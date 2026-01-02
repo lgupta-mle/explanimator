@@ -1,6 +1,6 @@
 """
-Hybrid PDF Parser: GROBID (text/sections) + Marker (images/tables)
-Combines the best of both tools for research paper extraction.
+Hybrid PDF Parser: GROBID (text/sections) + PyMuPDF (images)
+Combines GROBID's clean section extraction with PyMuPDF's comprehensive image extraction.
 """
 import os
 import re
@@ -9,22 +9,22 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any
 import requests
 import xml.etree.ElementTree as ET
-from marker.converters.pdf import PdfConverter
-from marker.models import create_model_dict
-from marker.output import text_from_rendered
+import fitz  # PyMuPDF
+from PIL import Image
+import io
 
 
-class HybridResearchPaperParser:
+class GrobidPyMuPDFParser:
     """
     Hybrid parser combining:
     - GROBID: Clean section structure, methodology extraction
-    - Marker: Image extraction, table extraction
+    - PyMuPDF: Comprehensive image extraction (all embedded images)
     """
     
     def __init__(
         self,
         grobid_url: str = "http://localhost:8070",
-        output_base_dir: str = "./output_hybrid",
+        output_base_dir: str = "./output_grobid_pymupdf",
         timeout: int = 180
     ):
         self.grobid_url = grobid_url.rstrip("/")
@@ -39,11 +39,6 @@ class HybridResearchPaperParser:
             'experimental procedure', 'procedure', 'experimental methods', 'technique',
             'model architecture', 'architecture', 'model', 'framework'
         ]
-        
-        # Load Marker models once
-        print("Loading Marker models for image extraction...")
-        self.marker_models = create_model_dict()
-        print("Marker models loaded!")
     
     def parse_directory(self, directory_path: str) -> List[Dict[str, Any]]:
         """Parse all PDFs in a directory."""
@@ -89,7 +84,7 @@ class HybridResearchPaperParser:
         return results
     
     def parse_paper(self, pdf_path: str, paper_name: Optional[str] = None) -> Dict[str, Any]:
-        """Parse a single PDF using hybrid approach."""
+        """Parse a single PDF using GROBID + PyMuPDF."""
         pdf_path = Path(pdf_path)
         if not pdf_path.exists():
             raise FileNotFoundError(f"PDF not found: {pdf_path}")
@@ -120,32 +115,15 @@ class HybridResearchPaperParser:
             grobid_figures = self._extract_figure_metadata_from_tei(root)
             grobid_tables = self._extract_table_metadata_from_tei(root)
             
-            # Step 2: Extract images and tables with Marker
-            print(f"  [2/2] Extracting images and tables with Marker...")
-            converter = PdfConverter(
-                artifact_dict=self.marker_models,
-                config={"use_llm": False}
-            )
-            rendered = converter(str(pdf_path))
-            full_text, _, marker_images = text_from_rendered(rendered)
-            out_meta = getattr(rendered, "metadata", {})
+            # Step 2: Extract images with PyMuPDF
+            print(f"  [2/2] Extracting images with PyMuPDF...")
+            pymupdf_images = self._extract_images_with_pymupdf(str(pdf_path), images_dir, paper_name)
             
-            # Save full markdown from Marker
-            markdown_file = paper_output_dir / f"{paper_name}_full.md"
-            with open(markdown_file, 'w', encoding='utf-8') as f:
-                f.write(full_text)
+            # Merge GROBID figure metadata with PyMuPDF images
+            merged_figures = self._merge_figure_data(grobid_figures, pymupdf_images)
             
-            # Save Marker images
-            saved_images = self._save_marker_images(marker_images, images_dir, paper_name)
-            
-            # Merge GROBID figure metadata with Marker images
-            merged_figures = self._merge_figure_data(grobid_figures, saved_images)
-            
-            # Extract tables from Marker markdown
-            tables = self._extract_tables_from_markdown(full_text, tables_dir, paper_name)
-            
-            # Merge with GROBID table metadata
-            merged_tables = self._merge_table_data(grobid_tables, tables)
+            # Save table metadata from GROBID
+            saved_tables = self._save_table_metadata(grobid_tables, tables_dir, paper_name)
             
             # Prepare results
             results = {
@@ -153,19 +131,15 @@ class HybridResearchPaperParser:
                 'source_file': str(pdf_path),
                 'output_directory': str(paper_output_dir),
                 'tei_file': str(tei_path),
-                'markdown_file': str(markdown_file),
                 'methodology': methodology,
                 'figures': {
                     'count': len(merged_figures),
-                    'items': merged_figures
+                    'items': merged_figures,
+                    'note': 'Images from PyMuPDF, captions from GROBID'
                 },
                 'tables': {
-                    'count': len(merged_tables),
-                    'items': merged_tables
-                },
-                'metadata': {
-                    'total_pages': out_meta.get('pages', 0),
-                    'languages': out_meta.get('languages', [])
+                    'count': len(saved_tables),
+                    'items': saved_tables
                 },
                 'status': 'success'
             }
@@ -208,7 +182,7 @@ class HybridResearchPaperParser:
         return resp.text
     
     def _extract_methodology_from_tei(self, root: ET.Element) -> Dict[str, Any]:
-        """Extract methodology section from GROBID TEI XML with improved subsection handling."""
+        """Extract methodology section from GROBID TEI XML with nested subsections."""
         ns = {'tei': self._get_namespace(root)}
         body = root.find('.//tei:text/tei:body', ns)
         
@@ -218,7 +192,6 @@ class HybridResearchPaperParser:
         def get_section_title(div: ET.Element) -> str:
             head = div.find('tei:head', ns)
             if head is not None:
-                # Get all text including nested elements
                 return ''.join(head.itertext()).strip()
             return ''
         
@@ -227,14 +200,14 @@ class HybridResearchPaperParser:
             paras = []
             
             # Get direct paragraphs (not in subsections)
-            for p in div.findall('tei:p', ns):
+            for p in div.findall('./tei:p', ns):
                 txt = ''.join(p.itertext()).strip()
                 if txt:
                     paras.append(txt)
             
             # If including subsections, recursively get their text
             if include_subsections:
-                for subdiv in div.findall('tei:div', ns):
+                for subdiv in div.findall('./tei:div', ns):
                     sub_text = get_section_text(subdiv, include_subsections=True)
                     if sub_text:
                         paras.append(sub_text)
@@ -244,10 +217,10 @@ class HybridResearchPaperParser:
         def get_subsections(div: ET.Element, level: int = 1) -> List[Dict[str, Any]]:
             """Extract all subsections recursively with nested structure."""
             subs = []
-            # Only get direct children divs, not all descendants
+            # Only get direct children divs
             for subdiv in div.findall('./tei:div', ns):
                 title = get_section_title(subdiv)
-                # Get only direct paragraphs, not from nested subsections
+                # Get only direct paragraphs
                 direct_paras = []
                 for p in subdiv.findall('./tei:p', ns):
                     txt = ''.join(p.itertext()).strip()
@@ -270,18 +243,18 @@ class HybridResearchPaperParser:
             return subs
         
         # Find methodology section
-        for div in body.findall('tei:div', ns):
+        for div in body.findall('./tei:div', ns):
             title = get_section_title(div)
             title_lower = title.lower()
             
             if any(keyword in title_lower for keyword in self.methodology_keywords):
-                # Found methodology section - extract with all subsections
+                # Found methodology section
                 return {
                     'found': True,
                     'title': title,
-                    'text': get_section_text(div, include_subsections=False),  # Only direct text
+                    'text': get_section_text(div, include_subsections=False),
                     'subsections': get_subsections(div),
-                    'full_text': get_section_text(div, include_subsections=True)  # Everything
+                    'full_text': get_section_text(div, include_subsections=True)
                 }
         
         return {'found': False, 'title': None, 'text': '', 'subsections': []}
@@ -320,141 +293,133 @@ class HybridResearchPaperParser:
         
         return tables
     
-    def _save_marker_images(self, images: Dict[str, Any], images_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
-        """Save images extracted by Marker (matches pdf_parser2.py logic)."""
-        saved_images = []
+    def _extract_images_with_pymupdf(self, pdf_path: str, images_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
+        """Extract all images from PDF using PyMuPDF."""
+        images = []
         
-        for img_name, img_data in images.items():
-            try:
-                # Marker returns images as PIL Image objects
-                safe_img_name = str(img_name).replace("/", "_").replace(os.sep, "_")
-                image_filename = f"{paper_name}_{safe_img_name}"
-                if not image_filename.endswith(('.png', '.jpg', '.jpeg')):
-                    image_filename += '.png'
+        try:
+            # Open PDF with PyMuPDF
+            pdf_document = fitz.open(pdf_path)
+            
+            image_count = 0
+            
+            # Iterate through pages
+            for page_num in range(len(pdf_document)):
+                page = pdf_document[page_num]
                 
-                image_path = images_dir / image_filename
+                # Get list of images on this page
+                image_list = page.get_images(full=True)
                 
-                # Save the image
-                img_data.save(image_path)
-                
-                # Get image info
-                width, height = img_data.size
-                
-                saved_images.append({
-                    'figure_number': len(saved_images) + 1,
-                    'filename': img_name,
-                    'saved_as': str(image_path),
-                    'width': width,
-                    'height': height,
-                    'format': img_data.format or 'PNG',
-                    'source': 'marker',
-                    'status': 'saved'
-                })
-            except Exception as e:
-                saved_images.append({
-                    'filename': img_name,
-                    'source': 'marker',
-                    'status': 'error',
-                    'error': str(e)
-                })
+                for img_index, img in enumerate(image_list):
+                    image_count += 1
+                    
+                    # Get image xref (reference number)
+                    xref = img[0]
+                    
+                    # Extract image
+                    try:
+                        base_image = pdf_document.extract_image(xref)
+                        image_bytes = base_image["image"]
+                        image_ext = base_image["ext"]
+                        
+                        # Save image
+                        image_filename = f"{paper_name}_image_{image_count}.{image_ext}"
+                        image_path = images_dir / image_filename
+                        
+                        with open(image_path, "wb") as img_file:
+                            img_file.write(image_bytes)
+                        
+                        # Get image dimensions
+                        try:
+                            img_pil = Image.open(io.BytesIO(image_bytes))
+                            width, height = img_pil.size
+                        except:
+                            width, height = None, None
+                        
+                        # Create metadata
+                        image_data = {
+                            'image_number': image_count,
+                            'page': page_num + 1,  # 1-indexed
+                            'saved_as': str(image_path),
+                            'format': image_ext,
+                            'width': width,
+                            'height': height,
+                            'size_bytes': len(image_bytes),
+                            'source': 'pymupdf',
+                            'status': 'saved'
+                        }
+                        
+                        images.append(image_data)
+                        
+                    except Exception as e:
+                        images.append({
+                            'image_number': image_count,
+                            'page': page_num + 1,
+                            'source': 'pymupdf',
+                            'status': 'error',
+                            'error': str(e)
+                        })
+            
+            pdf_document.close()
+            
+        except Exception as e:
+            print(f"    Error extracting images with PyMuPDF: {str(e)}")
         
-        return saved_images
+        return images
     
-    def _merge_figure_data(self, grobid_figures: List[Dict], marker_images: List[Dict]) -> List[Dict]:
-        """Merge GROBID figure metadata with Marker extracted images."""
+    def _merge_figure_data(self, grobid_figures: List[Dict], pymupdf_images: List[Dict]) -> List[Dict]:
+        """Merge GROBID figure metadata with PyMuPDF extracted images."""
         merged = []
         
-        # Start with Marker images (they have the actual files)
-        for img in marker_images:
-            # Try to find matching GROBID caption
-            fig_num = img.get('figure_number', 0)
-            caption = ''
+        # Use PyMuPDF images as primary (they have actual files)
+        for img in pymupdf_images:
+            if img.get('status') != 'saved':
+                continue
             
-            if fig_num <= len(grobid_figures):
-                caption = grobid_figures[fig_num - 1].get('caption', '')
+            # Try to find matching GROBID caption
+            # Simple heuristic: use figure number if counts match
+            caption = ''
+            img_num = img.get('image_number', 0)
+            if img_num <= len(grobid_figures):
+                caption = grobid_figures[img_num - 1].get('caption', '')
             
             merged.append({
-                **img,
-                'caption': caption if caption else img.get('caption', ''),
-                'has_image_file': img.get('status') == 'saved'
+                'figure_number': img_num,
+                'page': img.get('page'),
+                'image_file': img.get('saved_as'),
+                'format': img.get('format'),
+                'width': img.get('width'),
+                'height': img.get('height'),
+                'size_bytes': img.get('size_bytes'),
+                'caption': caption,
+                'source': 'pymupdf_image_grobid_caption',
+                'status': 'saved'
             })
         
-        # Add any GROBID figures that don't have images
-        for idx, gfig in enumerate(grobid_figures, 1):
-            if idx > len(marker_images):
-                merged.append({
-                    'figure_number': idx,
-                    'caption': gfig.get('caption', ''),
-                    'source': 'grobid',
-                    'has_image_file': False,
-                    'status': 'metadata_only'
-                })
-        
         return merged
     
-    def _extract_tables_from_markdown(self, markdown_text: str, tables_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
-        """Extract tables from Marker markdown."""
-        tables = []
-        lines = markdown_text.split('\n')
-        in_table = False
-        current_table = []
-        table_count = 0
+    def _save_table_metadata(self, grobid_tables: List[Dict], tables_dir: Path, paper_name: str) -> List[Dict]:
+        """Save table metadata from GROBID."""
+        saved_tables = []
         
-        for line in lines:
-            if '|' in line and line.strip().startswith('|'):
-                if not in_table:
-                    in_table = True
-                    current_table = []
-                current_table.append(line)
-            else:
-                if in_table and current_table:
-                    table_count += 1
-                    table_md = '\n'.join(current_table)
-                    table_filename = f"{paper_name}_table_{table_count}.md"
-                    table_path = tables_dir / table_filename
-                    
-                    with open(table_path, 'w', encoding='utf-8') as f:
-                        f.write(table_md)
-                    
-                    tables.append({
-                        'table_number': table_count,
-                        'saved_as': str(table_path),
-                        'rows': len(current_table),
-                        'source': 'marker',
-                        'status': 'saved'
-                    })
-                    
-                    in_table = False
-                    current_table = []
-        
-        return tables
-    
-    def _merge_table_data(self, grobid_tables: List[Dict], marker_tables: List[Dict]) -> List[Dict]:
-        """Merge GROBID table metadata with Marker extracted tables."""
-        merged = []
-        
-        max_count = max(len(grobid_tables), len(marker_tables))
-        
-        for idx in range(max_count):
-            table_data = {'table_number': idx + 1}
+        for table in grobid_tables:
+            table_num = table.get('table_number')
+            caption = table.get('caption', '')
             
-            # Add GROBID caption if available
-            if idx < len(grobid_tables):
-                table_data['caption'] = grobid_tables[idx].get('caption', '')
+            # Save caption to file
+            caption_file = tables_dir / f"{paper_name}_table_{table_num}_caption.txt"
+            with open(caption_file, 'w', encoding='utf-8') as f:
+                f.write(caption)
             
-            # Add Marker table file if available
-            if idx < len(marker_tables):
-                table_data.update({
-                    'saved_as': marker_tables[idx].get('saved_as'),
-                    'rows': marker_tables[idx].get('rows'),
-                    'status': 'saved'
-                })
-            else:
-                table_data['status'] = 'metadata_only'
-            
-            merged.append(table_data)
+            saved_tables.append({
+                'table_number': table_num,
+                'caption': caption,
+                'caption_file': str(caption_file),
+                'source': 'grobid',
+                'status': 'metadata_only'
+            })
         
-        return merged
+        return saved_tables
     
     def _get_namespace(self, root: ET.Element) -> str:
         """Extract namespace from TEI root element."""
