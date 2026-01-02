@@ -1,1 +1,0 @@
-The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)

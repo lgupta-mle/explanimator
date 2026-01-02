@@ -1,1 +1,0 @@
-Ku et al. (2025)nimator's performance on TheoremExplainBench against baseline models fromKu et al. (2025). Scores range from 0 to 1, with higher being better. Manimator's results (using DeepSeek V3) are highlighted.

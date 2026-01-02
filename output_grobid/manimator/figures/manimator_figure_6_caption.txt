@@ -1,1 +1,0 @@
-Combined system prompts used for Stage 1 (Scene Description Generation) and Stage 2 (Manim Code Generation).
