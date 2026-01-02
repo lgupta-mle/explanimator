@@ -1,0 +1,1 @@
+Figure 1. The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID. The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.

@@ -1,0 +1,1 @@
+Interface used for collecting human evaluation ratings on generated animations.

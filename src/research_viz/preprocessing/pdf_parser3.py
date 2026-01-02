@@ -127,17 +127,19 @@ class GrobidResearchPaperParser:
         if body is None:
             return {"found": False, "title": None, "text": "", "subsections": []}
 
+        def text_content(el: Optional[ET.Element]) -> str:
+            if el is None:
+                return ""
+            return re.sub(r"\s+", " ", " ".join(el.itertext())).strip()
+
         def section_title(div: ET.Element) -> str:
             head = div.find("tei:head", ns)
-            return (head.text or "").strip() if head is not None else ""
+            return text_content(head)
 
         def gather_text(div: ET.Element) -> str:
             paras = []
             for p in div.findall(".//tei:p", ns):
-                txt = ("" if p.text is None else p.text)
-                # include tails
-                txt += "" if p.tail is None else " " + p.tail
-                txt = re.sub(r"\s+", " ", txt).strip()
+                txt = text_content(p)
                 if txt:
                     paras.append(txt)
             return "\n\n".join(paras)
@@ -166,11 +168,17 @@ class GrobidResearchPaperParser:
     def _extract_figures_from_tei(self, root: ET.Element, figures_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
         ns = {"tei": self._ns(root)}
         items: List[Dict[str, Any]] = []
+
+        def text_content(el: Optional[ET.Element]) -> str:
+            if el is None:
+                return ""
+            return re.sub(r"\s+", " ", " ".join(el.itertext())).strip()
+
         idx = 0
         for fig in root.findall(".//tei:figure", ns):
             idx += 1
             caption_el = fig.find("tei:figDesc", ns) or fig.find("tei:head", ns) or fig.find("tei:p", ns)
-            caption = (caption_el.text or "").strip() if caption_el is not None else ""
+            caption = text_content(caption_el)
             graphic = fig.find(".//tei:graphic", ns)
             url = graphic.get("url") if graphic is not None else None
 
@@ -191,12 +199,22 @@ class GrobidResearchPaperParser:
     def _extract_tables_from_tei(self, root: ET.Element, tables_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
         ns = {"tei": self._ns(root)}
         items: List[Dict[str, Any]] = []
+
+        def text_content(el: Optional[ET.Element]) -> str:
+            if el is None:
+                return ""
+            return re.sub(r"\s+", " ", " ".join(el.itertext())).strip()
+
         idx = 0
-        for tbl in root.findall(".//tei:table", ns):
+        # Tables are often encoded as <figure type="table"> wrappers containing a <table>.
+        for fig in root.findall(".//tei:figure[@type='table']", ns):
+            tbl = fig.find("tei:table", ns)
+            if tbl is None:
+                continue
             idx += 1
-            head = tbl.find("tei:head", ns)
-            caption = (head.text or "").strip() if head is not None else ""
-            # Save raw XML for table (preserves structure)
+            caption_el = fig.find("tei:head", ns) or fig.find("tei:figDesc", ns)
+            caption = text_content(caption_el)
+
             xml_path = tables_dir / f"{paper_name}_table_{idx}.tei.xml"
             with open(xml_path, "w", encoding="utf-8") as f:
                 f.write(ET.tostring(tbl, encoding="unicode"))
@@ -207,6 +225,20 @@ class GrobidResearchPaperParser:
                 "tei_file": str(xml_path),
                 "status": "saved_xml",
             })
+
+        # Fallback: any bare <table> not wrapped in a figure
+        if idx == 0:
+            for tbl in root.findall(".//tei:table", ns):
+                idx += 1
+                xml_path = tables_dir / f"{paper_name}_table_{idx}.tei.xml"
+                with open(xml_path, "w", encoding="utf-8") as f:
+                    f.write(ET.tostring(tbl, encoding="unicode"))
+                items.append({
+                    "table_number": idx,
+                    "caption": "",
+                    "tei_file": str(xml_path),
+                    "status": "saved_xml",
+                })
         return items
 
     def _ns(self, root: ET.Element) -> str:
