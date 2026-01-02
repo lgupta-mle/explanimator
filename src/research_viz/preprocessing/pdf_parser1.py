@@ -17,14 +17,18 @@ from marker.output import text_from_rendered
 class HybridResearchPaperParser:
     """
     Hybrid parser combining:
-    - GROBID: Clean section structure, methodology extraction
-    - Marker: Image extraction, table extraction
+    - GROBID: Clean section structure, methodology extraction, table metadata
+    - Marker: Image extraction only (optimized - skips text processing)
+    
+    This approach is optimized to avoid duplicate text processing:
+    - GROBID handles all text/section extraction
+    - Marker only extracts images (faster than full processing)
     """
     
     def __init__(
         self,
         grobid_url: str = "http://localhost:8070",
-        output_base_dir: str = "./output_hybrid",
+        output_base_dir: str = "./output_grobid_marker",
         timeout: int = 180
     ):
         self.grobid_url = grobid_url.rstrip("/")
@@ -120,20 +124,21 @@ class HybridResearchPaperParser:
             grobid_figures = self._extract_figure_metadata_from_tei(root)
             grobid_tables = self._extract_table_metadata_from_tei(root)
             
-            # Step 2: Extract images and tables with Marker
-            print(f"  [2/2] Extracting images and tables with Marker...")
+            # Step 2: Extract images with Marker (optimized - images only)
+            print(f"  [2/2] Extracting images with Marker...")
             converter = PdfConverter(
                 artifact_dict=self.marker_models,
-                config={"use_llm": False}
+                config={
+                    "use_llm": False,
+                    "paginate_output": False,  # Skip pagination
+                    "extract_images": True      # Ensure images are extracted
+                }
             )
             rendered = converter(str(pdf_path))
-            full_text, _, marker_images = text_from_rendered(rendered)
-            out_meta = getattr(rendered, "metadata", {})
             
-            # Save full markdown from Marker
-            markdown_file = paper_output_dir / f"{paper_name}_full.md"
-            with open(markdown_file, 'w', encoding='utf-8') as f:
-                f.write(full_text)
+            # Extract only images, skip text processing
+            marker_images = rendered.images if hasattr(rendered, 'images') else {}
+            out_meta = getattr(rendered, "metadata", {})
             
             # Save Marker images
             saved_images = self._save_marker_images(marker_images, images_dir, paper_name)
@@ -141,11 +146,8 @@ class HybridResearchPaperParser:
             # Merge GROBID figure metadata with Marker images
             merged_figures = self._merge_figure_data(grobid_figures, saved_images)
             
-            # Extract tables from Marker markdown
-            tables = self._extract_tables_from_markdown(full_text, tables_dir, paper_name)
-            
-            # Merge with GROBID table metadata
-            merged_tables = self._merge_table_data(grobid_tables, tables)
+            # Use GROBID table metadata (no need to extract from Marker markdown)
+            merged_tables = self._save_table_metadata(grobid_tables, tables_dir, paper_name)
             
             # Prepare results
             results = {
@@ -153,7 +155,6 @@ class HybridResearchPaperParser:
                 'source_file': str(pdf_path),
                 'output_directory': str(paper_output_dir),
                 'tei_file': str(tei_path),
-                'markdown_file': str(markdown_file),
                 'methodology': methodology,
                 'figures': {
                     'count': len(merged_figures),
@@ -270,17 +271,18 @@ class HybridResearchPaperParser:
             return subs
         
         # Find methodology section
-        for div in body.findall('tei:div', ns):
+        for div in body.findall('./tei:div', ns):
             title = get_section_title(div)
             title_lower = title.lower()
             
             if any(keyword in title_lower for keyword in self.methodology_keywords):
                 # Found methodology section - extract with all subsections
+                subsections = get_subsections(div)
                 return {
                     'found': True,
                     'title': title,
                     'text': get_section_text(div, include_subsections=False),  # Only direct text
-                    'subsections': get_subsections(div),
+                    'subsections': subsections,
                     'full_text': get_section_text(div, include_subsections=True)  # Everything
                 }
         
@@ -392,69 +394,28 @@ class HybridResearchPaperParser:
         
         return merged
     
-    def _extract_tables_from_markdown(self, markdown_text: str, tables_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
-        """Extract tables from Marker markdown."""
-        tables = []
-        lines = markdown_text.split('\n')
-        in_table = False
-        current_table = []
-        table_count = 0
+    def _save_table_metadata(self, grobid_tables: List[Dict], tables_dir: Path, paper_name: str) -> List[Dict]:
+        """Save table metadata from GROBID (no Marker table extraction needed)."""
+        saved_tables = []
         
-        for line in lines:
-            if '|' in line and line.strip().startswith('|'):
-                if not in_table:
-                    in_table = True
-                    current_table = []
-                current_table.append(line)
-            else:
-                if in_table and current_table:
-                    table_count += 1
-                    table_md = '\n'.join(current_table)
-                    table_filename = f"{paper_name}_table_{table_count}.md"
-                    table_path = tables_dir / table_filename
-                    
-                    with open(table_path, 'w', encoding='utf-8') as f:
-                        f.write(table_md)
-                    
-                    tables.append({
-                        'table_number': table_count,
-                        'saved_as': str(table_path),
-                        'rows': len(current_table),
-                        'source': 'marker',
-                        'status': 'saved'
-                    })
-                    
-                    in_table = False
-                    current_table = []
-        
-        return tables
-    
-    def _merge_table_data(self, grobid_tables: List[Dict], marker_tables: List[Dict]) -> List[Dict]:
-        """Merge GROBID table metadata with Marker extracted tables."""
-        merged = []
-        
-        max_count = max(len(grobid_tables), len(marker_tables))
-        
-        for idx in range(max_count):
-            table_data = {'table_number': idx + 1}
+        for table in grobid_tables:
+            table_num = table.get('table_number')
+            caption = table.get('caption', '')
             
-            # Add GROBID caption if available
-            if idx < len(grobid_tables):
-                table_data['caption'] = grobid_tables[idx].get('caption', '')
+            # Save caption to file for reference
+            caption_file = tables_dir / f"{paper_name}_table_{table_num}_caption.txt"
+            with open(caption_file, 'w', encoding='utf-8') as f:
+                f.write(caption)
             
-            # Add Marker table file if available
-            if idx < len(marker_tables):
-                table_data.update({
-                    'saved_as': marker_tables[idx].get('saved_as'),
-                    'rows': marker_tables[idx].get('rows'),
-                    'status': 'saved'
-                })
-            else:
-                table_data['status'] = 'metadata_only'
-            
-            merged.append(table_data)
+            saved_tables.append({
+                'table_number': table_num,
+                'caption': caption,
+                'caption_file': str(caption_file),
+                'source': 'grobid',
+                'status': 'metadata_only'
+            })
         
-        return merged
+        return saved_tables
     
     def _get_namespace(self, root: ET.Element) -> str:
         """Extract namespace from TEI root element."""

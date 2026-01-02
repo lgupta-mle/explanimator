@@ -1,165 +1,52 @@
 """
-PDF Parser using Marker for research paper extraction.
-Marker is specifically designed for converting academic PDFs to Markdown with figures and tables.
-Requires Python 3.10+
+Hybrid PDF Parser: GROBID (text/sections) + PyMuPDF (images)
+Combines GROBID's clean section extraction with PyMuPDF's comprehensive image extraction.
 """
-import json
 import os
 import re
+import json
 from pathlib import Path
 from typing import Dict, List, Optional, Any
-from marker.converters.pdf import PdfConverter
-from marker.models import create_model_dict
-from marker.output import text_from_rendered
+import requests
+import xml.etree.ElementTree as ET
+import fitz  # PyMuPDF
+from PIL import Image
+import io
 
 
-class MarkerResearchPaperParser:
+class GrobidPyMuPDFParser:
     """
-    Parser for extracting methodology sections, figures, and tables from research papers
-    using Marker.
+    Hybrid parser combining:
+    - GROBID: Clean section structure, methodology extraction
+    - PyMuPDF: Comprehensive image extraction (all embedded images)
     """
     
-    def __init__(self, output_base_dir: str = "./output_marker"):
-        """
-        Initialize the research paper parser with Marker.
-        
-        Args:
-            output_base_dir: Base directory for saving extracted content
-        """
+    def __init__(
+        self,
+        grobid_url: str = "http://localhost:8070",
+        output_base_dir: str = "./output_grobid_pymupdf",
+        timeout: int = 180
+    ):
+        self.grobid_url = grobid_url.rstrip("/")
+        self.timeout = timeout
         self.output_base_dir = Path(output_base_dir)
         self.output_base_dir.mkdir(parents=True, exist_ok=True)
         
-        # Keywords to identify methodology sections
         self.methodology_keywords = [
             'method', 'methods', 'methodology', 'methodologies',
             'materials and methods', 'experimental setup', 'experimental design',
             'approach', 'experimental', 'implementation', 'system design',
             'experimental procedure', 'procedure', 'experimental methods', 'technique',
-            'model architecture', 'architecture'
+            'model architecture', 'architecture', 'model', 'framework'
         ]
-        
-        # Load Marker models once
-        print("Loading Marker models (this may take a moment)...")
-        self.model_lst = create_model_dict()
-        print("Models loaded successfully!")
-    
-    def parse_paper(self, pdf_path: str, paper_name: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Parse a single research paper PDF.
-        
-        Args:
-            pdf_path: Path to the PDF file
-            paper_name: Optional name for the paper (defaults to filename)
-            
-        Returns:
-            Dictionary containing extracted data
-        """
-        pdf_path = Path(pdf_path)
-        if not pdf_path.exists():
-            raise FileNotFoundError(f"PDF not found: {pdf_path}")
-        
-        if paper_name is None:
-            paper_name = pdf_path.stem
-        
-        print(f"\nProcessing: {paper_name}")
-        
-        # Create output directory for this paper
-        paper_output_dir = self.output_base_dir / paper_name
-        paper_output_dir.mkdir(parents=True, exist_ok=True)
-        
-        try:
-            # Convert PDF to Markdown using Marker
-            print(f"  Converting PDF with Marker...")
-            converter = PdfConverter(
-                artifact_dict=self.model_lst,
-                config={"use_llm": False}
-            )
-
-            rendered = converter(str(pdf_path))
-            full_text, _, images = text_from_rendered(rendered)
-            out_meta = getattr(rendered, "metadata", {})
-            
-            # Save the full markdown
-            markdown_file = paper_output_dir / f"{paper_name}_full.md"
-            with open(markdown_file, 'w', encoding='utf-8') as f:
-                f.write(full_text)
-            print(f"  Saved full markdown to: {markdown_file}")
-            
-            # Extract methodology section
-            print(f"  Extracting methodology section...")
-            methodology = self._extract_methodology_from_markdown(full_text)
-
-            methodology_file = None
-            if methodology.get('found'):
-                methodology_file = paper_output_dir / f"{paper_name}_methodology.md"
-                with open(methodology_file, 'w', encoding='utf-8') as f:
-                    f.write(methodology.get('text', ''))
-            
-            # Save extracted images
-            print(f"  Saving extracted images...")
-            saved_images = self._save_images(images, paper_output_dir, paper_name)
-            
-            # Extract tables from markdown
-            print(f"  Extracting tables...")
-            tables = self._extract_tables_from_markdown(full_text, paper_output_dir, paper_name)
-            
-            # Prepare results
-            results = {
-                'paper_name': paper_name,
-                'source_file': str(pdf_path),
-                'output_directory': str(paper_output_dir),
-                'markdown_file': str(markdown_file),
-                'methodology_file': str(methodology_file) if methodology_file else None,
-                'methodology': methodology,
-                'figures': {
-                    'count': len(saved_images),
-                    'items': saved_images
-                },
-                'tables': {
-                    'count': len(tables),
-                    'items': tables
-                },
-                'metadata': {
-                    'total_pages': len(out_meta.get('page_stats', [])) if isinstance(out_meta.get('page_stats', None), list) else 0,
-                    'table_of_contents': out_meta.get('table_of_contents', None)
-                },
-                'status': 'success'
-            }
-            
-            # Save results as JSON
-            results_file = paper_output_dir / f"{paper_name}_extraction_results.json"
-            self._save_json(results, results_file)
-            print(f"  Results saved to: {results_file}")
-            
-            return results
-            
-        except Exception as e:
-            print(f"  Error: {str(e)}")
-            import traceback
-            traceback.print_exc()
-            return {
-                'paper_name': paper_name,
-                'source_file': str(pdf_path),
-                'status': 'error',
-                'error': str(e)
-            }
     
     def parse_directory(self, directory_path: str) -> List[Dict[str, Any]]:
-        """
-        Parse all PDF files in a directory.
-        
-        Args:
-            directory_path: Path to directory containing PDFs
-            
-        Returns:
-            List of results for each paper
-        """
+        """Parse all PDFs in a directory."""
         directory = Path(directory_path)
         if not directory.exists():
             raise FileNotFoundError(f"Directory not found: {directory}")
         
-        pdf_files = list(directory.glob("*.pdf"))
-        
+        pdf_files = sorted(directory.glob("*.pdf"))
         if not pdf_files:
             print(f"No PDF files found in {directory}")
             return []
@@ -184,269 +71,359 @@ class MarkerResearchPaperParser:
         
         # Save summary
         summary_file = self.output_base_dir / "extraction_summary.json"
-        self._save_json({
-            'total_papers': len(pdf_files),
-            'successful': sum(1 for r in results if r.get('status') == 'success'),
-            'failed': sum(1 for r in results if r.get('status') == 'error'),
-            'results': results
-        }, summary_file)
+        with open(summary_file, 'w', encoding='utf-8') as f:
+            json.dump({
+                'total_papers': len(pdf_files),
+                'successful': sum(1 for r in results if r.get('status') == 'success'),
+                'failed': sum(1 for r in results if r.get('status') == 'error'),
+                'results': results
+            }, f, indent=2, ensure_ascii=False)
         
         print("\n" + "=" * 70)
         print(f"Processing complete! Summary saved to: {summary_file}")
-        
         return results
     
-    def _extract_methodology_from_markdown(self, markdown_text: str) -> Dict[str, Any]:
-        """
-        Extract methodology section from markdown text.
+    def parse_paper(self, pdf_path: str, paper_name: Optional[str] = None) -> Dict[str, Any]:
+        """Parse a single PDF using GROBID + PyMuPDF."""
+        pdf_path = Path(pdf_path)
+        if not pdf_path.exists():
+            raise FileNotFoundError(f"PDF not found: {pdf_path}")
         
-        Args:
-            markdown_text: Full markdown text of the paper
-            
-        Returns:
-            Dictionary containing methodology data
-        """
-        methodology_data = {
-            'found': False,
-            'title': None,
-            'text': '',
-            'subsections': []
-        }
+        if paper_name is None:
+            paper_name = pdf_path.stem
         
-        # Split into lines for processing
-        lines = markdown_text.split('\n')
+        print(f"\nProcessing: {paper_name}")
         
-        in_methodology = False
-        methodology_lines = []
-        current_subsection = None
-        subsections = {}
-        methodology_title = None
-        
-        for i, line in enumerate(lines):
-            # Check for section headers (markdown headers or numbered section titles)
-            header_text = None
-            level = None
-            if line.startswith('#'):
-                header_match = re.match(r'^(#+)\s+(.+)$', line)
-                if header_match:
-                    level = len(header_match.group(1))
-                    header_text = header_match.group(2).strip()
-            else:
-                numbered_match = re.match(r'^(\d+(?:\.\d+)*)\s+(.+)$', line.strip())
-                if numbered_match:
-                    section_num = numbered_match.group(1)
-                    header_text = (section_num + " " + numbered_match.group(2)).strip()
-                    level = section_num.count('.') + 1
-                else:
-                    # Some PDFs yield plain headings without markdown markers or numbering
-                    # (often all-caps like "METHODS" / "METHODOLOGY").
-                    candidate = line.strip()
-                    plain_heading_match = re.match(r'^[A-Za-z][A-Za-z\s\-:&]{2,}$', candidate)
-                    if plain_heading_match and len(candidate) <= 80 and candidate == candidate.upper():
-                        header_text = candidate
-                        level = 1
-
-            if header_text is not None and level is not None:
-                header_lower = header_text.lower()
-
-                # Check if this is a methodology section
-                if not in_methodology and any(keyword in header_lower for keyword in self.methodology_keywords):
-                    in_methodology = True
-                    methodology_data['found'] = True
-                    methodology_data['title'] = header_text
-                    methodology_title = header_text
-                    current_subsection = None
-                    continue
-
-                # If we're in methodology
-                elif in_methodology:
-                    # Check if this is a subsection (higher level number = subsection)
-                    if level > 1 and any(keyword in header_lower for keyword in self.methodology_keywords + ['encoder', 'decoder', 'attention', 'layer', 'training']):
-                        current_subsection = header_text
-                        subsections[current_subsection] = []
-                        continue
-                    elif level <= 2 and not any(keyword in header_lower for keyword in self.methodology_keywords):
-                        # New main section, stop methodology extraction
-                        break
-            
-            # Collect content if in methodology
-            if in_methodology:
-                line_stripped = line.strip()
-                if line_stripped and not line_stripped.startswith('#'):
-                    # Skip image references
-                    if not line_stripped.startswith('!['):
-                        if current_subsection:
-                            subsections[current_subsection].append(line_stripped)
-                        else:
-                            methodology_lines.append(line_stripped)
-        
-        # Compile results
-        if methodology_data['found']:
-            methodology_data['text'] = '\n\n'.join(methodology_lines)
-            methodology_data['subsections'] = [
-                {
-                    'title': title,
-                    'text': '\n\n'.join(content)
-                }
-                for title, content in subsections.items()
-            ]
-        
-        return methodology_data
-    
-    def _save_images(self, images: Dict[str, Any], output_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
-        """
-        Save extracted images from Marker.
-        
-        Args:
-            images: Dictionary of images from Marker
-            output_dir: Directory to save images
-            paper_name: Name of the paper
-            
-        Returns:
-            List of image metadata
-        """
-        images_dir = output_dir / "images"
+        # Create output directories
+        paper_output_dir = self.output_base_dir / paper_name
+        images_dir = paper_output_dir / "images"
+        tables_dir = paper_output_dir / "tables"
+        paper_output_dir.mkdir(parents=True, exist_ok=True)
         images_dir.mkdir(exist_ok=True)
-        
-        saved_images = []
-        
-        for img_name, img_data in images.items():
-            try:
-                # Marker returns images as PIL Image objects
-                safe_img_name = str(img_name).replace("/", "_").replace(os.sep, "_")
-                image_filename = f"{paper_name}_{safe_img_name}"
-                if not image_filename.endswith(('.png', '.jpg', '.jpeg')):
-                    image_filename += '.png'
-                
-                image_path = images_dir / image_filename
-                
-                # Save the image
-                img_data.save(image_path)
-                
-                # Get image info
-                width, height = img_data.size
-                
-                image_info = {
-                    'figure_number': len(saved_images) + 1,
-                    'filename': img_name,
-                    'saved_as': str(image_path),
-                    'width': width,
-                    'height': height,
-                    'format': img_data.format or 'PNG',
-                    'status': 'saved'
-                }
-                
-                saved_images.append(image_info)
-                
-            except Exception as e:
-                saved_images.append({
-                    'filename': img_name,
-                    'status': 'error',
-                    'error': str(e)
-                })
-        
-        return saved_images
-    
-    def _extract_tables_from_markdown(self, markdown_text: str, output_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
-        """
-        Extract tables from markdown text.
-        
-        Args:
-            markdown_text: Full markdown text
-            output_dir: Directory to save tables
-            paper_name: Name of the paper
-            
-        Returns:
-            List of table metadata
-        """
-        tables_dir = output_dir / "tables"
         tables_dir.mkdir(exist_ok=True)
         
+        try:
+            # Step 1: Extract text and sections with GROBID
+            print(f"  [1/2] Extracting text and sections with GROBID...")
+            tei_xml = self._process_with_grobid(str(pdf_path))
+            tei_path = paper_output_dir / f"{paper_name}.tei.xml"
+            with open(tei_path, 'w', encoding='utf-8') as f:
+                f.write(tei_xml)
+            
+            root = ET.fromstring(tei_xml)
+            methodology = self._extract_methodology_from_tei(root)
+            grobid_figures = self._extract_figure_metadata_from_tei(root)
+            grobid_tables = self._extract_table_metadata_from_tei(root)
+            
+            # Step 2: Extract images with PyMuPDF
+            print(f"  [2/2] Extracting images with PyMuPDF...")
+            pymupdf_images = self._extract_images_with_pymupdf(str(pdf_path), images_dir, paper_name)
+            
+            # Merge GROBID figure metadata with PyMuPDF images
+            merged_figures = self._merge_figure_data(grobid_figures, pymupdf_images)
+            
+            # Save table metadata from GROBID
+            saved_tables = self._save_table_metadata(grobid_tables, tables_dir, paper_name)
+            
+            # Prepare results
+            results = {
+                'paper_name': paper_name,
+                'source_file': str(pdf_path),
+                'output_directory': str(paper_output_dir),
+                'tei_file': str(tei_path),
+                'methodology': methodology,
+                'figures': {
+                    'count': len(merged_figures),
+                    'items': merged_figures,
+                    'note': 'Images from PyMuPDF, captions from GROBID'
+                },
+                'tables': {
+                    'count': len(saved_tables),
+                    'items': saved_tables
+                },
+                'status': 'success'
+            }
+            
+            # Save results
+            results_file = paper_output_dir / f"{paper_name}_extraction_results.json"
+            with open(results_file, 'w', encoding='utf-8') as f:
+                json.dump(results, f, indent=2, ensure_ascii=False)
+            print(f"  ✓ Results saved to: {results_file}")
+            
+            return results
+            
+        except Exception as e:
+            print(f"  ✗ Error: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return {
+                'paper_name': paper_name,
+                'source_file': str(pdf_path),
+                'status': 'error',
+                'error': str(e)
+            }
+    
+    def _process_with_grobid(self, pdf_path: str) -> str:
+        """Send PDF to GROBID and get TEI XML."""
+        url = f"{self.grobid_url}/api/processFulltextDocument"
+        with open(pdf_path, 'rb') as f:
+            files = {'input': f}
+            data = {
+                'consolidateHeader': 1,
+                'consolidateCitations': 1,
+                'teiCoordinates': 'true',
+                'segmentSentences': 1,
+                'generateIDs': 1
+            }
+            resp = requests.post(url, files=files, data=data, timeout=self.timeout)
+        
+        if resp.status_code != 200:
+            raise RuntimeError(f"GROBID error {resp.status_code}: {resp.text[:500]}")
+        return resp.text
+    
+    def _extract_methodology_from_tei(self, root: ET.Element) -> Dict[str, Any]:
+        """Extract methodology section from GROBID TEI XML with nested subsections."""
+        ns = {'tei': self._get_namespace(root)}
+        body = root.find('.//tei:text/tei:body', ns)
+        
+        if body is None:
+            return {'found': False, 'title': None, 'text': '', 'subsections': []}
+        
+        def get_section_title(div: ET.Element) -> str:
+            head = div.find('tei:head', ns)
+            if head is not None:
+                return ''.join(head.itertext()).strip()
+            return ''
+        
+        def get_section_text(div: ET.Element, include_subsections: bool = False) -> str:
+            """Extract text from a section, optionally including subsections."""
+            paras = []
+            
+            # Get direct paragraphs (not in subsections)
+            for p in div.findall('./tei:p', ns):
+                txt = ''.join(p.itertext()).strip()
+                if txt:
+                    paras.append(txt)
+            
+            # If including subsections, recursively get their text
+            if include_subsections:
+                for subdiv in div.findall('./tei:div', ns):
+                    sub_text = get_section_text(subdiv, include_subsections=True)
+                    if sub_text:
+                        paras.append(sub_text)
+            
+            return '\n\n'.join(paras)
+        
+        def get_subsections(div: ET.Element, level: int = 1) -> List[Dict[str, Any]]:
+            """Extract all subsections recursively with nested structure."""
+            subs = []
+            # Only get direct children divs
+            for subdiv in div.findall('./tei:div', ns):
+                title = get_section_title(subdiv)
+                # Get only direct paragraphs
+                direct_paras = []
+                for p in subdiv.findall('./tei:p', ns):
+                    txt = ''.join(p.itertext()).strip()
+                    if txt:
+                        direct_paras.append(txt)
+                direct_text = '\n\n'.join(direct_paras)
+                
+                # Recursively get nested subsections
+                nested_subs = get_subsections(subdiv, level + 1)
+                
+                if title or direct_text or nested_subs:
+                    sub_data = {
+                        'title': title,
+                        'text': direct_text,
+                        'level': level
+                    }
+                    if nested_subs:
+                        sub_data['subsections'] = nested_subs
+                    subs.append(sub_data)
+            return subs
+        
+        # Find methodology section
+        for div in body.findall('./tei:div', ns):
+            title = get_section_title(div)
+            title_lower = title.lower()
+            
+            if any(keyword in title_lower for keyword in self.methodology_keywords):
+                # Found methodology section
+                subsections = get_subsections(div)
+                return {
+                    'found': True,
+                    'title': title,
+                    'text': get_section_text(div, include_subsections=False),
+                    'subsections': subsections,
+                    'full_text': get_section_text(div, include_subsections=True)
+                }
+        
+        return {'found': False, 'title': None, 'text': '', 'subsections': []}
+    
+    def _extract_figure_metadata_from_tei(self, root: ET.Element) -> List[Dict[str, Any]]:
+        """Extract figure metadata from GROBID TEI."""
+        ns = {'tei': self._get_namespace(root)}
+        figures = []
+        
+        for idx, fig in enumerate(root.findall('.//tei:figure', ns), 1):
+            caption_el = fig.find('tei:figDesc', ns) or fig.find('tei:head', ns)
+            caption = ''.join(caption_el.itertext()).strip() if caption_el is not None else ''
+            
+            figures.append({
+                'figure_number': idx,
+                'caption': caption,
+                'source': 'grobid'
+            })
+        
+        return figures
+    
+    def _extract_table_metadata_from_tei(self, root: ET.Element) -> List[Dict[str, Any]]:
+        """Extract table metadata from GROBID TEI."""
+        ns = {'tei': self._get_namespace(root)}
         tables = []
         
-        # Find all markdown tables
-        lines = markdown_text.split('\n')
-        in_table = False
-        current_table = []
-        table_count = 0
-        
-        for line in lines:
-            # Check if line is part of a markdown table
-            if '|' in line and line.strip().startswith('|'):
-                if not in_table:
-                    in_table = True
-                    current_table = []
-                current_table.append(line)
-            else:
-                if in_table and current_table:
-                    # End of table
-                    table_count += 1
-                    
-                    # Save table as markdown
-                    table_md = '\n'.join(current_table)
-                    table_filename = f"{paper_name}_table_{table_count}.md"
-                    table_path = tables_dir / table_filename
-                    
-                    with open(table_path, 'w', encoding='utf-8') as f:
-                        f.write(table_md)
-                    
-                    # Try to find caption (usually before or after table)
-                    caption = ""
-                    
-                    tables.append({
-                        'table_number': table_count,
-                        'caption': caption,
-                        'saved_as': str(table_path),
-                        'rows': len(current_table),
-                        'status': 'saved'
-                    })
-                    
-                    in_table = False
-                    current_table = []
+        for idx, tbl in enumerate(root.findall('.//tei:table', ns), 1):
+            head = tbl.find('tei:head', ns)
+            caption = ''.join(head.itertext()).strip() if head is not None else ''
+            
+            tables.append({
+                'table_number': idx,
+                'caption': caption,
+                'source': 'grobid'
+            })
         
         return tables
     
-    def _save_json(self, data: Dict[str, Any], filepath: Path):
-        """
-        Save data as JSON file.
+    def _extract_images_with_pymupdf(self, pdf_path: str, images_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
+        """Extract all images from PDF using PyMuPDF."""
+        images = []
         
-        Args:
-            data: Data to save
-            filepath: Path to save file
-        """
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-
-
-def main():
-    """Main function to demonstrate usage."""
-    parser = MarkerResearchPaperParser(output_base_dir="./output_marker")
+        try:
+            # Open PDF with PyMuPDF
+            pdf_document = fitz.open(pdf_path)
+            
+            image_count = 0
+            
+            # Iterate through pages
+            for page_num in range(len(pdf_document)):
+                page = pdf_document[page_num]
+                
+                # Get list of images on this page
+                image_list = page.get_images(full=True)
+                
+                for img_index, img in enumerate(image_list):
+                    image_count += 1
+                    
+                    # Get image xref (reference number)
+                    xref = img[0]
+                    
+                    # Extract image
+                    try:
+                        base_image = pdf_document.extract_image(xref)
+                        image_bytes = base_image["image"]
+                        image_ext = base_image["ext"]
+                        
+                        # Save image
+                        image_filename = f"{paper_name}_image_{image_count}.{image_ext}"
+                        image_path = images_dir / image_filename
+                        
+                        with open(image_path, "wb") as img_file:
+                            img_file.write(image_bytes)
+                        
+                        # Get image dimensions
+                        try:
+                            img_pil = Image.open(io.BytesIO(image_bytes))
+                            width, height = img_pil.size
+                        except:
+                            width, height = None, None
+                        
+                        # Create metadata
+                        image_data = {
+                            'image_number': image_count,
+                            'page': page_num + 1,  # 1-indexed
+                            'saved_as': str(image_path),
+                            'format': image_ext,
+                            'width': width,
+                            'height': height,
+                            'size_bytes': len(image_bytes),
+                            'source': 'pymupdf',
+                            'status': 'saved'
+                        }
+                        
+                        images.append(image_data)
+                        
+                    except Exception as e:
+                        images.append({
+                            'image_number': image_count,
+                            'page': page_num + 1,
+                            'source': 'pymupdf',
+                            'status': 'error',
+                            'error': str(e)
+                        })
+            
+            pdf_document.close()
+            
+        except Exception as e:
+            print(f"    Error extracting images with PyMuPDF: {str(e)}")
+        
+        return images
     
-    # Process all PDFs in resources directory
-    resources_dir = "./resources"
-    results = parser.parse_directory(resources_dir)
+    def _merge_figure_data(self, grobid_figures: List[Dict], pymupdf_images: List[Dict]) -> List[Dict]:
+        """Merge GROBID figure metadata with PyMuPDF extracted images."""
+        merged = []
+        
+        # Use PyMuPDF images as primary (they have actual files)
+        for img in pymupdf_images:
+            if img.get('status') != 'saved':
+                continue
+            
+            # Try to find matching GROBID caption
+            # Simple heuristic: use figure number if counts match
+            caption = ''
+            img_num = img.get('image_number', 0)
+            if img_num <= len(grobid_figures):
+                caption = grobid_figures[img_num - 1].get('caption', '')
+            
+            merged.append({
+                'figure_number': img_num,
+                'page': img.get('page'),
+                'image_file': img.get('saved_as'),
+                'format': img.get('format'),
+                'width': img.get('width'),
+                'height': img.get('height'),
+                'size_bytes': img.get('size_bytes'),
+                'caption': caption,
+                'source': 'pymupdf_image_grobid_caption',
+                'status': 'saved'
+            })
+        
+        return merged
     
-    # Print summary
-    print("\n" + "=" * 70)
-    print("EXTRACTION SUMMARY")
-    print("=" * 70)
+    def _save_table_metadata(self, grobid_tables: List[Dict], tables_dir: Path, paper_name: str) -> List[Dict]:
+        """Save table metadata from GROBID."""
+        saved_tables = []
+        
+        for table in grobid_tables:
+            table_num = table.get('table_number')
+            caption = table.get('caption', '')
+            
+            # Save caption to file
+            caption_file = tables_dir / f"{paper_name}_table_{table_num}_caption.txt"
+            with open(caption_file, 'w', encoding='utf-8') as f:
+                f.write(caption)
+            
+            saved_tables.append({
+                'table_number': table_num,
+                'caption': caption,
+                'caption_file': str(caption_file),
+                'source': 'grobid',
+                'status': 'metadata_only'
+            })
+        
+        return saved_tables
     
-    for result in results:
-        if result.get('status') == 'success':
-            print(f"\n✓ {result['paper_name']}")
-            print(f"  Methodology: {'Found' if result['methodology']['found'] else 'Not found'}")
-            if result['methodology']['found']:
-                print(f"    Title: {result['methodology']['title']}")
-                print(f"    Text length: {len(result['methodology']['text'])} characters")
-                print(f"    Subsections: {len(result['methodology']['subsections'])}")
-            print(f"  Figures/Images: {result['figures']['count']}")
-            print(f"  Tables: {result['tables']['count']}")
-            print(f"  Output: {result['output_directory']}")
-        else:
-            print(f"\n✗ {result['paper_name']}: {result.get('error', 'Unknown error')}")
-    
-    print("\n" + "=" * 70)
-
-
-if __name__ == "__main__":
-    main()
+    def _get_namespace(self, root: ET.Element) -> str:
+        """Extract namespace from TEI root element."""
+        if root.tag.startswith('{'):
+            return root.tag.split('}')[0].strip('{')
+        return 'http://www.tei-c.org/ns/1.0'
