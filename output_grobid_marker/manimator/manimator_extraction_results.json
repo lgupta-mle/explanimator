@@ -3,7 +3,6 @@
   "source_file": "resources/manimator.pdf",
   "output_directory": "output_grobid_marker/manimator",
   "tei_file": "output_grobid_marker/manimator/manimator.tei.xml",
-  "markdown_file": "output_grobid_marker/manimator/manimator_full.md",
   "methodology": {
     "found": true,
     "title": "Large Language Models for Understanding and Code Generation",
@@ -81,9 +80,9 @@
       {
         "table_number": 1,
         "caption": "",
-        "saved_as": "output_grobid_marker/manimator/tables/manimator_table_1.md",
-        "rows": 5,
-        "status": "saved"
+        "caption_file": "output_grobid_marker/manimator/tables/manimator_table_1_caption.txt",
+        "source": "grobid",
+        "status": "metadata_only"
       }
     ]
   },

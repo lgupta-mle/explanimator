@@ -8,7 +8,6 @@
       "source_file": "resources/attention_is_all_you_need.pdf",
       "output_directory": "output_grobid_marker/attention_is_all_you_need",
       "tei_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
-      "markdown_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need_full.md",
       "methodology": {
         "found": true,
         "title": "Model Architecture",
@@ -77,34 +76,28 @@
         ]
       },
       "tables": {
-        "count": 4,
+        "count": 3,
         "items": [
           {
             "table_number": 1,
             "caption": "",
-            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_1.md",
-            "rows": 3,
-            "status": "saved"
+            "caption_file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_1_caption.txt",
+            "source": "grobid",
+            "status": "metadata_only"
           },
           {
             "table_number": 2,
             "caption": "",
-            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_2.md",
-            "rows": 13,
-            "status": "saved"
+            "caption_file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_2_caption.txt",
+            "source": "grobid",
+            "status": "metadata_only"
           },
           {
             "table_number": 3,
             "caption": "",
-            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_3.md",
-            "rows": 22,
-            "status": "saved"
-          },
-          {
-            "table_number": 4,
-            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_4.md",
-            "rows": 14,
-            "status": "saved"
+            "caption_file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_3_caption.txt",
+            "source": "grobid",
+            "status": "metadata_only"
           }
         ]
       },
@@ -119,7 +112,6 @@
       "source_file": "resources/manimator.pdf",
       "output_directory": "output_grobid_marker/manimator",
       "tei_file": "output_grobid_marker/manimator/manimator.tei.xml",
-      "markdown_file": "output_grobid_marker/manimator/manimator_full.md",
       "methodology": {
         "found": true,
         "title": "Large Language Models for Understanding and Code Generation",
@@ -197,9 +189,9 @@
           {
             "table_number": 1,
             "caption": "",
-            "saved_as": "output_grobid_marker/manimator/tables/manimator_table_1.md",
-            "rows": 5,
-            "status": "saved"
+            "caption_file": "output_grobid_marker/manimator/tables/manimator_table_1_caption.txt",
+            "source": "grobid",
+            "status": "metadata_only"
           }
         ]
       },

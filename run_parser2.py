@@ -1,7 +1,7 @@
 """
 Runner for GROBID + PyMuPDF Parser
 """
-from src.research_viz.preprocessing.pdf_parser5 import GrobidPyMuPDFParser
+from src.research_viz.preprocessing.pdf_parser2 import GrobidPyMuPDFParser
 
 # Initialize parser
 parser = GrobidPyMuPDFParser(

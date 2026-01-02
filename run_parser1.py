@@ -1,7 +1,7 @@
 """
 Runner for Hybrid Parser (GROBID + Marker)
 """
-from src.research_viz.preprocessing.pdf_parser4 import HybridResearchPaperParser
+from src.research_viz.preprocessing.pdf_parser1 import HybridResearchPaperParser
 
 # Initialize hybrid parser
 parser = HybridResearchPaperParser(
