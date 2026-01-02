@@ -1,0 +1,213 @@
+{
+  "total_papers": 2,
+  "successful": 2,
+  "failed": 0,
+  "results": [
+    {
+      "paper_name": "attention_is_all_you_need",
+      "source_file": "resources/attention_is_all_you_need.pdf",
+      "output_directory": "output_grobid_marker/attention_is_all_you_need",
+      "tei_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
+      "markdown_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need_full.md",
+      "methodology": {
+        "found": true,
+        "title": "Model Architecture",
+        "text": "Most competitive neural sequence transduction models have an encoder-decoder structure [5,2,35].Here, the encoder maps an input sequence of symbol representations (x 1 , ..., x n ) to a sequence of continuous representations z = (z 1 , ..., z n ).Given z, the decoder then generates an output sequence (y 1 , ..., y m ) of symbols one element at a time.At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next.The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+        "subsections": [],
+        "full_text": "Most competitive neural sequence transduction models have an encoder-decoder structure [5,2,35].Here, the encoder maps an input sequence of symbol representations (x 1 , ..., x n ) to a sequence of continuous representations z = (z 1 , ..., z n ).Given z, the decoder then generates an output sequence (y 1 , ..., y m ) of symbols one element at a time.At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next.The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively."
+      },
+      "figures": {
+        "count": 5,
+        "items": [
+          {
+            "figure_number": 1,
+            "filename": "_page_2_Figure_0.jpeg",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_2_Figure_0.jpeg",
+            "width": 628,
+            "height": 955,
+            "format": "PNG",
+            "source": "marker",
+            "status": "saved",
+            "caption": "Figure 1: The Transformer -model architecture.",
+            "has_image_file": true
+          },
+          {
+            "figure_number": 2,
+            "filename": "_page_12_Figure_1.jpeg",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_12_Figure_1.jpeg",
+            "width": 1129,
+            "height": 578,
+            "format": "PNG",
+            "source": "marker",
+            "status": "saved",
+            "caption": "Figure 2: (left) Scaled Dot-Product Attention.(right) Multi-Head Attention consists of several attention layers running in parallel.",
+            "has_image_file": true
+          },
+          {
+            "figure_number": 3,
+            "filename": "_page_13_Figure_0.jpeg",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_13_Figure_0.jpeg",
+            "width": 1122,
+            "height": 1296,
+            "format": "PNG",
+            "source": "marker",
+            "status": "saved",
+            "caption": "The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+            "has_image_file": true
+          },
+          {
+            "figure_number": 4,
+            "filename": "_page_14_Figure_0.jpeg",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_14_Figure_0.jpeg",
+            "width": 1108,
+            "height": 1202,
+            "format": "PNG",
+            "source": "marker",
+            "status": "saved",
+            "caption": "Variations on the Transformer architecture.Unlisted values are identical to those of the base model.All metrics are on the English-to-German translation development set, newstest2013.Listed perplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to per-word perplexities.",
+            "has_image_file": true
+          },
+          {
+            "figure_number": 5,
+            "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
+            "source": "grobid",
+            "has_image_file": false,
+            "status": "metadata_only"
+          }
+        ]
+      },
+      "tables": {
+        "count": 4,
+        "items": [
+          {
+            "table_number": 1,
+            "caption": "",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_1.md",
+            "rows": 3,
+            "status": "saved"
+          },
+          {
+            "table_number": 2,
+            "caption": "",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_2.md",
+            "rows": 13,
+            "status": "saved"
+          },
+          {
+            "table_number": 3,
+            "caption": "",
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_3.md",
+            "rows": 22,
+            "status": "saved"
+          },
+          {
+            "table_number": 4,
+            "saved_as": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_4.md",
+            "rows": 14,
+            "status": "saved"
+          }
+        ]
+      },
+      "metadata": {
+        "total_pages": 0,
+        "languages": []
+      },
+      "status": "success"
+    },
+    {
+      "paper_name": "manimator",
+      "source_file": "resources/manimator.pdf",
+      "output_directory": "output_grobid_marker/manimator",
+      "tei_file": "output_grobid_marker/manimator/manimator.tei.xml",
+      "markdown_file": "output_grobid_marker/manimator/manimator_full.md",
+      "methodology": {
+        "found": true,
+        "title": "Large Language Models for Understanding and Code Generation",
+        "text": "Recent advancements in Large Language Models (LLMs) like GPT-4 (Achiam et al., 2023), Claude (Anthropic, 2024), Gemini (Team et al., 2024), DeepSeek (Liu et al., 2024) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development (Jimenez et al., 2024).Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data (Galimzyanov et al., 2025;Yang et al., 2024;Goswami et al., 2025).Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code).",
+        "subsections": [],
+        "full_text": "Recent advancements in Large Language Models (LLMs) like GPT-4 (Achiam et al., 2023), Claude (Anthropic, 2024), Gemini (Team et al., 2024), DeepSeek (Liu et al., 2024) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development (Jimenez et al., 2024).Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data (Galimzyanov et al., 2025;Yang et al., 2024;Goswami et al., 2025).Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code)."
+      },
+      "figures": {
+        "count": 7,
+        "items": [
+          {
+            "figure_number": 1,
+            "filename": "_page_1_Figure_1.jpeg",
+            "saved_as": "output_grobid_marker/manimator/images/manimator__page_1_Figure_1.jpeg",
+            "width": 1337,
+            "height": 470,
+            "format": "PNG",
+            "source": "marker",
+            "status": "saved",
+            "caption": "Figure 1.The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID.The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.",
+            "has_image_file": true
+          },
+          {
+            "figure_number": 2,
+            "filename": "_page_7_Figure_1.jpeg",
+            "saved_as": "output_grobid_marker/manimator/images/manimator__page_7_Figure_1.jpeg",
+            "width": 1158,
+            "height": 1461,
+            "format": "PNG",
+            "source": "marker",
+            "status": "saved",
+            "caption": "",
+            "has_image_file": true
+          },
+          {
+            "figure_number": 3,
+            "caption": "",
+            "source": "grobid",
+            "has_image_file": false,
+            "status": "metadata_only"
+          },
+          {
+            "figure_number": 4,
+            "caption": "",
+            "source": "grobid",
+            "has_image_file": false,
+            "status": "metadata_only"
+          },
+          {
+            "figure_number": 5,
+            "caption": "Ku et al. (2025)nimator's performance on TheoremExplainBench against baseline models fromKu et al. (2025).Scores range from 0 to 1, with higher being better.Manimator's results (using DeepSeek V3) are highlighted.",
+            "source": "grobid",
+            "has_image_file": false,
+            "status": "metadata_only"
+          },
+          {
+            "figure_number": 6,
+            "caption": "Combined system prompts used for Stage 1 (Scene Description Generation) and Stage 2 (Manim Code Generation).",
+            "source": "grobid",
+            "has_image_file": false,
+            "status": "metadata_only"
+          },
+          {
+            "figure_number": 7,
+            "caption": "Interface used for collecting human evaluation ratings on generated animations.",
+            "source": "grobid",
+            "has_image_file": false,
+            "status": "metadata_only"
+          }
+        ]
+      },
+      "tables": {
+        "count": 1,
+        "items": [
+          {
+            "table_number": 1,
+            "caption": "",
+            "saved_as": "output_grobid_marker/manimator/tables/manimator_table_1.md",
+            "rows": 5,
+            "status": "saved"
+          }
+        ]
+      },
+      "metadata": {
+        "total_pages": 0,
+        "languages": []
+      },
+      "status": "success"
+    }
+  ]
+}

@@ -6,7 +6,7 @@ from src.research_viz.preprocessing.pdf_parser4 import HybridResearchPaperParser
 # Initialize hybrid parser
 parser = HybridResearchPaperParser(
     grobid_url="http://localhost:8070",
-    output_base_dir="./output_hybrid"
+    output_base_dir="./output_grobid_marker"
 )
 
 # Process all PDFs
