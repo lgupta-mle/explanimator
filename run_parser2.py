@@ -4,7 +4,7 @@ Script to run the Marker-based PDF parser on research papers.
 from src.research_viz.preprocessing.pdf_parser2 import MarkerResearchPaperParser
 
 # Initialize parser with output directory
-parser = MarkerResearchPaperParser(output_base_dir="./output_marker")
+parser = MarkerResearchPaperParser(output_base_dir="./output_marker2")
 
 # Process all PDFs in resources directory
 resources_dir = "./resources"

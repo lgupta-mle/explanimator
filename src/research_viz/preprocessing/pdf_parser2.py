@@ -8,8 +8,9 @@ import os
 import re
 from pathlib import Path
 from typing import Dict, List, Optional, Any
-from marker.convert import convert_single_pdf
-from marker.models import load_all_models
+from marker.converters.pdf import PdfConverter
+from marker.models import create_model_dict
+from marker.output import text_from_rendered
 
 
 class MarkerResearchPaperParser:
@@ -30,14 +31,16 @@ class MarkerResearchPaperParser:
         
         # Keywords to identify methodology sections
         self.methodology_keywords = [
-            'method', 'approach', 'algorithm', 'implementation',
-            'architecture', 'design', 'procedure', 'technique',
-            'framework', 'model', 'system'
+            'method', 'methods', 'methodology', 'methodologies',
+            'materials and methods', 'experimental setup', 'experimental design',
+            'approach', 'experimental', 'implementation', 'system design',
+            'experimental procedure', 'procedure', 'experimental methods', 'technique',
+            'model architecture', 'architecture'
         ]
         
         # Load Marker models once
         print("Loading Marker models (this may take a moment)...")
-        self.model_lst = load_all_models()
+        self.model_lst = create_model_dict()
         print("Models loaded successfully!")
     
     def parse_paper(self, pdf_path: str, paper_name: Optional[str] = None) -> Dict[str, Any]:
@@ -67,12 +70,14 @@ class MarkerResearchPaperParser:
         try:
             # Convert PDF to Markdown using Marker
             print(f"  Converting PDF with Marker...")
-            full_text, images, out_meta = convert_single_pdf(
-                str(pdf_path),
-                self.model_lst,
-                max_pages=None,
-                langs=None
+            converter = PdfConverter(
+                artifact_dict=self.model_lst,
+                config={"use_llm": False}
             )
+
+            rendered = converter(str(pdf_path))
+            full_text, _, images = text_from_rendered(rendered)
+            out_meta = getattr(rendered, "metadata", {})
             
             # Save the full markdown
             markdown_file = paper_output_dir / f"{paper_name}_full.md"
@@ -83,6 +88,12 @@ class MarkerResearchPaperParser:
             # Extract methodology section
             print(f"  Extracting methodology section...")
             methodology = self._extract_methodology_from_markdown(full_text)
+
+            methodology_file = None
+            if methodology.get('found'):
+                methodology_file = paper_output_dir / f"{paper_name}_methodology.md"
+                with open(methodology_file, 'w', encoding='utf-8') as f:
+                    f.write(methodology.get('text', ''))
             
             # Save extracted images
             print(f"  Saving extracted images...")
@@ -98,6 +109,7 @@ class MarkerResearchPaperParser:
                 'source_file': str(pdf_path),
                 'output_directory': str(paper_output_dir),
                 'markdown_file': str(markdown_file),
+                'methodology_file': str(methodology_file) if methodology_file else None,
                 'methodology': methodology,
                 'figures': {
                     'count': len(saved_images),
@@ -108,8 +120,8 @@ class MarkerResearchPaperParser:
                     'items': tables
                 },
                 'metadata': {
-                    'total_pages': out_meta.get('pages', 0),
-                    'languages': out_meta.get('languages', [])
+                    'total_pages': len(out_meta.get('page_stats', [])) if isinstance(out_meta.get('page_stats', None), list) else 0,
+                    'table_of_contents': out_meta.get('table_of_contents', None)
                 },
                 'status': 'success'
             }
@@ -211,35 +223,51 @@ class MarkerResearchPaperParser:
         methodology_title = None
         
         for i, line in enumerate(lines):
-            # Check for section headers (markdown headers)
+            # Check for section headers (markdown headers or numbered section titles)
+            header_text = None
+            level = None
             if line.startswith('#'):
-                # Extract header level and text
                 header_match = re.match(r'^(#+)\s+(.+)$', line)
                 if header_match:
                     level = len(header_match.group(1))
                     header_text = header_match.group(2).strip()
-                    header_lower = header_text.lower()
-                    
-                    # Check if this is a methodology section
-                    if not in_methodology and any(keyword in header_lower for keyword in self.methodology_keywords):
-                        in_methodology = True
-                        methodology_data['found'] = True
-                        methodology_data['title'] = header_text
-                        methodology_title = header_text
-                        current_subsection = None
+            else:
+                numbered_match = re.match(r'^(\d+(?:\.\d+)*)\s+(.+)$', line.strip())
+                if numbered_match:
+                    section_num = numbered_match.group(1)
+                    header_text = (section_num + " " + numbered_match.group(2)).strip()
+                    level = section_num.count('.') + 1
+                else:
+                    # Some PDFs yield plain headings without markdown markers or numbering
+                    # (often all-caps like "METHODS" / "METHODOLOGY").
+                    candidate = line.strip()
+                    plain_heading_match = re.match(r'^[A-Za-z][A-Za-z\s\-:&]{2,}$', candidate)
+                    if plain_heading_match and len(candidate) <= 80 and candidate == candidate.upper():
+                        header_text = candidate
+                        level = 1
+
+            if header_text is not None and level is not None:
+                header_lower = header_text.lower()
+
+                # Check if this is a methodology section
+                if not in_methodology and any(keyword in header_lower for keyword in self.methodology_keywords):
+                    in_methodology = True
+                    methodology_data['found'] = True
+                    methodology_data['title'] = header_text
+                    methodology_title = header_text
+                    current_subsection = None
+                    continue
+
+                # If we're in methodology
+                elif in_methodology:
+                    # Check if this is a subsection (higher level number = subsection)
+                    if level > 1 and any(keyword in header_lower for keyword in self.methodology_keywords + ['encoder', 'decoder', 'attention', 'layer', 'training']):
+                        current_subsection = header_text
+                        subsections[current_subsection] = []
                         continue
-                    
-                    # If we're in methodology
-                    elif in_methodology:
-                        # Check if this is a subsection (higher level number = subsection)
-                        if level > 1 and any(keyword in header_lower for keyword in self.methodology_keywords + ['encoder', 'decoder', 'attention', 'layer', 'training']):
-                            # This is a subsection
-                            current_subsection = header_text
-                            subsections[current_subsection] = []
-                            continue
-                        elif level <= 2 and not any(keyword in header_lower for keyword in self.methodology_keywords):
-                            # New main section, stop methodology extraction
-                            break
+                    elif level <= 2 and not any(keyword in header_lower for keyword in self.methodology_keywords):
+                        # New main section, stop methodology extraction
+                        break
             
             # Collect content if in methodology
             if in_methodology:
@@ -285,7 +313,8 @@ class MarkerResearchPaperParser:
         for img_name, img_data in images.items():
             try:
                 # Marker returns images as PIL Image objects
-                image_filename = f"{paper_name}_{img_name}"
+                safe_img_name = str(img_name).replace("/", "_").replace(os.sep, "_")
+                image_filename = f"{paper_name}_{safe_img_name}"
                 if not image_filename.endswith(('.png', '.jpg', '.jpeg')):
                     image_filename += '.png'
                 
