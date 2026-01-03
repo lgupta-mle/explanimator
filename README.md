@@ -42,12 +42,12 @@ A hybrid PDF parsing system that extracts structured content from research paper
 
 This project provides two hybrid PDF parsers:
 
-1. **pdf_parser1.py** (GROBID + Marker): Best for text-based PDFs with complex layouts
+1. **pdf_parser1.py** (GROBID + Marker API): Best for text-based PDFs with complex layouts
 2. **pdf_parser2.py** (GROBID + PyMuPDF): Faster alternative with comprehensive image extraction
 
 Both parsers combine:
 - **GROBID**: Extracts text, sections, methodology, and metadata with captions
-- **Marker/PyMuPDF**: Extracts actual images and tables from PDFs
+- **Marker API/PyMuPDF**: Extracts actual images and tables from PDFs
 
 ## Prerequisites
 
@@ -92,10 +92,13 @@ pip install -r requirements.txt
 
 This will install:
 - **Core dependencies**: `requests`, `Pillow` (required for both parsers)
-- **marker-pdf**: For pdf_parser1.py
+- **datalab-sdk**: For pdf_parser1.py (Marker API access)
 - **pymupdf**: For pdf_parser2.py (version 1.23.0+ for table extraction)
 
-**Note**: Python 3.10+ is required for all parsers.
+**Note**: 
+- Python 3.10+ is required for all parsers
+- pdf_parser1.py uses the Datalab Marker API (requires API key or account)
+- Get your API key at: https://www.datalab.to/
 
 ### Step 4: Install and Run GROBID
 

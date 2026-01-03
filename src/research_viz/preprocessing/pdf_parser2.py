@@ -39,6 +39,11 @@ class GrobidPyMuPDFParser:
             'experimental procedure', 'procedure', 'experimental methods', 'technique',
             'model architecture', 'architecture', 'model', 'framework'
         ]
+        
+        self.related_works_keywords = [
+            'related work', 'related works', 'background', 'preliminaries',
+            'literature review', 'prior work', 'previous work'
+        ]
     
     def parse_directory(self, directory_path: str) -> List[Dict[str, Any]]:
         """Parse all PDFs in a directory."""
@@ -111,7 +116,8 @@ class GrobidPyMuPDFParser:
                 f.write(tei_xml)
             
             root = ET.fromstring(tei_xml)
-            methodology = self._extract_methodology_from_tei(root)
+            methodology = self._extract_section_from_tei(root, self.methodology_keywords, 'methodology')
+            related_works = self._extract_section_from_tei(root, self.related_works_keywords, 'related_works')
             grobid_figures = self._extract_figure_metadata_from_tei(root)
             grobid_tables = self._extract_table_metadata_from_tei(root)
             
@@ -133,6 +139,7 @@ class GrobidPyMuPDFParser:
                 'output_directory': str(paper_output_dir),
                 'tei_file': str(tei_path),
                 'methodology': methodology,
+                'related_works': related_works,
                 'figures': {
                     'count': len(merged_figures),
                     'items': merged_figures,
@@ -183,11 +190,16 @@ class GrobidPyMuPDFParser:
             raise RuntimeError(f"GROBID error {resp.status_code}: {resp.text[:500]}")
         return resp.text
     
-    def _extract_methodology_from_tei(self, root: ET.Element) -> Dict[str, Any]:
-        """Extract methodology section from GROBID TEI XML.
+    def _extract_section_from_tei(self, root: ET.Element, keywords: List[str], section_type: str) -> Dict[str, Any]:
+        """Extract a section (methodology, related works, etc.) from GROBID TEI XML.
         
         GROBID outputs a flat structure where subsections are siblings, not children.
         We use section numbers (e.g., 3, 3.1, 3.2, 3.2.1) to build the hierarchy.
+        
+        Args:
+            root: TEI XML root element
+            keywords: List of keywords to match in section titles
+            section_type: Type of section being extracted (for logging)
         """
         ns = {'tei': self._get_namespace(root)}
         body = root.find('.//tei:text/tei:body', ns)
@@ -254,39 +266,22 @@ class GrobidPyMuPDFParser:
             
             return subs
         
-        # Priority keywords for scoring
-        exact_keywords = ['methodology', 'method', 'methods']
-        secondary_keywords = ['approach', 'implementation', 'system design', 'experimental design']
-        
         all_divs = body.findall('./tei:div', ns)
         candidates = []
         
-        # Find all matching sections and score them
+        # Find all matching sections - check if title CONTAINS any keyword
         for idx, div in enumerate(all_divs):
             title = get_section_title(div)
             section_num = get_section_number(div)
             title_lower = title.lower().strip()
             
-            score = 0
-            
-            # Exact match with "methodology" or "method" = highest priority
-            if title_lower in exact_keywords or title_lower == 'methodology':
-                score = 100
-            # Title is exactly one of the exact keywords
-            elif any(title_lower == keyword for keyword in exact_keywords):
-                score = 90
-            # Title contains exact keyword as a standalone word
-            elif any(f' {keyword} ' in f' {title_lower} ' or title_lower.startswith(keyword + ' ') or title_lower.endswith(' ' + keyword) for keyword in exact_keywords):
-                score = 80
-            # Secondary keywords
-            elif any(keyword in title_lower for keyword in secondary_keywords):
-                score = 50
-            # Any other methodology keyword
-            elif any(keyword in title_lower for keyword in self.methodology_keywords):
-                score = 30
-            
-            if score > 0:
-                candidates.append((score, idx, div, title, section_num))
+            # Check if title contains any of the keywords
+            for keyword in keywords:
+                if keyword in title_lower:
+                    # Score based on how well it matches
+                    score = 100 if title_lower == keyword else 80
+                    candidates.append((score, idx, div, title, section_num))
+                    break  # Only count first match
         
         if not candidates:
             return {'found': False, 'title': None, 'text': '', 'subsections': []}
@@ -311,6 +306,7 @@ class GrobidPyMuPDFParser:
         
         return {
             'found': True,
+            'section_type': section_type,
             'title': title,
             'section_number': section_num,
             'text': get_section_text(div),

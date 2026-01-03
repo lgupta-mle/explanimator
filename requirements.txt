@@ -4,9 +4,10 @@
 # Core dependencies (required for both parsers)
 requests
 Pillow
+python-dotenv
 
-# For pdf_parser1.py (GROBID + Marker)
-marker-pdf
+# For pdf_parser1.py (GROBID + Marker API)
+datalab-python-sdk
 
 # For pdf_parser2.py (GROBID + PyMuPDF)
 pymupdf

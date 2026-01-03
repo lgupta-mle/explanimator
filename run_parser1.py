@@ -1,12 +1,17 @@
 """
 Runner for Hybrid Parser (GROBID + Marker)
+
+Note: Make sure you have set DATALAB_API_KEY in the .env file
+located at: src/research_viz/preprocessing/.env
 """
 from src.research_viz.preprocessing.pdf_parser1 import HybridResearchPaperParser
 
 # Initialize hybrid parser
+# API key will be automatically loaded from .env file
 parser = HybridResearchPaperParser(
     grobid_url="http://localhost:8070",
-    output_base_dir="./output_grobid_marker"
+    output_base_dir="./output_grobid_marker",
+    datalab_api_key=True  # Use API key from .env file
 )
 
 # Process all PDFs
