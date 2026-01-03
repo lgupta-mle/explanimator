@@ -1,0 +1,156 @@
+{
+  "paper_name": "attention_is_all_you_need",
+  "source_file": "resources/attention_is_all_you_need.pdf",
+  "output_directory": "output_grobid_marker/attention_is_all_you_need",
+  "tei_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
+  "methodology": {
+    "found": true,
+    "title": "Model Architecture",
+    "section_number": "3",
+    "text": "Most competitive neural sequence transduction models have an encoder-decoder structure [5,2,35].Here, the encoder maps an input sequence of symbol representations (x 1 , ..., x n ) to a sequence of continuous representations z = (z 1 , ..., z n ).Given z, the decoder then generates an output sequence (y 1 , ..., y m ) of symbols one element at a time.At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next.The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+    "subsections": [
+      {
+        "title": "Encoder and Decoder Stacks",
+        "text": "Encoder: The encoder is composed of a stack of N = 6 identical layers.Each layer has two sub-layers.The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network.We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1].That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself.To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension d model = 512.\n\nDecoder: The decoder is also composed of a stack of N = 6 identical layers.In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack.Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization.We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.",
+        "level": 1,
+        "section_number": "3.1"
+      },
+      {
+        "title": "Attention",
+        "text": "An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors.The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.",
+        "level": 1,
+        "section_number": "3.2",
+        "subsections": [
+          {
+            "title": "Scaled Dot-Product Attention",
+            "text": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2).The input consists of queries and keys of dimension d k , and values of dimension d v .We compute the dot products of the query with all keys, divide each by √ d k , and apply a softmax function to obtain the weights on the values.\n\nIn practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q.The keys and values are also packed together into matrices K and V .We compute the matrix of outputs as:\n\nThe two most commonly used attention functions are additive attention [2], and dot-product (multiplicative) attention.Dot-product attention is identical to our algorithm, except for the scaling factor of 1\n\nAdditive attention computes the compatibility function using a feed-forward network with a single hidden layer.While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code.\n\nWhile for small values of d k the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of d k [3].We suspect that for large values of d k , the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradientsfoot_0 .To counteract this effect, we scale the dot products by 1",
+            "level": 2,
+            "section_number": "3.2.1"
+          },
+          {
+            "title": "Multi-Head Attention",
+            "text": "Instead of performing a single attention function with d model -dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to d k , d k and d v dimensions, respectively.On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding d v -dimensional output values.These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2.\n\nMulti-head attention allows the model to jointly attend to information from different representation subspaces at different positions.With a single attention head, averaging inhibits this.\n\nwhere\n\nWhere the projections are parameter matrices\n\nIn this work we employ h = 8 parallel attention layers, or heads.For each of these we use\n\nDue to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.",
+            "level": 2,
+            "section_number": "3.2.2"
+          },
+          {
+            "title": "Applications of Attention in our Model",
+            "text": "The Transformer uses multi-head attention in three different ways:\n\n• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder.This allows every position in the decoder to attend over all positions in the input sequence.This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38,2,9].\n\n• The encoder contains self-attention layers.In a self-attention layer all of the keys, values and queries come from the same place, in this case, the output of the previous layer in the encoder.Each position in the encoder can attend to all positions in the previous layer of the encoder.\n\n• Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position.We need to prevent leftward information flow in the decoder to preserve the auto-regressive property.We implement this inside of scaled dot-product attention by masking out (setting to -∞) all values in the input of the softmax which correspond to illegal connections.See Figure 2.",
+            "level": 2,
+            "section_number": "3.2.3"
+          }
+        ]
+      },
+      {
+        "title": "Position-wise Feed-Forward Networks",
+        "text": "In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically.This consists of two linear transformations with a ReLU activation in between.\n\nWhile the linear transformations are the same across different positions, they use different parameters from layer to layer.Another way of describing this is as two convolutions with kernel size 1.\n\nThe dimensionality of input and output is d model = 512, and the inner-layer has dimensionality d f f = 2048.",
+        "level": 1,
+        "section_number": "3.3"
+      },
+      {
+        "title": "Embeddings and Softmax",
+        "text": "Similarly to other sequence transduction models, we use learned embeddings to convert the input tokens and output tokens to vectors of dimension d model .We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities.In our model, we share the same weight matrix between the two embedding layers and the pre-softmax linear transformation, similar to [30].In the embedding layers, we multiply those weights by √ d model .\n\nTable 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations for different layer types.n is the sequence length, d is the representation dimension, k is the kernel size of convolutions and r the size of the neighborhood in restricted self-attention.\n\nLayer Type Complexity per Layer Sequential Maximum Path Length Operations Self-Attention",
+        "level": 1,
+        "section_number": "3.4"
+      },
+      {
+        "title": "Positional Encoding",
+        "text": "Since our model contains no recurrence and no convolution, in order for the model to make use of the order of the sequence, we must inject some information about the relative or absolute position of the tokens in the sequence.To this end, we add \"positional encodings\" to the input embeddings at the bottoms of the encoder and decoder stacks.The positional encodings have the same dimension d model as the embeddings, so that the two can be summed.There are many choices of positional encodings, learned and fixed [9].\n\nIn this work, we use sine and cosine functions of different frequencies:\n\nwhere pos is the position and i is the dimension.That is, each dimension of the positional encoding corresponds to a sinusoid.The wavelengths form a geometric progression from 2π to 10000 • 2π.We chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixed offset k, P E pos+k can be represented as a linear function of P E pos .\n\nWe also experimented with using learned positional embeddings [9] instead, and found that the two versions produced nearly identical results (see Table 3 row (E)).We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training.",
+        "level": 1,
+        "section_number": "3.5"
+      }
+    ],
+    "full_text": "Most competitive neural sequence transduction models have an encoder-decoder structure [5,2,35].Here, the encoder maps an input sequence of symbol representations (x 1 , ..., x n ) to a sequence of continuous representations z = (z 1 , ..., z n ).Given z, the decoder then generates an output sequence (y 1 , ..., y m ) of symbols one element at a time.At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next.The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.\n\nEncoder: The encoder is composed of a stack of N = 6 identical layers.Each layer has two sub-layers.The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network.We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1].That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself.To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension d model = 512.\n\nDecoder: The decoder is also composed of a stack of N = 6 identical layers.In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack.Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization.We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.\n\nAn attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors.The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.\n\nWe call our particular attention \"Scaled Dot-Product Attention\" (Figure 2).The input consists of queries and keys of dimension d k , and values of dimension d v .We compute the dot products of the query with all keys, divide each by √ d k , and apply a softmax function to obtain the weights on the values.\n\nIn practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q.The keys and values are also packed together into matrices K and V .We compute the matrix of outputs as:\n\nThe two most commonly used attention functions are additive attention [2], and dot-product (multiplicative) attention.Dot-product attention is identical to our algorithm, except for the scaling factor of 1\n\nAdditive attention computes the compatibility function using a feed-forward network with a single hidden layer.While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code.\n\nWhile for small values of d k the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of d k [3].We suspect that for large values of d k , the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradientsfoot_0 .To counteract this effect, we scale the dot products by 1\n\nInstead of performing a single attention function with d model -dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to d k , d k and d v dimensions, respectively.On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding d v -dimensional output values.These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2.\n\nMulti-head attention allows the model to jointly attend to information from different representation subspaces at different positions.With a single attention head, averaging inhibits this.\n\nwhere\n\nWhere the projections are parameter matrices\n\nIn this work we employ h = 8 parallel attention layers, or heads.For each of these we use\n\nDue to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.\n\nThe Transformer uses multi-head attention in three different ways:\n\n• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder.This allows every position in the decoder to attend over all positions in the input sequence.This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38,2,9].\n\n• The encoder contains self-attention layers.In a self-attention layer all of the keys, values and queries come from the same place, in this case, the output of the previous layer in the encoder.Each position in the encoder can attend to all positions in the previous layer of the encoder.\n\n• Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position.We need to prevent leftward information flow in the decoder to preserve the auto-regressive property.We implement this inside of scaled dot-product attention by masking out (setting to -∞) all values in the input of the softmax which correspond to illegal connections.See Figure 2.\n\nIn addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically.This consists of two linear transformations with a ReLU activation in between.\n\nWhile the linear transformations are the same across different positions, they use different parameters from layer to layer.Another way of describing this is as two convolutions with kernel size 1.\n\nThe dimensionality of input and output is d model = 512, and the inner-layer has dimensionality d f f = 2048.\n\nSimilarly to other sequence transduction models, we use learned embeddings to convert the input tokens and output tokens to vectors of dimension d model .We also use the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities.In our model, we share the same weight matrix between the two embedding layers and the pre-softmax linear transformation, similar to [30].In the embedding layers, we multiply those weights by √ d model .\n\nTable 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations for different layer types.n is the sequence length, d is the representation dimension, k is the kernel size of convolutions and r the size of the neighborhood in restricted self-attention.\n\nLayer Type Complexity per Layer Sequential Maximum Path Length Operations Self-Attention\n\nSince our model contains no recurrence and no convolution, in order for the model to make use of the order of the sequence, we must inject some information about the relative or absolute position of the tokens in the sequence.To this end, we add \"positional encodings\" to the input embeddings at the bottoms of the encoder and decoder stacks.The positional encodings have the same dimension d model as the embeddings, so that the two can be summed.There are many choices of positional encodings, learned and fixed [9].\n\nIn this work, we use sine and cosine functions of different frequencies:\n\nwhere pos is the position and i is the dimension.That is, each dimension of the positional encoding corresponds to a sinusoid.The wavelengths form a geometric progression from 2π to 10000 • 2π.We chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixed offset k, P E pos+k can be represented as a linear function of P E pos .\n\nWe also experimented with using learned positional embeddings [9] instead, and found that the two versions produced nearly identical results (see Table 3 row (E)).We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training."
+  },
+  "figures": {
+    "count": 5,
+    "items": [
+      {
+        "figure_number": 1,
+        "filename": "_page_2_Figure_0.jpeg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_2_Figure_0.jpeg",
+        "width": 628,
+        "height": 955,
+        "format": "PNG",
+        "source": "marker",
+        "status": "saved",
+        "caption": "Figure 1: The Transformer -model architecture.",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 2,
+        "filename": "_page_12_Figure_1.jpeg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_12_Figure_1.jpeg",
+        "width": 1129,
+        "height": 578,
+        "format": "PNG",
+        "source": "marker",
+        "status": "saved",
+        "caption": "Figure 2: (left) Scaled Dot-Product Attention.(right) Multi-Head Attention consists of several attention layers running in parallel.",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 3,
+        "filename": "_page_13_Figure_0.jpeg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_13_Figure_0.jpeg",
+        "width": 1122,
+        "height": 1296,
+        "format": "PNG",
+        "source": "marker",
+        "status": "saved",
+        "caption": "The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 4,
+        "filename": "_page_14_Figure_0.jpeg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/attention_is_all_you_need__page_14_Figure_0.jpeg",
+        "width": 1108,
+        "height": 1202,
+        "format": "PNG",
+        "source": "marker",
+        "status": "saved",
+        "caption": "Variations on the Transformer architecture.Unlisted values are identical to those of the base model.All metrics are on the English-to-German translation development set, newstest2013.Listed perplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to per-word perplexities.",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 5,
+        "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      }
+    ]
+  },
+  "tables": {
+    "count": 3,
+    "items": [
+      {
+        "table_number": 1,
+        "caption": "",
+        "caption_file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_1_caption.txt",
+        "source": "grobid",
+        "status": "metadata_only"
+      },
+      {
+        "table_number": 2,
+        "caption": "",
+        "caption_file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_2_caption.txt",
+        "source": "grobid",
+        "status": "metadata_only"
+      },
+      {
+        "table_number": 3,
+        "caption": "",
+        "caption_file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_3_caption.txt",
+        "source": "grobid",
+        "status": "metadata_only"
+      }
+    ]
+  },
+  "metadata": {
+    "total_pages": 0,
+    "languages": []
+  },
+  "status": "success"
+}

@@ -1,0 +1,234 @@
+1. Introduction
+
+<pes2ug22cs321@pesu.pesu.edu>.
+
+cal concepts, particularly those presented in dense research papers, poses a significant challenge for learners. Dynamic visualizations can greatly enhance comprehension, but creating them manually is time-consuming and requires specialized knowledge and skills. We introduce manimator, an open-source system that leverages Large Language Models to transform research papers and natural language prompts into explanatory animations using the Manim engine. Manimator employs a pipeline where an LLM interprets the input text or research paper PDF to generate a structured scene description outlining key concepts, mathematical formulas, and visual elements and another LLM translates this description into executable Manim Python code. We discuss its potential as an educational tool for rapidly creating engaging visual explanations for complex STEM topics, democratizing the creation of high-quality educational content.
+
+Abstract Understanding complex scientific and mathemati-
+
+The ability to grasp complex scientific and mathematical concepts is fundamental to STEM education. However, traditional learning materials, such as textbooks and research papers, often present information in dense, static formats. Dynamic visualizations have proven effective in improving understanding and engagement, making abstract concepts more concrete and intuitive [\(Schoenherr et al.,](#page-4-0) [2024\)](#page-4-0).
+
+The Manim animation engine [\(The Manim Community De](#page-5-0)[velopers,](#page-5-0) [2024\)](#page-5-0) has demonstrated the power of code-driven animations for explaining intricate topics. Despite the poten- \*Equal contribution <sup>1</sup>Department of Computer Science and Engineering, PES University, Bengaluru, India. Correspondence to: Samarth P <pes2ug22cs495@pesu.pesu.edu>, Vyoman Jain <pes2ug22cs672@pesu.pesu.edu>, Shiva Golugula <pes2ug22cs525@pesu.pesu.edu>, Motamarri Sai Sathvik
+
+Our work on manimator intersects with several research areas, including visualization in STEM education, code-driven animation tools, the application of Large Language Models (LLMs) for understanding and generation, and automated multimodal content creation.
+
+tial, creating such high-quality animations requires significant effort, programming expertise (Python), and domain knowledge. This bottleneck limits the widespread availability of custom visualizations tailored to specific concepts or research findings. However, recent advancements in Large Language Models (LLMs) have shown remarkable capabilities in text understanding, structured data generation, and code synthesis [\(Nijkamp et al.,](#page-4-1) [2023;](#page-4-1) [Chen et al.,](#page-4-2) [2023\)](#page-4-2). In this paper, we present manimator, a system that harnesses LLMs to bridge the gap between complex textual information and engaging visual explanations. Manimator takes either a natural language prompt describing a concept or a full research paper (via PDF upload or using its arXiv ID)
+
+1. Scene Understanding and Planning: An LLM analyzes the input to extract key concepts, relevant formulas, and potential visual representations, structuring
+
+2. Code Generation: A code-specialized LLM translates the structured scene description into Python code com-
+
+3. Rendering: The generated Manim code is executed to
+
+Manimator aims to empower educators, students, and researchers to quickly visualize complex ideas, thereby enhancing learning and scientific communication. We plan to open-source the tool and provide public access through a
+
+them into a detailed "scene description."
+
+patible with the Manim engine.
+
+produce a video animation.
+
+Gradio interface and API.
+
+2. Related Works
+
+Manimator: Transforming Research Papers and Mathematical Concepts into Visual Explanations
+
+Samarth P \* 1 Vyoman Jain \* 1 Shiva Golugula \* 1 Motamarri Sai Sathvik \* 1
+
+as input.
+
+It employs a multi-stage pipeline:
+
+![](_page_1_Figure_1.jpeg)
+
+Figure 1. The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID. The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.
+
+2
+
+The efficacy of visualization, particularly dynamic visualization, in enhancing the understanding of complex scientific and mathematical concepts is well-established [\(Brown &](#page-4-3) [Sedgewick,](#page-4-3) [1985;](#page-4-3) [Heer & Robertson,](#page-4-4) [2007\)](#page-4-4). Visual representations can make abstract ideas more concrete, reveal hidden patterns, and improve learner engagement [\(Amini et al.,](#page-4-5) [2018\)](#page-4-5). Static visualizations are common in textbooks and papers, but dynamic animations offer significant advantages for illustrating processes, algorithms, and time-varying phenomena [\(Heer & Robertson,](#page-4-4) [2007\)](#page-4-4). Research has explored creating visualizations for specific domains, such as algorithm and data structure education [\(Markovic & Ka](#page-4-6) ´ stelan ˇ , [2024\)](#page-4-6). Tools like manimator aim to build upon these principles by significantly lowering the barrier to creating dynamic visualizations, making this powerful pedagogical approach more accessible. [Ku et al.](#page-4-7) [\(2025\)](#page-4-7) also highlight the benefit of visual explanations for theorem understanding, noting that they can expose reasoning errors more clearly than text alone.
+
+The Manim library [\(The Manim Community Developers,](#page-5-0) [2024\)](#page-5-0) stands out as a powerful tool for creating precise, programmatically generated mathematical animations. Its code-driven nature allows for fine-grained control over visual elements and complex transformations, making it ideal for explaining intricate STEM topics [\(Markovic & Ka](#page-4-6) ´ stelan ˇ , [2024\)](#page-4-6). However, creating animations with Manim requires significant programming expertise (Python) and considerable manual effort, representing a bottleneck for educators and researchers who may lack the time or specific skills [\(Markovic & Ka](#page-4-6) ´ stelan ˇ , [2024;](#page-4-6) [Helbling & Chau,](#page-4-8) [2023\)](#page-4-8). Prior
+
+2.2. Code-Driven Animation and Manim
+
+2.1. Visualization in STEM Education and
+
+Communication
+
+like GPT-4 [\(Achiam et al.,](#page-4-9) [2023\)](#page-4-9), Claude [\(Anthropic,](#page-4-10) [2024\)](#page-4-10), Gemini [\(Team et al.,](#page-4-11) [2024\)](#page-4-11), DeepSeek [\(Liu et al.,](#page-4-12) [2024\)](#page-4-12) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis [\(Nijkamp et al.,](#page-4-1) [2023;](#page-4-1) [Chen et al.,](#page-4-2) [2023\)](#page-4-2). LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships. Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development [\(Jimenez et al.,](#page-4-13) [2024\)](#page-4-13). Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data [\(Galimzyanov et al.,](#page-4-14) [2025;](#page-4-14) [Yang et al.,](#page-5-1) [2024;](#page-5-1) [Goswami et al.,](#page-4-15) [2025\)](#page-4-15). Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code).
+
+2.4. Automated Generation of Multimodal Explanations Bridging the gap between textual information and visual explanations automatically is an emerging research direction.
+
+<span id="page-1-0"></span>work like [Helbling & Chau](#page-4-8) [\(2023\)](#page-4-8) aimed to simplify Manim usage for specific domains like machine learning architectures by providing higher-level abstractions, but still required manual coding within its framework. Manimator directly addresses the creation bottleneck by automating the Manim code generation process itself using LLMs.
+
+2.3. Large Language Models for Understanding and
+
+Recent advancements in Large Language Models (LLMs)
+
+Code Generation
+
+Most current approaches focus on text-to-image or textto-static-diagram generation. Generating dynamic, structured animations for complex explanatory purposes presents unique challenges involving temporal consistency, accurate representation of symbolic information (like formulas), and pedagogical structuring. The most closely related work is TheoremExplainAgent [\(Ku et al.,](#page-4-7) [2025\)](#page-4-7), which introduces an agentic approach using LLMs to generate Manim explanation videos specifically for mathematical theorems. It employs planning and coding agents to produce structured videos, demonstrating the potential of LLMs in this domain. While manimator shares the goal of automated Manim video generation, it positions itself as a more general tool applicable to a wider range of STEM concepts, directly accepting research papers (via PDF/arXiv ID) or natural language prompts as input and utilizing a pipeline potentially suitable for various complex topics beyond formal theorems.
+
+Manimator employs an agentic architecture orchestrated primarily by LLMs, with the core process involving transformation of a text prompt into a video animation via intermediate structured planning and code generation stages (illustrated in Figure [1\)](#page-1-0). Manimator accepts two primary input types: a natural language description (e.g., "Explain the Fourier Transform") or a PDF document provided via upload or arXiv ID, with PDF content optionally compressed
+
+This stage interprets the input to create a structured scene description for the animation. Models with text and multimodal capabilities are strategically deployed based on the input type: PDF inputs leverage the multimodal capability of models with large context windows (e.g., gemini-2.0-flash) which can analyze and understand document content, while text prompts utilize powerful LLMs (e.g., llama-3.3-70b [\(Grattafiori et al.,](#page-4-16) [2024\)](#page-4-16)) for comprehensive scene interpretation. A detailed system prompt instructs the LLM to structure content into: Topic, Key Points (with LaTeX math like F(x)), Visual Elements, and Style. Few-Shot Learning examples guide the LLM towards the desired output format and detail, ensuring consistency regardless of input type. This approach allows Manimator to extract meaningful content from diverse input sources while maintaining pedagogical quality. The output is a structured Scene Description in Markdown that serves as the foundation for subsequent animation generation.
+
+and base64 encoded for multimodal LLM input.
+
+3.1. Stage 1: Scene Description Generation
+
+3.2. Stage 2: Manim Code Generation
+
+This stage translates the Scene Description into executable Manim Python code. The Scene Description is fed to a code-
+
+## 3. Methodology
+
+pendent on the choice of LLMs and the design of the system prompts for each stage. We conducted extensive experimentation to identify the optimal configuration. Our process involved careful modulation of the system prompts, where we discovered that detailed, stage-wise and role-playing instructions (like "You are an expert in creating educational animations using Manim") combined with few-shot examples yielded the most consistent and high-quality results for both scene planning and code generation (see figure [2\)](#page-6-0).
+
+3.4. Model Selection and Prompt Optimization
+
+The generated Manim code is executed using the Manim library [\(The Manim Community Developers,](#page-5-0) [2024\)](#page-5-0) to produce the final video animation file (typically in MP4 format). This stage involves running the Python script in an environment where Manim and its dependencies (like FFmpeg) are
+
+The performance of the manimator pipeline is critically de-
+
+focused LLM (e.g., deepseek-v3 [\(Liu et al.,](#page-4-12) [2024\)](#page-4-12)), which operates under a comprehensive system prompt that positions the model as a Manim expert. This system prompt provides detailed instructions for the LLM to create educational animations by understanding topics, planning animations with logical flow, writing modular code with proper comments, and ensuring visual clarity. Few-shot examples are also included in the prompt to demonstrate proper implementation patterns and guide the model toward producing high-quality code. The prompt emphasizes important technical requirements such as avoiding element overlap, implementing proper scene cleanup, adding appropriate wait calls for pacing, and maintaining consistent animation style. The output is a fully executable Python script containing a Manim Scene class that can be directly rendered to produce
+
+the educational animation.
+
+installed.
+
+3
+
+3.3. Stage 3: Animation Rendering
+
+To identify the most effective models, we evaluated a range of state-of-the-art LLMs, including Claude 3.7 Sonnet, Llama 3.3 70B, Qwen2.5 Coder 32B, OpenAI's o3, and DeepSeek-V3. The evaluation criteria included the logical coherence of the generated scene description, the syntactic correctness and complexity of the Manim code, inference latency, and API cost. Although OpenAI o3 produced competent outputs, we found that DeepSeek-V3 offered the best price-to-performance ratio across this range of models. It consistently generated high-quality executable Manim code that adhered well to the structured plan and required minimal post-generation correction, making it our primary choice for the system. This balance of generation quality and economic viability is crucial for making manimator an accessible and scalable tool.
+
+| Agent/Model                         | Accuracy<br>& Depth | Visual<br>Relevance | Logical<br>Flow | Element<br>Layout | Visual<br>Consistency | Overall<br>Score |
+|-------------------------------------|---------------------|---------------------|-----------------|-------------------|-----------------------|------------------|
+| manimator (DeepSeek V3)             | 0.77                | 0.899               | 0.88            | 0.853             | 0.852                 | 0.845            |
+| Claude 3.5-Sonnet (Ku et al., 2025) | 0.75                | 0.87                | 0.88            | 0.57              | 0.92                  | 0.79             |
+| o3-mini (medium) (Ku et al., 2025)  | 0.76                | 0.76                | 0.89            | 0.61              | 0.88                  | 0.77             |
+
+Table 1. Comparison of Manimator's performance on TheoremExplainBench against baseline models from [Ku et al.](#page-4-7) [\(2025\)](#page-4-7). Scores range from 0 to 1, with higher being better. Manimator's results (using DeepSeek V3) are highlighted.
+
+Agent/Model Accuracy Visual Logical Element Visual Overall
+
+manimator (DeepSeek V3) 0.89 0.69 0.83 0.52 0.75 0.738
+
+Table 2. Results of human evaluation for Manimator (DeepSeek V3) based on user ratings across the same dimensions used in Theorem-
+
+4
+
+& Depth Relevance Flow Layout Consistency Score
+
+in Appendix [A.3.](#page-8-0)
+
+5. Limitations
+
+for Manim generation.
+
+To evaluate the quality and effectiveness of the animations generated by manimator, we primarily utilized the TheoremExplainBench (TEB) benchmark introduced by [Ku et al.](#page-4-7) [\(2025\)](#page-4-7). TEB provides a standardized framework for assessing AI systems' ability to generate multimodal theorem explanations, evaluating videos across five key dimensions: Accuracy and Depth, Visual Relevance, Logical Flow, Element Layout, and Visual Consistency. An overall score, typically the geometric mean of the individual dimensions, is also computed. We evaluated manimator, configured to use the DeepSeek V3 large language model [\(Liu et al.,](#page-4-12) [2024\)](#page-4-12), on TEB by comparing its performance against relevant baseline results reported in the original TEB paper [\(Ku et al.,](#page-4-7) [2025\)](#page-4-7), specifically those for Claude 3.5-Sonnet and o3-mini (medium), which were strong performers in that study. Additionally, we conducted a human evaluation using a custom dashboard (see Appendix [A.3\)](#page-8-0), assessing the generated videos along similar quality dimensions.
+
+The TEB results are presented in Table [1.](#page-3-0) As shown, manimator demonstrates strong performance on the TEB benchmark, particularly excelling in Visual Relevance (0.899) and Logical Flow (0.880), which suggests the generated animations are both conceptually aligned with the source material and coherently structured. Manimator significantly outperforms the baseline models (Claude 3.5-Sonnet and o3 mini) in Element Layout (0.853 compared to 0.57 and 0.61, respectively), likely benefiting from the capabilities of the DeepSeek V3 model in generating spatially aware Manim code. While Claude 3.5-Sonnet achieves a slightly higher score in Visual Consistency (0.92 versus 0.852), manimator maintains strong performance across all dimensions, resulting in the highest Overall Score (0.845 compared to 0.79 and 0.77). Its Accuracy and Depth score (0.770) is comparable to the baselines. These TEB results indicate that manimator is a robust system for producing well-structured educational animations with excellent visual organization. The human
+
+ExplainBench. See Appendix [A.3](#page-8-0) for details on the evaluation setup.
+
+4. Results and Evaluation
+
+6. Conclusion We presented manimator, an open-source system utilizing Large Language Models to automatically generate educational animations using the Manim engine from research papers or natural language prompts. By implementing a pipeline where LLMs first interpret the input to create a structured scene description and then translate this into executable Manim code, manimator significantly lowers the barrier to creating dynamic visualizations for complex STEM topics, which traditionally requires extensive time and expertise. Our evaluations indicate that manimator produces high-quality, well-structured animations, thereby offering a valuable tool for educators, researchers, and students to enhance learning, understanding, and scientific communication by making the creation of engaging visual explanations more accessible. The system is publicly available as an open-source project and via a web interface to facilitate broader adoption and development.
+
+<span id="page-3-1"></span><span id="page-3-0"></span>evaluation results, summarized in Table [2,](#page-3-1) provide complementary insights based on user perception, further detailed
+
+The quality of the generated animations heavily depends on the capabilities of the underlying LLMs for both understanding the input content and generating correct, complex Manim code. Handling highly intricate visual details or ensuring perfect pedagogical flow for very nuanced topics remain challenges. The system currently does not incorporate iterative refinement based on user feedback on the generated video. Future work could address these limitations by incorporating feedback loops, employing more sophisticated planning agents, and fine-tuning models specifically
+
+<span id="page-4-4"></span>Heer, J. and Robertson, G. G. Animated transitions in statistical data graphics. *IEEE Transactions on Visualization and Computer Graphics*, 13(6):1240–1247, 2007. doi: 10.1109/TVCG.2007.70539. URL [https:](https://doi.org/10.1109/TVCG.2007.70539) [//doi.org/10.1109/TVCG.2007.70539](https://doi.org/10.1109/TVCG.2007.70539). Helbling, A. and Chau, D. H. P. MANIMML: Communicating machine learning architectures with anima-
+
+*preprint arXiv:2407.21783*, 2024.
+
+[17108v3](https://arxiv.org/abs/2306.17108v3).
+
+<span id="page-4-16"></span>Grattafiori, A., Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A., Letman, A., Mathur, A., Schelten, A., Vaughan, A., et al. The llama 3 herd of models. *arXiv*
+
+<span id="page-4-13"></span>Jimenez, C. E., Yang, J., Wettig, A., Yao, S., Pei, K., Press, O., and Narasimhan, K. R. Swe-bench: Can language models resolve real-world github issues? In *ICLR*, 2024. URL [https://openreview.net/forum?](https://openreview.net/forum?id=VTF8yNQM66) [id=VTF8yNQM66](https://openreview.net/forum?id=VTF8yNQM66).
+
+<span id="page-4-8"></span>tion, 2023. URL [https://arxiv.org/abs/2306.](https://arxiv.org/abs/2306.17108v3)
+
+<span id="page-4-7"></span>Ku, M., Chong, T., Leung, J., Shah, K., Yu, A., and Chen, W. Theoremexplainagent: Towards multimodal explanations for llm theorem understanding, 2025. URL [https://](https://arxiv.org/abs/2502.19400) [arxiv.org/abs/2502.19400](https://arxiv.org/abs/2502.19400).
+
+<span id="page-4-12"></span><span id="page-4-6"></span>Liu, A., Feng, B., Xue, B., Wang, B., Wu, B., Lu, C., Zhao, C., Deng, C., Zhang, C., Ruan, C., et al. Deepseek-v3 technical report. *arXiv preprint arXiv:2412.19437*, 2024. Markovic, M. and Ka ´ stelan, I. Demonstrating the po- ˇ tential of visualization in education with the manim python library: Examples from algorithms and data structures. In *2024 47th MIPRO ICT and Electronics Convention (MIPRO)*, pp. 625–629, 2024. doi:
+
+<span id="page-4-1"></span><span id="page-4-0"></span>Nijkamp, E., Pang, B., Hayashi, H., Tu, L., Wang, H., Zhou, Y., Savarese, S., and Xiong, C. Codegen: An open large language model for code with multi-turn program synthesis. In *The Eleventh International Conference on Learning Representations*, 2023. URL [https:](https://openreview.net/forum?id=iaYcJKpY2B_) [//openreview.net/forum?id=iaYcJKpY2B\\_](https://openreview.net/forum?id=iaYcJKpY2B_). Schoenherr, J., Strohmaier, A. R., and Schukajlow, S. Learning with visualizations helps: A meta-analysis of visualization interventions in mathematics education. *Ed-*
+
+<span id="page-4-11"></span>Team, G., Georgiev, P., Lei, V. I., Burnell, R., Bai, L., Gulati, A., Tanzer, G., Vincent, D., Pan, Z., Wang, S., et al. Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context. *arXiv preprint*
+
+*arXiv:2403.05530*, 2024.
+
+5
+
+10.1109/MIPRO60963.2024.10569661.
+
+- <span id="page-4-14"></span>Galimzyanov, T., Titov, S., Golubev, Y., and Bogomolov, E. Drawing pandas: A benchmark for llms in generating plotting code, 2025. URL [https://arxiv.org/](https://arxiv.org/abs/2412.02764) [abs/2412.02764](https://arxiv.org/abs/2412.02764). *ucational Research Review*, 45:100639, 2024. ISSN 1747- 938X. doi: https://doi.org/10.1016/j.edurev.2024.100639. URL [https://www.sciencedirect.com/](https://www.sciencedirect.com/science/article/pii/S1747938X24000484) [science/article/pii/S1747938X24000484](https://www.sciencedirect.com/science/article/pii/S1747938X24000484).
+- <span id="page-4-15"></span>Goswami, K., Mathur, P., Rossi, R., and Dernoncourt, F. Plotgen: Multi-agent llm-based scientific data visualization via multimodal feedback, 2025. URL [https:](https://arxiv.org/abs/2502.00988) [//arxiv.org/abs/2502.00988](https://arxiv.org/abs/2502.00988).
+
+Impact Statement
+
+References
+
+and accessible to learners worldwide.
+
+*arXiv:2303.08774*, 2023.
+
+[1145/3206505.3206552](https://doi.org/10.1145/3206505.3206552).
+
+[1985.229778](https://doi.org/10.1109/MS.1985.229778).
+
+[com/news/claude-3-family](https://www.anthropic.com/news/claude-3-family).
+
+The primary impact of manimator lies in its potential to democratize the creation of high-quality educational content and accelerate scientific communication. By automating the difficult and time-consuming process of creating explanatory animations, our work empowers a broader audience—educators, students, and researchers who may not have the requisite programming skills or resources to produce such visualizations manually. This can lead to more engaging and effective learning experiences in STEM fields, helping to make complex, abstract concepts more intuitive
+
+<span id="page-4-9"></span>Achiam, J., Adler, S., Agarwal, S., Ahmad, L., Akkaya, I., Aleman, F. L., Almeida, D., Altenschmidt, J., Altman, S., Anadkat, S., et al. Gpt-4 technical report. *arXiv preprint*
+
+<span id="page-4-5"></span>Amini, F., Riche, N. H., Lee, B., Leboe-McGowan, J., and Irani, P. Hooked on data videos: assessing the effect of animation and pictographs on viewer engagement. In *Proceedings of the 2018 International Conference on Advanced Visual Interfaces*, AVI '18, New York, NY, USA, 2018. Association for Computing Machinery. ISBN 9781450356169. doi: 10.1145/ 3206505.3206552. URL [https://doi.org/10.](https://doi.org/10.1145/3206505.3206552)
+
+<span id="page-4-10"></span>Anthropic. The claude 3 model family: Opus, sonnet, haiku. Online, 2024. URL [https://www.anthropic.](https://www.anthropic.com/news/claude-3-family)
+
+<span id="page-4-3"></span>Brown, M. H. and Sedgewick, R. Techniques for algorithm animation. *IEEE Softw.*, 2(1):28–39, January 1985. ISSN 0740-7459. doi: 10.1109/MS.1985. 229778. URL [https://doi.org/10.1109/MS.](https://doi.org/10.1109/MS.1985.229778)
+
+<span id="page-4-2"></span>Chen, W., Ma, X., Wang, X., and Cohen, W. W. Program of thoughts prompting: Disentangling computation from reasoning for numerical reasoning tasks, 2023. URL <https://arxiv.org/abs/2211.12588>.
+
+6
+
+<span id="page-5-0"></span>The Manim Community Developers. Manim - mathematical animation framework. Software, 2024. URL [https:](https://www.manim.community/)
+
+<span id="page-5-1"></span>Yang, Z., Zhou, Z., Wang, S., Cong, X., Han, X., Yan, Y., and others. Matplotagent: Method and evaluation for llmbased agentic scientific data visualization, 2024. URL <https://arxiv.org/abs/2402.11453>.
+
+[//www.manim.community/](https://www.manim.community/).
+
+This appendix provides supplementary materials for Manimator, including the system prompts used and visual examples of
+
+A. Appendix
+
+generated animations.
+
+A.1. System Prompts
+
+Figure 2. Combined system prompts used for Stage 1 (Scene Description Generation) and Stage 2 (Manim Code Generation).
+
+<span id="page-6-0"></span>7
+
+![](_page_7_Figure_1.jpeg)
+
+8
+
+<span id="page-8-0"></span>A.3. Human Evaluation Dashboard
+
+To complement the standardized benchmark with direct user feedback, we recruited unpaid volunteer engineering students, who have experience with educational content like this, to participate in a human evaluation study. Participants interacted with a custom-built evaluation dashboard that presented them with animations generated by Manimator.
+
+For each animation, evaluators were asked to provide a rating on a scale of 1 (Poor) to 5 (Excellent) across the same five core parameters used in the TEB benchmark: Accuracy & Depth, Visual Relevance, Logical Flow, Element Layout, and Visual Consistency. This allowed for a direct comparison between automated benchmark scores and perceived human quality. To align the 1-to-5 rating scale with the 0-to-1 scale used in TEB, we normalized the scores from our human evaluators. The
+
+9
+
+final scores, representing the average normalized ratings from all participants, are summarized in Table [2.](#page-3-1)
+
+Figure 4. Interface used for collecting human evaluation ratings on generated animations.

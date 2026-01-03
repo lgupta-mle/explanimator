@@ -1,0 +1,120 @@
+{
+  "paper_name": "manimator",
+  "source_file": "resources/manimator.pdf",
+  "output_directory": "output_grobid_marker/manimator",
+  "tei_file": "output_grobid_marker/manimator/manimator.tei.xml",
+  "methodology": {
+    "found": true,
+    "title": "Methodology",
+    "section_number": "3",
+    "text": "Manimator employs an agentic architecture orchestrated primarily by LLMs, with the core process involving transformation of a text prompt into a video animation via intermediate structured planning and code generation stages (illustrated in Figure 1).Manimator accepts two primary input types: a natural language description (e.g., \"Explain the Fourier Transform\") or a PDF document provided via upload or arXiv ID, with PDF content optionally compressed and base64 encoded for multimodal LLM input.",
+    "subsections": [
+      {
+        "title": "Stage 1: Scene Description Generation",
+        "text": "This stage interprets the input to create a structured scene description for the animation.Models with text and multimodal capabilities are strategically deployed based on the input type: PDF inputs leverage the multimodal capability of models with large context windows (e.g., gemini-2.0-flash)which can analyze and understand document content, while text prompts utilize powerful LLMs (e.g., llama-3.3-70b(Grattafiori et al., 2024)) for comprehensive scene interpretation.A detailed system prompt instructs the LLM to structure content into: Topic, Key Points (with LaTeX math like F (x)), Visual Elements, and Style.Few-Shot Learning examples guide the LLM towards the desired output format and detail, ensuring consistency regardless of input type.This approach allows Manimator to extract meaningful content from diverse input sources while maintaining pedagogical quality.The output is a structured Scene Description in Markdown that serves as the foundation for subsequent animation generation.",
+        "level": 1,
+        "section_number": "3.1"
+      },
+      {
+        "title": "Stage 2: Manim Code Generation",
+        "text": "This stage translates the Scene Description into executable Manim Python code.The Scene Description is fed to a code-focused LLM (e.g., deepseek-v3 (Liu et al., 2024)), which operates under a comprehensive system prompt that positions the model as a Manim expert.This system prompt provides detailed instructions for the LLM to create educational animations by understanding topics, planning animations with logical flow, writing modular code with proper comments, and ensuring visual clarity.Few-shot examples are also included in the prompt to demonstrate proper implementation patterns and guide the model toward producing high-quality code.The prompt emphasizes important technical requirements such as avoiding element overlap, implementing proper scene cleanup, adding appropriate wait calls for pacing, and maintaining consistent animation style.\n\nThe output is a fully executable Python script containing a Manim Scene class that can be directly rendered to produce the educational animation.",
+        "level": 1,
+        "section_number": "3.2"
+      },
+      {
+        "title": "Stage 3: Animation Rendering",
+        "text": "The generated Manim code is executed using the Manim library (The Manim Community Developers, 2024) to produce the final video animation file (typically in MP4 format).This stage involves running the Python script in an environment where Manim and its dependencies (like FFmpeg) are installed.",
+        "level": 1,
+        "section_number": "3.3"
+      },
+      {
+        "title": "Model Selection and Prompt Optimization",
+        "text": "The performance of the manimator pipeline is critically dependent on the choice of LLMs and the design of the system prompts for each stage.We conducted extensive experimentation to identify the optimal configuration.Our process involved careful modulation of the system prompts, where we discovered that detailed, stage-wise and role-playing instructions (like \"You are an expert in creating educational animations using Manim\") combined with few-shot examples yielded the most consistent and high-quality results for both scene planning and code generation (see figure 2).Table 2. Results of human evaluation for Manimator (DeepSeek V3) based on user ratings across the same dimensions used in Theorem-ExplainBench. See Appendix A.3 for details on the evaluation setup.",
+        "level": 1,
+        "section_number": "3.4"
+      }
+    ],
+    "full_text": "Manimator employs an agentic architecture orchestrated primarily by LLMs, with the core process involving transformation of a text prompt into a video animation via intermediate structured planning and code generation stages (illustrated in Figure 1).Manimator accepts two primary input types: a natural language description (e.g., \"Explain the Fourier Transform\") or a PDF document provided via upload or arXiv ID, with PDF content optionally compressed and base64 encoded for multimodal LLM input.\n\nThis stage interprets the input to create a structured scene description for the animation.Models with text and multimodal capabilities are strategically deployed based on the input type: PDF inputs leverage the multimodal capability of models with large context windows (e.g., gemini-2.0-flash)which can analyze and understand document content, while text prompts utilize powerful LLMs (e.g., llama-3.3-70b(Grattafiori et al., 2024)) for comprehensive scene interpretation.A detailed system prompt instructs the LLM to structure content into: Topic, Key Points (with LaTeX math like F (x)), Visual Elements, and Style.Few-Shot Learning examples guide the LLM towards the desired output format and detail, ensuring consistency regardless of input type.This approach allows Manimator to extract meaningful content from diverse input sources while maintaining pedagogical quality.The output is a structured Scene Description in Markdown that serves as the foundation for subsequent animation generation.\n\nThis stage translates the Scene Description into executable Manim Python code.The Scene Description is fed to a code-focused LLM (e.g., deepseek-v3 (Liu et al., 2024)), which operates under a comprehensive system prompt that positions the model as a Manim expert.This system prompt provides detailed instructions for the LLM to create educational animations by understanding topics, planning animations with logical flow, writing modular code with proper comments, and ensuring visual clarity.Few-shot examples are also included in the prompt to demonstrate proper implementation patterns and guide the model toward producing high-quality code.The prompt emphasizes important technical requirements such as avoiding element overlap, implementing proper scene cleanup, adding appropriate wait calls for pacing, and maintaining consistent animation style.\n\nThe output is a fully executable Python script containing a Manim Scene class that can be directly rendered to produce the educational animation.\n\nThe generated Manim code is executed using the Manim library (The Manim Community Developers, 2024) to produce the final video animation file (typically in MP4 format).This stage involves running the Python script in an environment where Manim and its dependencies (like FFmpeg) are installed.\n\nThe performance of the manimator pipeline is critically dependent on the choice of LLMs and the design of the system prompts for each stage.We conducted extensive experimentation to identify the optimal configuration.Our process involved careful modulation of the system prompts, where we discovered that detailed, stage-wise and role-playing instructions (like \"You are an expert in creating educational animations using Manim\") combined with few-shot examples yielded the most consistent and high-quality results for both scene planning and code generation (see figure 2).Table 2. Results of human evaluation for Manimator (DeepSeek V3) based on user ratings across the same dimensions used in Theorem-ExplainBench. See Appendix A.3 for details on the evaluation setup."
+  },
+  "figures": {
+    "count": 7,
+    "items": [
+      {
+        "figure_number": 1,
+        "filename": "_page_1_Figure_1.jpeg",
+        "saved_as": "output_grobid_marker/manimator/images/manimator__page_1_Figure_1.jpeg",
+        "width": 1337,
+        "height": 470,
+        "format": "PNG",
+        "source": "marker",
+        "status": "saved",
+        "caption": "Figure 1.The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID.The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 2,
+        "filename": "_page_7_Figure_1.jpeg",
+        "saved_as": "output_grobid_marker/manimator/images/manimator__page_7_Figure_1.jpeg",
+        "width": 1158,
+        "height": 1461,
+        "format": "PNG",
+        "source": "marker",
+        "status": "saved",
+        "caption": "",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 3,
+        "caption": "",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 4,
+        "caption": "",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 5,
+        "caption": "Ku et al. (2025)nimator's performance on TheoremExplainBench against baseline models fromKu et al. (2025).Scores range from 0 to 1, with higher being better.Manimator's results (using DeepSeek V3) are highlighted.",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 6,
+        "caption": "Combined system prompts used for Stage 1 (Scene Description Generation) and Stage 2 (Manim Code Generation).",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 7,
+        "caption": "Interface used for collecting human evaluation ratings on generated animations.",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      }
+    ]
+  },
+  "tables": {
+    "count": 1,
+    "items": [
+      {
+        "table_number": 1,
+        "caption": "",
+        "caption_file": "output_grobid_marker/manimator/tables/manimator_table_1_caption.txt",
+        "source": "grobid",
+        "status": "metadata_only"
+      }
+    ]
+  },
+  "metadata": {
+    "total_pages": 0,
+    "languages": []
+  },
+  "status": "success"
+}
