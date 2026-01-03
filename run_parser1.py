@@ -10,7 +10,7 @@ from src.research_viz.preprocessing.pdf_parser1 import HybridResearchPaperParser
 # API key will be automatically loaded from .env file
 parser = HybridResearchPaperParser(
     grobid_url="http://localhost:8070",
-    output_base_dir="./output_grobid_marker",
+    output_base_dir="./output_grobid_marker2",
     datalab_api_key=True  # Use API key from .env file
 )
 
@@ -26,6 +26,15 @@ print("=" * 70)
 for result in results:
     if result.get('status') == 'success':
         print(f"\n✓ {result['paper_name']}")
+        
+        # Introduction
+        intro = result.get('introduction', {})
+        print(f"   📖 Introduction: {'Found' if intro.get('found') else 'Not found'}")
+        if intro.get('found'):
+            print(f"     Title: {intro.get('title')}")
+            print(f"     Direct text: {len(intro.get('text', ''))} chars")
+            print(f"     Full text (with subsections): {len(intro.get('full_text', ''))} chars")
+            print(f"     Subsections: {len(intro.get('subsections', []))}")
         
         # Methodology
         meth = result.get('methodology', {})
@@ -47,6 +56,15 @@ for result in results:
                         print_subsections(sub['subsections'], indent)
             
             print_subsections(meth.get('subsections', []))
+        
+        # Related Works
+        related = result.get('related_works', {})
+        print(f"   📚 Related Works: {'Found' if related.get('found') else 'Not found'}")
+        if related.get('found'):
+            print(f"     Title: {related.get('title')}")
+            print(f"     Direct text: {len(related.get('text', ''))} chars")
+            print(f"     Full text (with subsections): {len(related.get('full_text', ''))} chars")
+            print(f"     Subsections: {len(related.get('subsections', []))}")
         
         # Figures
         figs = result.get('figures', {})

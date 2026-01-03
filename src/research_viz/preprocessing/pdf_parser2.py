@@ -44,6 +44,10 @@ class GrobidPyMuPDFParser:
             'related work', 'related works', 'background', 'preliminaries',
             'literature review', 'prior work', 'previous work'
         ]
+        
+        self.introduction_keywords = [
+            'introduction', 'intro', 'overview', 'motivation'
+        ]
     
     def parse_directory(self, directory_path: str) -> List[Dict[str, Any]]:
         """Parse all PDFs in a directory."""
@@ -116,6 +120,7 @@ class GrobidPyMuPDFParser:
                 f.write(tei_xml)
             
             root = ET.fromstring(tei_xml)
+            introduction = self._extract_section_from_tei(root, self.introduction_keywords, 'introduction')
             methodology = self._extract_section_from_tei(root, self.methodology_keywords, 'methodology')
             related_works = self._extract_section_from_tei(root, self.related_works_keywords, 'related_works')
             grobid_figures = self._extract_figure_metadata_from_tei(root)
@@ -138,6 +143,7 @@ class GrobidPyMuPDFParser:
                 'source_file': str(pdf_path),
                 'output_directory': str(paper_output_dir),
                 'tei_file': str(tei_path),
+                'introduction': introduction,
                 'methodology': methodology,
                 'related_works': related_works,
                 'figures': {

@@ -60,6 +60,10 @@ class HybridResearchPaperParser:
             'related work', 'related works', 'background', 'preliminaries',
             'literature review', 'prior work', 'previous work'
         ]
+        
+        self.introduction_keywords = [
+            'introduction', 'intro', 'overview', 'motivation'
+        ]
     
     def parse_directory(self, directory_path: str) -> List[Dict[str, Any]]:
         """Parse all PDFs in a directory."""
@@ -132,6 +136,7 @@ class HybridResearchPaperParser:
                 f.write(tei_xml)
             
             root = ET.fromstring(tei_xml)
+            introduction = self._extract_section_from_tei(root, self.introduction_keywords, 'introduction')
             methodology = self._extract_section_from_tei(root, self.methodology_keywords, 'methodology')
             related_works = self._extract_section_from_tei(root, self.related_works_keywords, 'related_works')
             grobid_figures = self._extract_figure_metadata_from_tei(root)
@@ -140,11 +145,13 @@ class HybridResearchPaperParser:
             # Step 2: Extract images and tables with Marker API
             print(f"  [2/2] Extracting images and tables with Marker API...")
             
-            # Configure conversion options
+            # Configure conversion options - ensure image extraction is enabled
             options = ConvertOptions(
                 output_format="markdown",
                 mode="accurate",
-                paginate=False
+                paginate=False,
+                disable_image_extraction=False,  # Explicitly enable image extraction
+                disable_image_captions=False
             )
             
             # Convert PDF using Datalab API
@@ -154,6 +161,14 @@ class HybridResearchPaperParser:
             full_text = result.markdown
             marker_images = result.images if hasattr(result, 'images') else {}
             out_meta = getattr(result, "metadata", {})
+            
+            # Debug: Check what images we got
+            print(f"    Images from API: {len(marker_images)} images")
+            if marker_images:
+                for img_name, img_data in list(marker_images.items())[:3]:
+                    print(f"      - {img_name}: {len(img_data) if img_data else 0} bytes")
+            else:
+                print(f"    ⚠️  No images returned from Marker API")
             
             # Save Marker images
             saved_images = self._save_marker_images(marker_images, images_dir, paper_name)
@@ -173,6 +188,7 @@ class HybridResearchPaperParser:
                 'source_file': str(pdf_path),
                 'output_directory': str(paper_output_dir),
                 'tei_file': str(tei_path),
+                'introduction': introduction,
                 'methodology': methodology,
                 'related_works': related_works,
                 'figures': {
@@ -392,12 +408,41 @@ class HybridResearchPaperParser:
         
         saved_images = []
         
+        if not marker_images:
+            print(f"    No images to save")
+            return saved_images
+        
         for img_name, img_data in marker_images.items():
             try:
+                # Debug: Check data type and size
+                print(f"    Processing image: {img_name}")
+                print(f"      Data type: {type(img_data)}")
+                print(f"      Data size: {len(img_data) if img_data else 0} bytes")
+                
+                # Ensure img_data is bytes
+                if not isinstance(img_data, bytes):
+                    print(f"      ⚠️  Converting to bytes...")
+                    if isinstance(img_data, str):
+                        # If it's a base64 string, decode it
+                        import base64
+                        img_data = base64.b64decode(img_data)
+                    else:
+                        img_data = bytes(img_data)
+                
+                if not img_data or len(img_data) == 0:
+                    print(f"      ✗ Empty image data, skipping")
+                    saved_images.append({
+                        'filename': img_name,
+                        'source': 'marker_api',
+                        'status': 'error',
+                        'error': 'Empty image data'
+                    })
+                    continue
+                
                 # img_data is bytes from API
                 image_filename = img_name
-                if not any(image_filename.endswith(ext) for ext in ['.png', '.jpg', '.jpeg']):
-                    image_filename = f"{paper_name}_{img_name}.png"
+                if not any(image_filename.endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.gif', '.bmp']):
+                    image_filename = f"{img_name}"  # Keep original name from API
                 
                 image_path = images_dir / image_filename
                 
@@ -405,10 +450,18 @@ class HybridResearchPaperParser:
                 with open(image_path, 'wb') as f:
                     f.write(img_data)
                 
+                print(f"      ✓ Saved to: {image_path}")
+                
                 # Get image info using PIL
-                img = Image.open(io.BytesIO(img_data))
-                width, height = img.size
-                img_format = img.format or 'PNG'
+                try:
+                    img = Image.open(io.BytesIO(img_data))
+                    width, height = img.size
+                    img_format = img.format or 'Unknown'
+                    print(f"      Size: {width}x{height}, Format: {img_format}")
+                except Exception as pil_error:
+                    print(f"      ⚠️  Could not read image with PIL: {pil_error}")
+                    width, height = 0, 0
+                    img_format = 'Unknown'
                 
                 saved_images.append({
                     'figure_number': len(saved_images) + 1,
@@ -421,6 +474,7 @@ class HybridResearchPaperParser:
                     'status': 'saved'
                 })
             except Exception as e:
+                print(f"      ✗ Error: {str(e)}")
                 saved_images.append({
                     'filename': img_name,
                     'source': 'marker_api',
