@@ -66,7 +66,14 @@ def create_high_level_methodology_kg(
         HighLevelKnowledgeGraph instance or None if generation fails
     """
     system_prompt = open(os.path.join(os.path.dirname(__file__), "prompts", "high_kg_prompt.txt")).read()
-    prepared_usr_prompt = json.dumps(parsed_paper, indent=4)
+
+    # Only pass the introduction, related works, and methodology sections 
+    parsed_paper_subset = {
+        "introduction": parsed_paper.get("introduction", ""),
+        "related_works": parsed_paper.get("related_works", ""),
+        "methodology": parsed_paper.get("methodology", "")
+    }
+    prepared_usr_prompt = json.dumps(parsed_paper_subset, indent=4)
 
     # Extract images with captions
     images_metadata = extract_images_metadata(parsed_paper)
@@ -187,6 +194,7 @@ def main(model_name: str = "openai/gpt-5", paper_name: str = "attention_is_all_y
     parsed_paper["images_dir"] = os.path.join(base_dir, "output_grobid_marker", paper_name, "images")
 
     # Generate high-level knowledge graph
+    print("Generating high-level knowledge graph...")
     high_level_kg = create_high_level_methodology_kg(parsed_paper, model_name)
 
     if high_level_kg is None:
@@ -194,6 +202,7 @@ def main(model_name: str = "openai/gpt-5", paper_name: str = "attention_is_all_y
         return
 
     # Generate low-level knowledge graphs for novel components
+    print("Generating low-level knowledge graphs for novel components...")
     low_level_kgs = {}
     for component in high_level_kg.high_level_components:
         if component.novel_contribution:
@@ -208,6 +217,7 @@ def main(model_name: str = "openai/gpt-5", paper_name: str = "attention_is_all_y
                 low_level_kgs[component.id] = low_kg
 
     # Generate methodology breakdown
+    print("Generating methodology breakdown...")
     methodology_breakdown = generate_methodology_breakdown(
         high_level_kg,
         low_level_kgs,

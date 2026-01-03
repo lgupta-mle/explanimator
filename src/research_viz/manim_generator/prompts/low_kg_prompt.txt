@@ -75,9 +75,13 @@ Return a JSON object with the following structure:
           "description": "Role of this parameter"
         }
       ],
-      "hyperparameters": {
-        "any_key": "any relevant hyperparameter (e.g., dropout_rate, num_heads, kernel_size)"
-      },
+      "hyperparameters": [
+        {
+          "name": "hyperparameter name",
+          "value": "value as string",
+          "description": "what this controls (optional)"
+        }
+      ],
       "computational_complexity": "O(n^2) or similar (optional)",
       "numerical_stability_notes": "Any special handling for numerical stability (optional)"
     }
@@ -110,7 +114,7 @@ Return a JSON object with the following structure:
     {
       "from_shape": "[batch, seq_len, d_model]",
       "to_shape": "[batch, num_heads, seq_len, d_k]",
-      "transformation_type": "reshape|transpose|permute|broadcast|squeeze|unsqueeze",
+      "transformation_type": "reshape_transpose",
       "operations_involved": ["op_ids"],
       "purpose": "Why this transformation is needed",
       "formula_or_code": "Exact transformation (e.g., 'x.view(batch, seq_len, num_heads, d_k).transpose(1, 2)')"
@@ -138,7 +142,7 @@ Return a JSON object with the following structure:
   "visualization_suggestions": [
     {
       "operation_or_step": "op_id or step number",
-      "visualization_type": "tensor_flow|matrix_animation|attention_heatmap|dimension_transformation",
+      "visualization_type": "tensor_flow",
       "description": "What to animate and how",
       "complexity_level": "simple|moderate|complex",
       "priority": "high|medium|low (based on importance to understanding)"
@@ -146,6 +150,16 @@ Return a JSON object with the following structure:
   ]
 }
 ```
+
+
+NOTE: The following fields are OPTIONAL and can be set to null if not applicable:
+- composite_operations: Only if there are logical groupings of atomic operations
+- tensor_transformations: Only if there are explicit reshape/transpose operations
+- special_cases: Only if behavior differs (training vs inference, masking, etc.)
+- implementation_hints: Only if there are non-obvious implementation considerations
+- visualization_suggestions: Only if you have specific animation recommendations
+
+Set these to null rather than empty arrays if they don't apply to this component.
 
 ## DETAILED INSTRUCTIONS
 
@@ -205,7 +219,7 @@ Distinguish clearly:
 - **Parameters**: Learned weights (W, b, gamma, beta)
   - Include shape, initialization strategy, whether trainable
 - **Hyperparameters**: Fixed configuration values (num_heads=8, d_k=64, dropout=0.1)
-  - Include in hyperparameters dict
+  - Include in hyperparameters list
 
 ### 5. Data Flow Construction
 
@@ -397,9 +411,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
           "description": "Query projection bias"
         }
       ],
-      "hyperparameters": {
-        "d_model": 512
-      },
+      "hyperparameters": [{"name": "d_model", "value": "512"}],
       "computational_complexity": "O(seq_len * d_model^2)"
     },
     {
@@ -425,10 +437,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {
-        "num_heads": 8,
-        "d_k": 64
-      },
+      "hyperparameters": [{"name": "num_heads", "value": "8"}, {"name": "d_k", "value": "64"}],
       "computational_complexity": "O(1)"
     },
     {
@@ -454,7 +463,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {},
+      "hyperparameters": [],
       "computational_complexity": "O(1)"
     },
     {
@@ -486,7 +495,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {},
+      "hyperparameters": [],
       "computational_complexity": "O(num_heads * seq_len^2 * d_k)"
     },
     {
@@ -512,9 +521,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {
-        "d_k": 64
-      },
+      "hyperparameters": [{"name": "d_k", "value": "64"}],
       "computational_complexity": "O(num_heads * seq_len^2)",
       "numerical_stability_notes": "Scaling prevents gradient vanishing in softmax"
     },
@@ -541,7 +548,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {},
+      "hyperparameters": [],
       "computational_complexity": "O(num_heads * seq_len^2)",
       "numerical_stability_notes": "Use max subtraction trick: softmax(x) = softmax(x - max(x))"
     },
@@ -568,9 +575,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {
-        "dropout_rate": 0.1
-      },
+      "hyperparameters": [{"name": "dropout_rate", "value": "0.1"}],
       "computational_complexity": "O(num_heads * seq_len^2)"
     },
     {
@@ -602,7 +607,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {},
+      "hyperparameters": [],
       "computational_complexity": "O(num_heads * seq_len^2 * d_v)"
     },
     {
@@ -628,7 +633,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
         }
       ],
       "parameters": [],
-      "hyperparameters": {},
+      "hyperparameters": [],
       "computational_complexity": "O(1)"
     },
     {
@@ -669,7 +674,7 @@ Here's an example for decomposing "Multi-Head Self-Attention":
           "description": "Output projection bias"
         }
       ],
-      "hyperparameters": {},
+      "hyperparameters": [],
       "computational_complexity": "O(seq_len * d_model^2)"
     }
   ],

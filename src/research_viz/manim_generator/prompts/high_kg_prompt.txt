@@ -172,8 +172,8 @@ Carefully analyze architecture diagrams:
 Describe the big picture:
 - **Paradigm**: What architectural family does this belong to?
 - **Main Pipeline**: Sequential stages from input to output
-- **Parallel Pathways**: Any multi-stream processing (e.g., multi-scale features, auxiliary branches)
-- **Feedback Loops**: Iterative refinement, recurrent processing, self-correction mechanisms
+- **Parallel Pathways** (OPTIONAL - set to null if not applicable): Any multi-stream processing (e.g., multi-scale features, auxiliary branches)
+- **Feedback Loops** (OPTIONAL - set to null if not applicable): Iterative refinement, recurrent processing, self-correction mechanisms
 
 ### 5. Key Innovations
 
@@ -367,8 +367,8 @@ Here's a minimal example for a Vision Transformer paper:
         "order": 3
       }
     ],
-    "parallel_pathways": [],
-    "feedback_loops": []
+    "parallel_pathways": null,
+    "feedback_loops": null
   },
   "key_innovations": [
     {

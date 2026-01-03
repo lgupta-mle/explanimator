@@ -12,6 +12,65 @@ def encode_image_to_base64(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
 
+def is_optional_field(field_schema: dict) -> bool:
+    """
+    Check if a field schema represents an Optional type (Union with None).
+    """
+    # Check for anyOf with null type (Pydantic v2 pattern for Optional)
+    if "anyOf" in field_schema:
+        types = [item.get("type") for item in field_schema["anyOf"] if "type" in item]
+        if "null" in types:
+            return True
+
+    # Check for single type that is null
+    if field_schema.get("type") == "null":
+        return True
+
+    # Check for default value of None
+    if field_schema.get("default") is None:
+        return True
+
+    return False
+
+
+def make_schema_openai_compatible(schema: dict) -> dict:
+    """
+    Recursively process schema to make it compatible with OpenAI's strict mode.
+    - Ensures non-optional properties are in the 'required' array
+    - Optional fields (with None default) are excluded from required
+    - Sets additionalProperties to false for all objects
+    """
+    if isinstance(schema, dict):
+        # Process nested objects first
+        for key, value in schema.items():
+            if isinstance(value, (dict, list)):
+                schema[key] = make_schema_openai_compatible(value)
+
+        # If this object has properties, make non-optional ones required
+        if "properties" in schema:
+            required_fields = []
+            for prop_name, prop_schema in schema["properties"].items():
+                # Only add to required if not optional
+                if not is_optional_field(prop_schema):
+                    required_fields.append(prop_name)
+
+            # Set required array (may be empty for objects with all optional fields)
+            schema["required"] = required_fields
+
+            # Ensure additionalProperties is false
+            if "additionalProperties" not in schema:
+                schema["additionalProperties"] = False
+
+        # Process $defs (Pydantic v2 uses $defs instead of definitions)
+        if "$defs" in schema:
+            for def_name in schema["$defs"]:
+                schema["$defs"][def_name] = make_schema_openai_compatible(schema["$defs"][def_name])
+
+    elif isinstance(schema, list):
+        return [make_schema_openai_compatible(item) for item in schema]
+
+    return schema
+
 def create_llm_response(
     prepared_usr_prompt: str,
     system_prompt: str,
@@ -38,7 +97,9 @@ def create_llm_response(
     """
 
     # Create the LLM client
+    use_openrouter = True
     if model_name.startswith("openai/"):
+        use_openrouter = False
         client = OpenAI()
     else:
         client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.getenv("OPENROUTER_API_KEY"))
@@ -102,13 +163,15 @@ def create_llm_response(
 
     # Prepare API call parameters
     api_params = {
-        "model": model_name,
+        "model": model_name if use_openrouter else model_name.split("/")[1],
         "messages": messages
     }
 
     # Add structured output if schema provided
     if schema is not None:
         json_schema = schema.model_json_schema()
+        # Make schema compatible with OpenAI's strict mode
+        json_schema = make_schema_openai_compatible(json_schema)
         api_params["response_format"] = {
             "type": "json_schema",
             "json_schema": {
@@ -126,6 +189,7 @@ def create_llm_response(
         return None
 
     content = response.choices[0].message.content
+    print("Usage: ", response.usage)
 
     # Parse and validate if schema provided
     if schema is not None:
