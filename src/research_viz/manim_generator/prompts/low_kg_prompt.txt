@@ -1,0 +1,885 @@
+# TASK: Atomic-Level Knowledge Graph Construction for Research Paper Methodology
+
+You are an expert at analyzing research papers and extracting detailed implementation-level knowledge graphs that capture every computational step, tensor transformation, and mathematical operation.
+
+## OBJECTIVE
+
+Create an atomic-level knowledge graph that:
+1. Breaks down high-level components into atomic operations
+2. Tracks tensor shapes and transformations at each step
+3. Captures all mathematical operations with formulas
+4. Provides implementation-ready details for code generation
+5. Identifies intermediate computational steps not shown in diagrams
+
+## CONTEXT
+
+You will receive:
+- **High-level knowledge graph**: Contains components like "Transformer Encoder", "Attention Module", etc.
+- **Methodology section**: Detailed technical description with equations
+- **Images**: Architecture diagrams (often high-level, missing atomic details)
+- **Target components**: Specific high-level components to decompose
+
+## INPUT FORMAT
+
+```json
+{
+  "high_level_component": {
+    "id": "component_1",
+    "name": "Component to decompose",
+    "description": "High-level description of what this does"
+  },
+  "methodology_text": "Relevant section of methodology describing this component",
+  "equations": ["LaTeX equations mentioned in methodology"],
+  "visual_hints": "Description of how this appears in diagrams"
+}
+```
+
+## OUTPUT FORMAT
+
+Return a JSON object with the following structure:
+
+```json
+{
+  "component_id": "component_1",
+  "component_name": "Name of high-level component being decomposed",
+
+  "atomic_operations": [
+    {
+      "id": "op_1",
+      "name": "Operation name (e.g., 'linear_projection', 'matrix_multiply', 'softmax')",
+      "type": "linear|matmul|activation|normalization|elementwise|reduction|reshape|concatenation|split|attention|convolution|pooling|dropout|embedding",
+      "description": "Precise description of what this operation does (2-3 sentences)",
+      "mathematical_formula": "LaTeX formula representing this operation",
+      "input_tensors": [
+        {
+          "name": "tensor name (e.g., 'X', 'W_Q', 'hidden_states')",
+          "shape": "symbolic shape (e.g., '[batch, seq_len, d_model]')",
+          "dtype": "float32|int64|bool (if specified)",
+          "description": "What this tensor represents"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "output tensor name",
+          "shape": "symbolic shape",
+          "dtype": "data type",
+          "description": "What this output represents"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "parameter name (e.g., 'W_Q', 'bias', 'gamma')",
+          "shape": "parameter shape",
+          "initialization": "how initialized (e.g., 'Xavier', 'zeros', 'learned')",
+          "trainable": "true|false",
+          "description": "Role of this parameter"
+        }
+      ],
+      "hyperparameters": {
+        "any_key": "any relevant hyperparameter (e.g., dropout_rate, num_heads, kernel_size)"
+      },
+      "computational_complexity": "O(n^2) or similar (optional)",
+      "numerical_stability_notes": "Any special handling for numerical stability (optional)"
+    }
+  ],
+
+  "data_flow": [
+    {
+      "step": 1,
+      "operation_id": "op_1",
+      "input_from": ["previous_op_id or 'component_input'"],
+      "output_to": ["next_op_id or 'component_output'"],
+      "intermediate_result": "Description of what exists after this step",
+      "tensor_shape_at_step": "Current tensor shape",
+      "notes": "Any important notes about this step"
+    }
+  ],
+
+  "composite_operations": [
+    {
+      "id": "composite_1",
+      "name": "Multi-step operation name (e.g., 'scaled_dot_product_attention')",
+      "description": "High-level description of this multi-step operation",
+      "atomic_operations_involved": ["op_1", "op_2", "op_3"],
+      "overall_formula": "Combined LaTeX formula for the composite operation",
+      "why_grouped": "Why these operations form a logical unit"
+    }
+  ],
+
+  "tensor_transformations": [
+    {
+      "from_shape": "[batch, seq_len, d_model]",
+      "to_shape": "[batch, num_heads, seq_len, d_k]",
+      "transformation_type": "reshape|transpose|permute|broadcast|squeeze|unsqueeze",
+      "operations_involved": ["op_ids"],
+      "purpose": "Why this transformation is needed",
+      "formula_or_code": "Exact transformation (e.g., 'x.view(batch, seq_len, num_heads, d_k).transpose(1, 2)')"
+    }
+  ],
+
+  "special_cases": [
+    {
+      "condition": "When/what triggers this special case",
+      "modified_operations": ["op_ids that behave differently"],
+      "description": "What changes in this case",
+      "example": "Concrete example (e.g., 'During inference, dropout is disabled')"
+    }
+  ],
+
+  "implementation_hints": [
+    {
+      "topic": "e.g., 'masking', 'memory_efficiency', 'gradient_flow'",
+      "description": "Practical implementation consideration",
+      "affected_operations": ["op_ids"],
+      "code_snippet": "Pseudocode or reference implementation (optional)"
+    }
+  ],
+
+  "visualization_suggestions": [
+    {
+      "operation_or_step": "op_id or step number",
+      "visualization_type": "tensor_flow|matrix_animation|attention_heatmap|dimension_transformation",
+      "description": "What to animate and how",
+      "complexity_level": "simple|moderate|complex",
+      "priority": "high|medium|low (based on importance to understanding)"
+    }
+  ]
+}
+```
+
+## DETAILED INSTRUCTIONS
+
+### 1. Atomic Operation Extraction
+
+For each high-level component, decompose into atomic operations:
+- **Linear/Dense layers**: Separate into matrix multiplication + bias addition
+- **Attention mechanisms**: Break into Q/K/V projections → dot product → scaling → softmax → weighted sum
+- **Normalization layers**: Separate into mean/variance computation → normalization → scale/shift
+- **Activation functions**: Each activation (ReLU, GELU, Sigmoid, etc.) is an atomic operation
+- **Reshape/Transpose operations**: Often implicit but critical for tensor flow
+
+Examples of atomic operations:
+```
+- "linear_projection": W @ X + b
+- "matrix_multiply": A @ B
+- "scaled_dot_product": (Q @ K^T) / sqrt(d_k)
+- "softmax": exp(x) / sum(exp(x))
+- "layer_norm": (x - mean) / sqrt(var + eps) * gamma + beta
+- "gelu_activation": x * Phi(x) where Phi is Gaussian CDF
+- "dropout": x * bernoulli(p) / p (training), x (inference)
+- "concatenate": torch.cat([x1, x2], dim=-1)
+- "split_heads": x.view(batch, seq, num_heads, d_k).transpose(1, 2)
+```
+
+### 2. Tensor Shape Tracking
+
+This is CRITICAL for code generation:
+- Track shape at every step in the data flow
+- Be explicit about dimension meanings: `[batch, seq_len, hidden_dim]` not just `[B, S, H]`
+- Show how shapes change through operations:
+  - Matrix multiply: `[B, M, K] @ [K, N] → [B, M, N]`
+  - Reshape for multi-head: `[B, S, D] → [B, S, H, D/H] → [B, H, S, D/H]`
+  - Concatenation: `[B, S, D1]` + `[B, S, D2] → [B, S, D1+D2]`
+- Note broadcasting behavior where applicable
+
+### 3. Mathematical Formulas
+
+Provide precise LaTeX formulas:
+- Use standard notation (capital letters for matrices, lowercase for vectors)
+- Show element-wise vs. matrix operations clearly
+  - Element-wise: `x ⊙ y` or `x * y`
+  - Matrix multiply: `X @ Y` or `XY`
+- Include all terms (don't omit bias terms or normalization constants)
+- Match the notation used in the paper when possible
+
+Examples:
+```latex
+Q = XW_Q + b_Q
+\text{Attention}(Q,K,V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V
+\text{LayerNorm}(x) = \gamma \odot \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}} + \beta
+```
+
+### 4. Parameters vs. Hyperparameters
+
+Distinguish clearly:
+- **Parameters**: Learned weights (W, b, gamma, beta)
+  - Include shape, initialization strategy, whether trainable
+- **Hyperparameters**: Fixed configuration values (num_heads=8, d_k=64, dropout=0.1)
+  - Include in hyperparameters dict
+
+### 5. Data Flow Construction
+
+Create a step-by-step trace:
+```json
+{
+  "step": 1,
+  "operation_id": "project_to_query",
+  "input_from": ["component_input"],
+  "output_to": ["reshape_query"],
+  "intermediate_result": "Linear projection of input to query space",
+  "tensor_shape_at_step": "[batch, seq_len, d_model]",
+  "notes": "Uses weight matrix W_Q with Xavier initialization"
+}
+```
+
+Order matters! Number steps sequentially as they execute.
+
+### 6. Composite Operations
+
+Some operations are commonly grouped:
+- **Scaled Dot-Product Attention**: QK^T → scale → mask (optional) → softmax → @V
+- **Multi-Head Attention**: Project to Q/K/V → split heads → scaled dot-product → concat → project
+- **Feed-Forward Network**: Linear → activation → dropout → Linear
+- **Residual Connection + LayerNorm**: residual = x, x = operation(x), x = LayerNorm(x + residual)
+
+Group these to show higher-level patterns while maintaining atomic details.
+
+### 7. Tensor Transformations
+
+Reshape/transpose operations are often the trickiest part:
+```json
+{
+  "from_shape": "[batch, seq_len, d_model]",
+  "to_shape": "[batch, num_heads, seq_len, d_k]",
+  "transformation_type": "reshape_transpose",
+  "purpose": "Split embedding dimension into num_heads for parallel attention",
+  "formula_or_code": "x.view(batch, seq_len, num_heads, d_k).transpose(1, 2)"
+}
+```
+
+Be explicit about which dimensions are moved/combined.
+
+### 8. Special Cases
+
+Capture conditional behavior:
+- **Training vs. Inference**: Dropout, batch norm behavior
+- **Masking**: Causal masks for autoregressive models, padding masks
+- **Sequence length variations**: Dynamic shapes, padding handling
+- **Edge cases**: Empty sequences, single-token inputs
+
+### 9. Implementation Hints
+
+Provide practical guidance:
+- **Memory efficiency**: Gradient checkpointing, in-place operations
+- **Numerical stability**: LogSumExp trick for softmax, epsilon in normalization
+- **Gradient flow**: Residual connections, gradient clipping points
+- **Performance**: Batching strategies, kernel fusion opportunities
+
+### 10. Visualization Suggestions
+
+For each operation, suggest how to animate:
+- **High priority**: Novel operations, complex transformations, attention patterns
+- **Medium priority**: Standard operations in novel configurations
+- **Low priority**: Completely standard operations (basic ReLU, etc.)
+
+Visualization types:
+- `tensor_flow`: Show tensor moving through operations with shape changes
+- `matrix_animation`: Animate matrix multiplication, attention computation
+- `attention_heatmap`: Visualize attention weights
+- `dimension_transformation`: Show reshape/transpose visually
+
+## DOMAIN-SPECIFIC GUIDANCE
+
+### Deep Learning - Attention Mechanisms
+
+Decompose attention into:
+1. Linear projections: X → Q, K, V
+2. Reshape for multi-head: `[B,S,D] → [B,H,S,D/H]`
+3. Scaled dot-product: `QK^T / sqrt(d_k)`
+4. Optional masking: Add `-inf` to masked positions
+5. Softmax: Row-wise normalization
+6. Weighted sum: Attention @ V
+7. Reshape back: `[B,H,S,D/H] → [B,S,D]`
+8. Output projection: Linear layer
+
+### Deep Learning - Convolutions
+
+Decompose convolution into:
+1. Input padding (if needed)
+2. Im2col transformation (unfold)
+3. Matrix multiplication with kernel
+4. Reshape to output spatial dimensions
+5. Bias addition
+6. Activation function
+
+Track: kernel size, stride, padding, dilation, groups
+
+### Deep Learning - Normalization
+
+**Layer Normalization**:
+1. Compute mean: `μ = mean(x, dim=-1)`
+2. Compute variance: `σ² = var(x, dim=-1)`
+3. Normalize: `x_norm = (x - μ) / sqrt(σ² + ε)`
+4. Scale and shift: `y = γ * x_norm + β`
+
+**Batch Normalization**:
+1. Compute batch statistics (training) or use running stats (inference)
+2. Normalize
+3. Scale and shift
+
+### Computer Vision - Feature Pyramids
+
+Track:
+- Spatial dimensions at each level
+- Upsampling/downsampling operations (stride-2 conv, max pool, interpolation)
+- Feature concatenation or addition across levels
+- Channel dimension changes
+
+### NLP - Positional Encoding
+
+Decompose:
+1. Generate position indices: `[0, 1, 2, ..., seq_len-1]`
+2. Generate dimension indices: `[0, 1, 2, ..., d_model-1]`
+3. Compute sinusoidal encoding: `PE(pos, 2i) = sin(pos / 10000^(2i/d_model))`
+4. Element-wise addition: `x = x + PE`
+
+## QUALITY CRITERIA
+
+1. **Completeness**: Every operation in the component is captured
+2. **Precision**: Tensor shapes and formulas are exactly correct
+3. **Executability**: Enough detail to implement in code
+4. **Clarity**: Operations are well-organized and documented
+5. **Correctness**: Mathematical formulas match the paper
+
+## IMPORTANT NOTES
+
+- Go BEYOND what's shown in figures - read methodology text carefully
+- If a detail is not specified (e.g., initialization), use standard practices and note it
+- Don't skip "obvious" operations like activation functions or bias terms
+- For complex components, create 20-50 atomic operations
+- Ensure data_flow creates a complete directed acyclic graph
+
+## EXAMPLE OUTPUT
+
+Here's an example for decomposing "Multi-Head Self-Attention":
+
+```json
+{
+  "component_id": "multihead_attention",
+  "component_name": "Multi-Head Self-Attention",
+
+  "atomic_operations": [
+    {
+      "id": "op_q_proj",
+      "name": "query_projection",
+      "type": "linear",
+      "description": "Linear projection of input to query space. Maps input embeddings to query vectors for computing attention scores.",
+      "mathematical_formula": "Q = XW_Q + b_Q",
+      "input_tensors": [
+        {
+          "name": "X",
+          "shape": "[batch, seq_len, d_model]",
+          "dtype": "float32",
+          "description": "Input embeddings or previous layer outputs"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q",
+          "shape": "[batch, seq_len, d_model]",
+          "dtype": "float32",
+          "description": "Query vectors before reshaping for multi-head"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "W_Q",
+          "shape": "[d_model, d_model]",
+          "initialization": "Xavier uniform",
+          "trainable": true,
+          "description": "Query projection weight matrix"
+        },
+        {
+          "name": "b_Q",
+          "shape": "[d_model]",
+          "initialization": "zeros",
+          "trainable": true,
+          "description": "Query projection bias"
+        }
+      ],
+      "hyperparameters": {
+        "d_model": 512
+      },
+      "computational_complexity": "O(seq_len * d_model^2)"
+    },
+    {
+      "id": "op_q_reshape",
+      "name": "query_reshape_multihead",
+      "type": "reshape",
+      "description": "Reshape query tensor to split the embedding dimension into num_heads parallel attention heads, each with dimension d_k = d_model / num_heads.",
+      "mathematical_formula": "Q' = \\text{reshape}(Q, [\\text{batch}, \\text{seq\\_len}, \\text{num\\_heads}, d_k])",
+      "input_tensors": [
+        {
+          "name": "Q",
+          "shape": "[batch, seq_len, d_model]",
+          "dtype": "float32",
+          "description": "Query vectors from projection"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q_reshaped",
+          "shape": "[batch, seq_len, num_heads, d_k]",
+          "dtype": "float32",
+          "description": "Query vectors split into multiple heads"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {
+        "num_heads": 8,
+        "d_k": 64
+      },
+      "computational_complexity": "O(1)"
+    },
+    {
+      "id": "op_q_transpose",
+      "name": "query_transpose",
+      "type": "reshape",
+      "description": "Transpose dimensions to bring num_heads before seq_len for efficient batched matrix multiplication across heads.",
+      "mathematical_formula": "Q'' = \\text{transpose}(Q', [0, 2, 1, 3])",
+      "input_tensors": [
+        {
+          "name": "Q_reshaped",
+          "shape": "[batch, seq_len, num_heads, d_k]",
+          "dtype": "float32",
+          "description": "Query vectors split into heads"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q_multihead",
+          "shape": "[batch, num_heads, seq_len, d_k]",
+          "dtype": "float32",
+          "description": "Query vectors ready for multi-head attention"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {},
+      "computational_complexity": "O(1)"
+    },
+    {
+      "id": "op_attention_scores",
+      "name": "compute_attention_scores",
+      "type": "matmul",
+      "description": "Compute raw attention scores by matrix multiplying query and transposed key vectors. This calculates the compatibility between each query and key position.",
+      "mathematical_formula": "\\text{scores} = Q''K''^T",
+      "input_tensors": [
+        {
+          "name": "Q_multihead",
+          "shape": "[batch, num_heads, seq_len, d_k]",
+          "dtype": "float32",
+          "description": "Query vectors"
+        },
+        {
+          "name": "K_multihead",
+          "shape": "[batch, num_heads, seq_len, d_k]",
+          "dtype": "float32",
+          "description": "Key vectors (will be transposed)"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attention_scores",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Raw attention scores (unnormalized)"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {},
+      "computational_complexity": "O(num_heads * seq_len^2 * d_k)"
+    },
+    {
+      "id": "op_scale_scores",
+      "name": "scale_attention_scores",
+      "type": "elementwise",
+      "description": "Scale attention scores by 1/sqrt(d_k) to prevent dot products from growing too large and causing softmax saturation.",
+      "mathematical_formula": "\\text{scores\\_scaled} = \\frac{\\text{scores}}{\\sqrt{d_k}}",
+      "input_tensors": [
+        {
+          "name": "attention_scores",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Raw attention scores"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attention_scores_scaled",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Scaled attention scores"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {
+        "d_k": 64
+      },
+      "computational_complexity": "O(num_heads * seq_len^2)",
+      "numerical_stability_notes": "Scaling prevents gradient vanishing in softmax"
+    },
+    {
+      "id": "op_softmax",
+      "name": "attention_softmax",
+      "type": "activation",
+      "description": "Apply softmax along the last dimension to normalize attention scores into a probability distribution over key positions for each query.",
+      "mathematical_formula": "\\text{attention\\_weights} = \\text{softmax}(\\text{scores\\_scaled}, \\text{dim}=-1)",
+      "input_tensors": [
+        {
+          "name": "attention_scores_scaled",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Scaled attention scores"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attention_weights",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Normalized attention probability distribution"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {},
+      "computational_complexity": "O(num_heads * seq_len^2)",
+      "numerical_stability_notes": "Use max subtraction trick: softmax(x) = softmax(x - max(x))"
+    },
+    {
+      "id": "op_attention_dropout",
+      "name": "attention_dropout",
+      "type": "dropout",
+      "description": "Apply dropout to attention weights for regularization during training. Randomly zero out some attention connections.",
+      "mathematical_formula": "\\text{attention\\_weights'} = \\text{Dropout}(\\text{attention\\_weights}, p)",
+      "input_tensors": [
+        {
+          "name": "attention_weights",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Attention probability distribution"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attention_weights_dropout",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Attention weights after dropout"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {
+        "dropout_rate": 0.1
+      },
+      "computational_complexity": "O(num_heads * seq_len^2)"
+    },
+    {
+      "id": "op_weighted_sum",
+      "name": "compute_weighted_values",
+      "type": "matmul",
+      "description": "Compute weighted sum of value vectors using attention weights. This produces the final attention output for each query position.",
+      "mathematical_formula": "\\text{context} = \\text{attention\\_weights'} V''",
+      "input_tensors": [
+        {
+          "name": "attention_weights_dropout",
+          "shape": "[batch, num_heads, seq_len, seq_len]",
+          "dtype": "float32",
+          "description": "Attention weights"
+        },
+        {
+          "name": "V_multihead",
+          "shape": "[batch, num_heads, seq_len, d_v]",
+          "dtype": "float32",
+          "description": "Value vectors"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "context_vectors",
+          "shape": "[batch, num_heads, seq_len, d_v]",
+          "dtype": "float32",
+          "description": "Attention-weighted value vectors"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {},
+      "computational_complexity": "O(num_heads * seq_len^2 * d_v)"
+    },
+    {
+      "id": "op_concat_heads",
+      "name": "concatenate_heads",
+      "type": "reshape",
+      "description": "Transpose and reshape to concatenate all attention heads back into a single embedding dimension.",
+      "mathematical_formula": "\\text{concat} = \\text{reshape}(\\text{transpose}(\\text{context}, [0,2,1,3]), [\\text{batch}, \\text{seq\\_len}, d_{\\text{model}}])",
+      "input_tensors": [
+        {
+          "name": "context_vectors",
+          "shape": "[batch, num_heads, seq_len, d_v]",
+          "dtype": "float32",
+          "description": "Per-head attention outputs"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "concat_output",
+          "shape": "[batch, seq_len, d_model]",
+          "dtype": "float32",
+          "description": "Concatenated multi-head outputs"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": {},
+      "computational_complexity": "O(1)"
+    },
+    {
+      "id": "op_output_proj",
+      "name": "output_projection",
+      "type": "linear",
+      "description": "Final linear projection to transform concatenated attention outputs back to model dimension.",
+      "mathematical_formula": "\\text{output} = \\text{concat} W_O + b_O",
+      "input_tensors": [
+        {
+          "name": "concat_output",
+          "shape": "[batch, seq_len, d_model]",
+          "dtype": "float32",
+          "description": "Concatenated attention outputs"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attention_output",
+          "shape": "[batch, seq_len, d_model]",
+          "dtype": "float32",
+          "description": "Final multi-head attention output"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "W_O",
+          "shape": "[d_model, d_model]",
+          "initialization": "Xavier uniform",
+          "trainable": true,
+          "description": "Output projection weight matrix"
+        },
+        {
+          "name": "b_O",
+          "shape": "[d_model]",
+          "initialization": "zeros",
+          "trainable": true,
+          "description": "Output projection bias"
+        }
+      ],
+      "hyperparameters": {},
+      "computational_complexity": "O(seq_len * d_model^2)"
+    }
+  ],
+
+  "data_flow": [
+    {
+      "step": 1,
+      "operation_id": "op_q_proj",
+      "input_from": ["component_input"],
+      "output_to": ["op_q_reshape"],
+      "intermediate_result": "Query vectors in d_model space",
+      "tensor_shape_at_step": "[batch, seq_len, d_model]",
+      "notes": "Similar projections happen for K and V in parallel"
+    },
+    {
+      "step": 2,
+      "operation_id": "op_q_reshape",
+      "input_from": ["op_q_proj"],
+      "output_to": ["op_q_transpose"],
+      "intermediate_result": "Query vectors split into heads",
+      "tensor_shape_at_step": "[batch, seq_len, num_heads, d_k]",
+      "notes": "d_k = d_model / num_heads = 512 / 8 = 64"
+    },
+    {
+      "step": 3,
+      "operation_id": "op_q_transpose",
+      "input_from": ["op_q_reshape"],
+      "output_to": ["op_attention_scores"],
+      "intermediate_result": "Query vectors with head dimension first for batched matmul",
+      "tensor_shape_at_step": "[batch, num_heads, seq_len, d_k]",
+      "notes": "This shape allows efficient batched matrix multiplication across all heads"
+    },
+    {
+      "step": 4,
+      "operation_id": "op_attention_scores",
+      "input_from": ["op_q_transpose", "op_k_transpose"],
+      "output_to": ["op_scale_scores"],
+      "intermediate_result": "Raw compatibility scores between all query-key pairs",
+      "tensor_shape_at_step": "[batch, num_heads, seq_len, seq_len]",
+      "notes": "Each position attends to all positions; quadratic in sequence length"
+    },
+    {
+      "step": 5,
+      "operation_id": "op_scale_scores",
+      "input_from": ["op_attention_scores"],
+      "output_to": ["op_softmax"],
+      "intermediate_result": "Scaled attention scores",
+      "tensor_shape_at_step": "[batch, num_heads, seq_len, seq_len]",
+      "notes": "Scaling factor is 1/sqrt(64) ≈ 0.125"
+    },
+    {
+      "step": 6,
+      "operation_id": "op_softmax",
+      "input_from": ["op_scale_scores"],
+      "output_to": ["op_attention_dropout"],
+      "intermediate_result": "Normalized attention probability distribution",
+      "tensor_shape_at_step": "[batch, num_heads, seq_len, seq_len]",
+      "notes": "Each row sums to 1.0; can visualize as heatmap"
+    },
+    {
+      "step": 7,
+      "operation_id": "op_attention_dropout",
+      "input_from": ["op_softmax"],
+      "output_to": ["op_weighted_sum"],
+      "intermediate_result": "Regularized attention weights",
+      "tensor_shape_at_step": "[batch, num_heads, seq_len, seq_len]",
+      "notes": "Only active during training; identity function during inference"
+    },
+    {
+      "step": 8,
+      "operation_id": "op_weighted_sum",
+      "input_from": ["op_attention_dropout", "op_v_transpose"],
+      "output_to": ["op_concat_heads"],
+      "intermediate_result": "Context vectors from weighted value summation",
+      "tensor_shape_at_step": "[batch, num_heads, seq_len, d_v]",
+      "notes": "Each head produces independent context vectors"
+    },
+    {
+      "step": 9,
+      "operation_id": "op_concat_heads",
+      "input_from": ["op_weighted_sum"],
+      "output_to": ["op_output_proj"],
+      "intermediate_result": "Concatenated outputs from all attention heads",
+      "tensor_shape_at_step": "[batch, seq_len, d_model]",
+      "notes": "Merges num_heads * d_v back to d_model"
+    },
+    {
+      "step": 10,
+      "operation_id": "op_output_proj",
+      "input_from": ["op_concat_heads"],
+      "output_to": ["component_output"],
+      "intermediate_result": "Final multi-head attention output",
+      "tensor_shape_at_step": "[batch, seq_len, d_model]",
+      "notes": "Ready to be added to residual connection"
+    }
+  ],
+
+  "composite_operations": [
+    {
+      "id": "comp_qkv_projection",
+      "name": "QKV Projection",
+      "description": "Parallel linear projections of input to query, key, and value spaces",
+      "atomic_operations_involved": ["op_q_proj", "op_k_proj", "op_v_proj"],
+      "overall_formula": "Q = XW_Q + b_Q, \\quad K = XW_K + b_K, \\quad V = XW_V + b_V",
+      "why_grouped": "These three projections always happen together and can be fused for efficiency"
+    },
+    {
+      "id": "comp_scaled_dotprod",
+      "name": "Scaled Dot-Product Attention",
+      "description": "Core attention mechanism: compute scores, scale, normalize, and aggregate",
+      "atomic_operations_involved": ["op_attention_scores", "op_scale_scores", "op_softmax", "op_weighted_sum"],
+      "overall_formula": "\\text{Attention}(Q,K,V) = \\text{softmax}(\\frac{QK^T}{\\sqrt{d_k}})V",
+      "why_grouped": "This is the fundamental attention operation described as a unit in the paper"
+    }
+  ],
+
+  "tensor_transformations": [
+    {
+      "from_shape": "[batch, seq_len, d_model]",
+      "to_shape": "[batch, num_heads, seq_len, d_k]",
+      "transformation_type": "reshape_transpose",
+      "operations_involved": ["op_q_reshape", "op_q_transpose"],
+      "purpose": "Split embedding into multiple attention heads for parallel processing",
+      "formula_or_code": "Q.view(batch, seq_len, num_heads, d_k).transpose(1, 2)"
+    },
+    {
+      "from_shape": "[batch, num_heads, seq_len, d_v]",
+      "to_shape": "[batch, seq_len, d_model]",
+      "transformation_type": "transpose_reshape",
+      "operations_involved": ["op_concat_heads"],
+      "purpose": "Merge attention heads back to single embedding dimension",
+      "formula_or_code": "context.transpose(1, 2).contiguous().view(batch, seq_len, d_model)"
+    }
+  ],
+
+  "special_cases": [
+    {
+      "condition": "During inference (model.eval() mode)",
+      "modified_operations": ["op_attention_dropout"],
+      "description": "Dropout is disabled during inference; attention weights pass through unchanged",
+      "example": "if not training: attention_weights' = attention_weights"
+    },
+    {
+      "condition": "When using causal masking (e.g., decoder self-attention)",
+      "modified_operations": ["op_scale_scores"],
+      "description": "Add large negative value (-1e9) to attention scores for future positions before softmax",
+      "example": "scores_scaled[mask == 0] = -1e9  # Prevent attending to future"
+    },
+    {
+      "condition": "When sequence length varies (padding)",
+      "modified_operations": ["op_softmax"],
+      "description": "Mask padded positions by setting attention scores to -inf before softmax",
+      "example": "scores[padding_mask] = float('-inf')"
+    }
+  ],
+
+  "implementation_hints": [
+    {
+      "topic": "Memory Efficiency",
+      "description": "Can fuse Q/K/V projections into single matrix multiply for 3x speedup",
+      "affected_operations": ["op_q_proj", "op_k_proj", "op_v_proj"],
+      "code_snippet": "QKV = input @ W_qkv  # W_qkv shape: [d_model, 3*d_model]\nQ, K, V = QKV.split(d_model, dim=-1)"
+    },
+    {
+      "topic": "Numerical Stability",
+      "description": "Use fused scaled_dot_product_attention kernel if available (PyTorch 2.0+)",
+      "affected_operations": ["op_attention_scores", "op_scale_scores", "op_softmax", "op_weighted_sum"],
+      "code_snippet": "output = F.scaled_dot_product_attention(Q, K, V, dropout_p=0.1)"
+    },
+    {
+      "topic": "Gradient Flow",
+      "description": "Ensure contiguous() before reshape to avoid runtime errors",
+      "affected_operations": ["op_concat_heads"],
+      "code_snippet": "output = context.transpose(1, 2).contiguous().view(batch, seq, d_model)"
+    }
+  ],
+
+  "visualization_suggestions": [
+    {
+      "operation_or_step": "op_attention_scores",
+      "visualization_type": "matrix_animation",
+      "description": "Animate matrix multiplication Q @ K^T showing how each query interacts with all keys",
+      "complexity_level": "moderate",
+      "priority": "high"
+    },
+    {
+      "operation_or_step": "op_softmax",
+      "visualization_type": "attention_heatmap",
+      "description": "Show attention weights as heatmap; highlight how softmax normalizes scores",
+      "complexity_level": "simple",
+      "priority": "high"
+    },
+    {
+      "operation_or_step": "op_q_reshape",
+      "visualization_type": "dimension_transformation",
+      "description": "Visualize splitting d_model dimension into num_heads x d_k",
+      "complexity_level": "moderate",
+      "priority": "medium"
+    },
+    {
+      "operation_or_step": "op_weighted_sum",
+      "visualization_type": "tensor_flow",
+      "description": "Show how attention weights aggregate value vectors",
+      "complexity_level": "complex",
+      "priority": "high"
+    }
+  ]
+}
+```
+
+---
+
+Now, given the high-level component and methodology details, construct the atomic-level knowledge graph following this specification. Decompose the component into every single operation needed for implementation.
