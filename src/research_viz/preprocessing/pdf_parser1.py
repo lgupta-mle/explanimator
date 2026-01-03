@@ -142,7 +142,7 @@ class HybridResearchPaperParser:
             
             # Configure conversion options
             options = ConvertOptions(
-                output_format="json",
+                output_format="markdown",
                 mode="accurate",
                 paginate=False
             )
