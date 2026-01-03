@@ -182,7 +182,11 @@ class GrobidPyMuPDFParser:
         return resp.text
     
     def _extract_methodology_from_tei(self, root: ET.Element) -> Dict[str, Any]:
-        """Extract methodology section from GROBID TEI XML with nested subsections."""
+        """Extract methodology section from GROBID TEI XML.
+        
+        GROBID outputs a flat structure where subsections are siblings, not children.
+        We use section numbers (e.g., 3, 3.1, 3.2, 3.2.1) to build the hierarchy.
+        """
         ns = {'tei': self._get_namespace(root)}
         body = root.find('.//tei:text/tei:body', ns)
         
@@ -195,70 +199,122 @@ class GrobidPyMuPDFParser:
                 return ''.join(head.itertext()).strip()
             return ''
         
-        def get_section_text(div: ET.Element, include_subsections: bool = False) -> str:
-            """Extract text from a section, optionally including subsections."""
+        def get_section_number(div: ET.Element) -> str:
+            """Extract section number from head element."""
+            head = div.find('tei:head', ns)
+            if head is not None:
+                n_attr = head.get('n', '').strip()
+                # Normalize: remove trailing dot for consistency
+                return n_attr.rstrip('.')
+            return ''
+        
+        def get_section_text(div: ET.Element) -> str:
+            """Extract text from direct paragraphs only."""
             paras = []
-            
-            # Get direct paragraphs (not in subsections)
             for p in div.findall('./tei:p', ns):
                 txt = ''.join(p.itertext()).strip()
                 if txt:
                     paras.append(txt)
-            
-            # If including subsections, recursively get their text
-            if include_subsections:
-                for subdiv in div.findall('./tei:div', ns):
-                    sub_text = get_section_text(subdiv, include_subsections=True)
-                    if sub_text:
-                        paras.append(sub_text)
-            
             return '\n\n'.join(paras)
         
-        def get_subsections(div: ET.Element, level: int = 1) -> List[Dict[str, Any]]:
-            """Extract all subsections recursively with nested structure."""
+        def build_hierarchy(all_divs, parent_num):
+            """Build hierarchical structure from flat list based on section numbers."""
             subs = []
-            # Only get direct children divs
-            for subdiv in div.findall('./tei:div', ns):
-                title = get_section_title(subdiv)
-                # Get only direct paragraphs
-                direct_paras = []
-                for p in subdiv.findall('./tei:p', ns):
-                    txt = ''.join(p.itertext()).strip()
-                    if txt:
-                        direct_paras.append(txt)
-                direct_text = '\n\n'.join(direct_paras)
+            i = 0
+            while i < len(all_divs):
+                div, num = all_divs[i]
                 
-                # Recursively get nested subsections
-                nested_subs = get_subsections(subdiv, level + 1)
+                # Check if this is a direct child (e.g., 3.1 is child of 3, 3.2.1 is child of 3.2)
+                if num.startswith(parent_num + '.'):
+                    # Count dots to determine if it's a direct child
+                    parent_dots = parent_num.count('.')
+                    current_dots = num.count('.')
+                    
+                    if current_dots == parent_dots + 1:
+                        # This is a direct child
+                        title = get_section_title(div)
+                        direct_text = get_section_text(div)
+                        
+                        # Find nested subsections
+                        nested_subs = build_hierarchy(all_divs[i+1:], num)
+                        
+                        sub_data = {
+                            'title': title,
+                            'text': direct_text,
+                            'level': current_dots,
+                            'section_number': num
+                        }
+                        if nested_subs:
+                            sub_data['subsections'] = nested_subs
+                        subs.append(sub_data)
                 
-                if title or direct_text or nested_subs:
-                    sub_data = {
-                        'title': title,
-                        'text': direct_text,
-                        'level': level
-                    }
-                    if nested_subs:
-                        sub_data['subsections'] = nested_subs
-                    subs.append(sub_data)
+                i += 1
+            
             return subs
         
-        # Find methodology section
-        for div in body.findall('./tei:div', ns):
-            title = get_section_title(div)
-            title_lower = title.lower()
-            
-            if any(keyword in title_lower for keyword in self.methodology_keywords):
-                # Found methodology section
-                subsections = get_subsections(div)
-                return {
-                    'found': True,
-                    'title': title,
-                    'text': get_section_text(div, include_subsections=False),
-                    'subsections': subsections,
-                    'full_text': get_section_text(div, include_subsections=True)
-                }
+        # Priority keywords for scoring
+        exact_keywords = ['methodology', 'method', 'methods']
+        secondary_keywords = ['approach', 'implementation', 'system design', 'experimental design']
         
-        return {'found': False, 'title': None, 'text': '', 'subsections': []}
+        all_divs = body.findall('./tei:div', ns)
+        candidates = []
+        
+        # Find all matching sections and score them
+        for idx, div in enumerate(all_divs):
+            title = get_section_title(div)
+            section_num = get_section_number(div)
+            title_lower = title.lower().strip()
+            
+            score = 0
+            
+            # Exact match with "methodology" or "method" = highest priority
+            if title_lower in exact_keywords or title_lower == 'methodology':
+                score = 100
+            # Title is exactly one of the exact keywords
+            elif any(title_lower == keyword for keyword in exact_keywords):
+                score = 90
+            # Title contains exact keyword as a standalone word
+            elif any(f' {keyword} ' in f' {title_lower} ' or title_lower.startswith(keyword + ' ') or title_lower.endswith(' ' + keyword) for keyword in exact_keywords):
+                score = 80
+            # Secondary keywords
+            elif any(keyword in title_lower for keyword in secondary_keywords):
+                score = 50
+            # Any other methodology keyword
+            elif any(keyword in title_lower for keyword in self.methodology_keywords):
+                score = 30
+            
+            if score > 0:
+                candidates.append((score, idx, div, title, section_num))
+        
+        if not candidates:
+            return {'found': False, 'title': None, 'text': '', 'subsections': []}
+        
+        # Pick the best candidate (highest score)
+        candidates.sort(key=lambda x: x[0], reverse=True)
+        score, idx, div, title, section_num = candidates[0]
+        
+        # Get all remaining divs to check for subsections
+        remaining_divs = [(d, get_section_number(d)) for d in all_divs[idx+1:]]
+        
+        # Build hierarchy from flat structure
+        subsections = build_hierarchy(remaining_divs, section_num)
+        
+        # Get full text by collecting this section + all subsections
+        all_text_parts = [get_section_text(div)]
+        for d, num in remaining_divs:
+            if num.startswith(section_num + '.'):
+                text = get_section_text(d)
+                if text:
+                    all_text_parts.append(text)
+        
+        return {
+            'found': True,
+            'title': title,
+            'section_number': section_num,
+            'text': get_section_text(div),
+            'subsections': subsections,
+            'full_text': '\n\n'.join(all_text_parts)
+        }
     
     def _extract_figure_metadata_from_tei(self, root: ET.Element) -> List[Dict[str, Any]]:
         """Extract figure metadata from GROBID TEI."""
