@@ -6,8 +6,17 @@
     {
       "paper_name": "attention_is_all_you_need",
       "source_file": "resources/attention_is_all_you_need.pdf",
-      "output_directory": "output_grobid_marker/attention_is_all_you_need",
-      "tei_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
+      "output_directory": "output_grobid_marker2/attention_is_all_you_need",
+      "tei_file": "output_grobid_marker2/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
+      "introduction": {
+        "found": true,
+        "section_type": "introduction",
+        "title": "Introduction",
+        "section_number": "1",
+        "text": "Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation [35,2,5].Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures [38,24,15].\n\nRecurrent models typically factor computation along the symbol positions of the input and output sequences.Aligning the positions to steps in computation time, they generate a sequence of hidden states h t , as a function of the previous hidden state h t-1 and the input for position t.This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.Recent work has achieved significant improvements in computational efficiency through factorization tricks [21] and conditional computation [32], while also improving model performance in case of the latter.The fundamental constraint of sequential computation, however, remains.\n\nAttention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2,19].In all but a few cases [27], however, such attention mechanisms are used in conjunction with a recurrent network.\n\nIn this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.The Transformer allows for significantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs.",
+        "subsections": [],
+        "full_text": "Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation [35,2,5].Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures [38,24,15].\n\nRecurrent models typically factor computation along the symbol positions of the input and output sequences.Aligning the positions to steps in computation time, they generate a sequence of hidden states h t , as a function of the previous hidden state h t-1 and the input for position t.This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.Recent work has achieved significant improvements in computational efficiency through factorization tricks [21] and conditional computation [32], while also improving model performance in case of the latter.The fundamental constraint of sequential computation, however, remains.\n\nAttention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2,19].In all but a few cases [27], however, such attention mechanisms are used in conjunction with a recurrent network.\n\nIn this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.The Transformer allows for significantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs."
+      },
       "methodology": {
         "found": true,
         "section_type": "methodology",
@@ -81,52 +90,76 @@
         "count": 6,
         "items": [
           {
+            "figure_number": 1,
             "filename": "ad04aa6cb9e7fb36bb7a91e817e2d314_img.jpg",
+            "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/ad04aa6cb9e7fb36bb7a91e817e2d314_img.jpg",
+            "width": 594,
+            "height": 877,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "Figure 1: The Transformer -model architecture.",
+            "has_image_file": true
           },
           {
+            "figure_number": 2,
             "filename": "e94f3bbb6f7501b9a1344dd0210e5dd8_img.jpg",
+            "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/e94f3bbb6f7501b9a1344dd0210e5dd8_img.jpg",
+            "width": 171,
+            "height": 333,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "Figure 2: (left) Scaled Dot-Product Attention.(right) Multi-Head Attention consists of several attention layers running in parallel.",
+            "has_image_file": true
           },
           {
+            "figure_number": 3,
             "filename": "f961cbef0f8217e216b553bed270315b_img.jpg",
+            "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/f961cbef0f8217e216b553bed270315b_img.jpg",
+            "width": 320,
+            "height": 414,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+            "has_image_file": true
           },
           {
+            "figure_number": 4,
             "filename": "2236272d3b3db6e6363337f5a8db72f6_img.jpg",
+            "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/2236272d3b3db6e6363337f5a8db72f6_img.jpg",
+            "width": 1027,
+            "height": 551,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "Variations on the Transformer architecture.Unlisted values are identical to those of the base model.All metrics are on the English-to-German translation development set, newstest2013.Listed perplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to per-word perplexities.",
+            "has_image_file": true
           },
           {
+            "figure_number": 5,
             "filename": "7c1f9e78e0f033d391b687f1652f6e47_img.jpg",
+            "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/7c1f9e78e0f033d391b687f1652f6e47_img.jpg",
+            "width": 1018,
+            "height": 1166,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
+            "status": "saved",
             "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
-            "has_image_file": false
+            "has_image_file": true
           },
           {
+            "figure_number": 6,
             "filename": "71ab4df17511d75261da8d462d643b1a_img.jpg",
+            "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/71ab4df17511d75261da8d462d643b1a_img.jpg",
+            "width": 1014,
+            "height": 1092,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "The Transformer generalizes well to English constituency parsing (Results are on Section 23 of WSJ)",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "",
+            "has_image_file": true
           }
         ]
       },
@@ -135,7 +168,7 @@
         "items": [
           {
             "table_number": 1,
-            "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_1.md",
+            "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_1.md",
             "rows": 3,
             "columns": 4,
             "source": "marker",
@@ -145,7 +178,7 @@
           },
           {
             "table_number": 2,
-            "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_2.md",
+            "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_2.md",
             "rows": 5,
             "columns": 4,
             "source": "marker",
@@ -155,7 +188,7 @@
           },
           {
             "table_number": 3,
-            "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_3.md",
+            "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_3.md",
             "rows": 12,
             "columns": 5,
             "source": "marker",
@@ -165,7 +198,7 @@
           },
           {
             "table_number": 4,
-            "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_4.md",
+            "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_4.md",
             "rows": 21,
             "columns": 13,
             "source": "marker",
@@ -175,7 +208,7 @@
           },
           {
             "table_number": 5,
-            "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_5.md",
+            "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_5.md",
             "rows": 13,
             "columns": 3,
             "source": "marker",
@@ -194,8 +227,17 @@
     {
       "paper_name": "manimator",
       "source_file": "resources/manimator.pdf",
-      "output_directory": "output_grobid_marker/manimator",
-      "tei_file": "output_grobid_marker/manimator/manimator.tei.xml",
+      "output_directory": "output_grobid_marker2/manimator",
+      "tei_file": "output_grobid_marker2/manimator/manimator.tei.xml",
+      "introduction": {
+        "found": true,
+        "section_type": "introduction",
+        "title": "Introduction",
+        "section_number": "1",
+        "text": "The ability to grasp complex scientific and mathematical concepts is fundamental to STEM education.However, traditional learning materials, such as textbooks and research papers, often present information in dense, static formats.Dynamic visualizations have proven effective in improving understanding and engagement, making abstract concepts more concrete and intuitive (Schoenherr et al., 2024).\n\nThe Manim animation engine (The Manim Community Developers, 2024) has demonstrated the power of code-driven animations for explaining intricate topics.Despite the poten-* Equal contribution 1 Department of Computer Science and Engineering, PES University, Bengaluru, India.Correspondence to: Samarth P <pes2ug22cs495@pesu.pesu.edu>,Vyoman Jain <pes2ug22cs672@pesu.pesu.edu>,Shiva Golugula <pes2ug22cs525@pesu.pesu.edu>,Motamarri Sai Sathvik <pes2ug22cs321@pesu.pesu.edu>.\n\ntial, creating such high-quality animations requires significant effort, programming expertise (Python), and domain knowledge.This bottleneck limits the widespread availability of custom visualizations tailored to specific concepts or research findings.However, recent advancements in Large Language Models (LLMs) have shown remarkable capabilities in text understanding, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).\n\nIn this paper, we present manimator, a system that harnesses LLMs to bridge the gap between complex textual information and engaging visual explanations.Manimator takes either a natural language prompt describing a concept or a full research paper (via PDF upload or using its arXiv ID) as input.\n\nIt employs a multi-stage pipeline:\n\n1. Scene Understanding and Planning: An LLM analyzes the input to extract key concepts, relevant formulas, and potential visual representations, structuring them into a detailed \"scene description.\"2. Code Generation: A code-specialized LLM translates the structured scene description into Python code compatible with the Manim engine.3. Rendering: The generated Manim code is executed to produce a video animation.\n\nManimator aims to empower educators, students, and researchers to quickly visualize complex ideas, thereby enhancing learning and scientific communication.We plan to open-source the tool and provide public access through a Gradio interface and API.",
+        "subsections": [],
+        "full_text": "The ability to grasp complex scientific and mathematical concepts is fundamental to STEM education.However, traditional learning materials, such as textbooks and research papers, often present information in dense, static formats.Dynamic visualizations have proven effective in improving understanding and engagement, making abstract concepts more concrete and intuitive (Schoenherr et al., 2024).\n\nThe Manim animation engine (The Manim Community Developers, 2024) has demonstrated the power of code-driven animations for explaining intricate topics.Despite the poten-* Equal contribution 1 Department of Computer Science and Engineering, PES University, Bengaluru, India.Correspondence to: Samarth P <pes2ug22cs495@pesu.pesu.edu>,Vyoman Jain <pes2ug22cs672@pesu.pesu.edu>,Shiva Golugula <pes2ug22cs525@pesu.pesu.edu>,Motamarri Sai Sathvik <pes2ug22cs321@pesu.pesu.edu>.\n\ntial, creating such high-quality animations requires significant effort, programming expertise (Python), and domain knowledge.This bottleneck limits the widespread availability of custom visualizations tailored to specific concepts or research findings.However, recent advancements in Large Language Models (LLMs) have shown remarkable capabilities in text understanding, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).\n\nIn this paper, we present manimator, a system that harnesses LLMs to bridge the gap between complex textual information and engaging visual explanations.Manimator takes either a natural language prompt describing a concept or a full research paper (via PDF upload or using its arXiv ID) as input.\n\nIt employs a multi-stage pipeline:\n\n1. Scene Understanding and Planning: An LLM analyzes the input to extract key concepts, relevant formulas, and potential visual representations, structuring them into a detailed \"scene description.\"2. Code Generation: A code-specialized LLM translates the structured scene description into Python code compatible with the Manim engine.3. Rendering: The generated Manim code is executed to produce a video animation.\n\nManimator aims to empower educators, students, and researchers to quickly visualize complex ideas, thereby enhancing learning and scientific communication.We plan to open-source the tool and provide public access through a Gradio interface and API."
+      },
       "methodology": {
         "found": true,
         "section_type": "methodology",
@@ -243,20 +285,28 @@
         "count": 7,
         "items": [
           {
+            "figure_number": 1,
             "filename": "49ad3a646d84bcfeac02bdf2b3792a3e_img.jpg",
+            "saved_as": "output_grobid_marker2/manimator/images/49ad3a646d84bcfeac02bdf2b3792a3e_img.jpg",
+            "width": 1270,
+            "height": 418,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "Interface used for collecting human evaluation ratings on generated animations.",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "Figure 1.The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID.The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.",
+            "has_image_file": true
           },
           {
+            "figure_number": 2,
             "filename": "a71911ad87414271aeb190e0eebcb989_img.jpg",
+            "saved_as": "output_grobid_marker2/manimator/images/a71911ad87414271aeb190e0eebcb989_img.jpg",
+            "width": 921,
+            "height": 1310,
+            "format": "JPEG",
             "source": "marker_api",
-            "status": "error",
-            "error": "a bytes-like object is required, not 'str'",
-            "caption": "Interface used for collecting human evaluation ratings on generated animations.",
-            "has_image_file": false
+            "status": "saved",
+            "caption": "",
+            "has_image_file": true
           },
           {
             "figure_number": 3,
@@ -300,7 +350,7 @@
         "items": [
           {
             "table_number": 1,
-            "file": "output_grobid_marker/manimator/tables/manimator_table_1.md",
+            "file": "output_grobid_marker2/manimator/tables/manimator_table_1.md",
             "rows": 4,
             "columns": 7,
             "source": "marker",
@@ -310,7 +360,7 @@
           },
           {
             "table_number": 2,
-            "file": "output_grobid_marker/manimator/tables/manimator_table_2.md",
+            "file": "output_grobid_marker2/manimator/tables/manimator_table_2.md",
             "rows": 2,
             "columns": 7,
             "source": "marker",
@@ -320,9 +370,9 @@
           },
           {
             "table_number": 3,
-            "file": "output_grobid_marker/manimator/tables/manimator_table_3.md",
-            "rows": 6,
-            "columns": 6,
+            "file": "output_grobid_marker2/manimator/tables/manimator_table_3.md",
+            "rows": 12,
+            "columns": 5,
             "source": "marker",
             "status": "extracted",
             "caption": "",

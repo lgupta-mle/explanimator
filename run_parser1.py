@@ -10,7 +10,7 @@ from src.research_viz.preprocessing.pdf_parser1 import HybridResearchPaperParser
 # API key will be automatically loaded from .env file
 parser = HybridResearchPaperParser(
     grobid_url="http://localhost:8070",
-    output_base_dir="./output_grobid_marker",
+    output_base_dir="./output_grobid_marker2",
     datalab_api_key=True  # Use API key from .env file
 )
 
