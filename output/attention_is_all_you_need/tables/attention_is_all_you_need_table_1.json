@@ -1,5 +1,0 @@
-{
-  "table_number": 1,
-  "caption": "",
-  "content": "| Layer Type                  | Complexity per Layer   | Sequential Operations   | Maximum Path Length   |\n|-----------------------------|------------------------|-------------------------|-----------------------|\n| Self-Attention              | O ( n 2 · d )          | O (1)                   | O (1)                 |\n| Recurrent                   | O ( n · d 2 )          | O ( n )                 | O ( n )               |\n| Convolutional               | O ( k · n · d 2 )      | O (1)                   | O ( log k ( n ))      |\n| Self-Attention (restricted) | O ( r · n · d )        | O (1)                   | O ( n/r )             |"
-}
