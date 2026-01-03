@@ -9,10 +9,10 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any
 import requests
 import xml.etree.ElementTree as ET
-from marker.converters.pdf import PdfConverter
-from marker.models import create_model_dict
-from marker.output import text_from_rendered
+from dotenv import load_dotenv
+from datalab_sdk import DatalabClient, ConvertOptions
 
+load_dotenv()
 
 class HybridResearchPaperParser:
     """
@@ -29,12 +29,24 @@ class HybridResearchPaperParser:
         self,
         grobid_url: str = "http://localhost:8070",
         output_base_dir: str = "./output_grobid_marker",
-        timeout: int = 180
+        timeout: int = 180,
+        datalab_api_key: bool = True
     ):
         self.grobid_url = grobid_url.rstrip("/")
         self.timeout = timeout
         self.output_base_dir = Path(output_base_dir)
         self.output_base_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize Datalab client for Marker API
+        print("Initializing Datalab Marker client...")
+        if datalab_api_key:
+            DATALAB_API_KEY = os.getenv("DATALAB_API_KEY")
+            if not DATALAB_API_KEY:
+                raise ValueError("DATALAB_API_KEY not found in environment. Please set it in .env file")
+            self.datalab_client = DatalabClient(api_key=DATALAB_API_KEY)
+        else:
+            self.datalab_client = DatalabClient()  # Will use default auth
+        print("✓ Datalab client initialized")
         
         self.methodology_keywords = [
             'method', 'methods', 'methodology', 'methodologies',
@@ -44,10 +56,10 @@ class HybridResearchPaperParser:
             'model architecture', 'architecture', 'model', 'framework'
         ]
         
-        # Load Marker models once
-        print("Loading Marker models for image extraction...")
-        self.marker_models = create_model_dict()
-        print("Marker models loaded!")
+        self.related_works_keywords = [
+            'related work', 'related works', 'background', 'preliminaries',
+            'literature review', 'prior work', 'previous work'
+        ]
     
     def parse_directory(self, directory_path: str) -> List[Dict[str, Any]]:
         """Parse all PDFs in a directory."""
@@ -120,27 +132,28 @@ class HybridResearchPaperParser:
                 f.write(tei_xml)
             
             root = ET.fromstring(tei_xml)
-            methodology = self._extract_methodology_from_tei(root)
+            methodology = self._extract_section_from_tei(root, self.methodology_keywords, 'methodology')
+            related_works = self._extract_section_from_tei(root, self.related_works_keywords, 'related_works')
             grobid_figures = self._extract_figure_metadata_from_tei(root)
             grobid_tables = self._extract_table_metadata_from_tei(root)
             
-            # Step 2: Extract images and tables with Marker
-            print(f"  [2/2] Extracting images and tables with Marker...")
-            converter = PdfConverter(
-                artifact_dict=self.marker_models,
-                config={
-                    "use_llm": False,
-                    "paginate_output": False,
-                    "extract_images": True
-                }
-            )
-            rendered = converter(str(pdf_path))
+            # Step 2: Extract images and tables with Marker API
+            print(f"  [2/2] Extracting images and tables with Marker API...")
             
-            # Extract images and get markdown for tables
-            marker_images = rendered.images if hasattr(rendered, 'images') else {}
-            from marker.converters.pdf import text_from_rendered
-            full_text, _, _ = text_from_rendered(rendered)
-            out_meta = getattr(rendered, "metadata", {})
+            # Configure conversion options
+            options = ConvertOptions(
+                output_format="json",
+                mode="accurate",
+                paginate=False
+            )
+            
+            # Convert PDF using Datalab API
+            result = self.datalab_client.convert(str(pdf_path), options=options)
+            
+            # Extract markdown and images
+            full_text = result.markdown
+            marker_images = result.images if hasattr(result, 'images') else {}
+            out_meta = getattr(result, "metadata", {})
             
             # Save Marker images
             saved_images = self._save_marker_images(marker_images, images_dir, paper_name)
@@ -161,6 +174,7 @@ class HybridResearchPaperParser:
                 'output_directory': str(paper_output_dir),
                 'tei_file': str(tei_path),
                 'methodology': methodology,
+                'related_works': related_works,
                 'figures': {
                     'count': len(merged_figures),
                     'items': merged_figures
@@ -213,11 +227,16 @@ class HybridResearchPaperParser:
             raise RuntimeError(f"GROBID error {resp.status_code}: {resp.text[:500]}")
         return resp.text
     
-    def _extract_methodology_from_tei(self, root: ET.Element) -> Dict[str, Any]:
-        """Extract methodology section from GROBID TEI XML.
+    def _extract_section_from_tei(self, root: ET.Element, keywords: List[str], section_type: str) -> Dict[str, Any]:
+        """Extract a section (methodology, related works, etc.) from GROBID TEI XML.
         
         GROBID outputs a flat structure where subsections are siblings, not children.
         We use section numbers (e.g., 3, 3.1, 3.2, 3.2.1) to build the hierarchy.
+        
+        Args:
+            root: TEI XML root element
+            keywords: List of keywords to match in section titles
+            section_type: Type of section being extracted (for logging)
         """
         ns = {'tei': self._get_namespace(root)}
         body = root.find('.//tei:text/tei:body', ns)
@@ -284,39 +303,22 @@ class HybridResearchPaperParser:
             
             return subs
         
-        # Priority keywords for scoring
-        exact_keywords = ['methodology', 'method', 'methods']
-        secondary_keywords = ['approach', 'implementation', 'system design', 'experimental design']
-        
         all_divs = body.findall('./tei:div', ns)
         candidates = []
         
-        # Find all matching sections and score them
+        # Find all matching sections - check if title CONTAINS any keyword
         for idx, div in enumerate(all_divs):
             title = get_section_title(div)
             section_num = get_section_number(div)
             title_lower = title.lower().strip()
             
-            score = 0
-            
-            # Exact match with "methodology" or "method" = highest priority
-            if title_lower in exact_keywords or title_lower == 'methodology':
-                score = 100
-            # Title is exactly one of the exact keywords
-            elif any(title_lower == keyword for keyword in exact_keywords):
-                score = 90
-            # Title contains exact keyword as a standalone word
-            elif any(f' {keyword} ' in f' {title_lower} ' or title_lower.startswith(keyword + ' ') or title_lower.endswith(' ' + keyword) for keyword in exact_keywords):
-                score = 80
-            # Secondary keywords
-            elif any(keyword in title_lower for keyword in secondary_keywords):
-                score = 50
-            # Any other methodology keyword
-            elif any(keyword in title_lower for keyword in self.methodology_keywords):
-                score = 30
-            
-            if score > 0:
-                candidates.append((score, idx, div, title, section_num))
+            # Check if title contains any of the keywords
+            for keyword in keywords:
+                if keyword in title_lower:
+                    # Score based on how well it matches
+                    score = 100 if title_lower == keyword else 80
+                    candidates.append((score, idx, div, title, section_num))
+                    break  # Only count first match
         
         if not candidates:
             return {'found': False, 'title': None, 'text': '', 'subsections': []}
@@ -341,6 +343,7 @@ class HybridResearchPaperParser:
         
         return {
             'found': True,
+            'section_type': section_type,
             'title': title,
             'section_number': section_num,
             'text': get_section_text(div),
@@ -382,25 +385,30 @@ class HybridResearchPaperParser:
         
         return tables
     
-    def _save_marker_images(self, images: Dict[str, Any], images_dir: Path, paper_name: str) -> List[Dict[str, Any]]:
-        """Save images extracted by Marker (matches pdf_parser2.py logic)."""
+    def _save_marker_images(self, marker_images: Dict, images_dir: Path, paper_name: str) -> List[Dict]:
+        """Save images extracted by Marker API."""
+        from PIL import Image
+        import io
+        
         saved_images = []
         
-        for img_name, img_data in images.items():
+        for img_name, img_data in marker_images.items():
             try:
-                # Marker returns images as PIL Image objects
-                safe_img_name = str(img_name).replace("/", "_").replace(os.sep, "_")
-                image_filename = f"{paper_name}_{safe_img_name}"
-                if not image_filename.endswith(('.png', '.jpg', '.jpeg')):
-                    image_filename += '.png'
+                # img_data is bytes from API
+                image_filename = img_name
+                if not any(image_filename.endswith(ext) for ext in ['.png', '.jpg', '.jpeg']):
+                    image_filename = f"{paper_name}_{img_name}.png"
                 
                 image_path = images_dir / image_filename
                 
-                # Save the image
-                img_data.save(image_path)
+                # Save image bytes to file
+                with open(image_path, 'wb') as f:
+                    f.write(img_data)
                 
-                # Get image info
-                width, height = img_data.size
+                # Get image info using PIL
+                img = Image.open(io.BytesIO(img_data))
+                width, height = img.size
+                img_format = img.format or 'PNG'
                 
                 saved_images.append({
                     'figure_number': len(saved_images) + 1,
@@ -408,14 +416,14 @@ class HybridResearchPaperParser:
                     'saved_as': str(image_path),
                     'width': width,
                     'height': height,
-                    'format': img_data.format or 'PNG',
-                    'source': 'marker',
+                    'format': img_format,
+                    'source': 'marker_api',
                     'status': 'saved'
                 })
             except Exception as e:
                 saved_images.append({
                     'filename': img_name,
-                    'source': 'marker',
+                    'source': 'marker_api',
                     'status': 'error',
                     'error': str(e)
                 })

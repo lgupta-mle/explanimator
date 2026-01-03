@@ -1,3 +1,0 @@
-| Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the |
-|---------------------------------------------------------------------------------------------------|
-| English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.    |
