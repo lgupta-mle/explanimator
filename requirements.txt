@@ -1,3 +1,12 @@
-marker-pdf>=0.2.0
-Pillow>=10.0.0
-requests>=2.31.0
+# Python 3.10+ required
+# Java JDK 21+ required (for GROBID)
+
+# Core dependencies (required for both parsers)
+requests
+Pillow
+
+# For pdf_parser1.py (GROBID + Marker)
+marker-pdf
+
+# For pdf_parser2.py (GROBID + PyMuPDF)
+pymupdf

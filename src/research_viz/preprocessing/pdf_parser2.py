@@ -115,15 +115,16 @@ class GrobidPyMuPDFParser:
             grobid_figures = self._extract_figure_metadata_from_tei(root)
             grobid_tables = self._extract_table_metadata_from_tei(root)
             
-            # Step 2: Extract images with PyMuPDF
-            print(f"  [2/2] Extracting images with PyMuPDF...")
+            # Step 2: Extract images and tables with PyMuPDF
+            print(f"  [2/2] Extracting images and tables with PyMuPDF...")
             pymupdf_images = self._extract_images_with_pymupdf(str(pdf_path), images_dir, paper_name)
+            pymupdf_tables = self._extract_tables_with_pymupdf(str(pdf_path), tables_dir, paper_name)
             
             # Merge GROBID figure metadata with PyMuPDF images
             merged_figures = self._merge_figure_data(grobid_figures, pymupdf_images)
             
-            # Save table metadata from GROBID
-            saved_tables = self._save_table_metadata(grobid_tables, tables_dir, paper_name)
+            # Merge GROBID table metadata with PyMuPDF tables
+            merged_tables = self._merge_table_data(grobid_tables, pymupdf_tables)
             
             # Prepare results
             results = {
@@ -138,8 +139,9 @@ class GrobidPyMuPDFParser:
                     'note': 'Images from PyMuPDF, captions from GROBID'
                 },
                 'tables': {
-                    'count': len(saved_tables),
-                    'items': saved_tables
+                    'count': len(merged_tables),
+                    'items': merged_tables,
+                    'note': 'Tables from PyMuPDF, captions from GROBID'
                 },
                 'status': 'success'
             }
@@ -455,28 +457,115 @@ class GrobidPyMuPDFParser:
         
         return merged
     
-    def _save_table_metadata(self, grobid_tables: List[Dict], tables_dir: Path, paper_name: str) -> List[Dict]:
-        """Save table metadata from GROBID."""
-        saved_tables = []
+    def _extract_tables_with_pymupdf(self, pdf_path: str, tables_dir: Path, paper_name: str) -> List[Dict]:
+        """Extract tables from PDF using PyMuPDF."""
+        import fitz
         
-        for table in grobid_tables:
-            table_num = table.get('table_number')
-            caption = table.get('caption', '')
+        tables = []
+        table_count = 0
+        
+        try:
+            pdf_document = fitz.open(pdf_path)
             
-            # Save caption to file
-            caption_file = tables_dir / f"{paper_name}_table_{table_num}_caption.txt"
-            with open(caption_file, 'w', encoding='utf-8') as f:
-                f.write(caption)
+            for page_num in range(len(pdf_document)):
+                page = pdf_document[page_num]
+                
+                # Try to find tables using PyMuPDF's find_tables
+                try:
+                    # PyMuPDF 1.23.0+ has find_tables method
+                    if hasattr(page, 'find_tables'):
+                        tabs = page.find_tables()
+                        
+                        for tab_idx, tab in enumerate(tabs.tables):
+                            table_count += 1
+                            
+                            # Extract table as pandas DataFrame or list
+                            try:
+                                # Get table data
+                                table_data = tab.extract()
+                                
+                                # Convert to markdown format
+                                md_lines = []
+                                if table_data:
+                                    # Header
+                                    if len(table_data) > 0:
+                                        header = table_data[0]
+                                        md_lines.append('| ' + ' | '.join(str(cell) if cell else '' for cell in header) + ' |')
+                                        md_lines.append('| ' + ' | '.join(['---'] * len(header)) + ' |')
+                                    
+                                    # Data rows
+                                    for row in table_data[1:]:
+                                        md_lines.append('| ' + ' | '.join(str(cell) if cell else '' for cell in row) + ' |')
+                                
+                                table_md = '\n'.join(md_lines)
+                                
+                                # Save table as markdown
+                                table_file = tables_dir / f"{paper_name}_table_{table_count}.md"
+                                with open(table_file, 'w', encoding='utf-8') as f:
+                                    f.write(table_md)
+                                
+                                tables.append({
+                                    'table_number': table_count,
+                                    'page': page_num + 1,
+                                    'file': str(table_file),
+                                    'rows': len(table_data),
+                                    'columns': len(table_data[0]) if table_data else 0,
+                                    'source': 'pymupdf',
+                                    'status': 'extracted'
+                                })
+                            except Exception as e:
+                                tables.append({
+                                    'table_number': table_count,
+                                    'page': page_num + 1,
+                                    'source': 'pymupdf',
+                                    'status': 'error',
+                                    'error': str(e)
+                                })
+                except AttributeError:
+                    # find_tables not available in this PyMuPDF version
+                    pass
             
-            saved_tables.append({
-                'table_number': table_num,
+            pdf_document.close()
+            
+        except Exception as e:
+            print(f"    Error extracting tables with PyMuPDF: {str(e)}")
+        
+        return tables
+    
+    def _merge_table_data(self, grobid_tables: List[Dict], pymupdf_tables: List[Dict]) -> List[Dict]:
+        """Merge GROBID table metadata with PyMuPDF extracted tables."""
+        merged = []
+        
+        # Match by table number
+        for pymupdf_table in pymupdf_tables:
+            if pymupdf_table.get('status') != 'extracted':
+                continue
+                
+            table_num = pymupdf_table.get('table_number')
+            caption = ''
+            
+            # Find matching GROBID caption
+            if table_num <= len(grobid_tables):
+                caption = grobid_tables[table_num - 1].get('caption', '')
+            
+            merged.append({
+                **pymupdf_table,
                 'caption': caption,
-                'caption_file': str(caption_file),
-                'source': 'grobid',
-                'status': 'metadata_only'
+                'has_content': True
             })
         
-        return saved_tables
+        # Add any GROBID tables that weren't extracted by PyMuPDF
+        for idx, grobid_table in enumerate(grobid_tables, 1):
+            if idx > len(pymupdf_tables):
+                merged.append({
+                    'table_number': idx,
+                    'caption': grobid_table.get('caption', ''),
+                    'source': 'grobid',
+                    'status': 'metadata_only',
+                    'has_content': False
+                })
+        
+        return merged
     
     def _get_namespace(self, root: ET.Element) -> str:
         """Extract namespace from TEI root element."""

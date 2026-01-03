@@ -17,12 +17,12 @@ from marker.output import text_from_rendered
 class HybridResearchPaperParser:
     """
     Hybrid parser combining:
-    - GROBID: Clean section structure, methodology extraction, table metadata
-    - Marker: Image extraction only (optimized - skips text processing)
+    - GROBID: Clean section structure, methodology extraction, figure/table metadata
+    - Marker: Image and table extraction from PDF
     
-    This approach is optimized to avoid duplicate text processing:
-    - GROBID handles all text/section extraction
-    - Marker only extracts images (faster than full processing)
+    This approach leverages the strengths of both tools:
+    - GROBID handles text/section extraction and provides captions
+    - Marker extracts actual images and tables from the PDF
     """
     
     def __init__(
@@ -124,20 +124,22 @@ class HybridResearchPaperParser:
             grobid_figures = self._extract_figure_metadata_from_tei(root)
             grobid_tables = self._extract_table_metadata_from_tei(root)
             
-            # Step 2: Extract images with Marker (optimized - images only)
-            print(f"  [2/2] Extracting images with Marker...")
+            # Step 2: Extract images and tables with Marker
+            print(f"  [2/2] Extracting images and tables with Marker...")
             converter = PdfConverter(
                 artifact_dict=self.marker_models,
                 config={
                     "use_llm": False,
-                    "paginate_output": False,  # Skip pagination
-                    "extract_images": True      # Ensure images are extracted
+                    "paginate_output": False,
+                    "extract_images": True
                 }
             )
             rendered = converter(str(pdf_path))
             
-            # Extract only images, skip text processing
+            # Extract images and get markdown for tables
             marker_images = rendered.images if hasattr(rendered, 'images') else {}
+            from marker.converters.pdf import text_from_rendered
+            full_text, _, _ = text_from_rendered(rendered)
             out_meta = getattr(rendered, "metadata", {})
             
             # Save Marker images
@@ -146,8 +148,11 @@ class HybridResearchPaperParser:
             # Merge GROBID figure metadata with Marker images
             merged_figures = self._merge_figure_data(grobid_figures, saved_images)
             
-            # Use GROBID table metadata (no need to extract from Marker markdown)
-            merged_tables = self._save_table_metadata(grobid_tables, tables_dir, paper_name)
+            # Extract tables from Marker markdown
+            marker_tables = self._extract_tables_from_markdown(full_text, tables_dir, paper_name)
+            
+            # Merge GROBID table metadata with Marker tables
+            merged_tables = self._merge_table_data(grobid_tables, marker_tables)
             
             # Prepare results
             results = {
@@ -449,28 +454,78 @@ class HybridResearchPaperParser:
         
         return merged
     
-    def _save_table_metadata(self, grobid_tables: List[Dict], tables_dir: Path, paper_name: str) -> List[Dict]:
-        """Save table metadata from GROBID (no Marker table extraction needed)."""
-        saved_tables = []
+    def _extract_tables_from_markdown(self, markdown_text: str, tables_dir: Path, paper_name: str) -> List[Dict]:
+        """Extract tables from Marker markdown output."""
+        import re
         
-        for table in grobid_tables:
-            table_num = table.get('table_number')
-            caption = table.get('caption', '')
+        tables = []
+        # Find all markdown tables (lines starting with |)
+        table_pattern = r'((?:\|.+\|\n)+)'
+        matches = re.finditer(table_pattern, markdown_text)
+        
+        for idx, match in enumerate(matches, 1):
+            table_md = match.group(1).strip()
             
-            # Save caption to file for reference
-            caption_file = tables_dir / f"{paper_name}_table_{table_num}_caption.txt"
-            with open(caption_file, 'w', encoding='utf-8') as f:
-                f.write(caption)
+            # Skip if it's just a separator line
+            lines = table_md.split('\n')
+            if len(lines) < 2:
+                continue
             
-            saved_tables.append({
-                'table_number': table_num,
-                'caption': caption,
-                'caption_file': str(caption_file),
-                'source': 'grobid',
-                'status': 'metadata_only'
+            # Skip if all lines are separators
+            if all('---' in line or '===' in line for line in lines):
+                continue
+            
+            # Save table as markdown file
+            table_file = tables_dir / f"{paper_name}_table_{idx}.md"
+            with open(table_file, 'w', encoding='utf-8') as f:
+                f.write(table_md)
+            
+            # Parse table to get row/col count
+            rows = [line for line in lines if not all(c in '|-:= ' for c in line)]
+            cols = len(rows[0].split('|')) - 2 if rows else 0  # -2 for leading/trailing |
+            
+            tables.append({
+                'table_number': idx,
+                'file': str(table_file),
+                'rows': len(rows),
+                'columns': cols,
+                'source': 'marker',
+                'status': 'extracted'
             })
         
-        return saved_tables
+        return tables
+    
+    def _merge_table_data(self, grobid_tables: List[Dict], marker_tables: List[Dict]) -> List[Dict]:
+        """Merge GROBID table metadata with Marker extracted tables."""
+        merged = []
+        
+        # Match by table number
+        for marker_table in marker_tables:
+            table_num = marker_table.get('table_number')
+            caption = ''
+            
+            # Find matching GROBID caption
+            if table_num <= len(grobid_tables):
+                caption = grobid_tables[table_num - 1].get('caption', '')
+            
+            merged.append({
+                **marker_table,
+                'caption': caption,
+                'has_content': marker_table.get('status') == 'extracted'
+            })
+        
+        # Add any GROBID tables that weren't extracted by Marker
+        for idx, grobid_table in enumerate(grobid_tables, 1):
+            if idx > len(marker_tables):
+                merged.append({
+                    'table_number': idx,
+                    'caption': grobid_table.get('caption', ''),
+                    'source': 'grobid',
+                    'status': 'metadata_only',
+                    'has_content': False
+                })
+        
+        return merged
     
     def _get_namespace(self, root: ET.Element) -> str:
         """Extract namespace from TEI root element."""
