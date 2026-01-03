@@ -27,6 +27,15 @@ for result in results:
     if result.get('status') == 'success':
         print(f"\n✓ {result['paper_name']}")
         
+        # Introduction
+        intro = result.get('introduction', {})
+        print(f"   📖 Introduction: {'Found' if intro.get('found') else 'Not found'}")
+        if intro.get('found'):
+            print(f"     Title: {intro.get('title')}")
+            print(f"     Direct text: {len(intro.get('text', ''))} chars")
+            print(f"     Full text (with subsections): {len(intro.get('full_text', ''))} chars")
+            print(f"     Subsections: {len(intro.get('subsections', []))}")
+        
         # Methodology
         meth = result.get('methodology', {})
         print(f"   🧪 Methodology: {'Found' if meth.get('found') else 'Not found'}")
@@ -47,6 +56,15 @@ for result in results:
                         print_subsections(sub['subsections'], indent)
             
             print_subsections(meth.get('subsections', []))
+        
+        # Related Works
+        related = result.get('related_works', {})
+        print(f"   📚 Related Works: {'Found' if related.get('found') else 'Not found'}")
+        if related.get('found'):
+            print(f"     Title: {related.get('title')}")
+            print(f"     Direct text: {len(related.get('text', ''))} chars")
+            print(f"     Full text (with subsections): {len(related.get('full_text', ''))} chars")
+            print(f"     Subsections: {len(related.get('subsections', []))}")
         
         # Figures
         figs = result.get('figures', {})
