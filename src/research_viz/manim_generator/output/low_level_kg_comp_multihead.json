@@ -1,0 +1,1297 @@
+{
+  "component_id": "comp_multihead",
+  "component_name": "Multi-Head Attention",
+  "atomic_operations": [
+    {
+      "id": "op_q_mm",
+      "name": "query_linear_matmul",
+      "type": "matmul",
+      "description": "Projects the query-side inputs into the query subspace via matrix multiplication. Produces a packed tensor that holds all heads before bias is added.",
+      "mathematical_formula": "\\tilde{Q} = X_Q W_Q",
+      "input_tensors": [
+        {
+          "name": "X_Q",
+          "shape": "[batch, seq_q, d_model]",
+          "dtype": "float32",
+          "description": "Input tensor providing queries (encoder output or decoder hidden states)"
+        },
+        {
+          "name": "W_Q",
+          "shape": "[d_model, h\\cdot d_k]",
+          "dtype": "float32",
+          "description": "Query projection weights"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q_lin",
+          "shape": "[batch, seq_q, h*d_k]",
+          "dtype": "float32",
+          "description": "Linearly projected queries before bias"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "W_Q",
+          "shape": "[d_model, h*d_k]",
+          "initialization": "Xavier uniform",
+          "trainable": true,
+          "description": "Weight matrix for query projection"
+        }
+      ],
+      "hyperparameters": [
+        {
+          "name": "h",
+          "value": "8",
+          "description": "Number of attention heads"
+        },
+        {
+          "name": "d_k",
+          "value": "64",
+          "description": "Per-head query/key dimension"
+        },
+        {
+          "name": "d_model",
+          "value": "512",
+          "description": "Model width"
+        }
+      ],
+      "computational_complexity": "O(batch * seq_q * d_model * h*d_k)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_q_bias",
+      "name": "query_bias_add",
+      "type": "elementwise",
+      "description": "Adds a learnable bias to the linearly projected queries. Broadcasts bias across batch and sequence dimensions.",
+      "mathematical_formula": "Q = \\tilde{Q} + b_Q",
+      "input_tensors": [
+        {
+          "name": "Q_lin",
+          "shape": "[batch, seq_q, h*d_k]",
+          "dtype": "float32",
+          "description": "Projected queries before bias"
+        },
+        {
+          "name": "b_Q",
+          "shape": "[h*d_k]",
+          "dtype": "float32",
+          "description": "Query projection bias"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q",
+          "shape": "[batch, seq_q, h*d_k]",
+          "dtype": "float32",
+          "description": "Biased query projections"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "b_Q",
+          "shape": "[h*d_k]",
+          "initialization": "zeros",
+          "trainable": true,
+          "description": "Bias for query projection"
+        }
+      ],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * seq_q * h*d_k)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_k_mm",
+      "name": "key_linear_matmul",
+      "type": "matmul",
+      "description": "Projects the key-side inputs into the key subspace via matrix multiplication. Supports cross-attention by allowing a different source for keys/values.",
+      "mathematical_formula": "\\tilde{K} = X_KV W_K",
+      "input_tensors": [
+        {
+          "name": "X_KV",
+          "shape": "[batch, seq_kv, d_model]",
+          "dtype": "float32",
+          "description": "Input tensor providing keys/values (same as X_Q for self-attention)"
+        },
+        {
+          "name": "W_K",
+          "shape": "[d_model, h\\cdot d_k]",
+          "dtype": "float32",
+          "description": "Key projection weights"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "K_lin",
+          "shape": "[batch, seq_kv, h*d_k]",
+          "dtype": "float32",
+          "description": "Linearly projected keys before bias"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "W_K",
+          "shape": "[d_model, h*d_k]",
+          "initialization": "Xavier uniform",
+          "trainable": true,
+          "description": "Weight matrix for key projection"
+        }
+      ],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * seq_kv * d_model * h*d_k)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_k_bias",
+      "name": "key_bias_add",
+      "type": "elementwise",
+      "description": "Adds a learnable bias to the linearly projected keys. Bias is broadcast across batch and sequence.",
+      "mathematical_formula": "K = \\tilde{K} + b_K",
+      "input_tensors": [
+        {
+          "name": "K_lin",
+          "shape": "[batch, seq_kv, h*d_k]",
+          "dtype": "float32",
+          "description": "Projected keys before bias"
+        },
+        {
+          "name": "b_K",
+          "shape": "[h*d_k]",
+          "dtype": "float32",
+          "description": "Key projection bias"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "K",
+          "shape": "[batch, seq_kv, h*d_k]",
+          "dtype": "float32",
+          "description": "Biased key projections"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "b_K",
+          "shape": "[h*d_k]",
+          "initialization": "zeros",
+          "trainable": true,
+          "description": "Bias for key projection"
+        }
+      ],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * seq_kv * h*d_k)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_v_mm",
+      "name": "value_linear_matmul",
+      "type": "matmul",
+      "description": "Projects the value-side inputs into the value subspace via matrix multiplication. Typically d_v = d_k for Transformer-base.",
+      "mathematical_formula": "\\tilde{V} = X_KV W_V",
+      "input_tensors": [
+        {
+          "name": "X_KV",
+          "shape": "[batch, seq_kv, d_model]",
+          "dtype": "float32",
+          "description": "Input tensor providing keys/values"
+        },
+        {
+          "name": "W_V",
+          "shape": "[d_model, h\\cdot d_v]",
+          "dtype": "float32",
+          "description": "Value projection weights"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "V_lin",
+          "shape": "[batch, seq_kv, h*d_v]",
+          "dtype": "float32",
+          "description": "Linearly projected values before bias"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "W_V",
+          "shape": "[d_model, h*d_v]",
+          "initialization": "Xavier uniform",
+          "trainable": true,
+          "description": "Weight matrix for value projection"
+        }
+      ],
+      "hyperparameters": [
+        {
+          "name": "d_v",
+          "value": "64",
+          "description": "Per-head value dimension"
+        }
+      ],
+      "computational_complexity": "O(batch * seq_kv * d_model * h*d_v)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_v_bias",
+      "name": "value_bias_add",
+      "type": "elementwise",
+      "description": "Adds a learnable bias to the linearly projected values.",
+      "mathematical_formula": "V = \\tilde{V} + b_V",
+      "input_tensors": [
+        {
+          "name": "V_lin",
+          "shape": "[batch, seq_kv, h*d_v]",
+          "dtype": "float32",
+          "description": "Projected values before bias"
+        },
+        {
+          "name": "b_V",
+          "shape": "[h*d_v]",
+          "dtype": "float32",
+          "description": "Value projection bias"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "V",
+          "shape": "[batch, seq_kv, h*d_v]",
+          "dtype": "float32",
+          "description": "Biased value projections"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "b_V",
+          "shape": "[h*d_v]",
+          "initialization": "zeros",
+          "trainable": true,
+          "description": "Bias for value projection"
+        }
+      ],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * seq_kv * h*d_v)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_q_reshape",
+      "name": "query_split_heads_reshape",
+      "type": "reshape",
+      "description": "Reshapes the packed query dimension to separate heads. Converts the last dimension from h*d_k to [h, d_k].",
+      "mathematical_formula": "Q' = \\text{reshape}(Q, [B, S_q, h, d_k])",
+      "input_tensors": [
+        {
+          "name": "Q",
+          "shape": "[batch, seq_q, h*d_k]",
+          "dtype": "float32",
+          "description": "Packed queries"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q_heads_seq_last",
+          "shape": "[batch, seq_q, h, d_k]",
+          "dtype": "float32",
+          "description": "Queries with explicit head dimension"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_q_transpose",
+      "name": "query_heads_to_bhsd",
+      "type": "reshape",
+      "description": "Permutes dimensions to [batch, heads, seq, d_k] for efficient batched matmul across heads.",
+      "mathematical_formula": "Q_h = \\text{transpose}(Q', [0,2,1,3])",
+      "input_tensors": [
+        {
+          "name": "Q_heads_seq_last",
+          "shape": "[batch, seq_q, h, d_k]",
+          "dtype": "float32",
+          "description": "Queries with head dimension"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Q_h",
+          "shape": "[batch, h, seq_q, d_k]",
+          "dtype": "float32",
+          "description": "Queries ready for attention matmul"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_k_reshape",
+      "name": "key_split_heads_reshape",
+      "type": "reshape",
+      "description": "Reshapes the packed key dimension to separate heads.",
+      "mathematical_formula": "K' = \\text{reshape}(K, [B, S_{kv}, h, d_k])",
+      "input_tensors": [
+        {
+          "name": "K",
+          "shape": "[batch, seq_kv, h*d_k]",
+          "dtype": "float32",
+          "description": "Packed keys"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "K_heads_seq_last",
+          "shape": "[batch, seq_kv, h, d_k]",
+          "dtype": "float32",
+          "description": "Keys with head dimension"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_k_transpose",
+      "name": "key_heads_to_bhsd",
+      "type": "reshape",
+      "description": "Permutes dimensions to [batch, heads, seq_kv, d_k] for batched attention.",
+      "mathematical_formula": "K_h = \\text{transpose}(K', [0,2,1,3])",
+      "input_tensors": [
+        {
+          "name": "K_heads_seq_last",
+          "shape": "[batch, seq_kv, h, d_k]",
+          "dtype": "float32",
+          "description": "Keys with head dimension"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "K_h",
+          "shape": "[batch, h, seq_kv, d_k]",
+          "dtype": "float32",
+          "description": "Keys ready for attention matmul"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_v_reshape",
+      "name": "value_split_heads_reshape",
+      "type": "reshape",
+      "description": "Reshapes the packed value dimension to separate heads.",
+      "mathematical_formula": "V' = \\text{reshape}(V, [B, S_{kv}, h, d_v])",
+      "input_tensors": [
+        {
+          "name": "V",
+          "shape": "[batch, seq_kv, h*d_v]",
+          "dtype": "float32",
+          "description": "Packed values"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "V_heads_seq_last",
+          "shape": "[batch, seq_kv, h, d_v]",
+          "dtype": "float32",
+          "description": "Values with head dimension"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_v_transpose",
+      "name": "value_heads_to_bhsd",
+      "type": "reshape",
+      "description": "Permutes dimensions to [batch, heads, seq_kv, d_v] for batched attention.",
+      "mathematical_formula": "V_h = \\text{transpose}(V', [0,2,1,3])",
+      "input_tensors": [
+        {
+          "name": "V_heads_seq_last",
+          "shape": "[batch, seq_kv, h, d_v]",
+          "dtype": "float32",
+          "description": "Values with head dimension"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "V_h",
+          "shape": "[batch, h, seq_kv, d_v]",
+          "dtype": "float32",
+          "description": "Values ready for attention weighting"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_scores_matmul",
+      "name": "attention_scores_matmul",
+      "type": "matmul",
+      "description": "Computes raw attention scores for each head via batched matrix multiplication of queries with transposed keys. Measures compatibility of each query with every key.",
+      "mathematical_formula": "S = Q_h K_h^{\\top}",
+      "input_tensors": [
+        {
+          "name": "Q_h",
+          "shape": "[batch, h, seq_q, d_k]",
+          "dtype": "float32",
+          "description": "Per-head queries"
+        },
+        {
+          "name": "K_h",
+          "shape": "[batch, h, seq_kv, d_k]",
+          "dtype": "float32",
+          "description": "Per-head keys"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "scores",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Raw attention scores"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * h * seq_q * seq_kv * d_k)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_scores_scale",
+      "name": "scale_scores_by_sqrt_dk",
+      "type": "elementwise",
+      "description": "Scales the raw attention scores by 1/sqrt(d_k) to prevent softmax saturation at large dimensions. Applied element-wise across all heads and positions.",
+      "mathematical_formula": "S_{scaled} = \\frac{S}{\\sqrt{d_k}}",
+      "input_tensors": [
+        {
+          "name": "scores",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Raw attention scores"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "scores_scaled",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Scaled attention scores"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [
+        {
+          "name": "d_k",
+          "value": "64",
+          "description": "Per-head key/query dimension used for scaling"
+        }
+      ],
+      "computational_complexity": "O(batch * h * seq_q * seq_kv)",
+      "numerical_stability_notes": "Scaling reduces magnitude to improve softmax gradients"
+    },
+    {
+      "id": "op_add_masks",
+      "name": "add_attention_masks",
+      "type": "elementwise",
+      "description": "Adds an additive mask to scaled scores prior to softmax. Supports padding masks and optional causal masks by adding a large negative number (e.g., -1e9) at masked positions.",
+      "mathematical_formula": "S_{masked} = S_{scaled} + M",
+      "input_tensors": [
+        {
+          "name": "scores_scaled",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Scaled attention scores"
+        },
+        {
+          "name": "M",
+          "shape": "[batch, 1 or h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Additive attention mask (0 for valid, -\\infty for masked; broadcastable over heads)"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "scores_masked",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Masked scores passed to softmax"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * h * seq_q * seq_kv)",
+      "numerical_stability_notes": "Use a large negative constant that is representable in dtype (e.g., -1e9 for fp32, -1e4 for fp16) to avoid NaNs"
+    },
+    {
+      "id": "op_scores_softmax",
+      "name": "scores_rowwise_softmax",
+      "type": "activation",
+      "description": "Applies a row-wise softmax over the last dimension to turn masked scores into attention probabilities for each query position and head.",
+      "mathematical_formula": "A = \\operatorname{softmax}(S_{masked}) = \\frac{\\exp(S_{masked} - \\max(S_{masked},\\text{axis}=-1))}{\\sum_j \\exp(S_{masked} - \\max(S_{masked},\\text{axis}=-1))}",
+      "input_tensors": [
+        {
+          "name": "scores_masked",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Masked attention scores"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attn_probs",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Attention probability distribution"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * h * seq_q * seq_kv)",
+      "numerical_stability_notes": "Use max-subtraction before exp to prevent overflow; compute softmax in float32 even under mixed precision"
+    },
+    {
+      "id": "op_attn_dropout",
+      "name": "attention_weights_dropout",
+      "type": "dropout",
+      "description": "Randomly drops a fraction of attention probabilities during training for regularization. During inference, this operation is a no-op.",
+      "mathematical_formula": "A' = \\mathrm{Dropout}(A; p)",
+      "input_tensors": [
+        {
+          "name": "attn_probs",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Attention probabilities"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "attn_probs_do",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Attention probabilities after dropout"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [
+        {
+          "name": "dropout_attn",
+          "value": "0.1",
+          "description": "Dropout rate for attention weights"
+        },
+        {
+          "name": "training",
+          "value": "true/false",
+          "description": "Enables dropout only during training"
+        }
+      ],
+      "computational_complexity": "O(batch * h * seq_q * seq_kv)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_weighted_sum",
+      "name": "apply_attention_to_values",
+      "type": "matmul",
+      "description": "Computes the per-head context vectors as the weighted sum of values using attention probabilities.",
+      "mathematical_formula": "C_h = A' V_h",
+      "input_tensors": [
+        {
+          "name": "attn_probs_do",
+          "shape": "[batch, h, seq_q, seq_kv]",
+          "dtype": "float32",
+          "description": "Attention probabilities per head"
+        },
+        {
+          "name": "V_h",
+          "shape": "[batch, h, seq_kv, d_v]",
+          "dtype": "float32",
+          "description": "Per-head values"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "contexts_h",
+          "shape": "[batch, h, seq_q, d_v]",
+          "dtype": "float32",
+          "description": "Per-head context vectors"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * h * seq_q * seq_kv * d_v)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_ctx_transpose",
+      "name": "transpose_contexts_to_bshd",
+      "type": "reshape",
+      "description": "Moves the head dimension after sequence to prepare for concatenation by reshape.",
+      "mathematical_formula": "C' = \\text{transpose}(C_h, [0,2,1,3])",
+      "input_tensors": [
+        {
+          "name": "contexts_h",
+          "shape": "[batch, h, seq_q, d_v]",
+          "dtype": "float32",
+          "description": "Per-head context vectors"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "contexts_seq_heads_last",
+          "shape": "[batch, seq_q, h, d_v]",
+          "dtype": "float32",
+          "description": "Contexts transposed for merge"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_ctx_reshape",
+      "name": "merge_heads_concat",
+      "type": "reshape",
+      "description": "Concatenates per-head context vectors by reshaping [h, d_v] into a single last dimension. Produces a tensor at model width when h*d_v = d_model.",
+      "mathematical_formula": "C = \\text{reshape}(C', [B, S_q, h\\cdot d_v])",
+      "input_tensors": [
+        {
+          "name": "contexts_seq_heads_last",
+          "shape": "[batch, seq_q, h, d_v]",
+          "dtype": "float32",
+          "description": "Contexts with head dimension"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "concat_context",
+          "shape": "[batch, seq_q, h*d_v]",
+          "dtype": "float32",
+          "description": "Concatenated multi-head context"
+        }
+      ],
+      "parameters": [],
+      "hyperparameters": [],
+      "computational_complexity": "O(1)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_out_mm",
+      "name": "output_projection_matmul",
+      "type": "matmul",
+      "description": "Projects concatenated contexts back to model dimension via an output weight matrix. This mixes information across heads.",
+      "mathematical_formula": "\\tilde{Y} = C W_O",
+      "input_tensors": [
+        {
+          "name": "concat_context",
+          "shape": "[batch, seq_q, h*d_v]",
+          "dtype": "float32",
+          "description": "Concatenated context from all heads"
+        },
+        {
+          "name": "W_O",
+          "shape": "[h\\cdot d_v, d_model]",
+          "dtype": "float32",
+          "description": "Output projection weights"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Y_lin",
+          "shape": "[batch, seq_q, d_model]",
+          "dtype": "float32",
+          "description": "Projected outputs before bias"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "W_O",
+          "shape": "[h*d_v, d_model]",
+          "initialization": "Xavier uniform",
+          "trainable": true,
+          "description": "Output projection matrix"
+        }
+      ],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * seq_q * h*d_v * d_model)",
+      "numerical_stability_notes": null
+    },
+    {
+      "id": "op_out_bias",
+      "name": "output_projection_bias_add",
+      "type": "elementwise",
+      "description": "Adds bias to the output projection result to form the final multi-head attention output. The parent sublayer may apply dropout after this step.",
+      "mathematical_formula": "Y = Y_{lin} + b_O",
+      "input_tensors": [
+        {
+          "name": "Y_lin",
+          "shape": "[batch, seq_q, d_model]",
+          "dtype": "float32",
+          "description": "Projected outputs before bias"
+        },
+        {
+          "name": "b_O",
+          "shape": "[d_model]",
+          "dtype": "float32",
+          "description": "Output projection bias"
+        }
+      ],
+      "output_tensors": [
+        {
+          "name": "Y",
+          "shape": "[batch, seq_q, d_model]",
+          "dtype": "float32",
+          "description": "Final multi-head attention outputs"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "b_O",
+          "shape": "[d_model]",
+          "initialization": "zeros",
+          "trainable": true,
+          "description": "Bias for output projection"
+        }
+      ],
+      "hyperparameters": [],
+      "computational_complexity": "O(batch * seq_q * d_model)",
+      "numerical_stability_notes": null
+    }
+  ],
+  "data_flow": [
+    {
+      "step": 1,
+      "operation_id": "op_q_mm",
+      "input_from": [
+        "component_input:X_Q"
+      ],
+      "output_to": [
+        "op_q_bias"
+      ],
+      "intermediate_result": "Linear query projection without bias",
+      "tensor_shape_at_step": "[batch, seq_q, h*d_k]",
+      "notes": "W_Q uses Xavier initialization"
+    },
+    {
+      "step": 2,
+      "operation_id": "op_q_bias",
+      "input_from": [
+        "op_q_mm"
+      ],
+      "output_to": [
+        "op_q_reshape"
+      ],
+      "intermediate_result": "Biased query projections",
+      "tensor_shape_at_step": "[batch, seq_q, h*d_k]",
+      "notes": null
+    },
+    {
+      "step": 3,
+      "operation_id": "op_k_mm",
+      "input_from": [
+        "component_input:X_KV"
+      ],
+      "output_to": [
+        "op_k_bias"
+      ],
+      "intermediate_result": "Linear key projection without bias",
+      "tensor_shape_at_step": "[batch, seq_kv, h*d_k]",
+      "notes": "For self-attention X_KV == X_Q"
+    },
+    {
+      "step": 4,
+      "operation_id": "op_k_bias",
+      "input_from": [
+        "op_k_mm"
+      ],
+      "output_to": [
+        "op_k_reshape"
+      ],
+      "intermediate_result": "Biased key projections",
+      "tensor_shape_at_step": "[batch, seq_kv, h*d_k]",
+      "notes": null
+    },
+    {
+      "step": 5,
+      "operation_id": "op_v_mm",
+      "input_from": [
+        "component_input:X_KV"
+      ],
+      "output_to": [
+        "op_v_bias"
+      ],
+      "intermediate_result": "Linear value projection without bias",
+      "tensor_shape_at_step": "[batch, seq_kv, h*d_v]",
+      "notes": null
+    },
+    {
+      "step": 6,
+      "operation_id": "op_v_bias",
+      "input_from": [
+        "op_v_mm"
+      ],
+      "output_to": [
+        "op_v_reshape"
+      ],
+      "intermediate_result": "Biased value projections",
+      "tensor_shape_at_step": "[batch, seq_kv, h*d_v]",
+      "notes": null
+    },
+    {
+      "step": 7,
+      "operation_id": "op_q_reshape",
+      "input_from": [
+        "op_q_bias"
+      ],
+      "output_to": [
+        "op_q_transpose"
+      ],
+      "intermediate_result": "Queries split into heads",
+      "tensor_shape_at_step": "[batch, seq_q, h, d_k]",
+      "notes": "Pure view/reshape"
+    },
+    {
+      "step": 8,
+      "operation_id": "op_q_transpose",
+      "input_from": [
+        "op_q_reshape"
+      ],
+      "output_to": [
+        "op_scores_matmul"
+      ],
+      "intermediate_result": "Queries permuted to [B,h,S_q,d_k]",
+      "tensor_shape_at_step": "[batch, h, seq_q, d_k]",
+      "notes": null
+    },
+    {
+      "step": 9,
+      "operation_id": "op_k_reshape",
+      "input_from": [
+        "op_k_bias"
+      ],
+      "output_to": [
+        "op_k_transpose"
+      ],
+      "intermediate_result": "Keys split into heads",
+      "tensor_shape_at_step": "[batch, seq_kv, h, d_k]",
+      "notes": null
+    },
+    {
+      "step": 10,
+      "operation_id": "op_k_transpose",
+      "input_from": [
+        "op_k_reshape"
+      ],
+      "output_to": [
+        "op_scores_matmul"
+      ],
+      "intermediate_result": "Keys permuted to [B,h,S_kv,d_k]",
+      "tensor_shape_at_step": "[batch, h, seq_kv, d_k]",
+      "notes": null
+    },
+    {
+      "step": 11,
+      "operation_id": "op_v_reshape",
+      "input_from": [
+        "op_v_bias"
+      ],
+      "output_to": [
+        "op_v_transpose"
+      ],
+      "intermediate_result": "Values split into heads",
+      "tensor_shape_at_step": "[batch, seq_kv, h, d_v]",
+      "notes": null
+    },
+    {
+      "step": 12,
+      "operation_id": "op_v_transpose",
+      "input_from": [
+        "op_v_reshape"
+      ],
+      "output_to": [
+        "op_weighted_sum"
+      ],
+      "intermediate_result": "Values permuted to [B,h,S_kv,d_v]",
+      "tensor_shape_at_step": "[batch, h, seq_kv, d_v]",
+      "notes": null
+    },
+    {
+      "step": 13,
+      "operation_id": "op_scores_matmul",
+      "input_from": [
+        "op_q_transpose",
+        "op_k_transpose"
+      ],
+      "output_to": [
+        "op_scores_scale"
+      ],
+      "intermediate_result": "Raw attention compatibility scores",
+      "tensor_shape_at_step": "[batch, h, seq_q, seq_kv]",
+      "notes": "Quadratic in sequence lengths"
+    },
+    {
+      "step": 14,
+      "operation_id": "op_scores_scale",
+      "input_from": [
+        "op_scores_matmul"
+      ],
+      "output_to": [
+        "op_add_masks"
+      ],
+      "intermediate_result": "Scaled scores by 1/sqrt(d_k)",
+      "tensor_shape_at_step": "[batch, h, seq_q, seq_kv]",
+      "notes": null
+    },
+    {
+      "step": 15,
+      "operation_id": "op_add_masks",
+      "input_from": [
+        "op_scores_scale",
+        "component_input:Mask(optional)"
+      ],
+      "output_to": [
+        "op_scores_softmax"
+      ],
+      "intermediate_result": "Masked, scaled scores",
+      "tensor_shape_at_step": "[batch, h, seq_q, seq_kv]",
+      "notes": "Broadcast mask; -inf for illegal connections"
+    },
+    {
+      "step": 16,
+      "operation_id": "op_scores_softmax",
+      "input_from": [
+        "op_add_masks"
+      ],
+      "output_to": [
+        "op_attn_dropout"
+      ],
+      "intermediate_result": "Attention probabilities",
+      "tensor_shape_at_step": "[batch, h, seq_q, seq_kv]",
+      "notes": "Row-wise over last dim"
+    },
+    {
+      "step": 17,
+      "operation_id": "op_attn_dropout",
+      "input_from": [
+        "op_scores_softmax"
+      ],
+      "output_to": [
+        "op_weighted_sum"
+      ],
+      "intermediate_result": "Regularized attention probabilities",
+      "tensor_shape_at_step": "[batch, h, seq_q, seq_kv]",
+      "notes": "No-op during inference"
+    },
+    {
+      "step": 18,
+      "operation_id": "op_weighted_sum",
+      "input_from": [
+        "op_attn_dropout",
+        "op_v_transpose"
+      ],
+      "output_to": [
+        "op_ctx_transpose"
+      ],
+      "intermediate_result": "Per-head context vectors",
+      "tensor_shape_at_step": "[batch, h, seq_q, d_v]",
+      "notes": null
+    },
+    {
+      "step": 19,
+      "operation_id": "op_ctx_transpose",
+      "input_from": [
+        "op_weighted_sum"
+      ],
+      "output_to": [
+        "op_ctx_reshape"
+      ],
+      "intermediate_result": "Contexts with sequence first",
+      "tensor_shape_at_step": "[batch, seq_q, h, d_v]",
+      "notes": null
+    },
+    {
+      "step": 20,
+      "operation_id": "op_ctx_reshape",
+      "input_from": [
+        "op_ctx_transpose"
+      ],
+      "output_to": [
+        "op_out_mm"
+      ],
+      "intermediate_result": "Concatenated multi-head contexts",
+      "tensor_shape_at_step": "[batch, seq_q, h*d_v]",
+      "notes": "h*d_v equals d_model in base config"
+    },
+    {
+      "step": 21,
+      "operation_id": "op_out_mm",
+      "input_from": [
+        "op_ctx_reshape"
+      ],
+      "output_to": [
+        "op_out_bias"
+      ],
+      "intermediate_result": "Output projection before bias",
+      "tensor_shape_at_step": "[batch, seq_q, d_model]",
+      "notes": null
+    },
+    {
+      "step": 22,
+      "operation_id": "op_out_bias",
+      "input_from": [
+        "op_out_mm"
+      ],
+      "output_to": [
+        "component_output"
+      ],
+      "intermediate_result": "Final multi-head attention outputs",
+      "tensor_shape_at_step": "[batch, seq_q, d_model]",
+      "notes": "Parent block may apply dropout, residual add, and layer norm"
+    }
+  ],
+  "composite_operations": [
+    {
+      "id": "comp_qkv_projection",
+      "name": "QKV Projections",
+      "description": "Parallel linear projections from model space to per-head Q, K, V spaces, each split into h heads.",
+      "atomic_operations_involved": [
+        "op_q_mm",
+        "op_q_bias",
+        "op_k_mm",
+        "op_k_bias",
+        "op_v_mm",
+        "op_v_bias",
+        "op_q_reshape",
+        "op_q_transpose",
+        "op_k_reshape",
+        "op_k_transpose",
+        "op_v_reshape",
+        "op_v_transpose"
+      ],
+      "overall_formula": "Q = \\operatorname{reshape}(X_Q W_Q + b_Q, [B,S_q,h,d_k])\\;;\\; K = \\operatorname{reshape}(X_{KV} W_K + b_K, [B,S_{kv},h,d_k])\\;;\\; V = \\operatorname{reshape}(X_{KV} W_V + b_V, [B,S_{kv},h,d_v])",
+      "why_grouped": "These steps always occur together to create per-head Q, K, and V tensors used by attention."
+    },
+    {
+      "id": "comp_scaled_dot_product",
+      "name": "Scaled Dot-Product Attention (per head)",
+      "description": "The core attention operation: compute scores, scale, mask, normalize, and weight values.",
+      "atomic_operations_involved": [
+        "op_scores_matmul",
+        "op_scores_scale",
+        "op_add_masks",
+        "op_scores_softmax",
+        "op_attn_dropout",
+        "op_weighted_sum"
+      ],
+      "overall_formula": "C_h = \\operatorname{softmax}\\!\\left(\\frac{Q_h K_h^{\\top}}{\\sqrt{d_k}} + M\\right) V_h",
+      "why_grouped": "These operations form the standard attention kernel described as a single function in the paper."
+    },
+    {
+      "id": "comp_multihead_assembly",
+      "name": "Multi-Head Assembly and Output",
+      "description": "Concatenates per-head contexts and applies a final linear projection back to model dimension.",
+      "atomic_operations_involved": [
+        "op_ctx_transpose",
+        "op_ctx_reshape",
+        "op_out_mm",
+        "op_out_bias"
+      ],
+      "overall_formula": "Y = \\left[ C_h \\right]_{h=1}^H W_O + b_O",
+      "why_grouped": "These steps convert per-head results into a single tensor suitable for downstream layers."
+    }
+  ],
+  "tensor_transformations": [
+    {
+      "from_shape": "[batch, seq_q, h*d_k]",
+      "to_shape": "[batch, h, seq_q, d_k]",
+      "transformation_type": "reshape_transpose",
+      "operations_involved": [
+        "op_q_reshape",
+        "op_q_transpose"
+      ],
+      "purpose": "Prepare queries for batched per-head attention matmul.",
+      "formula_or_code": "Q_h = Q.view(B, S_q, h, d_k).transpose(1, 2)"
+    },
+    {
+      "from_shape": "[batch, seq_kv, h*d_k]",
+      "to_shape": "[batch, h, seq_kv, d_k]",
+      "transformation_type": "reshape_transpose",
+      "operations_involved": [
+        "op_k_reshape",
+        "op_k_transpose"
+      ],
+      "purpose": "Prepare keys for batched per-head attention matmul.",
+      "formula_or_code": "K_h = K.view(B, S_kv, h, d_k).transpose(1, 2)"
+    },
+    {
+      "from_shape": "[batch, seq_kv, h*d_v]",
+      "to_shape": "[batch, h, seq_kv, d_v]",
+      "transformation_type": "reshape_transpose",
+      "operations_involved": [
+        "op_v_reshape",
+        "op_v_transpose"
+      ],
+      "purpose": "Prepare values for batched per-head attention aggregation.",
+      "formula_or_code": "V_h = V.view(B, S_kv, h, d_v).transpose(1, 2)"
+    },
+    {
+      "from_shape": "[batch, h, seq_q, d_v]",
+      "to_shape": "[batch, seq_q, h*d_v]",
+      "transformation_type": "transpose_reshape",
+      "operations_involved": [
+        "op_ctx_transpose",
+        "op_ctx_reshape"
+      ],
+      "purpose": "Concatenate all head outputs into a single embedding dimension.",
+      "formula_or_code": "C = C_h.transpose(1, 2).contiguous().view(B, S_q, h*d_v)"
+    }
+  ],
+  "special_cases": [
+    {
+      "condition": "Decoder self-attention with causal masking",
+      "modified_operations": [
+        "op_add_masks"
+      ],
+      "description": "Prohibit attending to future positions by filling upper-triangular positions with -inf before softmax.",
+      "example": "M = (1 - tril(ones(S_q, S_kv))) * (-1e9)  # broadcast over batch and heads"
+    },
+    {
+      "condition": "Variable-length sequences with padding",
+      "modified_operations": [
+        "op_add_masks",
+        "op_scores_softmax"
+      ],
+      "description": "Mask padded key positions (and optionally padded queries) so they contribute zero probability.",
+      "example": "M[b, :, i, j] = -1e9 if key_padding_mask[b, j] == 1 else 0"
+    },
+    {
+      "condition": "Inference with key/value caching (auto-regressive decoding)",
+      "modified_operations": [
+        "op_k_mm",
+        "op_k_bias",
+        "op_v_mm",
+        "op_v_bias",
+        "op_k_reshape",
+        "op_v_reshape",
+        "op_k_transpose",
+        "op_v_transpose",
+        "op_scores_matmul",
+        "op_weighted_sum"
+      ],
+      "description": "Only the last query token (seq_q=1) is processed; new K and V are appended to cached tensors along seq_kv to avoid recomputation.",
+      "example": "K_cache = concat(K_cache, K_new, dim=2); V_cache = concat(V_cache, V_new, dim=2)"
+    },
+    {
+      "condition": "Mixed precision (fp16/bf16)",
+      "modified_operations": [
+        "op_scores_softmax",
+        "op_add_masks",
+        "op_scores_scale"
+      ],
+      "description": "Compute softmax and masking in float32 for stability; cast back to model dtype afterwards.",
+      "example": "attn_probs = softmax(scores_masked.float(), dim=-1).to(dtype)"
+    }
+  ],
+  "implementation_hints": [
+    {
+      "topic": "Mask construction and broadcasting",
+      "description": "Build an additive mask M that is broadcastable to [B, h, S_q, S_kv]. Combine padding and causal masks by summation to minimize kernel calls.",
+      "affected_operations": [
+        "op_add_masks"
+      ],
+      "code_snippet": "M = 0.0\nif causal:\n    causal_mask = torch.full((S_q, S_kv), float('-inf'), device=x.device)\n    causal_mask = torch.triu(causal_mask, diagonal=1)\n    M = M + causal_mask\nif key_padding_mask is not None:\n    M = M + key_padding_mask[:, None, None, :].to(x.dtype).masked_fill(key_padding_mask[:, None, None, :].bool(), float('-inf'))"
+    },
+    {
+      "topic": "Fusing QKV projections",
+      "description": "Use a single matmul to compute Q, K, V, then split along the last dimension for significant speedups.",
+      "affected_operations": [
+        "op_q_mm",
+        "op_k_mm",
+        "op_v_mm",
+        "op_q_bias",
+        "op_k_bias",
+        "op_v_bias"
+      ],
+      "code_snippet": "W_qkv = torch.empty(d_model, 3*h*d_k).to(device)\nb_qkv = torch.zeros(3*h*d_k, device=device)\nqkv = X @ W_qkv + b_qkv\nQ, K, V = qkv.split([h*d_k, h*d_k, h*d_v], dim=-1)"
+    },
+    {
+      "topic": "Use optimized attention kernels",
+      "description": "Prefer PyTorch 2.x F.scaled_dot_product_attention or FlashAttention to fuse scaling, masking, softmax, dropout, and matmuls for improved speed and memory.",
+      "affected_operations": [
+        "op_scores_matmul",
+        "op_scores_scale",
+        "op_add_masks",
+        "op_scores_softmax",
+        "op_attn_dropout",
+        "op_weighted_sum"
+      ],
+      "code_snippet": "Y = torch.nn.functional.scaled_dot_product_attention(Q_h, K_h, V_h, attn_mask=M, dropout_p=dropout_p, is_causal=causal)"
+    },
+    {
+      "topic": "Contiguity before view",
+      "description": "Call contiguous() after transpose and before view/reshape to avoid runtime errors and ensure correct memory layout.",
+      "affected_operations": [
+        "op_ctx_reshape",
+        "op_q_reshape",
+        "op_k_reshape",
+        "op_v_reshape"
+      ],
+      "code_snippet": "C = C_h.transpose(1, 2).contiguous().view(B, S_q, h*d_v)"
+    },
+    {
+      "topic": "Numerical stability of softmax",
+      "description": "Subtract per-row max before exp, and clamp additive mask value based on dtype to avoid NaNs.",
+      "affected_operations": [
+        "op_scores_softmax",
+        "op_add_masks"
+      ],
+      "code_snippet": "scores_masked = scores_scaled + mask\nscores_masked = scores_masked - scores_masked.max(dim=-1, keepdim=True).values\nattn_probs = scores_masked.softmax(dim=-1)"
+    },
+    {
+      "topic": "Gradient flow and clipping",
+      "description": "Backprop through attention can produce large gradients; consider gradient clipping at the module boundary.",
+      "affected_operations": [
+        "op_out_bias"
+      ],
+      "code_snippet": null
+    }
+  ],
+  "visualization_suggestions": [
+    {
+      "operation_or_step": "op_scores_matmul",
+      "visualization_type": "matrix_animation",
+      "description": "Animate Q_h @ K_h^T per head to show compatibility computation across all positions.",
+      "complexity_level": "moderate",
+      "priority": "high"
+    },
+    {
+      "operation_or_step": "op_scores_softmax",
+      "visualization_type": "attention_heatmap",
+      "description": "Display attention probabilities as a heatmap for each head; show effect of masking and scaling.",
+      "complexity_level": "simple",
+      "priority": "high"
+    },
+    {
+      "operation_or_step": "op_ctx_reshape",
+      "visualization_type": "dimension_transformation",
+      "description": "Illustrate concatenation of h heads back into a single d_model vector per position.",
+      "complexity_level": "moderate",
+      "priority": "medium"
+    },
+    {
+      "operation_or_step": "op_add_masks",
+      "visualization_type": "tensor_flow",
+      "description": "Show how padding and causal masks broadcast over batch and heads and zero out illegal connections after softmax.",
+      "complexity_level": "complex",
+      "priority": "high"
+    }
+  ]
+}

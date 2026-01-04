@@ -12,33 +12,14 @@ def encode_image_to_base64(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
 
-def is_optional_field(field_schema: dict) -> bool:
-    """
-    Check if a field schema represents an Optional type (Union with None).
-    """
-    # Check for anyOf with null type (Pydantic v2 pattern for Optional)
-    if "anyOf" in field_schema:
-        types = [item.get("type") for item in field_schema["anyOf"] if "type" in item]
-        if "null" in types:
-            return True
-
-    # Check for single type that is null
-    if field_schema.get("type") == "null":
-        return True
-
-    # Check for default value of None
-    if field_schema.get("default") is None:
-        return True
-
-    return False
-
-
 def make_schema_openai_compatible(schema: dict) -> dict:
     """
     Recursively process schema to make it compatible with OpenAI's strict mode.
-    - Ensures non-optional properties are in the 'required' array
-    - Optional fields (with None default) are excluded from required
+    - Ensures ALL properties are in the 'required' array (including optional ones)
     - Sets additionalProperties to false for all objects
+
+    Note: OpenAI's strict mode requires all fields to be in the required array,
+    even Optional fields. Optional fields use type: [type, "null"] pattern.
     """
     if isinstance(schema, dict):
         # Process nested objects first
@@ -46,16 +27,10 @@ def make_schema_openai_compatible(schema: dict) -> dict:
             if isinstance(value, (dict, list)):
                 schema[key] = make_schema_openai_compatible(value)
 
-        # If this object has properties, make non-optional ones required
+        # If this object has properties, make ALL of them required
         if "properties" in schema:
-            required_fields = []
-            for prop_name, prop_schema in schema["properties"].items():
-                # Only add to required if not optional
-                if not is_optional_field(prop_schema):
-                    required_fields.append(prop_name)
-
-            # Set required array (may be empty for objects with all optional fields)
-            schema["required"] = required_fields
+            # Include all properties in required array
+            schema["required"] = list(schema["properties"].keys())
 
             # Ensure additionalProperties is false
             if "additionalProperties" not in schema:

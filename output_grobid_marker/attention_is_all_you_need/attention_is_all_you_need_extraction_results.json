@@ -1,8 +1,8 @@
 {
   "paper_name": "attention_is_all_you_need",
   "source_file": "resources/attention_is_all_you_need.pdf",
-  "output_directory": "output_grobid_marker2/attention_is_all_you_need",
-  "tei_file": "output_grobid_marker2/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
+  "output_directory": "output_grobid_marker/attention_is_all_you_need",
+  "tei_file": "output_grobid_marker/attention_is_all_you_need/attention_is_all_you_need.tei.xml",
   "introduction": {
     "found": true,
     "section_type": "introduction",
@@ -87,7 +87,7 @@
       {
         "figure_number": 1,
         "filename": "ad04aa6cb9e7fb36bb7a91e817e2d314_img.jpg",
-        "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/ad04aa6cb9e7fb36bb7a91e817e2d314_img.jpg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/ad04aa6cb9e7fb36bb7a91e817e2d314_img.jpg",
         "width": 594,
         "height": 877,
         "format": "JPEG",
@@ -99,7 +99,7 @@
       {
         "figure_number": 2,
         "filename": "e94f3bbb6f7501b9a1344dd0210e5dd8_img.jpg",
-        "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/e94f3bbb6f7501b9a1344dd0210e5dd8_img.jpg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/e94f3bbb6f7501b9a1344dd0210e5dd8_img.jpg",
         "width": 171,
         "height": 333,
         "format": "JPEG",
@@ -111,7 +111,7 @@
       {
         "figure_number": 3,
         "filename": "f961cbef0f8217e216b553bed270315b_img.jpg",
-        "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/f961cbef0f8217e216b553bed270315b_img.jpg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/f961cbef0f8217e216b553bed270315b_img.jpg",
         "width": 320,
         "height": 414,
         "format": "JPEG",
@@ -123,7 +123,7 @@
       {
         "figure_number": 4,
         "filename": "2236272d3b3db6e6363337f5a8db72f6_img.jpg",
-        "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/2236272d3b3db6e6363337f5a8db72f6_img.jpg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/2236272d3b3db6e6363337f5a8db72f6_img.jpg",
         "width": 1027,
         "height": 551,
         "format": "JPEG",
@@ -135,7 +135,7 @@
       {
         "figure_number": 5,
         "filename": "7c1f9e78e0f033d391b687f1652f6e47_img.jpg",
-        "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/7c1f9e78e0f033d391b687f1652f6e47_img.jpg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/7c1f9e78e0f033d391b687f1652f6e47_img.jpg",
         "width": 1018,
         "height": 1166,
         "format": "JPEG",
@@ -147,7 +147,7 @@
       {
         "figure_number": 6,
         "filename": "71ab4df17511d75261da8d462d643b1a_img.jpg",
-        "saved_as": "output_grobid_marker2/attention_is_all_you_need/images/71ab4df17511d75261da8d462d643b1a_img.jpg",
+        "saved_as": "output_grobid_marker/attention_is_all_you_need/images/71ab4df17511d75261da8d462d643b1a_img.jpg",
         "width": 1014,
         "height": 1092,
         "format": "JPEG",
@@ -163,7 +163,7 @@
     "items": [
       {
         "table_number": 1,
-        "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_1.md",
+        "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_1.md",
         "rows": 3,
         "columns": 4,
         "source": "marker",
@@ -173,7 +173,7 @@
       },
       {
         "table_number": 2,
-        "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_2.md",
+        "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_2.md",
         "rows": 5,
         "columns": 4,
         "source": "marker",
@@ -183,7 +183,7 @@
       },
       {
         "table_number": 3,
-        "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_3.md",
+        "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_3.md",
         "rows": 12,
         "columns": 5,
         "source": "marker",
@@ -193,7 +193,7 @@
       },
       {
         "table_number": 4,
-        "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_4.md",
+        "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_4.md",
         "rows": 21,
         "columns": 13,
         "source": "marker",
@@ -203,7 +203,7 @@
       },
       {
         "table_number": 5,
-        "file": "output_grobid_marker2/attention_is_all_you_need/tables/attention_is_all_you_need_table_5.md",
+        "file": "output_grobid_marker/attention_is_all_you_need/tables/attention_is_all_you_need_table_5.md",
         "rows": 13,
         "columns": 3,
         "source": "marker",
