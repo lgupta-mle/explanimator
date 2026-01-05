@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:space="preserve" xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main" xml:id="_z82hCjV">Manimator: Transforming Research Papers and Mathematical Concepts into Visual Explanations</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability  status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2025-07-18">18 Jul 2025</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName><forename type="first">Vyoman</forename><surname>Jain</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Shiva</forename><surname>Golugula</surname></persName>
+						</author>
+						<author>
+							<persName><forename type="first">Motamarri</forename><forename type="middle">Sai</forename><surname>Sathvik</surname></persName>
+						</author>
+						<title level="a" type="main" xml:id="_Uj3GuQK">Manimator: Transforming Research Papers and Mathematical Concepts into Visual Explanations</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2025-07-18">18 Jul 2025</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">89C9D1436E8A8FA4A4787CE2B1858D44</idno>
+					<idno type="arXiv">arXiv:2507.14306v1[cs.AI]</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.3-SNAPSHOT" ident="GROBID" when="2026-01-03T23:05+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">0.8.2-41-gb8d6bec30</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=1, consolidateHeader=1, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=true, generateTeiCoordinates=[true], flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0" xml:id="_UvVbxZV"><p xml:id="_4QZEUs8"><s xml:id="_adNNevP">Understanding complex scientific and mathematical concepts, particularly those presented in dense research papers, poses a significant challenge for learners.</s><s xml:id="_8W2Avy3">Dynamic visualizations can greatly enhance comprehension, but creating them manually is time-consuming and requires specialized knowledge and skills.</s><s xml:id="_eWmMF44">We introduce manimator, an open-source system that leverages Large Language Models to transform research papers and natural language prompts into explanatory animations using the Manim engine.</s><s xml:id="_Cy7BrFX">Manimator employs a pipeline where an LLM interprets the input text or research paper PDF to generate a structured scene description outlining key concepts, mathematical formulas, and visual elements and another LLM translates this description into executable Manim Python code.</s><s xml:id="_wx9WgGp">We discuss its potential as an educational tool for rapidly creating engaging visual explanations for complex STEM topics, democratizing the creation of high-quality educational content.</s></p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<facsimile>
+		<surface n="1" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="2" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="3" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="4" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="5" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="6" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="7" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="8" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="9" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+	</facsimile>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1." xml:id="_YpSgda6">Introduction</head><p xml:id="_5t6et8N"><s xml:id="_AqxDFnz">The ability to grasp complex scientific and mathematical concepts is fundamental to STEM education.</s><s xml:id="_FKt5UF7">However, traditional learning materials, such as textbooks and research papers, often present information in dense, static formats.</s><s xml:id="_dYyHUvw">Dynamic visualizations have proven effective in improving understanding and engagement, making abstract concepts more concrete and intuitive <ref type="bibr" target="#b15">(Schoenherr et al., 2024)</ref>.</s></p><p xml:id="_8BKyEtv"><s xml:id="_dJ6zgqQ">The Manim animation engine <ref type="bibr">(The Manim Community Developers, 2024)</ref> has demonstrated the power of code-driven animations for explaining intricate topics.</s><s xml:id="_pmtvmff">Despite the poten-* Equal contribution 1 Department of Computer Science and Engineering, PES University, Bengaluru, India.</s><s xml:id="_EHvCz4f">Correspondence to: Samarth P &lt;pes2ug22cs495@pesu.pesu.edu&gt;,</s><s xml:id="_KnwT7Ew">Vyoman Jain &lt;pes2ug22cs672@pesu.pesu.edu&gt;,</s><s xml:id="_Qw4yG9V">Shiva Golugula &lt;pes2ug22cs525@pesu.pesu.edu&gt;,</s><s xml:id="_HJtARPM">Motamarri Sai Sathvik &lt;pes2ug22cs321@pesu.pesu.edu&gt;.</s></p><p xml:id="_36km2ZW"><s xml:id="_Pg57pD8">tial, creating such high-quality animations requires significant effort, programming expertise (Python), and domain knowledge.</s><s xml:id="_uVFMsFP">This bottleneck limits the widespread availability of custom visualizations tailored to specific concepts or research findings.</s><s xml:id="_xmAZjGv">However, recent advancements in Large Language Models (LLMs) have shown remarkable capabilities in text understanding, structured data generation, and code synthesis <ref type="bibr" target="#b14">(Nijkamp et al., 2023;</ref><ref type="bibr" target="#b4">Chen et al., 2023)</ref>.</s></p><p xml:id="_gSJuHAU"><s xml:id="_nC7wxZC">In this paper, we present manimator, a system that harnesses LLMs to bridge the gap between complex textual information and engaging visual explanations.</s><s xml:id="_qks7YWm">Manimator takes either a natural language prompt describing a concept or a full research paper (via PDF upload or using its arXiv ID) as input.</s></p><p xml:id="_XvCjrWh"><s xml:id="_44ydZHb">It employs a multi-stage pipeline:</s></p><p xml:id="_Ftg9q62"><s xml:id="_jXwe36T">1. Scene Understanding and Planning: An LLM analyzes the input to extract key concepts, relevant formulas, and potential visual representations, structuring them into a detailed "scene description."</s><s xml:id="_NMxEbqm">2. Code Generation: A code-specialized LLM translates the structured scene description into Python code compatible with the Manim engine.</s><s xml:id="_ZYTCQ9G">3. Rendering: The generated Manim code is executed to produce a video animation.</s></p><p xml:id="_Q65gq5q"><s xml:id="_WtyFaBE">Manimator aims to empower educators, students, and researchers to quickly visualize complex ideas, thereby enhancing learning and scientific communication.</s><s xml:id="_TvstVZF">We plan to open-source the tool and provide public access through a Gradio interface and API.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2." xml:id="_fsSx4SD">Related Works</head><p xml:id="_Xhee7DJ"><s xml:id="_aXxZnSg">Our work on manimator intersects with several research areas, including visualization in STEM education, code-driven animation tools, the application of Large Language Models (LLMs) for understanding and generation, and automated multimodal content creation.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1." xml:id="_6Wnr2g4">Visualization in STEM Education and Communication</head><p xml:id="_fpzSGh9"><s xml:id="_2hHp3rv">The efficacy of visualization, particularly dynamic visualization, in enhancing the understanding of complex scientific and mathematical concepts is well-established <ref type="bibr" target="#b3">(Brown &amp; Sedgewick, 1985;</ref><ref type="bibr" target="#b8">Heer &amp; Robertson, 2007)</ref>.</s><s xml:id="_nCYc7Cz">Visual representations can make abstract ideas more concrete, reveal hidden patterns, and improve learner engagement <ref type="bibr" target="#b1">(Amini et al., 2018)</ref>.</s><s xml:id="_jQCtkJS">Static visualizations are common in textbooks and papers, but dynamic animations offer significant advantages for illustrating processes, algorithms, and time-varying phenomena <ref type="bibr" target="#b8">(Heer &amp; Robertson, 2007)</ref>.</s><s xml:id="_S7nnzFN">Research has explored creating visualizations for specific domains, such as algorithm and data structure education <ref type="bibr" target="#b13">(Marković &amp; Kaštelan, 2024)</ref>.</s><s xml:id="_8xEQxUM">Tools like manimator aim to build upon these principles by significantly lowering the barrier to creating dynamic visualizations, making this powerful pedagogical approach more accessible.</s><s xml:id="_8rANA9k"><ref type="bibr" target="#b11">Ku et al. (2025)</ref> also highlight the benefit of visual explanations for theorem understanding, noting that they can expose reasoning errors more clearly than text alone.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2." xml:id="_TehhU8k">Code-Driven Animation and Manim</head><p xml:id="_nFZ9ENM"><s xml:id="_vPDVZY3">The Manim library (The Manim Community Developers, 2024) stands out as a powerful tool for creating precise, programmatically generated mathematical animations.</s><s xml:id="_VeX5qNz">Its code-driven nature allows for fine-grained control over visual elements and complex transformations, making it ideal for explaining intricate STEM topics <ref type="bibr" target="#b13">(Marković &amp; Kaštelan, 2024)</ref>.</s><s xml:id="_gdnYuRQ">However, creating animations with Manim requires significant programming expertise (Python) and considerable manual effort, representing a bottleneck for educators and researchers who may lack the time or specific skills <ref type="bibr" target="#b13">(Marković &amp; Kaštelan, 2024;</ref><ref type="bibr" target="#b9">Helbling &amp; Chau, 2023)</ref>.</s><s xml:id="_QSdGrpE">Prior work like <ref type="bibr" target="#b9">Helbling &amp; Chau (2023)</ref> aimed to simplify Manim usage for specific domains like machine learning architectures by providing higher-level abstractions, but still required manual coding within its framework.</s><s xml:id="_ndjPbrR">Manimator directly addresses the creation bottleneck by automating the Manim code generation process itself using LLMs.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3." xml:id="_DW5Czce">Large Language Models for Understanding and Code Generation</head><p xml:id="_fcEQ3jr"><s xml:id="_5fnkgHm">Recent advancements in Large Language Models (LLMs) like GPT-4 <ref type="bibr" target="#b0">(Achiam et al., 2023)</ref>, Claude (Anthropic, 2024), Gemini <ref type="bibr" target="#b16">(Team et al., 2024)</ref>, DeepSeek <ref type="bibr" target="#b12">(Liu et al., 2024)</ref> and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis <ref type="bibr" target="#b14">(Nijkamp et al., 2023;</ref><ref type="bibr" target="#b4">Chen et al., 2023)</ref>.</s><s xml:id="_zNVEXx6">LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.</s><s xml:id="_ffMhJNz">Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development <ref type="bibr" target="#b10">(Jimenez et al., 2024)</ref>.</s><s xml:id="_vQPUNyn">Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data <ref type="bibr" target="#b5">(Galimzyanov et al., 2025;</ref><ref type="bibr" target="#b10">Yang et al., 2024;</ref><ref type="bibr" target="#b6">Goswami et al., 2025)</ref>.</s><s xml:id="_RvSRVDx">Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4." xml:id="_VH8sjDh">Automated Generation of Multimodal Explanations</head><p xml:id="_cW6YsRU"><s xml:id="_xZCfU9D">Bridging the gap between textual information and visual explanations automatically is an emerging research direction.</s></p><p xml:id="_EtySN4s"><s xml:id="_CDKS8aS">Most current approaches focus on text-to-image or textto-static-diagram generation.</s><s xml:id="_uJx84pq">Generating dynamic, structured animations for complex explanatory purposes presents unique challenges involving temporal consistency, accurate representation of symbolic information (like formulas), and pedagogical structuring.</s><s xml:id="_7yPasmT">The most closely related work is TheoremExplainAgent <ref type="bibr" target="#b11">(Ku et al., 2025)</ref>, which introduces an agentic approach using LLMs to generate Manim explanation videos specifically for mathematical theorems.</s><s xml:id="_MXscud3">It employs planning and coding agents to produce structured videos, demonstrating the potential of LLMs in this domain.</s></p><p xml:id="_RAuhJmc"><s xml:id="_77D3GnV">While manimator shares the goal of automated Manim video generation, it positions itself as a more general tool applicable to a wider range of STEM concepts, directly accepting research papers (via PDF/arXiv ID) or natural language prompts as input and utilizing a pipeline potentially suitable for various complex topics beyond formal theorems.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3." xml:id="_nbdTSCr">Methodology</head><p xml:id="_jqhapgw"><s xml:id="_QRkUvws">Manimator employs an agentic architecture orchestrated primarily by LLMs, with the core process involving transformation of a text prompt into a video animation via intermediate structured planning and code generation stages (illustrated in Figure <ref type="figure" target="#fig_0">1</ref>).</s><s xml:id="_u3Xdt6W">Manimator accepts two primary input types: a natural language description (e.g., "Explain the Fourier Transform") or a PDF document provided via upload or arXiv ID, with PDF content optionally compressed and base64 encoded for multimodal LLM input.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1." xml:id="_9Jm8jXK">Stage 1: Scene Description Generation</head><p xml:id="_tpZBUNp"><s xml:id="_KAdShuW">This stage interprets the input to create a structured scene description for the animation.</s><s xml:id="_UFaFB4a">Models with text and multimodal capabilities are strategically deployed based on the input type: PDF inputs leverage the multimodal capability of models with large context windows (e.g., gemini-2.0-flash)</s><s xml:id="_NYqR7kj">which can analyze and understand document content, while text prompts utilize powerful LLMs (e.g., llama-3.3-70b</s><s xml:id="_2xaq6VZ"><ref type="bibr" target="#b7">(Grattafiori et al., 2024)</ref>) for comprehensive scene interpretation.</s><s xml:id="_wssebf4">A detailed system prompt instructs the LLM to structure content into: Topic, Key Points (with LaTeX math like F (x)), Visual Elements, and Style.</s><s xml:id="_4skmuks">Few-Shot Learning examples guide the LLM towards the desired output format and detail, ensuring consistency regardless of input type.</s><s xml:id="_JkPVXPC">This approach allows Manimator to extract meaningful content from diverse input sources while maintaining pedagogical quality.</s><s xml:id="_tyCuYE2">The output is a structured Scene Description in Markdown that serves as the foundation for subsequent animation generation.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2." xml:id="_kpRWCKS">Stage 2: Manim Code Generation</head><p xml:id="_D25GB2N"><s xml:id="_8ekVPYY">This stage translates the Scene Description into executable Manim Python code.</s><s xml:id="_6tmgFdk">The Scene Description is fed to a code-focused LLM (e.g., deepseek-v3 <ref type="bibr" target="#b12">(Liu et al., 2024)</ref>), which operates under a comprehensive system prompt that positions the model as a Manim expert.</s><s xml:id="_hRyKnCX">This system prompt provides detailed instructions for the LLM to create educational animations by understanding topics, planning animations with logical flow, writing modular code with proper comments, and ensuring visual clarity.</s><s xml:id="_xfxmaAB">Few-shot examples are also included in the prompt to demonstrate proper implementation patterns and guide the model toward producing high-quality code.</s><s xml:id="_WcWNgCN">The prompt emphasizes important technical requirements such as avoiding element overlap, implementing proper scene cleanup, adding appropriate wait calls for pacing, and maintaining consistent animation style.</s></p><p xml:id="_gAQVpmR"><s xml:id="_gZQebaE">The output is a fully executable Python script containing a Manim Scene class that can be directly rendered to produce the educational animation.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3." xml:id="_cxMKY9K">Stage 3: Animation Rendering</head><p xml:id="_x2ZSgPd"><s xml:id="_YCp4tAn">The generated Manim code is executed using the Manim library (The Manim Community Developers, 2024) to produce the final video animation file (typically in MP4 format).</s><s xml:id="_pfPf2pQ">This stage involves running the Python script in an environment where Manim and its dependencies (like FFmpeg) are installed.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4." xml:id="_myt4uwh">Model Selection and Prompt Optimization</head><p xml:id="_TdWjENn"><s xml:id="_af4Cg3V">The performance of the manimator pipeline is critically dependent on the choice of LLMs and the design of the system prompts for each stage.</s><s xml:id="_h9yujUg">We conducted extensive experimentation to identify the optimal configuration.</s><s xml:id="_uUBTAUS">Our process involved careful modulation of the system prompts, where we discovered that detailed, stage-wise and role-playing instructions (like "You are an expert in creating educational animations using Manim") combined with few-shot examples yielded the most consistent and high-quality results for both scene planning and code generation (see figure <ref type="figure">2</ref>).</s><s xml:id="_mBs7qG7">Table 2. Results of human evaluation for Manimator (DeepSeek V3) based on user ratings across the same dimensions used in Theorem-ExplainBench. See Appendix A.3 for details on the evaluation setup.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4." xml:id="_aDs8r4r">Results and Evaluation</head><p xml:id="_nfduT5M"><s xml:id="_SPckbR2">To evaluate the quality and effectiveness of the animations generated by manimator, we primarily utilized the Theore-mExplainBench (TEB) benchmark introduced by <ref type="bibr" target="#b11">Ku et al. (2025)</ref>.</s><s xml:id="_jc3Zy3E">TEB provides a standardized framework for assessing AI systems' ability to generate multimodal theorem explanations, evaluating videos across five key dimensions: Accuracy and Depth, Visual Relevance, Logical Flow, Element Layout, and Visual Consistency.</s><s xml:id="_XT9GnFA">An overall score, typically the geometric mean of the individual dimensions, is also computed.</s><s xml:id="_rsZCvGY">We evaluated manimator, configured to use the DeepSeek V3 large language model <ref type="bibr" target="#b12">(Liu et al., 2024)</ref>, on TEB by comparing its performance against relevant baseline results reported in the original TEB paper <ref type="bibr" target="#b11">(Ku et al., 2025)</ref>, specifically those for Claude 3.5-Sonnet and o3-mini (medium), which were strong performers in that study.</s><s xml:id="_ZCQfZhf">Additionally, we conducted a human evaluation using a custom dashboard (see Appendix A.3), assessing the generated videos along similar quality dimensions.</s></p><p xml:id="_DTZK5U3"><s xml:id="_RDsNSbP">The TEB results are presented in</s></p><p xml:id="_gKZCUTj"><s xml:id="_q3tTNfD">Table 1.</s><s xml:id="_hCqg8SS">As shown, manimator demonstrates strong performance on the TEB benchmark, particularly excelling in Visual Relevance (0.899) and Logical Flow (0.880), which suggests the generated animations are both conceptually aligned with the source material and coherently structured.</s><s xml:id="_exMxgrX">Manimator significantly outperforms the baseline models (Claude 3.5-Sonnet and o3mini) in Element Layout (0.853 compared to 0.57 and 0.61, respectively), likely benefiting from the capabilities of the DeepSeek V3 model in generating spatially aware Manim code.</s><s xml:id="_NhE5m2z">While Claude 3.5-Sonnet achieves a slightly higher score in Visual Consistency (0.92 versus 0.852), manimator maintains strong performance across all dimensions, resulting in the highest Overall Score (0.845 compared to 0.79 and 0.77).</s><s xml:id="_DRhnFHz">Its Accuracy and Depth score (0.770) is comparable to the baselines.</s><s xml:id="_HgWnWvq">These TEB results indicate that manimator is a robust system for producing well-structured educational animations with excellent visual organization.</s><s xml:id="_x6kh63c">The human evaluation results, summarized in Table 2, provide complementary insights based on user perception, further detailed in Appendix A.3.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5." xml:id="_Ccf93yW">Limitations</head><p xml:id="_C36sdrm"><s xml:id="_kbjm6mn">The quality of the generated animations heavily depends on the capabilities of the underlying LLMs for both understanding the input content and generating correct, complex Manim code.</s><s xml:id="_XCznnBr">Handling highly intricate visual details or ensuring perfect pedagogical flow for very nuanced topics remain challenges.</s><s xml:id="_duBJmwp">The system currently does not incorporate iterative refinement based on user feedback on the generated video.</s><s xml:id="_WVjjenM">Future work could address these limitations by incorporating feedback loops, employing more sophisticated planning agents, and fine-tuning models specifically for Manim generation.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6." xml:id="_RnaHWX2">Conclusion</head><p xml:id="_JacDPhw"><s xml:id="_P8VBEEA">We presented manimator, an open-source system utilizing Large Language Models to automatically generate educational animations using the Manim engine from research papers or natural language prompts.</s><s xml:id="_z9v6H6A">By implementing a pipeline where LLMs first interpret the input to create a structured scene description and then translate this into executable Manim code, manimator significantly lowers the barrier to creating dynamic visualizations for complex STEM topics, which traditionally requires extensive time and expertise.</s><s xml:id="_vqb5WwA">Our evaluations indicate that manimator produces high-quality, well-structured animations, thereby offering a valuable tool for educators, researchers, and students to enhance learning, understanding, and scientific communication by making the creation of engaging visual explanations more accessible.</s><s xml:id="_Up5ktH4">The system is publicly available as an open-source project and via a web interface to facilitate broader adoption and development.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head xml:id="_jMzrMzp">Impact Statement</head><p xml:id="_mx5C9jx"><s xml:id="_fSGvuQZ">The primary impact of manimator lies in its potential to democratize the creation of high-quality educational content and accelerate scientific communication.</s><s xml:id="_ux4XzYR">By automating the difficult and time-consuming process of creating explanatory animations, our work empowers a broader audience-educators, students, and researchers who may not have the requisite programming skills or resources to produce such visualizations manually.</s><s xml:id="_xux2dXS">This can lead to more engaging and effective learning experiences in STEM fields, helping to make complex, abstract concepts more intuitive and accessible to learners worldwide.</s></p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc><div><p xml:id="_S4pDVFC"><s xml:id="_zXjgFzH">Figure 1.</s><s xml:id="_saTvxjn">The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID.</s><s xml:id="_3HZxjSF">The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.</s></p></div></figDesc><graphic coords="2,56.62,67.06,481.12,160.57" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><graphic coords="7,127.10,149.17,340.19,510.29" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><graphic coords="8,114.95,92.74,364.48,490.10" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><graphic coords="9,139.25,90.83,315.91,456.46" type="bitmap" /></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0"><head>Table 1 .</head><label>1</label><figDesc><div><p><s xml:id="_jMh5KR9">Ku et al. (2025)nimator's performance on TheoremExplainBench against baseline models fromKu et al. (2025).</s><s xml:id="_wbsY8Xr">Scores range from 0 to 1, with higher being better.</s><s xml:id="_xEeuCyz">Manimator's results (using DeepSeek V3) are highlighted.</s></p></div></figDesc><table><row><cell>To identify the most effective models, we evaluated a range</cell></row><row><cell>of state-of-the-art LLMs, including Claude 3.7 Sonnet,</cell></row><row><cell>Llama 3.3 70B, Qwen2.5 Coder 32B, OpenAI's o3, and</cell></row><row><cell>DeepSeek-V3. The evaluation criteria included the logical</cell></row><row><cell>coherence of the generated scene description, the syntactic</cell></row><row><cell>correctness and complexity of the Manim code, inference</cell></row><row><cell>latency, and API cost. Although OpenAI o3 produced com-</cell></row><row><cell>petent outputs, we found that DeepSeek-V3 offered the</cell></row><row><cell>best price-to-performance ratio across this range of models.</cell></row><row><cell>It consistently generated high-quality executable Manim</cell></row><row><cell>code that adhered well to the structured plan and required</cell></row><row><cell>minimal post-generation correction, making it our primary</cell></row><row><cell>choice for the system. This balance of generation quality</cell></row><row><cell>and economic viability is crucial for making manimator an</cell></row><row><cell>accessible and scalable tool.</cell></row></table></figure>
+		</body>
+		<back>
+
+			
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head xml:id="_axvZwSX">A.2. Example Outputs</head><p xml:id="_547XAXQ"><s xml:id="_GXtyFRh">Figure 3. Examples of animations generated by Manimator.</s></p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0" xml:id="_MDDFQGk"><p xml:id="_SxsWDNH"><s xml:id="_ZFrhydy">The Manim Community Developers.</s><s xml:id="_qAzEAEM">Manim -mathematical animation framework.</s><s xml:id="_Zy8vgQB">Software, 2024.</s><s xml:id="_cvpk7vj">URL <ref type="url" target="https://www.manim.community/">https:  //www.manim.community/</ref>.</s></p><p xml:id="_xrNspBg"><s xml:id="_NyYgHrE">Yang, Z., Zhou, Z., Wang, S., Cong, X., Han, X., Yan, Y., and others.</s><s xml:id="_RXbUSQK">Matplotagent: Method and evaluation for llmbased agentic scientific data visualization, 2024.</s><s xml:id="_vxtnkBd">URL <ref type="url" target="https://arxiv.org/abs/2402.11453">https://arxiv.org/abs/2402.11453</ref>.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head xml:id="_tWaQQGm">A. Appendix</head><p xml:id="_pMNGYpC"><s xml:id="_XP68ntR">This appendix provides supplementary materials for Manimator, including the system prompts used and visual examples of generated animations.</s><s xml:id="_8MNRwX4">To complement the standardized benchmark with direct user feedback, we recruited unpaid volunteer engineering students, who have experience with educational content like this, to participate in a human evaluation study.</s><s xml:id="_KuqYVx9">Participants interacted with a custom-built evaluation dashboard that presented them with animations generated by Manimator.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head xml:id="_QX5kUnP">A.1. System Prompts</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head xml:id="_KZHRAUc">A.3. Human Evaluation Dashboard</head><p xml:id="_3XhKnau"><s xml:id="_KjGrUNB">For each animation, evaluators were asked to provide a rating on a scale of 1 (Poor) to 5 (Excellent) across the same five core parameters used in the TEB benchmark: Accuracy &amp; Depth, Visual Relevance, Logical Flow, Element Layout, and Visual Consistency.</s><s xml:id="_TU7Fzgf">This allowed for a direct comparison between automated benchmark scores and perceived human quality.</s><s xml:id="_a8bpmSX">To align the 1-to-5 rating scale with the 0-to-1 scale used in TEB, we normalized the scores from our human evaluators.</s><s xml:id="_XK8SWBr">The final scores, representing the average normalized ratings from all participants, are summarized in Table <ref type="table">2</ref>.</s></p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 2 .</head><label>2</label><figDesc><div><p xml:id="_KYaaWQQ"><s xml:id="_Z9UEjMR">Combined system prompts used for Stage 1 (Scene Description Generation) and Stage 2 (Manim Code Generation).</s></p></div></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 4 .</head><label>4</label><figDesc><div><p xml:id="_6qRtRms"><s xml:id="_kMNhqdB">Interface used for collecting human evaluation ratings on generated animations.</s></p></div></figDesc></figure>
+			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct status="extracted"  xml:id="b0">
+	<monogr>
+		<author>
+			<persName><forename type="first">J</forename><surname>Achiam</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Adler</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Agarwal</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Ahmad</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">I</forename><surname>Akkaya</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">F</forename><forename type="middle">L</forename><surname>Aleman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Almeida</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">J</forename><surname>Altenschmidt</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Altman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Anadkat</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2303.08774</idno>
+		<title level="m" xml:id="_qQFeB3c">Gpt-4 technical report</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b1">
+	<analytic>
+		<title level="a" type="main" xml:id="_aqkEFew">Hooked on data videos</title>
+		<author>
+			<persName><forename type="first">Fereshteh</forename><surname>Amini</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Nathalie</forename><forename type="middle">Henry</forename><surname>Riche</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Bongshin</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jason</forename><surname>Leboe-Mcgowan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Pourang</forename><surname>Irani</surname></persName>
+		</author>
+		<idno type="DOI">10.1145/3206505.3206552</idno>
+		<ptr target="https://doi.org/10.1145/3206505.3206552" />
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_PDCf4r8">Proceedings of the 2018 International Conference on Advanced Visual Interfaces</title>
+		<meeting>the 2018 International Conference on Advanced Visual Interfaces<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2018-05-29">2018</date>
+			<biblScope unit="page" from="1" to="9" />
+		</imprint>
+	</monogr>
+	<note>Association for Computing Machinery. ISBN 9781450356169</note>
+</biblStruct>
+
+<biblStruct status="extracted"  xml:id="b2">
+	<monogr>
+		<title level="m" type="main" xml:id="_7uKYSCR">The claude 3 model family: Opus, sonnet, haiku. Online</title>
+		<author>
+			<persName><surname>Anthropic</surname></persName>
+		</author>
+		<ptr target="https://www.anthropic.com/news/claude-3-family" />
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b3">
+	<analytic>
+		<title level="a" type="main" xml:id="_Fgrqast">Techniques for Algorithm Animation</title>
+		<author>
+			<persName><forename type="first">M</forename><forename type="middle">H</forename><surname>Brown</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Sedgewick</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/ms.1985.229778</idno>
+		<ptr target="https://doi.org/10.1109/MS.1985.229778" />
+	</analytic>
+	<monogr>
+		<title level="j" xml:id="_22pkv23">IEEE Software</title>
+		<title level="j" type="abbrev">IEEE Softw.</title>
+		<idno type="ISSN">0740-7459</idno>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="28" to="39" />
+			<date type="published" when="1985-01">January 1985</date>
+			<publisher>Institute of Electrical and Electronics Engineers (IEEE)</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted"  xml:id="b4">
+	<monogr>
+		<title level="m" type="main" xml:id="_wXBbAjZ">Program of thoughts prompting: Disentangling computation from reasoning for numerical reasoning tasks</title>
+		<author>
+			<persName><forename type="first">W</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">X</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">W</forename><forename type="middle">W</forename><surname>Cohen</surname></persName>
+		</author>
+		<ptr target="https://arxiv.org/abs/2211.12588" />
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b5">
+	<analytic>
+		<title level="a" type="main" xml:id="_zdDtZB7">Drawing Pandas: A Benchmark for LLMs in Generating Plotting Code</title>
+		<author>
+			<persName><forename type="first">Timur</forename><surname>Galimzyanov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Sergey</forename><surname>Titov</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Yaroslav</forename><surname>Golubev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Egor</forename><surname>Bogomolov</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/msr66628.2025.00083</idno>
+		<ptr target="https://arxiv.org/abs/2412.02764" />
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_hUFYAuG">2025 IEEE/ACM 22nd International Conference on Mining Software Repositories (MSR)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2025-04-28">2025</date>
+			<biblScope unit="page" from="503" to="507" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b6">
+	<analytic>
+		<title level="a" type="main" xml:id="_Tmsuvfu">PlotGen: Multi-Agent LLM-based Scientific Data Visualization via Multimodal Retrieval Feedback</title>
+		<author>
+			<persName><forename type="first">Kanika</forename><surname>Goswami</surname></persName>
+			<idno type="ORCID">0009-0008-2981-2391</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Puneet</forename><surname>Mathur</surname></persName>
+			<idno type="ORCID">0000-0002-3006-9186</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Ryan</forename><surname>Rossi</surname></persName>
+			<idno type="ORCID">0000-0001-9758-0635</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Franck</forename><surname>Dernoncourt</surname></persName>
+			<idno type="ORCID">0000-0002-1119-1346</idno>
+		</author>
+		<idno type="DOI">10.1145/3701716.3716888</idno>
+		<ptr target="https://arxiv.org/abs/2502.00988" />
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_SQnjr8y">Companion Proceedings of the ACM on Web Conference 2025</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2025-05-08">2025</date>
+			<biblScope unit="page" from="1672" to="1676" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted"  xml:id="b7">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><surname>Grattafiori</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Dubey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Jauhri</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Pandey</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Kadian</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Al-Dahle</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Letman</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Mathur</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Schelten</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Vaughan</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2407.21783</idno>
+		<title level="m" xml:id="_PvHw6GX">The llama 3 herd of models</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b8">
+	<analytic>
+		<title level="a" type="main" xml:id="_xvaCYeJ">Animated Transitions in Statistical Data Graphics</title>
+		<author>
+			<persName><forename type="first">Jeffrey</forename><surname>Heer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">George</forename><surname>Robertson</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/tvcg.2007.70539</idno>
+		<ptr target="https://doi.org/10.1109/TVCG.2007.70539" />
+	</analytic>
+	<monogr>
+		<title level="j" xml:id="_RSSWpKW">IEEE Transactions on Visualization and Computer Graphics</title>
+		<title level="j" type="abbrev">IEEE Trans. Visual. Comput. Graphics</title>
+		<idno type="ISSN">1077-2626</idno>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1240" to="1247" />
+			<date type="published" when="2007-11">2007</date>
+			<publisher>Institute of Electrical and Electronics Engineers (IEEE)</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b9">
+	<monogr>
+		<title level="m" type="main" xml:id="_EKBrfmg">Fig. 5. Married couple Riki and Hachiro Ohara. Borrowed from URL: https://habane8.com/y/193/f.htm.</title>
+		<author>
+			<persName><forename type="first">A</forename><surname>Helbling</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><forename type="middle">H</forename><surname>Chau</surname></persName>
+		</author>
+		<idno type="DOI">10.17816/eid677915-4363932</idno>
+		<ptr target="https://arxiv.org/abs/2306" />
+		<imprint>
+			<date type="published" when="2023">2023. 17108v3</date>
+			<publisher>ECO-Vector LLC</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b10">
+	<analytic>
+		<title level="a" type="main" xml:id="_Qy4eTe6">SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</title>
+		<author>
+			<persName><forename type="first">Carlos</forename><surname>Jimenez</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Kilian</forename><surname>Lieret</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Karthik</forename><surname>Narasimhan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ofir</forename><surname>Press</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alexander</forename><surname>Wettig</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">John</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Shunyu</forename><surname>Yao</surname></persName>
+		</author>
+		<idno type="DOI">10.52202/079017-1601</idno>
+		<ptr target="https://openreview.net/forum?id=VTF8yNQM66" />
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_2BMAqS4">Advances in Neural Information Processing Systems 37</title>
+		<imprint>
+			<publisher>Neural Information Processing Systems Foundation, Inc. (NeurIPS)</publisher>
+			<date type="published" when="2024">2024</date>
+			<biblScope unit="page" from="50528" to="50652" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b11">
+	<analytic>
+		<title level="a" type="main" xml:id="_zBykSsw">TheoremExplainAgent: Towards Video-based Multimodal Explanations for LLM Theorem Understanding</title>
+		<author>
+			<persName><forename type="first">Max</forename><surname>Ku</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Cheuk</forename><forename type="middle">Hei</forename><surname>Chong</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Jonathan</forename><surname>Leung</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Krish</forename><surname>Shah</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Alvin</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Wenhu</forename><surname>Chen</surname></persName>
+		</author>
+		<idno type="DOI">10.18653/v1/2025.acl-long.332</idno>
+		<ptr target="https://arxiv.org/abs/2502.19400" />
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_uPkj7Pt">Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</title>
+		<meeting>the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</meeting>
+		<imprint>
+			<publisher>Association for Computational Linguistics</publisher>
+			<date type="published" when="2025">2025</date>
+			<biblScope unit="page" from="6663" to="6684" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted"  xml:id="b12">
+	<monogr>
+		<author>
+			<persName><forename type="first">A</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Xue</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Deng</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Ruan</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2412.19437</idno>
+		<title level="m" xml:id="_XS6YsK9">Deepseek-v3 technical report</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b13">
+	<analytic>
+		<title level="a" type="main" xml:id="_GQzqPf6">Demonstrating the Potential of Visualization in Education with the Manim Python Library: Examples from Algorithms and Data Structures</title>
+		<author>
+			<persName><forename type="first">Milorad</forename><surname>Marković</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Ivan</forename><surname>Kaštelan</surname></persName>
+		</author>
+		<idno type="DOI">10.1109/mipro60963.2024.10569661</idno>
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_Dqpzc4H">2024 47th MIPRO ICT and Electronics Convention (MIPRO)</title>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2024-05-20">2024</date>
+			<biblScope unit="page" from="625" to="629" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted"  xml:id="b14">
+	<analytic>
+		<title level="a" type="main" xml:id="_ndJ2ZRf">Codegen: An open large language model for code with multi-turn program synthesis</title>
+		<author>
+			<persName><forename type="first">E</forename><surname>Nijkamp</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">B</forename><surname>Pang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Hayashi</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Tu</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">H</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Y</forename><surname>Zhou</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Savarese</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">C</forename><surname>Xiong</surname></persName>
+		</author>
+		<ptr target="https://openreview.net/forum?id=iaYcJKpY2B_" />
+	</analytic>
+	<monogr>
+		<title level="m" xml:id="_nVcrmTw">The Eleventh International Conference on Learning Representations</title>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="consolidated"  xml:id="b15">
+	<analytic>
+		<title level="a" type="main" xml:id="_GZGneEC">Learning with visualizations helps: A meta-analysis of visualization interventions in mathematics education</title>
+		<author>
+			<persName><forename type="first">Johanna</forename><surname>Schoenherr</surname></persName>
+			<idno type="ORCID">0000-0002-6445-2917</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Anselm</forename><forename type="middle">R</forename><surname>Strohmaier</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Stanislaw</forename><surname>Schukajlow</surname></persName>
+			<idno type="ORCID">0000-0003-0519-5276</idno>
+		</author>
+		<idno type="DOI">10.1016/j.edurev.2024.100639</idno>
+		<ptr target="https://www.sciencedirect.com/science/article/pii/S1747938X24000484" />
+	</analytic>
+	<monogr>
+		<title level="j" xml:id="_n8NZQMf">Educational Research Review</title>
+		<title level="j" type="abbrev">Educational Research Review</title>
+		<idno type="ISSN">1747-938X</idno>
+		<imprint>
+			<biblScope unit="volume">45</biblScope>
+			<biblScope unit="page">100639</biblScope>
+			<date type="published" when="2024-11">2024</date>
+			<publisher>Elsevier BV</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct status="extracted"  xml:id="b16">
+	<monogr>
+		<title level="m" type="main" xml:id="_6j8GJGp">Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context</title>
+		<author>
+			<persName><forename type="first">G</forename><surname>Team</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">P</forename><surname>Georgiev</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">V</forename><forename type="middle">I</forename><surname>Lei</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">R</forename><surname>Burnell</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">L</forename><surname>Bai</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">A</forename><surname>Gulati</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">G</forename><surname>Tanzer</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">D</forename><surname>Vincent</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Z</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">S</forename><surname>Wang</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:2403.05530</idno>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="report_type">arXiv preprint</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,2 +1,9 @@
 .DS_Store
 **/__pycache__/
+
+# Virtual environments
+.env
+.venv/
+myenv/
+venv/
+env/

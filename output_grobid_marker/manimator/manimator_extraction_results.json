@@ -1,0 +1,162 @@
+{
+  "paper_name": "manimator",
+  "source_file": "resources/manimator.pdf",
+  "output_directory": "output_grobid_marker2/manimator",
+  "tei_file": "output_grobid_marker2/manimator/manimator.tei.xml",
+  "introduction": {
+    "found": true,
+    "section_type": "introduction",
+    "title": "Introduction",
+    "section_number": "1",
+    "text": "The ability to grasp complex scientific and mathematical concepts is fundamental to STEM education.However, traditional learning materials, such as textbooks and research papers, often present information in dense, static formats.Dynamic visualizations have proven effective in improving understanding and engagement, making abstract concepts more concrete and intuitive (Schoenherr et al., 2024).\n\nThe Manim animation engine (The Manim Community Developers, 2024) has demonstrated the power of code-driven animations for explaining intricate topics.Despite the poten-* Equal contribution 1 Department of Computer Science and Engineering, PES University, Bengaluru, India.Correspondence to: Samarth P <pes2ug22cs495@pesu.pesu.edu>,Vyoman Jain <pes2ug22cs672@pesu.pesu.edu>,Shiva Golugula <pes2ug22cs525@pesu.pesu.edu>,Motamarri Sai Sathvik <pes2ug22cs321@pesu.pesu.edu>.\n\ntial, creating such high-quality animations requires significant effort, programming expertise (Python), and domain knowledge.This bottleneck limits the widespread availability of custom visualizations tailored to specific concepts or research findings.However, recent advancements in Large Language Models (LLMs) have shown remarkable capabilities in text understanding, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).\n\nIn this paper, we present manimator, a system that harnesses LLMs to bridge the gap between complex textual information and engaging visual explanations.Manimator takes either a natural language prompt describing a concept or a full research paper (via PDF upload or using its arXiv ID) as input.\n\nIt employs a multi-stage pipeline:\n\n1. Scene Understanding and Planning: An LLM analyzes the input to extract key concepts, relevant formulas, and potential visual representations, structuring them into a detailed \"scene description.\"2. Code Generation: A code-specialized LLM translates the structured scene description into Python code compatible with the Manim engine.3. Rendering: The generated Manim code is executed to produce a video animation.\n\nManimator aims to empower educators, students, and researchers to quickly visualize complex ideas, thereby enhancing learning and scientific communication.We plan to open-source the tool and provide public access through a Gradio interface and API.",
+    "subsections": [],
+    "full_text": "The ability to grasp complex scientific and mathematical concepts is fundamental to STEM education.However, traditional learning materials, such as textbooks and research papers, often present information in dense, static formats.Dynamic visualizations have proven effective in improving understanding and engagement, making abstract concepts more concrete and intuitive (Schoenherr et al., 2024).\n\nThe Manim animation engine (The Manim Community Developers, 2024) has demonstrated the power of code-driven animations for explaining intricate topics.Despite the poten-* Equal contribution 1 Department of Computer Science and Engineering, PES University, Bengaluru, India.Correspondence to: Samarth P <pes2ug22cs495@pesu.pesu.edu>,Vyoman Jain <pes2ug22cs672@pesu.pesu.edu>,Shiva Golugula <pes2ug22cs525@pesu.pesu.edu>,Motamarri Sai Sathvik <pes2ug22cs321@pesu.pesu.edu>.\n\ntial, creating such high-quality animations requires significant effort, programming expertise (Python), and domain knowledge.This bottleneck limits the widespread availability of custom visualizations tailored to specific concepts or research findings.However, recent advancements in Large Language Models (LLMs) have shown remarkable capabilities in text understanding, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).\n\nIn this paper, we present manimator, a system that harnesses LLMs to bridge the gap between complex textual information and engaging visual explanations.Manimator takes either a natural language prompt describing a concept or a full research paper (via PDF upload or using its arXiv ID) as input.\n\nIt employs a multi-stage pipeline:\n\n1. Scene Understanding and Planning: An LLM analyzes the input to extract key concepts, relevant formulas, and potential visual representations, structuring them into a detailed \"scene description.\"2. Code Generation: A code-specialized LLM translates the structured scene description into Python code compatible with the Manim engine.3. Rendering: The generated Manim code is executed to produce a video animation.\n\nManimator aims to empower educators, students, and researchers to quickly visualize complex ideas, thereby enhancing learning and scientific communication.We plan to open-source the tool and provide public access through a Gradio interface and API."
+  },
+  "methodology": {
+    "found": true,
+    "section_type": "methodology",
+    "title": "Large Language Models for Understanding and Code Generation",
+    "section_number": "2.3",
+    "text": "Recent advancements in Large Language Models (LLMs) like GPT-4 (Achiam et al., 2023), Claude (Anthropic, 2024), Gemini (Team et al., 2024), DeepSeek (Liu et al., 2024) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development (Jimenez et al., 2024).Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data (Galimzyanov et al., 2025;Yang et al., 2024;Goswami et al., 2025).Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code).",
+    "subsections": [],
+    "full_text": "Recent advancements in Large Language Models (LLMs) like GPT-4 (Achiam et al., 2023), Claude (Anthropic, 2024), Gemini (Team et al., 2024), DeepSeek (Liu et al., 2024) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development (Jimenez et al., 2024).Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data (Galimzyanov et al., 2025;Yang et al., 2024;Goswami et al., 2025).Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code)."
+  },
+  "related_works": {
+    "found": true,
+    "section_type": "related_works",
+    "title": "Related Works",
+    "section_number": "2",
+    "text": "Our work on manimator intersects with several research areas, including visualization in STEM education, code-driven animation tools, the application of Large Language Models (LLMs) for understanding and generation, and automated multimodal content creation.",
+    "subsections": [
+      {
+        "title": "Visualization in STEM Education and Communication",
+        "text": "The efficacy of visualization, particularly dynamic visualization, in enhancing the understanding of complex scientific and mathematical concepts is well-established (Brown & Sedgewick, 1985;Heer & Robertson, 2007).Visual representations can make abstract ideas more concrete, reveal hidden patterns, and improve learner engagement (Amini et al., 2018).Static visualizations are common in textbooks and papers, but dynamic animations offer significant advantages for illustrating processes, algorithms, and time-varying phenomena (Heer & Robertson, 2007).Research has explored creating visualizations for specific domains, such as algorithm and data structure education (Marković & Kaštelan, 2024).Tools like manimator aim to build upon these principles by significantly lowering the barrier to creating dynamic visualizations, making this powerful pedagogical approach more accessible.Ku et al. (2025) also highlight the benefit of visual explanations for theorem understanding, noting that they can expose reasoning errors more clearly than text alone.",
+        "level": 1,
+        "section_number": "2.1"
+      },
+      {
+        "title": "Code-Driven Animation and Manim",
+        "text": "The Manim library (The Manim Community Developers, 2024) stands out as a powerful tool for creating precise, programmatically generated mathematical animations.Its code-driven nature allows for fine-grained control over visual elements and complex transformations, making it ideal for explaining intricate STEM topics (Marković & Kaštelan, 2024).However, creating animations with Manim requires significant programming expertise (Python) and considerable manual effort, representing a bottleneck for educators and researchers who may lack the time or specific skills (Marković & Kaštelan, 2024;Helbling & Chau, 2023).Prior work like Helbling & Chau (2023) aimed to simplify Manim usage for specific domains like machine learning architectures by providing higher-level abstractions, but still required manual coding within its framework.Manimator directly addresses the creation bottleneck by automating the Manim code generation process itself using LLMs.",
+        "level": 1,
+        "section_number": "2.2"
+      },
+      {
+        "title": "Large Language Models for Understanding and Code Generation",
+        "text": "Recent advancements in Large Language Models (LLMs) like GPT-4 (Achiam et al., 2023), Claude (Anthropic, 2024), Gemini (Team et al., 2024), DeepSeek (Liu et al., 2024) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development (Jimenez et al., 2024).Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data (Galimzyanov et al., 2025;Yang et al., 2024;Goswami et al., 2025).Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code).",
+        "level": 1,
+        "section_number": "2.3"
+      },
+      {
+        "title": "Automated Generation of Multimodal Explanations",
+        "text": "Bridging the gap between textual information and visual explanations automatically is an emerging research direction.\n\nMost current approaches focus on text-to-image or textto-static-diagram generation.Generating dynamic, structured animations for complex explanatory purposes presents unique challenges involving temporal consistency, accurate representation of symbolic information (like formulas), and pedagogical structuring.The most closely related work is TheoremExplainAgent (Ku et al., 2025), which introduces an agentic approach using LLMs to generate Manim explanation videos specifically for mathematical theorems.It employs planning and coding agents to produce structured videos, demonstrating the potential of LLMs in this domain.\n\nWhile manimator shares the goal of automated Manim video generation, it positions itself as a more general tool applicable to a wider range of STEM concepts, directly accepting research papers (via PDF/arXiv ID) or natural language prompts as input and utilizing a pipeline potentially suitable for various complex topics beyond formal theorems.",
+        "level": 1,
+        "section_number": "2.4"
+      }
+    ],
+    "full_text": "Our work on manimator intersects with several research areas, including visualization in STEM education, code-driven animation tools, the application of Large Language Models (LLMs) for understanding and generation, and automated multimodal content creation.\n\nThe efficacy of visualization, particularly dynamic visualization, in enhancing the understanding of complex scientific and mathematical concepts is well-established (Brown & Sedgewick, 1985;Heer & Robertson, 2007).Visual representations can make abstract ideas more concrete, reveal hidden patterns, and improve learner engagement (Amini et al., 2018).Static visualizations are common in textbooks and papers, but dynamic animations offer significant advantages for illustrating processes, algorithms, and time-varying phenomena (Heer & Robertson, 2007).Research has explored creating visualizations for specific domains, such as algorithm and data structure education (Marković & Kaštelan, 2024).Tools like manimator aim to build upon these principles by significantly lowering the barrier to creating dynamic visualizations, making this powerful pedagogical approach more accessible.Ku et al. (2025) also highlight the benefit of visual explanations for theorem understanding, noting that they can expose reasoning errors more clearly than text alone.\n\nThe Manim library (The Manim Community Developers, 2024) stands out as a powerful tool for creating precise, programmatically generated mathematical animations.Its code-driven nature allows for fine-grained control over visual elements and complex transformations, making it ideal for explaining intricate STEM topics (Marković & Kaštelan, 2024).However, creating animations with Manim requires significant programming expertise (Python) and considerable manual effort, representing a bottleneck for educators and researchers who may lack the time or specific skills (Marković & Kaštelan, 2024;Helbling & Chau, 2023).Prior work like Helbling & Chau (2023) aimed to simplify Manim usage for specific domains like machine learning architectures by providing higher-level abstractions, but still required manual coding within its framework.Manimator directly addresses the creation bottleneck by automating the Manim code generation process itself using LLMs.\n\nRecent advancements in Large Language Models (LLMs) like GPT-4 (Achiam et al., 2023), Claude (Anthropic, 2024), Gemini (Team et al., 2024), DeepSeek (Liu et al., 2024) and others have demonstrated remarkable capabilities in natural language understanding, information extraction, structured data generation, and code synthesis (Nijkamp et al., 2023;Chen et al., 2023).LLMs can process complex textual inputs, including dense academic language found in research papers, to identify key concepts and relationships.Furthermore, their ability to generate code in various programming languages, including Python, has been extensively documented and applied in tools aiming to assist or automate software development (Jimenez et al., 2024).Several studies have explored using LLMs to generate code for specific visualization tasks, such as creating static plots from natural language descriptions or data (Galimzyanov et al., 2025;Yang et al., 2024;Goswami et al., 2025).Manimator leverages these dual capabilities: using LLMs first for deep understanding and planning (parsing text/PDFs into a scene description) and then for code generation (translating the plan into executable Manim code).\n\nBridging the gap between textual information and visual explanations automatically is an emerging research direction.\n\nMost current approaches focus on text-to-image or textto-static-diagram generation.Generating dynamic, structured animations for complex explanatory purposes presents unique challenges involving temporal consistency, accurate representation of symbolic information (like formulas), and pedagogical structuring.The most closely related work is TheoremExplainAgent (Ku et al., 2025), which introduces an agentic approach using LLMs to generate Manim explanation videos specifically for mathematical theorems.It employs planning and coding agents to produce structured videos, demonstrating the potential of LLMs in this domain.\n\nWhile manimator shares the goal of automated Manim video generation, it positions itself as a more general tool applicable to a wider range of STEM concepts, directly accepting research papers (via PDF/arXiv ID) or natural language prompts as input and utilizing a pipeline potentially suitable for various complex topics beyond formal theorems."
+  },
+  "figures": {
+    "count": 7,
+    "items": [
+      {
+        "figure_number": 1,
+        "filename": "49ad3a646d84bcfeac02bdf2b3792a3e_img.jpg",
+        "saved_as": "output_grobid_marker2/manimator/images/49ad3a646d84bcfeac02bdf2b3792a3e_img.jpg",
+        "width": 1270,
+        "height": 418,
+        "format": "JPEG",
+        "source": "marker_api",
+        "status": "saved",
+        "caption": "Figure 1.The Manimator Workflow: User provides input via a natural language prompt, PDF upload, or arXiv ID.The pipeline has three stages: (1) an LLM generates a structured Markdown scene description from input using prompts and examples; (2) a code-focused LLM converts this into Manim Python code; (3) the code is rendered into an animation using the Manim engine.",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 2,
+        "filename": "a71911ad87414271aeb190e0eebcb989_img.jpg",
+        "saved_as": "output_grobid_marker2/manimator/images/a71911ad87414271aeb190e0eebcb989_img.jpg",
+        "width": 921,
+        "height": 1310,
+        "format": "JPEG",
+        "source": "marker_api",
+        "status": "saved",
+        "caption": "",
+        "has_image_file": true
+      },
+      {
+        "figure_number": 3,
+        "caption": "",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 4,
+        "caption": "",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 5,
+        "caption": "Ku et al. (2025)nimator's performance on TheoremExplainBench against baseline models fromKu et al. (2025).Scores range from 0 to 1, with higher being better.Manimator's results (using DeepSeek V3) are highlighted.",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 6,
+        "caption": "Combined system prompts used for Stage 1 (Scene Description Generation) and Stage 2 (Manim Code Generation).",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      },
+      {
+        "figure_number": 7,
+        "caption": "Interface used for collecting human evaluation ratings on generated animations.",
+        "source": "grobid",
+        "has_image_file": false,
+        "status": "metadata_only"
+      }
+    ]
+  },
+  "tables": {
+    "count": 3,
+    "items": [
+      {
+        "table_number": 1,
+        "file": "output_grobid_marker2/manimator/tables/manimator_table_1.md",
+        "rows": 4,
+        "columns": 7,
+        "source": "marker",
+        "status": "extracted",
+        "caption": "",
+        "has_content": true
+      },
+      {
+        "table_number": 2,
+        "file": "output_grobid_marker2/manimator/tables/manimator_table_2.md",
+        "rows": 2,
+        "columns": 7,
+        "source": "marker",
+        "status": "extracted",
+        "caption": "",
+        "has_content": true
+      },
+      {
+        "table_number": 3,
+        "file": "output_grobid_marker2/manimator/tables/manimator_table_3.md",
+        "rows": 12,
+        "columns": 5,
+        "source": "marker",
+        "status": "extracted",
+        "caption": "",
+        "has_content": true
+      }
+    ]
+  },
+  "metadata": {
+    "total_pages": 0,
+    "languages": []
+  },
+  "status": "success"
+}

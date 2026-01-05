@@ -1,0 +1,418 @@
+# TASK: High-Level Knowledge Graph Construction for Research Paper Methodology
+
+You are an expert at analyzing research papers and constructing architectural-level knowledge graphs that capture the big picture of how a methodology works.
+
+## OBJECTIVE
+
+Create a high-level knowledge graph that:
+1. Establishes prerequisite knowledge from related works and introduction
+2. Captures the overall architecture and major components
+3. Shows high-level data flow and transformations
+4. Provides conceptual understanding before diving into implementation details
+
+## INPUT
+
+You will receive:
+- **Introduction section**: Context, problem formulation, and high-level approach
+- **Related Works section**: Background concepts and prior approaches
+- **Methodology section**: The core technical contribution
+- **Images**: Architecture diagrams, flowcharts, and visual representations
+- **Image captions**: Descriptions accompanying each figure
+
+## OUTPUT FORMAT
+
+Return a JSON object with the following structure:
+
+```json
+{
+  "paper_metadata": {
+    "title": "extracted paper title",
+    "primary_contribution": "1-2 sentence summary of main methodology",
+    "domain": "e.g., deep learning, computer vision, NLP, etc.",
+    "methodology_type": "e.g., architecture, training_algorithm, loss_function, data_augmentation"
+  },
+
+  "prerequisites": [
+    {
+      "id": "prereq_1",
+      "name": "Concept or technique name",
+      "type": "concept|technique|architecture|mathematical_foundation",
+      "description": "Clear explanation of what this is (2-3 sentences)",
+      "why_needed": "How this prerequisite relates to understanding the proposed methodology",
+      "source": "related_works|introduction",
+      "level": "foundational|intermediate|advanced",
+      "relationships_to_other_prereqs": ["prereq_2", "prereq_3"]
+    }
+  ],
+
+  "high_level_components": [
+    {
+      "id": "component_1",
+      "name": "Component name",
+      "type": "encoder|decoder|module|network|layer|mechanism|process|algorithm",
+      "description": "What this component does and its role in the overall methodology (3-4 sentences)",
+      "purpose": "Why this component exists / what problem it solves",
+      "input": "High-level description of what goes in",
+      "output": "High-level description of what comes out",
+      "key_properties": ["list", "of", "important", "characteristics"],
+      "visual_reference": {
+        "appears_in_figure": "figure_id or null",
+        "location_in_figure": "e.g., 'left encoder block', 'top pathway', 'center module'"
+      },
+      "novel_contribution": "true|false (is this a novel component or standard?)"
+    }
+  ],
+
+  "high_level_relationships": [
+    {
+      "id": "rel_1",
+      "source_id": "component_id or prereq_id",
+      "target_id": "component_id",
+      "relation_type": "flows_into|builds_upon|extends|composed_of|parallel_to|prerequisite_for|feeds_into|replaces",
+      "description": "How source relates to target at a conceptual level (2-3 sentences)",
+      "data_transformation": "High-level description of what changes between source and target",
+      "order": "integer indicating sequential order in pipeline (optional)",
+      "is_novel": "true|false (is this relationship part of the novel contribution?)"
+    }
+  ],
+
+  "architecture_overview": {
+    "paradigm": "e.g., encoder-decoder, autoregressive, diffusion, GAN, etc.",
+    "main_pipeline": [
+      {
+        "stage_id": "stage_1",
+        "name": "Stage name (e.g., Input Processing, Feature Extraction, etc.)",
+        "description": "What happens in this stage at a high level",
+        "components_involved": ["component_1", "component_2"],
+        "relationships_involved": ["rel_1", "rel_2"],
+        "order": 1
+      }
+    ],
+    "parallel_pathways": [
+      {
+        "pathway_name": "e.g., skip connections, multi-scale processing",
+        "description": "What this parallel pathway does",
+        "components": ["component_ids"]
+      }
+    ],
+    "feedback_loops": [
+      {
+        "description": "Description of any iterative or recurrent processes",
+        "components": ["component_ids"]
+      }
+    ]
+  },
+
+  "key_innovations": [
+    {
+      "innovation_id": "innov_1",
+      "name": "Name of the innovation",
+      "type": "architectural|algorithmic|mathematical|training_procedure",
+      "description": "What makes this novel compared to prior work (3-4 sentences)",
+      "comparison_to_baseline": "How this differs from the standard approach",
+      "components_involved": ["component_ids"],
+      "expected_benefit": "Why this innovation improves performance/efficiency/etc."
+    }
+  ],
+
+  "design_decisions": [
+    {
+      "decision": "Description of an important design choice made",
+      "rationale": "Why this choice was made over alternatives",
+      "alternatives_considered": ["alt1", "alt2"],
+      "components_affected": ["component_ids"]
+    }
+  ],
+
+  "high_level_summary": {
+    "one_sentence_summary": "Ultra-concise description of the methodology",
+    "paragraph_summary": "3-5 sentence explanation using only the high-level components",
+    "conceptual_analogy": "An analogy or comparison to help understand the approach (optional)",
+    "key_insight": "The main 'aha' moment or core idea behind the methodology"
+  }
+}
+```
+
+## DETAILED INSTRUCTIONS
+
+### 1. Prerequisites Extraction
+
+Focus on establishing the conceptual foundation:
+- Extract concepts from Related Works and Introduction that readers MUST understand first
+- Prioritize concepts that are directly built upon or extended by the proposed method
+- Avoid listing tangentially related work
+- Create a hierarchy: Some prerequisites may depend on other prerequisites
+- Examples:
+  - For a paper on Vision Transformers: prerequisite = "Transformer Architecture", "Self-Attention Mechanism", "Convolutional Neural Networks"
+  - For a paper on Diffusion Models: prerequisite = "Variational Autoencoders", "Denoising", "Markov Chains"
+
+### 2. High-Level Components
+
+Identify major building blocks:
+- These should be the "boxes" you'd draw in an architecture diagram
+- Each component should have a clear, singular purpose
+- Don't go into implementation details (e.g., "Encoder" not "12-layer transformer encoder with 768 hidden dims")
+- Mark which components are novel vs. standard
+- Examples:
+  - "Image Encoder", "Text Encoder", "Cross-Modal Attention Module", "Fusion Network"
+  - "Feature Pyramid", "Region Proposal Network", "ROI Pooling Layer"
+
+### 3. Visual Information Integration
+
+Carefully analyze architecture diagrams:
+- Map each component to its visual representation
+- Extract high-level flow (arrows, connections between boxes)
+- Identify parallel pathways (multiple streams)
+- Note skip connections, residual paths
+- Understand color coding or grouping in figures
+- If a diagram shows "Encoder → Attention → Decoder", create those as components
+
+### 4. Architecture Overview
+
+Describe the big picture:
+- **Paradigm**: What architectural family does this belong to?
+- **Main Pipeline**: Sequential stages from input to output
+- **Parallel Pathways** (OPTIONAL - set to null if not applicable): Any multi-stream processing (e.g., multi-scale features, auxiliary branches)
+- **Feedback Loops** (OPTIONAL - set to null if not applicable): Iterative refinement, recurrent processing, self-correction mechanisms
+
+### 5. Key Innovations
+
+This is CRITICAL - identify what's new:
+- What components/relationships didn't exist in prior work?
+- What's the creative leap this paper makes?
+- How does it differ from the baseline approach?
+- Don't just say "it's better" - explain the conceptual difference
+- Example: "Instead of global attention, introduces local window-based attention for efficiency"
+
+### 6. Design Decisions
+
+Capture important choices:
+- Why use this activation function and not another?
+- Why this specific loss function?
+- Why this architecture over alternatives?
+- These often appear in methodology as "We choose X because Y"
+
+### 7. Domain-Specific Guidance
+
+**For Deep Learning Papers:**
+- Components: Encoders, Decoders, Attention Modules, Normalization Layers, etc.
+- Focus on architecture paradigm (transformer, CNN, GNN, hybrid)
+- Note training vs. inference differences
+
+**For Computer Vision:**
+- Components: Backbone, Neck, Head, Feature Pyramid, ROI Pooling, etc
+- Focus on multi-scale processing, spatial hierarchies
+
+**For NLP:**
+- Components: Embedding Layer, Encoder Stack, Decoder Stack, Attention Mechanisms, etc
+- Focus on sequence processing paradigm
+
+**For Reinforcement Learning:**
+- Components: Policy Network, Value Network, Experience Replay, Environment Model, etc
+- Focus on agent-environment interaction loop
+
+## QUALITY CRITERIA
+
+1. **Clarity**: A domain expert should understand the big picture from this graph alone
+2. **Completeness**: All major components mentioned in methodology are included
+3. **Accuracy**: Relationships accurately reflect the paper's description
+4. **Novelty Identification**: Clear marking of what's new vs. standard
+5. **Visual Alignment**: Components map to architecture diagrams when provided
+
+## IMPORTANT NOTES
+
+- Stay at the ARCHITECTURAL level - don't describe specific operations or tensor shapes
+- Use the methodology text to understand what's INSIDE the boxes shown in figures
+- If multiple figures exist, synthesize information across them
+- Focus on NOVEL components more than standard ones (e.g., detailed description of new attention mechanism, brief mention of standard FFN)
+- Ensure the graph captures the "story" of how data flows through the system
+
+## EXAMPLE OUTPUT
+
+Here's a minimal example for a Vision Transformer paper:
+
+```json
+{
+  "paper_metadata": {
+    "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+    "primary_contribution": "Applies pure Transformer architecture to image classification by treating images as sequences of patches",
+    "domain": "computer_vision, deep_learning",
+    "methodology_type": "architecture"
+  },
+  "prerequisites": [
+    {
+      "id": "prereq_transformer",
+      "name": "Transformer Architecture",
+      "type": "architecture",
+      "description": "Sequence-to-sequence model using self-attention mechanism without recurrence or convolution, originally designed for NLP tasks. Uses multi-head attention and position-wise feed-forward networks.",
+      "why_needed": "Vision Transformer (ViT) directly applies the Transformer encoder architecture to image patches",
+      "source": "related_works",
+      "level": "intermediate",
+      "relationships_to_other_prereqs": ["prereq_attention"]
+    },
+    {
+      "id": "prereq_cnn",
+      "name": "Convolutional Neural Networks",
+      "type": "architecture",
+      "description": "Standard architecture for computer vision using convolutional layers to extract hierarchical spatial features with local receptive fields.",
+      "why_needed": "ViT is compared against CNN baselines and represents a paradigm shift from convolution-based to attention-based vision models",
+      "source": "related_works",
+      "level": "foundational",
+      "relationships_to_other_prereqs": []
+    }
+  ],
+  "high_level_components": [
+    {
+      "id": "patch_embedding",
+      "name": "Patch Embedding Layer",
+      "type": "module",
+      "description": "Splits input image into fixed-size non-overlapping patches and linearly projects each patch to create patch embeddings. This converts the 2D image into a sequence of 1D vectors that can be processed by the Transformer.",
+      "purpose": "Transform spatial image data into a sequence format compatible with Transformer architecture",
+      "input": "Input image (H x W x C)",
+      "output": "Sequence of patch embeddings",
+      "key_properties": ["patch_size: 16x16", "flattens 2D structure", "learnable projection"],
+      "visual_reference": {
+        "appears_in_figure": "figure_1",
+        "location_in_figure": "leftmost block showing image splitting"
+      },
+      "novel_contribution": "false"
+    },
+    {
+      "id": "transformer_encoder",
+      "name": "Transformer Encoder",
+      "type": "encoder",
+      "description": "Stack of identical Transformer encoder blocks, each containing multi-head self-attention and MLP layers with residual connections and layer normalization. Processes the sequence of patch embeddings to capture global dependencies.",
+      "purpose": "Learn relationships between all image patches through self-attention",
+      "input": "Sequence of patch embeddings with positional encodings",
+      "output": "Sequence of contextualized patch representations",
+      "key_properties": ["pure attention-based", "global receptive field", "no spatial inductive bias"],
+      "visual_reference": {
+        "appears_in_figure": "figure_1",
+        "location_in_figure": "central tower of repeated encoder blocks"
+      },
+      "novel_contribution": "false"
+    },
+    {
+      "id": "classification_head",
+      "name": "MLP Classification Head",
+      "type": "layer",
+      "description": "Multi-layer perceptron that takes the representation of the special [CLS] token and maps it to class logits.",
+      "purpose": "Generate final classification prediction from global image representation",
+      "input": "[CLS] token representation",
+      "output": "Class probabilities",
+      "key_properties": ["single hidden layer during pre-training", "attached to CLS token"],
+      "visual_reference": {
+        "appears_in_figure": "figure_1",
+        "location_in_figure": "rightmost block labeled 'MLP Head'"
+      },
+      "novel_contribution": "false"
+    }
+  ],
+  "high_level_relationships": [
+    {
+      "id": "rel_patch_to_encoder",
+      "source_id": "patch_embedding",
+      "target_id": "transformer_encoder",
+      "relation_type": "flows_into",
+      "description": "Patch embeddings are concatenated with a learnable [CLS] token and added with positional embeddings before being fed to the Transformer encoder.",
+      "data_transformation": "Spatial 2D image → Sequential 1D patch embeddings with position information",
+      "order": 1,
+      "is_novel": "false"
+    },
+    {
+      "id": "rel_encoder_to_head",
+      "source_id": "transformer_encoder",
+      "target_id": "classification_head",
+      "relation_type": "feeds_into",
+      "description": "The final representation of the [CLS] token from the Transformer encoder output is extracted and passed to the classification head.",
+      "data_transformation": "Contextualized sequence representations → Single global representation",
+      "order": 2,
+      "is_novel": "false"
+    },
+    {
+      "id": "rel_cnn_baseline",
+      "source_id": "prereq_cnn",
+      "target_id": "transformer_encoder",
+      "relation_type": "replaces",
+      "description": "ViT replaces the traditional CNN feature extraction backbone with a pure Transformer encoder, removing convolution and spatial inductive bias entirely.",
+      "data_transformation": "Local feature extraction → Global attention-based feature extraction",
+      "is_novel": "true"
+    }
+  ],
+  "architecture_overview": {
+    "paradigm": "transformer_encoder_only",
+    "main_pipeline": [
+      {
+        "stage_id": "stage_tokenization",
+        "name": "Image Tokenization",
+        "description": "Convert 2D image into sequence of patch embeddings",
+        "components_involved": ["patch_embedding"],
+        "relationships_involved": [],
+        "order": 1
+      },
+      {
+        "stage_id": "stage_encoding",
+        "name": "Self-Attention Encoding",
+        "description": "Process patch sequence through Transformer encoder to capture global dependencies",
+        "components_involved": ["transformer_encoder"],
+        "relationships_involved": ["rel_patch_to_encoder"],
+        "order": 2
+      },
+      {
+        "stage_id": "stage_classification",
+        "name": "Classification",
+        "description": "Generate class predictions from [CLS] token representation",
+        "components_involved": ["classification_head"],
+        "relationships_involved": ["rel_encoder_to_head"],
+        "order": 3
+      }
+    ],
+    "parallel_pathways": null,
+    "feedback_loops": null
+  },
+  "key_innovations": [
+    {
+      "innovation_id": "innov_patch_sequence",
+      "name": "Treating Images as Sequences of Patches",
+      "type": "architectural",
+      "description": "Instead of processing images through convolutional layers, ViT splits images into fixed-size patches and treats them as a sequence, applying the same Transformer architecture used in NLP. This removes spatial inductive bias and relies purely on learned attention patterns.",
+      "comparison_to_baseline": "CNNs use local convolutions with spatial structure built-in; ViT learns spatial relationships through attention over patches",
+      "components_involved": ["patch_embedding", "transformer_encoder"],
+      "expected_benefit": "Better scalability with data and compute; can leverage Transformer training techniques from NLP"
+    },
+    {
+      "innovation_id": "innov_large_scale",
+      "name": "Large-Scale Pre-training for Vision Transformers",
+      "type": "training_procedure",
+      "description": "Demonstrates that ViT requires large-scale pre-training datasets (ImageNet-21k, JFT-300M) to outperform CNNs, but achieves superior performance when pre-trained on sufficient data.",
+      "comparison_to_baseline": "CNNs perform well with smaller datasets due to inductive bias; ViT needs more data but scales better",
+      "components_involved": ["transformer_encoder"],
+      "expected_benefit": "State-of-the-art performance on image recognition benchmarks when pre-trained at scale"
+    }
+  ],
+  "design_decisions": [
+    {
+      "decision": "Use fixed-size 16x16 patches instead of variable sizes or overlapping patches",
+      "rationale": "Simplicity and computational efficiency; aligns with Transformer's sequence processing paradigm",
+      "alternatives_considered": ["overlapping patches", "multi-scale patches"],
+      "components_affected": ["patch_embedding"]
+    },
+    {
+      "decision": "Use [CLS] token for classification instead of global average pooling",
+      "rationale": "Follows BERT's design; allows the model to learn a dedicated global representation",
+      "alternatives_considered": ["global average pooling", "attention pooling"],
+      "components_affected": ["classification_head"]
+    }
+  ],
+  "high_level_summary": {
+    "one_sentence_summary": "Vision Transformer applies pure Transformer architecture to image classification by treating images as sequences of patches.",
+    "paragraph_summary": "ViT splits an image into fixed-size patches, embeds them linearly, and processes the sequence through a standard Transformer encoder. A special [CLS] token is prepended to the sequence, and its final representation is used for classification. This approach removes convolutional inductive bias and demonstrates that pure attention mechanisms can match or exceed CNN performance when pre-trained on large datasets.",
+    "conceptual_analogy": "Just as BERT treats sentences as sequences of word tokens, ViT treats images as sequences of patch tokens",
+    "key_insight": "Spatial inductive bias from convolutions is not necessary if given enough data; attention can learn spatial relationships"
+  }
+}
+```
+
+---
+
+Now, given the input sections and images from the research paper, construct the high-level knowledge graph following this specification.
