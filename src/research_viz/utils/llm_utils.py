@@ -17,6 +17,7 @@ def make_schema_openai_compatible(schema: dict) -> dict:
     Recursively process schema to make it compatible with OpenAI's strict mode.
     - Ensures ALL properties are in the 'required' array (including optional ones)
     - Sets additionalProperties to false for all objects
+    - Removes any required keys that don't exist in properties
 
     Note: OpenAI's strict mode requires all fields to be in the required array,
     even Optional fields. Optional fields use type: [type, "null"] pattern.

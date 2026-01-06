@@ -91,6 +91,15 @@ class ArchitecturalOverview(BaseModel):
     why_it_works: str = Field(..., description="Core reason this methodology is effective")
 
 
+class SegmentOverview(BaseModel):
+    """Brief overview of a video segment."""
+    model_config = ConfigDict(extra="forbid")
+    
+    segment_id: str = Field(..., description="Segment identifier")
+    title: str = Field(..., description="Segment title")
+    focus: str = Field(..., description="What this segment focuses on")
+
+
 class VideoNarrative(BaseModel):
     """Video structure with 4-6 main segments following a clear narrative arc."""
     model_config = ConfigDict(extra="forbid")
@@ -99,7 +108,7 @@ class VideoNarrative(BaseModel):
     total_segments: int = Field(..., description="Total number of video segments (typically 4-6)")
     
     # Segment descriptions
-    segment_overview: List[Dict[str, str]] = Field(..., description="Brief overview of each segment: [{segment_id, title, focus}]")
+    segment_overview: List[SegmentOverview] = Field(..., description="Brief overview of each segment")
 
 
 class SpeechTiming(BaseModel):

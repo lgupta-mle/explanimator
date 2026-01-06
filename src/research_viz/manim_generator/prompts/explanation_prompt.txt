@@ -28,6 +28,11 @@ Return a JSON object matching the EducationalExplanation schema:
         "segment_id": "seg_1_intro",
         "title": "Introduction & Problem",
         "focus": "What problem does this solve and why does it matter?"
+      },
+      {
+        "segment_id": "seg_2_foundation",
+        "title": "Prerequisites & Foundation",
+        "focus": "Essential background concepts needed to understand the methodology"
       }
     ]
   },
