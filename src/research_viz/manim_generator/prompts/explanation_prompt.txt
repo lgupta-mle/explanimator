@@ -55,22 +55,14 @@ Return a JSON object matching the EducationalExplanation schema:
       "narration_script": "Let's dive into this methodology. Imagine you're trying to [problem statement]... [complete spoken narration]",
       "concepts_explained": ["concept_id_1"],
       "key_message": "This paper addresses X by introducing Y"
-    }
-  ],
-  
-  "concepts": [
+    },
     {
-      "concept_id": "comp_encoder",
-      "concept_name": "Image Encoder",
-      "concept_type": "component",
-      "simple_explanation": "The encoder is like a translator that converts images into a numerical representation the model can understand.",
-      "detailed_explanation": "Specifically, it takes raw pixel values and progressively extracts hierarchical features...",
-      "analogy": "Think of it like reading a book and taking notes - you're compressing information while keeping what's important.",
-      "example": "When you input a cat image, the encoder identifies edges, then patterns, then cat features.",
-      "why_it_matters": "This component is crucial because it determines what information the rest of the model can work with.",
-      "prerequisite_concept_ids": ["prereq_cnn"],
-      "enables_concept_ids": ["comp_attention"],
-      "keywords": ["encoding", "feature extraction", "representation learning"]
+      "segment_id": "seg_2_foundation",
+      "title": "Prerequisites & Foundation",
+      "order": 1,
+      "narration_script": "Before we see how it works, let's build the toolkit. First, [prerequisite 1 with analogy and example]... Now that we understand that, [prerequisite 2]... Building on this, [prerequisite 3]...",
+      "concepts_explained": ["prereq_1", "prereq_2", "prereq_3"],
+      "key_message": "These building blocks give us everything we need to understand the methodology"
     }
   ],
   
@@ -90,6 +82,8 @@ Return a JSON object matching the EducationalExplanation schema:
 }
 ```
 
+You can be creative with how you explain or create the narration scripts based on your best judgement on the knowledge graph passed.
+
 ## DETAILED INSTRUCTIONS
 
 ### 1. Video Segment Structure (4-6 segments)
@@ -103,13 +97,18 @@ CRITICAL: Start simple with concrete examples, then layer in complexity. Prerequ
 - "Here's what this paper does..."
 
 **Segment 2: Prerequisites & Foundation (90-120s) - MANDATORY SECOND SEGMENT**
-- "Before we see how it works, let's understand the building blocks..."
-- Explain EVERY prerequisite concept with:
-  - Simple analogy first ("Think of attention like...")
-  - Concrete example ("When you read 'The cat sat', you connect 'cat' with 'sat'...")
-  - Then technical detail
-- Cover: attention mechanism, embeddings, any architecture basics needed
-- Build intuition before diving into the paper's method
+- "Before we see how it works, let's build the toolkit..."
+- Explain EVERY prerequisite concept from the KG in a LOGICAL, STEP-BY-STEP order:
+  - Start with the most foundational concept first (e.g., embeddings before attention)
+  - Build each concept on the previous one
+  - For each prerequisite:
+    1. Simple analogy first ("Think of attention like a spotlight...")
+    2. Concrete example using your running example ("When we process 'sat' in 'The cat sat', attention shines on 'cat'...")
+    3. Then technical detail
+  - Use clear transitions: "Now that we understand X, let's see Y..."
+  - Cover all prerequisites from KG: attention mechanism, self-attention, embeddings, positional encoding, etc.
+- Build complete intuition before diving into the paper's method
+- This segment should feel like building blocks stacking one on top of another
 
 **Segment 3: Core Architecture - Simple View (90-120s)**
 - "Now that we have the basics, here's the BIG IDEA..."
@@ -191,16 +190,14 @@ it would learn to connect 'cat' with 'sat' strongly, but maybe connect 'mat' wit
 less strongly. That's the basic idea - attention helps words find related words."
 ```
 
-### 3. Concept Extraction from KG
+### 3. Using the Knowledge Graph
 
-For each component/prerequisite/innovation in the KG:
-- Extract to `concepts` array
-- Provide both simple and detailed explanations
-- Include analogy if helpful
-- Specify prerequisites (what must be understood first)
-- Specify what this enables (what concepts build on this)
-
-This creates a dependency graph for animation planning.
+The KG provides all the concepts, relationships, and innovations you need to cover:
+- **Prerequisites**: Must be explained step-by-step in Segment 2, in logical order
+- **Components**: Cover in Segments 3-4, building on the prerequisites
+- **Innovations**: Highlight in Segment 5
+- **Relationships**: Show how concepts connect using transitions ("Now that we have X, we can build Y...")
+- All concepts from the KG should appear somewhere in the narration scripts, explained with examples and analogies
 
 ### 4. Narrative Strategies
 

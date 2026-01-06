@@ -132,9 +132,6 @@ class EducationalExplanation(BaseModel):
     video_narrative: VideoNarrative = Field(..., description="Overall video narrative structure")
     video_segments: List[VideoSegment] = Field(..., description="Ordered video segments with narration scripts (4-6 segments)")
     
-    # Concept explanations (for reference, not directly in video)
-    concepts: List[ConceptExplanation] = Field(..., description="Individual concept explanations extracted from KG")
-    
     # Architectural overview (typically in final segment)
     architectural_overview: ArchitecturalOverview = Field(..., description="System-level summary for conclusion")
 
