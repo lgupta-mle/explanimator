@@ -1,0 +1,169 @@
+{
+  "video_narrative": {
+    "narrative_strategy": "building_blocks",
+    "total_segments": 6,
+    "segment_overview": [
+      {
+        "segment_id": "seg_1_intro",
+        "title": "Introduction & Problem",
+        "focus": "What problem the Transformer solves in sequence tasks and why it matters"
+      },
+      {
+        "segment_id": "seg_2_foundation",
+        "title": "Prerequisites & Foundation",
+        "focus": "Attention, self-attention, positional encodings, seq2seq, autoregression, and training stabilizers"
+      },
+      {
+        "segment_id": "seg_3_simple_arch",
+        "title": "Core Architecture – Simple View",
+        "focus": "Big idea of an attention-only encoder–decoder and how information flows"
+      },
+      {
+        "segment_id": "seg_4_step_by_step",
+        "title": "How It Actually Works – Step by Step",
+        "focus": "Walk through one translation example end-to-end with technical details"
+      },
+      {
+        "segment_id": "seg_5_innovations",
+        "title": "What Makes This Special",
+        "focus": "Key innovations versus RNNs/CNNs and why they improve results"
+      },
+      {
+        "segment_id": "seg_6_overview",
+        "title": "Architectural Overview & Impact",
+        "focus": "Synthesize the full pipeline and real-world impact"
+      }
+    ]
+  },
+  "video_segments": [
+    {
+      "segment_id": "seg_1_intro",
+      "title": "Introduction & Problem",
+      "order": 0,
+      "narration_script": "Let’s start with a concrete task: translate the sentence, “The cat sat on the mat,” into French. A good translation is “Le chat s’est assis sur le tapis.” To produce that, a model needs to connect far-apart words, like matching “cat” with “sat,” and know word order, like putting “le” before “chat.”\nHere’s the challenge: older models, like RNNs and LSTMs, read sentences one token at a time—like a person copying a line of text letter by letter. That makes training slow and makes it hard to connect distant words because information has to pass through many steps. CNN-based models process in parallel, but they still need several layers to connect far-away words.\nThis paper, Attention Is All You Need, introduces the Transformer. The big move is bold and simple: throw out recurrence and convolution, and use only attention plus small feed-forward networks. Why does this matter? Because attention lets any word look directly at any other word in one hop, making long-distance connections easy, and it lets training run in parallel across the whole sentence. The result is faster training and often better accuracy on tasks like translation, summarization, and beyond.\nIn short: this paper replaces slow, step-by-step reading with instant, global cross-referencing—and that’s a game changer for language.",
+      "concepts_explained": [
+        "prereq_seq2seq",
+        "prereq_rnn_limits",
+        "prereq_cnn_seq"
+      ],
+      "key_message": "Transformer solves slow, sequential processing and long-range dependency problems by using only attention with an encoder–decoder setup.",
+      "estimated_duration_seconds": 91
+    },
+    {
+      "segment_id": "seg_2_foundation",
+      "title": "Prerequisites & Foundation",
+      "order": 1,
+      "narration_script": "Before we see how it works, let’s build our toolkit using the same example: “The cat sat on the mat.”\n1) Encoder–Decoder seq2seq. Imagine a two-person translation team. The encoder is the reader: it reads the English sentence and takes notes. The decoder is the speaker: it uses those notes to say the sentence in French, one word at a time. Technically, the encoder turns tokens into vectors; the decoder then generates output tokens autoregressively, conditioned on the encoder’s notes.\n2) RNN limits. Picture a relay race: each runner passes a baton (the hidden state) to the next. To connect “cat” with “sat,” the baton has to travel through multiple runners. That’s slow and the message can get distorted. This motivates removing the relay and letting any runner talk to any other directly.\n3) CNN seq2seq. Think of a camera scanning through the sentence with windows. To connect distant words, you need multiple scans or bigger windows. Better than a relay, but still many steps for long distances.\n4) Attention mechanism. Attention is a spotlight that brightens relevant words. When processing “sat,” the model asks, “Who sat?” It shines brightest on “cat.” Technically, we have three things: a query (what we’re looking for), keys (what each word offers), and values (the information to pull). We score how well the query matches each key, turn those scores into weights, and take a weighted sum of the values. That makes related words pop out, regardless of distance.\n5) Self-attention. Now the roundtable version: every word can look at every other word in the same sentence. “Sat” can directly consult “cat,” “on,” and “mat,” all at once. This builds context-rich word representations.\n6) Positional information. Attention by itself doesn’t know order—“cat sat” vs. “sat cat” look the same if we only shuffle. We add positional encodings, like giving each word GPS coordinates. The Transformer uses sinusoidal signals—think of two clocks ticking at different speeds (sine and cosine) so positions become recognizable patterns the model can compare and even extrapolate to longer sequences.\n7) Residual connections and LayerNorm. Imagine each block has a shortcut road that lets information skip ahead (residual), and a thermostat that keeps activations in a stable range (LayerNorm). This makes deep stacks easier to train.\n8) Autoregressive decoding and causal masking. The decoder speaks left-to-right. To prevent cheating, we cover its eyes to future words during training with a causal mask. It can only use what’s already been said.\nWith these building blocks—seq2seq structure, attention and self-attention, positional signals, stabilizing wrappers, and causal decoding—we’re ready for the Transformer.",
+      "concepts_explained": [
+        "prereq_seq2seq",
+        "prereq_rnn_limits",
+        "prereq_cnn_seq",
+        "prereq_attention",
+        "prereq_self_attention",
+        "prereq_positional_info",
+        "prereq_residual_norm",
+        "prereq_autoregressive"
+      ],
+      "key_message": "We now understand the essential pieces—attention, self-attention, position signals, residual LayerNorm, and autoregressive masking—that power the Transformer.",
+      "estimated_duration_seconds": 191
+    },
+    {
+      "segment_id": "seg_3_simple_arch",
+      "title": "Core Architecture – Simple View",
+      "order": 2,
+      "narration_script": "Now the big idea in plain terms. Think of an assembly line with two teams: an Encoder Team and a Decoder Team, both built from the same kind of smart blocks.\nStep 1: Input tokens become vectors, and we add those sine–cosine position signals—so “The” at position 1 looks different from “The” at position 5.\nStep 2: The Encoder Team has several identical floors. On each floor, there’s a multi-head self-attention room—a committee of experts. Each expert (head) looks across the entire sentence for a specific type of relationship: one might track subject–verb links (“cat”↔“sat”), another might track prepositional phrases (“on”↔“mat”). Their findings are combined, then a small feed-forward network refines each word’s representation.\nStep 3: The Decoder Team also has several floors. First, it holds a masked self-attention meeting over the words generated so far, so it doesn’t peek ahead. Then it has a cross-attention meeting where it consults the Encoder Team’s notes—this is how the output stays faithful to the input. Finally, it uses a feed-forward network and produces the next-word probabilities.\nThat’s the whole Transformer at a high level: embed + positions, encoder self-attends in parallel, decoder self-attends with a mask, then cross-attends to the encoder, and outputs a word. Repeat until the sentence is done.",
+      "concepts_explained": [
+        "comp_enc_token_pos_embed",
+        "comp_encoder_stack",
+        "comp_mh_self_attn_enc",
+        "comp_ffn",
+        "comp_dec_token_pos_embed",
+        "comp_decoder_stack",
+        "comp_masked_mh_self_attn_dec",
+        "comp_encdec_mh_attn",
+        "comp_output_linear_softmax"
+      ],
+      "key_message": "Transformer = encoder–decoder built from repeated self-attention and feed-forward blocks, with masking on the decoder and cross-attention to the encoder.",
+      "estimated_duration_seconds": 91
+    },
+    {
+      "segment_id": "seg_4_step_by_step",
+      "title": "How It Actually Works – Step by Step",
+      "order": 3,
+      "narration_script": "Let’s walk through translating “The cat sat on the mat” to French.\n1) Embedding and positions. Each English token becomes a vector. We add sinusoidal positional encodings so position 1 differs from position 2 in a predictable, comparable way.\n2) Encoder layer – multi-head self-attention. Inside one head, we create three matrices from the current layer’s representations: queries (Q), keys (K), and values (V). For the word “sat” as a query, we compute similarity with every key—“The,” “cat,” “sat,” “on,” “the,” “mat”—using dot products. Intuition: big dot product means strong relation. We scale these scores by 1/sqrt(d_k) so they don’t blow up when vectors are high-dimensional—for example, if d_k is 64, we divide by 8. Then we apply softmax to turn scores into weights that sum to 1. Finally, we make a weighted sum of the value vectors. That gives “sat” a context-aware representation that strongly reflects “cat.” Multiple heads repeat this in parallel, each focusing on different relations. We concatenate the head outputs and linearly mix them. Then a position-wise feed-forward network refines each token independently. Residual connections add the input back in, and LayerNorm stabilizes everything.\n3) Stack N encoder layers. After several layers, we have rich “encoder memory” that captures global relationships across the whole sentence.\n4) Decoder inputs and masking. To start decoding, we feed a special start token and, during training, the shifted French targets. The decoder first runs masked self-attention so the position predicting the second word can only see the first word, not the future ones.\n5) Cross-attention. Next, the decoder’s queries look over the encoder memory (as keys and values). When predicting “chat,” the decoder attends to “cat” in English; later when predicting “tapis,” it focuses on “mat.” Multi-heads let it align phrases, agreement, and syntax simultaneously.\n6) Output projection and softmax. The decoder state goes through a linear layer that maps to vocabulary logits, then softmax turns them into probabilities over French words. Often, the same weight matrix is shared with the input embeddings to reduce parameters. We pick the next word—say it chooses “Le”—and feed it back in for the next step. This repeats until an end-of-sentence token.\nThat’s one full pass: scaled dot-product attention for similarity and mixing, multi-head diversity, masking for causality, cross-attention for faithfulness, and a softmax to pick words.",
+      "concepts_explained": [
+        "comp_scaled_dot_prod",
+        "comp_multihead",
+        "comp_mh_self_attn_enc",
+        "comp_ffn",
+        "comp_add_norm",
+        "comp_dec_token_pos_embed",
+        "comp_masked_mh_self_attn_dec",
+        "comp_encdec_mh_attn",
+        "comp_output_linear_softmax"
+      ],
+      "key_message": "Technically, attention computes similarity scores (dot products), scales by 1/sqrt(dk), softmaxes to weights, and mixes values—repeated across heads, with masking and cross-attention in the decoder.",
+      "estimated_duration_seconds": 169
+    },
+    {
+      "segment_id": "seg_5_innovations",
+      "title": "What Makes This Special",
+      "order": 4,
+      "narration_script": "So what’s the innovation here, compared to older approaches?\n- Versus RNNs: Instead of a long relay where “cat” has to pass a message step-by-step to “sat,” the Transformer connects them directly in one hop via self-attention. That short path helps with long-range dependencies and trains in parallel.\n- Versus CNNs: Instead of stacking many layers to connect distant words, self-attention has a constant path length—every word can see every other word right away.\n- Multi-head attention: A single head tends to average relationships. Multiple heads act like a panel of specialists—one checks alignment, another checks syntax, another checks phrase boundaries—so the model captures richer structure with similar compute cost.\n- Scaled dot-product attention: Using dot products with 1/sqrt(d_k) scaling is both fast on GPUs/TPUs and numerically stable for large dimensions, so training is smooth and efficient.\n- Sinusoidal positional encodings: Simple, parameter-free signals that encode order and can generalize to longer inputs, keeping the model lightweight while preserving sequence structure.\nIn practical terms: you get faster training, better handling of long sentences, and strong performance on translation and many other language tasks.",
+      "concepts_explained": [
+        "innov_attention_only",
+        "innov_multihead",
+        "innov_scaled_dot",
+        "innov_positional_encoding",
+        "prereq_rnn_limits",
+        "prereq_cnn_seq"
+      ],
+      "key_message": "Transformer’s attention-only design, multi-head diversity, scaled dot-product, and sinusoidal positions deliver parallelism, constant-distance interactions, and strong accuracy.",
+      "estimated_duration_seconds": 78
+    },
+    {
+      "segment_id": "seg_6_overview",
+      "title": "Architectural Overview & Impact",
+      "order": 5,
+      "narration_script": "Let’s zoom out and see the full journey for “The cat sat on the mat.”\n1) Input representation: tokens → embeddings + sinusoidal positions.\n2) Source encoding: the encoder stack runs multi-head self-attention and feed-forward layers in parallel across all positions to produce encoder memory.\n3) Decoder input prep: previously generated French tokens are shifted, embedded, and masked self-attention builds context without peeking ahead.\n4) Cross-attention: decoder queries attend over the encoder memory, pulling in the most relevant English words for each French token.\n5) Output: a feed-forward layer refines the state, then a linear + softmax maps to next-word probabilities. The chosen word loops back in for the next step.\nThe components depend on each other: positions give order, self-attention lets words relate instantly, residual+LayerNorm keep training stable, masking preserves causality, and cross-attention ties output to input. This pattern scales to translation, summarization, question answering, even code generation—any task where sequences need global context and efficient training.\nThat’s why “Attention Is All You Need” changed the field: it turned sequence modeling into a fast, globally-aware system that’s simple, modular, and effective.",
+      "concepts_explained": [
+        "comp_enc_token_pos_embed",
+        "comp_encoder_stack",
+        "comp_dec_token_pos_embed",
+        "comp_decoder_stack",
+        "comp_encdec_mh_attn",
+        "comp_output_linear_softmax",
+        "comp_add_norm"
+      ],
+      "key_message": "All pieces form a clean pipeline: embeddings+positions → encoder self-attention stack → decoder masked self-attention + cross-attention → softmax output, repeated autoregressively.",
+      "estimated_duration_seconds": 78
+    }
+  ],
+  "architectural_overview": {
+    "overview_title": "Putting It All Together",
+    "big_picture_explanation": "The Transformer maps an input sequence to an output sequence using only attention and small per-position feed-forward layers. Inputs are embedded with positional signals, passed through a stack of encoder layers with multi-head self-attention to form a memory. The decoder consumes shifted outputs, applies masked self-attention for causality, then cross-attends to the encoder memory before projecting to next-token probabilities. Multi-head attention provides diverse relational views; residual connections and LayerNorm enable deep, stable stacks.",
+    "main_flow": [
+      "comp_enc_token_pos_embed",
+      "comp_encoder_stack",
+      "comp_dec_token_pos_embed",
+      "comp_decoder_stack",
+      "comp_encdec_mh_attn",
+      "comp_output_linear_softmax"
+    ],
+    "parallel_pathways": [
+      "comp_multihead"
+    ],
+    "feedback_loops": [
+      "comp_output_linear_softmax",
+      "comp_dec_token_pos_embed"
+    ],
+    "design_philosophy": "Eliminate sequential bottlenecks by replacing recurrence and convolution with global attention that operates in parallel. Keep blocks simple and repeatable, then stabilize them with residual connections and normalization. Explicitly encode order so attention can focus on content and relationships.",
+    "key_innovations_recap": [
+      "Attention-only encoder–decoder removes recurrence and convolution for full parallelism",
+      "Multi-head attention captures diverse relationships simultaneously",
+      "Scaled dot-product attention (with 1/sqrt(dk) scaling) for stability and efficiency",
+      "Sinusoidal positional encodings to inject order without extra parameters"
+    ],
+    "why_it_works": "Any position can directly attend to any other in constant steps, enabling rich long-range dependencies and fast parallel training while simple stabilizers keep deep stacks trainable."
+  }
+}
