@@ -17,7 +17,9 @@ from research_viz.manim_generator.explanation_schemas import (
     TimingEstimator,
     SpeechTiming
 )
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def create_educational_explanation(
     kg_json_path: str,
@@ -122,7 +124,7 @@ def add_duration_estimates(explanation: EducationalExplanation) -> EducationalEx
 
 def main(
     kg_json_path: Optional[str] = None,
-    model_name: str = "openai/gpt-4o"
+    model_name: str = "openai/gpt-5"
 ):
     """
     Generate educational explanation from Knowledge Graph.
@@ -130,7 +132,7 @@ def main(
     Args:
         kg_json_path: Path to the high-level methodology KG JSON file 
                      (default: uses output from breakdown_generator)
-        model_name: LLM model to use (default: openai/gpt-4o)
+        model_name: LLM model to use (default: openai/gpt-5)
     
     Examples:
         # Use default path (output from breakdown_generator)

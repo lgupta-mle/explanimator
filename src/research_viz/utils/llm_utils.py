@@ -73,11 +73,7 @@ def create_llm_response(
 
     # Create the LLM client
     use_openrouter = True
-    if model_name.startswith("openai/"):
-        use_openrouter = False
-        client = OpenAI()
-    else:
-        client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.getenv("OPENROUTER_API_KEY"))
+    client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.getenv("OPENROUTER_API_KEY"))
 
     # Prepare messages
     messages = [
