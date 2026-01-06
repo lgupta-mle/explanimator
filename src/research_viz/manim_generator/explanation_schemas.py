@@ -58,19 +58,22 @@ class ConceptCluster(BaseModel):
 class VideoSegment(BaseModel):
     """A video segment with narration transcript."""
     model_config = ConfigDict(extra="forbid")
-    
+
     segment_id: str = Field(..., description="Unique segment identifier (e.g., 'seg_1_intro')")
     title: str = Field(..., description="Segment title for reference")
     order: int = Field(..., description="Sequential order in video (0-indexed)")
-    
+
     # Narration transcript
     narration_script: str = Field(..., description="Complete spoken narration for this segment (natural, conversational tone)")
-    
+
     # Concept coverage
     concepts_explained: List[str] = Field(default_factory=list, description="Concept IDs covered in this segment")
-    
+
     # Learning outcome
     key_message: str = Field(..., description="Core takeaway from this segment (1 sentence)")
+
+    # Duration (calculated post-generation, not predicted by LLM)
+    estimated_duration_seconds: Optional[int] = Field(None, description="Estimated duration in seconds (calculated post-generation)")
 
 
 class ArchitecturalOverview(BaseModel):
