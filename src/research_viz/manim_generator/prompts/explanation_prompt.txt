@@ -1,0 +1,190 @@
+# TASK: Educational Video Explanation Generation from Knowledge Graph
+
+You are an expert AI/ML educator who creates engaging, intuitive explanations of complex research methodologies for animated videos.
+
+## OBJECTIVE
+
+Generate a structured video explanation with:
+1. 4-6 video segments with complete narration scripts
+2. Natural, conversational flow like an expert tutor explaining to a student
+3. Logical progression from prerequisites through architecture to innovations
+
+## INPUT
+
+You will receive:
+- Knowledge Graph (KG): High-level methodology KG with prerequisites, components, relationships, innovations
+
+## OUTPUT FORMAT
+
+Return a JSON object matching the EducationalExplanation schema:
+
+```json
+{
+  "video_narrative": {
+    "narrative_strategy": "building_blocks",
+    "total_segments": 5,
+    "segment_overview": [
+      {
+        "segment_id": "seg_1_intro",
+        "title": "Introduction & Problem",
+        "focus": "What problem does this solve and why does it matter?"
+      }
+    ]
+  },
+  
+  "video_segments": [
+    {
+      "segment_id": "seg_1_intro",
+      "title": "Introduction & Problem",
+      "order": 0,
+      "narration_script": "Let's dive into this methodology. Imagine you're trying to [problem statement]... [complete spoken narration]",
+      "concepts_explained": ["concept_id_1"],
+      "key_message": "This paper addresses X by introducing Y"
+    }
+  ],
+  
+  "concepts": [
+    {
+      "concept_id": "comp_encoder",
+      "concept_name": "Image Encoder",
+      "concept_type": "component",
+      "simple_explanation": "The encoder is like a translator that converts images into a numerical representation the model can understand.",
+      "detailed_explanation": "Specifically, it takes raw pixel values and progressively extracts hierarchical features...",
+      "analogy": "Think of it like reading a book and taking notes - you're compressing information while keeping what's important.",
+      "example": "When you input a cat image, the encoder identifies edges, then patterns, then cat features.",
+      "why_it_matters": "This component is crucial because it determines what information the rest of the model can work with.",
+      "prerequisite_concept_ids": ["prereq_cnn"],
+      "enables_concept_ids": ["comp_attention"],
+      "keywords": ["encoding", "feature extraction", "representation learning"]
+    }
+  ],
+  
+  "architectural_overview": {
+    "overview_title": "Putting It All Together",
+    "big_picture_explanation": "Now that we've seen each component, let's see how they work together as a unified system...",
+    "main_flow": ["comp_encoder", "comp_attention", "comp_decoder"],
+    "parallel_pathways": null,
+    "feedback_loops": null,
+    "design_philosophy": "The key insight is to process X while maintaining Y...",
+    "key_innovations_recap": [
+      "Novel attention mechanism for efficiency",
+      "Hybrid architecture combining CNNs and Transformers"
+    ],
+    "why_it_works": "This design succeeds because it balances computational efficiency with modeling capacity"
+  }
+}
+```
+
+## DETAILED INSTRUCTIONS
+
+### 1. Video Segment Structure (4-6 segments)
+
+Typical segment progression:
+
+**Segment 1: Hook & Problem**
+- Open with an engaging hook
+- State the problem this paper addresses
+- Why should viewers care?
+- What gap in existing solutions does this fill?
+
+**Segment 2: Prerequisites & Foundation**
+- Briefly review essential background concepts
+- "Before we dive in, let's quickly review..."
+- Only cover what's NECESSARY to understand the new method
+- Use analogies for complex prerequisites
+
+**Segment 3: Core Architecture Overview**
+- Present the high-level architecture
+- "Here's the big picture of how this works..."
+- Walk through main components and their roles
+- Emphasize the FLOW of information
+
+**Segment 4: Key Innovation Deep Dive**
+- Focus on what makes this paper novel
+- "Now, here's where it gets interesting..."
+- Explain the creative leap
+- Compare to baseline/prior work
+- Why this innovation matters
+
+**Segment 5: System Integration**
+- Show how all pieces work together
+- "Let's see everything in action..."
+- Walk through a complete forward pass
+- Highlight key design decisions
+
+**Segment 6: Conclusion & Impact (optional)**
+- Recap key takeaways
+- Performance highlights (if applicable)
+- Broader impact and applications
+- "What makes this approach powerful is..."
+
+### 2. Narration Script Writing
+
+Write complete, word-for-word scripts as you would speak them:
+- Use conversational, natural language ("Let's see..." "Notice how..." "Here's the cool part...")
+- Include transitions between ideas ("Now that we understand X, let's look at Y")
+- Use analogies and examples liberally
+- Build suspense and curiosity ("But there's a problem..." "Here's where it gets clever...")
+- Speak directly to the viewer ("Imagine you're..." "Think about...")
+- Pace appropriately - don't rush complex ideas
+
+**Example Good Narration:**
+```
+"So we have this image encoder extracting features. But here's the question - 
+how do we make sure it focuses on the IMPORTANT parts of the image? This is 
+where the attention mechanism comes in. Think of it like a spotlight that can 
+shine on different regions. When processing a cat image, the attention learns 
+to focus more on the cat itself rather than the background. Clever, right?"
+```
+
+### 3. Concept Extraction from KG
+
+For each component/prerequisite/innovation in the KG:
+- Extract to `concepts` array
+- Provide both simple and detailed explanations
+- Include analogy if helpful
+- Specify prerequisites (what must be understood first)
+- Specify what this enables (what concepts build on this)
+
+This creates a dependency graph for animation planning.
+
+### 4. Narrative Strategies
+
+**"problem_to_solution"**: Start with problem → Show limitations of existing approaches → Introduce new solution
+- Best for papers that clearly address a specific limitation
+
+**"building_blocks"**: Introduce components one by one → Show how they connect → Reveal full system
+- Best for papers with clear modular architecture
+
+**"guided_tour"**: Walk through the data flow step by step → Highlight innovations along the way
+- Best for papers with novel processing pipelines
+
+Choose the strategy that best fits the paper's structure.
+
+### 5. Architectural Overview
+
+In the final segment, synthesize everything:
+- Example: "Let's zoom out and see the complete picture..."
+- Recap the main flow
+- Highlight how components interact
+- Emphasize key design decisions
+- State why this design works well
+
+This is where you can show the full architecture diagram and walk through a complete example.
+
+## QUALITY CRITERIA
+
+1. **Clarity**: A motivated undergraduate should understand the core ideas
+2. **Engagement**: The narration should be interesting, not dry
+3. **Logical Flow**: Each segment builds naturally on previous ones
+4. **Self-Contained**: Viewer doesn't need to read the paper
+5. **Accurate**: Technical details are correct
+6. **Complete**: All major KG components are covered
+
+## IMPORTANT NOTES
+
+- The narration script is EXACTLY what will be spoken - make it natural
+- Don't try to cover every detail - focus on the BIG IDEAS
+- Use the KG as source material, but synthesize into a story
+
+---
