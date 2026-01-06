@@ -17,12 +17,20 @@ def make_schema_openai_compatible(schema: dict) -> dict:
     Recursively process schema to make it compatible with OpenAI's strict mode.
     - Ensures ALL properties are in the 'required' array (including optional ones)
     - Sets additionalProperties to false for all objects
-    - Removes any required keys that don't exist in properties
+    - Removes description when $ref is present (OpenAI strict mode requirement)
 
     Note: OpenAI's strict mode requires all fields to be in the required array,
     even Optional fields. Optional fields use type: [type, "null"] pattern.
     """
     if isinstance(schema, dict):
+        # If $ref is present, remove description and other keywords (OpenAI strict mode)
+        if "$ref" in schema:
+            # Keep only $ref, remove all other fields like description, title, etc.
+            ref_value = schema["$ref"]
+            schema.clear()
+            schema["$ref"] = ref_value
+            return schema
+        
         # Process nested objects first
         for key, value in schema.items():
             if isinstance(value, (dict, list)):
