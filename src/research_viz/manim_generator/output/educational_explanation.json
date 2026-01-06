@@ -1,0 +1,729 @@
+{
+  "video_narrative": {
+    "narrative_strategy": "problem_to_solution",
+    "total_segments": 6,
+    "segment_overview": [
+      {
+        "segment_id": "seg_1_intro",
+        "title": "Why Attention? The Bottleneck of Sequence Models",
+        "focus": "Motivate replacing recurrence/convolution with attention by highlighting limits of RNNs/CNNs"
+      },
+      {
+        "segment_id": "seg_2_foundation",
+        "title": "Foundations: Attention, Self-Attention, and Order",
+        "focus": "Essential background: attention mechanics, self-attention, positions, residuals, and autoregression"
+      },
+      {
+        "segment_id": "seg_3_architecture",
+        "title": "Big Picture: The Transformer Architecture",
+        "focus": "Walk through encoder/decoder stacks, multi-head attention, FFNs, and Add & Norm"
+      },
+      {
+        "segment_id": "seg_4_innovations",
+        "title": "What’s New: Attention-Only, Multi-Head, Scaling, and Positions",
+        "focus": "Deep dive on the core innovations and why they matter"
+      },
+      {
+        "segment_id": "seg_5_integration",
+        "title": "End-to-End Pass: From Input Tokens to Output Probabilities",
+        "focus": "Put all components together and follow a forward pass with autoregressive feedback"
+      },
+      {
+        "segment_id": "seg_6_conclusion",
+        "title": "Impact and Takeaways",
+        "focus": "Recap, performance intuition, and broader impact"
+      }
+    ]
+  },
+  "video_segments": [
+    {
+      "segment_id": "seg_1_intro",
+      "title": "Why Attention? The Bottleneck of Sequence Models",
+      "order": 0,
+      "narration_script": "Imagine translating a sentence, but your model can only read one word at a time, passing a note along as it goes. That’s what recurrent networks do—they’re powerful, but slow to train and struggle to connect words that are far apart in the sentence. Convolutional models help with parallelism, but they need multiple layers to link distant words, so the path between two far tokens still grows with distance. Attention Is All You Need flips this on its head. It removes both recurrence and convolution, and instead lets every word look at every other word directly—in a single hop. That means full parallelism during training and a constant path length between any two positions. The result? Faster training, better long-range reasoning, and a simpler architecture that still follows the familiar encoder–decoder paradigm for tasks like translation.",
+      "concepts_explained": [
+        "prereq_seq2seq",
+        "prereq_rnn_limits",
+        "prereq_cnn_seq"
+      ],
+      "key_message": "The Transformer replaces sequential bottlenecks with attention, enabling parallelism and constant path length.",
+      "estimated_duration_seconds": 59
+    },
+    {
+      "segment_id": "seg_2_foundation",
+      "title": "Foundations: Attention, Self-Attention, and Order",
+      "order": 1,
+      "narration_script": "Before we dive in, let’s quickly get on the same page about attention. Attention takes a query, compares it to keys, and uses those scores to blend values—like asking, “Which pieces of information are relevant to my current question?” Self-attention is the same idea, except your queries, keys, and values all come from the same sequence. That lets each position gather context from any other position, no matter how far away. There’s a catch, though: attention by itself doesn’t know order. So the Transformer adds positional encodings—fixed sinusoidal signals summed with token embeddings—to inject sequence order. And to keep training stable in deep stacks, each sub-layer is wrapped with a residual connection and LayerNorm. Finally, the decoder is autoregressive: it generates tokens left-to-right and uses a causal mask so it can’t peek at the future.",
+      "concepts_explained": [
+        "prereq_attention",
+        "prereq_self_attention",
+        "prereq_positional_info",
+        "prereq_residual_norm",
+        "prereq_autoregressive"
+      ],
+      "key_message": "Self-attention mixes information globally, positional encodings provide order, and residual LayerNorm keeps deep training stable while the decoder remains causal.",
+      "estimated_duration_seconds": 59
+    },
+    {
+      "segment_id": "seg_3_architecture",
+      "title": "Big Picture: The Transformer Architecture",
+      "order": 2,
+      "narration_script": "Here’s the big picture. On the encoder side, we embed input tokens and add sinusoidal positions. Those position-enriched vectors flow into a stack of identical layers. Each layer first applies multi-head self-attention—multiple attention heads run in parallel using scaled dot-product attention—so different heads can capture different types of relationships at the same time. Then a position-wise feed-forward network transforms each position independently, and Add & Norm wraps both sub-layers for stability. On the decoder side, we do something similar but with two twists: the self-attention is masked to preserve left-to-right generation, and there’s a cross-attention block where the decoder attends to the encoder’s outputs. After that, another feed-forward, then we’ll project to vocabulary logits and softmax to get probabilities.",
+      "concepts_explained": [
+        "comp_enc_token_pos_embed",
+        "comp_encoder_stack",
+        "comp_mh_self_attn_enc",
+        "comp_multihead",
+        "comp_scaled_dot_prod",
+        "comp_ffn",
+        "comp_add_norm"
+      ],
+      "key_message": "The Transformer is an encoder–decoder stack built from multi-head attention, feed-forwards, and Add & Norm, with masked self-attention and cross-attention in the decoder.",
+      "estimated_duration_seconds": 52
+    },
+    {
+      "segment_id": "seg_4_innovations",
+      "title": "What’s New: Attention-Only, Multi-Head, Scaling, and Positions",
+      "order": 3,
+      "narration_script": "Now, here’s where it gets clever. First, attention-only blocks replace recurrence and convolution, so we can process all positions in parallel and connect any two tokens in one hop. Second, multi-head attention projects queries, keys, and values into several low-dimensional subspaces. Instead of one big head trying to do everything, each head becomes a specialist—some track syntax, others align words across languages. Third, the scaled dot-product: dividing by the square root of the key dimension keeps the softmax from saturating when vectors get large, which stabilizes training while staying GPU-efficient. Finally, sinusoidal positional encodings add order information without extra parameters and can generalize to longer sequences. Together, these design choices are simple, fast, and surprisingly powerful.",
+      "concepts_explained": [
+        "innov_attention_only",
+        "innov_multihead",
+        "innov_scaled_dot",
+        "innov_positional_encoding"
+      ],
+      "key_message": "Four innovations—attention-only stacks, multi-head diversity, scaling for stability, and sinusoidal positions—unlock speed, expressivity, and long-range modeling.",
+      "estimated_duration_seconds": 50
+    },
+    {
+      "segment_id": "seg_5_integration",
+      "title": "End-to-End Pass: From Input Tokens to Output Probabilities",
+      "order": 4,
+      "narration_script": "Let’s run the system end to end. We embed the input sentence and add positions, then the encoder stack builds a rich, contextual memory of the whole sequence. On the decoder side, we shift the target tokens to the right, embed them with positions, and apply masked self-attention so each step only sees the past. Next comes cross-attention: the decoder queries attend over all encoder memory, pulling in the source information needed to predict the next token. After a feed-forward, a linear layer and softmax give us a probability distribution over the vocabulary. We pick the next token, feed it back in, and repeat—an autoregressive loop that continues until we generate the full output.",
+      "concepts_explained": [
+        "comp_dec_token_pos_embed",
+        "comp_decoder_stack",
+        "comp_masked_mh_self_attn_dec",
+        "comp_encdec_mh_attn",
+        "comp_output_linear_softmax"
+      ],
+      "key_message": "The decoder combines masked self-attention with cross-attention to the encoder memory, projects to logits, and loops autoregressively.",
+      "estimated_duration_seconds": 49
+    },
+    {
+      "segment_id": "seg_6_conclusion",
+      "title": "Impact and Takeaways",
+      "order": 5,
+      "narration_script": "To wrap up: the Transformer made attention the main character. By removing recurrence and convolution, it achieves full training parallelism and a constant path between tokens, which helps with long-range dependencies. Multi-head attention adds expressive power without heavy cost, scaled dot-product keeps the math stable and fast, and sinusoidal positions provide order signals with zero extra parameters. This simple, modular design powered a wave of progress across NLP and beyond. The big lesson is that global self-attention, plus smart engineering choices, can replace traditional sequence cores and scale beautifully.",
+      "concepts_explained": [
+        "comp_encoder_stack",
+        "comp_decoder_stack",
+        "comp_multihead",
+        "comp_scaled_dot_prod",
+        "prereq_positional_info"
+      ],
+      "key_message": "Global self-attention, done in parallel and grounded by positions and normalization, replaces recurrence and sets the stage for modern NLP.",
+      "estimated_duration_seconds": 39
+    }
+  ],
+  "concepts": [
+    {
+      "concept_id": "prereq_seq2seq",
+      "concept_name": "Encoder–Decoder Sequence-to-Sequence Models",
+      "concept_type": "prerequisite",
+      "simple_explanation": "Seq2Seq models read an input sequence with an encoder and generate an output sequence with a decoder. The decoder uses the encoder’s representation as context to produce tokens one by one.",
+      "detailed_explanation": "An encoder maps variable-length inputs to continuous representations, often a sequence of vectors. A decoder then autoregressively emits outputs conditioned on previous outputs and the encoder’s memory. Attention mechanisms can let the decoder focus on specific encoder states at each step. The Transformer keeps this overall structure but swaps the recurrent/convolutional cores for attention-only layers.",
+      "analogy": "Think of a note-taker (encoder) summarizing a lecture and a speaker (decoder) using that summary to give a talk.",
+      "example": "In translation, the encoder reads an English sentence; the decoder produces the German sentence token by token.",
+      "why_it_matters": "It frames the Transformer’s paradigm—a familiar structure with novel internal blocks.",
+      "prerequisite_concept_ids": [],
+      "enables_concept_ids": [
+        "comp_encoder_stack",
+        "comp_decoder_stack",
+        "comp_encdec_mh_attn",
+        "comp_dec_token_pos_embed",
+        "comp_output_linear_softmax",
+        "prereq_autoregressive"
+      ],
+      "keywords": [
+        "encoder",
+        "decoder",
+        "seq2seq",
+        "attention",
+        "context",
+        "generation"
+      ]
+    },
+    {
+      "concept_id": "prereq_rnn_limits",
+      "concept_name": "RNN/LSTM/GRU and Their Sequential Limitations",
+      "concept_type": "prerequisite",
+      "simple_explanation": "RNNs process tokens one at a time, so training can’t be fully parallelized. Long-distance dependencies must pass through many steps, making them harder to learn.",
+      "detailed_explanation": "Hidden states depend on previous states, creating a chain of sequential operations. Gradient flow can vanish or explode over long sequences despite gating. Parallelism is limited because each step waits for the previous one. These issues motivate architectures that reduce sequential depth and increase parallel computation.",
+      "analogy": "Like passing a message down a long line of people—the more hops, the more delay and distortion.",
+      "example": "To connect the first and last words of a long sentence, an RNN must propagate signals across every intermediate step.",
+      "why_it_matters": "It motivates replacing recurrence with attention to shorten path length and unlock parallelism.",
+      "prerequisite_concept_ids": [
+        "prereq_seq2seq"
+      ],
+      "enables_concept_ids": [
+        "innov_attention_only",
+        "comp_encoder_stack"
+      ],
+      "keywords": [
+        "sequential",
+        "parallelism",
+        "long-range",
+        "gradient",
+        "bottleneck"
+      ]
+    },
+    {
+      "concept_id": "prereq_cnn_seq",
+      "concept_name": "Convolutional Seq2Seq Models",
+      "concept_type": "prerequisite",
+      "simple_explanation": "CNN-based seq2seq models parallelize across positions but still need multiple layers to connect distant tokens. The path between far tokens grows with distance.",
+      "detailed_explanation": "Dilations and deep stacks extend receptive fields, but information still travels through a number of layers proportional to distance. They offer better parallelism than RNNs, yet long-range interactions can be indirect. Transformers reduce this path to constant via self-attention.",
+      "analogy": "Building a bridge with many spans—you can cross, but it takes multiple segments to reach the far side.",
+      "example": "ByteNet uses dilated convolutions to handle long sequences, but deep stacks are required for far dependencies.",
+      "why_it_matters": "Provides the key contrast the Transformer improves upon: constant path length and global access.",
+      "prerequisite_concept_ids": [
+        "prereq_attention"
+      ],
+      "enables_concept_ids": [
+        "innov_attention_only",
+        "comp_encoder_stack"
+      ],
+      "keywords": [
+        "convolution",
+        "dilation",
+        "receptive field",
+        "parallel"
+      ]
+    },
+    {
+      "concept_id": "prereq_attention",
+      "concept_name": "Attention Mechanisms",
+      "concept_type": "prerequisite",
+      "simple_explanation": "Attention scores how well a query matches keys and uses those scores to blend values. It lets a model focus on the most relevant information.",
+      "detailed_explanation": "Given Q, K, and V, attention computes compatibility between Q and K, applies softmax to get weights, and produces a weighted sum of V. It supports focusing on arbitrary positions independent of their distance. The Transformer operationalizes this via scaled dot-product attention inside multi-head attention.",
+      "analogy": "Like scanning an index to find the pages most relevant to your current question.",
+      "example": "When translating 'bank', attention can focus on surrounding words to decide between 'river bank' or 'financial bank'.",
+      "why_it_matters": "It is the core operation that replaces recurrence and convolution in the Transformer.",
+      "prerequisite_concept_ids": [],
+      "enables_concept_ids": [
+        "prereq_self_attention",
+        "comp_scaled_dot_prod",
+        "comp_multihead",
+        "comp_encdec_mh_attn",
+        "comp_mh_self_attn_enc",
+        "comp_masked_mh_self_attn_dec"
+      ],
+      "keywords": [
+        "query",
+        "key",
+        "value",
+        "softmax",
+        "weights",
+        "focus"
+      ]
+    },
+    {
+      "concept_id": "prereq_self_attention",
+      "concept_name": "Self-Attention (Intra-Attention)",
+      "concept_type": "prerequisite",
+      "simple_explanation": "Self-attention uses the same sequence for queries, keys, and values. Each position can look at all others to build context.",
+      "detailed_explanation": "For an input sequence, self-attention computes pairwise interactions across all positions, enabling global information mixing in parallel. It’s the backbone of both the encoder and decoder (masked in the decoder). The result is a contextualized representation for each token.",
+      "analogy": "A roundtable where every participant listens to everyone else before speaking.",
+      "example": "In 'The animal didn't cross the street because it was too tired', 'it' can attend to 'animal' to resolve the reference.",
+      "why_it_matters": "It gives the Transformer a global receptive field without sequential processing.",
+      "prerequisite_concept_ids": [
+        "prereq_attention"
+      ],
+      "enables_concept_ids": [
+        "comp_mh_self_attn_enc",
+        "comp_masked_mh_self_attn_dec",
+        "comp_encoder_stack",
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "global context",
+        "pairwise",
+        "parallel",
+        "Q=K=V"
+      ]
+    },
+    {
+      "concept_id": "prereq_positional_info",
+      "concept_name": "Encoding Positional Information",
+      "concept_type": "prerequisite",
+      "simple_explanation": "Attention doesn’t know token order by itself, so we add positional signals to embeddings. The Transformer uses fixed sinusoidal encodings.",
+      "detailed_explanation": "These sinusoids are summed with token embeddings to inject absolute position while allowing the model to infer relative positions. Because they are fixed, no extra parameters are added and extrapolation to longer lengths is possible. Both encoder and decoder use them.",
+      "analogy": "Sticky notes with index numbers attached to each word to preserve order.",
+      "example": "For positions 0,1,2…, we add sinusoids at different frequencies to the token vectors.",
+      "why_it_matters": "It enables the model to reason about sequence order without recurrence.",
+      "prerequisite_concept_ids": [],
+      "enables_concept_ids": [
+        "comp_enc_token_pos_embed",
+        "comp_dec_token_pos_embed",
+        "innov_positional_encoding"
+      ],
+      "keywords": [
+        "positional encoding",
+        "sinusoid",
+        "order",
+        "absolute",
+        "relative"
+      ]
+    },
+    {
+      "concept_id": "prereq_residual_norm",
+      "concept_name": "Residual Connections and Layer Normalization",
+      "concept_type": "prerequisite",
+      "simple_explanation": "Residuals add the input back to a sub-layer’s output, and LayerNorm stabilizes activations. Together they make deep stacks trainable.",
+      "detailed_explanation": "Residual connections provide a clear gradient path and ease optimization. LayerNorm normalizes per token across features, reducing covariate shift. The Transformer wraps every attention and feed-forward block with Add & Norm to keep training stable and efficient.",
+      "analogy": "A safety rail and leveler that keep a tall structure stable as it grows.",
+      "example": "Output = LayerNorm(x + Sublayer(x)) for both attention and feed-forward.",
+      "why_it_matters": "Without these, very deep attention stacks would be hard to optimize.",
+      "prerequisite_concept_ids": [],
+      "enables_concept_ids": [
+        "comp_add_norm",
+        "comp_encoder_stack",
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "residual",
+        "skip connection",
+        "LayerNorm",
+        "stability",
+        "deep"
+      ]
+    },
+    {
+      "concept_id": "prereq_autoregressive",
+      "concept_name": "Autoregressive Decoding and Causal Masking",
+      "concept_type": "prerequisite",
+      "simple_explanation": "The decoder generates left-to-right and must not see future tokens. A causal mask blocks attention to positions ahead.",
+      "detailed_explanation": "During training, targets are shifted right so each position predicts the next token. Masked self-attention zeroes out attention scores to future positions. This enforces the same constraint at inference time, ensuring consistent behavior.",
+      "analogy": "Covering the unread words with a sheet of paper so you only read what’s already revealed.",
+      "example": "At position t, the decoder can attend to positions ≤ t only.",
+      "why_it_matters": "It preserves the generative structure necessary for sequence generation tasks.",
+      "prerequisite_concept_ids": [
+        "prereq_seq2seq"
+      ],
+      "enables_concept_ids": [
+        "comp_masked_mh_self_attn_dec",
+        "comp_decoder_stack",
+        "comp_dec_token_pos_embed",
+        "comp_output_linear_softmax"
+      ],
+      "keywords": [
+        "causal",
+        "mask",
+        "left-to-right",
+        "teacher forcing"
+      ]
+    },
+    {
+      "concept_id": "comp_enc_token_pos_embed",
+      "concept_name": "Encoder Token + Positional Embedding",
+      "concept_type": "component",
+      "simple_explanation": "Maps input tokens to vectors and adds sinusoidal position signals. This is the encoder’s starting representation.",
+      "detailed_explanation": "Learned token embeddings capture content. Fixed sinusoids encode absolute positions and enable relative position reasoning. Summing them yields position-aware embeddings passed to the encoder stack.",
+      "analogy": "Labeling each word with both its meaning and its index tag.",
+      "example": "‘The’ → embedding e_the; position 0 → p0; input = e_the + p0.",
+      "why_it_matters": "Provides the content-plus-order features required by attention-only layers.",
+      "prerequisite_concept_ids": [
+        "prereq_positional_info"
+      ],
+      "enables_concept_ids": [
+        "comp_encoder_stack"
+      ],
+      "keywords": [
+        "embedding",
+        "positions",
+        "sinusoid",
+        "encoder input"
+      ]
+    },
+    {
+      "concept_id": "comp_encoder_stack",
+      "concept_name": "Transformer Encoder Stack (N layers)",
+      "concept_type": "component",
+      "simple_explanation": "A stack of identical layers combining multi-head self-attention and feed-forward networks with Add & Norm. It encodes the input sequence into contextual memory.",
+      "detailed_explanation": "Each layer first mixes information globally via multi-head self-attention, then applies a position-wise MLP. Residual connections and LayerNorm wrap both sub-layers. All positions are processed in parallel, and the final outputs serve as keys/values for the decoder’s cross-attention.",
+      "analogy": "A team of specialists repeatedly read the whole document and refine notes at each pass.",
+      "example": "Given embeddings, the encoder produces context-rich vectors for every input token.",
+      "why_it_matters": "It replaces RNN/CNN encoders, enabling constant path length and high parallelism.",
+      "prerequisite_concept_ids": [
+        "prereq_seq2seq",
+        "prereq_self_attention",
+        "prereq_residual_norm"
+      ],
+      "enables_concept_ids": [
+        "comp_encdec_mh_attn"
+      ],
+      "keywords": [
+        "encoder",
+        "self-attention",
+        "parallel",
+        "contextual memory"
+      ]
+    },
+    {
+      "concept_id": "comp_mh_self_attn_enc",
+      "concept_name": "Encoder Multi-Head Self-Attention",
+      "concept_type": "component",
+      "simple_explanation": "Multiple attention heads let each position attend to all others in different subspaces. Their outputs are concatenated and projected.",
+      "detailed_explanation": "Q, K, V are all the encoder layer inputs. Each head runs scaled dot-product attention in lower-dimensional space. Concatenation and a final linear layer mix head information, capturing diverse dependencies.",
+      "analogy": "Several analysts each scan the entire text for different patterns, then combine their findings.",
+      "example": "One head might focus on subject–verb relations, another on coreference signals.",
+      "why_it_matters": "It provides efficient, global context mixing with specialization across heads.",
+      "prerequisite_concept_ids": [
+        "prereq_self_attention",
+        "comp_multihead",
+        "comp_scaled_dot_prod"
+      ],
+      "enables_concept_ids": [
+        "comp_encoder_stack"
+      ],
+      "keywords": [
+        "multi-head",
+        "global",
+        "Q=K=V",
+        "specialization"
+      ]
+    },
+    {
+      "concept_id": "comp_ffn",
+      "concept_name": "Position-wise Feed-Forward Network",
+      "concept_type": "component",
+      "simple_explanation": "A small MLP applied to each position independently after attention. It adds nonlinearity and transforms features.",
+      "detailed_explanation": "Typically a two-layer network with ReLU (or GELU) and shared weights across positions within the layer. It complements attention’s mixing with per-token processing. Residual and normalization stabilize training.",
+      "analogy": "Personal editors polishing each token’s representation after the group discussion.",
+      "example": "For each token vector h, output = W2·σ(W1·h + b1) + b2.",
+      "why_it_matters": "Boosts representational power and helps the model model complex transformations.",
+      "prerequisite_concept_ids": [],
+      "enables_concept_ids": [
+        "comp_encoder_stack",
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "MLP",
+        "nonlinearity",
+        "per-position",
+        "shared weights"
+      ]
+    },
+    {
+      "concept_id": "comp_add_norm",
+      "concept_name": "Residual Add & LayerNorm Wrapper",
+      "concept_type": "component",
+      "simple_explanation": "Wraps each sub-layer with a residual connection and LayerNorm. Keeps gradients healthy and training stable.",
+      "detailed_explanation": "Given input x and sub-layer F, output = LayerNorm(x + F(x)). This pattern is applied around attention and feed-forward blocks in both encoder and decoder. It enables deeper stacks and faster convergence.",
+      "analogy": "A shock absorber and leveler after every operation.",
+      "example": "Self-Attn → Add & Norm; FFN → Add & Norm.",
+      "why_it_matters": "Deep Transformers rely on this for stable optimization.",
+      "prerequisite_concept_ids": [
+        "prereq_residual_norm"
+      ],
+      "enables_concept_ids": [
+        "comp_encoder_stack",
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "residual",
+        "LayerNorm",
+        "stability",
+        "deep learning"
+      ]
+    },
+    {
+      "concept_id": "comp_dec_token_pos_embed",
+      "concept_name": "Decoder Token + Positional Embedding (shifted)",
+      "concept_type": "component",
+      "simple_explanation": "Embeds previously generated tokens (shifted right) and adds positions. This seeds the decoder at each step.",
+      "detailed_explanation": "During training, targets are shifted so each position predicts the next token. Weight tying with output projection reduces parameters. The embeddings plus positions feed into masked self-attention.",
+      "analogy": "Feeding the decoder its own partial sentence with index tags attached.",
+      "example": "Start-of-sequence, then “Das”, “ist”, … each with its positional encoding.",
+      "why_it_matters": "Provides ordered context for causal generation.",
+      "prerequisite_concept_ids": [
+        "prereq_autoregressive",
+        "prereq_positional_info"
+      ],
+      "enables_concept_ids": [
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "embedding",
+        "shifted targets",
+        "positions",
+        "decoder input"
+      ]
+    },
+    {
+      "concept_id": "comp_decoder_stack",
+      "concept_name": "Transformer Decoder Stack (N layers)",
+      "concept_type": "component",
+      "simple_explanation": "A stack with masked self-attention, encoder–decoder attention, and a feed-forward, each with Add & Norm. It produces states for next-token prediction.",
+      "detailed_explanation": "Masked self-attention maintains causality. Cross-attention lets the decoder consult the encoder’s memory at every layer. A position-wise MLP follows, with residuals and LayerNorm for stability. Outputs feed into a linear-softmax head.",
+      "analogy": "A writer who consults prior text, checks the source notes, and refines each line before publishing the next word.",
+      "example": "At time t, the decoder attends to past targets and all encoder tokens to choose the next word.",
+      "why_it_matters": "It fuses target-side context with source information to generate accurate outputs.",
+      "prerequisite_concept_ids": [
+        "prereq_autoregressive",
+        "prereq_self_attention",
+        "prereq_residual_norm"
+      ],
+      "enables_concept_ids": [
+        "comp_output_linear_softmax"
+      ],
+      "keywords": [
+        "decoder",
+        "masked attention",
+        "cross-attention",
+        "generation"
+      ]
+    },
+    {
+      "concept_id": "comp_masked_mh_self_attn_dec",
+      "concept_name": "Decoder Masked Multi-Head Self-Attention",
+      "concept_type": "component",
+      "simple_explanation": "Like encoder self-attention, but with a causal mask. Each step sees only previous tokens.",
+      "detailed_explanation": "Multiple heads run scaled dot-product attention in parallel, but attention to future positions is blocked. This keeps training and inference consistent with left-to-right generation.",
+      "analogy": "Reading a sentence with a cover hiding the words you haven’t written yet.",
+      "example": "At position 5, heads can attend to positions 0–5 only.",
+      "why_it_matters": "Preserves the autoregressive nature of decoding while capturing target-side dependencies.",
+      "prerequisite_concept_ids": [
+        "prereq_autoregressive",
+        "prereq_self_attention",
+        "comp_multihead"
+      ],
+      "enables_concept_ids": [
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "causal mask",
+        "multi-head",
+        "self-attention",
+        "decoder"
+      ]
+    },
+    {
+      "concept_id": "comp_encdec_mh_attn",
+      "concept_name": "Encoder–Decoder Multi-Head Attention",
+      "concept_type": "component",
+      "simple_explanation": "The decoder queries attend over the encoder’s outputs (as keys/values) to pull in source information.",
+      "detailed_explanation": "At each decoder layer, multi-head attention uses decoder states as queries and the encoder memory as keys/values. This enables soft alignment and information fusion across the entire input sequence.",
+      "analogy": "Looking back and forth between your notes (encoder memory) while writing the next sentence.",
+      "example": "While generating a German word, the decoder aligns to the corresponding English phrase via attention peaks.",
+      "why_it_matters": "It provides direct, learned alignment between source and target sequences.",
+      "prerequisite_concept_ids": [
+        "prereq_attention",
+        "comp_multihead",
+        "comp_scaled_dot_prod"
+      ],
+      "enables_concept_ids": [
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "cross-attention",
+        "alignment",
+        "fusion",
+        "source conditioning"
+      ]
+    },
+    {
+      "concept_id": "comp_multihead",
+      "concept_name": "Multi-Head Attention",
+      "concept_type": "component",
+      "simple_explanation": "Runs several attention heads in parallel on projected subspaces, then concatenates and mixes them.",
+      "detailed_explanation": "Q, K, V are linearly projected into h lower-dimensional spaces. Each head performs scaled dot-product attention, and outputs are concatenated and projected back. This allows modeling diverse relations concurrently with similar cost to a single wide head.",
+      "analogy": "A committee of specialists, each expert in a different perspective.",
+      "example": "Heads can separately focus on syntax, long-range dependencies, or positional cues.",
+      "why_it_matters": "Improves expressivity and robustness of attention without heavy computation.",
+      "prerequisite_concept_ids": [
+        "comp_scaled_dot_prod"
+      ],
+      "enables_concept_ids": [
+        "comp_mh_self_attn_enc",
+        "comp_masked_mh_self_attn_dec",
+        "comp_encdec_mh_attn"
+      ],
+      "keywords": [
+        "heads",
+        "projection",
+        "concatenate",
+        "linear mix"
+      ]
+    },
+    {
+      "concept_id": "comp_scaled_dot_prod",
+      "concept_name": "Scaled Dot-Product Attention",
+      "concept_type": "component",
+      "simple_explanation": "Computes attention weights from query–key dot products, scales by 1/sqrt(dk), applies softmax, and blends values.",
+      "detailed_explanation": "The scaling prevents large dot products from pushing softmax into saturation when dk is large. It’s highly efficient on GPUs due to batched matrix multiplications. Optional masks support causal decoding.",
+      "analogy": "Comparing similarity scores, then turning them into a probability distribution over what to read.",
+      "example": "Given Q, K, V, output = softmax(QK^T / sqrt(dk)) V.",
+      "why_it_matters": "It’s the fast, stable workhorse inside every attention head.",
+      "prerequisite_concept_ids": [
+        "prereq_attention"
+      ],
+      "enables_concept_ids": [
+        "comp_multihead"
+      ],
+      "keywords": [
+        "dot product",
+        "scaling",
+        "softmax",
+        "matrix multiply"
+      ]
+    },
+    {
+      "concept_id": "comp_output_linear_softmax",
+      "concept_name": "Output Projection and Softmax",
+      "concept_type": "component",
+      "simple_explanation": "Maps decoder states to vocabulary logits and normalizes to probabilities for the next token.",
+      "detailed_explanation": "A linear layer projects hidden states to vocab size; softmax converts logits to probabilities. Often the output weight matrix is tied with input embeddings to reduce parameters and align spaces.",
+      "analogy": "Turning your current understanding into a ranked list of candidate words.",
+      "example": "Given state ht, compute p(next token | ≤ t) via softmax(Wo ht).",
+      "why_it_matters": "It’s the final step that produces concrete predictions and drives the autoregressive loop.",
+      "prerequisite_concept_ids": [
+        "prereq_autoregressive"
+      ],
+      "enables_concept_ids": [
+        "comp_dec_token_pos_embed"
+      ],
+      "keywords": [
+        "projection",
+        "softmax",
+        "probabilities",
+        "weight tying"
+      ]
+    },
+    {
+      "concept_id": "innov_attention_only",
+      "concept_name": "Attention-Only Encoder–Decoder (No Recurrence/Convolution)",
+      "concept_type": "innovation",
+      "simple_explanation": "The Transformer removes recurrence and convolution and builds everything from attention and feed-forwards. Training becomes fully parallel and long-range links become direct.",
+      "detailed_explanation": "By using self-attention, any two positions can interact in one hop. No sequential dependency chains are required for within-example training. This dramatically shortens the path length and improves efficiency and scalability.",
+      "analogy": "Letting every participant speak to everyone else at once instead of whispering down a line.",
+      "example": "In translation, the first and last words can directly inform each other via attention in the same layer.",
+      "why_it_matters": "It’s the core architectural leap that enabled rapid progress across NLP.",
+      "prerequisite_concept_ids": [
+        "prereq_rnn_limits",
+        "prereq_cnn_seq",
+        "prereq_attention",
+        "prereq_self_attention"
+      ],
+      "enables_concept_ids": [
+        "comp_encoder_stack",
+        "comp_decoder_stack"
+      ],
+      "keywords": [
+        "parallelism",
+        "constant path",
+        "scalability",
+        "efficiency"
+      ]
+    },
+    {
+      "concept_id": "innov_multihead",
+      "concept_name": "Multi-Head Attention",
+      "concept_type": "innovation",
+      "simple_explanation": "Multiple heads let the model attend to different relations in parallel, increasing expressivity at similar cost.",
+      "detailed_explanation": "Heads operate in lower-dimensional subspaces, avoiding the averaging limitations of a single head. Concatenation and projection mix insights from all heads. This supports richer structure learning.",
+      "analogy": "A panel of experts each focusing on their specialty, then pooling insights.",
+      "example": "One head may align word pairs; another captures long-distance agreement.",
+      "why_it_matters": "It’s key to the Transformer’s ability to capture diverse dependencies simultaneously.",
+      "prerequisite_concept_ids": [
+        "comp_scaled_dot_prod"
+      ],
+      "enables_concept_ids": [
+        "comp_multihead",
+        "comp_mh_self_attn_enc",
+        "comp_masked_mh_self_attn_dec",
+        "comp_encdec_mh_attn"
+      ],
+      "keywords": [
+        "heads",
+        "subspaces",
+        "expressivity",
+        "parallel"
+      ]
+    },
+    {
+      "concept_id": "innov_scaled_dot",
+      "concept_name": "Scaled Dot-Product Attention",
+      "concept_type": "innovation",
+      "simple_explanation": "Dot-product attention with 1/sqrt(dk) scaling keeps softmax stable and enables efficient batched computation.",
+      "detailed_explanation": "Unscaled dot products can produce large values that cause softmax saturation and poor gradients. Scaling fixes this while preserving the speed of matrix multiplication, outperforming additive attention at scale.",
+      "analogy": "Turning down the volume so the mixer doesn’t clip when many signals combine.",
+      "example": "Scale QK^T by sqrt(dk) before softmax to maintain healthy gradients.",
+      "why_it_matters": "It’s the practical backbone that makes large attention models train smoothly and fast.",
+      "prerequisite_concept_ids": [
+        "prereq_attention"
+      ],
+      "enables_concept_ids": [
+        "comp_scaled_dot_prod",
+        "comp_multihead"
+      ],
+      "keywords": [
+        "stability",
+        "efficiency",
+        "softmax",
+        "dk scaling"
+      ]
+    },
+    {
+      "concept_id": "innov_positional_encoding",
+      "concept_name": "Sinusoidal Positional Encodings",
+      "concept_type": "innovation",
+      "simple_explanation": "Fixed sinusoids added to embeddings encode token positions without extra parameters and can generalize to longer sequences.",
+      "detailed_explanation": "Different frequencies allow the model to learn relative position by linear operations on sinusoids. This approach is simple, parameter-free, and effective across sequence lengths. Both encoder and decoder use the same scheme.",
+      "analogy": "Stamping each word with a rhythmic pattern that reveals where it sits in the line.",
+      "example": "Position i uses sin and cos at multiple wavelengths; add to the token embedding.",
+      "why_it_matters": "Provides order to an otherwise permutation-invariant attention stack.",
+      "prerequisite_concept_ids": [
+        "prereq_positional_info"
+      ],
+      "enables_concept_ids": [
+        "comp_enc_token_pos_embed",
+        "comp_dec_token_pos_embed"
+      ],
+      "keywords": [
+        "sinusoid",
+        "position",
+        "relative",
+        "extrapolation"
+      ]
+    }
+  ],
+  "architectural_overview": {
+    "overview_title": "Putting It All Together: The Transformer at a Glance",
+    "big_picture_explanation": "Inputs are embedded and tagged with sinusoidal positions, then pass through an encoder stack where multi-head self-attention mixes global context and feed-forward layers transform each token’s features. The decoder consumes shifted target embeddings, applies masked self-attention for causality, and uses cross-attention to consult the encoder’s memory at every layer. A final projection and softmax produce next-token probabilities, which feed back to continue generation. Residual connections and LayerNorm stabilize all sub-layers, while multi-head attention provides diverse relational views in parallel.",
+    "main_flow": [
+      "comp_enc_token_pos_embed",
+      "comp_encoder_stack",
+      "comp_dec_token_pos_embed",
+      "comp_decoder_stack",
+      "comp_output_linear_softmax"
+    ],
+    "parallel_pathways": [
+      "comp_multihead",
+      "comp_add_norm"
+    ],
+    "feedback_loops": [
+      "comp_output_linear_softmax",
+      "comp_dec_token_pos_embed"
+    ],
+    "design_philosophy": "Use simple, modular blocks—attention and per-position MLPs—stacked deeply with residual normalization for stability. Replace sequential cores with global attention to maximize parallelism and minimize path length, while adding explicit positional signals to preserve order.",
+    "key_innovations_recap": [
+      "Attention-only encoder–decoder eliminates recurrence and convolution",
+      "Multi-head attention for parallel, diverse relational modeling",
+      "Scaled dot-product attention for stable and efficient training",
+      "Sinusoidal positional encodings for order without parameters"
+    ],
+    "why_it_works": "It couples global, one-hop information flow with full training parallelism and stable optimization, letting the model learn long-range dependencies efficiently."
+  }
+}
