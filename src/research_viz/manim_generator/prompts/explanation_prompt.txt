@@ -63,22 +63,16 @@ Return a JSON object matching the EducationalExplanation schema:
       "narration_script": "Before we see how it works, let's build the toolkit. First, [prerequisite 1 with analogy and example]... Now that we understand that, [prerequisite 2]... Building on this, [prerequisite 3]...",
       "concepts_explained": ["prereq_1", "prereq_2", "prereq_3"],
       "key_message": "These building blocks give us everything we need to understand the methodology"
+    },
+    {
+      "segment_id": "seg_6_overview",
+      "title": "Architectural Overview & Impact",
+      "order": 5,
+      "narration_script": "Now that we've seen all the pieces, let's see how they fit together. [Walk through complete pipeline with running example]... Here's the full journey: input → component 1 → component 2 → output...",
+      "concepts_explained": ["all_components"],
+      "key_message": "All components work together in a unified system to solve the problem efficiently"
     }
-  ],
-  
-  "architectural_overview": {
-    "overview_title": "Putting It All Together",
-    "big_picture_explanation": "Now that we've seen each component, let's see how they work together as a unified system...",
-    "main_flow": ["comp_encoder", "comp_attention", "comp_decoder"],
-    "parallel_pathways": null,
-    "feedback_loops": null,
-    "design_philosophy": "The key insight is to process X while maintaining Y...",
-    "key_innovations_recap": [
-      "Novel attention mechanism for efficiency",
-      "Hybrid architecture combining CNNs and Transformers"
-    ],
-    "why_it_works": "This design succeeds because it balances computational efficiency with modeling capacity"
-  }
+  ]
 }
 ```
 
@@ -212,16 +206,16 @@ The KG provides all the concepts, relationships, and innovations you need to cov
 
 Choose the strategy that best fits the paper's structure.
 
-### 5. Architectural Overview
+### 5. Segment 6 - Architectural Overview (in narration)
 
-In the final segment, synthesize everything:
-- Example: "Let's zoom out and see the complete picture..."
-- Recap the main flow
-- Highlight how components interact
-- Emphasize key design decisions
+The final segment's narration script must synthesize everything:
+- "Let's zoom out and see the complete picture..."
+- Walk through the COMPLETE pipeline from input to output using your running example
+- Show how ALL components interact in sequence
+- Highlight key design decisions
 - State why this design works well
-
-This is where you can show the full architecture diagram and walk through a complete example.
+- Recap the innovations and their impact
+- This narration should tie together everything from previous segments into one cohesive story
 
 ## QUALITY CRITERIA
 
