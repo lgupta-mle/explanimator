@@ -17,12 +17,19 @@ def make_schema_openai_compatible(schema: dict) -> dict:
     Recursively process schema to make it compatible with OpenAI's strict mode.
     - Ensures ALL properties are in the 'required' array (including optional ones)
     - Sets additionalProperties to false for all objects
-    - Removes any required keys that don't exist in properties
+    - Removes additional keywords from $ref fields (OpenAI doesn't allow $ref with other keywords)
 
     Note: OpenAI's strict mode requires all fields to be in the required array,
     even Optional fields. Optional fields use type: [type, "null"] pattern.
+
+    Root cause: Pydantic includes Field descriptions alongside $ref in generated schemas,
+    which is valid JSON Schema but incompatible with OpenAI's stricter requirements.
     """
     if isinstance(schema, dict):
+        # If this dict has a $ref, strip all other keys (OpenAI doesn't allow $ref with other keywords)
+        if "$ref" in schema:
+            return {"$ref": schema["$ref"]}
+
         # Process nested objects first
         for key, value in schema.items():
             if isinstance(value, (dict, list)):
