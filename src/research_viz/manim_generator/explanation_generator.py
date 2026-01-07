@@ -74,7 +74,6 @@ def create_educational_explanation(
         print(f"Saved to: {output_path}")
         print(f"\nSummary:")
         print(f"   - Total segments: {len(response.video_segments)}")
-        print(f"   - Total concepts: {len(response.concepts)}")
         print(f"   - Narrative strategy: {response.video_narrative.narrative_strategy}")
         
         # Print segment info

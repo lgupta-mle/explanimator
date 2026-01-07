@@ -1,13 +1,23 @@
 # TASK: Educational Video Explanation Generation from Knowledge Graph
 
-You are an expert AI/ML educator who creates engaging, intuitive explanations of complex research methodologies for animated videos.
+You are an expert AI/ML educator who creates engaging, intuitive explanations of complex research methodologies for animated videos. Your goal is to make research papers accessible to learners who may not have deep technical backgrounds.
 
 ## OBJECTIVE
 
 Generate a structured video explanation with:
 1. 4-6 video segments with complete narration scripts
-2. Natural, conversational flow like an expert tutor explaining to a student
-3. Logical progression from prerequisites through architecture to innovations
+2. Natural, conversational flow like an expert tutor explaining to a student WITH NO ASSUMPTIONS ABOUT PRIOR KNOWLEDGE
+3. Start SIMPLE (concrete examples, analogies) then gradually add complexity
+4. Prerequisites explained IMMEDIATELY after introduction, before diving into the methodology
+5. Every technical concept must have a real-world analogy or concrete example
+
+## TARGET AUDIENCE
+
+Assume your viewer:
+- Has basic understanding of machine learning (what neural networks are)
+- May NOT know specific architectures or advanced concepts
+- Learns best through concrete examples and visual analogies
+- Needs "why this matters" explained in practical terms
 
 ## INPUT
 
@@ -45,85 +55,115 @@ Return a JSON object matching the EducationalExplanation schema:
       "narration_script": "Let's dive into this methodology. Imagine you're trying to [problem statement]... [complete spoken narration]",
       "concepts_explained": ["concept_id_1"],
       "key_message": "This paper addresses X by introducing Y"
-    }
-  ],
-  
-  "concepts": [
+    },
     {
-      "concept_id": "comp_encoder",
-      "concept_name": "Image Encoder",
-      "concept_type": "component",
-      "simple_explanation": "The encoder is like a translator that converts images into a numerical representation the model can understand.",
-      "detailed_explanation": "Specifically, it takes raw pixel values and progressively extracts hierarchical features...",
-      "analogy": "Think of it like reading a book and taking notes - you're compressing information while keeping what's important.",
-      "example": "When you input a cat image, the encoder identifies edges, then patterns, then cat features.",
-      "why_it_matters": "This component is crucial because it determines what information the rest of the model can work with.",
-      "prerequisite_concept_ids": ["prereq_cnn"],
-      "enables_concept_ids": ["comp_attention"],
-      "keywords": ["encoding", "feature extraction", "representation learning"]
+      "segment_id": "seg_2_foundation",
+      "title": "Prerequisites & Foundation",
+      "order": 1,
+      "narration_script": "Before we see how it works, let's build the toolkit. First, [prerequisite 1 with analogy and example]... Now that we understand that, [prerequisite 2]... Building on this, [prerequisite 3]...",
+      "concepts_explained": ["prereq_1", "prereq_2", "prereq_3"],
+      "key_message": "These building blocks give us everything we need to understand the methodology"
+    },
+    {
+      "segment_id": "seg_6_overview",
+      "title": "Architectural Overview & Impact",
+      "order": 5,
+      "narration_script": "Now that we've seen all the pieces, let's see how they fit together. [Walk through complete pipeline with running example]... Here's the full journey: input → component 1 → component 2 → output...",
+      "concepts_explained": ["all_components"],
+      "key_message": "All components work together in a unified system to solve the problem efficiently"
     }
-  ],
-  
-  "architectural_overview": {
-    "overview_title": "Putting It All Together",
-    "big_picture_explanation": "Now that we've seen each component, let's see how they work together as a unified system...",
-    "main_flow": ["comp_encoder", "comp_attention", "comp_decoder"],
-    "parallel_pathways": null,
-    "feedback_loops": null,
-    "design_philosophy": "The key insight is to process X while maintaining Y...",
-    "key_innovations_recap": [
-      "Novel attention mechanism for efficiency",
-      "Hybrid architecture combining CNNs and Transformers"
-    ],
-    "why_it_works": "This design succeeds because it balances computational efficiency with modeling capacity"
-  }
+  ]
 }
 ```
+
+You can be creative with how you explain or create the narration scripts based on your best judgement on the knowledge graph passed.
 
 ## DETAILED INSTRUCTIONS
 
 ### 1. Video Segment Structure (4-6 segments)
 
-Typical segment progression:
+CRITICAL: Start simple with concrete examples, then layer in complexity. Prerequisites MUST come before methodology.
 
-**Segment 1: Hook & Problem**
-- Open with an engaging hook
-- State the problem this paper addresses
-- Why should viewers care?
-- What gap in existing solutions does this fill?
+**Segment 1: Hook & Problem (60-90s)**
+- Start with a CONCRETE, relatable scenario (e.g., "Imagine you're translating 'The cat sat on the mat' to French...")
+- What problem does this paper solve?
+- Why does it matter in practical terms?
+- "Here's what this paper does..."
 
-**Segment 2: Prerequisites & Foundation**
-- Briefly review essential background concepts
-- "Before we dive in, let's quickly review..."
-- Only cover what's NECESSARY to understand the new method
-- Use analogies for complex prerequisites
+**Segment 2: Prerequisites & Foundation (90-120s) - MANDATORY SECOND SEGMENT**
+- "Before we see how it works, let's build the toolkit..."
+- Explain EVERY prerequisite concept from the KG in a LOGICAL, STEP-BY-STEP order:
+  - Start with the most foundational concept first (e.g., embeddings before attention)
+  - Build each concept on the previous one
+  - For each prerequisite:
+    1. Simple analogy first ("Think of attention like a spotlight...")
+    2. Concrete example using your running example ("When we process 'sat' in 'The cat sat', attention shines on 'cat'...")
+    3. Then technical detail
+  - Use clear transitions: "Now that we understand X, let's see Y..."
+  - Cover all prerequisites from KG: attention mechanism, self-attention, embeddings, positional encoding, etc.
+- Build complete intuition before diving into the paper's method
+- This segment should feel like building blocks stacking one on top of another
 
-**Segment 3: Core Architecture Overview**
-- Present the high-level architecture
-- "Here's the big picture of how this works..."
-- Walk through main components and their roles
-- Emphasize the FLOW of information
+**Segment 3: Core Architecture - Simple View (90-120s)**
+- "Now that we have the basics, here's the BIG IDEA..."
+- Start with the SIMPLEST possible explanation
+- Use analogies ("Think of it like an assembly line where...")
+- Show the high-level flow with a concrete example
+- Avoid mathematical details in this segment
 
-**Segment 4: Key Innovation Deep Dive**
-- Focus on what makes this paper novel
-- "Now, here's where it gets interesting..."
-- Explain the creative leap
-- Compare to baseline/prior work
-- Why this innovation matters
+**Segment 4: How It Actually Works (90-120s)**
+- "Let's see what happens step by step..."
+- Walk through ONE concrete example from start to finish
+- "Imagine we input the sentence: [example]..."
+- Explain what each component does to this example
+- NOW you can add technical details, but tied to the example
 
-**Segment 5: System Integration**
-- Show how all pieces work together
-- "Let's see everything in action..."
-- Walk through a complete forward pass
-- Highlight key design decisions
+**Segment 5: What Makes This Special (60-90s)**
+- "So what's the innovation here?"
+- Compare to previous approaches using the SAME example
+- "Before, we would do X... now we do Y..."
+- Why this change matters (in concrete terms, not abstract)
 
-**Segment 6: Conclusion & Impact (optional)**
-- Recap key takeaways
-- Performance highlights (if applicable)
-- Broader impact and applications
-- "What makes this approach powerful is..."
+**Segment 6: Architectural Overview & Impact (60-90s) - MANDATORY FINAL SEGMENT**
+- "Now that we've seen all the pieces, let's see how they fit together..."
+- Synthesize ALL concepts and relationships into the big picture
+- Walk through the COMPLETE pipeline/flow using your running example
+- Show how data/information moves through the system from input to output
+- Explain how the components interact and depend on each other
+- "Here's the full journey: [input] → [component 1] → [component 2] → ... → [output]"
+- Real-world applications and impact
+- "This is why it matters..."
 
 ### 2. Narration Script Writing
+
+CRITICAL RULES for every segment:
+
+**Rule 1: Concrete Examples First**
+- ALWAYS start with a specific, concrete example
+- Use the SAME example throughout the video for consistency
+- Example: "Let's translate 'The cat sat on the mat' to French..."
+
+**Rule 2: Simple-to-Complex Layering**
+- Start with the simplest possible explanation (like explaining to a 12-year-old)
+- Use real-world analogies ("Think of attention like a spotlight...")
+- THEN add technical details
+- Never assume the viewer knows jargon
+
+**Rule 3: Show, Don't Tell**
+- Instead of: "The encoder processes the input"
+- Say: "The encoder takes our sentence 'The cat sat' and converts each word into a list of numbers"
+
+**Rule 4: Explain WHY, Not Just WHAT**
+- After explaining what something does, always say WHY it's designed that way
+- "We do this because..."
+- "This solves the problem of..."
+
+**Rule 5: Simplify Mathematics from KG**
+- If the KG mentions mathematical formulas or operations, you MUST explain them in the narration
+- Start with the INTUITION: "What this formula does is..."
+- Then concrete example: "For our sentence 'The cat sat', this means..."
+- Then the actual operation if needed: "Mathematically, we're computing..."
+- Example: Instead of just "scaled dot-product attention", say "We compare how related each word is to every other word by computing similarity scores, then we scale them down so they don't get too large..."
 
 Write complete, word-for-word scripts as you would speak them:
 - Use conversational, natural language ("Let's see..." "Notice how..." "Here's the cool part...")
@@ -135,23 +175,23 @@ Write complete, word-for-word scripts as you would speak them:
 
 **Example Good Narration:**
 ```
-"So we have this image encoder extracting features. But here's the question - 
-how do we make sure it focuses on the IMPORTANT parts of the image? This is 
-where the attention mechanism comes in. Think of it like a spotlight that can 
-shine on different regions. When processing a cat image, the attention learns 
-to focus more on the cat itself rather than the background. Clever, right?"
+"Let's say we're translating the sentence: 'The cat sat on the mat.' Now, when we get to 
+the word 'sat', our model needs to figure out WHO did the sitting. Was it the cat? The mat? 
+This is where attention comes in. Think of it like a spotlight - it can shine brightly on 
+'cat' when we're processing 'sat', telling the model: hey, these two words are connected! 
+The attention mechanism learns to point this spotlight automatically. So for our sentence, 
+it would learn to connect 'cat' with 'sat' strongly, but maybe connect 'mat' with 'sat' 
+less strongly. That's the basic idea - attention helps words find related words."
 ```
 
-### 3. Concept Extraction from KG
+### 3. Using the Knowledge Graph
 
-For each component/prerequisite/innovation in the KG:
-- Extract to `concepts` array
-- Provide both simple and detailed explanations
-- Include analogy if helpful
-- Specify prerequisites (what must be understood first)
-- Specify what this enables (what concepts build on this)
-
-This creates a dependency graph for animation planning.
+The KG provides all the concepts, relationships, and innovations you need to cover:
+- **Prerequisites**: Must be explained step-by-step in Segment 2, in logical order
+- **Components**: Cover in Segments 3-4, building on the prerequisites
+- **Innovations**: Highlight in Segment 5
+- **Relationships**: Show how concepts connect using transitions ("Now that we have X, we can build Y...")
+- All concepts from the KG should appear somewhere in the narration scripts, explained with examples and analogies
 
 ### 4. Narrative Strategies
 
@@ -166,30 +206,68 @@ This creates a dependency graph for animation planning.
 
 Choose the strategy that best fits the paper's structure.
 
-### 5. Architectural Overview
+### 5. Segment 6 - Architectural Overview (in narration)
 
-In the final segment, synthesize everything:
-- Example: "Let's zoom out and see the complete picture..."
-- Recap the main flow
-- Highlight how components interact
-- Emphasize key design decisions
+The final segment's narration script must synthesize everything:
+- "Let's zoom out and see the complete picture..."
+- Walk through the COMPLETE pipeline from input to output using your running example
+- Show how ALL components interact in sequence
+- Highlight key design decisions
 - State why this design works well
-
-This is where you can show the full architecture diagram and walk through a complete example.
+- Recap the innovations and their impact
+- This narration should tie together everything from previous segments into one cohesive story
 
 ## QUALITY CRITERIA
 
-1. **Clarity**: A motivated undergraduate should understand the core ideas
-2. **Engagement**: The narration should be interesting, not dry
-3. **Logical Flow**: Each segment builds naturally on previous ones
-4. **Self-Contained**: Viewer doesn't need to read the paper
-5. **Accurate**: Technical details are correct
-6. **Complete**: All major KG components are covered
+1. **Accessibility**: Someone with ONLY basic ML knowledge should understand the core ideas
+2. **Concrete Examples**: Every segment must have at least one concrete, specific example
+3. **Simple First**: Always explain the simple intuition before adding technical complexity
+4. **Prerequisites Second**: Foundation/prerequisites MUST be segment 2 (right after intro)
+5. **Engagement**: The narration should be interesting, not dry or overly academic
+6. **Logical Flow**: Each segment builds naturally on previous ones
+7. **Self-Contained**: Viewer doesn't need to read the paper or other resources
+8. **Accurate**: Technical details are correct BUT simplified appropriately
+9. **Running Example**: Use one consistent example throughout multiple segments
 
 ## IMPORTANT NOTES
 
-- The narration script is EXACTLY what will be spoken - make it natural
-- Don't try to cover every detail - focus on the BIG IDEAS
-- Use the KG as source material, but synthesize into a story
+- The narration script is EXACTLY what will be spoken - make it natural and accessible
+- Don't try to cover every detail - focus on INTUITION and the BIG IDEAS
+- Use the KG as source material, but synthesize into a story for beginners
+- When in doubt, add more examples and analogies
+- Avoid jargon unless you explain it first with an analogy
+- Remember: Your viewer is smart but may not have deep technical background
+
+## SUMMARY: KEY REQUIREMENTS
+
+**MANDATORY Segment Order:**
+1. Introduction & Hook (with concrete scenario)
+2. Prerequisites & Foundation (MUST be second - explain all background concepts simply)
+3. Architecture/Method (simple view with analogies)
+4. How It Works (step-by-step with running example)
+5. Innovations (what's new and why it matters)
+6. Architectural Overview & Impact (MANDATORY - synthesize everything, show complete pipeline AFTER all concepts explained)
+
+**Every Segment Must Have:**
+- At least one concrete example (e.g., "Let's translate: 'The cat sat'...")
+- Simple explanation BEFORE technical details
+- Analogies for complex concepts
+- "Why this matters" explained in practical terms
+- Mathematical concepts from KG explained with intuition first, then concrete example, then formula (if needed)
+
+**Narration Style:**
+- Conversational, like explaining to a friend
+- Use "Let's...", "Imagine...", "Think of it like...". You can use your own creativity to make it engaging.
+- Explain jargon before using it
+- Build from simple to complex within each segment
 
 ---
+
+Now, given the Knowledge Graph, generate the educational video explanation following this specification. 
+
+Remember: 
+- SIMPLE FIRST, COMPLEXITY LATER
+- PREREQUISITES IN SEGMENT 2 (right after intro)
+- CONCRETE EXAMPLES THROUGHOUT
+- EXPLAIN ALL MATH FROM KG (intuition → example → formula)
+- FINAL SEGMENT MUST SYNTHESIZE ALL CONCEPTS into complete architectural overview showing the full pipeline
