@@ -12,7 +12,7 @@ import tyro
 import os
 import json
 from research_viz.utils.llm_utils import create_llm_response
-from research_viz.manim_generator.explanation_schemas import (
+from research_viz.schemas.explanation_schemas import (
     EducationalExplanation,
     TimingEstimator,
     SpeechTiming
