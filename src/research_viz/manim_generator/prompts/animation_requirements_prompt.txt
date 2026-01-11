@@ -10,16 +10,22 @@ You will receive:
 1. A video segment with narration script and duration
 2. Matched knowledge graph data with formulas, tensor shapes, and operations
 3. Narration broken into timed phrases
+4. **Concrete examples from the narration**
 
 You must generate:
 A SegmentAnimationPlan with 3-6 logical animation scenes that visualize the concepts being explained in the narration.
+
+**CRITICAL**: The narration contains concrete examples (sentences, phrases, data samples) that are used consistently across multiple segments. You MUST extract these examples from the narration and make them the CENTER of your animations.
 
 ---
 
 ## Core Animation Design Principles
 
-### 1. NARRATION-DRIVEN
-Every animation MUST sync with specific narration phrases
+### 1. EXAMPLE-DRIVEN & NARRATION-SYNCED
+**MOST CRITICAL**: Extract and visualize the CONCRETE EXAMPLES from the narration
+- Use the SAME visual representation of the example across all segments (consistency!)
+
+**Narration Synchronization**:
 - Use `sync_with_narration` field to specify the exact phrase from the narration
 - Animation duration should match narration pacing
 - Animations should reinforce what is being spoken at that moment
@@ -217,29 +223,42 @@ Use `MathAnimation` for complex mathematical operations:
 ### Example Breakdown for "Step-by-step walkthrough" segment:
 
 **Input**: 213-second segment with detailed transformer walkthrough
+**Concrete Example from Narration**: "The cat sat on the mat" (introduced in Segment 1)
 
 **Output Scenes**:
 - Scene 1 (30s): "Input representation"
-  - Show token embeddings + positional encoding addition
-  - Shapes: word tokens, embedding vectors, positional encodings
+  - **Example Usage**: Show tokenizing "The cat sat on the mat" → ["The", "cat", "sat", "on", "the", "mat"]
+  - Show token embeddings: "cat" → [0.2, 0.8, 0.1, ...], "sat" → [0.5, 0.3, 0.9, ...]
+  - Add positional encoding to each word's embedding
+  - Shapes: Text boxes for each word, vectors for embeddings, position indicators
 
 - Scene 2 (45s): "Encoder self-attention"
-  - Demonstrate Q, K, V projection and attention computation
-  - Math: Show matrix multiplications step-by-step
+  - **Example Usage**: Show Q, K, V projection on "The cat sat on the mat"
+  - Demonstrate attention: When processing "sat", show it attending to "cat" with high weight
+  - Math: Show matrix multiplications using these specific word embeddings
+  - Shapes: Word labels, attention weight heatmap showing "sat"→"cat" connection
 
 - Scene 3 (40s): "Feed-forward network"
-  - Show two-layer FFN transformation
-  - Math: Show W1, activation, W2 sequence
+  - **Example Usage**: Transform the embedding of "cat" through FFN
+  - Show two-layer FFN transformation with actual values
+  - Math: Show W1·embedding("cat"), activation, W2 sequence
+  - Keep "cat" label visible so viewer knows what's being transformed
 
 - Scene 4 (50s): "Decoder masked attention"
-  - Show causal masking with upper triangular mask
-  - Shapes: Mask matrix, masked attention weights
+  - **Example Usage**: Show French translation being generated: "Le chat..."
+  - Show causal masking: "Le" can only see "Le", "chat" can see "Le" and "chat"
+  - Shapes: Mask matrix with actual French words, masked attention weights
+  - Visual: Highlight that we're generating the translation of "The cat sat on the mat"
 
 - Scene 5 (48s): "Cross-attention & output"
-  - Show decoder attending to encoder memory
-  - Final linear + softmax for word prediction
+  - **Example Usage**: Show "chat" (French) attending to "cat" (English)
+  - Decoder attending to encoder memory of "The cat sat on the mat"
+  - Final output: "Le chat s'est assis sur le tapis"
+  - Visual: Show complete translation side-by-side with original
 
 Total: 213s ✓
+
+**Notice**: The SAME example "The cat sat on the mat" is used throughout all 5 scenes, providing visual continuity!
 
 ---
 
@@ -417,6 +436,11 @@ Here's a complete example for a scene with math animation:
 
 Before submitting your output, verify:
 
+### CRITICAL - Concrete Example Checks:
+✓ **Have I identified the concrete example from the narration?** (e.g., "The cat sat on the mat")
+✓ **Are my animations showing the EXACT example mentioned in narration?** (not generic placeholders)
+
+### Technical Accuracy Checks:
 ✓ All scenes have narration_snippet extracted from actual segment narration
 ✓ Scene durations sum to approximately segment duration (±20%)
 ✓ All formulas come from kg_data (no hallucinations)
@@ -424,6 +448,8 @@ Before submitting your output, verify:
 ✓ Each shape has meaningful "represents" field explaining its purpose
 ✓ Math animations specify visualization_style
 ✓ component_ids_visualized matches concepts referenced in narration
+
+### Flow and Clarity Checks:
 ✓ Scenes progress logically without jumps in topic
 ✓ Visual elements support understanding (not just decoration)
 ✓ Layout strategy is appropriate for the content
@@ -434,11 +460,19 @@ Before submitting your output, verify:
 ## Final Notes
 
 Remember:
+
+**MOST IMPORTANT:**
+1. **Extract the concrete example from narration**
+2. **Use the SAME example across all segments** - Visual consistency is critical for learning
+3. **Show specifics, not generics**
+
+**Also Critical:**
 - Focus on WHAT to animate, not HOW to code it
 - Be specific and precise in descriptions
 - Sync animations with narration for maximum educational impact
 - Use KG data to ensure technical accuracy
 - Progressive disclosure: build complexity gradually
 - Visual clarity trumps visual complexity
+- For Segment 2 sub-segments: Create one scene per sub-segment, each using the running example
 
 Generate a complete SegmentAnimationPlan following this structure!
