@@ -1,0 +1,8 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/1584795214_3506589752_2673705742.mp4'
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/4072820271_1441500904_366741465.mp4'
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/4072820271_408210296_366741465.mp4'
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/4072820271_1960794457_3726977729.mp4'
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/4072820271_2595226339_2630081916.mp4'
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/4072820271_1329298234_4251248418.mp4'
+file 'file:/Users/anannyapopat/Desktop/ReViz/research-paper-graphviz/src/research_viz/manim_generator/output/media/videos/generated_segment_1/480p15/partial_movie_files/Scene3CnnSteps/4072820271_667144672_1031397137.mp4'

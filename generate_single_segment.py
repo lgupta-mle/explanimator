@@ -3,10 +3,16 @@ Generate Manim code for a single segment with improved validation.
 """
 
 import json
+import os
 from pathlib import Path
 from research_viz.schemas.animation_schemas import AnimationRequirements
 from research_viz.preprocessing.manim_db import ManimDocRetriever
 from research_viz.manim_generator.manim_code_generator import ManimCodeGenerator
+from dotenv import load_dotenv
+
+load_dotenv()
+
+print(os.getenv("OPENAI_API_KEY"))
 
 # Configuration
 SEGMENT_INDEX = 0  # 0 = first segment (Introduction & Problem)

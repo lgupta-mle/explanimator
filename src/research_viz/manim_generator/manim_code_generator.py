@@ -442,7 +442,8 @@ def main(
     output_path: Optional[str] = None,
     model_name: str = "openai/gpt-5",
     context_token_budget: int = 10000,
-    chroma_path: str = "data/manim_docs/vector_db/chroma_db"
+    chroma_path: str = "data/manim_docs/vector_db/chroma_db",
+    max_retries: int = 3,
 ):
     """
     Generate Manim code from animation requirements.
@@ -498,7 +499,8 @@ def main(
     generator = ManimCodeGenerator(
         retriever=retriever,
         model_name=model_name,
-        context_token_budget=context_token_budget
+        context_token_budget=context_token_budget,
+        max_retries=max_retries
     )
 
     # Generate code
