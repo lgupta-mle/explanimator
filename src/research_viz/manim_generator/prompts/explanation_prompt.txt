@@ -5,11 +5,12 @@ You are an expert AI/ML educator who creates engaging, intuitive explanations of
 ## OBJECTIVE
 
 Generate a structured video explanation with:
-1. 4-6 video segments with complete narration scripts
-2. Natural, conversational flow like an expert tutor explaining to a student WITH NO ASSUMPTIONS ABOUT PRIOR KNOWLEDGE
-3. Start SIMPLE (concrete examples, analogies) then gradually add complexity
-4. Prerequisites explained IMMEDIATELY after introduction, before diving into the methodology
-5. Every technical concept must have a real-world analogy or concrete example
+1. **ONE CONSISTENT RUNNING EXAMPLE** used throughout ALL segments (minor modifications allowed)
+2. 4-6 video segments with complete narration scripts
+3. Natural, conversational flow like an expert tutor explaining to a student WITH NO ASSUMPTIONS ABOUT PRIOR KNOWLEDGE
+4. Start SIMPLE (concrete examples, analogies) then gradually add complexity
+5. Prerequisites explained IMMEDIATELY after introduction, with **SUB-SEGMENTS** for each major concept
+6. Every technical concept must have a concrete example
 
 ## TARGET AUDIENCE
 
@@ -60,8 +61,26 @@ Return a JSON object matching the EducationalExplanation schema:
       "segment_id": "seg_2_foundation",
       "title": "Prerequisites & Foundation",
       "order": 1,
-      "narration_script": "Before we see how it works, let's build the toolkit. First, [prerequisite 1 with analogy and example]... Now that we understand that, [prerequisite 2]... Building on this, [prerequisite 3]...",
-      "concepts_explained": ["prereq_1", "prereq_2", "prereq_3"],
+      "narration_script": "Before we see how it works, let's build the toolkit...",
+      "sub_segments": [
+        {
+          "sub_segment_id": "seg_2_sub_1",
+          "title": "Concept 1: Embeddings",
+          "order": 0,
+          "narration_script": "First, let's understand embeddings. Think of embeddings like... [analogy]. In our 'The cat sat on the mat' example, each word gets converted to... [concrete example with running example]",
+          "concepts_explained": ["prereq_embeddings"],
+          "key_point": "Embeddings convert words to numerical vectors that capture meaning"
+        },
+        {
+          "sub_segment_id": "seg_2_sub_2",
+          "title": "Concept 2: Attention",
+          "order": 1,
+          "narration_script": "Now that we have embeddings, let's see attention. Think of attention like a spotlight... [analogy]. When processing 'sat' in 'The cat sat', attention helps us focus on... [concrete example using SAME running example]",
+          "concepts_explained": ["prereq_attention"],
+          "key_point": "Attention helps identify which words are related to each other"
+        }
+      ],
+      "concepts_explained": ["prereq_1", "prereq_2"],
       "key_message": "These building blocks give us everything we need to understand the methodology"
     },
     {
@@ -78,6 +97,40 @@ Return a JSON object matching the EducationalExplanation schema:
 
 You can be creative with how you explain or create the narration scripts based on your best judgement on the knowledge graph passed.
 
+## CRITICAL REQUIREMENTS
+
+### A. Consistent Running Example
+**MANDATORY**: Choose ONE concrete example in Segment 1 and use it consistently throughout ALL segments.
+
+Example: If you start with "Imagine translating 'The cat sat on the mat' to French", then:
+- ✅ Segment 2 (Prerequisites): "When we encode 'cat' as an embedding..." "When processing 'sat', attention focuses on 'cat'..."
+- ✅ Segment 3 (Architecture): "Our sentence 'The cat sat on the mat' flows through the encoder..."
+- ✅ Segment 4 (Details): "Let's walk through 'The cat sat': first, 'Le' is generated, then..."
+- ✅ Segment 6 (Overview): "Remember our sentence about the cat? Here's the complete journey..."
+
+❌ DON'T switch examples between segments (confuses learners)
+✅ DO use the SAME example with minor variations as needed
+
+### B. Sub-Segments for Segment 2 (Prerequisites)
+**MANDATORY**: Break Segment 2 into sub-segments, one for each major prerequisite concept.
+
+Each sub-segment MUST have:
+1. **Clear title**: e.g., "Concept 1: Word Embeddings", "Concept 2: Attention Mechanism"
+2. **Focused narration**: Explain ONLY that concept (2-3 minutes)
+3. **Three-layer explanation**:
+   - Layer 1: Analogy ("Think of embeddings like GPS coordinates for words...")
+   - Layer 2: Concrete example using running example ("For 'cat' in our sentence...")
+   - Layer 3: Technical detail ("Each word becomes a 512-dimensional vector...")
+4. **Transition**: End with how this enables the next concept
+
+Example structure:
+- Sub-segment 1: Embeddings (foundational)
+- Sub-segment 2: Attention mechanism (builds on embeddings)
+- Sub-segment 3: Self-attention (builds on attention)
+- Sub-segment 4: Positional encoding (adds to embeddings+attention)
+
+Each sub-segment = digestible chunk, easier to animate!
+
 ## DETAILED INSTRUCTIONS
 
 ### 1. Video Segment Structure (4-6 segments)
@@ -90,36 +143,44 @@ CRITICAL: Start simple with concrete examples, then layer in complexity. Prerequ
 - Why does it matter in practical terms?
 - "Here's what this paper does..."
 
-**Segment 2: Prerequisites & Foundation (90-120s) - MANDATORY SECOND SEGMENT**
-- "Before we see how it works, let's build the toolkit..."
-- Explain EVERY prerequisite concept from the KG in a LOGICAL, STEP-BY-STEP order:
-  - Start with the most foundational concept first (e.g., embeddings before attention)
-  - Build each concept on the previous one
-  - For each prerequisite:
-    1. Simple analogy first ("Think of attention like a spotlight...")
-    2. Concrete example using your running example ("When we process 'sat' in 'The cat sat', attention shines on 'cat'...")
-    3. Then technical detail
-  - Use clear transitions: "Now that we understand X, let's see Y..."
-  - Cover all prerequisites from KG: attention mechanism, self-attention, embeddings, positional encoding, etc.
-- Build complete intuition before diving into the paper's method
-- This segment should feel like building blocks stacking one on top of another
+**Segment 2: Prerequisites & Foundation - MANDATORY SECOND SEGMENT WITH SUB-SEGMENTS**
+- Introduction narration: "Before we see how it works, let's build the toolkit..."
+- THEN break into sub-segments (see schema example)
+- Create ONE sub-segment per major prerequisite concept from the KG
+- Order sub-segments by dependency (foundational concepts first):
+  - Example order: Embeddings → Attention → Self-Attention → Positional Encoding → Layer Normalization
+- Each sub-segment structure:
+  1. **Title**: Clear, specific ("Word Embeddings", not "Background")
+  2. **Narration**: 2-3 minute focused explanation
+     - Start: "Let's understand [concept]..."
+     - Analogy: "Think of [concept] like..."
+     - Example: Use SAME running example ("In our 'cat sat' sentence...")
+     - Detail: Technical but accessible explanation
+     - Transition: "Now that we have [concept], we can understand [next]..."
+  3. **Concepts explained**: List specific concept IDs from KG
+  4. **Key point**: One-sentence takeaway
+- This modular structure makes animation planning MUCH easier
+- Each sub-segment can have its own visual treatment
 
 **Segment 3: Core Architecture - Simple View (90-120s)**
 - "Now that we have the basics, here's the BIG IDEA..."
 - Start with the SIMPLEST possible explanation
 - Use analogies ("Think of it like an assembly line where...")
-- Show the high-level flow with a concrete example
+- Show the high-level flow with YOUR CONSISTENT running example
 - Avoid mathematical details in this segment
+- Reference your running example: "Remember our 'cat sat' sentence? Here's how it flows through..."
 
 **Segment 4: How It Actually Works (90-120s)**
 - "Let's see what happens step by step..."
-- Walk through ONE concrete example from start to finish
-- "Imagine we input the sentence: [example]..."
-- Explain what each component does to this example
+- Walk through YOUR CONSISTENT running example from start to finish
+- "Let's trace 'The cat sat on the mat' through the entire system..."
+- Explain what each component does to this SAME example
 - NOW you can add technical details, but tied to the example
+- Keep referencing: "Remember when we talked about embeddings? Now we're using them here..."
 
 **Segment 5: What Makes This Special (60-90s)**
 - "So what's the innovation here?"
+- Compare using YOUR running example: "With the old approach, 'The cat sat' would have been processed like... But with this method..."
 - Compare to previous approaches using the SAME example
 - "Before, we would do X... now we do Y..."
 - Why this change matters (in concrete terms, not abstract)
@@ -210,24 +271,27 @@ Choose the strategy that best fits the paper's structure.
 
 The final segment's narration script must synthesize everything:
 - "Let's zoom out and see the complete picture..."
-- Walk through the COMPLETE pipeline from input to output using your running example
+- "Remember 'The cat sat on the mat' from the beginning? Let's trace it one more time through the ENTIRE system..."
+- Walk through the COMPLETE pipeline from input to output using YOUR CONSISTENT running example
 - Show how ALL components interact in sequence
 - Highlight key design decisions
 - State why this design works well
 - Recap the innovations and their impact
-- This narration should tie together everything from previous segments into one cohesive story
+- End with: "And that's how our simple sentence about a cat becomes accurate French translation!"
+- This narration should tie together everything from previous segments into one cohesive story with the SAME example
 
 ## QUALITY CRITERIA
 
-1. **Accessibility**: Someone with ONLY basic ML knowledge should understand the core ideas
-2. **Concrete Examples**: Every segment must have at least one concrete, specific example
-3. **Simple First**: Always explain the simple intuition before adding technical complexity
-4. **Prerequisites Second**: Foundation/prerequisites MUST be segment 2 (right after intro)
-5. **Engagement**: The narration should be interesting, not dry or overly academic
-6. **Logical Flow**: Each segment builds naturally on previous ones
-7. **Self-Contained**: Viewer doesn't need to read the paper or other resources
-8. **Accurate**: Technical details are correct BUT simplified appropriately
-9. **Running Example**: Use one consistent example throughout multiple segments
+1. **ONE CONSISTENT EXAMPLE**: The same concrete example used from Segment 1 through Segment 6
+2. **SUB-SEGMENTS FOR SEGMENT 2**: Each prerequisite gets its own sub-segment with focused narration
+3. **Accessibility**: Someone with ONLY basic ML knowledge should understand the core ideas
+4. **Concrete Examples**: Every segment references the running example
+5. **Simple First**: Always explain the simple intuition before adding technical complexity
+6. **Prerequisites Second**: Foundation/prerequisites MUST be segment 2 with sub-segments
+7. **Engagement**: The narration should be interesting, not dry or overly academic
+8. **Logical Flow**: Each segment builds naturally on previous ones
+9. **Self-Contained**: Viewer doesn't need to read the paper or other resources
+10. **Accurate**: Technical details are correct BUT simplified appropriately
 
 ## IMPORTANT NOTES
 
@@ -265,9 +329,21 @@ The final segment's narration script must synthesize everything:
 
 Now, given the Knowledge Graph, generate the educational video explanation following this specification. 
 
+## FINAL CHECKLIST - MUST VERIFY BEFORE SUBMITTING:
+
+✅ **Consistent Example**: Did I use the SAME concrete example from Segment 1 through Segment 6?
+✅ **Segment 2 Sub-Segments**: Did I break Segment 2 into sub-segments, one per prerequisite concept?
+✅ **Three-Layer Explanations**: Does each sub-segment have analogy → concrete example → technical detail?
+✅ **Running Example in Sub-Segments**: Does each Segment 2 sub-segment use the same running example?
+✅ **Example Continuity**: Can a viewer follow "The cat sat on the mat" (or my chosen example) through ALL segments?
+✅ **Sub-Segment Structure**: Does each sub-segment have title, narration, concepts_explained, and key_point?
+✅ **Dependency Order**: Are sub-segments ordered by prerequisite dependencies (foundational first)?
+
 Remember: 
+- **ONE EXAMPLE THROUGHOUT ALL SEGMENTS** (most critical!)
+- **SEGMENT 2 MUST HAVE SUB-SEGMENTS** (one per prerequisite)
 - SIMPLE FIRST, COMPLEXITY LATER
 - PREREQUISITES IN SEGMENT 2 (right after intro)
-- CONCRETE EXAMPLES THROUGHOUT
-- EXPLAIN ALL MATH FROM KG (intuition → example → formula)
+- ARCHITECTURAL OVERVIEW AT END (segment 6, AFTER all concepts explained)
+- EXPLAIN MATH WITH INTUITION + EXAMPLE + FORMULA
 - FINAL SEGMENT MUST SYNTHESIZE ALL CONCEPTS into complete architectural overview showing the full pipeline

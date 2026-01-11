@@ -55,6 +55,24 @@ class ConceptCluster(BaseModel):
     cluster_summary: str = Field(..., description="Brief summary tying concepts together")
 
 
+class SubSegment(BaseModel):
+    """A sub-segment within a main segment for breaking down complex topics."""
+    model_config = ConfigDict(extra="forbid")
+    
+    sub_segment_id: str = Field(..., description="Unique sub-segment identifier (e.g., 'seg_2_sub_1')")
+    title: str = Field(..., description="Sub-segment title")
+    order: int = Field(..., description="Order within parent segment (0-indexed)")
+    
+    # Narration for this sub-segment
+    narration_script: str = Field(..., description="Narration for this specific sub-topic (natural, conversational)")
+    
+    # Concept coverage
+    concepts_explained: List[str] = Field(default_factory=list, description="Concept IDs covered in this sub-segment")
+    
+    # Learning outcome
+    key_point: str = Field(..., description="Main point of this sub-segment (1 sentence)")
+
+
 class VideoSegment(BaseModel):
     """A video segment with narration transcript."""
     model_config = ConfigDict(extra="forbid")
@@ -65,6 +83,9 @@ class VideoSegment(BaseModel):
 
     # Narration transcript
     narration_script: str = Field(..., description="Complete spoken narration for this segment (natural, conversational tone)")
+    
+    # Sub-segments (optional, for breaking down complex segments like prerequisites)
+    sub_segments: Optional[List[SubSegment]] = Field(None, description="Optional sub-segments for organizing complex topics (e.g., multiple prerequisite concepts in Segment 2)")
 
     # Concept coverage
     concepts_explained: List[str] = Field(default_factory=list, description="Concept IDs covered in this segment")
