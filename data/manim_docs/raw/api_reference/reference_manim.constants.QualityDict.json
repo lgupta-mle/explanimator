@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.constants.QualityDict.html",
+  "title": "QualityDict\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "QualityDict\u00b6\n\nQualified name:manim.constants.QualityDict\n\nclassQualityDict[source]\u00b6\n\nBases:TypedDictMethodsAttributesflagpixel_heightpixel_widthframe_rate\n\nBases:TypedDict\n\nMethods\n\nAttributes\n\nflag\n\npixel_height\n\npixel_width\n\nframe_rate",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "QualityDict",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Bases:TypedDict"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "timing"
+  ]
+}

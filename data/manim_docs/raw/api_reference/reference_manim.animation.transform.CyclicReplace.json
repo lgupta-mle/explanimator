@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.CyclicReplace.html",
+  "title": "CyclicReplace\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "CyclicReplace\u00b6\n\nQualified name:manim.animation.transform.CyclicReplace\n\nclassCyclicReplace(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformAn animation moving mobjects cyclically.In particular, this means: the first mobject takes the place\nof the second mobject, the second one takes the place of\nthe third mobject, and so on. The last mobject takes the\nplace of the first one.Parameters:mobjects(Mobject) \u2013 List of mobjects to be transformed.path_arc(float) \u2013 The angle of the arc (in radians) that the mobjects will follow to reach\ntheir target.kwargs\u2013 Further keyword arguments that are passed toTransform.ExamplesExample: CyclicReplaceExample\u00b6frommanimimport*classCyclicReplaceExample(Scene):defconstruct(self):group=VGroup(Square(),Circle(),Triangle(),Star())group.arrange(RIGHT)self.add(group)for_inrange(4):self.play(CyclicReplace(*group))class CyclicReplaceExample(Scene):\n    def construct(self):\n        group = VGroup(Square(), Circle(), Triangle(), Star())\n        group.arrange(RIGHT)\n        self.add(group)\n\n        for _ in range(4):\n            self.play(CyclicReplace(*group))Methodscreate_targetAttributespath_arcpath_funcrun_time_original__init__(*mobjects,path_arc=1.5707963267948966,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)path_arc(float)Return type:None\n\nBases:Transform\n\nAn animation moving mobjects cyclically.\n\nIn particular, this means: the first mobject takes the place\nof the second mobject, the second one takes the place of\nthe third mobject, and so on. The last mobject takes the\nplace of the first one.\n\nParameters:\n\nmobjects(Mobject) \u2013 List of mobjects to be transformed.path_arc(float) \u2013 The angle of the arc (in radians) that the mobjects will follow to reach\ntheir target.kwargs\u2013 Further keyword arguments that are passed toTransform.\n\nmobjects(Mobject) \u2013 List of mobjects to be transformed.\n\nmobjects(Mobject) \u2013 List of mobjects to be transformed.\n\npath_arc(float) \u2013 The angle of the arc (in radians) that the mobjects will follow to reach\ntheir target.\n\npath_arc(float) \u2013 The angle of the arc (in radians) that the mobjects will follow to reach\ntheir target.\n\nkwargs\u2013 Further keyword arguments that are passed toTransform.\n\nkwargs\u2013 Further keyword arguments that are passed toTransform.\n\nExamples\n\nExample: CyclicReplaceExample\u00b6\n\nMethods\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(*mobjects,path_arc=1.5707963267948966,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)path_arc(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobjects(Mobject)path_arc(float)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCyclicReplaceExample(Scene):defconstruct(self):group=VGroup(Square(),Circle(),Triangle(),Star())group.arrange(RIGHT)self.add(group)for_inrange(4):self.play(CyclicReplace(*group))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CyclicReplaceExample(Scene):\n    def construct(self):\n        group = VGroup(Square(), Circle(), Triangle(), Star())\n        group.arrange(RIGHT)\n        self.add(group)\n\n        for _ in range(4):\n            self.play(CyclicReplace(*group))",
+      "language": "python",
+      "context": "Example: CyclicReplaceExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "CyclicReplace",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "VGroup",
+    "Transform",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

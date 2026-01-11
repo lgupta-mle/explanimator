@@ -1,0 +1,748 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim._config.utils.ManimConfig.html",
+  "title": "ManimConfig\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimConfig\u00b6\n\nQualified name:manim.\\_config.utils.ManimConfig\n\nclassManimConfig[source]\u00b6\n\nBases:MutableMappingDict-like class storing all config options.The globalconfigobject is an instance of this class, and acts as a\nsingle source of truth for all of the library\u2019s customizable behavior.The globalconfigobject is capable of digesting different types of\nsources and converting them into a uniform interface.  These sources are\n(in ascending order of precedence): configuration files, command line\narguments, and programmatic changes.  Regardless of how the user chooses to\nset a config option, she can access its current value usingManimConfig\u2019s attributes and properties.NotesEach config option is implemented as a property of this class.Each config option can be set via a config file, using the full name of the\nproperty.  If a config option has an associated CLI flag, then the flag is\nequal to the full name of the property.  Those that admit an alternative\nflag or no flag at all are documented in the individual property\u2019s\ndocstring.ExamplesWe use a copy of the global configuration object in the following\nexamples for the sake of demonstration; you can skip these lines\nand just importconfigdirectly if you actually want to modify\nthe configuration:>>>frommanimimportconfigasglobal_config>>>config=global_config.copy()Each config option allows for dict syntax and attribute syntax.  For\nexample, the following two lines are equivalent,>>>frommanimimportWHITE>>>config.background_color=WHITE>>>config[\"background_color\"]=WHITEThe former is preferred; the latter is provided mostly for backwards\ncompatibility.The config options are designed to keep internal consistency.  For example,\nsettingframe_y_radiuswill affectframe_height:>>>config.frame_height8.0>>>config.frame_y_radius=5.0>>>config.frame_height10.0There are many ways of interacting with config options.  Take for example\nthe config optionbackground_color.  There are three ways to change it:\nvia a config file, via CLI flags, or programmatically.To set the background color via a config file, save the followingmanim.cfgfile with the following contents.[CLI]background_color=WHITEIn order to have this.cfgfile apply to a manim scene, it needs to be\nplaced in the same directory as the script,project/\n\u251c\u2500scene.py\n\u2514\u2500manim.cfgNow, when the user executesmanimscene.pythe background of the scene will be set toWHITE.  This applies regardless\nof where the manim command is invoked from.Command line arguments override.cfgfiles.  In the previous example,\nexecutingmanimscene.py-cBLUEwill set the background color to BLUE, regardless of the contents ofmanim.cfg.Finally, any programmatic changes made within the scene script itself will\noverride the command line arguments.  For example, ifscene.pycontains\nthe followingfrommanimimport*config.background_color=REDclassMyScene(Scene):...the background color will be set to RED, regardless of the contents ofmanim.cfgor the CLI arguments used when invoking manim.MethodscopyDeepcopy the contents of this ManimConfig.digest_argsProcess the config options present in CLI arguments.digest_fileProcess the config options present in a.cfgfile.digest_parserProcess the config options present in aConfigParserobject.get_dirResolve a config option that stores a directory.resolve_movie_file_extensionupdateDigest the options found in anotherManimConfigor in a dict.Attributesaspect_ratioAspect ratio (width / height) in pixels (--resolution, -r).assets_dirDirectory to locate video assets (no flag).background_colorBackground color of the scene (-c).background_opacityA number between 0.0 (fully transparent) and 1.0 (fully opaque).bottomCoordinate at the center bottom of the frame.custom_foldersWhether to use custom folder output.disable_cachingWhether to use scene caching.disable_caching_warningWhether a warning is raised if there are too much submobjects to hash.dry_runWhether dry run is enabled.enable_guiEnable GUI interaction.enable_wireframeWhether to enable wireframe debugging mode in opengl.ffmpeg_loglevelVerbosity level of ffmpeg (no flag).flush_cacheWhether to delete all the cached partial movie files.force_windowWhether to force window when using the opengl renderer.formatFile format; \"png\", \"gif\", \"mp4\", \"webm\" or \"mov\".frame_heightFrame height in logical units (no flag).frame_rateFrame rate in frames per second.frame_sizeTuple with (pixel width, pixel height) (no flag).frame_widthFrame width in logical units (no flag).frame_x_radiusHalf the frame width (no flag).frame_y_radiusHalf the frame height (no flag).from_animation_numberStart rendering animations at this number (-n).fullscreenExpand the window to its maximum possible size.gui_locationLocation parameters for the GUI window (e.g., screen coordinates or layout settings).images_dirDirectory to place images (no flag).input_fileInput file name.left_sideCoordinate at the middle left of the frame.log_dirDirectory to place logs.log_to_fileWhether to save logs to a file.max_files_cachedMaximum number of files cached.media_dirMain output directory.media_embedWhether to embed videos in Jupyter notebook.media_widthMedia width in Jupyter notebook.movie_file_extensionEither .mp4, .webm or .mov.no_latex_cleanupPrevents deletion of .aux, .dvi, and .log files produced by Tex and MathTex.notify_outdated_versionWhether to notify if there is a version update available.output_fileOutput file name (-o).partial_movie_dirDirectory to place partial movie files (no flag).pixel_heightFrame height in pixels (--resolution, -r).pixel_widthFrame width in pixels (--resolution, -r).pluginsList of plugins to enable.previewWhether to play the rendered movie (-p).preview_commandprogress_barWhether to show progress bars while rendering animations.qualityVideo quality (-q).rendererThe currently active renderer.right_sideCoordinate at the middle right of the frame.save_as_gifWhether to save the rendered scene in .gif format (-i).save_last_frameWhether to save the last frame of the scene as an image file (-s).save_pngsWhether to save all frames in the scene as images files (-g).save_sectionsWhether to save single videos for each section in addition to the movie file.scene_namesScenes to play from file.sections_dirDirectory to place section videos (no flag).show_in_file_browserWhether to show the output file in the file browser (-f).tex_dirDirectory to place tex (no flag).tex_templateTemplate used when rendering Tex.tex_template_fileFile to read Tex template from (no flag).text_dirDirectory to place text (no flag).topCoordinate at the center top of the frame.transparentWhether the background opacity is less than 1.0 (-t).upto_animation_numberStop rendering animations at this number.use_projection_fill_shadersUse shaders for OpenGLVMobject fill which are compatible with transformation matrices.use_projection_stroke_shadersUse shaders for OpenGLVMobject stroke which are compatible with transformation matrices.verbosityLogger verbosity; \"DEBUG\", \"INFO\", \"WARNING\", \"ERROR\", or \"CRITICAL\" (-v).video_dirDirectory to place videos (no flag).window_monitorThe monitor on which the scene will be rendered.window_positionSet the position of preview window.window_sizeThe size of the opengl window as 'width,height' or 'default' to automatically scale the window based on the display monitor.write_allWhether to render all scenes in the input file (-a).write_to_movieWhether to render the scene to a movie file (-w).zero_padPNG zero padding._set_between(key,val,lo,hi)[source]\u00b6Setkeytovalif lo <= val <= hi.Parameters:key(str)val(float)lo(float)hi(float)Return type:None_set_boolean(key,val)[source]\u00b6Setkeytovalifvalis Boolean.Parameters:key(str)val(Any)Return type:None_set_from_enum(key,enum_value,enum_class)[source]\u00b6Setkeyto the enum object with valueenum_valuein the givenenum_class.Tests:>>>fromenumimportEnum>>>classFruit(Enum):...APPLE=1...BANANA=2...CANTALOUPE=3>>>test_config=ManimConfig()>>>test_config._set_from_enum(\"fruit\",1,Fruit)>>>test_config._d['fruit']<Fruit.APPLE: 1>>>>test_config._set_from_enum(\"fruit\",Fruit.BANANA,Fruit)>>>test_config._d['fruit']<Fruit.BANANA: 2>>>>test_config._set_from_enum(\"fruit\",42,Fruit)Traceback (most recent call last):...ValueError:42 is not a valid FruitParameters:key(str)enum_value(Any)enum_class(EnumMeta)Return type:None_set_from_list(key,val,values)[source]\u00b6Setkeytovalifvalis contained invalues.Parameters:key(str)val(Any)values(list[Any])Return type:None_set_int_between(key,val,lo,hi)[source]\u00b6Setkeytovalif lo <= val <= hi.Parameters:key(str)val(int)lo(int)hi(int)Return type:None_set_pos_number(key,val,allow_inf)[source]\u00b6Setkeytovalifvalis a positive integer.Parameters:key(str)val(int)allow_inf(bool)Return type:None_set_str(key,val)[source]\u00b6Setkeytovalifvalis a string.Parameters:key(str)val(Any)Return type:Nonepropertyaspect_ratio:int\u00b6Aspect ratio (width / height) in pixels (\u2013resolution, -r).propertyassets_dir:str\u00b6Directory to locate video assets (no flag).propertybackground_color:ManimColor\u00b6Background color of the scene (-c).propertybackground_opacity:float\u00b6A number between 0.0 (fully transparent) and 1.0 (fully opaque).propertybottom:Vector3D\u00b6Coordinate at the center bottom of the frame.copy()[source]\u00b6Deepcopy the contents of this ManimConfig.Returns:A copy of this object containing no shared references.Return type:ManimConfigSee alsotempconfig()NotesThis is the main mechanism behindtempconfig().propertycustom_folders:str\u00b6Whether to use custom folder output.digest_args(args)[source]\u00b6Process the config options present in CLI arguments.Parameters:args(argparse.Namespace) \u2013 An object returned bymain_utils.parse_args().Returns:self\u2013 This object, after processing the contents ofparser.Return type:ManimConfigSee alsomain_utils.parse_args(),digest_parser(),digest_file()NotesIfargs.config_fileis a non-empty string,ManimConfigtries to digest the\ncontents of said file withdigest_file()before\ndigesting any other CLI arguments.digest_file(filename)[source]\u00b6Process the config options present in a.cfgfile.This method processes a single.cfgfile, whereasdigest_parser()can process arbitrary parsers, built\nperhaps from multiple.cfgfiles.Parameters:filename(StrPath) \u2013 Path to the.cfgfile.Returns:self\u2013 This object, after processing the contents offilename.Return type:ManimConfigSee alsodigest_file(),digest_args(),make_config_parser()NotesIf there are multiple.cfgfiles to process, it is always more\nefficient to parse them into a singleConfigParserobject\nfirst and digesting them with one call todigest_parser(), instead of calling this method\nmultiple times.digest_parser(parser)[source]\u00b6Process the config options present in aConfigParserobject.This method processes arbitrary parsers, not only those read from a\nsingle file, whereasdigest_file()can only process one\nfile at a time.Parameters:parser(configparser.ConfigParser) \u2013 An object reflecting the contents of one or many.cfgfiles.  In\nparticular, it may reflect the contents of multiple files that have\nbeen parsed in a cascading fashion.Returns:self\u2013 This object, after processing the contents ofparser.Return type:ManimConfigSee alsomake_config_parser(),digest_file(),digest_args()NotesIf there are multiple.cfgfiles to process, it is always more\nefficient to parse them into a singleConfigParserobject\nfirst, and then call this function once (instead of callingdigest_file()multiple times).ExamplesTo digest the config options set in two files, first create a\nConfigParser and parse both files and then digest the parser:parser=configparser.ConfigParser()parser.read([file1,file2])config=ManimConfig().digest_parser(parser)In fact, the globalconfigobject is initialized like so:parser=make_config_parser()config=ManimConfig().digest_parser(parser)propertydisable_caching:bool\u00b6Whether to use scene caching.propertydisable_caching_warning:bool\u00b6Whether a warning is raised if there are too much submobjects to hash.propertydry_run:bool\u00b6Whether dry run is enabled.propertyenable_gui:bool\u00b6Enable GUI interaction.propertyenable_wireframe:bool\u00b6Whether to enable wireframe debugging mode in opengl.propertyffmpeg_loglevel:str\u00b6Verbosity level of ffmpeg (no flag).propertyflush_cache:bool\u00b6Whether to delete all the cached partial movie files.propertyforce_window:bool\u00b6Whether to force window when using the opengl renderer.propertyformat:str\u00b6File format; \u201cpng\u201d, \u201cgif\u201d, \u201cmp4\u201d, \u201cwebm\u201d or \u201cmov\u201d.propertyframe_height:float\u00b6Frame height in logical units (no flag).propertyframe_rate:float\u00b6Frame rate in frames per second.propertyframe_size:tuple[int,int]\u00b6Tuple with (pixel width, pixel height) (no flag).propertyframe_width:float\u00b6Frame width in logical units (no flag).propertyframe_x_radius:float\u00b6Half the frame width (no flag).propertyframe_y_radius:float\u00b6Half the frame height (no flag).propertyfrom_animation_number:int\u00b6Start rendering animations at this number (-n).propertyfullscreen:bool\u00b6Expand the window to its maximum possible size.get_dir(key,**kwargs)[source]\u00b6Resolve a config option that stores a directory.Config options that store directories may depend on one another.  This\nmethod is used to provide the actual directory to the end user.Parameters:key(str) \u2013 The config option to be resolved.  Must be an option ending in'_dir', for example'media_dir'or'video_dir'.kwargs(Any) \u2013 Any strings to be used when resolving the directory.Returns:Path to the requested directory.  If the path resolves to the empty\nstring, returnNoneinstead.Return type:pathlib.PathRaises:KeyError\u2013 Whenkeyis not a config option that stores a directory and\n    thusget_dir()is not appropriate; or whenkeyis appropriate but there is not enough information to\n    resolve the directory.NotesStandardstr.format()syntax is used to resolve the paths so the\npaths may contain arbitrary placeholders using f-string notation.\nHowever, these will requirekwargsto contain the required values.ExamplesThe value ofconfig.tex_diris'{media_dir}/Tex'by default,\ni.e. it is a subfolder of whereverconfig.media_diris located.  In\norder to get theactualdirectory, useget_dir().>>>frommanimimportconfigasglobalconfig>>>config=globalconfig.copy()>>>config.tex_dir'{media_dir}/Tex'>>>config.media_dir'./media'>>>config.get_dir(\"tex_dir\").as_posix()'media/Tex'Resolving directories is done in a lazy way, at the last possible\nmoment, to reflect any changes in other config options:>>>config.media_dir=\"my_media_dir\">>>config.get_dir(\"tex_dir\").as_posix()'my_media_dir/Tex'Some directories depend on information that is not available toManimConfig. For example, the default value ofvideo_dirincludes the name of the input file and the video quality\n(e.g. 480p15). This informamtion has to be supplied viakwargs:>>>config.video_dir'{media_dir}/videos/{module_name}/{quality}'>>>config.get_dir(\"video_dir\")Traceback (most recent call last):KeyError:'video_dir {media_dir}/videos/{module_name}/{quality} requires the following keyword arguments: module_name'>>>config.get_dir(\"video_dir\",module_name=\"myfile\").as_posix()'my_media_dir/videos/myfile/1080p60'Note the quality does not need to be passed as keyword argument sinceManimConfigdoes store information about quality.Directories may be recursively defined.  For example, the config optionpartial_movie_dirdepends onvideo_dir, which in turn depends\nonmedia_dir:>>>config.partial_movie_dir'{video_dir}/partial_movie_files/{scene_name}'>>>config.get_dir(\"partial_movie_dir\")Traceback (most recent call last):KeyError:'partial_movie_dir {video_dir}/partial_movie_files/{scene_name} requires the following keyword arguments: scene_name'>>>config.get_dir(...\"partial_movie_dir\",module_name=\"myfile\",scene_name=\"myscene\"...).as_posix()'my_media_dir/videos/myfile/1080p60/partial_movie_files/myscene'Standard f-string syntax is used.  Arbitrary names can be used when\ndefining directories, as long as the corresponding values are passed toManimConfig.get_dir()viakwargs.>>>config.media_dir=\"{dir1}/{dir2}\">>>config.get_dir(\"media_dir\")Traceback (most recent call last):KeyError:'media_dir {dir1}/{dir2} requires the following keyword arguments: dir1'>>>config.get_dir(\"media_dir\",dir1=\"foo\",dir2=\"bar\").as_posix()'foo/bar'>>>config.media_dir=\"./media\">>>config.get_dir(\"media_dir\").as_posix()'media'propertygui_location:tuple[Any]\u00b6Location parameters for the GUI window (e.g., screen coordinates or layout settings).propertyimages_dir:str\u00b6Directory to place images (no flag).  SeeManimConfig.get_dir().propertyinput_file:str\u00b6Input file name.propertyleft_side:Vector3D\u00b6Coordinate at the middle left of the frame.propertylog_dir:str\u00b6Directory to place logs. SeeManimConfig.get_dir().propertylog_to_file:bool\u00b6Whether to save logs to a file.propertymax_files_cached:int\u00b6Maximum number of files cached.  Use -1 for infinity (no flag).propertymedia_dir:str\u00b6Main output directory.  SeeManimConfig.get_dir().propertymedia_embed:bool\u00b6Whether to embed videos in Jupyter notebook.propertymedia_width:str\u00b6Media width in Jupyter notebook.propertymovie_file_extension:str\u00b6Either .mp4, .webm or .mov.propertyno_latex_cleanup:bool\u00b6Prevents deletion of .aux, .dvi, and .log files produced by Tex and MathTex.propertynotify_outdated_version:bool\u00b6Whether to notify if there is a version update available.propertyoutput_file:str\u00b6Output file name (-o).propertypartial_movie_dir:str\u00b6Directory to place partial movie files (no flag).  SeeManimConfig.get_dir().propertypixel_height:int\u00b6Frame height in pixels (\u2013resolution, -r).propertypixel_width:int\u00b6Frame width in pixels (\u2013resolution, -r).propertyplugins:list[str]\u00b6List of plugins to enable.propertypreview:bool\u00b6Whether to play the rendered movie (-p).propertyprogress_bar:str\u00b6Whether to show progress bars while rendering animations.propertyquality:str|None\u00b6Video quality (-q).propertyrenderer:RendererType\u00b6The currently active renderer.Populated with one of the available renderers inRendererType.Tests:>>>test_config=ManimConfig()>>>test_config.rendererisNone# a new ManimConfig is unpopulatedTrue>>>test_config.renderer='opengl'>>>test_config.renderer<RendererType.OPENGL: 'opengl'>>>>test_config.renderer=42Traceback (most recent call last):...ValueError:42 is not a valid RendererTypeCheck that capitalization of renderer types is irrelevant:>>>test_config.renderer='OpenGL'>>>test_config.renderer='cAirO'propertyright_side:Vector3D\u00b6Coordinate at the middle right of the frame.propertysave_as_gif:bool\u00b6Whether to save the rendered scene in .gif format (-i).propertysave_last_frame:bool\u00b6Whether to save the last frame of the scene as an image file (-s).propertysave_pngs:bool\u00b6Whether to save all frames in the scene as images files (-g).propertysave_sections:bool\u00b6Whether to save single videos for each section in addition to the movie file.propertyscene_names:list[str]\u00b6Scenes to play from file.propertysections_dir:str\u00b6Directory to place section videos (no flag). SeeManimConfig.get_dir().propertyshow_in_file_browser:bool\u00b6Whether to show the output file in the file browser (-f).propertytex_dir:str\u00b6Directory to place tex (no flag).  SeeManimConfig.get_dir().propertytex_template:TexTemplate\u00b6Template used when rendering Tex.  SeeTexTemplate.propertytex_template_file:Path\u00b6File to read Tex template from (no flag).  SeeTexTemplate.propertytext_dir:str\u00b6Directory to place text (no flag).  SeeManimConfig.get_dir().propertytop:Vector3D\u00b6Coordinate at the center top of the frame.propertytransparent:bool\u00b6Whether the background opacity is less than 1.0 (-t).update(obj)[source]\u00b6Digest the options found in anotherManimConfigor in a dict.Similar todict.update(), replaces the values of this object with\nthose ofobj.Parameters:obj(ManimConfig|dict[str,Any]) \u2013 The object to copy values from.Return type:NoneRaises:AttributeError\u2013 Ifobjis a dict but contains keys that do not belong to any\n    config options.See alsodigest_file(),digest_args(),digest_parser()propertyupto_animation_number:int\u00b6Stop rendering animations at this number. Use -1 to avoid skipping (-n).propertyuse_projection_fill_shaders:bool\u00b6Use shaders for OpenGLVMobject fill which are compatible with transformation matrices.propertyuse_projection_stroke_shaders:bool\u00b6Use shaders for OpenGLVMobject stroke which are compatible with transformation matrices.propertyverbosity:str\u00b6Logger verbosity; \u201cDEBUG\u201d, \u201cINFO\u201d, \u201cWARNING\u201d, \u201cERROR\u201d, or \u201cCRITICAL\u201d (-v).propertyvideo_dir:str\u00b6Directory to place videos (no flag). SeeManimConfig.get_dir().propertywindow_monitor:int\u00b6The monitor on which the scene will be rendered.propertywindow_position:str\u00b6Set the position of preview window. You can use directions, e.g. UL/DR/ORIGIN/LEFT\u2026or the position(pixel) of the upper left corner of the window, e.g. \u2018960,540\u2019.propertywindow_size:str\u00b6The size of the opengl window as \u2018width,height\u2019 or \u2018default\u2019 to automatically scale the window based on the display monitor.propertywrite_all:bool\u00b6Whether to render all scenes in the input file (-a).propertywrite_to_movie:bool\u00b6Whether to render the scene to a movie file (-w).propertyzero_pad:int\u00b6PNG zero padding. A number between 0 (no zero padding) and 9 (9 columns minimum).\n\nBases:MutableMapping\n\nDict-like class storing all config options.\n\nThe globalconfigobject is an instance of this class, and acts as a\nsingle source of truth for all of the library\u2019s customizable behavior.\n\nThe globalconfigobject is capable of digesting different types of\nsources and converting them into a uniform interface.  These sources are\n(in ascending order of precedence): configuration files, command line\narguments, and programmatic changes.  Regardless of how the user chooses to\nset a config option, she can access its current value usingManimConfig\u2019s attributes and properties.\n\nNotes\n\nEach config option is implemented as a property of this class.\n\nEach config option can be set via a config file, using the full name of the\nproperty.  If a config option has an associated CLI flag, then the flag is\nequal to the full name of the property.  Those that admit an alternative\nflag or no flag at all are documented in the individual property\u2019s\ndocstring.\n\nExamples\n\nWe use a copy of the global configuration object in the following\nexamples for the sake of demonstration; you can skip these lines\nand just importconfigdirectly if you actually want to modify\nthe configuration:\n\nEach config option allows for dict syntax and attribute syntax.  For\nexample, the following two lines are equivalent,\n\nThe former is preferred; the latter is provided mostly for backwards\ncompatibility.\n\nThe config options are designed to keep internal consistency.  For example,\nsettingframe_y_radiuswill affectframe_height:\n\nThere are many ways of interacting with config options.  Take for example\nthe config optionbackground_color.  There are three ways to change it:\nvia a config file, via CLI flags, or programmatically.\n\nTo set the background color via a config file, save the followingmanim.cfgfile with the following contents.\n\nIn order to have this.cfgfile apply to a manim scene, it needs to be\nplaced in the same directory as the script,\n\nNow, when the user executes\n\nthe background of the scene will be set toWHITE.  This applies regardless\nof where the manim command is invoked from.\n\nCommand line arguments override.cfgfiles.  In the previous example,\nexecuting\n\nwill set the background color to BLUE, regardless of the contents ofmanim.cfg.\n\nFinally, any programmatic changes made within the scene script itself will\noverride the command line arguments.  For example, ifscene.pycontains\nthe following\n\nthe background color will be set to RED, regardless of the contents ofmanim.cfgor the CLI arguments used when invoking manim.\n\nMethods\n\ncopy\n\nDeepcopy the contents of this ManimConfig.\n\ndigest_args\n\nProcess the config options present in CLI arguments.\n\ndigest_file\n\nProcess the config options present in a.cfgfile.\n\ndigest_parser\n\nProcess the config options present in aConfigParserobject.\n\nget_dir\n\nResolve a config option that stores a directory.\n\nresolve_movie_file_extension\n\nupdate\n\nDigest the options found in anotherManimConfigor in a dict.\n\nAttributes\n\naspect_ratio\n\nAspect ratio (width / height) in pixels (--resolution, -r).\n\nassets_dir\n\nDirectory to locate video assets (no flag).\n\nbackground_color\n\nBackground color of the scene (-c).\n\nbackground_opacity\n\nA number between 0.0 (fully transparent) and 1.0 (fully opaque).\n\nbottom\n\nCoordinate at the center bottom of the frame.\n\ncustom_folders\n\nWhether to use custom folder output.\n\ndisable_caching\n\nWhether to use scene caching.\n\ndisable_caching_warning\n\nWhether a warning is raised if there are too much submobjects to hash.\n\ndry_run\n\nWhether dry run is enabled.\n\nenable_gui\n\nEnable GUI interaction.\n\nenable_wireframe\n\nWhether to enable wireframe debugging mode in opengl.\n\nffmpeg_loglevel\n\nVerbosity level of ffmpeg (no flag).\n\nflush_cache\n\nWhether to delete all the cached partial movie files.\n\nforce_window\n\nWhether to force window when using the opengl renderer.\n\nformat\n\nFile format; \"png\", \"gif\", \"mp4\", \"webm\" or \"mov\".\n\nframe_height\n\nFrame height in logical units (no flag).\n\nframe_rate\n\nFrame rate in frames per second.\n\nframe_size\n\nTuple with (pixel width, pixel height) (no flag).\n\nframe_width\n\nFrame width in logical units (no flag).\n\nframe_x_radius\n\nHalf the frame width (no flag).\n\nframe_y_radius\n\nHalf the frame height (no flag).\n\nfrom_animation_number\n\nStart rendering animations at this number (-n).\n\nfullscreen\n\nExpand the window to its maximum possible size.\n\ngui_location\n\nLocation parameters for the GUI window (e.g., screen coordinates or layout settings).\n\nimages_dir\n\nDirectory to place images (no flag).\n\ninput_file\n\nInput file name.\n\nleft_side\n\nCoordinate at the middle left of the frame.\n\nlog_dir\n\nDirectory to place logs.\n\nlog_to_file\n\nWhether to save logs to a file.\n\nmax_files_cached\n\nMaximum number of files cached.\n\nmedia_dir\n\nMain output directory.\n\nmedia_embed\n\nWhether to embed videos in Jupyter notebook.\n\nmedia_width\n\nMedia width in Jupyter notebook.\n\nmovie_file_extension\n\nEither .mp4, .webm or .mov.\n\nno_latex_cleanup\n\nPrevents deletion of .aux, .dvi, and .log files produced by Tex and MathTex.\n\nnotify_outdated_version\n\nWhether to notify if there is a version update available.\n\noutput_file\n\nOutput file name (-o).\n\npartial_movie_dir\n\nDirectory to place partial movie files (no flag).\n\npixel_height\n\nFrame height in pixels (--resolution, -r).\n\npixel_width\n\nFrame width in pixels (--resolution, -r).\n\nplugins\n\nList of plugins to enable.\n\npreview\n\nWhether to play the rendered movie (-p).\n\npreview_command\n\nprogress_bar\n\nWhether to show progress bars while rendering animations.\n\nquality\n\nVideo quality (-q).\n\nrenderer\n\nThe currently active renderer.\n\nright_side\n\nCoordinate at the middle right of the frame.\n\nsave_as_gif\n\nWhether to save the rendered scene in .gif format (-i).\n\nsave_last_frame\n\nWhether to save the last frame of the scene as an image file (-s).\n\nsave_pngs\n\nWhether to save all frames in the scene as images files (-g).\n\nsave_sections\n\nWhether to save single videos for each section in addition to the movie file.\n\nscene_names\n\nScenes to play from file.\n\nsections_dir\n\nDirectory to place section videos (no flag).\n\nshow_in_file_browser\n\nWhether to show the output file in the file browser (-f).\n\ntex_dir\n\nDirectory to place tex (no flag).\n\ntex_template\n\nTemplate used when rendering Tex.\n\ntex_template_file\n\nFile to read Tex template from (no flag).\n\ntext_dir\n\nDirectory to place text (no flag).\n\ntop\n\nCoordinate at the center top of the frame.\n\ntransparent\n\nWhether the background opacity is less than 1.0 (-t).\n\nupto_animation_number\n\nStop rendering animations at this number.\n\nuse_projection_fill_shaders\n\nUse shaders for OpenGLVMobject fill which are compatible with transformation matrices.\n\nuse_projection_stroke_shaders\n\nUse shaders for OpenGLVMobject stroke which are compatible with transformation matrices.\n\nverbosity\n\nLogger verbosity; \"DEBUG\", \"INFO\", \"WARNING\", \"ERROR\", or \"CRITICAL\" (-v).\n\nvideo_dir\n\nDirectory to place videos (no flag).\n\nwindow_monitor\n\nThe monitor on which the scene will be rendered.\n\nwindow_position\n\nSet the position of preview window.\n\nwindow_size\n\nThe size of the opengl window as 'width,height' or 'default' to automatically scale the window based on the display monitor.\n\nwrite_all\n\nWhether to render all scenes in the input file (-a).\n\nwrite_to_movie\n\nWhether to render the scene to a movie file (-w).\n\nzero_pad\n\nPNG zero padding.\n\n_set_between(key,val,lo,hi)[source]\u00b6\n\nSetkeytovalif lo <= val <= hi.Parameters:key(str)val(float)lo(float)hi(float)Return type:None\n\nSetkeytovalif lo <= val <= hi.\n\nParameters:\n\nkey(str)val(float)lo(float)hi(float)\n\nkey(str)\n\nkey(str)\n\nval(float)\n\nval(float)\n\nlo(float)\n\nlo(float)\n\nhi(float)\n\nhi(float)\n\nReturn type:\n\nNone\n\nNone\n\n_set_boolean(key,val)[source]\u00b6\n\nSetkeytovalifvalis Boolean.Parameters:key(str)val(Any)Return type:None\n\nSetkeytovalifvalis Boolean.\n\nParameters:\n\nkey(str)val(Any)\n\nkey(str)\n\nkey(str)\n\nval(Any)\n\nval(Any)\n\nReturn type:\n\nNone\n\nNone\n\n_set_from_enum(key,enum_value,enum_class)[source]\u00b6\n\nSetkeyto the enum object with valueenum_valuein the givenenum_class.Tests:>>>fromenumimportEnum>>>classFruit(Enum):...APPLE=1...BANANA=2...CANTALOUPE=3>>>test_config=ManimConfig()>>>test_config._set_from_enum(\"fruit\",1,Fruit)>>>test_config._d['fruit']<Fruit.APPLE: 1>>>>test_config._set_from_enum(\"fruit\",Fruit.BANANA,Fruit)>>>test_config._d['fruit']<Fruit.BANANA: 2>>>>test_config._set_from_enum(\"fruit\",42,Fruit)Traceback (most recent call last):...ValueError:42 is not a valid FruitParameters:key(str)enum_value(Any)enum_class(EnumMeta)Return type:None\n\nSetkeyto the enum object with valueenum_valuein the givenenum_class.\n\nTests:\n\nParameters:\n\nkey(str)enum_value(Any)enum_class(EnumMeta)\n\nkey(str)\n\nkey(str)\n\nenum_value(Any)\n\nenum_value(Any)\n\nenum_class(EnumMeta)\n\nenum_class(EnumMeta)\n\nReturn type:\n\nNone\n\nNone\n\n_set_from_list(key,val,values)[source]\u00b6\n\nSetkeytovalifvalis contained invalues.Parameters:key(str)val(Any)values(list[Any])Return type:None\n\nSetkeytovalifvalis contained invalues.\n\nParameters:\n\nkey(str)val(Any)values(list[Any])\n\nkey(str)\n\nkey(str)\n\nval(Any)\n\nval(Any)\n\nvalues(list[Any])\n\nvalues(list[Any])\n\nReturn type:\n\nNone\n\nNone\n\n_set_int_between(key,val,lo,hi)[source]\u00b6\n\nSetkeytovalif lo <= val <= hi.Parameters:key(str)val(int)lo(int)hi(int)Return type:None\n\nSetkeytovalif lo <= val <= hi.\n\nParameters:\n\nkey(str)val(int)lo(int)hi(int)\n\nkey(str)\n\nkey(str)\n\nval(int)\n\nval(int)\n\nlo(int)\n\nlo(int)\n\nhi(int)\n\nhi(int)\n\nReturn type:\n\nNone\n\nNone\n\n_set_pos_number(key,val,allow_inf)[source]\u00b6\n\nSetkeytovalifvalis a positive integer.Parameters:key(str)val(int)allow_inf(bool)Return type:None\n\nSetkeytovalifvalis a positive integer.\n\nParameters:\n\nkey(str)val(int)allow_inf(bool)\n\nkey(str)\n\nkey(str)\n\nval(int)\n\nval(int)\n\nallow_inf(bool)\n\nallow_inf(bool)\n\nReturn type:\n\nNone\n\nNone\n\n_set_str(key,val)[source]\u00b6\n\nSetkeytovalifvalis a string.Parameters:key(str)val(Any)Return type:None\n\nSetkeytovalifvalis a string.\n\nParameters:\n\nkey(str)val(Any)\n\nkey(str)\n\nkey(str)\n\nval(Any)\n\nval(Any)\n\nReturn type:\n\nNone\n\nNone\n\npropertyaspect_ratio:int\u00b6\n\nAspect ratio (width / height) in pixels (\u2013resolution, -r).\n\nAspect ratio (width / height) in pixels (\u2013resolution, -r).\n\npropertyassets_dir:str\u00b6\n\nDirectory to locate video assets (no flag).\n\nDirectory to locate video assets (no flag).\n\npropertybackground_color:ManimColor\u00b6\n\nBackground color of the scene (-c).\n\nBackground color of the scene (-c).\n\npropertybackground_opacity:float\u00b6\n\nA number between 0.0 (fully transparent) and 1.0 (fully opaque).\n\nA number between 0.0 (fully transparent) and 1.0 (fully opaque).\n\npropertybottom:Vector3D\u00b6\n\nCoordinate at the center bottom of the frame.\n\nCoordinate at the center bottom of the frame.\n\ncopy()[source]\u00b6\n\nDeepcopy the contents of this ManimConfig.Returns:A copy of this object containing no shared references.Return type:ManimConfigSee alsotempconfig()NotesThis is the main mechanism behindtempconfig().\n\nDeepcopy the contents of this ManimConfig.\n\nReturns:\n\nA copy of this object containing no shared references.\n\nA copy of this object containing no shared references.\n\nReturn type:\n\nManimConfig\n\nManimConfig\n\nSee also\n\ntempconfig()\n\nNotes\n\nThis is the main mechanism behindtempconfig().\n\npropertycustom_folders:str\u00b6\n\nWhether to use custom folder output.\n\nWhether to use custom folder output.\n\ndigest_args(args)[source]\u00b6\n\nProcess the config options present in CLI arguments.Parameters:args(argparse.Namespace) \u2013 An object returned bymain_utils.parse_args().Returns:self\u2013 This object, after processing the contents ofparser.Return type:ManimConfigSee alsomain_utils.parse_args(),digest_parser(),digest_file()NotesIfargs.config_fileis a non-empty string,ManimConfigtries to digest the\ncontents of said file withdigest_file()before\ndigesting any other CLI arguments.\n\nProcess the config options present in CLI arguments.\n\nParameters:\n\nargs(argparse.Namespace) \u2013 An object returned bymain_utils.parse_args().\n\nargs(argparse.Namespace) \u2013 An object returned bymain_utils.parse_args().\n\nReturns:\n\nself\u2013 This object, after processing the contents ofparser.\n\nself\u2013 This object, after processing the contents ofparser.\n\nReturn type:\n\nManimConfig\n\nManimConfig\n\nSee also\n\nmain_utils.parse_args(),digest_parser(),digest_file()\n\nNotes\n\nIfargs.config_fileis a non-empty string,ManimConfigtries to digest the\ncontents of said file withdigest_file()before\ndigesting any other CLI arguments.\n\ndigest_file(filename)[source]\u00b6\n\nProcess the config options present in a.cfgfile.This method processes a single.cfgfile, whereasdigest_parser()can process arbitrary parsers, built\nperhaps from multiple.cfgfiles.Parameters:filename(StrPath) \u2013 Path to the.cfgfile.Returns:self\u2013 This object, after processing the contents offilename.Return type:ManimConfigSee alsodigest_file(),digest_args(),make_config_parser()NotesIf there are multiple.cfgfiles to process, it is always more\nefficient to parse them into a singleConfigParserobject\nfirst and digesting them with one call todigest_parser(), instead of calling this method\nmultiple times.\n\nProcess the config options present in a.cfgfile.\n\nThis method processes a single.cfgfile, whereasdigest_parser()can process arbitrary parsers, built\nperhaps from multiple.cfgfiles.\n\nParameters:\n\nfilename(StrPath) \u2013 Path to the.cfgfile.\n\nfilename(StrPath) \u2013 Path to the.cfgfile.\n\nReturns:\n\nself\u2013 This object, after processing the contents offilename.\n\nself\u2013 This object, after processing the contents offilename.\n\nReturn type:\n\nManimConfig\n\nManimConfig\n\nSee also\n\ndigest_file(),digest_args(),make_config_parser()\n\nNotes\n\nIf there are multiple.cfgfiles to process, it is always more\nefficient to parse them into a singleConfigParserobject\nfirst and digesting them with one call todigest_parser(), instead of calling this method\nmultiple times.\n\ndigest_parser(parser)[source]\u00b6\n\nProcess the config options present in aConfigParserobject.This method processes arbitrary parsers, not only those read from a\nsingle file, whereasdigest_file()can only process one\nfile at a time.Parameters:parser(configparser.ConfigParser) \u2013 An object reflecting the contents of one or many.cfgfiles.  In\nparticular, it may reflect the contents of multiple files that have\nbeen parsed in a cascading fashion.Returns:self\u2013 This object, after processing the contents ofparser.Return type:ManimConfigSee alsomake_config_parser(),digest_file(),digest_args()NotesIf there are multiple.cfgfiles to process, it is always more\nefficient to parse them into a singleConfigParserobject\nfirst, and then call this function once (instead of callingdigest_file()multiple times).ExamplesTo digest the config options set in two files, first create a\nConfigParser and parse both files and then digest the parser:parser=configparser.ConfigParser()parser.read([file1,file2])config=ManimConfig().digest_parser(parser)In fact, the globalconfigobject is initialized like so:parser=make_config_parser()config=ManimConfig().digest_parser(parser)\n\nProcess the config options present in aConfigParserobject.\n\nThis method processes arbitrary parsers, not only those read from a\nsingle file, whereasdigest_file()can only process one\nfile at a time.\n\nParameters:\n\nparser(configparser.ConfigParser) \u2013 An object reflecting the contents of one or many.cfgfiles.  In\nparticular, it may reflect the contents of multiple files that have\nbeen parsed in a cascading fashion.\n\nparser(configparser.ConfigParser) \u2013 An object reflecting the contents of one or many.cfgfiles.  In\nparticular, it may reflect the contents of multiple files that have\nbeen parsed in a cascading fashion.\n\nReturns:\n\nself\u2013 This object, after processing the contents ofparser.\n\nself\u2013 This object, after processing the contents ofparser.\n\nReturn type:\n\nManimConfig\n\nManimConfig\n\nSee also\n\nmake_config_parser(),digest_file(),digest_args()\n\nNotes\n\nIf there are multiple.cfgfiles to process, it is always more\nefficient to parse them into a singleConfigParserobject\nfirst, and then call this function once (instead of callingdigest_file()multiple times).\n\nExamples\n\nTo digest the config options set in two files, first create a\nConfigParser and parse both files and then digest the parser:\n\nIn fact, the globalconfigobject is initialized like so:\n\npropertydisable_caching:bool\u00b6\n\nWhether to use scene caching.\n\nWhether to use scene caching.\n\npropertydisable_caching_warning:bool\u00b6\n\nWhether a warning is raised if there are too much submobjects to hash.\n\nWhether a warning is raised if there are too much submobjects to hash.\n\npropertydry_run:bool\u00b6\n\nWhether dry run is enabled.\n\nWhether dry run is enabled.\n\npropertyenable_gui:bool\u00b6\n\nEnable GUI interaction.\n\nEnable GUI interaction.\n\npropertyenable_wireframe:bool\u00b6\n\nWhether to enable wireframe debugging mode in opengl.\n\nWhether to enable wireframe debugging mode in opengl.\n\npropertyffmpeg_loglevel:str\u00b6\n\nVerbosity level of ffmpeg (no flag).\n\nVerbosity level of ffmpeg (no flag).\n\npropertyflush_cache:bool\u00b6\n\nWhether to delete all the cached partial movie files.\n\nWhether to delete all the cached partial movie files.\n\npropertyforce_window:bool\u00b6\n\nWhether to force window when using the opengl renderer.\n\nWhether to force window when using the opengl renderer.\n\npropertyformat:str\u00b6\n\nFile format; \u201cpng\u201d, \u201cgif\u201d, \u201cmp4\u201d, \u201cwebm\u201d or \u201cmov\u201d.\n\nFile format; \u201cpng\u201d, \u201cgif\u201d, \u201cmp4\u201d, \u201cwebm\u201d or \u201cmov\u201d.\n\npropertyframe_height:float\u00b6\n\nFrame height in logical units (no flag).\n\nFrame height in logical units (no flag).\n\npropertyframe_rate:float\u00b6\n\nFrame rate in frames per second.\n\nFrame rate in frames per second.\n\npropertyframe_size:tuple[int,int]\u00b6\n\nTuple with (pixel width, pixel height) (no flag).\n\nTuple with (pixel width, pixel height) (no flag).\n\npropertyframe_width:float\u00b6\n\nFrame width in logical units (no flag).\n\nFrame width in logical units (no flag).\n\npropertyframe_x_radius:float\u00b6\n\nHalf the frame width (no flag).\n\nHalf the frame width (no flag).\n\npropertyframe_y_radius:float\u00b6\n\nHalf the frame height (no flag).\n\nHalf the frame height (no flag).\n\npropertyfrom_animation_number:int\u00b6\n\nStart rendering animations at this number (-n).\n\nStart rendering animations at this number (-n).\n\npropertyfullscreen:bool\u00b6\n\nExpand the window to its maximum possible size.\n\nExpand the window to its maximum possible size.\n\nget_dir(key,**kwargs)[source]\u00b6\n\nResolve a config option that stores a directory.Config options that store directories may depend on one another.  This\nmethod is used to provide the actual directory to the end user.Parameters:key(str) \u2013 The config option to be resolved.  Must be an option ending in'_dir', for example'media_dir'or'video_dir'.kwargs(Any) \u2013 Any strings to be used when resolving the directory.Returns:Path to the requested directory.  If the path resolves to the empty\nstring, returnNoneinstead.Return type:pathlib.PathRaises:KeyError\u2013 Whenkeyis not a config option that stores a directory and\n    thusget_dir()is not appropriate; or whenkeyis appropriate but there is not enough information to\n    resolve the directory.NotesStandardstr.format()syntax is used to resolve the paths so the\npaths may contain arbitrary placeholders using f-string notation.\nHowever, these will requirekwargsto contain the required values.ExamplesThe value ofconfig.tex_diris'{media_dir}/Tex'by default,\ni.e. it is a subfolder of whereverconfig.media_diris located.  In\norder to get theactualdirectory, useget_dir().>>>frommanimimportconfigasglobalconfig>>>config=globalconfig.copy()>>>config.tex_dir'{media_dir}/Tex'>>>config.media_dir'./media'>>>config.get_dir(\"tex_dir\").as_posix()'media/Tex'Resolving directories is done in a lazy way, at the last possible\nmoment, to reflect any changes in other config options:>>>config.media_dir=\"my_media_dir\">>>config.get_dir(\"tex_dir\").as_posix()'my_media_dir/Tex'Some directories depend on information that is not available toManimConfig. For example, the default value ofvideo_dirincludes the name of the input file and the video quality\n(e.g. 480p15). This informamtion has to be supplied viakwargs:>>>config.video_dir'{media_dir}/videos/{module_name}/{quality}'>>>config.get_dir(\"video_dir\")Traceback (most recent call last):KeyError:'video_dir {media_dir}/videos/{module_name}/{quality} requires the following keyword arguments: module_name'>>>config.get_dir(\"video_dir\",module_name=\"myfile\").as_posix()'my_media_dir/videos/myfile/1080p60'Note the quality does not need to be passed as keyword argument sinceManimConfigdoes store information about quality.Directories may be recursively defined.  For example, the config optionpartial_movie_dirdepends onvideo_dir, which in turn depends\nonmedia_dir:>>>config.partial_movie_dir'{video_dir}/partial_movie_files/{scene_name}'>>>config.get_dir(\"partial_movie_dir\")Traceback (most recent call last):KeyError:'partial_movie_dir {video_dir}/partial_movie_files/{scene_name} requires the following keyword arguments: scene_name'>>>config.get_dir(...\"partial_movie_dir\",module_name=\"myfile\",scene_name=\"myscene\"...).as_posix()'my_media_dir/videos/myfile/1080p60/partial_movie_files/myscene'Standard f-string syntax is used.  Arbitrary names can be used when\ndefining directories, as long as the corresponding values are passed toManimConfig.get_dir()viakwargs.>>>config.media_dir=\"{dir1}/{dir2}\">>>config.get_dir(\"media_dir\")Traceback (most recent call last):KeyError:'media_dir {dir1}/{dir2} requires the following keyword arguments: dir1'>>>config.get_dir(\"media_dir\",dir1=\"foo\",dir2=\"bar\").as_posix()'foo/bar'>>>config.media_dir=\"./media\">>>config.get_dir(\"media_dir\").as_posix()'media'\n\nResolve a config option that stores a directory.\n\nConfig options that store directories may depend on one another.  This\nmethod is used to provide the actual directory to the end user.\n\nParameters:\n\nkey(str) \u2013 The config option to be resolved.  Must be an option ending in'_dir', for example'media_dir'or'video_dir'.kwargs(Any) \u2013 Any strings to be used when resolving the directory.\n\nkey(str) \u2013 The config option to be resolved.  Must be an option ending in'_dir', for example'media_dir'or'video_dir'.\n\nkey(str) \u2013 The config option to be resolved.  Must be an option ending in'_dir', for example'media_dir'or'video_dir'.\n\nkwargs(Any) \u2013 Any strings to be used when resolving the directory.\n\nkwargs(Any) \u2013 Any strings to be used when resolving the directory.\n\nReturns:\n\nPath to the requested directory.  If the path resolves to the empty\nstring, returnNoneinstead.\n\nPath to the requested directory.  If the path resolves to the empty\nstring, returnNoneinstead.\n\nReturn type:\n\npathlib.Path\n\npathlib.Path\n\nRaises:\n\nKeyError\u2013 Whenkeyis not a config option that stores a directory and\n    thusget_dir()is not appropriate; or whenkeyis appropriate but there is not enough information to\n    resolve the directory.\n\nKeyError\u2013 Whenkeyis not a config option that stores a directory and\n    thusget_dir()is not appropriate; or whenkeyis appropriate but there is not enough information to\n    resolve the directory.\n\nNotes\n\nStandardstr.format()syntax is used to resolve the paths so the\npaths may contain arbitrary placeholders using f-string notation.\nHowever, these will requirekwargsto contain the required values.\n\nExamples\n\nThe value ofconfig.tex_diris'{media_dir}/Tex'by default,\ni.e. it is a subfolder of whereverconfig.media_diris located.  In\norder to get theactualdirectory, useget_dir().\n\nResolving directories is done in a lazy way, at the last possible\nmoment, to reflect any changes in other config options:\n\nSome directories depend on information that is not available toManimConfig. For example, the default value ofvideo_dirincludes the name of the input file and the video quality\n(e.g. 480p15). This informamtion has to be supplied viakwargs:\n\nNote the quality does not need to be passed as keyword argument sinceManimConfigdoes store information about quality.\n\nDirectories may be recursively defined.  For example, the config optionpartial_movie_dirdepends onvideo_dir, which in turn depends\nonmedia_dir:\n\nStandard f-string syntax is used.  Arbitrary names can be used when\ndefining directories, as long as the corresponding values are passed toManimConfig.get_dir()viakwargs.\n\npropertygui_location:tuple[Any]\u00b6\n\nLocation parameters for the GUI window (e.g., screen coordinates or layout settings).\n\nLocation parameters for the GUI window (e.g., screen coordinates or layout settings).\n\npropertyimages_dir:str\u00b6\n\nDirectory to place images (no flag).  SeeManimConfig.get_dir().\n\nDirectory to place images (no flag).  SeeManimConfig.get_dir().\n\npropertyinput_file:str\u00b6\n\nInput file name.\n\nInput file name.\n\npropertyleft_side:Vector3D\u00b6\n\nCoordinate at the middle left of the frame.\n\nCoordinate at the middle left of the frame.\n\npropertylog_dir:str\u00b6\n\nDirectory to place logs. SeeManimConfig.get_dir().\n\nDirectory to place logs. SeeManimConfig.get_dir().\n\npropertylog_to_file:bool\u00b6\n\nWhether to save logs to a file.\n\nWhether to save logs to a file.\n\npropertymax_files_cached:int\u00b6\n\nMaximum number of files cached.  Use -1 for infinity (no flag).\n\nMaximum number of files cached.  Use -1 for infinity (no flag).\n\npropertymedia_dir:str\u00b6\n\nMain output directory.  SeeManimConfig.get_dir().\n\nMain output directory.  SeeManimConfig.get_dir().\n\npropertymedia_embed:bool\u00b6\n\nWhether to embed videos in Jupyter notebook.\n\nWhether to embed videos in Jupyter notebook.\n\npropertymedia_width:str\u00b6\n\nMedia width in Jupyter notebook.\n\nMedia width in Jupyter notebook.\n\npropertymovie_file_extension:str\u00b6\n\nEither .mp4, .webm or .mov.\n\nEither .mp4, .webm or .mov.\n\npropertyno_latex_cleanup:bool\u00b6\n\nPrevents deletion of .aux, .dvi, and .log files produced by Tex and MathTex.\n\nPrevents deletion of .aux, .dvi, and .log files produced by Tex and MathTex.\n\npropertynotify_outdated_version:bool\u00b6\n\nWhether to notify if there is a version update available.\n\nWhether to notify if there is a version update available.\n\npropertyoutput_file:str\u00b6\n\nOutput file name (-o).\n\nOutput file name (-o).\n\npropertypartial_movie_dir:str\u00b6\n\nDirectory to place partial movie files (no flag).  SeeManimConfig.get_dir().\n\nDirectory to place partial movie files (no flag).  SeeManimConfig.get_dir().\n\npropertypixel_height:int\u00b6\n\nFrame height in pixels (\u2013resolution, -r).\n\nFrame height in pixels (\u2013resolution, -r).\n\npropertypixel_width:int\u00b6\n\nFrame width in pixels (\u2013resolution, -r).\n\nFrame width in pixels (\u2013resolution, -r).\n\npropertyplugins:list[str]\u00b6\n\nList of plugins to enable.\n\nList of plugins to enable.\n\npropertypreview:bool\u00b6\n\nWhether to play the rendered movie (-p).\n\nWhether to play the rendered movie (-p).\n\npropertyprogress_bar:str\u00b6\n\nWhether to show progress bars while rendering animations.\n\nWhether to show progress bars while rendering animations.\n\npropertyquality:str|None\u00b6\n\nVideo quality (-q).\n\nVideo quality (-q).\n\npropertyrenderer:RendererType\u00b6\n\nThe currently active renderer.Populated with one of the available renderers inRendererType.Tests:>>>test_config=ManimConfig()>>>test_config.rendererisNone# a new ManimConfig is unpopulatedTrue>>>test_config.renderer='opengl'>>>test_config.renderer<RendererType.OPENGL: 'opengl'>>>>test_config.renderer=42Traceback (most recent call last):...ValueError:42 is not a valid RendererTypeCheck that capitalization of renderer types is irrelevant:>>>test_config.renderer='OpenGL'>>>test_config.renderer='cAirO'\n\nThe currently active renderer.\n\nPopulated with one of the available renderers inRendererType.\n\nTests:\n\nCheck that capitalization of renderer types is irrelevant:\n\npropertyright_side:Vector3D\u00b6\n\nCoordinate at the middle right of the frame.\n\nCoordinate at the middle right of the frame.\n\npropertysave_as_gif:bool\u00b6\n\nWhether to save the rendered scene in .gif format (-i).\n\nWhether to save the rendered scene in .gif format (-i).\n\npropertysave_last_frame:bool\u00b6\n\nWhether to save the last frame of the scene as an image file (-s).\n\nWhether to save the last frame of the scene as an image file (-s).\n\npropertysave_pngs:bool\u00b6\n\nWhether to save all frames in the scene as images files (-g).\n\nWhether to save all frames in the scene as images files (-g).\n\npropertysave_sections:bool\u00b6\n\nWhether to save single videos for each section in addition to the movie file.\n\nWhether to save single videos for each section in addition to the movie file.\n\npropertyscene_names:list[str]\u00b6\n\nScenes to play from file.\n\nScenes to play from file.\n\npropertysections_dir:str\u00b6\n\nDirectory to place section videos (no flag). SeeManimConfig.get_dir().\n\nDirectory to place section videos (no flag). SeeManimConfig.get_dir().\n\npropertyshow_in_file_browser:bool\u00b6\n\nWhether to show the output file in the file browser (-f).\n\nWhether to show the output file in the file browser (-f).\n\npropertytex_dir:str\u00b6\n\nDirectory to place tex (no flag).  SeeManimConfig.get_dir().\n\nDirectory to place tex (no flag).  SeeManimConfig.get_dir().\n\npropertytex_template:TexTemplate\u00b6\n\nTemplate used when rendering Tex.  SeeTexTemplate.\n\nTemplate used when rendering Tex.  SeeTexTemplate.\n\npropertytex_template_file:Path\u00b6\n\nFile to read Tex template from (no flag).  SeeTexTemplate.\n\nFile to read Tex template from (no flag).  SeeTexTemplate.\n\npropertytext_dir:str\u00b6\n\nDirectory to place text (no flag).  SeeManimConfig.get_dir().\n\nDirectory to place text (no flag).  SeeManimConfig.get_dir().\n\npropertytop:Vector3D\u00b6\n\nCoordinate at the center top of the frame.\n\nCoordinate at the center top of the frame.\n\npropertytransparent:bool\u00b6\n\nWhether the background opacity is less than 1.0 (-t).\n\nWhether the background opacity is less than 1.0 (-t).\n\nupdate(obj)[source]\u00b6\n\nDigest the options found in anotherManimConfigor in a dict.Similar todict.update(), replaces the values of this object with\nthose ofobj.Parameters:obj(ManimConfig|dict[str,Any]) \u2013 The object to copy values from.Return type:NoneRaises:AttributeError\u2013 Ifobjis a dict but contains keys that do not belong to any\n    config options.See alsodigest_file(),digest_args(),digest_parser()\n\nDigest the options found in anotherManimConfigor in a dict.\n\nSimilar todict.update(), replaces the values of this object with\nthose ofobj.\n\nParameters:\n\nobj(ManimConfig|dict[str,Any]) \u2013 The object to copy values from.\n\nobj(ManimConfig|dict[str,Any]) \u2013 The object to copy values from.\n\nReturn type:\n\nNone\n\nNone\n\nRaises:\n\nAttributeError\u2013 Ifobjis a dict but contains keys that do not belong to any\n    config options.\n\nAttributeError\u2013 Ifobjis a dict but contains keys that do not belong to any\n    config options.\n\nSee also\n\ndigest_file(),digest_args(),digest_parser()\n\npropertyupto_animation_number:int\u00b6\n\nStop rendering animations at this number. Use -1 to avoid skipping (-n).\n\nStop rendering animations at this number. Use -1 to avoid skipping (-n).\n\npropertyuse_projection_fill_shaders:bool\u00b6\n\nUse shaders for OpenGLVMobject fill which are compatible with transformation matrices.\n\nUse shaders for OpenGLVMobject fill which are compatible with transformation matrices.\n\npropertyuse_projection_stroke_shaders:bool\u00b6\n\nUse shaders for OpenGLVMobject stroke which are compatible with transformation matrices.\n\nUse shaders for OpenGLVMobject stroke which are compatible with transformation matrices.\n\npropertyverbosity:str\u00b6\n\nLogger verbosity; \u201cDEBUG\u201d, \u201cINFO\u201d, \u201cWARNING\u201d, \u201cERROR\u201d, or \u201cCRITICAL\u201d (-v).\n\nLogger verbosity; \u201cDEBUG\u201d, \u201cINFO\u201d, \u201cWARNING\u201d, \u201cERROR\u201d, or \u201cCRITICAL\u201d (-v).\n\npropertyvideo_dir:str\u00b6\n\nDirectory to place videos (no flag). SeeManimConfig.get_dir().\n\nDirectory to place videos (no flag). SeeManimConfig.get_dir().\n\npropertywindow_monitor:int\u00b6\n\nThe monitor on which the scene will be rendered.\n\nThe monitor on which the scene will be rendered.\n\npropertywindow_position:str\u00b6\n\nSet the position of preview window. You can use directions, e.g. UL/DR/ORIGIN/LEFT\u2026or the position(pixel) of the upper left corner of the window, e.g. \u2018960,540\u2019.\n\nSet the position of preview window. You can use directions, e.g. UL/DR/ORIGIN/LEFT\u2026or the position(pixel) of the upper left corner of the window, e.g. \u2018960,540\u2019.\n\npropertywindow_size:str\u00b6\n\nThe size of the opengl window as \u2018width,height\u2019 or \u2018default\u2019 to automatically scale the window based on the display monitor.\n\nThe size of the opengl window as \u2018width,height\u2019 or \u2018default\u2019 to automatically scale the window based on the display monitor.\n\npropertywrite_all:bool\u00b6\n\nWhether to render all scenes in the input file (-a).\n\nWhether to render all scenes in the input file (-a).\n\npropertywrite_to_movie:bool\u00b6\n\nWhether to render the scene to a movie file (-w).\n\nWhether to render the scene to a movie file (-w).\n\npropertyzero_pad:int\u00b6\n\nPNG zero padding. A number between 0 (no zero padding) and 9 (9 columns minimum).\n\nPNG zero padding. A number between 0 (no zero padding) and 9 (9 columns minimum).",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportconfigasglobal_config>>>config=global_config.copy()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportWHITE>>>config.background_color=WHITE>>>config[\"background_color\"]=WHITE",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>config.frame_height8.0>>>config.frame_y_radius=5.0>>>config.frame_height10.0",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "[CLI]background_color=WHITE",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "project/\n\u251c\u2500scene.py\n\u2514\u2500manim.cfg",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "manimscene.py",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "manimscene.py-cBLUE",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*config.background_color=REDclassMyScene(Scene):...",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>fromenumimportEnum>>>classFruit(Enum):...APPLE=1...BANANA=2...CANTALOUPE=3>>>test_config=ManimConfig()>>>test_config._set_from_enum(\"fruit\",1,Fruit)>>>test_config._d['fruit']<Fruit.APPLE: 1>>>>test_config._set_from_enum(\"fruit\",Fruit.BANANA,Fruit)>>>test_config._d['fruit']<Fruit.BANANA: 2>>>>test_config._set_from_enum(\"fruit\",42,Fruit)Traceback (most recent call last):...ValueError:42 is not a valid Fruit",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "parser=configparser.ConfigParser()parser.read([file1,file2])config=ManimConfig().digest_parser(parser)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "parser=make_config_parser()config=ManimConfig().digest_parser(parser)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportconfigasglobalconfig>>>config=globalconfig.copy()>>>config.tex_dir'{media_dir}/Tex'>>>config.media_dir'./media'>>>config.get_dir(\"tex_dir\").as_posix()'media/Tex'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>config.media_dir=\"my_media_dir\">>>config.get_dir(\"tex_dir\").as_posix()'my_media_dir/Tex'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>config.video_dir'{media_dir}/videos/{module_name}/{quality}'>>>config.get_dir(\"video_dir\")Traceback (most recent call last):KeyError:'video_dir {media_dir}/videos/{module_name}/{quality} requires the following keyword arguments: module_name'>>>config.get_dir(\"video_dir\",module_name=\"myfile\").as_posix()'my_media_dir/videos/myfile/1080p60'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>config.partial_movie_dir'{video_dir}/partial_movie_files/{scene_name}'>>>config.get_dir(\"partial_movie_dir\")Traceback (most recent call last):KeyError:'partial_movie_dir {video_dir}/partial_movie_files/{scene_name} requires the following keyword arguments: scene_name'>>>config.get_dir(...\"partial_movie_dir\",module_name=\"myfile\",scene_name=\"myscene\"...).as_posix()'my_media_dir/videos/myfile/1080p60/partial_movie_files/myscene'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>config.media_dir=\"{dir1}/{dir2}\">>>config.get_dir(\"media_dir\")Traceback (most recent call last):KeyError:'media_dir {dir1}/{dir2} requires the following keyword arguments: dir1'>>>config.get_dir(\"media_dir\",dir1=\"foo\",dir2=\"bar\").as_posix()'foo/bar'>>>config.media_dir=\"./media\">>>config.get_dir(\"media_dir\").as_posix()'media'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>test_config=ManimConfig()>>>test_config.rendererisNone# a new ManimConfig is unpopulatedTrue>>>test_config.renderer='opengl'>>>test_config.renderer<RendererType.OPENGL: 'opengl'>>>>test_config.renderer=42Traceback (most recent call last):...ValueError:42 is not a valid RendererType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>test_config.renderer='OpenGL'>>>test_config.renderer='cAirO'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ManimConfig",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Bases:MutableMapping"
+    },
+    {
+      "name": "_set_between",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeytovalif lo <= val <= hi."
+    },
+    {
+      "name": "_set_boolean",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeytovalifvalis Boolean."
+    },
+    {
+      "name": "_set_from_enum",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeyto the enum object with valueenum_valuein the givenenum_class."
+    },
+    {
+      "name": "_set_from_list",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeytovalifvalis contained invalues."
+    },
+    {
+      "name": "_set_int_between",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeytovalif lo <= val <= hi."
+    },
+    {
+      "name": "_set_pos_number",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeytovalifvalis a positive integer."
+    },
+    {
+      "name": "_set_str",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Setkeytovalifvalis a string."
+    },
+    {
+      "name": "aspect_ratio",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Aspect ratio (width / height) in pixels (\u2013resolution, -r)."
+    },
+    {
+      "name": "assets_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to locate video assets (no flag)."
+    },
+    {
+      "name": "background_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Background color of the scene (-c)."
+    },
+    {
+      "name": "background_opacity",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A number between 0.0 (fully transparent) and 1.0 (fully opaque)."
+    },
+    {
+      "name": "bottom",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Coordinate at the center bottom of the frame."
+    },
+    {
+      "name": "copy",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Deepcopy the contents of this ManimConfig."
+    },
+    {
+      "name": "custom_folders",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to use custom folder output."
+    },
+    {
+      "name": "digest_args",
+      "class_name": null,
+      "parameters": [
+        "args"
+      ],
+      "return_type": null,
+      "description": "Process the config options present in CLI arguments."
+    },
+    {
+      "name": "digest_file",
+      "class_name": null,
+      "parameters": [
+        "filename"
+      ],
+      "return_type": null,
+      "description": "Process the config options present in a.cfgfile."
+    },
+    {
+      "name": "digest_parser",
+      "class_name": null,
+      "parameters": [
+        "parser"
+      ],
+      "return_type": null,
+      "description": "Process the config options present in aConfigParserobject."
+    },
+    {
+      "name": "disable_caching",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to use scene caching."
+    },
+    {
+      "name": "disable_caching_warning",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether a warning is raised if there are too much submobjects to hash."
+    },
+    {
+      "name": "dry_run",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether dry run is enabled."
+    },
+    {
+      "name": "enable_gui",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Enable GUI interaction."
+    },
+    {
+      "name": "enable_wireframe",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to enable wireframe debugging mode in opengl."
+    },
+    {
+      "name": "ffmpeg_loglevel",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Verbosity level of ffmpeg (no flag)."
+    },
+    {
+      "name": "flush_cache",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to delete all the cached partial movie files."
+    },
+    {
+      "name": "force_window",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to force window when using the opengl renderer."
+    },
+    {
+      "name": "format",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "File format; \u201cpng\u201d, \u201cgif\u201d, \u201cmp4\u201d, \u201cwebm\u201d or \u201cmov\u201d."
+    },
+    {
+      "name": "frame_height",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Frame height in logical units (no flag)."
+    },
+    {
+      "name": "frame_rate",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Frame rate in frames per second."
+    },
+    {
+      "name": "frame_size",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Tuple with (pixel width, pixel height) (no flag)."
+    },
+    {
+      "name": "frame_width",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Frame width in logical units (no flag)."
+    },
+    {
+      "name": "frame_x_radius",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Half the frame width (no flag)."
+    },
+    {
+      "name": "frame_y_radius",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Half the frame height (no flag)."
+    },
+    {
+      "name": "from_animation_number",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Start rendering animations at this number (-n)."
+    },
+    {
+      "name": "fullscreen",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Expand the window to its maximum possible size."
+    },
+    {
+      "name": "get_dir",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Resolve a config option that stores a directory."
+    },
+    {
+      "name": "gui_location",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Location parameters for the GUI window (e.g., screen coordinates or layout settings)."
+    },
+    {
+      "name": "images_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place images (no flag).  SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "input_file",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Input file name."
+    },
+    {
+      "name": "left_side",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Coordinate at the middle left of the frame."
+    },
+    {
+      "name": "log_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place logs. SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "log_to_file",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to save logs to a file."
+    },
+    {
+      "name": "max_files_cached",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Maximum number of files cached.  Use -1 for infinity (no flag)."
+    },
+    {
+      "name": "media_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Main output directory.  SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "media_embed",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to embed videos in Jupyter notebook."
+    },
+    {
+      "name": "media_width",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Media width in Jupyter notebook."
+    },
+    {
+      "name": "movie_file_extension",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Either .mp4, .webm or .mov."
+    },
+    {
+      "name": "no_latex_cleanup",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Prevents deletion of .aux, .dvi, and .log files produced by Tex and MathTex."
+    },
+    {
+      "name": "notify_outdated_version",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to notify if there is a version update available."
+    },
+    {
+      "name": "output_file",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Output file name (-o)."
+    },
+    {
+      "name": "partial_movie_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place partial movie files (no flag).  SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "pixel_height",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Frame height in pixels (\u2013resolution, -r)."
+    },
+    {
+      "name": "pixel_width",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Frame width in pixels (\u2013resolution, -r)."
+    },
+    {
+      "name": "plugins",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "List of plugins to enable."
+    },
+    {
+      "name": "preview",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to play the rendered movie (-p)."
+    },
+    {
+      "name": "progress_bar",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to show progress bars while rendering animations."
+    },
+    {
+      "name": "quality",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Video quality (-q)."
+    },
+    {
+      "name": "renderer",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The currently active renderer."
+    },
+    {
+      "name": "right_side",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Coordinate at the middle right of the frame."
+    },
+    {
+      "name": "save_as_gif",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to save the rendered scene in .gif format (-i)."
+    },
+    {
+      "name": "save_last_frame",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to save the last frame of the scene as an image file (-s)."
+    },
+    {
+      "name": "save_pngs",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to save all frames in the scene as images files (-g)."
+    },
+    {
+      "name": "save_sections",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to save single videos for each section in addition to the movie file."
+    },
+    {
+      "name": "scene_names",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Scenes to play from file."
+    },
+    {
+      "name": "sections_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place section videos (no flag). SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "show_in_file_browser",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to show the output file in the file browser (-f)."
+    },
+    {
+      "name": "tex_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place tex (no flag).  SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "tex_template",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Template used when rendering Tex.  SeeTexTemplate."
+    },
+    {
+      "name": "tex_template_file",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "File to read Tex template from (no flag).  SeeTexTemplate."
+    },
+    {
+      "name": "text_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place text (no flag).  SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "top",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Coordinate at the center top of the frame."
+    },
+    {
+      "name": "transparent",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether the background opacity is less than 1.0 (-t)."
+    },
+    {
+      "name": "update",
+      "class_name": null,
+      "parameters": [
+        "obj"
+      ],
+      "return_type": null,
+      "description": "Digest the options found in anotherManimConfigor in a dict."
+    },
+    {
+      "name": "upto_animation_number",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Stop rendering animations at this number. Use -1 to avoid skipping (-n)."
+    },
+    {
+      "name": "use_projection_fill_shaders",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Use shaders for OpenGLVMobject fill which are compatible with transformation matrices."
+    },
+    {
+      "name": "use_projection_stroke_shaders",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Use shaders for OpenGLVMobject stroke which are compatible with transformation matrices."
+    },
+    {
+      "name": "verbosity",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Logger verbosity; \u201cDEBUG\u201d, \u201cINFO\u201d, \u201cWARNING\u201d, \u201cERROR\u201d, or \u201cCRITICAL\u201d (-v)."
+    },
+    {
+      "name": "video_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Directory to place videos (no flag). SeeManimConfig.get_dir()."
+    },
+    {
+      "name": "window_monitor",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The monitor on which the scene will be rendered."
+    },
+    {
+      "name": "window_position",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Set the position of preview window. You can use directions, e.g. UL/DR/ORIGIN/LEFT\u2026or the position(pixel) of the upper left corner of the window, e.g. \u2018960,540\u2019."
+    },
+    {
+      "name": "window_size",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The size of the opengl window as \u2018width,height\u2019 or \u2018default\u2019 to automatically scale the window based on the display monitor."
+    },
+    {
+      "name": "write_all",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to render all scenes in the input file (-a)."
+    },
+    {
+      "name": "write_to_movie",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to render the scene to a movie file (-w)."
+    },
+    {
+      "name": "zero_pad",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "PNG zero padding. A number between 0 (no zero padding) and 9 (9 columns minimum)."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

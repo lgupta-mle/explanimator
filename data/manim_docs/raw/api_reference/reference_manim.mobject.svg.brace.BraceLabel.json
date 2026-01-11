@@ -1,0 +1,46 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.brace.BraceLabel.html",
+  "title": "BraceLabel\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BraceLabel\u00b6\n\nQualified name:manim.mobject.svg.brace.BraceLabel\n\nclassBraceLabel(obj,text,brace_direction=array([0.,-1.,0.]),label_constructor=<class'manim.mobject.text.tex_mobject.MathTex'>,font_size=48,buff=0.2,brace_config=None,**kwargs)[source]\u00b6\n\nBases:VMobjectCreate a brace with a label attached.Parameters:obj(Mobject) \u2013 The mobject adjacent to which the brace is placed.text(str) \u2013 The label text.brace_direction(Vector3DLike) \u2013 The direction of the brace. By defaultDOWN.label_constructor(type[SingleStringMathTex|Text]) \u2013 A class or function used to construct a mobject representing\nthe label. By defaultMathTex.font_size(float) \u2013 The font size of the label, passed to thelabel_constructor.buff(float) \u2013 The buffer between the mobject and the brace.brace_config(dict[str,Any]|None) \u2013 Arguments to be passed toBrace.kwargs(Any) \u2013 Additional arguments to be passed toVMobject.Methodschange_brace_labelchange_labelcreation_animshift_braceAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(obj,text,brace_direction=array([0.,-1.,0.]),label_constructor=<class'manim.mobject.text.tex_mobject.MathTex'>,font_size=48,buff=0.2,brace_config=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:obj(Mobject)text(str)brace_direction(Vector3DLike)label_constructor(type[SingleStringMathTex|Text])font_size(float)buff(float)brace_config(dict[str,Any]|None)kwargs(Any)\n\nBases:VMobject\n\nCreate a brace with a label attached.\n\nParameters:\n\nobj(Mobject) \u2013 The mobject adjacent to which the brace is placed.text(str) \u2013 The label text.brace_direction(Vector3DLike) \u2013 The direction of the brace. By defaultDOWN.label_constructor(type[SingleStringMathTex|Text]) \u2013 A class or function used to construct a mobject representing\nthe label. By defaultMathTex.font_size(float) \u2013 The font size of the label, passed to thelabel_constructor.buff(float) \u2013 The buffer between the mobject and the brace.brace_config(dict[str,Any]|None) \u2013 Arguments to be passed toBrace.kwargs(Any) \u2013 Additional arguments to be passed toVMobject.\n\nobj(Mobject) \u2013 The mobject adjacent to which the brace is placed.\n\nobj(Mobject) \u2013 The mobject adjacent to which the brace is placed.\n\ntext(str) \u2013 The label text.\n\ntext(str) \u2013 The label text.\n\nbrace_direction(Vector3DLike) \u2013 The direction of the brace. By defaultDOWN.\n\nbrace_direction(Vector3DLike) \u2013 The direction of the brace. By defaultDOWN.\n\nlabel_constructor(type[SingleStringMathTex|Text]) \u2013 A class or function used to construct a mobject representing\nthe label. By defaultMathTex.\n\nlabel_constructor(type[SingleStringMathTex|Text]) \u2013 A class or function used to construct a mobject representing\nthe label. By defaultMathTex.\n\nfont_size(float) \u2013 The font size of the label, passed to thelabel_constructor.\n\nfont_size(float) \u2013 The font size of the label, passed to thelabel_constructor.\n\nbuff(float) \u2013 The buffer between the mobject and the brace.\n\nbuff(float) \u2013 The buffer between the mobject and the brace.\n\nbrace_config(dict[str,Any]|None) \u2013 Arguments to be passed toBrace.\n\nbrace_config(dict[str,Any]|None) \u2013 Arguments to be passed toBrace.\n\nkwargs(Any) \u2013 Additional arguments to be passed toVMobject.\n\nkwargs(Any) \u2013 Additional arguments to be passed toVMobject.\n\nMethods\n\nchange_brace_label\n\nchange_label\n\ncreation_anim\n\nshift_brace\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(obj,text,brace_direction=array([0.,-1.,0.]),label_constructor=<class'manim.mobject.text.tex_mobject.MathTex'>,font_size=48,buff=0.2,brace_config=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:obj(Mobject)text(str)brace_direction(Vector3DLike)label_constructor(type[SingleStringMathTex|Text])font_size(float)buff(float)brace_config(dict[str,Any]|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nobj(Mobject)text(str)brace_direction(Vector3DLike)label_constructor(type[SingleStringMathTex|Text])font_size(float)buff(float)brace_config(dict[str,Any]|None)kwargs(Any)\n\nobj(Mobject)\n\nobj(Mobject)\n\ntext(str)\n\ntext(str)\n\nbrace_direction(Vector3DLike)\n\nbrace_direction(Vector3DLike)\n\nlabel_constructor(type[SingleStringMathTex|Text])\n\nlabel_constructor(type[SingleStringMathTex|Text])\n\nfont_size(float)\n\nfont_size(float)\n\nbuff(float)\n\nbuff(float)\n\nbrace_config(dict[str,Any]|None)\n\nbrace_config(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "BraceLabel",
+      "class_name": null,
+      "parameters": [
+        "obj"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "obj"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Text",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

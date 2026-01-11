@@ -1,0 +1,59 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.UntypeWithCursor.html",
+  "title": "UntypeWithCursor\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "UntypeWithCursor\u00b6\n\nQualified name:manim.animation.creation.UntypeWithCursor\n\nclassUntypeWithCursor(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TypeWithCursorSimilar toRemoveTextLetterByLetter, but with an additional cursor mobject at the end.Parameters:time_per_char(float) \u2013 Frequency of appearance of the letters.cursor(VMobject|None) \u2013Mobjectshown after the last added letter.buff\u2013 Controls how far away the cursor is to the right of the last added letter.keep_cursor_y\u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.leave_cursor_on\u2013 Whether to show the cursor after the animation.tip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.text(Text)ExamplesExample: DeletingTextExample\u00b6frommanimimport*classDeletingTextExample(Scene):defconstruct(self):text=Text(\"Deleting\",color=PURPLE).scale(1.5).to_edge(LEFT)cursor=Rectangle(color=GREY_A,fill_color=GREY_A,fill_opacity=1.0,height=1.1,width=0.5,).move_to(text[0])# Position the cursorself.play(UntypeWithCursor(text,cursor))self.play(Blink(cursor,blinks=2))class DeletingTextExample(Scene):\n    def construct(self):\n        text = Text(\"Deleting\", color=PURPLE).scale(1.5).to_edge(LEFT)\n        cursor = Rectangle(\n            color = GREY_A,\n            fill_color = GREY_A,\n            fill_opacity = 1.0,\n            height = 1.1,\n            width = 0.5,\n        ).move_to(text[0]) # Position the cursor\n\n        self.play(UntypeWithCursor(text, cursor))\n        self.play(Blink(cursor, blinks=2))References:BlinkMethodsAttributesrun_time_original__init__(text,cursor=None,time_per_char=0.1,reverse_rate_function=True,introducer=False,remover=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text(Text)cursor(VMobject|None)time_per_char(float)Return type:None\n\nBases:TypeWithCursor\n\nSimilar toRemoveTextLetterByLetter, but with an additional cursor mobject at the end.\n\nParameters:\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.cursor(VMobject|None) \u2013Mobjectshown after the last added letter.buff\u2013 Controls how far away the cursor is to the right of the last added letter.keep_cursor_y\u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.leave_cursor_on\u2013 Whether to show the cursor after the animation.tip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.text(Text)\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.\n\ncursor(VMobject|None) \u2013Mobjectshown after the last added letter.\n\ncursor(VMobject|None) \u2013Mobjectshown after the last added letter.\n\nbuff\u2013 Controls how far away the cursor is to the right of the last added letter.\n\nbuff\u2013 Controls how far away the cursor is to the right of the last added letter.\n\nkeep_cursor_y\u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.\n\nkeep_cursor_y\u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.\n\nleave_cursor_on\u2013 Whether to show the cursor after the animation.\n\nleave_cursor_on\u2013 Whether to show the cursor after the animation.\n\ntip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.\n\ntip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.\n\ntext(Text)\n\ntext(Text)\n\nExamples\n\nExample: DeletingTextExample\u00b6\n\nReferences:Blink\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(text,cursor=None,time_per_char=0.1,reverse_rate_function=True,introducer=False,remover=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text(Text)cursor(VMobject|None)time_per_char(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext(Text)cursor(VMobject|None)time_per_char(float)\n\ntext(Text)\n\ntext(Text)\n\ncursor(VMobject|None)\n\ncursor(VMobject|None)\n\ntime_per_char(float)\n\ntime_per_char(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classDeletingTextExample(Scene):defconstruct(self):text=Text(\"Deleting\",color=PURPLE).scale(1.5).to_edge(LEFT)cursor=Rectangle(color=GREY_A,fill_color=GREY_A,fill_opacity=1.0,height=1.1,width=0.5,).move_to(text[0])# Position the cursorself.play(UntypeWithCursor(text,cursor))self.play(Blink(cursor,blinks=2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class DeletingTextExample(Scene):\n    def construct(self):\n        text = Text(\"Deleting\", color=PURPLE).scale(1.5).to_edge(LEFT)\n        cursor = Rectangle(\n            color = GREY_A,\n            fill_color = GREY_A,\n            fill_opacity = 1.0,\n            height = 1.1,\n            width = 0.5,\n        ).move_to(text[0]) # Position the cursor\n\n        self.play(UntypeWithCursor(text, cursor))\n        self.play(Blink(cursor, blinks=2))",
+      "language": "python",
+      "context": "Example: DeletingTextExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "UntypeWithCursor",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:TypeWithCursor"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Text",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.point_cloud_mobject.html",
+  "title": "point_cloud_mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "point_cloud_mobject\u00b6\n\nMobjects representing point clouds.\n\nClasses\n\nMobject1D\n\nMobject2D\n\nPGroup\n\nA group for several point mobjects.\n\nPMobject\n\nA disc made of a cloud of Dots\n\nPoint\n\nA mobject representing a point.\n\nPointCloudDot\n\nA disc made of a cloud of dots.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Dot",
+    "Mobject"
+  ],
+  "tags": []
+}

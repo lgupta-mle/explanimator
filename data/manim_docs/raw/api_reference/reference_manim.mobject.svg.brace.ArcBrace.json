@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.brace.ArcBrace.html",
+  "title": "ArcBrace\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArcBrace\u00b6\n\nQualified name:manim.mobject.svg.brace.ArcBrace\n\nclassArcBrace(arc=None,direction=array([1.,0.,0.]),**kwargs)[source]\u00b6\n\nBases:BraceCreates aBracethat wraps around anArc.The direction parameter allows the brace to be applied\nfrom outside or inside the arc.WarningTheArcBraceis smaller for arcs with smaller radii.NoteTheArcBraceis initially a verticalBracedefined by the\nlength of theArc, but is scaled down to match the start and end\nangles. An exponential function is then applied after it is shifted based on\nthe radius of the arc.The scaling effect is not applied for arcs with radii smaller than 1 to prevent\nover-scaling.Parameters:arc(Arc|None) \u2013 TheArcthat wraps around theBracemobject.direction(Vector3DLike) \u2013 The direction from which the brace faces the arc.LEFTfor inside the arc, andRIGHTfor the outside.kwargs(Any)ExampleExample: ArcBraceExample\u00b6frommanimimport*classArcBraceExample(Scene):defconstruct(self):arc_1=Arc(radius=1.5,start_angle=0,angle=2*PI/3).set_color(RED)brace_1=ArcBrace(arc_1,LEFT)group_1=VGroup(arc_1,brace_1)arc_2=Arc(radius=3,start_angle=0,angle=5*PI/6).set_color(YELLOW)brace_2=ArcBrace(arc_2)group_2=VGroup(arc_2,brace_2)arc_3=Arc(radius=0.5,start_angle=-0,angle=PI).set_color(BLUE)brace_3=ArcBrace(arc_3)group_3=VGroup(arc_3,brace_3)arc_4=Arc(radius=0.2,start_angle=0,angle=3*PI/2).set_color(GREEN)brace_4=ArcBrace(arc_4)group_4=VGroup(arc_4,brace_4)arc_group=VGroup(group_1,group_2,group_3,group_4).arrange_in_grid(buff=1.5)self.add(arc_group.center())class ArcBraceExample(Scene):\n    def construct(self):\n        arc_1 = Arc(radius=1.5,start_angle=0,angle=2*PI/3).set_color(RED)\n        brace_1 = ArcBrace(arc_1,LEFT)\n        group_1 = VGroup(arc_1,brace_1)\n\n        arc_2 = Arc(radius=3,start_angle=0,angle=5*PI/6).set_color(YELLOW)\n        brace_2 = ArcBrace(arc_2)\n        group_2 = VGroup(arc_2,brace_2)\n\n        arc_3 = Arc(radius=0.5,start_angle=-0,angle=PI).set_color(BLUE)\n        brace_3 = ArcBrace(arc_3)\n        group_3 = VGroup(arc_3,brace_3)\n\n        arc_4 = Arc(radius=0.2,start_angle=0,angle=3*PI/2).set_color(GREEN)\n        brace_4 = ArcBrace(arc_4)\n        group_4 = VGroup(arc_4,brace_4)\n\n        arc_group = VGroup(group_1, group_2, group_3, group_4).arrange_in_grid(buff=1.5)\n        self.add(arc_group.center())References:ArcMethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(arc=None,direction=array([1.,0.,0.]),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:arc(Arc|None)direction(Vector3DLike)kwargs(Any)\n\nBases:Brace\n\nCreates aBracethat wraps around anArc.\n\nThe direction parameter allows the brace to be applied\nfrom outside or inside the arc.\n\nWarning\n\nTheArcBraceis smaller for arcs with smaller radii.\n\nNote\n\nTheArcBraceis initially a verticalBracedefined by the\nlength of theArc, but is scaled down to match the start and end\nangles. An exponential function is then applied after it is shifted based on\nthe radius of the arc.\n\nThe scaling effect is not applied for arcs with radii smaller than 1 to prevent\nover-scaling.\n\nParameters:\n\narc(Arc|None) \u2013 TheArcthat wraps around theBracemobject.direction(Vector3DLike) \u2013 The direction from which the brace faces the arc.LEFTfor inside the arc, andRIGHTfor the outside.kwargs(Any)\n\narc(Arc|None) \u2013 TheArcthat wraps around theBracemobject.\n\narc(Arc|None) \u2013 TheArcthat wraps around theBracemobject.\n\ndirection(Vector3DLike) \u2013 The direction from which the brace faces the arc.LEFTfor inside the arc, andRIGHTfor the outside.\n\ndirection(Vector3DLike) \u2013 The direction from which the brace faces the arc.LEFTfor inside the arc, andRIGHTfor the outside.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExample\n\nExample: ArcBraceExample\u00b6\n\nReferences:Arc\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(arc=None,direction=array([1.,0.,0.]),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:arc(Arc|None)direction(Vector3DLike)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\narc(Arc|None)direction(Vector3DLike)kwargs(Any)\n\narc(Arc|None)\n\narc(Arc|None)\n\ndirection(Vector3DLike)\n\ndirection(Vector3DLike)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classArcBraceExample(Scene):defconstruct(self):arc_1=Arc(radius=1.5,start_angle=0,angle=2*PI/3).set_color(RED)brace_1=ArcBrace(arc_1,LEFT)group_1=VGroup(arc_1,brace_1)arc_2=Arc(radius=3,start_angle=0,angle=5*PI/6).set_color(YELLOW)brace_2=ArcBrace(arc_2)group_2=VGroup(arc_2,brace_2)arc_3=Arc(radius=0.5,start_angle=-0,angle=PI).set_color(BLUE)brace_3=ArcBrace(arc_3)group_3=VGroup(arc_3,brace_3)arc_4=Arc(radius=0.2,start_angle=0,angle=3*PI/2).set_color(GREEN)brace_4=ArcBrace(arc_4)group_4=VGroup(arc_4,brace_4)arc_group=VGroup(group_1,group_2,group_3,group_4).arrange_in_grid(buff=1.5)self.add(arc_group.center())",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArcBraceExample(Scene):\n    def construct(self):\n        arc_1 = Arc(radius=1.5,start_angle=0,angle=2*PI/3).set_color(RED)\n        brace_1 = ArcBrace(arc_1,LEFT)\n        group_1 = VGroup(arc_1,brace_1)\n\n        arc_2 = Arc(radius=3,start_angle=0,angle=5*PI/6).set_color(YELLOW)\n        brace_2 = ArcBrace(arc_2)\n        group_2 = VGroup(arc_2,brace_2)\n\n        arc_3 = Arc(radius=0.5,start_angle=-0,angle=PI).set_color(BLUE)\n        brace_3 = ArcBrace(arc_3)\n        group_3 = VGroup(arc_3,brace_3)\n\n        arc_4 = Arc(radius=0.2,start_angle=0,angle=3*PI/2).set_color(GREEN)\n        brace_4 = ArcBrace(arc_4)\n        group_4 = VGroup(arc_4,brace_4)\n\n        arc_group = VGroup(group_1, group_2, group_3, group_4).arrange_in_grid(buff=1.5)\n        self.add(arc_group.center())",
+      "language": "python",
+      "context": "Example: ArcBraceExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ArcBrace",
+      "class_name": null,
+      "parameters": [
+        "arc=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Brace"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "arc=None"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Scene",
+    "Create"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

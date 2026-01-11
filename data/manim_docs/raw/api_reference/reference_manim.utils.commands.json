@@ -1,0 +1,41 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.commands.html",
+  "title": "commands\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "commands\u00b6\n\nClasses\n\nVideoMetadata\n\nFunctions\n\ncapture(command,cwd=None,command_input=None)[source]\u00b6\n\nParameters:command(str)cwd(StrOrBytesPath|None)command_input(str|None)Return type:tuple[str, str, int]\n\nParameters:\n\ncommand(str)cwd(StrOrBytesPath|None)command_input(str|None)\n\ncommand(str)\n\ncommand(str)\n\ncwd(StrOrBytesPath|None)\n\ncwd(StrOrBytesPath|None)\n\ncommand_input(str|None)\n\ncommand_input(str|None)\n\nReturn type:\n\ntuple[str, str, int]\n\ntuple[str, str, int]\n\nget_dir_layout(dirpath)[source]\u00b6\n\nGet list of paths relative to dirpath of all files in dir and subdirs recursively.Parameters:dirpath(Path)Return type:Generator[str, None, None]\n\nGet list of paths relative to dirpath of all files in dir and subdirs recursively.\n\nParameters:\n\ndirpath(Path)\n\ndirpath(Path)\n\nReturn type:\n\nGenerator[str, None, None]\n\nGenerator[str, None, None]\n\nget_video_metadata(path_to_video)[source]\u00b6\n\nParameters:path_to_video(str|PathLike)Return type:VideoMetadata\n\nParameters:\n\npath_to_video(str|PathLike)\n\npath_to_video(str|PathLike)\n\nReturn type:\n\nVideoMetadata\n\nVideoMetadata",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "capture",
+      "class_name": null,
+      "parameters": [
+        "command"
+      ],
+      "return_type": null,
+      "description": "command(str)"
+    },
+    {
+      "name": "get_dir_layout",
+      "class_name": null,
+      "parameters": [
+        "dirpath"
+      ],
+      "return_type": null,
+      "description": "Get list of paths relative to dirpath of all files in dir and subdirs recursively."
+    },
+    {
+      "name": "get_video_metadata",
+      "class_name": null,
+      "parameters": [
+        "path_to_video"
+      ],
+      "return_type": null,
+      "description": "path_to_video(str|PathLike)"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "graph"
+  ]
+}

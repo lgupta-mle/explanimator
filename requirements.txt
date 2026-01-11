@@ -17,3 +17,9 @@ torchvision>=0.24.0
 numpy>=2.0.0
 openai
 tyro
+
+# RAG dependencies for Manim code generation
+chromadb
+beautifulsoup4
+lxml
+tiktoken

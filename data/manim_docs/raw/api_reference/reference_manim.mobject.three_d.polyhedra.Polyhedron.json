@@ -1,0 +1,95 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.polyhedra.Polyhedron.html",
+  "title": "Polyhedron\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Polyhedron\u00b6\n\nQualified name:manim.mobject.three\\_d.polyhedra.Polyhedron\n\nclassPolyhedron(vertex_coords,faces_list,faces_config={},graph_config={})[source]\u00b6\n\nBases:VGroupAn abstract polyhedra class.In this implementation, polyhedra are defined with a list of vertex coordinates in space, and a list\nof faces. This implementation mirrors that of a standard polyhedral data format (OFF, object file format).Parameters:vertex_coords(Point3DLike_Array) \u2013 A list of coordinates of the corresponding vertices in the polyhedron. Each coordinate will correspond to\na vertex. The vertices are indexed with the usual indexing of Python.faces_list(list[list[int]]) \u2013 A list of faces. Each face is a sublist containing the indices of the vertices that form the corners of that face.faces_config(dict[str,str|int|float|bool]) \u2013 Configuration for the polygons representing the faces of the polyhedron.graph_config(dict[str,Any]) \u2013 Configuration for the graph containing the vertices and edges of the polyhedron.ExamplesTo understand how to create a custom polyhedra, let\u2019s use the example of a rather simple one - a square pyramid.Example: SquarePyramidScene\u00b6frommanimimport*classSquarePyramidScene(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)vertex_coords=[[1,1,0],[1,-1,0],[-1,-1,0],[-1,1,0],[0,0,2]]faces_list=[[0,1,4],[1,2,4],[2,3,4],[3,0,4],[0,1,2,3]]pyramid=Polyhedron(vertex_coords,faces_list)self.add(pyramid)class SquarePyramidScene(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        vertex_coords = [\n            [1, 1, 0],\n            [1, -1, 0],\n            [-1, -1, 0],\n            [-1, 1, 0],\n            [0, 0, 2]\n        ]\n        faces_list = [\n            [0, 1, 4],\n            [1, 2, 4],\n            [2, 3, 4],\n            [3, 0, 4],\n            [0, 1, 2, 3]\n        ]\n        pyramid = Polyhedron(vertex_coords, faces_list)\n        self.add(pyramid)In defining the polyhedron above, we first defined the coordinates of the vertices.\nThese are the corners of the square base, given as the first four coordinates in the vertex list,\nand the apex, the last coordinate in the list.Next, we define the faces of the polyhedron. The triangular surfaces of the pyramid are polygons\nwith two adjacent vertices in the base and the vertex at the apex as corners. We thus define these\nsurfaces in the first four elements of our face list. The last element defines the base of the pyramid.The graph and faces of polyhedra can also be accessed and modified directly, after instantiation.\nThey are stored in thegraphandfacesattributes respectively.Example: PolyhedronSubMobjects\u00b6frommanimimport*classPolyhedronSubMobjects(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)octahedron=Octahedron(edge_length=3)octahedron.graph[0].set_color(RED)octahedron.faces[2].set_color(YELLOW)self.add(octahedron)class PolyhedronSubMobjects(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        octahedron = Octahedron(edge_length = 3)\n        octahedron.graph[0].set_color(RED)\n        octahedron.faces[2].set_color(YELLOW)\n        self.add(octahedron)Methodscreate_facesCreates VGroup of faces from a list of face coordinates.extract_face_coordsExtracts the coordinates of the vertices in the graph.get_edgesCreates list of cyclic pairwise tuples.update_facesAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(vertex_coords,faces_list,faces_config={},graph_config={})\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vertex_coords(Point3DLike_Array)faces_list(list[list[int]])faces_config(dict[str,str|int|float|bool])graph_config(dict[str,Any])create_faces(face_coords)[source]\u00b6Creates VGroup of faces from a list of face coordinates.Parameters:face_coords(Point3DLike_Array)Return type:VGroupextract_face_coords()[source]\u00b6Extracts the coordinates of the vertices in the graph.\nUsed for updating faces.Return type:Point3DLike_Arrayget_edges(faces_list)[source]\u00b6Creates list of cyclic pairwise tuples.Parameters:faces_list(list[list[int]])Return type:list[tuple[int, int]]\n\nBases:VGroup\n\nAn abstract polyhedra class.\n\nIn this implementation, polyhedra are defined with a list of vertex coordinates in space, and a list\nof faces. This implementation mirrors that of a standard polyhedral data format (OFF, object file format).\n\nParameters:\n\nvertex_coords(Point3DLike_Array) \u2013 A list of coordinates of the corresponding vertices in the polyhedron. Each coordinate will correspond to\na vertex. The vertices are indexed with the usual indexing of Python.faces_list(list[list[int]]) \u2013 A list of faces. Each face is a sublist containing the indices of the vertices that form the corners of that face.faces_config(dict[str,str|int|float|bool]) \u2013 Configuration for the polygons representing the faces of the polyhedron.graph_config(dict[str,Any]) \u2013 Configuration for the graph containing the vertices and edges of the polyhedron.\n\nvertex_coords(Point3DLike_Array) \u2013 A list of coordinates of the corresponding vertices in the polyhedron. Each coordinate will correspond to\na vertex. The vertices are indexed with the usual indexing of Python.\n\nvertex_coords(Point3DLike_Array) \u2013 A list of coordinates of the corresponding vertices in the polyhedron. Each coordinate will correspond to\na vertex. The vertices are indexed with the usual indexing of Python.\n\nfaces_list(list[list[int]]) \u2013 A list of faces. Each face is a sublist containing the indices of the vertices that form the corners of that face.\n\nfaces_list(list[list[int]]) \u2013 A list of faces. Each face is a sublist containing the indices of the vertices that form the corners of that face.\n\nfaces_config(dict[str,str|int|float|bool]) \u2013 Configuration for the polygons representing the faces of the polyhedron.\n\nfaces_config(dict[str,str|int|float|bool]) \u2013 Configuration for the polygons representing the faces of the polyhedron.\n\ngraph_config(dict[str,Any]) \u2013 Configuration for the graph containing the vertices and edges of the polyhedron.\n\ngraph_config(dict[str,Any]) \u2013 Configuration for the graph containing the vertices and edges of the polyhedron.\n\nExamples\n\nTo understand how to create a custom polyhedra, let\u2019s use the example of a rather simple one - a square pyramid.\n\nExample: SquarePyramidScene\u00b6\n\nIn defining the polyhedron above, we first defined the coordinates of the vertices.\nThese are the corners of the square base, given as the first four coordinates in the vertex list,\nand the apex, the last coordinate in the list.\n\nNext, we define the faces of the polyhedron. The triangular surfaces of the pyramid are polygons\nwith two adjacent vertices in the base and the vertex at the apex as corners. We thus define these\nsurfaces in the first four elements of our face list. The last element defines the base of the pyramid.\n\nThe graph and faces of polyhedra can also be accessed and modified directly, after instantiation.\nThey are stored in thegraphandfacesattributes respectively.\n\nExample: PolyhedronSubMobjects\u00b6\n\nMethods\n\ncreate_faces\n\nCreates VGroup of faces from a list of face coordinates.\n\nextract_face_coords\n\nExtracts the coordinates of the vertices in the graph.\n\nget_edges\n\nCreates list of cyclic pairwise tuples.\n\nupdate_faces\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(vertex_coords,faces_list,faces_config={},graph_config={})\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vertex_coords(Point3DLike_Array)faces_list(list[list[int]])faces_config(dict[str,str|int|float|bool])graph_config(dict[str,Any])\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvertex_coords(Point3DLike_Array)faces_list(list[list[int]])faces_config(dict[str,str|int|float|bool])graph_config(dict[str,Any])\n\nvertex_coords(Point3DLike_Array)\n\nvertex_coords(Point3DLike_Array)\n\nfaces_list(list[list[int]])\n\nfaces_list(list[list[int]])\n\nfaces_config(dict[str,str|int|float|bool])\n\nfaces_config(dict[str,str|int|float|bool])\n\ngraph_config(dict[str,Any])\n\ngraph_config(dict[str,Any])\n\ncreate_faces(face_coords)[source]\u00b6\n\nCreates VGroup of faces from a list of face coordinates.Parameters:face_coords(Point3DLike_Array)Return type:VGroup\n\nCreates VGroup of faces from a list of face coordinates.\n\nParameters:\n\nface_coords(Point3DLike_Array)\n\nface_coords(Point3DLike_Array)\n\nReturn type:\n\nVGroup\n\nVGroup\n\nextract_face_coords()[source]\u00b6\n\nExtracts the coordinates of the vertices in the graph.\nUsed for updating faces.Return type:Point3DLike_Array\n\nExtracts the coordinates of the vertices in the graph.\nUsed for updating faces.\n\nReturn type:\n\nPoint3DLike_Array\n\nPoint3DLike_Array\n\nget_edges(faces_list)[source]\u00b6\n\nCreates list of cyclic pairwise tuples.Parameters:faces_list(list[list[int]])Return type:list[tuple[int, int]]\n\nCreates list of cyclic pairwise tuples.\n\nParameters:\n\nfaces_list(list[list[int]])\n\nfaces_list(list[list[int]])\n\nReturn type:\n\nlist[tuple[int, int]]\n\nlist[tuple[int, int]]",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classSquarePyramidScene(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)vertex_coords=[[1,1,0],[1,-1,0],[-1,-1,0],[-1,1,0],[0,0,2]]faces_list=[[0,1,4],[1,2,4],[2,3,4],[3,0,4],[0,1,2,3]]pyramid=Polyhedron(vertex_coords,faces_list)self.add(pyramid)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SquarePyramidScene(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        vertex_coords = [\n            [1, 1, 0],\n            [1, -1, 0],\n            [-1, -1, 0],\n            [-1, 1, 0],\n            [0, 0, 2]\n        ]\n        faces_list = [\n            [0, 1, 4],\n            [1, 2, 4],\n            [2, 3, 4],\n            [3, 0, 4],\n            [0, 1, 2, 3]\n        ]\n        pyramid = Polyhedron(vertex_coords, faces_list)\n        self.add(pyramid)",
+      "language": "python",
+      "context": "Example: SquarePyramidScene\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPolyhedronSubMobjects(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)octahedron=Octahedron(edge_length=3)octahedron.graph[0].set_color(RED)octahedron.faces[2].set_color(YELLOW)self.add(octahedron)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PolyhedronSubMobjects(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        octahedron = Octahedron(edge_length = 3)\n        octahedron.graph[0].set_color(RED)\n        octahedron.faces[2].set_color(YELLOW)\n        self.add(octahedron)",
+      "language": "python",
+      "context": "Example: PolyhedronSubMobjects\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Polyhedron",
+      "class_name": null,
+      "parameters": [
+        "vertex_coords"
+      ],
+      "return_type": null,
+      "description": "Bases:VGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vertex_coords"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "create_faces",
+      "class_name": null,
+      "parameters": [
+        "face_coords"
+      ],
+      "return_type": null,
+      "description": "Creates VGroup of faces from a list of face coordinates."
+    },
+    {
+      "name": "extract_face_coords",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Extracts the coordinates of the vertices in the graph.\nUsed for updating faces."
+    },
+    {
+      "name": "get_edges",
+      "class_name": null,
+      "parameters": [
+        "faces_list"
+      ],
+      "return_type": null,
+      "description": "Creates list of cyclic pairwise tuples."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "VGroup",
+    "ThreeDScene",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

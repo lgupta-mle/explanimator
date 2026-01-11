@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.fading.FadeIn.html",
+  "title": "FadeIn\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "FadeIn\u00b6\n\nQualified name:manim.animation.fading.FadeIn\n\nclassFadeIn(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:_FadeFade inMobjects.Parameters:mobjects(Mobject) \u2013 The mobjects to be faded in.shift\u2013 The vector by which the mobject shifts while being faded in.target_position\u2013 The position from which the mobject starts while being faded in. In case\nanother mobject is given as target position, its center is used.scale\u2013 The factor by which the mobject is scaled initially before being rescaling to\nits original size while being faded in.kwargs(Any)ExamplesExample: FadeInExample\u00b6frommanimimport*classFadeInExample(Scene):defconstruct(self):dot=Dot(UP*2+LEFT)self.add(dot)tex=Tex(\"FadeIn with \",\"shift \",r\" or target\\_position\",\" and scale\").scale(1)animations=[FadeIn(tex[0]),FadeIn(tex[1],shift=DOWN),FadeIn(tex[2],target_position=dot),FadeIn(tex[3],scale=1.5),]self.play(AnimationGroup(*animations,lag_ratio=0.5))class FadeInExample(Scene):\n    def construct(self):\n        dot = Dot(UP * 2 + LEFT)\n        self.add(dot)\n        tex = Tex(\n            \"FadeIn with \", \"shift \", r\" or target\\_position\", \" and scale\"\n        ).scale(1)\n        animations = [\n            FadeIn(tex[0]),\n            FadeIn(tex[1], shift=DOWN),\n            FadeIn(tex[2], target_position=dot),\n            FadeIn(tex[3], scale=1.5),\n        ]\n        self.play(AnimationGroup(*animations, lag_ratio=0.5))Methodscreate_starting_mobjectcreate_targetAttributespath_arcpath_funcrun_time_original__init__(*mobjects,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)kwargs(Any)Return type:None\n\nBases:_Fade\n\nFade inMobjects.\n\nParameters:\n\nmobjects(Mobject) \u2013 The mobjects to be faded in.shift\u2013 The vector by which the mobject shifts while being faded in.target_position\u2013 The position from which the mobject starts while being faded in. In case\nanother mobject is given as target position, its center is used.scale\u2013 The factor by which the mobject is scaled initially before being rescaling to\nits original size while being faded in.kwargs(Any)\n\nmobjects(Mobject) \u2013 The mobjects to be faded in.\n\nmobjects(Mobject) \u2013 The mobjects to be faded in.\n\nshift\u2013 The vector by which the mobject shifts while being faded in.\n\nshift\u2013 The vector by which the mobject shifts while being faded in.\n\ntarget_position\u2013 The position from which the mobject starts while being faded in. In case\nanother mobject is given as target position, its center is used.\n\ntarget_position\u2013 The position from which the mobject starts while being faded in. In case\nanother mobject is given as target position, its center is used.\n\nscale\u2013 The factor by which the mobject is scaled initially before being rescaling to\nits original size while being faded in.\n\nscale\u2013 The factor by which the mobject is scaled initially before being rescaling to\nits original size while being faded in.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: FadeInExample\u00b6\n\nMethods\n\ncreate_starting_mobject\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(*mobjects,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobjects(Mobject)kwargs(Any)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classFadeInExample(Scene):defconstruct(self):dot=Dot(UP*2+LEFT)self.add(dot)tex=Tex(\"FadeIn with \",\"shift \",r\" or target\\_position\",\" and scale\").scale(1)animations=[FadeIn(tex[0]),FadeIn(tex[1],shift=DOWN),FadeIn(tex[2],target_position=dot),FadeIn(tex[3],scale=1.5),]self.play(AnimationGroup(*animations,lag_ratio=0.5))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class FadeInExample(Scene):\n    def construct(self):\n        dot = Dot(UP * 2 + LEFT)\n        self.add(dot)\n        tex = Tex(\n            \"FadeIn with \", \"shift \", r\" or target\\_position\", \" and scale\"\n        ).scale(1)\n        animations = [\n            FadeIn(tex[0]),\n            FadeIn(tex[1], shift=DOWN),\n            FadeIn(tex[2], target_position=dot),\n            FadeIn(tex[3], scale=1.5),\n        ]\n        self.play(AnimationGroup(*animations, lag_ratio=0.5))",
+      "language": "python",
+      "context": "Example: FadeInExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "FadeIn",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:_Fade"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "FadeIn",
+    "Tex",
+    "AnimationGroup",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "transformation",
+    "math",
+    "animation"
+  ]
+}

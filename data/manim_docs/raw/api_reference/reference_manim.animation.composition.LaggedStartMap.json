@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.composition.LaggedStartMap.html",
+  "title": "LaggedStartMap\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LaggedStartMap\u00b6\n\nQualified name:manim.animation.composition.LaggedStartMap\n\nclassLaggedStartMap(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:LaggedStartPlays a series ofAnimationwhile mapping a function to submobjects.Parameters:AnimationClass\u2013Animationto apply to mobject.mobject(Mobject) \u2013Mobjectwhose submobjects the animation, and optionally the function,\nare to be applied.arg_creator(Callable[[Mobject],Iterable[Any]]|None) \u2013 Function which will be applied toMobject.run_time(float) \u2013 The duration of the animation in seconds.animation_class(type[Animation])kwargs(Any)ExamplesExample: LaggedStartMapExample\u00b6frommanimimport*classLaggedStartMapExample(Scene):defconstruct(self):title=Tex(\"LaggedStartMap\").to_edge(UP,buff=LARGE_BUFF)dots=VGroup(*[Dot(radius=0.16)for_inrange(35)]).arrange_in_grid(rows=5,cols=7,buff=MED_LARGE_BUFF)self.add(dots,title)# Animate yellow ripple effectformobindots,title:self.play(LaggedStartMap(ApplyMethod,mob,lambdam:(m.set_color,YELLOW),lag_ratio=0.1,rate_func=there_and_back,run_time=2))class LaggedStartMapExample(Scene):\n    def construct(self):\n        title = Tex(\"LaggedStartMap\").to_edge(UP, buff=LARGE_BUFF)\n        dots = VGroup(\n            *[Dot(radius=0.16) for _ in range(35)]\n            ).arrange_in_grid(rows=5, cols=7, buff=MED_LARGE_BUFF)\n        self.add(dots, title)\n\n        # Animate yellow ripple effect\n        for mob in dots, title:\n            self.play(LaggedStartMap(\n                ApplyMethod, mob,\n                lambda m : (m.set_color, YELLOW),\n                lag_ratio = 0.1,\n                rate_func = there_and_back,\n                run_time = 2\n            ))MethodsAttributesrun_time_original__init__(animation_class,mobject,arg_creator=None,run_time=2,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:animation_class(type[Animation])mobject(Mobject)arg_creator(Callable[[Mobject],Iterable[Any]]|None)run_time(float)kwargs(Any)\n\nBases:LaggedStart\n\nPlays a series ofAnimationwhile mapping a function to submobjects.\n\nParameters:\n\nAnimationClass\u2013Animationto apply to mobject.mobject(Mobject) \u2013Mobjectwhose submobjects the animation, and optionally the function,\nare to be applied.arg_creator(Callable[[Mobject],Iterable[Any]]|None) \u2013 Function which will be applied toMobject.run_time(float) \u2013 The duration of the animation in seconds.animation_class(type[Animation])kwargs(Any)\n\nAnimationClass\u2013Animationto apply to mobject.\n\nAnimationClass\u2013Animationto apply to mobject.\n\nmobject(Mobject) \u2013Mobjectwhose submobjects the animation, and optionally the function,\nare to be applied.\n\nmobject(Mobject) \u2013Mobjectwhose submobjects the animation, and optionally the function,\nare to be applied.\n\narg_creator(Callable[[Mobject],Iterable[Any]]|None) \u2013 Function which will be applied toMobject.\n\narg_creator(Callable[[Mobject],Iterable[Any]]|None) \u2013 Function which will be applied toMobject.\n\nrun_time(float) \u2013 The duration of the animation in seconds.\n\nrun_time(float) \u2013 The duration of the animation in seconds.\n\nanimation_class(type[Animation])\n\nanimation_class(type[Animation])\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: LaggedStartMapExample\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(animation_class,mobject,arg_creator=None,run_time=2,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:animation_class(type[Animation])mobject(Mobject)arg_creator(Callable[[Mobject],Iterable[Any]]|None)run_time(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nanimation_class(type[Animation])mobject(Mobject)arg_creator(Callable[[Mobject],Iterable[Any]]|None)run_time(float)kwargs(Any)\n\nanimation_class(type[Animation])\n\nanimation_class(type[Animation])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\narg_creator(Callable[[Mobject],Iterable[Any]]|None)\n\narg_creator(Callable[[Mobject],Iterable[Any]]|None)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLaggedStartMapExample(Scene):defconstruct(self):title=Tex(\"LaggedStartMap\").to_edge(UP,buff=LARGE_BUFF)dots=VGroup(*[Dot(radius=0.16)for_inrange(35)]).arrange_in_grid(rows=5,cols=7,buff=MED_LARGE_BUFF)self.add(dots,title)# Animate yellow ripple effectformobindots,title:self.play(LaggedStartMap(ApplyMethod,mob,lambdam:(m.set_color,YELLOW),lag_ratio=0.1,rate_func=there_and_back,run_time=2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LaggedStartMapExample(Scene):\n    def construct(self):\n        title = Tex(\"LaggedStartMap\").to_edge(UP, buff=LARGE_BUFF)\n        dots = VGroup(\n            *[Dot(radius=0.16) for _ in range(35)]\n            ).arrange_in_grid(rows=5, cols=7, buff=MED_LARGE_BUFF)\n        self.add(dots, title)\n\n        # Animate yellow ripple effect\n        for mob in dots, title:\n            self.play(LaggedStartMap(\n                ApplyMethod, mob,\n                lambda m : (m.set_color, YELLOW),\n                lag_ratio = 0.1,\n                rate_func = there_and_back,\n                run_time = 2\n            ))",
+      "language": "python",
+      "context": "Example: LaggedStartMapExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LaggedStartMap",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:LaggedStart"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "animation_class"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "LaggedStart",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "animation",
+    "graph"
+  ]
+}

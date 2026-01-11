@@ -1,0 +1,259 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene_file_writer.SceneFileWriter.html",
+  "title": "SceneFileWriter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SceneFileWriter\u00b6\n\nQualified name:manim.scene.scene\\_file\\_writer.SceneFileWriter\n\nclassSceneFileWriter(renderer,scene_name,**kwargs)[source]\u00b6\n\nBases:objectSceneFileWriter is the object that actually writes the animations\nplayed, into video files, using FFMPEG.\nThis is mostly for Manim\u2019s internal use. You will rarely, if ever,\nhave to use the methods for this class, unless tinkering with the very\nfabric of Manim\u2019s reality.Parameters:renderer(CairoRenderer|OpenGLRenderer)scene_name(str)kwargs(Any)sections\u00b6used to segment sceneType:list ofSectionsections_output_dir\u00b6where are section videos storedType:pathlib.Pathoutput_name\u00b6name of movie without extension and basis for section video namesType:strSome useful attributes are:\u201cwrite_to_movie\u201d (bool=False)Whether or not to write the animations into a video file.\u201cmovie_file_extension\u201d (str=\u201d.mp4\u201d)The file-type extension of the outputted video.\u201cpartial_movie_files\u201dList of all the partial-movie files.Methodsadd_audio_segmentThis method adds an audio segment from an AudioSegment type object and suitable parameters.add_partial_movie_fileAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.add_soundThis method adds an audio segment from a sound file.begin_animationUsed internally by manim to stream the animation to FFMPEG for displaying or writing to a file.clean_cacheWill clean the cache by removing the oldest partial_movie_files.close_partial_movie_streamClose the currently opened video container.combine_filescombine_to_movieUsed internally by Manim to combine the separate partial movie files that make up a Scene into a single video file for that Scene.combine_to_section_videosConcatenate partial movie files for each section.create_audio_segmentCreates an empty, silent, Audio Segment.encode_and_write_frameFor internal use only: takes a given frame innp.ndarrayformat and writes it to the streamend_animationInternally used by Manim to stop streaming to FFMPEG gracefully.finishFinishes writing to the FFMPEG buffer or writing images to output directory.finish_last_sectionDelete current section if it is empty.flush_cache_directoryDelete all the cached partial movie filesget_resolution_directoryGet the name of the resolution directory directly containing the video file.init_audioPreps the writer for adding audio to the movie.init_output_directoriesInitialise output directories.is_already_cachedWill check if a file named withhash_invocationexists.listen_and_writeFor internal use only: blocks until new frame is available on the queue.next_sectionCreate segmentation cut here.open_partial_movie_streamOpen a container holding a video stream.output_imageprint_file_ready_messagePrints the \"File Ready\" message to STDOUT.save_imageThis method saves the image passed to it in the default image directory.write_frameUsed internally by Manim to write a frame to the FFMPEG input buffer.write_subcaption_fileWrites the subcaption file.Attributesforce_output_as_scene_nameadd_audio_segment(new_segment,time=None,gain_to_background=None)[source]\u00b6This method adds an audio segment from an AudioSegment type object\nand suitable parameters.Parameters:new_segment(AudioSegment) \u2013 The audio segment to addtime(float|None) \u2013 the timestamp at which the sound should be added.gain_to_background(float|None) \u2013 The gain of the segment from the background.Return type:Noneadd_partial_movie_file(hash_animation)[source]\u00b6Adds a new partial movie file path toscene.partial_movie_filesand current section from a hash.This method will compute the path from the hash. In addition to that it\nadds the new animation to the current section.Parameters:hash_animation(str|None) \u2013 Hash of the animation.Return type:Noneadd_sound(sound_file,time=None,gain=None,**kwargs)[source]\u00b6This method adds an audio segment from a sound file.Parameters:sound_file(StrPath) \u2013 The path to the sound file.time(float|None) \u2013 The timestamp at which the audio should be added.gain(float|None) \u2013 The gain of the given audio segment.**kwargs(Any) \u2013 This method uses add_audio_segment, so any keyword arguments\nused there can be referenced here.Return type:Nonebegin_animation(allow_write=False,file_path=None)[source]\u00b6Used internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.file_path(StrPath|None)Return type:Noneclean_cache()[source]\u00b6Will clean the cache by removing the oldest partial_movie_files.Return type:Noneclose_partial_movie_stream()[source]\u00b6Close the currently opened video container.Used internally by Manim to first flush the remaining packages\nin the video stream holding a partial file, and then close\nthe corresponding container.Return type:Nonecombine_to_movie()[source]\u00b6Used internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene.Return type:Nonecombine_to_section_videos()[source]\u00b6Concatenate partial movie files for each section.Return type:Nonecreate_audio_segment()[source]\u00b6Creates an empty, silent, Audio Segment.Return type:Noneencode_and_write_frame(frame,num_frames)[source]\u00b6For internal use only: takes a given frame innp.ndarrayformat and\nwrites it to the streamParameters:frame(PixelArray)num_frames(int)Return type:Noneend_animation(allow_write=False)[source]\u00b6Internally used by Manim to stop streaming to FFMPEG gracefully.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.Return type:Nonefinish()[source]\u00b6Finishes writing to the FFMPEG buffer or writing images to output directory.\nCombines the partial movie files into the whole scene.\nIf save_last_frame is True, saves the last frame in the default image directory.Return type:Nonefinish_last_section()[source]\u00b6Delete current section if it is empty.Return type:Noneflush_cache_directory()[source]\u00b6Delete all the cached partial movie filesReturn type:Noneget_resolution_directory()[source]\u00b6Get the name of the resolution directory directly containing\nthe video file.This method gets the name of the directory that immediately contains the\nvideo file. This name is<height_in_pixels_of_video>p<frame_rate>.\nFor example, if you are rendering an 854x480 px animation at 15fps,\nthe name of the directory that immediately contains the video,  file\nwill be480p15.The file structure should look something like:MEDIA_DIR|--Tex|--texts|--videos|--<name_of_file_containing_scene>|--<height_in_pixels_of_video>p<frame_rate>|--partial_movie_files|--<scene_name>.mp4|--<scene_name>.srtReturns:The name of the directory.Return type:strinit_audio()[source]\u00b6Preps the writer for adding audio to the movie.Return type:Noneinit_output_directories(scene_name)[source]\u00b6Initialise output directories.NotesThe directories are read fromconfig, for exampleconfig['media_dir'].  If the target directories don\u2019t already\nexist, they will be created.Parameters:scene_name(str)Return type:Noneis_already_cached(hash_invocation)[source]\u00b6Will check if a file named withhash_invocationexists.Parameters:hash_invocation(str) \u2013 The hash corresponding to an invocation to eitherscene.playorscene.wait.Returns:Whether the file exists.Return type:boollisten_and_write()[source]\u00b6For internal use only: blocks until new frame is available on the queue.Return type:Nonenext_section(name,type_,skip_animations)[source]\u00b6Create segmentation cut here.Parameters:name(str)type_(str)skip_animations(bool)Return type:Noneopen_partial_movie_stream(file_path=None)[source]\u00b6Open a container holding a video stream.This is used internally by Manim initialize the container holding\nthe video stream of a partial movie file.Parameters:file_path(StrPath|None)Return type:Noneprint_file_ready_message(file_path)[source]\u00b6Prints the \u201cFile Ready\u201d message to STDOUT.Parameters:file_path(StrPath)Return type:Nonesave_image(image)[source]\u00b6This method saves the image passed to it in the default image directory.Parameters:image(Image) \u2013 The pixel array of the image to save.Return type:Nonewrite_frame(frame_or_renderer,num_frames=1)[source]\u00b6Used internally by Manim to write a frame to the FFMPEG input buffer.Parameters:frame_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.num_frames(int) \u2013 The number of times to write frame.Return type:Nonewrite_subcaption_file()[source]\u00b6Writes the subcaption file.Return type:None\n\nBases:object\n\nSceneFileWriter is the object that actually writes the animations\nplayed, into video files, using FFMPEG.\nThis is mostly for Manim\u2019s internal use. You will rarely, if ever,\nhave to use the methods for this class, unless tinkering with the very\nfabric of Manim\u2019s reality.\n\nParameters:\n\nrenderer(CairoRenderer|OpenGLRenderer)scene_name(str)kwargs(Any)\n\nrenderer(CairoRenderer|OpenGLRenderer)\n\nrenderer(CairoRenderer|OpenGLRenderer)\n\nscene_name(str)\n\nscene_name(str)\n\nkwargs(Any)\n\nkwargs(Any)\n\nsections\u00b6\n\nused to segment sceneType:list ofSection\n\nused to segment scene\n\nType:\n\nlist ofSection\n\nlist ofSection\n\nsections_output_dir\u00b6\n\nwhere are section videos storedType:pathlib.Path\n\nwhere are section videos stored\n\nType:\n\npathlib.Path\n\npathlib.Path\n\noutput_name\u00b6\n\nname of movie without extension and basis for section video namesType:str\n\nname of movie without extension and basis for section video names\n\nType:\n\nstr\n\nstr\n\nSome useful attributes are:\n\n\u201cwrite_to_movie\u201d (bool=False)Whether or not to write the animations into a video file.\u201cmovie_file_extension\u201d (str=\u201d.mp4\u201d)The file-type extension of the outputted video.\u201cpartial_movie_files\u201dList of all the partial-movie files.\n\n\u201cwrite_to_movie\u201d (bool=False)\n\nWhether or not to write the animations into a video file.\n\nWhether or not to write the animations into a video file.\n\n\u201cmovie_file_extension\u201d (str=\u201d.mp4\u201d)\n\nThe file-type extension of the outputted video.\n\nThe file-type extension of the outputted video.\n\n\u201cpartial_movie_files\u201d\n\nList of all the partial-movie files.\n\nList of all the partial-movie files.\n\nMethods\n\nadd_audio_segment\n\nThis method adds an audio segment from an AudioSegment type object and suitable parameters.\n\nadd_partial_movie_file\n\nAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.\n\nadd_sound\n\nThis method adds an audio segment from a sound file.\n\nbegin_animation\n\nUsed internally by manim to stream the animation to FFMPEG for displaying or writing to a file.\n\nclean_cache\n\nWill clean the cache by removing the oldest partial_movie_files.\n\nclose_partial_movie_stream\n\nClose the currently opened video container.\n\ncombine_files\n\ncombine_to_movie\n\nUsed internally by Manim to combine the separate partial movie files that make up a Scene into a single video file for that Scene.\n\ncombine_to_section_videos\n\nConcatenate partial movie files for each section.\n\ncreate_audio_segment\n\nCreates an empty, silent, Audio Segment.\n\nencode_and_write_frame\n\nFor internal use only: takes a given frame innp.ndarrayformat and writes it to the stream\n\nend_animation\n\nInternally used by Manim to stop streaming to FFMPEG gracefully.\n\nfinish\n\nFinishes writing to the FFMPEG buffer or writing images to output directory.\n\nfinish_last_section\n\nDelete current section if it is empty.\n\nflush_cache_directory\n\nDelete all the cached partial movie files\n\nget_resolution_directory\n\nGet the name of the resolution directory directly containing the video file.\n\ninit_audio\n\nPreps the writer for adding audio to the movie.\n\ninit_output_directories\n\nInitialise output directories.\n\nis_already_cached\n\nWill check if a file named withhash_invocationexists.\n\nlisten_and_write\n\nFor internal use only: blocks until new frame is available on the queue.\n\nnext_section\n\nCreate segmentation cut here.\n\nopen_partial_movie_stream\n\nOpen a container holding a video stream.\n\noutput_image\n\nprint_file_ready_message\n\nPrints the \"File Ready\" message to STDOUT.\n\nsave_image\n\nThis method saves the image passed to it in the default image directory.\n\nwrite_frame\n\nUsed internally by Manim to write a frame to the FFMPEG input buffer.\n\nwrite_subcaption_file\n\nWrites the subcaption file.\n\nAttributes\n\nforce_output_as_scene_name\n\nadd_audio_segment(new_segment,time=None,gain_to_background=None)[source]\u00b6\n\nThis method adds an audio segment from an AudioSegment type object\nand suitable parameters.Parameters:new_segment(AudioSegment) \u2013 The audio segment to addtime(float|None) \u2013 the timestamp at which the sound should be added.gain_to_background(float|None) \u2013 The gain of the segment from the background.Return type:None\n\nThis method adds an audio segment from an AudioSegment type object\nand suitable parameters.\n\nParameters:\n\nnew_segment(AudioSegment) \u2013 The audio segment to addtime(float|None) \u2013 the timestamp at which the sound should be added.gain_to_background(float|None) \u2013 The gain of the segment from the background.\n\nnew_segment(AudioSegment) \u2013 The audio segment to add\n\nnew_segment(AudioSegment) \u2013 The audio segment to add\n\ntime(float|None) \u2013 the timestamp at which the sound should be added.\n\ntime(float|None) \u2013 the timestamp at which the sound should be added.\n\ngain_to_background(float|None) \u2013 The gain of the segment from the background.\n\ngain_to_background(float|None) \u2013 The gain of the segment from the background.\n\nReturn type:\n\nNone\n\nNone\n\nadd_partial_movie_file(hash_animation)[source]\u00b6\n\nAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.This method will compute the path from the hash. In addition to that it\nadds the new animation to the current section.Parameters:hash_animation(str|None) \u2013 Hash of the animation.Return type:None\n\nAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.\n\nThis method will compute the path from the hash. In addition to that it\nadds the new animation to the current section.\n\nParameters:\n\nhash_animation(str|None) \u2013 Hash of the animation.\n\nhash_animation(str|None) \u2013 Hash of the animation.\n\nReturn type:\n\nNone\n\nNone\n\nadd_sound(sound_file,time=None,gain=None,**kwargs)[source]\u00b6\n\nThis method adds an audio segment from a sound file.Parameters:sound_file(StrPath) \u2013 The path to the sound file.time(float|None) \u2013 The timestamp at which the audio should be added.gain(float|None) \u2013 The gain of the given audio segment.**kwargs(Any) \u2013 This method uses add_audio_segment, so any keyword arguments\nused there can be referenced here.Return type:None\n\nThis method adds an audio segment from a sound file.\n\nParameters:\n\nsound_file(StrPath) \u2013 The path to the sound file.time(float|None) \u2013 The timestamp at which the audio should be added.gain(float|None) \u2013 The gain of the given audio segment.**kwargs(Any) \u2013 This method uses add_audio_segment, so any keyword arguments\nused there can be referenced here.\n\nsound_file(StrPath) \u2013 The path to the sound file.\n\nsound_file(StrPath) \u2013 The path to the sound file.\n\ntime(float|None) \u2013 The timestamp at which the audio should be added.\n\ntime(float|None) \u2013 The timestamp at which the audio should be added.\n\ngain(float|None) \u2013 The gain of the given audio segment.\n\ngain(float|None) \u2013 The gain of the given audio segment.\n\n**kwargs(Any) \u2013 This method uses add_audio_segment, so any keyword arguments\nused there can be referenced here.\n\n**kwargs(Any) \u2013 This method uses add_audio_segment, so any keyword arguments\nused there can be referenced here.\n\nReturn type:\n\nNone\n\nNone\n\nbegin_animation(allow_write=False,file_path=None)[source]\u00b6\n\nUsed internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.file_path(StrPath|None)Return type:None\n\nUsed internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file.\n\nParameters:\n\nallow_write(bool) \u2013 Whether or not to write to a video file.file_path(StrPath|None)\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nfile_path(StrPath|None)\n\nfile_path(StrPath|None)\n\nReturn type:\n\nNone\n\nNone\n\nclean_cache()[source]\u00b6\n\nWill clean the cache by removing the oldest partial_movie_files.Return type:None\n\nWill clean the cache by removing the oldest partial_movie_files.\n\nReturn type:\n\nNone\n\nNone\n\nclose_partial_movie_stream()[source]\u00b6\n\nClose the currently opened video container.Used internally by Manim to first flush the remaining packages\nin the video stream holding a partial file, and then close\nthe corresponding container.Return type:None\n\nClose the currently opened video container.\n\nUsed internally by Manim to first flush the remaining packages\nin the video stream holding a partial file, and then close\nthe corresponding container.\n\nReturn type:\n\nNone\n\nNone\n\ncombine_to_movie()[source]\u00b6\n\nUsed internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene.Return type:None\n\nUsed internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene.\n\nReturn type:\n\nNone\n\nNone\n\ncombine_to_section_videos()[source]\u00b6\n\nConcatenate partial movie files for each section.Return type:None\n\nConcatenate partial movie files for each section.\n\nReturn type:\n\nNone\n\nNone\n\ncreate_audio_segment()[source]\u00b6\n\nCreates an empty, silent, Audio Segment.Return type:None\n\nCreates an empty, silent, Audio Segment.\n\nReturn type:\n\nNone\n\nNone\n\nencode_and_write_frame(frame,num_frames)[source]\u00b6\n\nFor internal use only: takes a given frame innp.ndarrayformat and\nwrites it to the streamParameters:frame(PixelArray)num_frames(int)Return type:None\n\nFor internal use only: takes a given frame innp.ndarrayformat and\nwrites it to the stream\n\nParameters:\n\nframe(PixelArray)num_frames(int)\n\nframe(PixelArray)\n\nframe(PixelArray)\n\nnum_frames(int)\n\nnum_frames(int)\n\nReturn type:\n\nNone\n\nNone\n\nend_animation(allow_write=False)[source]\u00b6\n\nInternally used by Manim to stop streaming to FFMPEG gracefully.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.Return type:None\n\nInternally used by Manim to stop streaming to FFMPEG gracefully.\n\nParameters:\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinishes writing to the FFMPEG buffer or writing images to output directory.\nCombines the partial movie files into the whole scene.\nIf save_last_frame is True, saves the last frame in the default image directory.Return type:None\n\nFinishes writing to the FFMPEG buffer or writing images to output directory.\nCombines the partial movie files into the whole scene.\nIf save_last_frame is True, saves the last frame in the default image directory.\n\nReturn type:\n\nNone\n\nNone\n\nfinish_last_section()[source]\u00b6\n\nDelete current section if it is empty.Return type:None\n\nDelete current section if it is empty.\n\nReturn type:\n\nNone\n\nNone\n\nflush_cache_directory()[source]\u00b6\n\nDelete all the cached partial movie filesReturn type:None\n\nDelete all the cached partial movie files\n\nReturn type:\n\nNone\n\nNone\n\nget_resolution_directory()[source]\u00b6\n\nGet the name of the resolution directory directly containing\nthe video file.This method gets the name of the directory that immediately contains the\nvideo file. This name is<height_in_pixels_of_video>p<frame_rate>.\nFor example, if you are rendering an 854x480 px animation at 15fps,\nthe name of the directory that immediately contains the video,  file\nwill be480p15.The file structure should look something like:MEDIA_DIR|--Tex|--texts|--videos|--<name_of_file_containing_scene>|--<height_in_pixels_of_video>p<frame_rate>|--partial_movie_files|--<scene_name>.mp4|--<scene_name>.srtReturns:The name of the directory.Return type:str\n\nGet the name of the resolution directory directly containing\nthe video file.\n\nThis method gets the name of the directory that immediately contains the\nvideo file. This name is<height_in_pixels_of_video>p<frame_rate>.\nFor example, if you are rendering an 854x480 px animation at 15fps,\nthe name of the directory that immediately contains the video,  file\nwill be480p15.\n\nThe file structure should look something like:\n\nReturns:\n\nThe name of the directory.\n\nThe name of the directory.\n\nReturn type:\n\nstr\n\nstr\n\ninit_audio()[source]\u00b6\n\nPreps the writer for adding audio to the movie.Return type:None\n\nPreps the writer for adding audio to the movie.\n\nReturn type:\n\nNone\n\nNone\n\ninit_output_directories(scene_name)[source]\u00b6\n\nInitialise output directories.NotesThe directories are read fromconfig, for exampleconfig['media_dir'].  If the target directories don\u2019t already\nexist, they will be created.Parameters:scene_name(str)Return type:None\n\nInitialise output directories.\n\nNotes\n\nThe directories are read fromconfig, for exampleconfig['media_dir'].  If the target directories don\u2019t already\nexist, they will be created.\n\nParameters:\n\nscene_name(str)\n\nscene_name(str)\n\nReturn type:\n\nNone\n\nNone\n\nis_already_cached(hash_invocation)[source]\u00b6\n\nWill check if a file named withhash_invocationexists.Parameters:hash_invocation(str) \u2013 The hash corresponding to an invocation to eitherscene.playorscene.wait.Returns:Whether the file exists.Return type:bool\n\nWill check if a file named withhash_invocationexists.\n\nParameters:\n\nhash_invocation(str) \u2013 The hash corresponding to an invocation to eitherscene.playorscene.wait.\n\nhash_invocation(str) \u2013 The hash corresponding to an invocation to eitherscene.playorscene.wait.\n\nReturns:\n\nWhether the file exists.\n\nWhether the file exists.\n\nReturn type:\n\nbool\n\nbool\n\nlisten_and_write()[source]\u00b6\n\nFor internal use only: blocks until new frame is available on the queue.Return type:None\n\nFor internal use only: blocks until new frame is available on the queue.\n\nReturn type:\n\nNone\n\nNone\n\nnext_section(name,type_,skip_animations)[source]\u00b6\n\nCreate segmentation cut here.Parameters:name(str)type_(str)skip_animations(bool)Return type:None\n\nCreate segmentation cut here.\n\nParameters:\n\nname(str)type_(str)skip_animations(bool)\n\nname(str)\n\nname(str)\n\ntype_(str)\n\ntype_(str)\n\nskip_animations(bool)\n\nskip_animations(bool)\n\nReturn type:\n\nNone\n\nNone\n\nopen_partial_movie_stream(file_path=None)[source]\u00b6\n\nOpen a container holding a video stream.This is used internally by Manim initialize the container holding\nthe video stream of a partial movie file.Parameters:file_path(StrPath|None)Return type:None\n\nOpen a container holding a video stream.\n\nThis is used internally by Manim initialize the container holding\nthe video stream of a partial movie file.\n\nParameters:\n\nfile_path(StrPath|None)\n\nfile_path(StrPath|None)\n\nReturn type:\n\nNone\n\nNone\n\nprint_file_ready_message(file_path)[source]\u00b6\n\nPrints the \u201cFile Ready\u201d message to STDOUT.Parameters:file_path(StrPath)Return type:None\n\nPrints the \u201cFile Ready\u201d message to STDOUT.\n\nParameters:\n\nfile_path(StrPath)\n\nfile_path(StrPath)\n\nReturn type:\n\nNone\n\nNone\n\nsave_image(image)[source]\u00b6\n\nThis method saves the image passed to it in the default image directory.Parameters:image(Image) \u2013 The pixel array of the image to save.Return type:None\n\nThis method saves the image passed to it in the default image directory.\n\nParameters:\n\nimage(Image) \u2013 The pixel array of the image to save.\n\nimage(Image) \u2013 The pixel array of the image to save.\n\nReturn type:\n\nNone\n\nNone\n\nwrite_frame(frame_or_renderer,num_frames=1)[source]\u00b6\n\nUsed internally by Manim to write a frame to the FFMPEG input buffer.Parameters:frame_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.num_frames(int) \u2013 The number of times to write frame.Return type:None\n\nUsed internally by Manim to write a frame to the FFMPEG input buffer.\n\nParameters:\n\nframe_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.num_frames(int) \u2013 The number of times to write frame.\n\nframe_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.\n\nframe_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.\n\nnum_frames(int) \u2013 The number of times to write frame.\n\nnum_frames(int) \u2013 The number of times to write frame.\n\nReturn type:\n\nNone\n\nNone\n\nwrite_subcaption_file()[source]\u00b6\n\nWrites the subcaption file.Return type:None\n\nWrites the subcaption file.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "MEDIA_DIR|--Tex|--texts|--videos|--<name_of_file_containing_scene>|--<height_in_pixels_of_video>p<frame_rate>|--partial_movie_files|--<scene_name>.mp4|--<scene_name>.srt",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "SceneFileWriter",
+      "class_name": null,
+      "parameters": [
+        "renderer"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "sections",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "used to segment scene"
+    },
+    {
+      "name": "sections_output_dir",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "where are section videos stored"
+    },
+    {
+      "name": "output_name",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "name of movie without extension and basis for section video names"
+    },
+    {
+      "name": "add_audio_segment",
+      "class_name": null,
+      "parameters": [
+        "new_segment"
+      ],
+      "return_type": null,
+      "description": "This method adds an audio segment from an AudioSegment type object\nand suitable parameters."
+    },
+    {
+      "name": "add_partial_movie_file",
+      "class_name": null,
+      "parameters": [
+        "hash_animation"
+      ],
+      "return_type": null,
+      "description": "Adds a new partial movie file path toscene.partial_movie_filesand current section from a hash."
+    },
+    {
+      "name": "add_sound",
+      "class_name": null,
+      "parameters": [
+        "sound_file"
+      ],
+      "return_type": null,
+      "description": "This method adds an audio segment from a sound file."
+    },
+    {
+      "name": "begin_animation",
+      "class_name": null,
+      "parameters": [
+        "allow_write=False"
+      ],
+      "return_type": null,
+      "description": "Used internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file."
+    },
+    {
+      "name": "clean_cache",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Will clean the cache by removing the oldest partial_movie_files."
+    },
+    {
+      "name": "close_partial_movie_stream",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Close the currently opened video container."
+    },
+    {
+      "name": "combine_to_movie",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Used internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene."
+    },
+    {
+      "name": "combine_to_section_videos",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Concatenate partial movie files for each section."
+    },
+    {
+      "name": "create_audio_segment",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Creates an empty, silent, Audio Segment."
+    },
+    {
+      "name": "encode_and_write_frame",
+      "class_name": null,
+      "parameters": [
+        "frame"
+      ],
+      "return_type": null,
+      "description": "For internal use only: takes a given frame innp.ndarrayformat and\nwrites it to the stream"
+    },
+    {
+      "name": "end_animation",
+      "class_name": null,
+      "parameters": [
+        "allow_write=False"
+      ],
+      "return_type": null,
+      "description": "Internally used by Manim to stop streaming to FFMPEG gracefully."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finishes writing to the FFMPEG buffer or writing images to output directory.\nCombines the partial movie files into the whole scene.\nIf save_last_frame is True, saves the last frame in the default image directory."
+    },
+    {
+      "name": "finish_last_section",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Delete current section if it is empty."
+    },
+    {
+      "name": "flush_cache_directory",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Delete all the cached partial movie files"
+    },
+    {
+      "name": "get_resolution_directory",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get the name of the resolution directory directly containing\nthe video file."
+    },
+    {
+      "name": "init_audio",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Preps the writer for adding audio to the movie."
+    },
+    {
+      "name": "init_output_directories",
+      "class_name": null,
+      "parameters": [
+        "scene_name"
+      ],
+      "return_type": null,
+      "description": "Initialise output directories."
+    },
+    {
+      "name": "is_already_cached",
+      "class_name": null,
+      "parameters": [
+        "hash_invocation"
+      ],
+      "return_type": null,
+      "description": "Will check if a file named withhash_invocationexists."
+    },
+    {
+      "name": "listen_and_write",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "For internal use only: blocks until new frame is available on the queue."
+    },
+    {
+      "name": "next_section",
+      "class_name": null,
+      "parameters": [
+        "name"
+      ],
+      "return_type": null,
+      "description": "Create segmentation cut here."
+    },
+    {
+      "name": "open_partial_movie_stream",
+      "class_name": null,
+      "parameters": [
+        "file_path=None"
+      ],
+      "return_type": null,
+      "description": "Open a container holding a video stream."
+    },
+    {
+      "name": "print_file_ready_message",
+      "class_name": null,
+      "parameters": [
+        "file_path"
+      ],
+      "return_type": null,
+      "description": "Prints the \u201cFile Ready\u201d message to STDOUT."
+    },
+    {
+      "name": "save_image",
+      "class_name": null,
+      "parameters": [
+        "image"
+      ],
+      "return_type": null,
+      "description": "This method saves the image passed to it in the default image directory."
+    },
+    {
+      "name": "write_frame",
+      "class_name": null,
+      "parameters": [
+        "frame_or_renderer"
+      ],
+      "return_type": null,
+      "description": "Used internally by Manim to write a frame to the FFMPEG input buffer."
+    },
+    {
+      "name": "write_subcaption_file",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Writes the subcaption file."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "Scene",
+    "Tex",
+    "Write"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "text"
+  ]
+}

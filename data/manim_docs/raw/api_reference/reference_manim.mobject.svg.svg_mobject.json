@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.svg_mobject.html",
+  "title": "svg_mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "svg_mobject\u00b6\n\nMobjects generated from an SVG file.\n\nClasses\n\nSVGMobject\n\nA vectorized mobject created from importing an SVG file.\n\nVMobjectFromSVGPath\n\nA vectorized mobject representing an SVG path.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "math"
+  ]
+}

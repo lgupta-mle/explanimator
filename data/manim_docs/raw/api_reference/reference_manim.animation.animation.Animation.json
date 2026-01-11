@@ -1,0 +1,229 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.animation.Animation.html",
+  "title": "Animation\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Animation\u00b6\n\nQualified name:manim.animation.animation.Animation\n\nclassAnimation(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:objectAn animation.Animations have a fixed time span.Parameters:mobject\u2013 The mobject to be animated. This is not required for all types of animations.lag_ratio\u2013Defines the delay after which the animation is applied to submobjects. This lag\nis relative to the duration of the animation.This does not influence the total\nruntime of the animation. Instead the runtime of individual animations is\nadjusted so that the complete animation has the defined run time.run_time\u2013 The duration of the animation in seconds.rate_func\u2013The function defining the animation progress based on the relative runtime (seerate_functions) .For examplerate_func(0.5)is the proportion of the animation that is done\nafter half of the animations run time.reverse_rate_function\u2013 Reverses the rate function of the animation. Settingreverse_rate_functiondoes not have any effect onremoverorintroducer. These need to be\nset explicitly if an introducer-animation should be turned into a remover one\nand vice versa.name\u2013 The name of the animation. This gets displayed while rendering the animation.\nDefaults to <class-name>(<Mobject-name>).remover\u2013 Whether the given mobject should be removed from the scene after this animation.suspend_mobject_updating\u2013 Whether updaters of the mobject should be suspended during the animation.Return type:SelfNoteIn the current implementation of this class, the specified rate function is applied\nwithinAnimation.interpolate_mobject()call as part of the call toAnimation.interpolate_submobject(). For subclasses ofAnimationthat are implemented by overridinginterpolate_mobject(), the rate function\nhas to be applied manually (e.g., by passingself.rate_func(alpha)instead\nof justalpha).ExamplesExample: LagRatios\u00b6frommanimimport*classLagRatios(Scene):defconstruct(self):ratios=[0,0.1,0.5,1,2]# demonstrated lag_ratios# Create dot groupsgroup=VGroup(*[Dot()for_inrange(4)]).arrange_submobjects()groups=VGroup(*[group.copy()for_inratios]).arrange_submobjects(buff=1)self.add(groups)# Label groupsself.add(Text(\"lag_ratio = \",font_size=36).next_to(groups,UP,buff=1.5))forgroup,ratioinzip(groups,ratios):self.add(Text(str(ratio),font_size=36).next_to(group,UP))#Animate groups with different lag_ratiosself.play(AnimationGroup(*[group.animate(lag_ratio=ratio,run_time=1.5).shift(DOWN*2)forgroup,ratioinzip(groups,ratios)]))# lag_ratio also works recursively on nested submobjects:self.play(groups.animate(run_time=1,lag_ratio=0.1).shift(UP*2))class LagRatios(Scene):\n    def construct(self):\n        ratios = [0, 0.1, 0.5, 1, 2]  # demonstrated lag_ratios\n\n        # Create dot groups\n        group = VGroup(*[Dot() for _ in range(4)]).arrange_submobjects()\n        groups = VGroup(*[group.copy() for _ in ratios]).arrange_submobjects(buff=1)\n        self.add(groups)\n\n        # Label groups\n        self.add(Text(\"lag_ratio = \", font_size=36).next_to(groups, UP, buff=1.5))\n        for group, ratio in zip(groups, ratios):\n            self.add(Text(str(ratio), font_size=36).next_to(group, UP))\n\n        #Animate groups with different lag_ratios\n        self.play(AnimationGroup(*[\n            group.animate(lag_ratio=ratio, run_time=1.5).shift(DOWN * 2)\n            for group, ratio in zip(groups, ratios)\n        ]))\n\n        # lag_ratio also works recursively on nested submobjects:\n        self.play(groups.animate(run_time=1, lag_ratio=0.1).shift(UP * 2))MethodsbeginBegin the animation.clean_up_from_sceneClean up theSceneafter finishing the animation.copyCreate a copy of the animation.create_starting_mobjectfinishFinish the animation.get_all_families_zippedget_all_mobjectsGet all mobjects involved in the animation.get_all_mobjects_to_updateGet all mobjects to be updated during the animation.get_rate_funcGet the rate function of the animation.get_run_timeGet the run time of the animation.get_sub_alphaGet the animation progress of any submobjects subanimation.interpolateSet the animation progress.interpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.interpolate_submobjectis_introducerTest if the animation is an introducer.is_removerTest if the animation is a remover.set_defaultSets the default values of keyword arguments.set_nameSet the name of the animation.set_rate_funcSet the rate function of the animation.set_run_timeSet the run time of the animation.update_mobjectsUpdates things like starting_mobject, and (for Transforms) target_mobject.Attributesrun_time_original__init__(mobject,lag_ratio=0.0,run_time=1.0,rate_func=<functionsmooth>,reverse_rate_function=False,name=None,remover=False,suspend_mobject_updating=True,introducer=False,*,_on_finish=<functionAnimation.<lambda>>,use_override=True)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject|OpenGLMobject|None)lag_ratio(float)run_time(float)rate_func(Callable[[float],float])reverse_rate_function(bool)name(str)remover(bool)suspend_mobject_updating(bool)introducer(bool)_on_finish(Callable[[],None])use_override(bool)Return type:None_setup_scene(scene)[source]\u00b6Setup up theScenebefore starting the animation.This includes toadd()the Animation\u2019sMobjectif the animation is an introducer.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonecopy()[source]\u00b6Create a copy of the animation.Returns:A copy ofselfReturn type:Animationfinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:Noneget_all_mobjects()[source]\u00b6Get all mobjects involved in the animation.Ordering must match the ordering of arguments to interpolate_submobjectReturns:The sequence of mobjects.Return type:Sequence[Mobject]get_all_mobjects_to_update()[source]\u00b6Get all mobjects to be updated during the animation.Returns:The list of mobjects to be updated during the animation.Return type:List[Mobject]get_rate_func()[source]\u00b6Get the rate function of the animation.Returns:The rate function of the animation.Return type:Callable[[float], float]get_run_time()[source]\u00b6Get the run time of the animation.Returns:The time the animation takes in seconds.Return type:floatget_sub_alpha(alpha,index,num_submobjects)[source]\u00b6Get the animation progress of any submobjects subanimation.Parameters:alpha(float) \u2013 The overall animation progressindex(int) \u2013 The index of the subanimation.num_submobjects(int) \u2013 The total count of subanimations.Returns:The progress of the subanimation.Return type:floatinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:Noneinterpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:Noneis_introducer()[source]\u00b6Test if the animation is an introducer.Returns:Trueif the animation is an introducer,Falseotherwise.Return type:boolis_remover()[source]\u00b6Test if the animation is a remover.Returns:Trueif the animation is a remover,Falseotherwise.Return type:boolclassmethodset_default(**kwargs)[source]\u00b6Sets the default values of keyword arguments.If this method is called without any additional keyword\narguments, the original default values of the initialization\nmethod of this class are restored.Parameters:kwargs\u2013 Passing any keyword argument will update the default\nvalues of the keyword arguments of the initialization\nfunction of this class.Return type:NoneExamplesExample: ChangeDefaultAnimation\u00b6frommanimimport*classChangeDefaultAnimation(Scene):defconstruct(self):Rotate.set_default(run_time=2,rate_func=rate_functions.linear)Indicate.set_default(color=None)S=Square(color=BLUE,fill_color=BLUE,fill_opacity=0.25)self.add(S)self.play(Rotate(S,PI))self.play(Indicate(S))Rotate.set_default()Indicate.set_default()class ChangeDefaultAnimation(Scene):\n    def construct(self):\n        Rotate.set_default(run_time=2, rate_func=rate_functions.linear)\n        Indicate.set_default(color=None)\n\n        S = Square(color=BLUE, fill_color=BLUE, fill_opacity=0.25)\n        self.add(S)\n        self.play(Rotate(S, PI))\n        self.play(Indicate(S))\n\n        Rotate.set_default()\n        Indicate.set_default()set_name(name)[source]\u00b6Set the name of the animation.Parameters:name(str) \u2013 The new name of the animation.Returns:selfReturn type:Animationset_rate_func(rate_func)[source]\u00b6Set the rate function of the animation.Parameters:rate_func(Callable[[float],float]) \u2013 The new function defining the animation progress based on the\nrelative runtime (seerate_functions).Returns:selfReturn type:Animationset_run_time(run_time)[source]\u00b6Set the run time of the animation.Parameters:run_time(float) \u2013 The new time the animation should take in seconds.note::(..) \u2013 The run_time of an animation should not be changed while it is already\nrunning.Returns:selfReturn type:Animationupdate_mobjects(dt)[source]\u00b6Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nBases:object\n\nAn animation.\n\nAnimations have a fixed time span.\n\nParameters:\n\nmobject\u2013 The mobject to be animated. This is not required for all types of animations.lag_ratio\u2013Defines the delay after which the animation is applied to submobjects. This lag\nis relative to the duration of the animation.This does not influence the total\nruntime of the animation. Instead the runtime of individual animations is\nadjusted so that the complete animation has the defined run time.run_time\u2013 The duration of the animation in seconds.rate_func\u2013The function defining the animation progress based on the relative runtime (seerate_functions) .For examplerate_func(0.5)is the proportion of the animation that is done\nafter half of the animations run time.reverse_rate_function\u2013 Reverses the rate function of the animation. Settingreverse_rate_functiondoes not have any effect onremoverorintroducer. These need to be\nset explicitly if an introducer-animation should be turned into a remover one\nand vice versa.name\u2013 The name of the animation. This gets displayed while rendering the animation.\nDefaults to <class-name>(<Mobject-name>).remover\u2013 Whether the given mobject should be removed from the scene after this animation.suspend_mobject_updating\u2013 Whether updaters of the mobject should be suspended during the animation.\n\nmobject\u2013 The mobject to be animated. This is not required for all types of animations.\n\nmobject\u2013 The mobject to be animated. This is not required for all types of animations.\n\nlag_ratio\u2013Defines the delay after which the animation is applied to submobjects. This lag\nis relative to the duration of the animation.This does not influence the total\nruntime of the animation. Instead the runtime of individual animations is\nadjusted so that the complete animation has the defined run time.\n\nlag_ratio\u2013Defines the delay after which the animation is applied to submobjects. This lag\nis relative to the duration of the animation.This does not influence the total\nruntime of the animation. Instead the runtime of individual animations is\nadjusted so that the complete animation has the defined run time.\n\nDefines the delay after which the animation is applied to submobjects. This lag\nis relative to the duration of the animation.\n\nThis does not influence the total\nruntime of the animation. Instead the runtime of individual animations is\nadjusted so that the complete animation has the defined run time.\n\nrun_time\u2013 The duration of the animation in seconds.\n\nrun_time\u2013 The duration of the animation in seconds.\n\nrate_func\u2013The function defining the animation progress based on the relative runtime (seerate_functions) .For examplerate_func(0.5)is the proportion of the animation that is done\nafter half of the animations run time.\n\nrate_func\u2013The function defining the animation progress based on the relative runtime (seerate_functions) .For examplerate_func(0.5)is the proportion of the animation that is done\nafter half of the animations run time.\n\nThe function defining the animation progress based on the relative runtime (seerate_functions) .\n\nFor examplerate_func(0.5)is the proportion of the animation that is done\nafter half of the animations run time.\n\nreverse_rate_function\u2013 Reverses the rate function of the animation. Settingreverse_rate_functiondoes not have any effect onremoverorintroducer. These need to be\nset explicitly if an introducer-animation should be turned into a remover one\nand vice versa.\n\nreverse_rate_function\u2013 Reverses the rate function of the animation. Settingreverse_rate_functiondoes not have any effect onremoverorintroducer. These need to be\nset explicitly if an introducer-animation should be turned into a remover one\nand vice versa.\n\nname\u2013 The name of the animation. This gets displayed while rendering the animation.\nDefaults to <class-name>(<Mobject-name>).\n\nname\u2013 The name of the animation. This gets displayed while rendering the animation.\nDefaults to <class-name>(<Mobject-name>).\n\nremover\u2013 Whether the given mobject should be removed from the scene after this animation.\n\nremover\u2013 Whether the given mobject should be removed from the scene after this animation.\n\nsuspend_mobject_updating\u2013 Whether updaters of the mobject should be suspended during the animation.\n\nsuspend_mobject_updating\u2013 Whether updaters of the mobject should be suspended during the animation.\n\nReturn type:\n\nSelf\n\nSelf\n\nNote\n\nIn the current implementation of this class, the specified rate function is applied\nwithinAnimation.interpolate_mobject()call as part of the call toAnimation.interpolate_submobject(). For subclasses ofAnimationthat are implemented by overridinginterpolate_mobject(), the rate function\nhas to be applied manually (e.g., by passingself.rate_func(alpha)instead\nof justalpha).\n\nExamples\n\nExample: LagRatios\u00b6\n\nMethods\n\nbegin\n\nBegin the animation.\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\ncopy\n\nCreate a copy of the animation.\n\ncreate_starting_mobject\n\nfinish\n\nFinish the animation.\n\nget_all_families_zipped\n\nget_all_mobjects\n\nGet all mobjects involved in the animation.\n\nget_all_mobjects_to_update\n\nGet all mobjects to be updated during the animation.\n\nget_rate_func\n\nGet the rate function of the animation.\n\nget_run_time\n\nGet the run time of the animation.\n\nget_sub_alpha\n\nGet the animation progress of any submobjects subanimation.\n\ninterpolate\n\nSet the animation progress.\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\ninterpolate_submobject\n\nis_introducer\n\nTest if the animation is an introducer.\n\nis_remover\n\nTest if the animation is a remover.\n\nset_default\n\nSets the default values of keyword arguments.\n\nset_name\n\nSet the name of the animation.\n\nset_rate_func\n\nSet the rate function of the animation.\n\nset_run_time\n\nSet the run time of the animation.\n\nupdate_mobjects\n\nUpdates things like starting_mobject, and (for Transforms) target_mobject.\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,lag_ratio=0.0,run_time=1.0,rate_func=<functionsmooth>,reverse_rate_function=False,name=None,remover=False,suspend_mobject_updating=True,introducer=False,*,_on_finish=<functionAnimation.<lambda>>,use_override=True)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject|OpenGLMobject|None)lag_ratio(float)run_time(float)rate_func(Callable[[float],float])reverse_rate_function(bool)name(str)remover(bool)suspend_mobject_updating(bool)introducer(bool)_on_finish(Callable[[],None])use_override(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject|OpenGLMobject|None)lag_ratio(float)run_time(float)rate_func(Callable[[float],float])reverse_rate_function(bool)name(str)remover(bool)suspend_mobject_updating(bool)introducer(bool)_on_finish(Callable[[],None])use_override(bool)\n\nmobject(Mobject|OpenGLMobject|None)\n\nmobject(Mobject|OpenGLMobject|None)\n\nlag_ratio(float)\n\nlag_ratio(float)\n\nrun_time(float)\n\nrun_time(float)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nreverse_rate_function(bool)\n\nreverse_rate_function(bool)\n\nname(str)\n\nname(str)\n\nremover(bool)\n\nremover(bool)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nintroducer(bool)\n\nintroducer(bool)\n\n_on_finish(Callable[[],None])\n\n_on_finish(Callable[[],None])\n\nuse_override(bool)\n\nuse_override(bool)\n\nReturn type:\n\nNone\n\nNone\n\n_setup_scene(scene)[source]\u00b6\n\nSetup up theScenebefore starting the animation.This includes toadd()the Animation\u2019sMobjectif the animation is an introducer.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nSetup up theScenebefore starting the animation.\n\nThis includes toadd()the Animation\u2019sMobjectif the animation is an introducer.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\ncopy()[source]\u00b6\n\nCreate a copy of the animation.Returns:A copy ofselfReturn type:Animation\n\nCreate a copy of the animation.\n\nReturns:\n\nA copy ofself\n\nA copy ofself\n\nReturn type:\n\nAnimation\n\nAnimation\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone\n\nget_all_mobjects()[source]\u00b6\n\nGet all mobjects involved in the animation.Ordering must match the ordering of arguments to interpolate_submobjectReturns:The sequence of mobjects.Return type:Sequence[Mobject]\n\nGet all mobjects involved in the animation.\n\nOrdering must match the ordering of arguments to interpolate_submobject\n\nReturns:\n\nThe sequence of mobjects.\n\nThe sequence of mobjects.\n\nReturn type:\n\nSequence[Mobject]\n\nSequence[Mobject]\n\nget_all_mobjects_to_update()[source]\u00b6\n\nGet all mobjects to be updated during the animation.Returns:The list of mobjects to be updated during the animation.Return type:List[Mobject]\n\nGet all mobjects to be updated during the animation.\n\nReturns:\n\nThe list of mobjects to be updated during the animation.\n\nThe list of mobjects to be updated during the animation.\n\nReturn type:\n\nList[Mobject]\n\nList[Mobject]\n\nget_rate_func()[source]\u00b6\n\nGet the rate function of the animation.Returns:The rate function of the animation.Return type:Callable[[float], float]\n\nGet the rate function of the animation.\n\nReturns:\n\nThe rate function of the animation.\n\nThe rate function of the animation.\n\nReturn type:\n\nCallable[[float], float]\n\nCallable[[float], float]\n\nget_run_time()[source]\u00b6\n\nGet the run time of the animation.Returns:The time the animation takes in seconds.Return type:float\n\nGet the run time of the animation.\n\nReturns:\n\nThe time the animation takes in seconds.\n\nThe time the animation takes in seconds.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_sub_alpha(alpha,index,num_submobjects)[source]\u00b6\n\nGet the animation progress of any submobjects subanimation.Parameters:alpha(float) \u2013 The overall animation progressindex(int) \u2013 The index of the subanimation.num_submobjects(int) \u2013 The total count of subanimations.Returns:The progress of the subanimation.Return type:float\n\nGet the animation progress of any submobjects subanimation.\n\nParameters:\n\nalpha(float) \u2013 The overall animation progressindex(int) \u2013 The index of the subanimation.num_submobjects(int) \u2013 The total count of subanimations.\n\nalpha(float) \u2013 The overall animation progress\n\nalpha(float) \u2013 The overall animation progress\n\nindex(int) \u2013 The index of the subanimation.\n\nindex(int) \u2013 The index of the subanimation.\n\nnum_submobjects(int) \u2013 The total count of subanimations.\n\nnum_submobjects(int) \u2013 The total count of subanimations.\n\nReturns:\n\nThe progress of the subanimation.\n\nThe progress of the subanimation.\n\nReturn type:\n\nfloat\n\nfloat\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone\n\nis_introducer()[source]\u00b6\n\nTest if the animation is an introducer.Returns:Trueif the animation is an introducer,Falseotherwise.Return type:bool\n\nTest if the animation is an introducer.\n\nReturns:\n\nTrueif the animation is an introducer,Falseotherwise.\n\nTrueif the animation is an introducer,Falseotherwise.\n\nReturn type:\n\nbool\n\nbool\n\nis_remover()[source]\u00b6\n\nTest if the animation is a remover.Returns:Trueif the animation is a remover,Falseotherwise.Return type:bool\n\nTest if the animation is a remover.\n\nReturns:\n\nTrueif the animation is a remover,Falseotherwise.\n\nTrueif the animation is a remover,Falseotherwise.\n\nReturn type:\n\nbool\n\nbool\n\nclassmethodset_default(**kwargs)[source]\u00b6\n\nSets the default values of keyword arguments.If this method is called without any additional keyword\narguments, the original default values of the initialization\nmethod of this class are restored.Parameters:kwargs\u2013 Passing any keyword argument will update the default\nvalues of the keyword arguments of the initialization\nfunction of this class.Return type:NoneExamplesExample: ChangeDefaultAnimation\u00b6frommanimimport*classChangeDefaultAnimation(Scene):defconstruct(self):Rotate.set_default(run_time=2,rate_func=rate_functions.linear)Indicate.set_default(color=None)S=Square(color=BLUE,fill_color=BLUE,fill_opacity=0.25)self.add(S)self.play(Rotate(S,PI))self.play(Indicate(S))Rotate.set_default()Indicate.set_default()class ChangeDefaultAnimation(Scene):\n    def construct(self):\n        Rotate.set_default(run_time=2, rate_func=rate_functions.linear)\n        Indicate.set_default(color=None)\n\n        S = Square(color=BLUE, fill_color=BLUE, fill_opacity=0.25)\n        self.add(S)\n        self.play(Rotate(S, PI))\n        self.play(Indicate(S))\n\n        Rotate.set_default()\n        Indicate.set_default()\n\nSets the default values of keyword arguments.\n\nIf this method is called without any additional keyword\narguments, the original default values of the initialization\nmethod of this class are restored.\n\nParameters:\n\nkwargs\u2013 Passing any keyword argument will update the default\nvalues of the keyword arguments of the initialization\nfunction of this class.\n\nkwargs\u2013 Passing any keyword argument will update the default\nvalues of the keyword arguments of the initialization\nfunction of this class.\n\nReturn type:\n\nNone\n\nNone\n\nExamples\n\nExample: ChangeDefaultAnimation\u00b6\n\nset_name(name)[source]\u00b6\n\nSet the name of the animation.Parameters:name(str) \u2013 The new name of the animation.Returns:selfReturn type:Animation\n\nSet the name of the animation.\n\nParameters:\n\nname(str) \u2013 The new name of the animation.\n\nname(str) \u2013 The new name of the animation.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nAnimation\n\nAnimation\n\nset_rate_func(rate_func)[source]\u00b6\n\nSet the rate function of the animation.Parameters:rate_func(Callable[[float],float]) \u2013 The new function defining the animation progress based on the\nrelative runtime (seerate_functions).Returns:selfReturn type:Animation\n\nSet the rate function of the animation.\n\nParameters:\n\nrate_func(Callable[[float],float]) \u2013 The new function defining the animation progress based on the\nrelative runtime (seerate_functions).\n\nrate_func(Callable[[float],float]) \u2013 The new function defining the animation progress based on the\nrelative runtime (seerate_functions).\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nAnimation\n\nAnimation\n\nset_run_time(run_time)[source]\u00b6\n\nSet the run time of the animation.Parameters:run_time(float) \u2013 The new time the animation should take in seconds.note::(..) \u2013 The run_time of an animation should not be changed while it is already\nrunning.Returns:selfReturn type:Animation\n\nSet the run time of the animation.\n\nParameters:\n\nrun_time(float) \u2013 The new time the animation should take in seconds.note::(..) \u2013 The run_time of an animation should not be changed while it is already\nrunning.\n\nrun_time(float) \u2013 The new time the animation should take in seconds.\n\nrun_time(float) \u2013 The new time the animation should take in seconds.\n\nnote::(..) \u2013 The run_time of an animation should not be changed while it is already\nrunning.\n\nnote::(..) \u2013 The run_time of an animation should not be changed while it is already\nrunning.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nAnimation\n\nAnimation\n\nupdate_mobjects(dt)[source]\u00b6\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.\n\nParameters:\n\ndt(float)\n\ndt(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLagRatios(Scene):defconstruct(self):ratios=[0,0.1,0.5,1,2]# demonstrated lag_ratios# Create dot groupsgroup=VGroup(*[Dot()for_inrange(4)]).arrange_submobjects()groups=VGroup(*[group.copy()for_inratios]).arrange_submobjects(buff=1)self.add(groups)# Label groupsself.add(Text(\"lag_ratio = \",font_size=36).next_to(groups,UP,buff=1.5))forgroup,ratioinzip(groups,ratios):self.add(Text(str(ratio),font_size=36).next_to(group,UP))#Animate groups with different lag_ratiosself.play(AnimationGroup(*[group.animate(lag_ratio=ratio,run_time=1.5).shift(DOWN*2)forgroup,ratioinzip(groups,ratios)]))# lag_ratio also works recursively on nested submobjects:self.play(groups.animate(run_time=1,lag_ratio=0.1).shift(UP*2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LagRatios(Scene):\n    def construct(self):\n        ratios = [0, 0.1, 0.5, 1, 2]  # demonstrated lag_ratios\n\n        # Create dot groups\n        group = VGroup(*[Dot() for _ in range(4)]).arrange_submobjects()\n        groups = VGroup(*[group.copy() for _ in ratios]).arrange_submobjects(buff=1)\n        self.add(groups)\n\n        # Label groups\n        self.add(Text(\"lag_ratio = \", font_size=36).next_to(groups, UP, buff=1.5))\n        for group, ratio in zip(groups, ratios):\n            self.add(Text(str(ratio), font_size=36).next_to(group, UP))\n\n        #Animate groups with different lag_ratios\n        self.play(AnimationGroup(*[\n            group.animate(lag_ratio=ratio, run_time=1.5).shift(DOWN * 2)\n            for group, ratio in zip(groups, ratios)\n        ]))\n\n        # lag_ratio also works recursively on nested submobjects:\n        self.play(groups.animate(run_time=1, lag_ratio=0.1).shift(UP * 2))",
+      "language": "python",
+      "context": "Example: LagRatios\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classChangeDefaultAnimation(Scene):defconstruct(self):Rotate.set_default(run_time=2,rate_func=rate_functions.linear)Indicate.set_default(color=None)S=Square(color=BLUE,fill_color=BLUE,fill_opacity=0.25)self.add(S)self.play(Rotate(S,PI))self.play(Indicate(S))Rotate.set_default()Indicate.set_default()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ChangeDefaultAnimation(Scene):\n    def construct(self):\n        Rotate.set_default(run_time=2, rate_func=rate_functions.linear)\n        Indicate.set_default(color=None)\n\n        S = Square(color=BLUE, fill_color=BLUE, fill_opacity=0.25)\n        self.add(S)\n        self.play(Rotate(S, PI))\n        self.play(Indicate(S))\n\n        Rotate.set_default()\n        Indicate.set_default()",
+      "language": "python",
+      "context": "Example: ChangeDefaultAnimation\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Animation",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_setup_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Setup up theScenebefore starting the animation."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    },
+    {
+      "name": "copy",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Create a copy of the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    },
+    {
+      "name": "get_all_mobjects",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get all mobjects involved in the animation."
+    },
+    {
+      "name": "get_all_mobjects_to_update",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get all mobjects to be updated during the animation."
+    },
+    {
+      "name": "get_rate_func",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get the rate function of the animation."
+    },
+    {
+      "name": "get_run_time",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get the run time of the animation."
+    },
+    {
+      "name": "get_sub_alpha",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Get the animation progress of any submobjects subanimation."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    },
+    {
+      "name": "is_introducer",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Test if the animation is an introducer."
+    },
+    {
+      "name": "is_remover",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Test if the animation is a remover."
+    },
+    {
+      "name": "set_default",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Sets the default values of keyword arguments."
+    },
+    {
+      "name": "set_name",
+      "class_name": null,
+      "parameters": [
+        "name"
+      ],
+      "return_type": null,
+      "description": "Set the name of the animation."
+    },
+    {
+      "name": "set_rate_func",
+      "class_name": null,
+      "parameters": [
+        "rate_func"
+      ],
+      "return_type": null,
+      "description": "Set the rate function of the animation."
+    },
+    {
+      "name": "set_run_time",
+      "class_name": null,
+      "parameters": [
+        "run_time"
+      ],
+      "return_type": null,
+      "description": "Set the run time of the animation."
+    },
+    {
+      "name": "update_mobjects",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject."
+    }
+  ],
+  "related_classes": [
+    "Rotate",
+    "Create",
+    "VGroup",
+    "Tex",
+    "Transform",
+    "AnimationGroup",
+    "Indicate",
+    "Text",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

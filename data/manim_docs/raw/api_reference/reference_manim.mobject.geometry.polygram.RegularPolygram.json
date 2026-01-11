@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.RegularPolygram.html",
+  "title": "RegularPolygram\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "RegularPolygram\u00b6\n\nQualified name:manim.mobject.geometry.polygram.RegularPolygram\n\nclassRegularPolygram(num_vertices,*,density=2,radius=1,start_angle=None,**kwargs)[source]\u00b6\n\nBases:PolygramAPolygramwith regularly spaced vertices.Parameters:num_vertices(int) \u2013 The number of vertices.density(int) \u2013The density of theRegularPolygram.Can be thought of as how many vertices to hop\nto draw a line between them. Everydensity-th\nvertex is connected.radius(float) \u2013 The radius of the circle that the vertices are placed on.start_angle(float|None) \u2013 The angle the vertices start at; the rotation of\ntheRegularPolygram.kwargs(Any) \u2013 Forwarded to the parent constructor.ExamplesExample: RegularPolygramExample\u00b6frommanimimport*classRegularPolygramExample(Scene):defconstruct(self):pentagram=RegularPolygram(5,radius=2)self.add(pentagram)class RegularPolygramExample(Scene):\n    def construct(self):\n        pentagram = RegularPolygram(5, radius=2)\n        self.add(pentagram)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(num_vertices,*,density=2,radius=1,start_angle=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:num_vertices(int)density(int)radius(float)start_angle(float|None)kwargs(Any)Return type:None\n\nBases:Polygram\n\nAPolygramwith regularly spaced vertices.\n\nParameters:\n\nnum_vertices(int) \u2013 The number of vertices.density(int) \u2013The density of theRegularPolygram.Can be thought of as how many vertices to hop\nto draw a line between them. Everydensity-th\nvertex is connected.radius(float) \u2013 The radius of the circle that the vertices are placed on.start_angle(float|None) \u2013 The angle the vertices start at; the rotation of\ntheRegularPolygram.kwargs(Any) \u2013 Forwarded to the parent constructor.\n\nnum_vertices(int) \u2013 The number of vertices.\n\nnum_vertices(int) \u2013 The number of vertices.\n\ndensity(int) \u2013The density of theRegularPolygram.Can be thought of as how many vertices to hop\nto draw a line between them. Everydensity-th\nvertex is connected.\n\ndensity(int) \u2013The density of theRegularPolygram.Can be thought of as how many vertices to hop\nto draw a line between them. Everydensity-th\nvertex is connected.\n\nThe density of theRegularPolygram.\n\nCan be thought of as how many vertices to hop\nto draw a line between them. Everydensity-th\nvertex is connected.\n\nradius(float) \u2013 The radius of the circle that the vertices are placed on.\n\nradius(float) \u2013 The radius of the circle that the vertices are placed on.\n\nstart_angle(float|None) \u2013 The angle the vertices start at; the rotation of\ntheRegularPolygram.\n\nstart_angle(float|None) \u2013 The angle the vertices start at; the rotation of\ntheRegularPolygram.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nExamples\n\nExample: RegularPolygramExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(num_vertices,*,density=2,radius=1,start_angle=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:num_vertices(int)density(int)radius(float)start_angle(float|None)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nnum_vertices(int)density(int)radius(float)start_angle(float|None)kwargs(Any)\n\nnum_vertices(int)\n\nnum_vertices(int)\n\ndensity(int)\n\ndensity(int)\n\nradius(float)\n\nradius(float)\n\nstart_angle(float|None)\n\nstart_angle(float|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classRegularPolygramExample(Scene):defconstruct(self):pentagram=RegularPolygram(5,radius=2)self.add(pentagram)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RegularPolygramExample(Scene):\n    def construct(self):\n        pentagram = RegularPolygram(5, radius=2)\n        self.add(pentagram)",
+      "language": "python",
+      "context": "Example: RegularPolygramExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "RegularPolygram",
+      "class_name": null,
+      "parameters": [
+        "num_vertices"
+      ],
+      "return_type": null,
+      "description": "Bases:Polygram"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "num_vertices"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "geometry",
+    "animation"
+  ]
+}

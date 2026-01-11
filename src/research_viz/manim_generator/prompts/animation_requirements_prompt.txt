@@ -79,7 +79,7 @@ Use `ShapeSpec` to define visual objects:
 - color: Color names or descriptions (e.g., "blue", "light green", "orange")
 - content: For text/equations, the actual content to display
 - from_kg_component: Component ID from KG (e.g., "comp_scaled_dot_prod")
-- properties: Additional properties as key-value pairs
+- properties: Additional properties as list of key-value pairs
 
 ### Examples:
 ```json
@@ -100,7 +100,11 @@ Use `ShapeSpec` to define visual objects:
   "position": "center",
   "color": "blue gradient",
   "represents": "Attention weight matrix showing relationships between words",
-  "properties": {"rows": 6, "cols": 6, "show_heatmap": true}
+  "properties": [
+    {"key": "rows", "value": "6"},
+    {"key": "cols", "value": "6"},
+    {"key": "show_heatmap", "value": "true"}
+  ]
 }
 ```
 
@@ -171,7 +175,7 @@ Use `MathAnimation` for complex mathematical operations:
 
 ### Optional but Recommended:
 - from_kg_operation: Operation ID from KG (e.g., "op_qk_matmul")
-- tensor_shapes: {"Q": "[batch, seq, d_k]", "K": "[batch, seq, d_k]"}
+- tensor_shapes: List of key-value pairs (e.g., [{"key": "Q", "value": "[batch, seq, d_k]"}])
 - show_intermediate_steps: true/false
 
 ### Example - Scaled Dot-Product Attention:
@@ -182,11 +186,11 @@ Use `MathAnimation` for complex mathematical operations:
   "input_formulas": ["Q", "K^T", "√d_k"],
   "output_formula": "softmax(QK^T/√d_k)V",
   "from_kg_operation": "op_scaled_dot_product",
-  "tensor_shapes": {
-    "Q": "[batch, seq, d_k]",
-    "K": "[batch, seq, d_k]",
-    "output": "[batch, seq, seq]"
-  },
+  "tensor_shapes": [
+    {"key": "Q", "value": "[batch, seq, d_k]"},
+    {"key": "K", "value": "[batch, seq, d_k]"},
+    {"key": "output", "value": "[batch, seq, seq]"}
+  ],
   "visualization_style": "step_by_step",
   "show_intermediate_steps": true,
   "duration": 8.0,
@@ -379,11 +383,11 @@ Here's a complete example for a scene with math animation:
           "input_formulas": ["Q ∈ ℝ^{seq×d_k}", "K^T ∈ ℝ^{d_k×seq}"],
           "output_formula": "L = QK^T ∈ ℝ^{seq×seq}",
           "from_kg_operation": "op_qk_matmul",
-          "tensor_shapes": {
-            "Q": "[batch, seq, d_k]",
-            "K": "[batch, seq, d_k]",
-            "L": "[batch, seq, seq]"
-          },
+          "tensor_shapes": [
+            {"key": "Q", "value": "[batch, seq, d_k]"},
+            {"key": "K", "value": "[batch, seq, d_k]"},
+            {"key": "L", "value": "[batch, seq, seq]"}
+          ],
           "visualization_style": "step_by_step",
           "show_intermediate_steps": true,
           "duration": 8.0,
@@ -398,12 +402,12 @@ Here's a complete example for a scene with math animation:
   ],
   "component_ids_visualized": ["comp_encoder_stack", "comp_mh_self_attn_enc", "comp_scaled_dot_prod"],
   "low_level_kg_sources": ["comp_mh_self_attn_enc", "comp_scaled_dot_prod"],
-  "color_scheme": {
-    "query": "blue",
-    "key": "green",
-    "value": "orange",
-    "attention": "red"
-  }
+  "color_scheme": [
+    {"key": "query", "value": "blue"},
+    {"key": "key", "value": "green"},
+    {"key": "value", "value": "orange"},
+    {"key": "attention", "value": "red"}
+  ]
 }
 ```
 

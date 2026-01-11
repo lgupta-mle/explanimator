@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.movement.html",
+  "title": "movement\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "movement\u00b6\n\nAnimations related to movement.\n\nClasses\n\nComplexHomotopy\n\nComplex Homotopy a function Cx[0, 1] to C\n\nHomotopy\n\nA Homotopy.\n\nMoveAlongPath\n\nMake one mobject move along the path of another mobject.\n\nPhaseFlow\n\nSmoothedVectorizedHomotopy",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "animation",
+    "math",
+    "graph"
+  ]
+}

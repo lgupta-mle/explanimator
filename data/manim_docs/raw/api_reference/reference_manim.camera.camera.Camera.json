@@ -1,0 +1,399 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.camera.Camera.html",
+  "title": "Camera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Camera\u00b6\n\nQualified name:manim.camera.camera.Camera\n\nclassCamera(background_image=None,frame_center=array([0.,0.,0.]),image_mode='RGBA',n_channels=4,pixel_array_dtype='uint8',cairo_line_width_multiple=0.01,use_z_index=True,background=None,pixel_height=None,pixel_width=None,frame_height=None,frame_width=None,frame_rate=None,background_color=None,background_opacity=None,**kwargs)[source]\u00b6\n\nBases:objectBase camera class.This is the object which takes care of what exactly is displayed\non screen at any given moment.Parameters:background_image(str|None) \u2013 The path to an image that should be the background image.\nIf not set, the background is filled withself.background_colorbackground(PixelArray|None) \u2013 Whatbackgroundis set to. By default,None.pixel_height(int|None) \u2013 The height of the scene in pixels.pixel_width(int|None) \u2013 The width of the scene in pixels.kwargs(Any) \u2013 Additional arguments (background_color,background_opacity)\nto be set.frame_center(Point3D)image_mode(str)n_channels(int)pixel_array_dtype(str)cairo_line_width_multiple(float)use_z_index(bool)frame_height(float|None)frame_width(float|None)frame_rate(float|None)background_color(ParsableManimColor|None)background_opacity(float|None)Methodsadjust_out_of_range_pointsIf any of the points in the passed array are out of the viable range, they are adjusted suitably.adjusted_thicknessComputes the adjusted stroke width for a zoomed camera.apply_fillFills the cairo contextapply_strokeApplies a stroke to the VMobject in the cairo context.cache_cairo_contextCaches the passed Pixel array into a Cairo Contextcapture_mobjectCapture mobjects by storing it inpixel_array.capture_mobjectsCapture mobjects by printing them onpixel_array.convert_pixel_arrayConverts a pixel array from values that have floats in then to proper RGB values.display_image_mobjectDisplays an ImageMobject by changing the pixel_array suitably.display_multiple_background_colored_vmobjectsDisplays multiple vmobjects that have the same color as the background.display_multiple_image_mobjectsDisplays multiple image mobjects by modifying the passed pixel_array.display_multiple_non_background_colored_vmobjectsDisplays multiple VMobjects in the cairo context, as long as they don't have background colors.display_multiple_point_cloud_mobjectsDisplays multiple PMobjects by modifying the passed pixel array.display_multiple_vectorized_mobjectsDisplays multiple VMobjects in the pixel_arraydisplay_point_cloudDisplays a PMobject by modifying the pixel array suitably.display_vectorizedDisplays a VMobject in the cairo contextget_background_colored_vmobject_displayerReturns the background_colored_vmobject_displayer if it exists or makes one and returns it if not.get_cached_cairo_contextReturns the cached cairo context of the passed pixel array if it exists, and None if it doesn't.get_cairo_contextReturns the cairo context for a pixel array after caching it to self.pixel_array_to_cairo_context If that array has already been cached, it returns the cached version instead.get_coords_of_all_pixelsReturns the cartesian coordinates of each pixel.get_fill_rgbasReturns the RGBA array of the fill of the passed VMobjectget_imageReturns an image from the passed pixel array, or from the current frame if the passed pixel array is none.get_mobjects_to_displayUsed to get the list of mobjects to display with the camera.get_stroke_rgbasGets the RGBA array for the stroke of the passed VMobject.get_thickening_nudgesDetermine a list of vectors used to nudge two-dimensional pixel coordinates.init_backgroundInitialize the background.is_in_frameChecks whether the passed mobject is in frame or not.make_background_from_funcMakes a pixel array for the background by using coords_to_colors_func to determine each pixel's color.on_screen_pixelsReturns array of pixels that are on the screen from a given array of pixel_coordinatesoverlay_PIL_imageOverlays a PIL image on the passed pixel array.overlay_rgba_arrayOverlays an RGBA array on top of the given Pixel array.points_to_pixel_coordsresetResets the camera's pixel array to that of the backgroundreset_pixel_shapeThis method resets the height and width of a single pixel to the passed new_height and new_width.resize_frame_shapeChanges frame_shape to match the aspect ratio of the pixels, where fixed_dimension determines whether frame_height or frame_width remains fixed while the other changes accordingly.set_backgroundSets the background to the passed pixel_array after converting to valid RGB values.set_background_from_funcSets the background to a pixel array using coords_to_colors_func to determine each pixel's color.set_cairo_context_colorSets the color of the cairo contextset_cairo_context_pathSets a path for the cairo context with the vmobject passedset_frame_to_backgroundset_pixel_arraySets the pixel array of the camera to the passed pixel array.thickened_coordinatesReturns thickened coordinates for a passed array of pixel coords and a thickness to thicken by.transform_points_pre_displaytype_or_raiseReturn the type of mobject, if it is a type that can be rendered.Attributesbackground_colorbackground_opacityadjust_out_of_range_points(points)[source]\u00b6If any of the points in the passed array are out of\nthe viable range, they are adjusted suitably.Parameters:points(ndarray) \u2013 The points to adjustReturns:The adjusted points.Return type:np.arrayadjusted_thickness(thickness)[source]\u00b6Computes the adjusted stroke width for a zoomed camera.Parameters:thickness(float) \u2013 The stroke width of a mobject.Returns:The adjusted stroke width that reflects zooming in with\nthe camera.Return type:floatapply_fill(ctx,vmobject)[source]\u00b6Fills the cairo contextParameters:ctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectReturns:The camera object.Return type:Cameraapply_stroke(ctx,vmobject,background=False)[source]\u00b6Applies a stroke to the VMobject in the cairo context.Parameters:ctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when applying this\nstroke width, by default FalseReturns:The camera object with the stroke applied.Return type:Cameracache_cairo_context(pixel_array,ctx)[source]\u00b6Caches the passed Pixel array into a Cairo ContextParameters:pixel_array(PixelArray) \u2013 The pixel array to cachectx(Context) \u2013 The context to cache it into.Return type:Nonecapture_mobject(mobject,**kwargs)[source]\u00b6Capture mobjects by storing it inpixel_array.This is a single-mobject version ofcapture_mobjects().Parameters:mobject(Mobject) \u2013 Mobject to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:Nonecapture_mobjects(mobjects,**kwargs)[source]\u00b6Capture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().convert_pixel_array(pixel_array,convert_from_floats=False)[source]\u00b6Converts a pixel array from values that have floats in then\nto proper RGB values.Parameters:pixel_array(PixelArray|list|tuple) \u2013 Pixel array to convert.convert_from_floats(bool) \u2013 Whether or not to convert float values to ints, by default FalseReturns:The new, converted pixel array.Return type:np.arraydisplay_image_mobject(image_mobject,pixel_array)[source]\u00b6Displays an ImageMobject by changing the pixel_array suitably.Parameters:image_mobject(AbstractImageMobject) \u2013 The imageMobject to displaypixel_array(np.ndarray) \u2013 The Pixel array to put the imagemobject in.Return type:Nonedisplay_multiple_background_colored_vmobjects(cvmobjects,pixel_array)[source]\u00b6Displays multiple vmobjects that have the same color as the background.Parameters:cvmobjects(Iterable[VMobject]) \u2013 List of Colored VMobjectspixel_array(PixelArray) \u2013 The pixel array.Returns:The camera object.Return type:Cameradisplay_multiple_image_mobjects(image_mobjects,pixel_array)[source]\u00b6Displays multiple image mobjects by modifying the passed pixel_array.Parameters:image_mobjects(Iterable[AbstractImageMobject]) \u2013 list of ImageMobjectspixel_array(PixelArray) \u2013 The pixel array to modify.Return type:Nonedisplay_multiple_non_background_colored_vmobjects(vmobjects,pixel_array)[source]\u00b6Displays multiple VMobjects in the cairo context, as long as they don\u2019t have\nbackground colors.Parameters:vmobjects(Iterable[VMobject]) \u2013 list of the VMobjectspixel_array(PixelArray) \u2013 The Pixel array to add the VMobjects to.Return type:Nonedisplay_multiple_point_cloud_mobjects(pmobjects,pixel_array)[source]\u00b6Displays multiple PMobjects by modifying the passed pixel array.Parameters:pmobjects(Iterable[PMobject]) \u2013 List of PMobjectspixel_array(PixelArray) \u2013 The pixel array to modify.Return type:Nonedisplay_multiple_vectorized_mobjects(vmobjects,pixel_array)[source]\u00b6Displays multiple VMobjects in the pixel_arrayParameters:vmobjects(list[VMobject]) \u2013 list of VMobjects to displaypixel_array(PixelArray) \u2013 The pixel arrayReturn type:Nonedisplay_point_cloud(pmobject,points,rgbas,thickness,pixel_array)[source]\u00b6Displays a PMobject by modifying the pixel array suitably.TODO: Write a description for the rgbas argument.Parameters:pmobject(PMobject) \u2013 Point Cloud Mobjectpoints(Point3D_Array) \u2013 The points to display in the point cloud mobjectrgbas(FloatRGBA_Array)thickness(float) \u2013 The thickness of each point of the PMobjectpixel_array(PixelArray) \u2013 The pixel array to modify.Return type:Nonedisplay_vectorized(vmobject,ctx)[source]\u00b6Displays a VMobject in the cairo contextParameters:vmobject(VMobject) \u2013 The Vectorized Mobject to displayctx(Context) \u2013 The cairo context to use.Returns:The camera objectReturn type:Cameraget_background_colored_vmobject_displayer()[source]\u00b6Returns the background_colored_vmobject_displayer\nif it exists or makes one and returns it if not.Returns:Object that displays VMobjects that have the same color\nas the background.Return type:BackgroundColoredVMobjectDisplayerget_cached_cairo_context(pixel_array)[source]\u00b6Returns the cached cairo context of the passed\npixel array if it exists, and None if it doesn\u2019t.Parameters:pixel_array(PixelArray) \u2013 The pixel array to check.Returns:The cached cairo context.Return type:cairo.Contextget_cairo_context(pixel_array)[source]\u00b6Returns the cairo context for a pixel array after\ncaching it to self.pixel_array_to_cairo_context\nIf that array has already been cached, it returns the\ncached version instead.Parameters:pixel_array(PixelArray) \u2013 The Pixel array to get the cairo context of.Returns:The cairo context of the pixel array.Return type:cairo.Contextget_coords_of_all_pixels()[source]\u00b6Returns the cartesian coordinates of each pixel.Returns:The array of cartesian coordinates.Return type:np.ndarrayget_fill_rgbas(vmobject)[source]\u00b6Returns the RGBA array of the fill of the passed VMobjectParameters:vmobject(VMobject) \u2013 The VMobjectReturns:The RGBA Array of the fill of the VMobjectReturn type:np.arrayget_image(pixel_array=None)[source]\u00b6Returns an image from the passed\npixel array, or from the current frame\nif the passed pixel array is none.Parameters:pixel_array(PixelArray|list|tuple|None) \u2013 The pixel array from which to get an image, by default NoneReturns:The PIL image of the array.Return type:PIL.Image.Imageget_mobjects_to_display(mobjects,include_submobjects=True,excluded_mobjects=None)[source]\u00b6Used to get the list of mobjects to display\nwith the camera.Parameters:mobjects(Iterable[Mobject]) \u2013 The Mobjectsinclude_submobjects(bool) \u2013 Whether or not to include the submobjects of mobjects, by default Trueexcluded_mobjects(list|None) \u2013 Any mobjects to exclude, by default NoneReturns:list of mobjectsReturn type:listget_stroke_rgbas(vmobject,background=False)[source]\u00b6Gets the RGBA array for the stroke of the passed\nVMobject.Parameters:vmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default FalseReturns:The RGBA array of the stroke.Return type:np.ndarrayget_thickening_nudges(thickness)[source]\u00b6Determine a list of vectors used to nudge\ntwo-dimensional pixel coordinates.Parameters:thickness(float)Return type:np.arrayinit_background()[source]\u00b6Initialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background.Return type:Noneis_in_frame(mobject)[source]\u00b6Checks whether the passed mobject is in\nframe or not.Parameters:mobject(Mobject) \u2013 The mobject for which the checking needs to be done.Returns:True if in frame, False otherwise.Return type:boolmake_background_from_func(coords_to_colors_func)[source]\u00b6Makes a pixel array for the background by using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats.Parameters:coords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that pointReturns:The pixel array which can then be passed to set_background.Return type:np.arrayon_screen_pixels(pixel_coords)[source]\u00b6Returns array of pixels that are on the screen from a given\narray of pixel_coordinatesParameters:pixel_coords(ndarray) \u2013 The pixel coords to check.Returns:The pixel coords on screen.Return type:np.arrayoverlay_PIL_image(pixel_array,image)[source]\u00b6Overlays a PIL image on the passed pixel array.Parameters:pixel_array(ndarray) \u2013 The Pixel arrayimage(<module 'PIL.Image' from '/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py'>) \u2013 The Image to overlay.Return type:Noneoverlay_rgba_array(pixel_array,new_array)[source]\u00b6Overlays an RGBA array on top of the given Pixel array.Parameters:pixel_array(ndarray) \u2013 The original pixel array to modify.new_array(ndarray) \u2013 The new pixel array to overlay.Return type:Nonereset()[source]\u00b6Resets the camera\u2019s pixel array\nto that of the backgroundReturns:The camera object after setting the pixel array.Return type:Camerareset_pixel_shape(new_height,new_width)[source]\u00b6This method resets the height and width\nof a single pixel to the passed new_height and new_width.Parameters:new_height(float) \u2013 The new height of the entire scene in pixelsnew_width(float) \u2013 The new width of the entire scene in pixelsReturn type:Noneresize_frame_shape(fixed_dimension=0)[source]\u00b6Changes frame_shape to match the aspect ratio\nof the pixels, where fixed_dimension determines\nwhether frame_height or frame_width\nremains fixed while the other changes accordingly.Parameters:fixed_dimension(int) \u2013 If 0, height is scaled with respect to width\nelse, width is scaled with respect to height.Return type:Noneset_background(pixel_array,convert_from_floats=False)[source]\u00b6Sets the background to the passed pixel_array after converting\nto valid RGB values.Parameters:pixel_array(PixelArray|list|tuple) \u2013 The pixel array to set the background to.convert_from_floats(bool) \u2013 Whether or not to convert floats values to proper RGB valid ones, by default FalseReturn type:Noneset_background_from_func(coords_to_colors_func)[source]\u00b6Sets the background to a pixel array using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats.Parameters:coords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that pointReturn type:Noneset_cairo_context_color(ctx,rgbas,vmobject)[source]\u00b6Sets the color of the cairo contextParameters:ctx(Context) \u2013 The cairo contextrgbas(FloatRGBALike_Array) \u2013 The RGBA array with which to color the context.vmobject(VMobject) \u2013 The VMobject with which to set the color.Returns:The camera objectReturn type:Cameraset_cairo_context_path(ctx,vmobject)[source]\u00b6Sets a path for the cairo context with the vmobject passedParameters:ctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectReturns:Camera object after setting cairo_context_pathReturn type:Cameraset_pixel_array(pixel_array,convert_from_floats=False)[source]\u00b6Sets the pixel array of the camera to the passed pixel array.Parameters:pixel_array(PixelArray|list|tuple) \u2013 The pixel array to convert and then set as the camera\u2019s pixel array.convert_from_floats(bool) \u2013 Whether or not to convert float values to proper RGB values, by default FalseReturn type:Nonethickened_coordinates(pixel_coords,thickness)[source]\u00b6Returns thickened coordinates for a passed array of pixel coords and\na thickness to thicken by.Parameters:pixel_coords(ndarray) \u2013 Pixel coordinatesthickness(float) \u2013 ThicknessReturns:Array of thickened pixel coords.Return type:np.arraytype_or_raise(mobject)[source]\u00b6Return the type of mobject, if it is a type that can be rendered.Ifmobjectis an instance of a class that inherits from a class that\ncan be rendered, return the super class.  For example, an instance of a\nSquare is also an instance of VMobject, and these can be rendered.\nTherefore,type_or_raise(Square())returns True.Parameters:mobject(Mobject) \u2013 The object to take the type of.Return type:type[VMobject] | type[PMobject] | type[AbstractImageMobject] | type[Mobject]NotesFor a list of classes that can currently be rendered, seedisplay_funcs().Returns:The type of mobjects, if it can be rendered.Return type:Type[Mobject]Raises:TypeError\u2013 When mobject is not an instance of a class that can be rendered.Parameters:mobject(Mobject)\n\nBases:object\n\nBase camera class.\n\nThis is the object which takes care of what exactly is displayed\non screen at any given moment.\n\nParameters:\n\nbackground_image(str|None) \u2013 The path to an image that should be the background image.\nIf not set, the background is filled withself.background_colorbackground(PixelArray|None) \u2013 Whatbackgroundis set to. By default,None.pixel_height(int|None) \u2013 The height of the scene in pixels.pixel_width(int|None) \u2013 The width of the scene in pixels.kwargs(Any) \u2013 Additional arguments (background_color,background_opacity)\nto be set.frame_center(Point3D)image_mode(str)n_channels(int)pixel_array_dtype(str)cairo_line_width_multiple(float)use_z_index(bool)frame_height(float|None)frame_width(float|None)frame_rate(float|None)background_color(ParsableManimColor|None)background_opacity(float|None)\n\nbackground_image(str|None) \u2013 The path to an image that should be the background image.\nIf not set, the background is filled withself.background_color\n\nbackground_image(str|None) \u2013 The path to an image that should be the background image.\nIf not set, the background is filled withself.background_color\n\nbackground(PixelArray|None) \u2013 Whatbackgroundis set to. By default,None.\n\nbackground(PixelArray|None) \u2013 Whatbackgroundis set to. By default,None.\n\npixel_height(int|None) \u2013 The height of the scene in pixels.\n\npixel_height(int|None) \u2013 The height of the scene in pixels.\n\npixel_width(int|None) \u2013 The width of the scene in pixels.\n\npixel_width(int|None) \u2013 The width of the scene in pixels.\n\nkwargs(Any) \u2013 Additional arguments (background_color,background_opacity)\nto be set.\n\nkwargs(Any) \u2013 Additional arguments (background_color,background_opacity)\nto be set.\n\nframe_center(Point3D)\n\nframe_center(Point3D)\n\nimage_mode(str)\n\nimage_mode(str)\n\nn_channels(int)\n\nn_channels(int)\n\npixel_array_dtype(str)\n\npixel_array_dtype(str)\n\ncairo_line_width_multiple(float)\n\ncairo_line_width_multiple(float)\n\nuse_z_index(bool)\n\nuse_z_index(bool)\n\nframe_height(float|None)\n\nframe_height(float|None)\n\nframe_width(float|None)\n\nframe_width(float|None)\n\nframe_rate(float|None)\n\nframe_rate(float|None)\n\nbackground_color(ParsableManimColor|None)\n\nbackground_color(ParsableManimColor|None)\n\nbackground_opacity(float|None)\n\nbackground_opacity(float|None)\n\nMethods\n\nadjust_out_of_range_points\n\nIf any of the points in the passed array are out of the viable range, they are adjusted suitably.\n\nadjusted_thickness\n\nComputes the adjusted stroke width for a zoomed camera.\n\napply_fill\n\nFills the cairo context\n\napply_stroke\n\nApplies a stroke to the VMobject in the cairo context.\n\ncache_cairo_context\n\nCaches the passed Pixel array into a Cairo Context\n\ncapture_mobject\n\nCapture mobjects by storing it inpixel_array.\n\ncapture_mobjects\n\nCapture mobjects by printing them onpixel_array.\n\nconvert_pixel_array\n\nConverts a pixel array from values that have floats in then to proper RGB values.\n\ndisplay_image_mobject\n\nDisplays an ImageMobject by changing the pixel_array suitably.\n\ndisplay_multiple_background_colored_vmobjects\n\nDisplays multiple vmobjects that have the same color as the background.\n\ndisplay_multiple_image_mobjects\n\nDisplays multiple image mobjects by modifying the passed pixel_array.\n\ndisplay_multiple_non_background_colored_vmobjects\n\nDisplays multiple VMobjects in the cairo context, as long as they don't have background colors.\n\ndisplay_multiple_point_cloud_mobjects\n\nDisplays multiple PMobjects by modifying the passed pixel array.\n\ndisplay_multiple_vectorized_mobjects\n\nDisplays multiple VMobjects in the pixel_array\n\ndisplay_point_cloud\n\nDisplays a PMobject by modifying the pixel array suitably.\n\ndisplay_vectorized\n\nDisplays a VMobject in the cairo context\n\nget_background_colored_vmobject_displayer\n\nReturns the background_colored_vmobject_displayer if it exists or makes one and returns it if not.\n\nget_cached_cairo_context\n\nReturns the cached cairo context of the passed pixel array if it exists, and None if it doesn't.\n\nget_cairo_context\n\nReturns the cairo context for a pixel array after caching it to self.pixel_array_to_cairo_context If that array has already been cached, it returns the cached version instead.\n\nget_coords_of_all_pixels\n\nReturns the cartesian coordinates of each pixel.\n\nget_fill_rgbas\n\nReturns the RGBA array of the fill of the passed VMobject\n\nget_image\n\nReturns an image from the passed pixel array, or from the current frame if the passed pixel array is none.\n\nget_mobjects_to_display\n\nUsed to get the list of mobjects to display with the camera.\n\nget_stroke_rgbas\n\nGets the RGBA array for the stroke of the passed VMobject.\n\nget_thickening_nudges\n\nDetermine a list of vectors used to nudge two-dimensional pixel coordinates.\n\ninit_background\n\nInitialize the background.\n\nis_in_frame\n\nChecks whether the passed mobject is in frame or not.\n\nmake_background_from_func\n\nMakes a pixel array for the background by using coords_to_colors_func to determine each pixel's color.\n\non_screen_pixels\n\nReturns array of pixels that are on the screen from a given array of pixel_coordinates\n\noverlay_PIL_image\n\nOverlays a PIL image on the passed pixel array.\n\noverlay_rgba_array\n\nOverlays an RGBA array on top of the given Pixel array.\n\npoints_to_pixel_coords\n\nreset\n\nResets the camera's pixel array to that of the background\n\nreset_pixel_shape\n\nThis method resets the height and width of a single pixel to the passed new_height and new_width.\n\nresize_frame_shape\n\nChanges frame_shape to match the aspect ratio of the pixels, where fixed_dimension determines whether frame_height or frame_width remains fixed while the other changes accordingly.\n\nset_background\n\nSets the background to the passed pixel_array after converting to valid RGB values.\n\nset_background_from_func\n\nSets the background to a pixel array using coords_to_colors_func to determine each pixel's color.\n\nset_cairo_context_color\n\nSets the color of the cairo context\n\nset_cairo_context_path\n\nSets a path for the cairo context with the vmobject passed\n\nset_frame_to_background\n\nset_pixel_array\n\nSets the pixel array of the camera to the passed pixel array.\n\nthickened_coordinates\n\nReturns thickened coordinates for a passed array of pixel coords and a thickness to thicken by.\n\ntransform_points_pre_display\n\ntype_or_raise\n\nReturn the type of mobject, if it is a type that can be rendered.\n\nAttributes\n\nbackground_color\n\nbackground_opacity\n\nadjust_out_of_range_points(points)[source]\u00b6\n\nIf any of the points in the passed array are out of\nthe viable range, they are adjusted suitably.Parameters:points(ndarray) \u2013 The points to adjustReturns:The adjusted points.Return type:np.array\n\nIf any of the points in the passed array are out of\nthe viable range, they are adjusted suitably.\n\nParameters:\n\npoints(ndarray) \u2013 The points to adjust\n\npoints(ndarray) \u2013 The points to adjust\n\nReturns:\n\nThe adjusted points.\n\nThe adjusted points.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nadjusted_thickness(thickness)[source]\u00b6\n\nComputes the adjusted stroke width for a zoomed camera.Parameters:thickness(float) \u2013 The stroke width of a mobject.Returns:The adjusted stroke width that reflects zooming in with\nthe camera.Return type:float\n\nComputes the adjusted stroke width for a zoomed camera.\n\nParameters:\n\nthickness(float) \u2013 The stroke width of a mobject.\n\nthickness(float) \u2013 The stroke width of a mobject.\n\nReturns:\n\nThe adjusted stroke width that reflects zooming in with\nthe camera.\n\nThe adjusted stroke width that reflects zooming in with\nthe camera.\n\nReturn type:\n\nfloat\n\nfloat\n\napply_fill(ctx,vmobject)[source]\u00b6\n\nFills the cairo contextParameters:ctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectReturns:The camera object.Return type:Camera\n\nFills the cairo context\n\nParameters:\n\nctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobject\n\nctx(Context) \u2013 The cairo context\n\nctx(Context) \u2013 The cairo context\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nReturns:\n\nThe camera object.\n\nThe camera object.\n\nReturn type:\n\nCamera\n\nCamera\n\napply_stroke(ctx,vmobject,background=False)[source]\u00b6\n\nApplies a stroke to the VMobject in the cairo context.Parameters:ctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when applying this\nstroke width, by default FalseReturns:The camera object with the stroke applied.Return type:Camera\n\nApplies a stroke to the VMobject in the cairo context.\n\nParameters:\n\nctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when applying this\nstroke width, by default False\n\nctx(Context) \u2013 The cairo context\n\nctx(Context) \u2013 The cairo context\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nbackground(bool) \u2013 Whether or not to consider the background when applying this\nstroke width, by default False\n\nbackground(bool) \u2013 Whether or not to consider the background when applying this\nstroke width, by default False\n\nReturns:\n\nThe camera object with the stroke applied.\n\nThe camera object with the stroke applied.\n\nReturn type:\n\nCamera\n\nCamera\n\ncache_cairo_context(pixel_array,ctx)[source]\u00b6\n\nCaches the passed Pixel array into a Cairo ContextParameters:pixel_array(PixelArray) \u2013 The pixel array to cachectx(Context) \u2013 The context to cache it into.Return type:None\n\nCaches the passed Pixel array into a Cairo Context\n\nParameters:\n\npixel_array(PixelArray) \u2013 The pixel array to cachectx(Context) \u2013 The context to cache it into.\n\npixel_array(PixelArray) \u2013 The pixel array to cache\n\npixel_array(PixelArray) \u2013 The pixel array to cache\n\nctx(Context) \u2013 The context to cache it into.\n\nctx(Context) \u2013 The context to cache it into.\n\nReturn type:\n\nNone\n\nNone\n\ncapture_mobject(mobject,**kwargs)[source]\u00b6\n\nCapture mobjects by storing it inpixel_array.This is a single-mobject version ofcapture_mobjects().Parameters:mobject(Mobject) \u2013 Mobject to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:None\n\nCapture mobjects by storing it inpixel_array.\n\nThis is a single-mobject version ofcapture_mobjects().\n\nParameters:\n\nmobject(Mobject) \u2013 Mobject to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nmobject(Mobject) \u2013 Mobject to capture.\n\nmobject(Mobject) \u2013 Mobject to capture.\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nReturn type:\n\nNone\n\nNone\n\ncapture_mobjects(mobjects,**kwargs)[source]\u00b6\n\nCapture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nCapture mobjects by printing them onpixel_array.\n\nThis is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nReturn type:\n\nNone\n\nNone\n\nNotes\n\nFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nconvert_pixel_array(pixel_array,convert_from_floats=False)[source]\u00b6\n\nConverts a pixel array from values that have floats in then\nto proper RGB values.Parameters:pixel_array(PixelArray|list|tuple) \u2013 Pixel array to convert.convert_from_floats(bool) \u2013 Whether or not to convert float values to ints, by default FalseReturns:The new, converted pixel array.Return type:np.array\n\nConverts a pixel array from values that have floats in then\nto proper RGB values.\n\nParameters:\n\npixel_array(PixelArray|list|tuple) \u2013 Pixel array to convert.convert_from_floats(bool) \u2013 Whether or not to convert float values to ints, by default False\n\npixel_array(PixelArray|list|tuple) \u2013 Pixel array to convert.\n\npixel_array(PixelArray|list|tuple) \u2013 Pixel array to convert.\n\nconvert_from_floats(bool) \u2013 Whether or not to convert float values to ints, by default False\n\nconvert_from_floats(bool) \u2013 Whether or not to convert float values to ints, by default False\n\nReturns:\n\nThe new, converted pixel array.\n\nThe new, converted pixel array.\n\nReturn type:\n\nnp.array\n\nnp.array\n\ndisplay_image_mobject(image_mobject,pixel_array)[source]\u00b6\n\nDisplays an ImageMobject by changing the pixel_array suitably.Parameters:image_mobject(AbstractImageMobject) \u2013 The imageMobject to displaypixel_array(np.ndarray) \u2013 The Pixel array to put the imagemobject in.Return type:None\n\nDisplays an ImageMobject by changing the pixel_array suitably.\n\nParameters:\n\nimage_mobject(AbstractImageMobject) \u2013 The imageMobject to displaypixel_array(np.ndarray) \u2013 The Pixel array to put the imagemobject in.\n\nimage_mobject(AbstractImageMobject) \u2013 The imageMobject to display\n\nimage_mobject(AbstractImageMobject) \u2013 The imageMobject to display\n\npixel_array(np.ndarray) \u2013 The Pixel array to put the imagemobject in.\n\npixel_array(np.ndarray) \u2013 The Pixel array to put the imagemobject in.\n\nReturn type:\n\nNone\n\nNone\n\ndisplay_multiple_background_colored_vmobjects(cvmobjects,pixel_array)[source]\u00b6\n\nDisplays multiple vmobjects that have the same color as the background.Parameters:cvmobjects(Iterable[VMobject]) \u2013 List of Colored VMobjectspixel_array(PixelArray) \u2013 The pixel array.Returns:The camera object.Return type:Camera\n\nDisplays multiple vmobjects that have the same color as the background.\n\nParameters:\n\ncvmobjects(Iterable[VMobject]) \u2013 List of Colored VMobjectspixel_array(PixelArray) \u2013 The pixel array.\n\ncvmobjects(Iterable[VMobject]) \u2013 List of Colored VMobjects\n\ncvmobjects(Iterable[VMobject]) \u2013 List of Colored VMobjects\n\npixel_array(PixelArray) \u2013 The pixel array.\n\npixel_array(PixelArray) \u2013 The pixel array.\n\nReturns:\n\nThe camera object.\n\nThe camera object.\n\nReturn type:\n\nCamera\n\nCamera\n\ndisplay_multiple_image_mobjects(image_mobjects,pixel_array)[source]\u00b6\n\nDisplays multiple image mobjects by modifying the passed pixel_array.Parameters:image_mobjects(Iterable[AbstractImageMobject]) \u2013 list of ImageMobjectspixel_array(PixelArray) \u2013 The pixel array to modify.Return type:None\n\nDisplays multiple image mobjects by modifying the passed pixel_array.\n\nParameters:\n\nimage_mobjects(Iterable[AbstractImageMobject]) \u2013 list of ImageMobjectspixel_array(PixelArray) \u2013 The pixel array to modify.\n\nimage_mobjects(Iterable[AbstractImageMobject]) \u2013 list of ImageMobjects\n\nimage_mobjects(Iterable[AbstractImageMobject]) \u2013 list of ImageMobjects\n\npixel_array(PixelArray) \u2013 The pixel array to modify.\n\npixel_array(PixelArray) \u2013 The pixel array to modify.\n\nReturn type:\n\nNone\n\nNone\n\ndisplay_multiple_non_background_colored_vmobjects(vmobjects,pixel_array)[source]\u00b6\n\nDisplays multiple VMobjects in the cairo context, as long as they don\u2019t have\nbackground colors.Parameters:vmobjects(Iterable[VMobject]) \u2013 list of the VMobjectspixel_array(PixelArray) \u2013 The Pixel array to add the VMobjects to.Return type:None\n\nDisplays multiple VMobjects in the cairo context, as long as they don\u2019t have\nbackground colors.\n\nParameters:\n\nvmobjects(Iterable[VMobject]) \u2013 list of the VMobjectspixel_array(PixelArray) \u2013 The Pixel array to add the VMobjects to.\n\nvmobjects(Iterable[VMobject]) \u2013 list of the VMobjects\n\nvmobjects(Iterable[VMobject]) \u2013 list of the VMobjects\n\npixel_array(PixelArray) \u2013 The Pixel array to add the VMobjects to.\n\npixel_array(PixelArray) \u2013 The Pixel array to add the VMobjects to.\n\nReturn type:\n\nNone\n\nNone\n\ndisplay_multiple_point_cloud_mobjects(pmobjects,pixel_array)[source]\u00b6\n\nDisplays multiple PMobjects by modifying the passed pixel array.Parameters:pmobjects(Iterable[PMobject]) \u2013 List of PMobjectspixel_array(PixelArray) \u2013 The pixel array to modify.Return type:None\n\nDisplays multiple PMobjects by modifying the passed pixel array.\n\nParameters:\n\npmobjects(Iterable[PMobject]) \u2013 List of PMobjectspixel_array(PixelArray) \u2013 The pixel array to modify.\n\npmobjects(Iterable[PMobject]) \u2013 List of PMobjects\n\npmobjects(Iterable[PMobject]) \u2013 List of PMobjects\n\npixel_array(PixelArray) \u2013 The pixel array to modify.\n\npixel_array(PixelArray) \u2013 The pixel array to modify.\n\nReturn type:\n\nNone\n\nNone\n\ndisplay_multiple_vectorized_mobjects(vmobjects,pixel_array)[source]\u00b6\n\nDisplays multiple VMobjects in the pixel_arrayParameters:vmobjects(list[VMobject]) \u2013 list of VMobjects to displaypixel_array(PixelArray) \u2013 The pixel arrayReturn type:None\n\nDisplays multiple VMobjects in the pixel_array\n\nParameters:\n\nvmobjects(list[VMobject]) \u2013 list of VMobjects to displaypixel_array(PixelArray) \u2013 The pixel array\n\nvmobjects(list[VMobject]) \u2013 list of VMobjects to display\n\nvmobjects(list[VMobject]) \u2013 list of VMobjects to display\n\npixel_array(PixelArray) \u2013 The pixel array\n\npixel_array(PixelArray) \u2013 The pixel array\n\nReturn type:\n\nNone\n\nNone\n\ndisplay_point_cloud(pmobject,points,rgbas,thickness,pixel_array)[source]\u00b6\n\nDisplays a PMobject by modifying the pixel array suitably.TODO: Write a description for the rgbas argument.Parameters:pmobject(PMobject) \u2013 Point Cloud Mobjectpoints(Point3D_Array) \u2013 The points to display in the point cloud mobjectrgbas(FloatRGBA_Array)thickness(float) \u2013 The thickness of each point of the PMobjectpixel_array(PixelArray) \u2013 The pixel array to modify.Return type:None\n\nDisplays a PMobject by modifying the pixel array suitably.\n\nTODO: Write a description for the rgbas argument.\n\nParameters:\n\npmobject(PMobject) \u2013 Point Cloud Mobjectpoints(Point3D_Array) \u2013 The points to display in the point cloud mobjectrgbas(FloatRGBA_Array)thickness(float) \u2013 The thickness of each point of the PMobjectpixel_array(PixelArray) \u2013 The pixel array to modify.\n\npmobject(PMobject) \u2013 Point Cloud Mobject\n\npmobject(PMobject) \u2013 Point Cloud Mobject\n\npoints(Point3D_Array) \u2013 The points to display in the point cloud mobject\n\npoints(Point3D_Array) \u2013 The points to display in the point cloud mobject\n\nrgbas(FloatRGBA_Array)\n\nrgbas(FloatRGBA_Array)\n\nthickness(float) \u2013 The thickness of each point of the PMobject\n\nthickness(float) \u2013 The thickness of each point of the PMobject\n\npixel_array(PixelArray) \u2013 The pixel array to modify.\n\npixel_array(PixelArray) \u2013 The pixel array to modify.\n\nReturn type:\n\nNone\n\nNone\n\ndisplay_vectorized(vmobject,ctx)[source]\u00b6\n\nDisplays a VMobject in the cairo contextParameters:vmobject(VMobject) \u2013 The Vectorized Mobject to displayctx(Context) \u2013 The cairo context to use.Returns:The camera objectReturn type:Camera\n\nDisplays a VMobject in the cairo context\n\nParameters:\n\nvmobject(VMobject) \u2013 The Vectorized Mobject to displayctx(Context) \u2013 The cairo context to use.\n\nvmobject(VMobject) \u2013 The Vectorized Mobject to display\n\nvmobject(VMobject) \u2013 The Vectorized Mobject to display\n\nctx(Context) \u2013 The cairo context to use.\n\nctx(Context) \u2013 The cairo context to use.\n\nReturns:\n\nThe camera object\n\nThe camera object\n\nReturn type:\n\nCamera\n\nCamera\n\nget_background_colored_vmobject_displayer()[source]\u00b6\n\nReturns the background_colored_vmobject_displayer\nif it exists or makes one and returns it if not.Returns:Object that displays VMobjects that have the same color\nas the background.Return type:BackgroundColoredVMobjectDisplayer\n\nReturns the background_colored_vmobject_displayer\nif it exists or makes one and returns it if not.\n\nReturns:\n\nObject that displays VMobjects that have the same color\nas the background.\n\nObject that displays VMobjects that have the same color\nas the background.\n\nReturn type:\n\nBackgroundColoredVMobjectDisplayer\n\nBackgroundColoredVMobjectDisplayer\n\nget_cached_cairo_context(pixel_array)[source]\u00b6\n\nReturns the cached cairo context of the passed\npixel array if it exists, and None if it doesn\u2019t.Parameters:pixel_array(PixelArray) \u2013 The pixel array to check.Returns:The cached cairo context.Return type:cairo.Context\n\nReturns the cached cairo context of the passed\npixel array if it exists, and None if it doesn\u2019t.\n\nParameters:\n\npixel_array(PixelArray) \u2013 The pixel array to check.\n\npixel_array(PixelArray) \u2013 The pixel array to check.\n\nReturns:\n\nThe cached cairo context.\n\nThe cached cairo context.\n\nReturn type:\n\ncairo.Context\n\ncairo.Context\n\nget_cairo_context(pixel_array)[source]\u00b6\n\nReturns the cairo context for a pixel array after\ncaching it to self.pixel_array_to_cairo_context\nIf that array has already been cached, it returns the\ncached version instead.Parameters:pixel_array(PixelArray) \u2013 The Pixel array to get the cairo context of.Returns:The cairo context of the pixel array.Return type:cairo.Context\n\nReturns the cairo context for a pixel array after\ncaching it to self.pixel_array_to_cairo_context\nIf that array has already been cached, it returns the\ncached version instead.\n\nParameters:\n\npixel_array(PixelArray) \u2013 The Pixel array to get the cairo context of.\n\npixel_array(PixelArray) \u2013 The Pixel array to get the cairo context of.\n\nReturns:\n\nThe cairo context of the pixel array.\n\nThe cairo context of the pixel array.\n\nReturn type:\n\ncairo.Context\n\ncairo.Context\n\nget_coords_of_all_pixels()[source]\u00b6\n\nReturns the cartesian coordinates of each pixel.Returns:The array of cartesian coordinates.Return type:np.ndarray\n\nReturns the cartesian coordinates of each pixel.\n\nReturns:\n\nThe array of cartesian coordinates.\n\nThe array of cartesian coordinates.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nget_fill_rgbas(vmobject)[source]\u00b6\n\nReturns the RGBA array of the fill of the passed VMobjectParameters:vmobject(VMobject) \u2013 The VMobjectReturns:The RGBA Array of the fill of the VMobjectReturn type:np.array\n\nReturns the RGBA array of the fill of the passed VMobject\n\nParameters:\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nReturns:\n\nThe RGBA Array of the fill of the VMobject\n\nThe RGBA Array of the fill of the VMobject\n\nReturn type:\n\nnp.array\n\nnp.array\n\nget_image(pixel_array=None)[source]\u00b6\n\nReturns an image from the passed\npixel array, or from the current frame\nif the passed pixel array is none.Parameters:pixel_array(PixelArray|list|tuple|None) \u2013 The pixel array from which to get an image, by default NoneReturns:The PIL image of the array.Return type:PIL.Image.Image\n\nReturns an image from the passed\npixel array, or from the current frame\nif the passed pixel array is none.\n\nParameters:\n\npixel_array(PixelArray|list|tuple|None) \u2013 The pixel array from which to get an image, by default None\n\npixel_array(PixelArray|list|tuple|None) \u2013 The pixel array from which to get an image, by default None\n\nReturns:\n\nThe PIL image of the array.\n\nThe PIL image of the array.\n\nReturn type:\n\nPIL.Image.Image\n\nPIL.Image.Image\n\nget_mobjects_to_display(mobjects,include_submobjects=True,excluded_mobjects=None)[source]\u00b6\n\nUsed to get the list of mobjects to display\nwith the camera.Parameters:mobjects(Iterable[Mobject]) \u2013 The Mobjectsinclude_submobjects(bool) \u2013 Whether or not to include the submobjects of mobjects, by default Trueexcluded_mobjects(list|None) \u2013 Any mobjects to exclude, by default NoneReturns:list of mobjectsReturn type:list\n\nUsed to get the list of mobjects to display\nwith the camera.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 The Mobjectsinclude_submobjects(bool) \u2013 Whether or not to include the submobjects of mobjects, by default Trueexcluded_mobjects(list|None) \u2013 Any mobjects to exclude, by default None\n\nmobjects(Iterable[Mobject]) \u2013 The Mobjects\n\nmobjects(Iterable[Mobject]) \u2013 The Mobjects\n\ninclude_submobjects(bool) \u2013 Whether or not to include the submobjects of mobjects, by default True\n\ninclude_submobjects(bool) \u2013 Whether or not to include the submobjects of mobjects, by default True\n\nexcluded_mobjects(list|None) \u2013 Any mobjects to exclude, by default None\n\nexcluded_mobjects(list|None) \u2013 Any mobjects to exclude, by default None\n\nReturns:\n\nlist of mobjects\n\nlist of mobjects\n\nReturn type:\n\nlist\n\nlist\n\nget_stroke_rgbas(vmobject,background=False)[source]\u00b6\n\nGets the RGBA array for the stroke of the passed\nVMobject.Parameters:vmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default FalseReturns:The RGBA array of the stroke.Return type:np.ndarray\n\nGets the RGBA array for the stroke of the passed\nVMobject.\n\nParameters:\n\nvmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default False\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default False\n\nbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default False\n\nReturns:\n\nThe RGBA array of the stroke.\n\nThe RGBA array of the stroke.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nget_thickening_nudges(thickness)[source]\u00b6\n\nDetermine a list of vectors used to nudge\ntwo-dimensional pixel coordinates.Parameters:thickness(float)Return type:np.array\n\nDetermine a list of vectors used to nudge\ntwo-dimensional pixel coordinates.\n\nParameters:\n\nthickness(float)\n\nthickness(float)\n\nReturn type:\n\nnp.array\n\nnp.array\n\ninit_background()[source]\u00b6\n\nInitialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background.Return type:None\n\nInitialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background.\n\nReturn type:\n\nNone\n\nNone\n\nis_in_frame(mobject)[source]\u00b6\n\nChecks whether the passed mobject is in\nframe or not.Parameters:mobject(Mobject) \u2013 The mobject for which the checking needs to be done.Returns:True if in frame, False otherwise.Return type:bool\n\nChecks whether the passed mobject is in\nframe or not.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject for which the checking needs to be done.\n\nmobject(Mobject) \u2013 The mobject for which the checking needs to be done.\n\nReturns:\n\nTrue if in frame, False otherwise.\n\nTrue if in frame, False otherwise.\n\nReturn type:\n\nbool\n\nbool\n\nmake_background_from_func(coords_to_colors_func)[source]\u00b6\n\nMakes a pixel array for the background by using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats.Parameters:coords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that pointReturns:The pixel array which can then be passed to set_background.Return type:np.array\n\nMakes a pixel array for the background by using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats.\n\nParameters:\n\ncoords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that point\n\ncoords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that point\n\nReturns:\n\nThe pixel array which can then be passed to set_background.\n\nThe pixel array which can then be passed to set_background.\n\nReturn type:\n\nnp.array\n\nnp.array\n\non_screen_pixels(pixel_coords)[source]\u00b6\n\nReturns array of pixels that are on the screen from a given\narray of pixel_coordinatesParameters:pixel_coords(ndarray) \u2013 The pixel coords to check.Returns:The pixel coords on screen.Return type:np.array\n\nReturns array of pixels that are on the screen from a given\narray of pixel_coordinates\n\nParameters:\n\npixel_coords(ndarray) \u2013 The pixel coords to check.\n\npixel_coords(ndarray) \u2013 The pixel coords to check.\n\nReturns:\n\nThe pixel coords on screen.\n\nThe pixel coords on screen.\n\nReturn type:\n\nnp.array\n\nnp.array\n\noverlay_PIL_image(pixel_array,image)[source]\u00b6\n\nOverlays a PIL image on the passed pixel array.Parameters:pixel_array(ndarray) \u2013 The Pixel arrayimage(<module 'PIL.Image' from '/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py'>) \u2013 The Image to overlay.Return type:None\n\nOverlays a PIL image on the passed pixel array.\n\nParameters:\n\npixel_array(ndarray) \u2013 The Pixel arrayimage(<module 'PIL.Image' from '/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py'>) \u2013 The Image to overlay.\n\npixel_array(ndarray) \u2013 The Pixel array\n\npixel_array(ndarray) \u2013 The Pixel array\n\nimage(<module 'PIL.Image' from '/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py'>) \u2013 The Image to overlay.\n\nimage(<module 'PIL.Image' from '/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py'>) \u2013 The Image to overlay.\n\nReturn type:\n\nNone\n\nNone\n\noverlay_rgba_array(pixel_array,new_array)[source]\u00b6\n\nOverlays an RGBA array on top of the given Pixel array.Parameters:pixel_array(ndarray) \u2013 The original pixel array to modify.new_array(ndarray) \u2013 The new pixel array to overlay.Return type:None\n\nOverlays an RGBA array on top of the given Pixel array.\n\nParameters:\n\npixel_array(ndarray) \u2013 The original pixel array to modify.new_array(ndarray) \u2013 The new pixel array to overlay.\n\npixel_array(ndarray) \u2013 The original pixel array to modify.\n\npixel_array(ndarray) \u2013 The original pixel array to modify.\n\nnew_array(ndarray) \u2013 The new pixel array to overlay.\n\nnew_array(ndarray) \u2013 The new pixel array to overlay.\n\nReturn type:\n\nNone\n\nNone\n\nreset()[source]\u00b6\n\nResets the camera\u2019s pixel array\nto that of the backgroundReturns:The camera object after setting the pixel array.Return type:Camera\n\nResets the camera\u2019s pixel array\nto that of the background\n\nReturns:\n\nThe camera object after setting the pixel array.\n\nThe camera object after setting the pixel array.\n\nReturn type:\n\nCamera\n\nCamera\n\nreset_pixel_shape(new_height,new_width)[source]\u00b6\n\nThis method resets the height and width\nof a single pixel to the passed new_height and new_width.Parameters:new_height(float) \u2013 The new height of the entire scene in pixelsnew_width(float) \u2013 The new width of the entire scene in pixelsReturn type:None\n\nThis method resets the height and width\nof a single pixel to the passed new_height and new_width.\n\nParameters:\n\nnew_height(float) \u2013 The new height of the entire scene in pixelsnew_width(float) \u2013 The new width of the entire scene in pixels\n\nnew_height(float) \u2013 The new height of the entire scene in pixels\n\nnew_height(float) \u2013 The new height of the entire scene in pixels\n\nnew_width(float) \u2013 The new width of the entire scene in pixels\n\nnew_width(float) \u2013 The new width of the entire scene in pixels\n\nReturn type:\n\nNone\n\nNone\n\nresize_frame_shape(fixed_dimension=0)[source]\u00b6\n\nChanges frame_shape to match the aspect ratio\nof the pixels, where fixed_dimension determines\nwhether frame_height or frame_width\nremains fixed while the other changes accordingly.Parameters:fixed_dimension(int) \u2013 If 0, height is scaled with respect to width\nelse, width is scaled with respect to height.Return type:None\n\nChanges frame_shape to match the aspect ratio\nof the pixels, where fixed_dimension determines\nwhether frame_height or frame_width\nremains fixed while the other changes accordingly.\n\nParameters:\n\nfixed_dimension(int) \u2013 If 0, height is scaled with respect to width\nelse, width is scaled with respect to height.\n\nfixed_dimension(int) \u2013 If 0, height is scaled with respect to width\nelse, width is scaled with respect to height.\n\nReturn type:\n\nNone\n\nNone\n\nset_background(pixel_array,convert_from_floats=False)[source]\u00b6\n\nSets the background to the passed pixel_array after converting\nto valid RGB values.Parameters:pixel_array(PixelArray|list|tuple) \u2013 The pixel array to set the background to.convert_from_floats(bool) \u2013 Whether or not to convert floats values to proper RGB valid ones, by default FalseReturn type:None\n\nSets the background to the passed pixel_array after converting\nto valid RGB values.\n\nParameters:\n\npixel_array(PixelArray|list|tuple) \u2013 The pixel array to set the background to.convert_from_floats(bool) \u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\npixel_array(PixelArray|list|tuple) \u2013 The pixel array to set the background to.\n\npixel_array(PixelArray|list|tuple) \u2013 The pixel array to set the background to.\n\nconvert_from_floats(bool) \u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\nconvert_from_floats(bool) \u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\nReturn type:\n\nNone\n\nNone\n\nset_background_from_func(coords_to_colors_func)[source]\u00b6\n\nSets the background to a pixel array using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats.Parameters:coords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that pointReturn type:None\n\nSets the background to a pixel array using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats.\n\nParameters:\n\ncoords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that point\n\ncoords_to_colors_func(Callable[[ndarray],ndarray]) \u2013 The function whose input is an (x,y) pair of coordinates and\nwhose return values must be the colors for that point\n\nReturn type:\n\nNone\n\nNone\n\nset_cairo_context_color(ctx,rgbas,vmobject)[source]\u00b6\n\nSets the color of the cairo contextParameters:ctx(Context) \u2013 The cairo contextrgbas(FloatRGBALike_Array) \u2013 The RGBA array with which to color the context.vmobject(VMobject) \u2013 The VMobject with which to set the color.Returns:The camera objectReturn type:Camera\n\nSets the color of the cairo context\n\nParameters:\n\nctx(Context) \u2013 The cairo contextrgbas(FloatRGBALike_Array) \u2013 The RGBA array with which to color the context.vmobject(VMobject) \u2013 The VMobject with which to set the color.\n\nctx(Context) \u2013 The cairo context\n\nctx(Context) \u2013 The cairo context\n\nrgbas(FloatRGBALike_Array) \u2013 The RGBA array with which to color the context.\n\nrgbas(FloatRGBALike_Array) \u2013 The RGBA array with which to color the context.\n\nvmobject(VMobject) \u2013 The VMobject with which to set the color.\n\nvmobject(VMobject) \u2013 The VMobject with which to set the color.\n\nReturns:\n\nThe camera object\n\nThe camera object\n\nReturn type:\n\nCamera\n\nCamera\n\nset_cairo_context_path(ctx,vmobject)[source]\u00b6\n\nSets a path for the cairo context with the vmobject passedParameters:ctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobjectReturns:Camera object after setting cairo_context_pathReturn type:Camera\n\nSets a path for the cairo context with the vmobject passed\n\nParameters:\n\nctx(Context) \u2013 The cairo contextvmobject(VMobject) \u2013 The VMobject\n\nctx(Context) \u2013 The cairo context\n\nctx(Context) \u2013 The cairo context\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nReturns:\n\nCamera object after setting cairo_context_path\n\nCamera object after setting cairo_context_path\n\nReturn type:\n\nCamera\n\nCamera\n\nset_pixel_array(pixel_array,convert_from_floats=False)[source]\u00b6\n\nSets the pixel array of the camera to the passed pixel array.Parameters:pixel_array(PixelArray|list|tuple) \u2013 The pixel array to convert and then set as the camera\u2019s pixel array.convert_from_floats(bool) \u2013 Whether or not to convert float values to proper RGB values, by default FalseReturn type:None\n\nSets the pixel array of the camera to the passed pixel array.\n\nParameters:\n\npixel_array(PixelArray|list|tuple) \u2013 The pixel array to convert and then set as the camera\u2019s pixel array.convert_from_floats(bool) \u2013 Whether or not to convert float values to proper RGB values, by default False\n\npixel_array(PixelArray|list|tuple) \u2013 The pixel array to convert and then set as the camera\u2019s pixel array.\n\npixel_array(PixelArray|list|tuple) \u2013 The pixel array to convert and then set as the camera\u2019s pixel array.\n\nconvert_from_floats(bool) \u2013 Whether or not to convert float values to proper RGB values, by default False\n\nconvert_from_floats(bool) \u2013 Whether or not to convert float values to proper RGB values, by default False\n\nReturn type:\n\nNone\n\nNone\n\nthickened_coordinates(pixel_coords,thickness)[source]\u00b6\n\nReturns thickened coordinates for a passed array of pixel coords and\na thickness to thicken by.Parameters:pixel_coords(ndarray) \u2013 Pixel coordinatesthickness(float) \u2013 ThicknessReturns:Array of thickened pixel coords.Return type:np.array\n\nReturns thickened coordinates for a passed array of pixel coords and\na thickness to thicken by.\n\nParameters:\n\npixel_coords(ndarray) \u2013 Pixel coordinatesthickness(float) \u2013 Thickness\n\npixel_coords(ndarray) \u2013 Pixel coordinates\n\npixel_coords(ndarray) \u2013 Pixel coordinates\n\nthickness(float) \u2013 Thickness\n\nthickness(float) \u2013 Thickness\n\nReturns:\n\nArray of thickened pixel coords.\n\nArray of thickened pixel coords.\n\nReturn type:\n\nnp.array\n\nnp.array\n\ntype_or_raise(mobject)[source]\u00b6\n\nReturn the type of mobject, if it is a type that can be rendered.Ifmobjectis an instance of a class that inherits from a class that\ncan be rendered, return the super class.  For example, an instance of a\nSquare is also an instance of VMobject, and these can be rendered.\nTherefore,type_or_raise(Square())returns True.Parameters:mobject(Mobject) \u2013 The object to take the type of.Return type:type[VMobject] | type[PMobject] | type[AbstractImageMobject] | type[Mobject]NotesFor a list of classes that can currently be rendered, seedisplay_funcs().Returns:The type of mobjects, if it can be rendered.Return type:Type[Mobject]Raises:TypeError\u2013 When mobject is not an instance of a class that can be rendered.Parameters:mobject(Mobject)\n\nReturn the type of mobject, if it is a type that can be rendered.\n\nIfmobjectis an instance of a class that inherits from a class that\ncan be rendered, return the super class.  For example, an instance of a\nSquare is also an instance of VMobject, and these can be rendered.\nTherefore,type_or_raise(Square())returns True.\n\nParameters:\n\nmobject(Mobject) \u2013 The object to take the type of.\n\nmobject(Mobject) \u2013 The object to take the type of.\n\nReturn type:\n\ntype[VMobject] | type[PMobject] | type[AbstractImageMobject] | type[Mobject]\n\ntype[VMobject] | type[PMobject] | type[AbstractImageMobject] | type[Mobject]\n\nNotes\n\nFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nReturns:\n\nThe type of mobjects, if it can be rendered.\n\nThe type of mobjects, if it can be rendered.\n\nReturn type:\n\nType[Mobject]\n\nType[Mobject]\n\nRaises:\n\nTypeError\u2013 When mobject is not an instance of a class that can be rendered.\n\nTypeError\u2013 When mobject is not an instance of a class that can be rendered.\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Camera",
+      "class_name": null,
+      "parameters": [
+        "background_image=None"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "adjust_out_of_range_points",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "If any of the points in the passed array are out of\nthe viable range, they are adjusted suitably."
+    },
+    {
+      "name": "adjusted_thickness",
+      "class_name": null,
+      "parameters": [
+        "thickness"
+      ],
+      "return_type": null,
+      "description": "Computes the adjusted stroke width for a zoomed camera."
+    },
+    {
+      "name": "apply_fill",
+      "class_name": null,
+      "parameters": [
+        "ctx"
+      ],
+      "return_type": null,
+      "description": "Fills the cairo context"
+    },
+    {
+      "name": "apply_stroke",
+      "class_name": null,
+      "parameters": [
+        "ctx"
+      ],
+      "return_type": null,
+      "description": "Applies a stroke to the VMobject in the cairo context."
+    },
+    {
+      "name": "cache_cairo_context",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Caches the passed Pixel array into a Cairo Context"
+    },
+    {
+      "name": "capture_mobject",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects by storing it inpixel_array."
+    },
+    {
+      "name": "capture_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects by printing them onpixel_array."
+    },
+    {
+      "name": "convert_pixel_array",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Converts a pixel array from values that have floats in then\nto proper RGB values."
+    },
+    {
+      "name": "display_image_mobject",
+      "class_name": null,
+      "parameters": [
+        "image_mobject"
+      ],
+      "return_type": null,
+      "description": "Displays an ImageMobject by changing the pixel_array suitably."
+    },
+    {
+      "name": "display_multiple_background_colored_vmobjects",
+      "class_name": null,
+      "parameters": [
+        "cvmobjects"
+      ],
+      "return_type": null,
+      "description": "Displays multiple vmobjects that have the same color as the background."
+    },
+    {
+      "name": "display_multiple_image_mobjects",
+      "class_name": null,
+      "parameters": [
+        "image_mobjects"
+      ],
+      "return_type": null,
+      "description": "Displays multiple image mobjects by modifying the passed pixel_array."
+    },
+    {
+      "name": "display_multiple_non_background_colored_vmobjects",
+      "class_name": null,
+      "parameters": [
+        "vmobjects"
+      ],
+      "return_type": null,
+      "description": "Displays multiple VMobjects in the cairo context, as long as they don\u2019t have\nbackground colors."
+    },
+    {
+      "name": "display_multiple_point_cloud_mobjects",
+      "class_name": null,
+      "parameters": [
+        "pmobjects"
+      ],
+      "return_type": null,
+      "description": "Displays multiple PMobjects by modifying the passed pixel array."
+    },
+    {
+      "name": "display_multiple_vectorized_mobjects",
+      "class_name": null,
+      "parameters": [
+        "vmobjects"
+      ],
+      "return_type": null,
+      "description": "Displays multiple VMobjects in the pixel_array"
+    },
+    {
+      "name": "display_point_cloud",
+      "class_name": null,
+      "parameters": [
+        "pmobject"
+      ],
+      "return_type": null,
+      "description": "Displays a PMobject by modifying the pixel array suitably."
+    },
+    {
+      "name": "display_vectorized",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Displays a VMobject in the cairo context"
+    },
+    {
+      "name": "get_background_colored_vmobject_displayer",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the background_colored_vmobject_displayer\nif it exists or makes one and returns it if not."
+    },
+    {
+      "name": "get_cached_cairo_context",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Returns the cached cairo context of the passed\npixel array if it exists, and None if it doesn\u2019t."
+    },
+    {
+      "name": "get_cairo_context",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Returns the cairo context for a pixel array after\ncaching it to self.pixel_array_to_cairo_context\nIf that array has already been cached, it returns the\ncached version instead."
+    },
+    {
+      "name": "get_coords_of_all_pixels",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the cartesian coordinates of each pixel."
+    },
+    {
+      "name": "get_fill_rgbas",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Returns the RGBA array of the fill of the passed VMobject"
+    },
+    {
+      "name": "get_image",
+      "class_name": null,
+      "parameters": [
+        "pixel_array=None"
+      ],
+      "return_type": null,
+      "description": "Returns an image from the passed\npixel array, or from the current frame\nif the passed pixel array is none."
+    },
+    {
+      "name": "get_mobjects_to_display",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Used to get the list of mobjects to display\nwith the camera."
+    },
+    {
+      "name": "get_stroke_rgbas",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Gets the RGBA array for the stroke of the passed\nVMobject."
+    },
+    {
+      "name": "get_thickening_nudges",
+      "class_name": null,
+      "parameters": [
+        "thickness"
+      ],
+      "return_type": null,
+      "description": "Determine a list of vectors used to nudge\ntwo-dimensional pixel coordinates."
+    },
+    {
+      "name": "init_background",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background."
+    },
+    {
+      "name": "is_in_frame",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Checks whether the passed mobject is in\nframe or not."
+    },
+    {
+      "name": "make_background_from_func",
+      "class_name": null,
+      "parameters": [
+        "coords_to_colors_func"
+      ],
+      "return_type": null,
+      "description": "Makes a pixel array for the background by using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats."
+    },
+    {
+      "name": "on_screen_pixels",
+      "class_name": null,
+      "parameters": [
+        "pixel_coords"
+      ],
+      "return_type": null,
+      "description": "Returns array of pixels that are on the screen from a given\narray of pixel_coordinates"
+    },
+    {
+      "name": "overlay_PIL_image",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Overlays a PIL image on the passed pixel array."
+    },
+    {
+      "name": "overlay_rgba_array",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Overlays an RGBA array on top of the given Pixel array."
+    },
+    {
+      "name": "reset",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Resets the camera\u2019s pixel array\nto that of the background"
+    },
+    {
+      "name": "reset_pixel_shape",
+      "class_name": null,
+      "parameters": [
+        "new_height"
+      ],
+      "return_type": null,
+      "description": "This method resets the height and width\nof a single pixel to the passed new_height and new_width."
+    },
+    {
+      "name": "resize_frame_shape",
+      "class_name": null,
+      "parameters": [
+        "fixed_dimension=0"
+      ],
+      "return_type": null,
+      "description": "Changes frame_shape to match the aspect ratio\nof the pixels, where fixed_dimension determines\nwhether frame_height or frame_width\nremains fixed while the other changes accordingly."
+    },
+    {
+      "name": "set_background",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Sets the background to the passed pixel_array after converting\nto valid RGB values."
+    },
+    {
+      "name": "set_background_from_func",
+      "class_name": null,
+      "parameters": [
+        "coords_to_colors_func"
+      ],
+      "return_type": null,
+      "description": "Sets the background to a pixel array using coords_to_colors_func to determine each pixel\u2019s color. Each input\npixel\u2019s color. Each input to coords_to_colors_func is an (x, y) pair in space (in ordinary space coordinates; not\npixel coordinates), and each output is expected to be an RGBA array of 4 floats."
+    },
+    {
+      "name": "set_cairo_context_color",
+      "class_name": null,
+      "parameters": [
+        "ctx"
+      ],
+      "return_type": null,
+      "description": "Sets the color of the cairo context"
+    },
+    {
+      "name": "set_cairo_context_path",
+      "class_name": null,
+      "parameters": [
+        "ctx"
+      ],
+      "return_type": null,
+      "description": "Sets a path for the cairo context with the vmobject passed"
+    },
+    {
+      "name": "set_pixel_array",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Sets the pixel array of the camera to the passed pixel array."
+    },
+    {
+      "name": "thickened_coordinates",
+      "class_name": null,
+      "parameters": [
+        "pixel_coords"
+      ],
+      "return_type": null,
+      "description": "Returns thickened coordinates for a passed array of pixel coords and\na thickness to thicken by."
+    },
+    {
+      "name": "type_or_raise",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Return the type of mobject, if it is a type that can be rendered."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "Camera",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

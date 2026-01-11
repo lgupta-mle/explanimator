@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.composition.LaggedStart.html",
+  "title": "LaggedStart\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LaggedStart\u00b6\n\nQualified name:manim.animation.composition.LaggedStart\n\nclassLaggedStart(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationGroupAdjusts the timing of a series ofAnimationaccording tolag_ratio.Parameters:animations(Animation) \u2013 Sequence ofAnimationobjects to be played.lag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.05, meaning that the next animation will begin when 5% of the current\nanimation has played.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.kwargs(Any)ExamplesExample: LaggedStartExample\u00b6frommanimimport*classLaggedStartExample(Scene):defconstruct(self):title=Text(\"lag_ratio = 0.25\").to_edge(UP)dot1=Dot(point=LEFT*2+UP,radius=0.16)dot2=Dot(point=LEFT*2,radius=0.16)dot3=Dot(point=LEFT*2+DOWN,radius=0.16)line_25=DashedLine(start=LEFT+UP*2,end=LEFT+DOWN*2,color=RED)label=Text(\"25%\",font_size=24).next_to(line_25,UP)self.add(title,dot1,dot2,dot3,line_25,label)self.play(LaggedStart(dot1.animate.shift(RIGHT*4),dot2.animate.shift(RIGHT*4),dot3.animate.shift(RIGHT*4),lag_ratio=0.25,run_time=4))class LaggedStartExample(Scene):\n    def construct(self):\n        title = Text(\"lag_ratio = 0.25\").to_edge(UP)\n\n        dot1 = Dot(point=LEFT * 2 + UP, radius=0.16)\n        dot2 = Dot(point=LEFT * 2, radius=0.16)\n        dot3 = Dot(point=LEFT * 2 + DOWN, radius=0.16)\n        line_25 = DashedLine(\n            start=LEFT + UP * 2,\n            end=LEFT + DOWN * 2,\n            color=RED\n        )\n        label = Text(\"25%\", font_size=24).next_to(line_25, UP)\n        self.add(title, dot1, dot2, dot3, line_25, label)\n\n        self.play(LaggedStart(\n            dot1.animate.shift(RIGHT * 4),\n            dot2.animate.shift(RIGHT * 4),\n            dot3.animate.shift(RIGHT * 4),\n            lag_ratio=0.25,\n            run_time=4\n        ))MethodsAttributesrun_time_original__init__(*animations,lag_ratio=0.05,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:animations(Animation)lag_ratio(float)kwargs(Any)\n\nBases:AnimationGroup\n\nAdjusts the timing of a series ofAnimationaccording tolag_ratio.\n\nParameters:\n\nanimations(Animation) \u2013 Sequence ofAnimationobjects to be played.lag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.05, meaning that the next animation will begin when 5% of the current\nanimation has played.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.kwargs(Any)\n\nanimations(Animation) \u2013 Sequence ofAnimationobjects to be played.\n\nanimations(Animation) \u2013 Sequence ofAnimationobjects to be played.\n\nlag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.05, meaning that the next animation will begin when 5% of the current\nanimation has played.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.\n\nlag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.05, meaning that the next animation will begin when 5% of the current\nanimation has played.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.\n\nDefines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.05, meaning that the next animation will begin when 5% of the current\nanimation has played.\n\nThis does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: LaggedStartExample\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(*animations,lag_ratio=0.05,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:animations(Animation)lag_ratio(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nanimations(Animation)lag_ratio(float)kwargs(Any)\n\nanimations(Animation)\n\nanimations(Animation)\n\nlag_ratio(float)\n\nlag_ratio(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLaggedStartExample(Scene):defconstruct(self):title=Text(\"lag_ratio = 0.25\").to_edge(UP)dot1=Dot(point=LEFT*2+UP,radius=0.16)dot2=Dot(point=LEFT*2,radius=0.16)dot3=Dot(point=LEFT*2+DOWN,radius=0.16)line_25=DashedLine(start=LEFT+UP*2,end=LEFT+DOWN*2,color=RED)label=Text(\"25%\",font_size=24).next_to(line_25,UP)self.add(title,dot1,dot2,dot3,line_25,label)self.play(LaggedStart(dot1.animate.shift(RIGHT*4),dot2.animate.shift(RIGHT*4),dot3.animate.shift(RIGHT*4),lag_ratio=0.25,run_time=4))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LaggedStartExample(Scene):\n    def construct(self):\n        title = Text(\"lag_ratio = 0.25\").to_edge(UP)\n\n        dot1 = Dot(point=LEFT * 2 + UP, radius=0.16)\n        dot2 = Dot(point=LEFT * 2, radius=0.16)\n        dot3 = Dot(point=LEFT * 2 + DOWN, radius=0.16)\n        line_25 = DashedLine(\n            start=LEFT + UP * 2,\n            end=LEFT + DOWN * 2,\n            color=RED\n        )\n        label = Text(\"25%\", font_size=24).next_to(line_25, UP)\n        self.add(title, dot1, dot2, dot3, line_25, label)\n\n        self.play(LaggedStart(\n            dot1.animate.shift(RIGHT * 4),\n            dot2.animate.shift(RIGHT * 4),\n            dot3.animate.shift(RIGHT * 4),\n            lag_ratio=0.25,\n            run_time=4\n        ))",
+      "language": "python",
+      "context": "Example: LaggedStartExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LaggedStart",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:AnimationGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*animations"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Tex",
+    "AnimationGroup",
+    "LaggedStart",
+    "Text",
+    "Dot",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.ShowPassingFlash.html",
+  "title": "ShowPassingFlash\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ShowPassingFlash\u00b6\n\nQualified name:manim.animation.indication.ShowPassingFlash\n\nclassShowPassingFlash(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ShowPartialShow only a sliver of the VMobject each frame.Parameters:mobject(VMobject) \u2013 The mobject whose stroke is animated.time_width(float) \u2013 The length of the sliver relative to the length of the stroke.kwargs(Any)ExamplesExample: TimeWidthValues\u00b6frommanimimport*classTimeWidthValues(Scene):defconstruct(self):p=RegularPolygon(5,color=DARK_GRAY,stroke_width=6).scale(3)lbl=VMobject()self.add(p,lbl)p=p.copy().set_color(BLUE)fortime_widthin[0.2,0.5,1,2]:lbl.become(Tex(r\"\\texttt{time\\_width={{%.1f}}}\"%time_width))self.play(ShowPassingFlash(p.copy().set_color(BLUE),run_time=2,time_width=time_width))class TimeWidthValues(Scene):\n    def construct(self):\n        p = RegularPolygon(5, color=DARK_GRAY, stroke_width=6).scale(3)\n        lbl = VMobject()\n        self.add(p, lbl)\n        p = p.copy().set_color(BLUE)\n        for time_width in [0.2, 0.5, 1, 2]:\n            lbl.become(Tex(r\"\\texttt{time\\_width={{%.1f}}}\"%time_width))\n            self.play(ShowPassingFlash(\n                p.copy().set_color(BLUE),\n                run_time=2,\n                time_width=time_width\n            ))See alsoCreateMethodsclean_up_from_sceneClean up theSceneafter finishing the animation.Attributesrun_time_original__init__(mobject,time_width=0.1,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject)time_width(float)kwargs(Any)Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nBases:ShowPartial\n\nShow only a sliver of the VMobject each frame.\n\nParameters:\n\nmobject(VMobject) \u2013 The mobject whose stroke is animated.time_width(float) \u2013 The length of the sliver relative to the length of the stroke.kwargs(Any)\n\nmobject(VMobject) \u2013 The mobject whose stroke is animated.\n\nmobject(VMobject) \u2013 The mobject whose stroke is animated.\n\ntime_width(float) \u2013 The length of the sliver relative to the length of the stroke.\n\ntime_width(float) \u2013 The length of the sliver relative to the length of the stroke.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: TimeWidthValues\u00b6\n\nSee also\n\nCreate\n\nMethods\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,time_width=0.1,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject)time_width(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(VMobject)time_width(float)kwargs(Any)\n\nmobject(VMobject)\n\nmobject(VMobject)\n\ntime_width(float)\n\ntime_width(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classTimeWidthValues(Scene):defconstruct(self):p=RegularPolygon(5,color=DARK_GRAY,stroke_width=6).scale(3)lbl=VMobject()self.add(p,lbl)p=p.copy().set_color(BLUE)fortime_widthin[0.2,0.5,1,2]:lbl.become(Tex(r\"\\texttt{time\\_width={{%.1f}}}\"%time_width))self.play(ShowPassingFlash(p.copy().set_color(BLUE),run_time=2,time_width=time_width))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TimeWidthValues(Scene):\n    def construct(self):\n        p = RegularPolygon(5, color=DARK_GRAY, stroke_width=6).scale(3)\n        lbl = VMobject()\n        self.add(p, lbl)\n        p = p.copy().set_color(BLUE)\n        for time_width in [0.2, 0.5, 1, 2]:\n            lbl.become(Tex(r\"\\texttt{time\\_width={{%.1f}}}\"%time_width))\n            self.play(ShowPassingFlash(\n                p.copy().set_color(BLUE),\n                run_time=2,\n                time_width=time_width\n            ))",
+      "language": "python",
+      "context": "Example: TimeWidthValues\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ShowPassingFlash",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ShowPartial"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "Tex",
+    "Flash",
+    "VMobject",
+    "ShowPassingFlash",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

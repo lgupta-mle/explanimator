@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.movement.Homotopy.html",
+  "title": "Homotopy\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Homotopy\u00b6\n\nQualified name:manim.animation.movement.Homotopy\n\nclassHomotopy(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationA Homotopy.This is an animation transforming the points of a mobject according\nto the specified transformation function. With the parameter\\(t\\)moving from 0 to 1 throughout the animation and\\((x, y, z)\\)describing the coordinates of the point of a mobject,\nthe function passed to thehomotopykeyword argument should\ntransform the tuple\\((x, y, z, t)\\)to\\((x', y', z')\\),\nthe coordinates the original point is transformed to at time\\(t\\).Parameters:homotopy(Callable[[float,float,float,float],tuple[float,float,float]]) \u2013 A function mapping\\((x, y, z, t)\\)to\\((x', y', z')\\).mobject(Mobject) \u2013 The mobject transformed under the given homotopy.run_time(float) \u2013 The run time of the animation.apply_function_kwargs(dict[str,Any]|None) \u2013 Keyword arguments propagated toMobject.apply_function().kwargs(Any) \u2013 Further keyword arguments passed to the parent class.ExamplesExample: HomotopyExample\u00b6frommanimimport*classHomotopyExample(Scene):defconstruct(self):square=Square()defhomotopy(x,y,z,t):ift<=0.25:progress=t/0.25return(x,y+progress*0.2*np.sin(x),z)else:wave_progress=(t-0.25)/0.75return(x,y+0.2*np.sin(x+10*wave_progress),z)self.play(Homotopy(homotopy,square,rate_func=linear,run_time=2))class HomotopyExample(Scene):\n    def construct(self):\n        square = Square()\n\n        def homotopy(x, y, z, t):\n            if t <= 0.25:\n                progress = t / 0.25\n                return (x, y + progress * 0.2 * np.sin(x), z)\n            else:\n                wave_progress = (t - 0.25) / 0.75\n                return (x, y + 0.2 * np.sin(x + 10 * wave_progress), z)\n\n        self.play(Homotopy(homotopy, square, rate_func= linear, run_time=2))Methodsfunction_at_time_tinterpolate_submobjectAttributesrun_time_original__init__(homotopy,mobject,run_time=3,apply_function_kwargs=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:homotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nBases:Animation\n\nA Homotopy.\n\nThis is an animation transforming the points of a mobject according\nto the specified transformation function. With the parameter\\(t\\)moving from 0 to 1 throughout the animation and\\((x, y, z)\\)describing the coordinates of the point of a mobject,\nthe function passed to thehomotopykeyword argument should\ntransform the tuple\\((x, y, z, t)\\)to\\((x', y', z')\\),\nthe coordinates the original point is transformed to at time\\(t\\).\n\nParameters:\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]]) \u2013 A function mapping\\((x, y, z, t)\\)to\\((x', y', z')\\).mobject(Mobject) \u2013 The mobject transformed under the given homotopy.run_time(float) \u2013 The run time of the animation.apply_function_kwargs(dict[str,Any]|None) \u2013 Keyword arguments propagated toMobject.apply_function().kwargs(Any) \u2013 Further keyword arguments passed to the parent class.\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]]) \u2013 A function mapping\\((x, y, z, t)\\)to\\((x', y', z')\\).\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]]) \u2013 A function mapping\\((x, y, z, t)\\)to\\((x', y', z')\\).\n\nmobject(Mobject) \u2013 The mobject transformed under the given homotopy.\n\nmobject(Mobject) \u2013 The mobject transformed under the given homotopy.\n\nrun_time(float) \u2013 The run time of the animation.\n\nrun_time(float) \u2013 The run time of the animation.\n\napply_function_kwargs(dict[str,Any]|None) \u2013 Keyword arguments propagated toMobject.apply_function().\n\napply_function_kwargs(dict[str,Any]|None) \u2013 Keyword arguments propagated toMobject.apply_function().\n\nkwargs(Any) \u2013 Further keyword arguments passed to the parent class.\n\nkwargs(Any) \u2013 Further keyword arguments passed to the parent class.\n\nExamples\n\nExample: HomotopyExample\u00b6\n\nMethods\n\nfunction_at_time_t\n\ninterpolate_submobject\n\nAttributes\n\nrun_time\n\n_original__init__(homotopy,mobject,run_time=3,apply_function_kwargs=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:homotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nrun_time(float)\n\nrun_time(float)\n\napply_function_kwargs(dict[str,Any]|None)\n\napply_function_kwargs(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classHomotopyExample(Scene):defconstruct(self):square=Square()defhomotopy(x,y,z,t):ift<=0.25:progress=t/0.25return(x,y+progress*0.2*np.sin(x),z)else:wave_progress=(t-0.25)/0.75return(x,y+0.2*np.sin(x+10*wave_progress),z)self.play(Homotopy(homotopy,square,rate_func=linear,run_time=2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class HomotopyExample(Scene):\n    def construct(self):\n        square = Square()\n\n        def homotopy(x, y, z, t):\n            if t <= 0.25:\n                progress = t / 0.25\n                return (x, y + progress * 0.2 * np.sin(x), z)\n            else:\n                wave_progress = (t - 0.25) / 0.75\n                return (x, y + 0.2 * np.sin(x + 10 * wave_progress), z)\n\n        self.play(Homotopy(homotopy, square, rate_func= linear, run_time=2))",
+      "language": "python",
+      "context": "Example: HomotopyExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Homotopy",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "homotopy"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "timing",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

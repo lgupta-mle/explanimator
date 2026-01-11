@@ -1,0 +1,37 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.movement.SmoothedVectorizedHomotopy.html",
+  "title": "SmoothedVectorizedHomotopy\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SmoothedVectorizedHomotopy\u00b6\n\nQualified name:manim.animation.movement.SmoothedVectorizedHomotopy\n\nclassSmoothedVectorizedHomotopy(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:HomotopyMethodsinterpolate_submobjectAttributesrun_timeParameters:homotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)_original__init__(homotopy,mobject,run_time=3,apply_function_kwargs=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:homotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nBases:Homotopy\n\nMethods\n\ninterpolate_submobject\n\nAttributes\n\nrun_time\n\nParameters:\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nrun_time(float)\n\nrun_time(float)\n\napply_function_kwargs(dict[str,Any]|None)\n\napply_function_kwargs(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(homotopy,mobject,run_time=3,apply_function_kwargs=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:homotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])mobject(Mobject)run_time(float)apply_function_kwargs(dict[str,Any]|None)kwargs(Any)\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])\n\nhomotopy(Callable[[float,float,float,float],tuple[float,float,float]])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nrun_time(float)\n\nrun_time(float)\n\napply_function_kwargs(dict[str,Any]|None)\n\napply_function_kwargs(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SmoothedVectorizedHomotopy",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Homotopy"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "homotopy"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "math",
+    "graph"
+  ]
+}

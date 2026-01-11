@@ -1,0 +1,66 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.camera.BackgroundColoredVMobjectDisplayer.html",
+  "title": "BackgroundColoredVMobjectDisplayer\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BackgroundColoredVMobjectDisplayer\u00b6\n\nQualified name:manim.camera.camera.BackgroundColoredVMobjectDisplayer\n\nclassBackgroundColoredVMobjectDisplayer(camera)[source]\u00b6\n\nBases:objectAuxiliary class that handles displaying vectorized mobjects with\na set background image.Parameters:camera(Camera) \u2013 Camera object to use.MethodsdisplayDisplays the colored VMobjects.get_background_arrayGets the background array that has the passed file_name.reset_pixel_arrayresize_background_arrayResizes the pixel array representing the background.resize_background_array_to_matchResizes the background array to match the passed pixel array.display(*cvmobjects)[source]\u00b6Displays the colored VMobjects.Parameters:*cvmobjects(VMobject) \u2013 The VMobjectsReturns:The pixel array with thecvmobjectsdisplayed.Return type:np.arrayget_background_array(image)[source]\u00b6Gets the background array that has the passed file_name.Parameters:image(Image|Path|str) \u2013 The background image or its file name.Returns:The pixel array of the image.Return type:np.ndarrayresize_background_array(background_array,new_width,new_height,mode='RGBA')[source]\u00b6Resizes the pixel array representing the background.Parameters:background_array(PixelArray) \u2013 The pixelnew_width(float) \u2013 The new width of the backgroundnew_height(float) \u2013 The new height of the backgroundmode(str) \u2013 The PIL image mode, by default \u201cRGBA\u201dReturns:The numpy pixel array of the resized background.Return type:np.arrayresize_background_array_to_match(background_array,pixel_array)[source]\u00b6Resizes the background array to match the passed pixel array.Parameters:background_array(PixelArray) \u2013 The prospective pixel array.pixel_array(PixelArray) \u2013 The pixel array whose width and height should be matched.Returns:The resized background array.Return type:np.array\n\nBases:object\n\nAuxiliary class that handles displaying vectorized mobjects with\na set background image.\n\nParameters:\n\ncamera(Camera) \u2013 Camera object to use.\n\ncamera(Camera) \u2013 Camera object to use.\n\nMethods\n\ndisplay\n\nDisplays the colored VMobjects.\n\nget_background_array\n\nGets the background array that has the passed file_name.\n\nreset_pixel_array\n\nresize_background_array\n\nResizes the pixel array representing the background.\n\nresize_background_array_to_match\n\nResizes the background array to match the passed pixel array.\n\ndisplay(*cvmobjects)[source]\u00b6\n\nDisplays the colored VMobjects.Parameters:*cvmobjects(VMobject) \u2013 The VMobjectsReturns:The pixel array with thecvmobjectsdisplayed.Return type:np.array\n\nDisplays the colored VMobjects.\n\nParameters:\n\n*cvmobjects(VMobject) \u2013 The VMobjects\n\n*cvmobjects(VMobject) \u2013 The VMobjects\n\nReturns:\n\nThe pixel array with thecvmobjectsdisplayed.\n\nThe pixel array with thecvmobjectsdisplayed.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nget_background_array(image)[source]\u00b6\n\nGets the background array that has the passed file_name.Parameters:image(Image|Path|str) \u2013 The background image or its file name.Returns:The pixel array of the image.Return type:np.ndarray\n\nGets the background array that has the passed file_name.\n\nParameters:\n\nimage(Image|Path|str) \u2013 The background image or its file name.\n\nimage(Image|Path|str) \u2013 The background image or its file name.\n\nReturns:\n\nThe pixel array of the image.\n\nThe pixel array of the image.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nresize_background_array(background_array,new_width,new_height,mode='RGBA')[source]\u00b6\n\nResizes the pixel array representing the background.Parameters:background_array(PixelArray) \u2013 The pixelnew_width(float) \u2013 The new width of the backgroundnew_height(float) \u2013 The new height of the backgroundmode(str) \u2013 The PIL image mode, by default \u201cRGBA\u201dReturns:The numpy pixel array of the resized background.Return type:np.array\n\nResizes the pixel array representing the background.\n\nParameters:\n\nbackground_array(PixelArray) \u2013 The pixelnew_width(float) \u2013 The new width of the backgroundnew_height(float) \u2013 The new height of the backgroundmode(str) \u2013 The PIL image mode, by default \u201cRGBA\u201d\n\nbackground_array(PixelArray) \u2013 The pixel\n\nbackground_array(PixelArray) \u2013 The pixel\n\nnew_width(float) \u2013 The new width of the background\n\nnew_width(float) \u2013 The new width of the background\n\nnew_height(float) \u2013 The new height of the background\n\nnew_height(float) \u2013 The new height of the background\n\nmode(str) \u2013 The PIL image mode, by default \u201cRGBA\u201d\n\nmode(str) \u2013 The PIL image mode, by default \u201cRGBA\u201d\n\nReturns:\n\nThe numpy pixel array of the resized background.\n\nThe numpy pixel array of the resized background.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nresize_background_array_to_match(background_array,pixel_array)[source]\u00b6\n\nResizes the background array to match the passed pixel array.Parameters:background_array(PixelArray) \u2013 The prospective pixel array.pixel_array(PixelArray) \u2013 The pixel array whose width and height should be matched.Returns:The resized background array.Return type:np.array\n\nResizes the background array to match the passed pixel array.\n\nParameters:\n\nbackground_array(PixelArray) \u2013 The prospective pixel array.pixel_array(PixelArray) \u2013 The pixel array whose width and height should be matched.\n\nbackground_array(PixelArray) \u2013 The prospective pixel array.\n\nbackground_array(PixelArray) \u2013 The prospective pixel array.\n\npixel_array(PixelArray) \u2013 The pixel array whose width and height should be matched.\n\npixel_array(PixelArray) \u2013 The pixel array whose width and height should be matched.\n\nReturns:\n\nThe resized background array.\n\nThe resized background array.\n\nReturn type:\n\nnp.array\n\nnp.array",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "BackgroundColoredVMobjectDisplayer",
+      "class_name": null,
+      "parameters": [
+        "camera"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "display",
+      "class_name": null,
+      "parameters": [
+        "*cvmobjects"
+      ],
+      "return_type": null,
+      "description": "Displays the colored VMobjects."
+    },
+    {
+      "name": "get_background_array",
+      "class_name": null,
+      "parameters": [
+        "image"
+      ],
+      "return_type": null,
+      "description": "Gets the background array that has the passed file_name."
+    },
+    {
+      "name": "resize_background_array",
+      "class_name": null,
+      "parameters": [
+        "background_array"
+      ],
+      "return_type": null,
+      "description": "Resizes the pixel array representing the background."
+    },
+    {
+      "name": "resize_background_array_to_match",
+      "class_name": null,
+      "parameters": [
+        "background_array"
+      ],
+      "return_type": null,
+      "description": "Resizes the background array to match the passed pixel array."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "math"
+  ]
+}

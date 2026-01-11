@@ -1,0 +1,103 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.value_tracker.ValueTracker.html",
+  "title": "ValueTracker\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ValueTracker\u00b6\n\nQualified name:manim.mobject.value\\_tracker.ValueTracker\n\nclassValueTracker(value=0,**kwargs)[source]\u00b6\n\nBases:MobjectA mobject that can be used for tracking (real-valued) parameters.\nUseful for animating parameter changes.Not meant to be displayed.  Instead the position encodes some\nnumber, often one which another animation or continual_animation\nuses for its update function, and by treating it as a mobject it can\nstill be animated and manipulated just like anything else.This value changes continuously when animated using theanimatesyntax.ExamplesExample: ValueTrackerExample\u00b6frommanimimport*classValueTrackerExample(Scene):defconstruct(self):number_line=NumberLine()pointer=Vector(DOWN)label=MathTex(\"x\").add_updater(lambdam:m.next_to(pointer,UP))tracker=ValueTracker(0)pointer.add_updater(lambdam:m.next_to(number_line.n2p(tracker.get_value()),UP))self.add(number_line,pointer,label)tracker+=1.5self.wait(1)tracker-=4self.wait(0.5)self.play(tracker.animate.set_value(5))self.wait(0.5)self.play(tracker.animate.set_value(3))self.play(tracker.animate.increment_value(-2))self.wait(0.5)class ValueTrackerExample(Scene):\n    def construct(self):\n        number_line = NumberLine()\n        pointer = Vector(DOWN)\n        label = MathTex(\"x\").add_updater(lambda m: m.next_to(pointer, UP))\n\n        tracker = ValueTracker(0)\n        pointer.add_updater(\n            lambda m: m.next_to(\n                        number_line.n2p(tracker.get_value()),\n                        UP\n                    )\n        )\n        self.add(number_line, pointer,label)\n        tracker += 1.5\n        self.wait(1)\n        tracker -= 4\n        self.wait(0.5)\n        self.play(tracker.animate.set_value(5))\n        self.wait(0.5)\n        self.play(tracker.animate.set_value(3))\n        self.play(tracker.animate.increment_value(-2))\n        self.wait(0.5)NoteYou can also link ValueTrackers to updaters. In this case, you have to make sure that the\nValueTracker is added to the scene byaddExample: ValueTrackerExample\u00b6frommanimimport*classValueTrackerExample(Scene):defconstruct(self):tracker=ValueTracker(0)label=Dot(radius=3).add_updater(lambdax:x.set_x(tracker.get_value()))self.add(label)self.add(tracker)tracker.add_updater(lambdamobject,dt:mobject.increment_value(dt))self.wait(2)class ValueTrackerExample(Scene):\n    def construct(self):\n        tracker = ValueTracker(0)\n        label = Dot(radius=3).add_updater(lambda x : x.set_x(tracker.get_value()))\n        self.add(label)\n        self.add(tracker)\n        tracker.add_updater(lambda mobject, dt: mobject.increment_value(dt))\n        self.wait(2)Methodsget_valueGet the current value of this ValueTracker.increment_valueIncrements (adds) a scalar value to the ValueTracker.interpolateTurnsselfinto an interpolation betweenmobject1andmobject2.set_valueSets a new scalar value to the ValueTracker.AttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:value(float)kwargs(Any)_original__init__(value=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:value(float)kwargs(Any)Return type:Noneget_value()[source]\u00b6Get the current value of this ValueTracker.Return type:floatincrement_value(d_value)[source]\u00b6Increments (adds) a scalar value to the ValueTracker.Parameters:d_value(float)Return type:Selfinterpolate(mobject1,mobject2,alpha,path_func=<functioninterpolate>)[source]\u00b6Turnsselfinto an interpolation betweenmobject1andmobject2.Parameters:mobject1(Mobject)mobject2(Mobject)alpha(float)path_func(PathFuncType)Return type:Selfset_value(value)[source]\u00b6Sets a new scalar value to the ValueTracker.Parameters:value(float)Return type:Self\n\nBases:Mobject\n\nA mobject that can be used for tracking (real-valued) parameters.\nUseful for animating parameter changes.\n\nNot meant to be displayed.  Instead the position encodes some\nnumber, often one which another animation or continual_animation\nuses for its update function, and by treating it as a mobject it can\nstill be animated and manipulated just like anything else.\n\nThis value changes continuously when animated using theanimatesyntax.\n\nExamples\n\nExample: ValueTrackerExample\u00b6\n\nNote\n\nYou can also link ValueTrackers to updaters. In this case, you have to make sure that the\nValueTracker is added to the scene byadd\n\nExample: ValueTrackerExample\u00b6\n\nMethods\n\nget_value\n\nGet the current value of this ValueTracker.\n\nincrement_value\n\nIncrements (adds) a scalar value to the ValueTracker.\n\ninterpolate\n\nTurnsselfinto an interpolation betweenmobject1andmobject2.\n\nset_value\n\nSets a new scalar value to the ValueTracker.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nvalue(float)kwargs(Any)\n\nvalue(float)\n\nvalue(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(value=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:value(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvalue(float)kwargs(Any)\n\nvalue(float)\n\nvalue(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nget_value()[source]\u00b6\n\nGet the current value of this ValueTracker.Return type:float\n\nGet the current value of this ValueTracker.\n\nReturn type:\n\nfloat\n\nfloat\n\nincrement_value(d_value)[source]\u00b6\n\nIncrements (adds) a scalar value to the ValueTracker.Parameters:d_value(float)Return type:Self\n\nIncrements (adds) a scalar value to the ValueTracker.\n\nParameters:\n\nd_value(float)\n\nd_value(float)\n\nReturn type:\n\nSelf\n\nSelf\n\ninterpolate(mobject1,mobject2,alpha,path_func=<functioninterpolate>)[source]\u00b6\n\nTurnsselfinto an interpolation betweenmobject1andmobject2.Parameters:mobject1(Mobject)mobject2(Mobject)alpha(float)path_func(PathFuncType)Return type:Self\n\nTurnsselfinto an interpolation betweenmobject1andmobject2.\n\nParameters:\n\nmobject1(Mobject)mobject2(Mobject)alpha(float)path_func(PathFuncType)\n\nmobject1(Mobject)\n\nmobject1(Mobject)\n\nmobject2(Mobject)\n\nmobject2(Mobject)\n\nalpha(float)\n\nalpha(float)\n\npath_func(PathFuncType)\n\npath_func(PathFuncType)\n\nReturn type:\n\nSelf\n\nSelf\n\nset_value(value)[source]\u00b6\n\nSets a new scalar value to the ValueTracker.Parameters:value(float)Return type:Self\n\nSets a new scalar value to the ValueTracker.\n\nParameters:\n\nvalue(float)\n\nvalue(float)\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classValueTrackerExample(Scene):defconstruct(self):number_line=NumberLine()pointer=Vector(DOWN)label=MathTex(\"x\").add_updater(lambdam:m.next_to(pointer,UP))tracker=ValueTracker(0)pointer.add_updater(lambdam:m.next_to(number_line.n2p(tracker.get_value()),UP))self.add(number_line,pointer,label)tracker+=1.5self.wait(1)tracker-=4self.wait(0.5)self.play(tracker.animate.set_value(5))self.wait(0.5)self.play(tracker.animate.set_value(3))self.play(tracker.animate.increment_value(-2))self.wait(0.5)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ValueTrackerExample(Scene):\n    def construct(self):\n        number_line = NumberLine()\n        pointer = Vector(DOWN)\n        label = MathTex(\"x\").add_updater(lambda m: m.next_to(pointer, UP))\n\n        tracker = ValueTracker(0)\n        pointer.add_updater(\n            lambda m: m.next_to(\n                        number_line.n2p(tracker.get_value()),\n                        UP\n                    )\n        )\n        self.add(number_line, pointer,label)\n        tracker += 1.5\n        self.wait(1)\n        tracker -= 4\n        self.wait(0.5)\n        self.play(tracker.animate.set_value(5))\n        self.wait(0.5)\n        self.play(tracker.animate.set_value(3))\n        self.play(tracker.animate.increment_value(-2))\n        self.wait(0.5)",
+      "language": "python",
+      "context": "Example: ValueTrackerExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classValueTrackerExample(Scene):defconstruct(self):tracker=ValueTracker(0)label=Dot(radius=3).add_updater(lambdax:x.set_x(tracker.get_value()))self.add(label)self.add(tracker)tracker.add_updater(lambdamobject,dt:mobject.increment_value(dt))self.wait(2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ValueTrackerExample(Scene):\n    def construct(self):\n        tracker = ValueTracker(0)\n        label = Dot(radius=3).add_updater(lambda x : x.set_x(tracker.get_value()))\n        self.add(label)\n        self.add(tracker)\n        tracker.add_updater(lambda mobject, dt: mobject.increment_value(dt))\n        self.wait(2)",
+      "language": "python",
+      "context": "Example: ValueTrackerExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ValueTracker",
+      "class_name": null,
+      "parameters": [
+        "value=0"
+      ],
+      "return_type": null,
+      "description": "Bases:Mobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "value=0"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_value",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get the current value of this ValueTracker."
+    },
+    {
+      "name": "increment_value",
+      "class_name": null,
+      "parameters": [
+        "d_value"
+      ],
+      "return_type": null,
+      "description": "Increments (adds) a scalar value to the ValueTracker."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "mobject1"
+      ],
+      "return_type": null,
+      "description": "Turnsselfinto an interpolation betweenmobject1andmobject2."
+    },
+    {
+      "name": "set_value",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets a new scalar value to the ValueTracker."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Tex",
+    "MathTex",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "text",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.tips.ArrowTriangleFilledTip.html",
+  "title": "ArrowTriangleFilledTip\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArrowTriangleFilledTip\u00b6\n\nQualified name:manim.mobject.geometry.tips.ArrowTriangleFilledTip\n\nclassArrowTriangleFilledTip(fill_opacity=1,stroke_width=0,**kwargs)[source]\u00b6\n\nBases:ArrowTriangleTipTriangular arrow tip with filled tip.This is the default arrow tip shape.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridesbaseThe base point of the arrow tip.colordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.lengthThe length of the arrow tip.n_points_per_curvesheen_factorstroke_colortip_angleThe angle of the arrow tip.tip_pointThe tip point of the arrow tip.vectorThe vector pointing from the base point to the tip point.widthThe width of the mobject.Parameters:fill_opacity(float)stroke_width(float)kwargs(Any)_original__init__(fill_opacity=1,stroke_width=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:fill_opacity(float)stroke_width(float)kwargs(Any)Return type:None\n\nBases:ArrowTriangleTip\n\nTriangular arrow tip with filled tip.\n\nThis is the default arrow tip shape.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\nbase\n\nThe base point of the arrow tip.\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nlength\n\nThe length of the arrow tip.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\ntip_angle\n\nThe angle of the arrow tip.\n\ntip_point\n\nThe tip point of the arrow tip.\n\nvector\n\nThe vector pointing from the base point to the tip point.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nfill_opacity(float)stroke_width(float)kwargs(Any)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(fill_opacity=1,stroke_width=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:fill_opacity(float)stroke_width(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfill_opacity(float)stroke_width(float)kwargs(Any)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ArrowTriangleFilledTip",
+      "class_name": null,
+      "parameters": [
+        "fill_opacity=1"
+      ],
+      "return_type": null,
+      "description": "Bases:ArrowTriangleTip"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "fill_opacity=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Arrow"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.composition.html",
+  "title": "composition\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "composition\u00b6\n\nTools for displaying multiple animations at once.\n\nClasses\n\nAnimationGroup\n\nPlays a group or series ofAnimation.\n\nLaggedStart\n\nAdjusts the timing of a series ofAnimationaccording tolag_ratio.\n\nLaggedStartMap\n\nPlays a series ofAnimationwhile mapping a function to submobjects.\n\nSuccession\n\nPlays a series of animations in succession.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "LaggedStart",
+    "Succession",
+    "AnimationGroup"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

@@ -3,6 +3,7 @@ from pathlib import Path
 import base64
 import json
 import os
+import copy
 from typing import Optional, Type, TypeVar, Union, List, Dict, Any
 from pydantic import BaseModel
 
@@ -18,17 +19,24 @@ def make_schema_openai_compatible(schema: dict) -> dict:
     - Ensures ALL properties are in the 'required' array (including optional ones)
     - Sets additionalProperties to false for all objects
     - Removes additional keywords from $ref fields (OpenAI doesn't allow $ref with other keywords)
+    - Strips title, description, default from all fields (OpenAI strict mode only wants core schema)
 
     Note: OpenAI's strict mode requires all fields to be in the required array,
     even Optional fields. Optional fields use type: [type, "null"] pattern.
 
-    Root cause: Pydantic includes Field descriptions alongside $ref in generated schemas,
+    Root cause: Pydantic includes Field descriptions, titles, and defaults in generated schemas,
     which is valid JSON Schema but incompatible with OpenAI's stricter requirements.
     """
+
     if isinstance(schema, dict):
         # If this dict has a $ref, strip all other keys (OpenAI doesn't allow $ref with other keywords)
         if "$ref" in schema:
             return {"$ref": schema["$ref"]}
+
+        # Remove fields that OpenAI strict mode doesn't allow
+        keys_to_remove = ["title", "description", "default"]
+        for key in keys_to_remove:
+            schema.pop(key, None)
 
         # Process nested objects first
         for key, value in schema.items():
@@ -150,13 +158,13 @@ def create_llm_response(
     if schema is not None:
         json_schema = schema.model_json_schema()
         # Make schema compatible with OpenAI's strict mode
-        json_schema = make_schema_openai_compatible(json_schema)
+        # json_schema = make_schema_openai_compatible(json_schema)
         api_params["response_format"] = {
             "type": "json_schema",
             "json_schema": {
                 "name": schema.__name__,
                 "schema": json_schema,
-                "strict": True
+                "strict": False
             }
         }
 

@@ -1,0 +1,650 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.vectorized_mobject.VMobject.html",
+  "title": "VMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "VMobject\u00b6\n\nQualified name:manim.mobject.types.vectorized\\_mobject.VMobject\n\nclassVMobject(fill_color=None,fill_opacity=0.0,stroke_color=None,stroke_opacity=1.0,stroke_width=4,background_stroke_color=ManimColor('#000000'),background_stroke_opacity=1.0,background_stroke_width=0,sheen_factor=0.0,joint_type=None,sheen_direction=array([-1.,1.,0.]),close_new_points=False,pre_function_handle_to_anchor_scale_factor=0.01,make_smooth_after_applying_functions=False,background_image=None,shade_in_3d=False,tolerance_for_point_equality=1e-06,n_points_per_cubic_curve=4,cap_style=CapStyleType.AUTO,**kwargs)[source]\u00b6\n\nBases:MobjectA vectorized mobject.Parameters:background_stroke_color(ParsableManimColor|None) \u2013 The purpose of background stroke is to have something\nthat won\u2019t overlap fill, e.g.  For text against some\ntextured background.sheen_factor(float) \u2013 When a color c is set, there will be a second color\ncomputed based on interpolating c to WHITE by with\nsheen_factor, and the display will gradient to this\nsecondary color in the direction of sheen_direction.close_new_points(bool) \u2013 Indicates that it will not be displayed, but\nthat it should count in parent mobject\u2019s pathtolerance_for_point_equality(float) \u2013 This is within a pixeljoint_type(LineJointType|None) \u2013 The line joint type used to connect the curve segments\nof this vectorized mobject. SeeLineJointTypefor options.fill_color(ParsableManimColor|None)fill_opacity(float)stroke_color(ParsableManimColor|None)stroke_opacity(float)stroke_width(float)background_stroke_opacity(float)background_stroke_width(float)sheen_direction(Vector3DLike)pre_function_handle_to_anchor_scale_factor(float)make_smooth_after_applying_functions(bool)background_image(Image|str|None)shade_in_3d(bool)n_points_per_cubic_curve(int)cap_style(CapStyleType)kwargs(Any)Methodsadd_cubic_bezier_curveadd_cubic_bezier_curve_toAdd cubic bezier curve to the path.add_cubic_bezier_curvesadd_line_toAdd a straight line from the last point of VMobject to the given point.add_points_as_cornersAppend multiple straight lines at the end ofVMobject.points, which connect the givenpointsin order starting from the end of the current path.add_quadratic_bezier_curve_toAdd Quadratic bezier curve to the path.add_smooth_curve_toCreates a smooth curve from given points and add it to the VMobject.add_subpathalign_pointsAdds points to self and vmobject so that they both have the same number of subpaths, with corresponding subpaths each containing the same number of points.align_rgbasappend_pointsAppend the givennew_pointsto the end ofVMobject.points.append_vectorized_mobjectapply_functionchange_anchor_modeChanges the anchor mode of the bezier curves.clear_pointsclose_pathcolor_using_background_imageconsider_points_equalsconsider_points_equals_2dDetermine if two points are close enough to be considered equal.fadeforce_directionMakes sure that points are either directed clockwise or counterclockwise.gen_cubic_bezier_tuples_from_pointsReturns the bezier tuples from an array of points.gen_subpaths_from_points_2dgenerate_rgbas_arrayFirst arg can be either a color, or a tuple/list of colors.get_anchorsReturns the anchors of the curves forming the VMobject.get_anchors_and_handlesReturns anchors1, handles1, handles2, anchors2, where (anchors1[i], handles1[i], handles2[i], anchors2[i]) will be four points defining a cubic bezier curve for any i in range(0, len(anchors1))get_arc_lengthReturn the approximated length of the whole curve.get_background_imageget_colorReturns the color of theMobjectget_cubic_bezier_tuplesget_cubic_bezier_tuples_from_pointsget_curve_functionsGets the functions for the curves of the mobject.get_curve_functions_with_lengthsGets the functions and lengths of the curves for the mobject.get_directionUsesshoelace_direction()to calculate the direction.get_end_anchorsReturn the end anchors of the bezier curves.get_fill_colorIf there are multiple colors (for gradient) this returns the first oneget_fill_colorsget_fill_opacitiesget_fill_opacityIf there are multiple opacities, this returns the firstget_fill_rgbasget_gradient_start_and_end_pointsget_group_classget_last_pointget_mobject_type_classReturn the base class of this mobject type.get_nth_curve_functionReturns the expression of the nth curve.get_nth_curve_function_with_lengthReturns the expression of the nth curve along with its (approximate) length.get_nth_curve_lengthReturns the (approximate) length of the nth curve.get_nth_curve_length_piecesReturns the array of short line lengths used for length approximation.get_nth_curve_pointsReturns the points defining the nth curve of the vmobject.get_num_curvesReturns the number of curves of the vmobject.get_point_mobjectThe simplestMobjectto be transformed to or from self.get_points_defining_boundaryget_sheen_directionget_sheen_factorget_start_anchorsReturns the start anchors of the bezier curves.get_stroke_colorget_stroke_colorsget_stroke_opacitiesget_stroke_opacityget_stroke_rgbasget_stroke_widthget_styleget_subcurveReturns the subcurve of the VMobject between the interval [a, b].get_subpathsReturns subpaths formed by the curves of the VMobject.get_subpaths_from_pointshas_new_path_startedinit_colorsInitializes the colors.insert_n_curvesInserts n curves to the bezier curves of the vmobject.insert_n_curves_to_point_listGiven an array of k points defining a bezier curves (anchors and handles), returns points defining exactly k + n bezier curves.interpolate_coloris_closedmake_jaggedmake_smoothmatch_background_imagematch_stylepoint_from_proportionGets the point at a proportion along the path of theVMobject.pointwise_become_partialGiven a 2ndVMobjectvmobject, a lower boundaand an upper boundb, modify thisVMobject's points to match the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.proportion_from_pointReturns the proportion along the path of theVMobjecta particular given point is at.resize_pointsResize the array of anchor points and handles to have the specified size.reverse_directionReverts the point direction by inverting the point order.rotateRotates theMobjectaround a specified axis and point.rotate_sheen_directionRotates the direction of the applied sheen.scaleScale the size by a factor.scale_handle_to_anchor_distancesIf the distance between a given handle point H and its associated anchor point A is d, then it changes H to be a distances factor*d away from A, but so that the line from A to H doesn't change.set_anchors_and_handlesGiven two sets of anchors and handles, process them to set them as anchors and handles of the VMobject.set_background_strokeset_cap_styleSets the cap style of theVMobject.set_colorCondition is function which takes in one arguments, (x, y, z).set_fillSet the fill color and fill opacity of aVMobject.set_opacityset_pointsset_points_as_cornersGiven an array of points, set them as corners of theVMobject.set_points_smoothlyset_shade_in_3dset_sheenApplies a color gradient from a direction.set_sheen_directionSets the direction of the applied sheen.set_strokeset_stylestart_new_pathAppend apointto theVMobject.points, which will be the beginning of a new B\u00e9zier curve in the path given by the points.update_rgbas_arrayAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._assert_valid_submobjects(submobjects)[source]\u00b6Check that all submobjects are actually instances ofMobject, and that none of them isself(aMobjectcannot contain itself).This is an auxiliary function called when adding Mobjects to thesubmobjectslist.This function is intended to be overridden by subclasses such asVMobject, which should assert that only other VMobjects\nmay be added into it.Parameters:submobjects(Iterable[VMobject]) \u2013 The list containing values to validate.Returns:The Mobject itself.Return type:MobjectRaises:TypeError\u2013 If any of the values insubmobjectsis not aMobject.ValueError\u2013 If there was an attempt to add aMobjectas its own\n    submobject._gen_subpaths_from_points(points,filter_func)[source]\u00b6Given an array of points defining the bezier curves of the vmobject, return subpaths formed by these points.\nHere, Two bezier curves form a path if at least two of their anchors are evaluated True by the relation defined by filter_func.The algorithm every bezier tuple (anchors and handles) inself.points(by regrouping each n elements, where\nn is the number of points per cubic curve)), and evaluate the relation between two anchors with filter_func.\nNOTE : The filter_func takes an int n as parameter, and will evaluate the relation between points[n] and points[n - 1]. This should probably be changed so\nthe function takes two points as parameters.Parameters:points(CubicBezierPath) \u2013 points defining the bezier curve.filter_func(Callable[[int],bool]) \u2013 Filter-func defining the relation.Returns:subpaths formed by the points.Return type:Iterable[CubicSpline]_original__init__(fill_color=None,fill_opacity=0.0,stroke_color=None,stroke_opacity=1.0,stroke_width=4,background_stroke_color=ManimColor('#000000'),background_stroke_opacity=1.0,background_stroke_width=0,sheen_factor=0.0,joint_type=None,sheen_direction=array([-1.,1.,0.]),close_new_points=False,pre_function_handle_to_anchor_scale_factor=0.01,make_smooth_after_applying_functions=False,background_image=None,shade_in_3d=False,tolerance_for_point_equality=1e-06,n_points_per_cubic_curve=4,cap_style=CapStyleType.AUTO,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:fill_color(ParsableManimColor|None)fill_opacity(float)stroke_color(ParsableManimColor|None)stroke_opacity(float)stroke_width(float)background_stroke_color(ParsableManimColor|None)background_stroke_opacity(float)background_stroke_width(float)sheen_factor(float)joint_type(LineJointType|None)sheen_direction(Vector3DLike)close_new_points(bool)pre_function_handle_to_anchor_scale_factor(float)make_smooth_after_applying_functions(bool)background_image(Image|str|None)shade_in_3d(bool)tolerance_for_point_equality(float)n_points_per_cubic_curve(int)cap_style(CapStyleType)kwargs(Any)add_cubic_bezier_curve_to(handle1,handle2,anchor)[source]\u00b6Add cubic bezier curve to the path.NOTE : the first anchor is not a parameter as by default the end of the last sub-path!Parameters:handle1(Point3DLike) \u2013 first handlehandle2(Point3DLike) \u2013 second handleanchor(Point3DLike) \u2013 anchorReturns:selfReturn type:VMobjectadd_line_to(point)[source]\u00b6Add a straight line from the last point of VMobject to the given point.Parameters:point(Point3DLike) \u2013 The end of the straight line.Returns:selfReturn type:VMobjectadd_points_as_corners(points)[source]\u00b6Append multiple straight lines at the end ofVMobject.points, which connect the givenpointsin order\nstarting from the end of the current path. Thesepointswould be\ntherefore the corners of the new polyline appended to the path.Parameters:points(Point3DLike_Array) \u2013 An array of 3D points representing the corners of the polyline to\nappend toVMobject.points.Returns:The VMobject itself, after appending the straight lines to its\npath.Return type:VMobjectadd_quadratic_bezier_curve_to(handle,anchor)[source]\u00b6Add Quadratic bezier curve to the path.Returns:selfReturn type:VMobjectParameters:handle(Point3DLike)anchor(Point3DLike)add_smooth_curve_to(*points)[source]\u00b6Creates a smooth curve from given points and add it to the VMobject. If two points are passed in, the first is interpreted\nas a handle, the second as an anchor.Parameters:points(Point3DLike) \u2013 Points (anchor and handle, or just anchor) to add a smooth curve fromReturns:selfReturn type:VMobjectRaises:ValueError\u2013 If 0 or more than 2 points are given.align_points(vmobject)[source]\u00b6Adds points to self and vmobject so that they both have the same number of subpaths, with\ncorresponding subpaths each containing the same number of points.Points are added either by subdividing curves evenly along the subpath, or by creating new subpaths consisting\nof a single point repeated.Parameters:vmobject(VMobject) \u2013 The object to align points with.Returns:selfReturn type:VMobjectSee alsointerpolate(),align_data()append_points(new_points)[source]\u00b6Append the givennew_pointsto the end ofVMobject.points.Parameters:new_points(Point3DLike_Array) \u2013 An array of 3D points to append.Returns:The VMobject itself, after appendingnew_points.Return type:VMobjectchange_anchor_mode(mode)[source]\u00b6Changes the anchor mode of the bezier curves. This will modify the handles.There can be only two modes, \u201cjagged\u201d, and \u201csmooth\u201d.Returns:selfReturn type:VMobjectParameters:mode(Literal['jagged','smooth'])consider_points_equals_2d(p0,p1)[source]\u00b6Determine if two points are close enough to be considered equal.This uses the algorithm from np.isclose(), but expanded here for the\n2D point case. NumPy is overkill for such a small question.\n:param p0: first point\n:param p1: second pointReturns:whether two points considered close.Return type:boolParameters:p0(Point2DLike)p1(Point2DLike)propertyfill_color:ManimColor\u00b6If there are multiple colors (for gradient)\nthis returns the first oneforce_direction(target_direction)[source]\u00b6Makes sure that points are either directed clockwise or\ncounterclockwise.Parameters:target_direction(Literal['CW','CCW']) \u2013 Either\"CW\"or\"CCW\".Return type:Selfgen_cubic_bezier_tuples_from_points(points)[source]\u00b6Returns the bezier tuples from an array of points.self.points is a list of the anchors and handles of the bezier curves of the mobject (ie [anchor1, handle1, handle2, anchor2, anchor3 ..])\nThis algorithm basically retrieve them by taking an element every n, where n is the number of control points\nof the bezier curve.Parameters:points(CubicBezierPathLike) \u2013 Points from which control points will be extracted.Returns:Bezier control points.Return type:tuplegenerate_rgbas_array(color,opacity)[source]\u00b6First arg can be either a color, or a tuple/list of colors.\nLikewise, opacity can either be a float, or a tuple of floats.\nIf self.sheen_factor is not zero, and only\none color was passed in, a second slightly light color\nwill automatically be added for the gradientParameters:color(ParsableManimColor|Iterable[ManimColor]|None)opacity(float|Iterable[float])Return type:FloatRGBAget_anchors()[source]\u00b6Returns the anchors of the curves forming the VMobject.Returns:The anchors.Return type:Point3D_Arrayget_anchors_and_handles()[source]\u00b6Returns anchors1, handles1, handles2, anchors2,\nwhere (anchors1[i], handles1[i], handles2[i], anchors2[i])\nwill be four points defining a cubic bezier curve\nfor any i in range(0, len(anchors1))Returns:Iterable of the anchors and handles.Return type:list[Point3D_Array]get_arc_length(sample_points_per_curve=None)[source]\u00b6Return the approximated length of the whole curve.Parameters:sample_points_per_curve(int|None) \u2013 Number of sample points per curve used to approximate the length. More points result in a better approximation.Returns:The length of theVMobject.Return type:floatget_color()[source]\u00b6Returns the color of theMobjectExamples>>>frommanimimportSquare,RED>>>Square(color=RED).get_color()==REDTrueReturn type:ManimColorget_curve_functions()[source]\u00b6Gets the functions for the curves of the mobject.Returns:The functions for the curves.Return type:Iterable[Callable[[float],Point3D]]get_curve_functions_with_lengths(**kwargs)[source]\u00b6Gets the functions and lengths of the curves for the mobject.Parameters:**kwargs\u2013 The keyword arguments passed toget_nth_curve_function_with_length()Returns:The functions and lengths of the curves.Return type:Iterable[tuple[Callable[[float],Point3D], float]]get_direction()[source]\u00b6Usesshoelace_direction()to calculate the direction.\nThe direction of points determines in which direction the\nobject is drawn, clockwise or counterclockwise.ExamplesThe default direction of aCircleis counterclockwise:>>>frommanimimportCircle>>>Circle().get_direction()'CCW'Returns:Either\"CW\"or\"CCW\".Return type:strget_end_anchors()[source]\u00b6Return the end anchors of the bezier curves.Returns:Starting anchorsReturn type:Point3D_Arrayget_fill_color()[source]\u00b6If there are multiple colors (for gradient)\nthis returns the first oneReturn type:ManimColorget_fill_opacity()[source]\u00b6If there are multiple opacities, this returns the\nfirstReturn type:ManimFloatstaticget_mobject_type_class()[source]\u00b6Return the base class of this mobject type.Return type:type[VMobject]get_nth_curve_function(n)[source]\u00b6Returns the expression of the nth curve.Parameters:n(int) \u2013 index of the desired curve.Returns:expression of the nth bezier curve.Return type:Callable[float,Point3D]get_nth_curve_function_with_length(n,sample_points=None)[source]\u00b6Returns the expression of the nth curve along with its (approximate) length.Parameters:n(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.Returns:curve(Callable[[float], Point3D]) \u2013 The function for the nth curve.length(float) \u2013 The length of the nth curve.Return type:tuple[Callable[[float], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], float]get_nth_curve_length(n,sample_points=None)[source]\u00b6Returns the (approximate) length of the nth curve.Parameters:n(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.Returns:length\u2013 The length of the nth curve.Return type:floatget_nth_curve_length_pieces(n,sample_points=None)[source]\u00b6Returns the array of short line lengths used for length approximation.Parameters:n(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.Return type:The short length-pieces of the nth curve.get_nth_curve_points(n)[source]\u00b6Returns the points defining the nth curve of the vmobject.Parameters:n(int) \u2013 index of the desired bezier curve.Returns:points defining the nth bezier curve (anchors, handles)Return type:CubicBezierPointsget_num_curves()[source]\u00b6Returns the number of curves of the vmobject.Returns:number of curves of the vmobject.Return type:intget_point_mobject(center=None)[source]\u00b6The simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate typeParameters:center(Point3DLike|None)Return type:VectorizedPointget_start_anchors()[source]\u00b6Returns the start anchors of the bezier curves.Returns:Starting anchorsReturn type:Point3D_Arrayget_subcurve(a,b)[source]\u00b6Returns the subcurve of the VMobject between the interval [a, b].\nThe curve is a VMobject itself.Parameters:a(float) \u2013 The lower bound.b(float) \u2013 The upper bound.Returns:The subcurve between of [a, b]Return type:VMobjectget_subpaths()[source]\u00b6Returns subpaths formed by the curves of the VMobject.Subpaths are ranges of curves with each pair of consecutive curves having their end/start points coincident.Returns:subpaths.Return type:list[CubicSpline]init_colors(propagate_colors=True)[source]\u00b6Initializes the colors.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Parameters:propagate_colors(bool)Return type:Selfinsert_n_curves(n)[source]\u00b6Inserts n curves to the bezier curves of the vmobject.Parameters:n(int) \u2013 Number of curves to insert.Returns:selfReturn type:VMobjectinsert_n_curves_to_point_list(n,points)[source]\u00b6Given an array of k points defining a bezier curves (anchors and handles), returns points defining exactly k + n bezier curves.Parameters:n(int) \u2013 Number of desired curves.points(BezierPathLike) \u2013 Starting points.Return type:Points generated.point_from_proportion(alpha)[source]\u00b6Gets the point at a proportion along the path of theVMobject.Parameters:alpha(float) \u2013 The proportion along the the path of theVMobject.Returns:The point on theVMobject.Return type:numpy.ndarrayRaises:ValueError\u2013 Ifalphais not between 0 and 1.Exception\u2013 If theVMobjecthas no points.ExampleExample: PointFromProportion\u00b6frommanimimport*classPointFromProportion(Scene):defconstruct(self):line=Line(2*DL,2*UR)self.add(line)colors=(RED,BLUE,YELLOW)proportions=(1/4,1/2,3/4)forcolor,proportioninzip(colors,proportions):self.add(Dot(color=color).move_to(line.point_from_proportion(proportion)))class PointFromProportion(Scene):\n    def construct(self):\n        line = Line(2*DL, 2*UR)\n        self.add(line)\n        colors = (RED, BLUE, YELLOW)\n        proportions = (1/4, 1/2, 3/4)\n        for color, proportion in zip(colors, proportions):\n            self.add(Dot(color=color).move_to(\n                    line.point_from_proportion(proportion)\n            ))pointwise_become_partial(vmobject,a,b)[source]\u00b6Given a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.Parameters:vmobject(VMobject) \u2013 TheVMobjectthat will serve as a model.a(float) \u2013 The lower bound fort.b(float) \u2013 The upper bound fortReturns:TheVMobjectitself, after the transformation.Return type:VMobjectRaises:TypeError\u2013 Ifvmobjectis not an instance ofVMobject.proportion_from_point(point)[source]\u00b6Returns the proportion along the path of theVMobjecta particular given point is at.Parameters:point(Point3DLike) \u2013 The Cartesian coordinates of the point which may or may not lie on theVMobjectReturns:The proportion along the path of theVMobject.Return type:floatRaises:ValueError\u2013 Ifpointdoes not lie on the curve.Exception\u2013 If theVMobjecthas no points.resize_points(new_length,resize_func=<functionresize_array>)[source]\u00b6Resize the array of anchor points and handles to have\nthe specified size.Parameters:new_length(int) \u2013 The new (total) number of points.resize_func(Callable[[Point3D_Array,int],Point3D_Array]) \u2013 A function mapping a Numpy array (the points) and an integer\n(the target size) to a Numpy array. The default implementation\nis based on Numpy\u2019sresizefunction.Return type:Selfreverse_direction()[source]\u00b6Reverts the point direction by inverting the point order.Returns:Returns self.Return type:VMobjectExamplesExample: ChangeOfDirection\u00b6frommanimimport*classChangeOfDirection(Scene):defconstruct(self):ccw=RegularPolygon(5)ccw.shift(LEFT)cw=RegularPolygon(5)cw.shift(RIGHT).reverse_direction()self.play(Create(ccw),Create(cw),run_time=4)class ChangeOfDirection(Scene):\n    def construct(self):\n        ccw = RegularPolygon(5)\n        ccw.shift(LEFT)\n        cw = RegularPolygon(5)\n        cw.shift(RIGHT).reverse_direction()\n\n        self.play(Create(ccw), Create(cw),\n        run_time=4)rotate(angle,axis=array([0.,0.,1.]),*,about_point=None,about_edge=None)[source]\u00b6Rotates theMobjectaround a specified axis and point.Parameters:angle(float) \u2013 The angle of rotation in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.axis(Vector3DLike) \u2013 The rotation axis (seeRotatingfor more).about_point(Point3DLike|None) \u2013 The point about which the mobject rotates. IfNone, rotation occurs around\nthe center of the mobject.about_edge(Vector3DLike|None) \u2013 The edge about which to apply the scaling.Returns:self(for method chaining)Return type:MobjectNoteTo animate a rotation, useRotatingorRotateinstead of.animate.rotate(...).\nThe.animate.rotate(...)syntax only applies a transformation\nfrom the initial state to the final rotated state\n(interpolation between the two states), without showing proper rotational motion\nbased on the angle (from 0 to the given angle).ExamplesExample: RotateMethodExample\u00b6frommanimimport*classRotateMethodExample(Scene):defconstruct(self):circle=Circle(radius=1,color=BLUE)line=Line(start=ORIGIN,end=RIGHT)arrow1=Arrow(start=ORIGIN,end=RIGHT,buff=0,color=GOLD)group1=VGroup(circle,line,arrow1)group2=group1.copy()arrow2=group2[2]arrow2.rotate(angle=PI/4,about_point=arrow2.get_start())group3=group1.copy()arrow3=group3[2]arrow3.rotate(angle=120*DEGREES,about_point=arrow3.get_start())self.add(VGroup(group1,group2,group3).arrange(RIGHT,buff=1))class RotateMethodExample(Scene):\n    def construct(self):\n        circle = Circle(radius=1, color=BLUE)\n        line = Line(start=ORIGIN, end=RIGHT)\n        arrow1 = Arrow(start=ORIGIN, end=RIGHT, buff=0, color=GOLD)\n        group1 = VGroup(circle, line, arrow1)\n\n        group2 = group1.copy()\n        arrow2 = group2[2]\n        arrow2.rotate(angle=PI / 4, about_point=arrow2.get_start())\n\n        group3 = group1.copy()\n        arrow3 = group3[2]\n        arrow3.rotate(angle=120 * DEGREES, about_point=arrow3.get_start())\n\n        self.add(VGroup(group1, group2, group3).arrange(RIGHT, buff=1))See alsoRotating,Rotate,animate,apply_points_function_about_point()rotate_sheen_direction(angle,axis=array([0.,0.,1.]),family=True)[source]\u00b6Rotates the direction of the applied sheen.Parameters:angle(float) \u2013 Angle by which the direction of sheen is rotated.axis(Vector3DLike) \u2013 Axis of rotation.family(bool)Return type:SelfExamplesNormal usage:Circle().set_sheen_direction(UP).rotate_sheen_direction(PI)See alsoset_sheen_direction()scale(scale_factor,scale_stroke=False,*,about_point=None,about_edge=None)[source]\u00b6Scale the size by a factor.Default behavior is to scale about the center of the vmobject.Parameters:scale_factor(float) \u2013 The scaling factor\\(\\alpha\\). If\\(0 < |\\alpha|\u00a0< 1\\), the mobject\nwill shrink, and for\\(|\\alpha| > 1\\)it will grow. Furthermore,\nif\\(\\alpha < 0\\), the mobject is also flipped.scale_stroke(bool) \u2013 Boolean determining if the object\u2019s outline is scaled when the object is scaled.\nIf enabled, and object with 2px outline is scaled by a factor of .5, it will have an outline of 1px.kwargs\u2013 Additional keyword arguments passed toscale().about_point(Point3DLike|None)about_edge(Vector3DLike|None)Returns:selfReturn type:VMobjectExamplesExample: MobjectScaleExample\u00b6frommanimimport*classMobjectScaleExample(Scene):defconstruct(self):c1=Circle(1,RED).set_x(-1)c2=Circle(1,GREEN).set_x(1)vg=VGroup(c1,c2)vg.set_stroke(width=50)self.add(vg)self.play(c1.animate.scale(.25),c2.animate.scale(.25,scale_stroke=True))class MobjectScaleExample(Scene):\n    def construct(self):\n        c1 = Circle(1, RED).set_x(-1)\n        c2 = Circle(1, GREEN).set_x(1)\n\n        vg = VGroup(c1, c2)\n        vg.set_stroke(width=50)\n        self.add(vg)\n\n        self.play(\n            c1.animate.scale(.25),\n            c2.animate.scale(.25,\n                scale_stroke=True)\n        )See alsomove_to()scale_handle_to_anchor_distances(factor)[source]\u00b6If the distance between a given handle point H and its associated\nanchor point A is d, then it changes H to be a distances factor*d\naway from A, but so that the line from A to H doesn\u2019t change.\nThis is mostly useful in the context of applying a (differentiable)\nfunction, to preserve tangency properties.  One would pull all the\nhandles closer to their anchors, apply the function then push them out\nagain.Parameters:factor(float) \u2013 The factor used for scaling.Returns:selfReturn type:VMobjectset_anchors_and_handles(anchors1,handles1,handles2,anchors2)[source]\u00b6Given two sets of anchors and handles, process them to set them as anchors\nand handles of the VMobject.anchors1[i], handles1[i], handles2[i] and anchors2[i] define the i-th bezier\ncurve of the vmobject. There are four hardcoded parameters and this is a\nproblem as it makes the number of points per cubic curve unchangeable from 4\n(two anchors and two handles).Returns:selfReturn type:VMobjectParameters:anchors1(Point3DLike_Array)handles1(Point3DLike_Array)handles2(Point3DLike_Array)anchors2(Point3DLike_Array)set_cap_style(cap_style)[source]\u00b6Sets the cap style of theVMobject.Parameters:cap_style(CapStyleType) \u2013 The cap style to be set. SeeCapStyleTypefor options.Returns:selfReturn type:VMobjectExamplesExample: CapStyleExample\u00b6frommanimimport*classCapStyleExample(Scene):defconstruct(self):line=Line(LEFT,RIGHT,color=YELLOW,stroke_width=20)line.set_cap_style(CapStyleType.ROUND)self.add(line)class CapStyleExample(Scene):\n    def construct(self):\n        line = Line(LEFT, RIGHT, color=YELLOW, stroke_width=20)\n        line.set_cap_style(CapStyleType.ROUND)\n        self.add(line)set_color(color,family=True)[source]\u00b6Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof colorParameters:color(ParsableManimColor)family(bool)Return type:Selfset_fill(color=None,opacity=None,family=True)[source]\u00b6Set the fill color and fill opacity of aVMobject.Parameters:color(ParsableManimColor|None) \u2013 Fill color of theVMobject.opacity(float|None) \u2013 Fill opacity of theVMobject.family(bool) \u2013 IfTrue, the fill color of all submobjects is also set.Returns:selfReturn type:VMobjectExamplesExample: SetFill\u00b6frommanimimport*classSetFill(Scene):defconstruct(self):square=Square().scale(2).set_fill(WHITE,1)circle1=Circle().set_fill(GREEN,0.8)circle2=Circle().set_fill(YELLOW)# No fill_opacitycircle3=Circle().set_fill(color='#FF2135',opacity=0.2)group=Group(circle1,circle2,circle3).arrange()self.add(square)self.add(group)class SetFill(Scene):\n    def construct(self):\n        square = Square().scale(2).set_fill(WHITE,1)\n        circle1 = Circle().set_fill(GREEN,0.8)\n        circle2 = Circle().set_fill(YELLOW) # No fill_opacity\n        circle3 = Circle().set_fill(color = '#FF2135', opacity = 0.2)\n        group = Group(circle1,circle2,circle3).arrange()\n        self.add(square)\n        self.add(group)See alsoset_style()set_points_as_corners(points)[source]\u00b6Given an array of points, set them as corners of theVMobject.To achieve that, this algorithm sets handles aligned with the anchors\nsuch that the resultant B\u00e9zier curve will be the segment between the\ntwo anchors.Parameters:points(Point3DLike_Array) \u2013 Array of points that will be set as corners.Returns:The VMobject itself, after setting the new points as corners.Return type:VMobjectExamplesExample: PointsAsCornersExample\u00b6frommanimimport*classPointsAsCornersExample(Scene):defconstruct(self):corners=(# create squareUR,UL,DL,DR,UR,# create crossesDL,UL,DR)vmob=VMobject(stroke_color=RED)vmob.set_points_as_corners(corners).scale(2)self.add(vmob)class PointsAsCornersExample(Scene):\n    def construct(self):\n        corners = (\n            # create square\n            UR, UL,\n            DL, DR,\n            UR,\n            # create crosses\n            DL, UL,\n            DR\n        )\n        vmob = VMobject(stroke_color=RED)\n        vmob.set_points_as_corners(corners).scale(2)\n        self.add(vmob)set_sheen(factor,direction=None,family=True)[source]\u00b6Applies a color gradient from a direction.Parameters:factor(float) \u2013 The extent of lustre/gradient to apply. If negative, the gradient\nstarts from black, if positive the gradient starts from white and\nchanges to the current color.direction(Vector3DLike|None) \u2013 Direction from where the gradient is applied.family(bool)Return type:SelfExamplesExample: SetSheen\u00b6frommanimimport*classSetSheen(Scene):defconstruct(self):circle=Circle(fill_opacity=1).set_sheen(-0.3,DR)self.add(circle)class SetSheen(Scene):\n    def construct(self):\n        circle = Circle(fill_opacity=1).set_sheen(-0.3, DR)\n        self.add(circle)set_sheen_direction(direction,family=True)[source]\u00b6Sets the direction of the applied sheen.Parameters:direction(Vector3DLike) \u2013 Direction from where the gradient is applied.family(bool)Return type:SelfExamplesNormal usage:Circle().set_sheen_direction(UP)See alsoset_sheen(),rotate_sheen_direction()start_new_path(point)[source]\u00b6Append apointto theVMobject.points, which will be the\nbeginning of a new B\u00e9zier curve in the path given by the points. If\nthere\u2019s an unfinished curve at the end ofVMobject.points,\ncomplete it by appending the last B\u00e9zier curve\u2019s start anchor as many\ntimes as needed.Parameters:point(Point3DLike) \u2013 A 3D point to append toVMobject.points.Returns:The VMobject itself, after appendingpointand starting a new\ncurve.Return type:VMobject\n\nBases:Mobject\n\nA vectorized mobject.\n\nParameters:\n\nbackground_stroke_color(ParsableManimColor|None) \u2013 The purpose of background stroke is to have something\nthat won\u2019t overlap fill, e.g.  For text against some\ntextured background.sheen_factor(float) \u2013 When a color c is set, there will be a second color\ncomputed based on interpolating c to WHITE by with\nsheen_factor, and the display will gradient to this\nsecondary color in the direction of sheen_direction.close_new_points(bool) \u2013 Indicates that it will not be displayed, but\nthat it should count in parent mobject\u2019s pathtolerance_for_point_equality(float) \u2013 This is within a pixeljoint_type(LineJointType|None) \u2013 The line joint type used to connect the curve segments\nof this vectorized mobject. SeeLineJointTypefor options.fill_color(ParsableManimColor|None)fill_opacity(float)stroke_color(ParsableManimColor|None)stroke_opacity(float)stroke_width(float)background_stroke_opacity(float)background_stroke_width(float)sheen_direction(Vector3DLike)pre_function_handle_to_anchor_scale_factor(float)make_smooth_after_applying_functions(bool)background_image(Image|str|None)shade_in_3d(bool)n_points_per_cubic_curve(int)cap_style(CapStyleType)kwargs(Any)\n\nbackground_stroke_color(ParsableManimColor|None) \u2013 The purpose of background stroke is to have something\nthat won\u2019t overlap fill, e.g.  For text against some\ntextured background.\n\nbackground_stroke_color(ParsableManimColor|None) \u2013 The purpose of background stroke is to have something\nthat won\u2019t overlap fill, e.g.  For text against some\ntextured background.\n\nsheen_factor(float) \u2013 When a color c is set, there will be a second color\ncomputed based on interpolating c to WHITE by with\nsheen_factor, and the display will gradient to this\nsecondary color in the direction of sheen_direction.\n\nsheen_factor(float) \u2013 When a color c is set, there will be a second color\ncomputed based on interpolating c to WHITE by with\nsheen_factor, and the display will gradient to this\nsecondary color in the direction of sheen_direction.\n\nclose_new_points(bool) \u2013 Indicates that it will not be displayed, but\nthat it should count in parent mobject\u2019s path\n\nclose_new_points(bool) \u2013 Indicates that it will not be displayed, but\nthat it should count in parent mobject\u2019s path\n\ntolerance_for_point_equality(float) \u2013 This is within a pixel\n\ntolerance_for_point_equality(float) \u2013 This is within a pixel\n\njoint_type(LineJointType|None) \u2013 The line joint type used to connect the curve segments\nof this vectorized mobject. SeeLineJointTypefor options.\n\njoint_type(LineJointType|None) \u2013 The line joint type used to connect the curve segments\nof this vectorized mobject. SeeLineJointTypefor options.\n\nfill_color(ParsableManimColor|None)\n\nfill_color(ParsableManimColor|None)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_color(ParsableManimColor|None)\n\nstroke_color(ParsableManimColor|None)\n\nstroke_opacity(float)\n\nstroke_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nbackground_stroke_opacity(float)\n\nbackground_stroke_opacity(float)\n\nbackground_stroke_width(float)\n\nbackground_stroke_width(float)\n\nsheen_direction(Vector3DLike)\n\nsheen_direction(Vector3DLike)\n\npre_function_handle_to_anchor_scale_factor(float)\n\npre_function_handle_to_anchor_scale_factor(float)\n\nmake_smooth_after_applying_functions(bool)\n\nmake_smooth_after_applying_functions(bool)\n\nbackground_image(Image|str|None)\n\nbackground_image(Image|str|None)\n\nshade_in_3d(bool)\n\nshade_in_3d(bool)\n\nn_points_per_cubic_curve(int)\n\nn_points_per_cubic_curve(int)\n\ncap_style(CapStyleType)\n\ncap_style(CapStyleType)\n\nkwargs(Any)\n\nkwargs(Any)\n\nMethods\n\nadd_cubic_bezier_curve\n\nadd_cubic_bezier_curve_to\n\nAdd cubic bezier curve to the path.\n\nadd_cubic_bezier_curves\n\nadd_line_to\n\nAdd a straight line from the last point of VMobject to the given point.\n\nadd_points_as_corners\n\nAppend multiple straight lines at the end ofVMobject.points, which connect the givenpointsin order starting from the end of the current path.\n\nadd_quadratic_bezier_curve_to\n\nAdd Quadratic bezier curve to the path.\n\nadd_smooth_curve_to\n\nCreates a smooth curve from given points and add it to the VMobject.\n\nadd_subpath\n\nalign_points\n\nAdds points to self and vmobject so that they both have the same number of subpaths, with corresponding subpaths each containing the same number of points.\n\nalign_rgbas\n\nappend_points\n\nAppend the givennew_pointsto the end ofVMobject.points.\n\nappend_vectorized_mobject\n\napply_function\n\nchange_anchor_mode\n\nChanges the anchor mode of the bezier curves.\n\nclear_points\n\nclose_path\n\ncolor_using_background_image\n\nconsider_points_equals\n\nconsider_points_equals_2d\n\nDetermine if two points are close enough to be considered equal.\n\nfade\n\nforce_direction\n\nMakes sure that points are either directed clockwise or counterclockwise.\n\ngen_cubic_bezier_tuples_from_points\n\nReturns the bezier tuples from an array of points.\n\ngen_subpaths_from_points_2d\n\ngenerate_rgbas_array\n\nFirst arg can be either a color, or a tuple/list of colors.\n\nget_anchors\n\nReturns the anchors of the curves forming the VMobject.\n\nget_anchors_and_handles\n\nReturns anchors1, handles1, handles2, anchors2, where (anchors1[i], handles1[i], handles2[i], anchors2[i]) will be four points defining a cubic bezier curve for any i in range(0, len(anchors1))\n\nget_arc_length\n\nReturn the approximated length of the whole curve.\n\nget_background_image\n\nget_color\n\nReturns the color of theMobject\n\nget_cubic_bezier_tuples\n\nget_cubic_bezier_tuples_from_points\n\nget_curve_functions\n\nGets the functions for the curves of the mobject.\n\nget_curve_functions_with_lengths\n\nGets the functions and lengths of the curves for the mobject.\n\nget_direction\n\nUsesshoelace_direction()to calculate the direction.\n\nget_end_anchors\n\nReturn the end anchors of the bezier curves.\n\nget_fill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nget_fill_colors\n\nget_fill_opacities\n\nget_fill_opacity\n\nIf there are multiple opacities, this returns the first\n\nget_fill_rgbas\n\nget_gradient_start_and_end_points\n\nget_group_class\n\nget_last_point\n\nget_mobject_type_class\n\nReturn the base class of this mobject type.\n\nget_nth_curve_function\n\nReturns the expression of the nth curve.\n\nget_nth_curve_function_with_length\n\nReturns the expression of the nth curve along with its (approximate) length.\n\nget_nth_curve_length\n\nReturns the (approximate) length of the nth curve.\n\nget_nth_curve_length_pieces\n\nReturns the array of short line lengths used for length approximation.\n\nget_nth_curve_points\n\nReturns the points defining the nth curve of the vmobject.\n\nget_num_curves\n\nReturns the number of curves of the vmobject.\n\nget_point_mobject\n\nThe simplestMobjectto be transformed to or from self.\n\nget_points_defining_boundary\n\nget_sheen_direction\n\nget_sheen_factor\n\nget_start_anchors\n\nReturns the start anchors of the bezier curves.\n\nget_stroke_color\n\nget_stroke_colors\n\nget_stroke_opacities\n\nget_stroke_opacity\n\nget_stroke_rgbas\n\nget_stroke_width\n\nget_style\n\nget_subcurve\n\nReturns the subcurve of the VMobject between the interval [a, b].\n\nget_subpaths\n\nReturns subpaths formed by the curves of the VMobject.\n\nget_subpaths_from_points\n\nhas_new_path_started\n\ninit_colors\n\nInitializes the colors.\n\ninsert_n_curves\n\nInserts n curves to the bezier curves of the vmobject.\n\ninsert_n_curves_to_point_list\n\nGiven an array of k points defining a bezier curves (anchors and handles), returns points defining exactly k + n bezier curves.\n\ninterpolate_color\n\nis_closed\n\nmake_jagged\n\nmake_smooth\n\nmatch_background_image\n\nmatch_style\n\npoint_from_proportion\n\nGets the point at a proportion along the path of theVMobject.\n\npointwise_become_partial\n\nGiven a 2ndVMobjectvmobject, a lower boundaand an upper boundb, modify thisVMobject's points to match the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.\n\nproportion_from_point\n\nReturns the proportion along the path of theVMobjecta particular given point is at.\n\nresize_points\n\nResize the array of anchor points and handles to have the specified size.\n\nreverse_direction\n\nReverts the point direction by inverting the point order.\n\nrotate\n\nRotates theMobjectaround a specified axis and point.\n\nrotate_sheen_direction\n\nRotates the direction of the applied sheen.\n\nscale\n\nScale the size by a factor.\n\nscale_handle_to_anchor_distances\n\nIf the distance between a given handle point H and its associated anchor point A is d, then it changes H to be a distances factor*d away from A, but so that the line from A to H doesn't change.\n\nset_anchors_and_handles\n\nGiven two sets of anchors and handles, process them to set them as anchors and handles of the VMobject.\n\nset_background_stroke\n\nset_cap_style\n\nSets the cap style of theVMobject.\n\nset_color\n\nCondition is function which takes in one arguments, (x, y, z).\n\nset_fill\n\nSet the fill color and fill opacity of aVMobject.\n\nset_opacity\n\nset_points\n\nset_points_as_corners\n\nGiven an array of points, set them as corners of theVMobject.\n\nset_points_smoothly\n\nset_shade_in_3d\n\nset_sheen\n\nApplies a color gradient from a direction.\n\nset_sheen_direction\n\nSets the direction of the applied sheen.\n\nset_stroke\n\nset_style\n\nstart_new_path\n\nAppend apointto theVMobject.points, which will be the beginning of a new B\u00e9zier curve in the path given by the points.\n\nupdate_rgbas_array\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_assert_valid_submobjects(submobjects)[source]\u00b6\n\nCheck that all submobjects are actually instances ofMobject, and that none of them isself(aMobjectcannot contain itself).This is an auxiliary function called when adding Mobjects to thesubmobjectslist.This function is intended to be overridden by subclasses such asVMobject, which should assert that only other VMobjects\nmay be added into it.Parameters:submobjects(Iterable[VMobject]) \u2013 The list containing values to validate.Returns:The Mobject itself.Return type:MobjectRaises:TypeError\u2013 If any of the values insubmobjectsis not aMobject.ValueError\u2013 If there was an attempt to add aMobjectas its own\n    submobject.\n\nCheck that all submobjects are actually instances ofMobject, and that none of them isself(aMobjectcannot contain itself).\n\nThis is an auxiliary function called when adding Mobjects to thesubmobjectslist.\n\nThis function is intended to be overridden by subclasses such asVMobject, which should assert that only other VMobjects\nmay be added into it.\n\nParameters:\n\nsubmobjects(Iterable[VMobject]) \u2013 The list containing values to validate.\n\nsubmobjects(Iterable[VMobject]) \u2013 The list containing values to validate.\n\nReturns:\n\nThe Mobject itself.\n\nThe Mobject itself.\n\nReturn type:\n\nMobject\n\nMobject\n\nRaises:\n\nTypeError\u2013 If any of the values insubmobjectsis not aMobject.ValueError\u2013 If there was an attempt to add aMobjectas its own\n    submobject.\n\nTypeError\u2013 If any of the values insubmobjectsis not aMobject.\n\nTypeError\u2013 If any of the values insubmobjectsis not aMobject.\n\nValueError\u2013 If there was an attempt to add aMobjectas its own\n    submobject.\n\nValueError\u2013 If there was an attempt to add aMobjectas its own\n    submobject.\n\n_gen_subpaths_from_points(points,filter_func)[source]\u00b6\n\nGiven an array of points defining the bezier curves of the vmobject, return subpaths formed by these points.\nHere, Two bezier curves form a path if at least two of their anchors are evaluated True by the relation defined by filter_func.The algorithm every bezier tuple (anchors and handles) inself.points(by regrouping each n elements, where\nn is the number of points per cubic curve)), and evaluate the relation between two anchors with filter_func.\nNOTE : The filter_func takes an int n as parameter, and will evaluate the relation between points[n] and points[n - 1]. This should probably be changed so\nthe function takes two points as parameters.Parameters:points(CubicBezierPath) \u2013 points defining the bezier curve.filter_func(Callable[[int],bool]) \u2013 Filter-func defining the relation.Returns:subpaths formed by the points.Return type:Iterable[CubicSpline]\n\nGiven an array of points defining the bezier curves of the vmobject, return subpaths formed by these points.\nHere, Two bezier curves form a path if at least two of their anchors are evaluated True by the relation defined by filter_func.\n\nThe algorithm every bezier tuple (anchors and handles) inself.points(by regrouping each n elements, where\nn is the number of points per cubic curve)), and evaluate the relation between two anchors with filter_func.\nNOTE : The filter_func takes an int n as parameter, and will evaluate the relation between points[n] and points[n - 1]. This should probably be changed so\nthe function takes two points as parameters.\n\nParameters:\n\npoints(CubicBezierPath) \u2013 points defining the bezier curve.filter_func(Callable[[int],bool]) \u2013 Filter-func defining the relation.\n\npoints(CubicBezierPath) \u2013 points defining the bezier curve.\n\npoints(CubicBezierPath) \u2013 points defining the bezier curve.\n\nfilter_func(Callable[[int],bool]) \u2013 Filter-func defining the relation.\n\nfilter_func(Callable[[int],bool]) \u2013 Filter-func defining the relation.\n\nReturns:\n\nsubpaths formed by the points.\n\nsubpaths formed by the points.\n\nReturn type:\n\nIterable[CubicSpline]\n\nIterable[CubicSpline]\n\n_original__init__(fill_color=None,fill_opacity=0.0,stroke_color=None,stroke_opacity=1.0,stroke_width=4,background_stroke_color=ManimColor('#000000'),background_stroke_opacity=1.0,background_stroke_width=0,sheen_factor=0.0,joint_type=None,sheen_direction=array([-1.,1.,0.]),close_new_points=False,pre_function_handle_to_anchor_scale_factor=0.01,make_smooth_after_applying_functions=False,background_image=None,shade_in_3d=False,tolerance_for_point_equality=1e-06,n_points_per_cubic_curve=4,cap_style=CapStyleType.AUTO,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:fill_color(ParsableManimColor|None)fill_opacity(float)stroke_color(ParsableManimColor|None)stroke_opacity(float)stroke_width(float)background_stroke_color(ParsableManimColor|None)background_stroke_opacity(float)background_stroke_width(float)sheen_factor(float)joint_type(LineJointType|None)sheen_direction(Vector3DLike)close_new_points(bool)pre_function_handle_to_anchor_scale_factor(float)make_smooth_after_applying_functions(bool)background_image(Image|str|None)shade_in_3d(bool)tolerance_for_point_equality(float)n_points_per_cubic_curve(int)cap_style(CapStyleType)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfill_color(ParsableManimColor|None)fill_opacity(float)stroke_color(ParsableManimColor|None)stroke_opacity(float)stroke_width(float)background_stroke_color(ParsableManimColor|None)background_stroke_opacity(float)background_stroke_width(float)sheen_factor(float)joint_type(LineJointType|None)sheen_direction(Vector3DLike)close_new_points(bool)pre_function_handle_to_anchor_scale_factor(float)make_smooth_after_applying_functions(bool)background_image(Image|str|None)shade_in_3d(bool)tolerance_for_point_equality(float)n_points_per_cubic_curve(int)cap_style(CapStyleType)kwargs(Any)\n\nfill_color(ParsableManimColor|None)\n\nfill_color(ParsableManimColor|None)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_color(ParsableManimColor|None)\n\nstroke_color(ParsableManimColor|None)\n\nstroke_opacity(float)\n\nstroke_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nbackground_stroke_color(ParsableManimColor|None)\n\nbackground_stroke_color(ParsableManimColor|None)\n\nbackground_stroke_opacity(float)\n\nbackground_stroke_opacity(float)\n\nbackground_stroke_width(float)\n\nbackground_stroke_width(float)\n\nsheen_factor(float)\n\nsheen_factor(float)\n\njoint_type(LineJointType|None)\n\njoint_type(LineJointType|None)\n\nsheen_direction(Vector3DLike)\n\nsheen_direction(Vector3DLike)\n\nclose_new_points(bool)\n\nclose_new_points(bool)\n\npre_function_handle_to_anchor_scale_factor(float)\n\npre_function_handle_to_anchor_scale_factor(float)\n\nmake_smooth_after_applying_functions(bool)\n\nmake_smooth_after_applying_functions(bool)\n\nbackground_image(Image|str|None)\n\nbackground_image(Image|str|None)\n\nshade_in_3d(bool)\n\nshade_in_3d(bool)\n\ntolerance_for_point_equality(float)\n\ntolerance_for_point_equality(float)\n\nn_points_per_cubic_curve(int)\n\nn_points_per_cubic_curve(int)\n\ncap_style(CapStyleType)\n\ncap_style(CapStyleType)\n\nkwargs(Any)\n\nkwargs(Any)\n\nadd_cubic_bezier_curve_to(handle1,handle2,anchor)[source]\u00b6\n\nAdd cubic bezier curve to the path.NOTE : the first anchor is not a parameter as by default the end of the last sub-path!Parameters:handle1(Point3DLike) \u2013 first handlehandle2(Point3DLike) \u2013 second handleanchor(Point3DLike) \u2013 anchorReturns:selfReturn type:VMobject\n\nAdd cubic bezier curve to the path.\n\nNOTE : the first anchor is not a parameter as by default the end of the last sub-path!\n\nParameters:\n\nhandle1(Point3DLike) \u2013 first handlehandle2(Point3DLike) \u2013 second handleanchor(Point3DLike) \u2013 anchor\n\nhandle1(Point3DLike) \u2013 first handle\n\nhandle1(Point3DLike) \u2013 first handle\n\nhandle2(Point3DLike) \u2013 second handle\n\nhandle2(Point3DLike) \u2013 second handle\n\nanchor(Point3DLike) \u2013 anchor\n\nanchor(Point3DLike) \u2013 anchor\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nadd_line_to(point)[source]\u00b6\n\nAdd a straight line from the last point of VMobject to the given point.Parameters:point(Point3DLike) \u2013 The end of the straight line.Returns:selfReturn type:VMobject\n\nAdd a straight line from the last point of VMobject to the given point.\n\nParameters:\n\npoint(Point3DLike) \u2013 The end of the straight line.\n\npoint(Point3DLike) \u2013 The end of the straight line.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nadd_points_as_corners(points)[source]\u00b6\n\nAppend multiple straight lines at the end ofVMobject.points, which connect the givenpointsin order\nstarting from the end of the current path. Thesepointswould be\ntherefore the corners of the new polyline appended to the path.Parameters:points(Point3DLike_Array) \u2013 An array of 3D points representing the corners of the polyline to\nappend toVMobject.points.Returns:The VMobject itself, after appending the straight lines to its\npath.Return type:VMobject\n\nAppend multiple straight lines at the end ofVMobject.points, which connect the givenpointsin order\nstarting from the end of the current path. Thesepointswould be\ntherefore the corners of the new polyline appended to the path.\n\nParameters:\n\npoints(Point3DLike_Array) \u2013 An array of 3D points representing the corners of the polyline to\nappend toVMobject.points.\n\npoints(Point3DLike_Array) \u2013 An array of 3D points representing the corners of the polyline to\nappend toVMobject.points.\n\nReturns:\n\nThe VMobject itself, after appending the straight lines to its\npath.\n\nThe VMobject itself, after appending the straight lines to its\npath.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nadd_quadratic_bezier_curve_to(handle,anchor)[source]\u00b6\n\nAdd Quadratic bezier curve to the path.Returns:selfReturn type:VMobjectParameters:handle(Point3DLike)anchor(Point3DLike)\n\nAdd Quadratic bezier curve to the path.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nParameters:\n\nhandle(Point3DLike)anchor(Point3DLike)\n\nhandle(Point3DLike)\n\nhandle(Point3DLike)\n\nanchor(Point3DLike)\n\nanchor(Point3DLike)\n\nadd_smooth_curve_to(*points)[source]\u00b6\n\nCreates a smooth curve from given points and add it to the VMobject. If two points are passed in, the first is interpreted\nas a handle, the second as an anchor.Parameters:points(Point3DLike) \u2013 Points (anchor and handle, or just anchor) to add a smooth curve fromReturns:selfReturn type:VMobjectRaises:ValueError\u2013 If 0 or more than 2 points are given.\n\nCreates a smooth curve from given points and add it to the VMobject. If two points are passed in, the first is interpreted\nas a handle, the second as an anchor.\n\nParameters:\n\npoints(Point3DLike) \u2013 Points (anchor and handle, or just anchor) to add a smooth curve from\n\npoints(Point3DLike) \u2013 Points (anchor and handle, or just anchor) to add a smooth curve from\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nRaises:\n\nValueError\u2013 If 0 or more than 2 points are given.\n\nValueError\u2013 If 0 or more than 2 points are given.\n\nalign_points(vmobject)[source]\u00b6\n\nAdds points to self and vmobject so that they both have the same number of subpaths, with\ncorresponding subpaths each containing the same number of points.Points are added either by subdividing curves evenly along the subpath, or by creating new subpaths consisting\nof a single point repeated.Parameters:vmobject(VMobject) \u2013 The object to align points with.Returns:selfReturn type:VMobjectSee alsointerpolate(),align_data()\n\nAdds points to self and vmobject so that they both have the same number of subpaths, with\ncorresponding subpaths each containing the same number of points.\n\nPoints are added either by subdividing curves evenly along the subpath, or by creating new subpaths consisting\nof a single point repeated.\n\nParameters:\n\nvmobject(VMobject) \u2013 The object to align points with.\n\nvmobject(VMobject) \u2013 The object to align points with.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nSee also\n\ninterpolate(),align_data()\n\nappend_points(new_points)[source]\u00b6\n\nAppend the givennew_pointsto the end ofVMobject.points.Parameters:new_points(Point3DLike_Array) \u2013 An array of 3D points to append.Returns:The VMobject itself, after appendingnew_points.Return type:VMobject\n\nAppend the givennew_pointsto the end ofVMobject.points.\n\nParameters:\n\nnew_points(Point3DLike_Array) \u2013 An array of 3D points to append.\n\nnew_points(Point3DLike_Array) \u2013 An array of 3D points to append.\n\nReturns:\n\nThe VMobject itself, after appendingnew_points.\n\nThe VMobject itself, after appendingnew_points.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nchange_anchor_mode(mode)[source]\u00b6\n\nChanges the anchor mode of the bezier curves. This will modify the handles.There can be only two modes, \u201cjagged\u201d, and \u201csmooth\u201d.Returns:selfReturn type:VMobjectParameters:mode(Literal['jagged','smooth'])\n\nChanges the anchor mode of the bezier curves. This will modify the handles.\n\nThere can be only two modes, \u201cjagged\u201d, and \u201csmooth\u201d.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nParameters:\n\nmode(Literal['jagged','smooth'])\n\nmode(Literal['jagged','smooth'])\n\nconsider_points_equals_2d(p0,p1)[source]\u00b6\n\nDetermine if two points are close enough to be considered equal.This uses the algorithm from np.isclose(), but expanded here for the\n2D point case. NumPy is overkill for such a small question.\n:param p0: first point\n:param p1: second pointReturns:whether two points considered close.Return type:boolParameters:p0(Point2DLike)p1(Point2DLike)\n\nDetermine if two points are close enough to be considered equal.\n\nThis uses the algorithm from np.isclose(), but expanded here for the\n2D point case. NumPy is overkill for such a small question.\n:param p0: first point\n:param p1: second point\n\nReturns:\n\nwhether two points considered close.\n\nwhether two points considered close.\n\nReturn type:\n\nbool\n\nbool\n\nParameters:\n\np0(Point2DLike)p1(Point2DLike)\n\np0(Point2DLike)\n\np0(Point2DLike)\n\np1(Point2DLike)\n\np1(Point2DLike)\n\npropertyfill_color:ManimColor\u00b6\n\nIf there are multiple colors (for gradient)\nthis returns the first one\n\nIf there are multiple colors (for gradient)\nthis returns the first one\n\nforce_direction(target_direction)[source]\u00b6\n\nMakes sure that points are either directed clockwise or\ncounterclockwise.Parameters:target_direction(Literal['CW','CCW']) \u2013 Either\"CW\"or\"CCW\".Return type:Self\n\nMakes sure that points are either directed clockwise or\ncounterclockwise.\n\nParameters:\n\ntarget_direction(Literal['CW','CCW']) \u2013 Either\"CW\"or\"CCW\".\n\ntarget_direction(Literal['CW','CCW']) \u2013 Either\"CW\"or\"CCW\".\n\nReturn type:\n\nSelf\n\nSelf\n\ngen_cubic_bezier_tuples_from_points(points)[source]\u00b6\n\nReturns the bezier tuples from an array of points.self.points is a list of the anchors and handles of the bezier curves of the mobject (ie [anchor1, handle1, handle2, anchor2, anchor3 ..])\nThis algorithm basically retrieve them by taking an element every n, where n is the number of control points\nof the bezier curve.Parameters:points(CubicBezierPathLike) \u2013 Points from which control points will be extracted.Returns:Bezier control points.Return type:tuple\n\nReturns the bezier tuples from an array of points.\n\nself.points is a list of the anchors and handles of the bezier curves of the mobject (ie [anchor1, handle1, handle2, anchor2, anchor3 ..])\nThis algorithm basically retrieve them by taking an element every n, where n is the number of control points\nof the bezier curve.\n\nParameters:\n\npoints(CubicBezierPathLike) \u2013 Points from which control points will be extracted.\n\npoints(CubicBezierPathLike) \u2013 Points from which control points will be extracted.\n\nReturns:\n\nBezier control points.\n\nBezier control points.\n\nReturn type:\n\ntuple\n\ntuple\n\ngenerate_rgbas_array(color,opacity)[source]\u00b6\n\nFirst arg can be either a color, or a tuple/list of colors.\nLikewise, opacity can either be a float, or a tuple of floats.\nIf self.sheen_factor is not zero, and only\none color was passed in, a second slightly light color\nwill automatically be added for the gradientParameters:color(ParsableManimColor|Iterable[ManimColor]|None)opacity(float|Iterable[float])Return type:FloatRGBA\n\nFirst arg can be either a color, or a tuple/list of colors.\nLikewise, opacity can either be a float, or a tuple of floats.\nIf self.sheen_factor is not zero, and only\none color was passed in, a second slightly light color\nwill automatically be added for the gradient\n\nParameters:\n\ncolor(ParsableManimColor|Iterable[ManimColor]|None)opacity(float|Iterable[float])\n\ncolor(ParsableManimColor|Iterable[ManimColor]|None)\n\ncolor(ParsableManimColor|Iterable[ManimColor]|None)\n\nopacity(float|Iterable[float])\n\nopacity(float|Iterable[float])\n\nReturn type:\n\nFloatRGBA\n\nFloatRGBA\n\nget_anchors()[source]\u00b6\n\nReturns the anchors of the curves forming the VMobject.Returns:The anchors.Return type:Point3D_Array\n\nReturns the anchors of the curves forming the VMobject.\n\nReturns:\n\nThe anchors.\n\nThe anchors.\n\nReturn type:\n\nPoint3D_Array\n\nPoint3D_Array\n\nget_anchors_and_handles()[source]\u00b6\n\nReturns anchors1, handles1, handles2, anchors2,\nwhere (anchors1[i], handles1[i], handles2[i], anchors2[i])\nwill be four points defining a cubic bezier curve\nfor any i in range(0, len(anchors1))Returns:Iterable of the anchors and handles.Return type:list[Point3D_Array]\n\nReturns anchors1, handles1, handles2, anchors2,\nwhere (anchors1[i], handles1[i], handles2[i], anchors2[i])\nwill be four points defining a cubic bezier curve\nfor any i in range(0, len(anchors1))\n\nReturns:\n\nIterable of the anchors and handles.\n\nIterable of the anchors and handles.\n\nReturn type:\n\nlist[Point3D_Array]\n\nlist[Point3D_Array]\n\nget_arc_length(sample_points_per_curve=None)[source]\u00b6\n\nReturn the approximated length of the whole curve.Parameters:sample_points_per_curve(int|None) \u2013 Number of sample points per curve used to approximate the length. More points result in a better approximation.Returns:The length of theVMobject.Return type:float\n\nReturn the approximated length of the whole curve.\n\nParameters:\n\nsample_points_per_curve(int|None) \u2013 Number of sample points per curve used to approximate the length. More points result in a better approximation.\n\nsample_points_per_curve(int|None) \u2013 Number of sample points per curve used to approximate the length. More points result in a better approximation.\n\nReturns:\n\nThe length of theVMobject.\n\nThe length of theVMobject.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_color()[source]\u00b6\n\nReturns the color of theMobjectExamples>>>frommanimimportSquare,RED>>>Square(color=RED).get_color()==REDTrueReturn type:ManimColor\n\nReturns the color of theMobject\n\nExamples\n\nReturn type:\n\nManimColor\n\nManimColor\n\nget_curve_functions()[source]\u00b6\n\nGets the functions for the curves of the mobject.Returns:The functions for the curves.Return type:Iterable[Callable[[float],Point3D]]\n\nGets the functions for the curves of the mobject.\n\nReturns:\n\nThe functions for the curves.\n\nThe functions for the curves.\n\nReturn type:\n\nIterable[Callable[[float],Point3D]]\n\nIterable[Callable[[float],Point3D]]\n\nget_curve_functions_with_lengths(**kwargs)[source]\u00b6\n\nGets the functions and lengths of the curves for the mobject.Parameters:**kwargs\u2013 The keyword arguments passed toget_nth_curve_function_with_length()Returns:The functions and lengths of the curves.Return type:Iterable[tuple[Callable[[float],Point3D], float]]\n\nGets the functions and lengths of the curves for the mobject.\n\nParameters:\n\n**kwargs\u2013 The keyword arguments passed toget_nth_curve_function_with_length()\n\n**kwargs\u2013 The keyword arguments passed toget_nth_curve_function_with_length()\n\nReturns:\n\nThe functions and lengths of the curves.\n\nThe functions and lengths of the curves.\n\nReturn type:\n\nIterable[tuple[Callable[[float],Point3D], float]]\n\nIterable[tuple[Callable[[float],Point3D], float]]\n\nget_direction()[source]\u00b6\n\nUsesshoelace_direction()to calculate the direction.\nThe direction of points determines in which direction the\nobject is drawn, clockwise or counterclockwise.ExamplesThe default direction of aCircleis counterclockwise:>>>frommanimimportCircle>>>Circle().get_direction()'CCW'Returns:Either\"CW\"or\"CCW\".Return type:str\n\nUsesshoelace_direction()to calculate the direction.\nThe direction of points determines in which direction the\nobject is drawn, clockwise or counterclockwise.\n\nExamples\n\nThe default direction of aCircleis counterclockwise:\n\nReturns:\n\nEither\"CW\"or\"CCW\".\n\nEither\"CW\"or\"CCW\".\n\nReturn type:\n\nstr\n\nstr\n\nget_end_anchors()[source]\u00b6\n\nReturn the end anchors of the bezier curves.Returns:Starting anchorsReturn type:Point3D_Array\n\nReturn the end anchors of the bezier curves.\n\nReturns:\n\nStarting anchors\n\nStarting anchors\n\nReturn type:\n\nPoint3D_Array\n\nPoint3D_Array\n\nget_fill_color()[source]\u00b6\n\nIf there are multiple colors (for gradient)\nthis returns the first oneReturn type:ManimColor\n\nIf there are multiple colors (for gradient)\nthis returns the first one\n\nReturn type:\n\nManimColor\n\nManimColor\n\nget_fill_opacity()[source]\u00b6\n\nIf there are multiple opacities, this returns the\nfirstReturn type:ManimFloat\n\nIf there are multiple opacities, this returns the\nfirst\n\nReturn type:\n\nManimFloat\n\nManimFloat\n\nstaticget_mobject_type_class()[source]\u00b6\n\nReturn the base class of this mobject type.Return type:type[VMobject]\n\nReturn the base class of this mobject type.\n\nReturn type:\n\ntype[VMobject]\n\ntype[VMobject]\n\nget_nth_curve_function(n)[source]\u00b6\n\nReturns the expression of the nth curve.Parameters:n(int) \u2013 index of the desired curve.Returns:expression of the nth bezier curve.Return type:Callable[float,Point3D]\n\nReturns the expression of the nth curve.\n\nParameters:\n\nn(int) \u2013 index of the desired curve.\n\nn(int) \u2013 index of the desired curve.\n\nReturns:\n\nexpression of the nth bezier curve.\n\nexpression of the nth bezier curve.\n\nReturn type:\n\nCallable[float,Point3D]\n\nCallable[float,Point3D]\n\nget_nth_curve_function_with_length(n,sample_points=None)[source]\u00b6\n\nReturns the expression of the nth curve along with its (approximate) length.Parameters:n(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.Returns:curve(Callable[[float], Point3D]) \u2013 The function for the nth curve.length(float) \u2013 The length of the nth curve.Return type:tuple[Callable[[float], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], float]\n\nReturns the expression of the nth curve along with its (approximate) length.\n\nParameters:\n\nn(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.\n\nn(int) \u2013 The index of the desired curve.\n\nn(int) \u2013 The index of the desired curve.\n\nsample_points(int|None) \u2013 The number of points to sample to find the length.\n\nsample_points(int|None) \u2013 The number of points to sample to find the length.\n\nReturns:\n\ncurve(Callable[[float], Point3D]) \u2013 The function for the nth curve.length(float) \u2013 The length of the nth curve.\n\ncurve(Callable[[float], Point3D]) \u2013 The function for the nth curve.length(float) \u2013 The length of the nth curve.\n\ncurve(Callable[[float], Point3D]) \u2013 The function for the nth curve.\n\ncurve(Callable[[float], Point3D]) \u2013 The function for the nth curve.\n\nlength(float) \u2013 The length of the nth curve.\n\nlength(float) \u2013 The length of the nth curve.\n\nReturn type:\n\ntuple[Callable[[float], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], float]\n\ntuple[Callable[[float], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], float]\n\nget_nth_curve_length(n,sample_points=None)[source]\u00b6\n\nReturns the (approximate) length of the nth curve.Parameters:n(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.Returns:length\u2013 The length of the nth curve.Return type:float\n\nReturns the (approximate) length of the nth curve.\n\nParameters:\n\nn(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.\n\nn(int) \u2013 The index of the desired curve.\n\nn(int) \u2013 The index of the desired curve.\n\nsample_points(int|None) \u2013 The number of points to sample to find the length.\n\nsample_points(int|None) \u2013 The number of points to sample to find the length.\n\nReturns:\n\nlength\u2013 The length of the nth curve.\n\nlength\u2013 The length of the nth curve.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_nth_curve_length_pieces(n,sample_points=None)[source]\u00b6\n\nReturns the array of short line lengths used for length approximation.Parameters:n(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.Return type:The short length-pieces of the nth curve.\n\nReturns the array of short line lengths used for length approximation.\n\nParameters:\n\nn(int) \u2013 The index of the desired curve.sample_points(int|None) \u2013 The number of points to sample to find the length.\n\nn(int) \u2013 The index of the desired curve.\n\nn(int) \u2013 The index of the desired curve.\n\nsample_points(int|None) \u2013 The number of points to sample to find the length.\n\nsample_points(int|None) \u2013 The number of points to sample to find the length.\n\nReturn type:\n\nThe short length-pieces of the nth curve.\n\nThe short length-pieces of the nth curve.\n\nget_nth_curve_points(n)[source]\u00b6\n\nReturns the points defining the nth curve of the vmobject.Parameters:n(int) \u2013 index of the desired bezier curve.Returns:points defining the nth bezier curve (anchors, handles)Return type:CubicBezierPoints\n\nReturns the points defining the nth curve of the vmobject.\n\nParameters:\n\nn(int) \u2013 index of the desired bezier curve.\n\nn(int) \u2013 index of the desired bezier curve.\n\nReturns:\n\npoints defining the nth bezier curve (anchors, handles)\n\npoints defining the nth bezier curve (anchors, handles)\n\nReturn type:\n\nCubicBezierPoints\n\nCubicBezierPoints\n\nget_num_curves()[source]\u00b6\n\nReturns the number of curves of the vmobject.Returns:number of curves of the vmobject.Return type:int\n\nReturns the number of curves of the vmobject.\n\nReturns:\n\nnumber of curves of the vmobject.\n\nnumber of curves of the vmobject.\n\nReturn type:\n\nint\n\nint\n\nget_point_mobject(center=None)[source]\u00b6\n\nThe simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate typeParameters:center(Point3DLike|None)Return type:VectorizedPoint\n\nThe simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate type\n\nParameters:\n\ncenter(Point3DLike|None)\n\ncenter(Point3DLike|None)\n\nReturn type:\n\nVectorizedPoint\n\nVectorizedPoint\n\nget_start_anchors()[source]\u00b6\n\nReturns the start anchors of the bezier curves.Returns:Starting anchorsReturn type:Point3D_Array\n\nReturns the start anchors of the bezier curves.\n\nReturns:\n\nStarting anchors\n\nStarting anchors\n\nReturn type:\n\nPoint3D_Array\n\nPoint3D_Array\n\nget_subcurve(a,b)[source]\u00b6\n\nReturns the subcurve of the VMobject between the interval [a, b].\nThe curve is a VMobject itself.Parameters:a(float) \u2013 The lower bound.b(float) \u2013 The upper bound.Returns:The subcurve between of [a, b]Return type:VMobject\n\nReturns the subcurve of the VMobject between the interval [a, b].\nThe curve is a VMobject itself.\n\nParameters:\n\na(float) \u2013 The lower bound.b(float) \u2013 The upper bound.\n\na(float) \u2013 The lower bound.\n\na(float) \u2013 The lower bound.\n\nb(float) \u2013 The upper bound.\n\nb(float) \u2013 The upper bound.\n\nReturns:\n\nThe subcurve between of [a, b]\n\nThe subcurve between of [a, b]\n\nReturn type:\n\nVMobject\n\nVMobject\n\nget_subpaths()[source]\u00b6\n\nReturns subpaths formed by the curves of the VMobject.Subpaths are ranges of curves with each pair of consecutive curves having their end/start points coincident.Returns:subpaths.Return type:list[CubicSpline]\n\nReturns subpaths formed by the curves of the VMobject.\n\nSubpaths are ranges of curves with each pair of consecutive curves having their end/start points coincident.\n\nReturns:\n\nsubpaths.\n\nsubpaths.\n\nReturn type:\n\nlist[CubicSpline]\n\nlist[CubicSpline]\n\ninit_colors(propagate_colors=True)[source]\u00b6\n\nInitializes the colors.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Parameters:propagate_colors(bool)Return type:Self\n\nInitializes the colors.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nParameters:\n\npropagate_colors(bool)\n\npropagate_colors(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\ninsert_n_curves(n)[source]\u00b6\n\nInserts n curves to the bezier curves of the vmobject.Parameters:n(int) \u2013 Number of curves to insert.Returns:selfReturn type:VMobject\n\nInserts n curves to the bezier curves of the vmobject.\n\nParameters:\n\nn(int) \u2013 Number of curves to insert.\n\nn(int) \u2013 Number of curves to insert.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\ninsert_n_curves_to_point_list(n,points)[source]\u00b6\n\nGiven an array of k points defining a bezier curves (anchors and handles), returns points defining exactly k + n bezier curves.Parameters:n(int) \u2013 Number of desired curves.points(BezierPathLike) \u2013 Starting points.Return type:Points generated.\n\nGiven an array of k points defining a bezier curves (anchors and handles), returns points defining exactly k + n bezier curves.\n\nParameters:\n\nn(int) \u2013 Number of desired curves.points(BezierPathLike) \u2013 Starting points.\n\nn(int) \u2013 Number of desired curves.\n\nn(int) \u2013 Number of desired curves.\n\npoints(BezierPathLike) \u2013 Starting points.\n\npoints(BezierPathLike) \u2013 Starting points.\n\nReturn type:\n\nPoints generated.\n\nPoints generated.\n\npoint_from_proportion(alpha)[source]\u00b6\n\nGets the point at a proportion along the path of theVMobject.Parameters:alpha(float) \u2013 The proportion along the the path of theVMobject.Returns:The point on theVMobject.Return type:numpy.ndarrayRaises:ValueError\u2013 Ifalphais not between 0 and 1.Exception\u2013 If theVMobjecthas no points.ExampleExample: PointFromProportion\u00b6frommanimimport*classPointFromProportion(Scene):defconstruct(self):line=Line(2*DL,2*UR)self.add(line)colors=(RED,BLUE,YELLOW)proportions=(1/4,1/2,3/4)forcolor,proportioninzip(colors,proportions):self.add(Dot(color=color).move_to(line.point_from_proportion(proportion)))class PointFromProportion(Scene):\n    def construct(self):\n        line = Line(2*DL, 2*UR)\n        self.add(line)\n        colors = (RED, BLUE, YELLOW)\n        proportions = (1/4, 1/2, 3/4)\n        for color, proportion in zip(colors, proportions):\n            self.add(Dot(color=color).move_to(\n                    line.point_from_proportion(proportion)\n            ))\n\nGets the point at a proportion along the path of theVMobject.\n\nParameters:\n\nalpha(float) \u2013 The proportion along the the path of theVMobject.\n\nalpha(float) \u2013 The proportion along the the path of theVMobject.\n\nReturns:\n\nThe point on theVMobject.\n\nThe point on theVMobject.\n\nReturn type:\n\nnumpy.ndarray\n\nnumpy.ndarray\n\nRaises:\n\nValueError\u2013 Ifalphais not between 0 and 1.Exception\u2013 If theVMobjecthas no points.\n\nValueError\u2013 Ifalphais not between 0 and 1.\n\nValueError\u2013 Ifalphais not between 0 and 1.\n\nException\u2013 If theVMobjecthas no points.\n\nException\u2013 If theVMobjecthas no points.\n\nExample\n\nExample: PointFromProportion\u00b6\n\npointwise_become_partial(vmobject,a,b)[source]\u00b6\n\nGiven a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.Parameters:vmobject(VMobject) \u2013 TheVMobjectthat will serve as a model.a(float) \u2013 The lower bound fort.b(float) \u2013 The upper bound fortReturns:TheVMobjectitself, after the transformation.Return type:VMobjectRaises:TypeError\u2013 Ifvmobjectis not an instance ofVMobject.\n\nGiven a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.\n\nParameters:\n\nvmobject(VMobject) \u2013 TheVMobjectthat will serve as a model.a(float) \u2013 The lower bound fort.b(float) \u2013 The upper bound fort\n\nvmobject(VMobject) \u2013 TheVMobjectthat will serve as a model.\n\nvmobject(VMobject) \u2013 TheVMobjectthat will serve as a model.\n\na(float) \u2013 The lower bound fort.\n\na(float) \u2013 The lower bound fort.\n\nb(float) \u2013 The upper bound fort\n\nb(float) \u2013 The upper bound fort\n\nReturns:\n\nTheVMobjectitself, after the transformation.\n\nTheVMobjectitself, after the transformation.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nRaises:\n\nTypeError\u2013 Ifvmobjectis not an instance ofVMobject.\n\nTypeError\u2013 Ifvmobjectis not an instance ofVMobject.\n\nproportion_from_point(point)[source]\u00b6\n\nReturns the proportion along the path of theVMobjecta particular given point is at.Parameters:point(Point3DLike) \u2013 The Cartesian coordinates of the point which may or may not lie on theVMobjectReturns:The proportion along the path of theVMobject.Return type:floatRaises:ValueError\u2013 Ifpointdoes not lie on the curve.Exception\u2013 If theVMobjecthas no points.\n\nReturns the proportion along the path of theVMobjecta particular given point is at.\n\nParameters:\n\npoint(Point3DLike) \u2013 The Cartesian coordinates of the point which may or may not lie on theVMobject\n\npoint(Point3DLike) \u2013 The Cartesian coordinates of the point which may or may not lie on theVMobject\n\nReturns:\n\nThe proportion along the path of theVMobject.\n\nThe proportion along the path of theVMobject.\n\nReturn type:\n\nfloat\n\nfloat\n\nRaises:\n\nValueError\u2013 Ifpointdoes not lie on the curve.Exception\u2013 If theVMobjecthas no points.\n\nValueError\u2013 Ifpointdoes not lie on the curve.\n\nValueError\u2013 Ifpointdoes not lie on the curve.\n\nException\u2013 If theVMobjecthas no points.\n\nException\u2013 If theVMobjecthas no points.\n\nresize_points(new_length,resize_func=<functionresize_array>)[source]\u00b6\n\nResize the array of anchor points and handles to have\nthe specified size.Parameters:new_length(int) \u2013 The new (total) number of points.resize_func(Callable[[Point3D_Array,int],Point3D_Array]) \u2013 A function mapping a Numpy array (the points) and an integer\n(the target size) to a Numpy array. The default implementation\nis based on Numpy\u2019sresizefunction.Return type:Self\n\nResize the array of anchor points and handles to have\nthe specified size.\n\nParameters:\n\nnew_length(int) \u2013 The new (total) number of points.resize_func(Callable[[Point3D_Array,int],Point3D_Array]) \u2013 A function mapping a Numpy array (the points) and an integer\n(the target size) to a Numpy array. The default implementation\nis based on Numpy\u2019sresizefunction.\n\nnew_length(int) \u2013 The new (total) number of points.\n\nnew_length(int) \u2013 The new (total) number of points.\n\nresize_func(Callable[[Point3D_Array,int],Point3D_Array]) \u2013 A function mapping a Numpy array (the points) and an integer\n(the target size) to a Numpy array. The default implementation\nis based on Numpy\u2019sresizefunction.\n\nresize_func(Callable[[Point3D_Array,int],Point3D_Array]) \u2013 A function mapping a Numpy array (the points) and an integer\n(the target size) to a Numpy array. The default implementation\nis based on Numpy\u2019sresizefunction.\n\nReturn type:\n\nSelf\n\nSelf\n\nreverse_direction()[source]\u00b6\n\nReverts the point direction by inverting the point order.Returns:Returns self.Return type:VMobjectExamplesExample: ChangeOfDirection\u00b6frommanimimport*classChangeOfDirection(Scene):defconstruct(self):ccw=RegularPolygon(5)ccw.shift(LEFT)cw=RegularPolygon(5)cw.shift(RIGHT).reverse_direction()self.play(Create(ccw),Create(cw),run_time=4)class ChangeOfDirection(Scene):\n    def construct(self):\n        ccw = RegularPolygon(5)\n        ccw.shift(LEFT)\n        cw = RegularPolygon(5)\n        cw.shift(RIGHT).reverse_direction()\n\n        self.play(Create(ccw), Create(cw),\n        run_time=4)\n\nReverts the point direction by inverting the point order.\n\nReturns:\n\nReturns self.\n\nReturns self.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nExamples\n\nExample: ChangeOfDirection\u00b6\n\nrotate(angle,axis=array([0.,0.,1.]),*,about_point=None,about_edge=None)[source]\u00b6\n\nRotates theMobjectaround a specified axis and point.Parameters:angle(float) \u2013 The angle of rotation in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.axis(Vector3DLike) \u2013 The rotation axis (seeRotatingfor more).about_point(Point3DLike|None) \u2013 The point about which the mobject rotates. IfNone, rotation occurs around\nthe center of the mobject.about_edge(Vector3DLike|None) \u2013 The edge about which to apply the scaling.Returns:self(for method chaining)Return type:MobjectNoteTo animate a rotation, useRotatingorRotateinstead of.animate.rotate(...).\nThe.animate.rotate(...)syntax only applies a transformation\nfrom the initial state to the final rotated state\n(interpolation between the two states), without showing proper rotational motion\nbased on the angle (from 0 to the given angle).ExamplesExample: RotateMethodExample\u00b6frommanimimport*classRotateMethodExample(Scene):defconstruct(self):circle=Circle(radius=1,color=BLUE)line=Line(start=ORIGIN,end=RIGHT)arrow1=Arrow(start=ORIGIN,end=RIGHT,buff=0,color=GOLD)group1=VGroup(circle,line,arrow1)group2=group1.copy()arrow2=group2[2]arrow2.rotate(angle=PI/4,about_point=arrow2.get_start())group3=group1.copy()arrow3=group3[2]arrow3.rotate(angle=120*DEGREES,about_point=arrow3.get_start())self.add(VGroup(group1,group2,group3).arrange(RIGHT,buff=1))class RotateMethodExample(Scene):\n    def construct(self):\n        circle = Circle(radius=1, color=BLUE)\n        line = Line(start=ORIGIN, end=RIGHT)\n        arrow1 = Arrow(start=ORIGIN, end=RIGHT, buff=0, color=GOLD)\n        group1 = VGroup(circle, line, arrow1)\n\n        group2 = group1.copy()\n        arrow2 = group2[2]\n        arrow2.rotate(angle=PI / 4, about_point=arrow2.get_start())\n\n        group3 = group1.copy()\n        arrow3 = group3[2]\n        arrow3.rotate(angle=120 * DEGREES, about_point=arrow3.get_start())\n\n        self.add(VGroup(group1, group2, group3).arrange(RIGHT, buff=1))See alsoRotating,Rotate,animate,apply_points_function_about_point()\n\nRotates theMobjectaround a specified axis and point.\n\nParameters:\n\nangle(float) \u2013 The angle of rotation in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.axis(Vector3DLike) \u2013 The rotation axis (seeRotatingfor more).about_point(Point3DLike|None) \u2013 The point about which the mobject rotates. IfNone, rotation occurs around\nthe center of the mobject.about_edge(Vector3DLike|None) \u2013 The edge about which to apply the scaling.\n\nangle(float) \u2013 The angle of rotation in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.\n\nangle(float) \u2013 The angle of rotation in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.\n\naxis(Vector3DLike) \u2013 The rotation axis (seeRotatingfor more).\n\naxis(Vector3DLike) \u2013 The rotation axis (seeRotatingfor more).\n\nabout_point(Point3DLike|None) \u2013 The point about which the mobject rotates. IfNone, rotation occurs around\nthe center of the mobject.\n\nabout_point(Point3DLike|None) \u2013 The point about which the mobject rotates. IfNone, rotation occurs around\nthe center of the mobject.\n\nabout_edge(Vector3DLike|None) \u2013 The edge about which to apply the scaling.\n\nabout_edge(Vector3DLike|None) \u2013 The edge about which to apply the scaling.\n\nReturns:\n\nself(for method chaining)\n\nself(for method chaining)\n\nReturn type:\n\nMobject\n\nMobject\n\nNote\n\nTo animate a rotation, useRotatingorRotateinstead of.animate.rotate(...).\nThe.animate.rotate(...)syntax only applies a transformation\nfrom the initial state to the final rotated state\n(interpolation between the two states), without showing proper rotational motion\nbased on the angle (from 0 to the given angle).\n\nExamples\n\nExample: RotateMethodExample\u00b6\n\nSee also\n\nRotating,Rotate,animate,apply_points_function_about_point()\n\nrotate_sheen_direction(angle,axis=array([0.,0.,1.]),family=True)[source]\u00b6\n\nRotates the direction of the applied sheen.Parameters:angle(float) \u2013 Angle by which the direction of sheen is rotated.axis(Vector3DLike) \u2013 Axis of rotation.family(bool)Return type:SelfExamplesNormal usage:Circle().set_sheen_direction(UP).rotate_sheen_direction(PI)See alsoset_sheen_direction()\n\nRotates the direction of the applied sheen.\n\nParameters:\n\nangle(float) \u2013 Angle by which the direction of sheen is rotated.axis(Vector3DLike) \u2013 Axis of rotation.family(bool)\n\nangle(float) \u2013 Angle by which the direction of sheen is rotated.\n\nangle(float) \u2013 Angle by which the direction of sheen is rotated.\n\naxis(Vector3DLike) \u2013 Axis of rotation.\n\naxis(Vector3DLike) \u2013 Axis of rotation.\n\nfamily(bool)\n\nfamily(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\nExamples\n\nNormal usage:\n\nSee also\n\nset_sheen_direction()\n\nscale(scale_factor,scale_stroke=False,*,about_point=None,about_edge=None)[source]\u00b6\n\nScale the size by a factor.Default behavior is to scale about the center of the vmobject.Parameters:scale_factor(float) \u2013 The scaling factor\\(\\alpha\\). If\\(0 < |\\alpha|\u00a0< 1\\), the mobject\nwill shrink, and for\\(|\\alpha| > 1\\)it will grow. Furthermore,\nif\\(\\alpha < 0\\), the mobject is also flipped.scale_stroke(bool) \u2013 Boolean determining if the object\u2019s outline is scaled when the object is scaled.\nIf enabled, and object with 2px outline is scaled by a factor of .5, it will have an outline of 1px.kwargs\u2013 Additional keyword arguments passed toscale().about_point(Point3DLike|None)about_edge(Vector3DLike|None)Returns:selfReturn type:VMobjectExamplesExample: MobjectScaleExample\u00b6frommanimimport*classMobjectScaleExample(Scene):defconstruct(self):c1=Circle(1,RED).set_x(-1)c2=Circle(1,GREEN).set_x(1)vg=VGroup(c1,c2)vg.set_stroke(width=50)self.add(vg)self.play(c1.animate.scale(.25),c2.animate.scale(.25,scale_stroke=True))class MobjectScaleExample(Scene):\n    def construct(self):\n        c1 = Circle(1, RED).set_x(-1)\n        c2 = Circle(1, GREEN).set_x(1)\n\n        vg = VGroup(c1, c2)\n        vg.set_stroke(width=50)\n        self.add(vg)\n\n        self.play(\n            c1.animate.scale(.25),\n            c2.animate.scale(.25,\n                scale_stroke=True)\n        )See alsomove_to()\n\nScale the size by a factor.\n\nDefault behavior is to scale about the center of the vmobject.\n\nParameters:\n\nscale_factor(float) \u2013 The scaling factor\\(\\alpha\\). If\\(0 < |\\alpha|\u00a0< 1\\), the mobject\nwill shrink, and for\\(|\\alpha| > 1\\)it will grow. Furthermore,\nif\\(\\alpha < 0\\), the mobject is also flipped.scale_stroke(bool) \u2013 Boolean determining if the object\u2019s outline is scaled when the object is scaled.\nIf enabled, and object with 2px outline is scaled by a factor of .5, it will have an outline of 1px.kwargs\u2013 Additional keyword arguments passed toscale().about_point(Point3DLike|None)about_edge(Vector3DLike|None)\n\nscale_factor(float) \u2013 The scaling factor\\(\\alpha\\). If\\(0 < |\\alpha|\u00a0< 1\\), the mobject\nwill shrink, and for\\(|\\alpha| > 1\\)it will grow. Furthermore,\nif\\(\\alpha < 0\\), the mobject is also flipped.\n\nscale_factor(float) \u2013 The scaling factor\\(\\alpha\\). If\\(0 < |\\alpha|\u00a0< 1\\), the mobject\nwill shrink, and for\\(|\\alpha| > 1\\)it will grow. Furthermore,\nif\\(\\alpha < 0\\), the mobject is also flipped.\n\nscale_stroke(bool) \u2013 Boolean determining if the object\u2019s outline is scaled when the object is scaled.\nIf enabled, and object with 2px outline is scaled by a factor of .5, it will have an outline of 1px.\n\nscale_stroke(bool) \u2013 Boolean determining if the object\u2019s outline is scaled when the object is scaled.\nIf enabled, and object with 2px outline is scaled by a factor of .5, it will have an outline of 1px.\n\nkwargs\u2013 Additional keyword arguments passed toscale().\n\nkwargs\u2013 Additional keyword arguments passed toscale().\n\nabout_point(Point3DLike|None)\n\nabout_point(Point3DLike|None)\n\nabout_edge(Vector3DLike|None)\n\nabout_edge(Vector3DLike|None)\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nExamples\n\nExample: MobjectScaleExample\u00b6\n\nSee also\n\nmove_to()\n\nscale_handle_to_anchor_distances(factor)[source]\u00b6\n\nIf the distance between a given handle point H and its associated\nanchor point A is d, then it changes H to be a distances factor*d\naway from A, but so that the line from A to H doesn\u2019t change.\nThis is mostly useful in the context of applying a (differentiable)\nfunction, to preserve tangency properties.  One would pull all the\nhandles closer to their anchors, apply the function then push them out\nagain.Parameters:factor(float) \u2013 The factor used for scaling.Returns:selfReturn type:VMobject\n\nIf the distance between a given handle point H and its associated\nanchor point A is d, then it changes H to be a distances factor*d\naway from A, but so that the line from A to H doesn\u2019t change.\nThis is mostly useful in the context of applying a (differentiable)\nfunction, to preserve tangency properties.  One would pull all the\nhandles closer to their anchors, apply the function then push them out\nagain.\n\nParameters:\n\nfactor(float) \u2013 The factor used for scaling.\n\nfactor(float) \u2013 The factor used for scaling.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nset_anchors_and_handles(anchors1,handles1,handles2,anchors2)[source]\u00b6\n\nGiven two sets of anchors and handles, process them to set them as anchors\nand handles of the VMobject.anchors1[i], handles1[i], handles2[i] and anchors2[i] define the i-th bezier\ncurve of the vmobject. There are four hardcoded parameters and this is a\nproblem as it makes the number of points per cubic curve unchangeable from 4\n(two anchors and two handles).Returns:selfReturn type:VMobjectParameters:anchors1(Point3DLike_Array)handles1(Point3DLike_Array)handles2(Point3DLike_Array)anchors2(Point3DLike_Array)\n\nGiven two sets of anchors and handles, process them to set them as anchors\nand handles of the VMobject.\n\nanchors1[i], handles1[i], handles2[i] and anchors2[i] define the i-th bezier\ncurve of the vmobject. There are four hardcoded parameters and this is a\nproblem as it makes the number of points per cubic curve unchangeable from 4\n(two anchors and two handles).\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nParameters:\n\nanchors1(Point3DLike_Array)handles1(Point3DLike_Array)handles2(Point3DLike_Array)anchors2(Point3DLike_Array)\n\nanchors1(Point3DLike_Array)\n\nanchors1(Point3DLike_Array)\n\nhandles1(Point3DLike_Array)\n\nhandles1(Point3DLike_Array)\n\nhandles2(Point3DLike_Array)\n\nhandles2(Point3DLike_Array)\n\nanchors2(Point3DLike_Array)\n\nanchors2(Point3DLike_Array)\n\nset_cap_style(cap_style)[source]\u00b6\n\nSets the cap style of theVMobject.Parameters:cap_style(CapStyleType) \u2013 The cap style to be set. SeeCapStyleTypefor options.Returns:selfReturn type:VMobjectExamplesExample: CapStyleExample\u00b6frommanimimport*classCapStyleExample(Scene):defconstruct(self):line=Line(LEFT,RIGHT,color=YELLOW,stroke_width=20)line.set_cap_style(CapStyleType.ROUND)self.add(line)class CapStyleExample(Scene):\n    def construct(self):\n        line = Line(LEFT, RIGHT, color=YELLOW, stroke_width=20)\n        line.set_cap_style(CapStyleType.ROUND)\n        self.add(line)\n\nSets the cap style of theVMobject.\n\nParameters:\n\ncap_style(CapStyleType) \u2013 The cap style to be set. SeeCapStyleTypefor options.\n\ncap_style(CapStyleType) \u2013 The cap style to be set. SeeCapStyleTypefor options.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nExamples\n\nExample: CapStyleExample\u00b6\n\nset_color(color,family=True)[source]\u00b6\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof colorParameters:color(ParsableManimColor)family(bool)Return type:Self\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color\n\nParameters:\n\ncolor(ParsableManimColor)family(bool)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nfamily(bool)\n\nfamily(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\nset_fill(color=None,opacity=None,family=True)[source]\u00b6\n\nSet the fill color and fill opacity of aVMobject.Parameters:color(ParsableManimColor|None) \u2013 Fill color of theVMobject.opacity(float|None) \u2013 Fill opacity of theVMobject.family(bool) \u2013 IfTrue, the fill color of all submobjects is also set.Returns:selfReturn type:VMobjectExamplesExample: SetFill\u00b6frommanimimport*classSetFill(Scene):defconstruct(self):square=Square().scale(2).set_fill(WHITE,1)circle1=Circle().set_fill(GREEN,0.8)circle2=Circle().set_fill(YELLOW)# No fill_opacitycircle3=Circle().set_fill(color='#FF2135',opacity=0.2)group=Group(circle1,circle2,circle3).arrange()self.add(square)self.add(group)class SetFill(Scene):\n    def construct(self):\n        square = Square().scale(2).set_fill(WHITE,1)\n        circle1 = Circle().set_fill(GREEN,0.8)\n        circle2 = Circle().set_fill(YELLOW) # No fill_opacity\n        circle3 = Circle().set_fill(color = '#FF2135', opacity = 0.2)\n        group = Group(circle1,circle2,circle3).arrange()\n        self.add(square)\n        self.add(group)See alsoset_style()\n\nSet the fill color and fill opacity of aVMobject.\n\nParameters:\n\ncolor(ParsableManimColor|None) \u2013 Fill color of theVMobject.opacity(float|None) \u2013 Fill opacity of theVMobject.family(bool) \u2013 IfTrue, the fill color of all submobjects is also set.\n\ncolor(ParsableManimColor|None) \u2013 Fill color of theVMobject.\n\ncolor(ParsableManimColor|None) \u2013 Fill color of theVMobject.\n\nopacity(float|None) \u2013 Fill opacity of theVMobject.\n\nopacity(float|None) \u2013 Fill opacity of theVMobject.\n\nfamily(bool) \u2013 IfTrue, the fill color of all submobjects is also set.\n\nfamily(bool) \u2013 IfTrue, the fill color of all submobjects is also set.\n\nReturns:\n\nself\n\nself\n\nReturn type:\n\nVMobject\n\nVMobject\n\nExamples\n\nExample: SetFill\u00b6\n\nSee also\n\nset_style()\n\nset_points_as_corners(points)[source]\u00b6\n\nGiven an array of points, set them as corners of theVMobject.To achieve that, this algorithm sets handles aligned with the anchors\nsuch that the resultant B\u00e9zier curve will be the segment between the\ntwo anchors.Parameters:points(Point3DLike_Array) \u2013 Array of points that will be set as corners.Returns:The VMobject itself, after setting the new points as corners.Return type:VMobjectExamplesExample: PointsAsCornersExample\u00b6frommanimimport*classPointsAsCornersExample(Scene):defconstruct(self):corners=(# create squareUR,UL,DL,DR,UR,# create crossesDL,UL,DR)vmob=VMobject(stroke_color=RED)vmob.set_points_as_corners(corners).scale(2)self.add(vmob)class PointsAsCornersExample(Scene):\n    def construct(self):\n        corners = (\n            # create square\n            UR, UL,\n            DL, DR,\n            UR,\n            # create crosses\n            DL, UL,\n            DR\n        )\n        vmob = VMobject(stroke_color=RED)\n        vmob.set_points_as_corners(corners).scale(2)\n        self.add(vmob)\n\nGiven an array of points, set them as corners of theVMobject.\n\nTo achieve that, this algorithm sets handles aligned with the anchors\nsuch that the resultant B\u00e9zier curve will be the segment between the\ntwo anchors.\n\nParameters:\n\npoints(Point3DLike_Array) \u2013 Array of points that will be set as corners.\n\npoints(Point3DLike_Array) \u2013 Array of points that will be set as corners.\n\nReturns:\n\nThe VMobject itself, after setting the new points as corners.\n\nThe VMobject itself, after setting the new points as corners.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nExamples\n\nExample: PointsAsCornersExample\u00b6\n\nset_sheen(factor,direction=None,family=True)[source]\u00b6\n\nApplies a color gradient from a direction.Parameters:factor(float) \u2013 The extent of lustre/gradient to apply. If negative, the gradient\nstarts from black, if positive the gradient starts from white and\nchanges to the current color.direction(Vector3DLike|None) \u2013 Direction from where the gradient is applied.family(bool)Return type:SelfExamplesExample: SetSheen\u00b6frommanimimport*classSetSheen(Scene):defconstruct(self):circle=Circle(fill_opacity=1).set_sheen(-0.3,DR)self.add(circle)class SetSheen(Scene):\n    def construct(self):\n        circle = Circle(fill_opacity=1).set_sheen(-0.3, DR)\n        self.add(circle)\n\nApplies a color gradient from a direction.\n\nParameters:\n\nfactor(float) \u2013 The extent of lustre/gradient to apply. If negative, the gradient\nstarts from black, if positive the gradient starts from white and\nchanges to the current color.direction(Vector3DLike|None) \u2013 Direction from where the gradient is applied.family(bool)\n\nfactor(float) \u2013 The extent of lustre/gradient to apply. If negative, the gradient\nstarts from black, if positive the gradient starts from white and\nchanges to the current color.\n\nfactor(float) \u2013 The extent of lustre/gradient to apply. If negative, the gradient\nstarts from black, if positive the gradient starts from white and\nchanges to the current color.\n\ndirection(Vector3DLike|None) \u2013 Direction from where the gradient is applied.\n\ndirection(Vector3DLike|None) \u2013 Direction from where the gradient is applied.\n\nfamily(bool)\n\nfamily(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\nExamples\n\nExample: SetSheen\u00b6\n\nset_sheen_direction(direction,family=True)[source]\u00b6\n\nSets the direction of the applied sheen.Parameters:direction(Vector3DLike) \u2013 Direction from where the gradient is applied.family(bool)Return type:SelfExamplesNormal usage:Circle().set_sheen_direction(UP)See alsoset_sheen(),rotate_sheen_direction()\n\nSets the direction of the applied sheen.\n\nParameters:\n\ndirection(Vector3DLike) \u2013 Direction from where the gradient is applied.family(bool)\n\ndirection(Vector3DLike) \u2013 Direction from where the gradient is applied.\n\ndirection(Vector3DLike) \u2013 Direction from where the gradient is applied.\n\nfamily(bool)\n\nfamily(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\nExamples\n\nNormal usage:\n\nSee also\n\nset_sheen(),rotate_sheen_direction()\n\nstart_new_path(point)[source]\u00b6\n\nAppend apointto theVMobject.points, which will be the\nbeginning of a new B\u00e9zier curve in the path given by the points. If\nthere\u2019s an unfinished curve at the end ofVMobject.points,\ncomplete it by appending the last B\u00e9zier curve\u2019s start anchor as many\ntimes as needed.Parameters:point(Point3DLike) \u2013 A 3D point to append toVMobject.points.Returns:The VMobject itself, after appendingpointand starting a new\ncurve.Return type:VMobject\n\nAppend apointto theVMobject.points, which will be the\nbeginning of a new B\u00e9zier curve in the path given by the points. If\nthere\u2019s an unfinished curve at the end ofVMobject.points,\ncomplete it by appending the last B\u00e9zier curve\u2019s start anchor as many\ntimes as needed.\n\nParameters:\n\npoint(Point3DLike) \u2013 A 3D point to append toVMobject.points.\n\npoint(Point3DLike) \u2013 A 3D point to append toVMobject.points.\n\nReturns:\n\nThe VMobject itself, after appendingpointand starting a new\ncurve.\n\nThe VMobject itself, after appendingpointand starting a new\ncurve.\n\nReturn type:\n\nVMobject\n\nVMobject",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportSquare,RED>>>Square(color=RED).get_color()==REDTrue",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportCircle>>>Circle().get_direction()'CCW'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPointFromProportion(Scene):defconstruct(self):line=Line(2*DL,2*UR)self.add(line)colors=(RED,BLUE,YELLOW)proportions=(1/4,1/2,3/4)forcolor,proportioninzip(colors,proportions):self.add(Dot(color=color).move_to(line.point_from_proportion(proportion)))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PointFromProportion(Scene):\n    def construct(self):\n        line = Line(2*DL, 2*UR)\n        self.add(line)\n        colors = (RED, BLUE, YELLOW)\n        proportions = (1/4, 1/2, 3/4)\n        for color, proportion in zip(colors, proportions):\n            self.add(Dot(color=color).move_to(\n                    line.point_from_proportion(proportion)\n            ))",
+      "language": "python",
+      "context": "Example: PointFromProportion\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classChangeOfDirection(Scene):defconstruct(self):ccw=RegularPolygon(5)ccw.shift(LEFT)cw=RegularPolygon(5)cw.shift(RIGHT).reverse_direction()self.play(Create(ccw),Create(cw),run_time=4)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ChangeOfDirection(Scene):\n    def construct(self):\n        ccw = RegularPolygon(5)\n        ccw.shift(LEFT)\n        cw = RegularPolygon(5)\n        cw.shift(RIGHT).reverse_direction()\n\n        self.play(Create(ccw), Create(cw),\n        run_time=4)",
+      "language": "python",
+      "context": "Example: ChangeOfDirection\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classRotateMethodExample(Scene):defconstruct(self):circle=Circle(radius=1,color=BLUE)line=Line(start=ORIGIN,end=RIGHT)arrow1=Arrow(start=ORIGIN,end=RIGHT,buff=0,color=GOLD)group1=VGroup(circle,line,arrow1)group2=group1.copy()arrow2=group2[2]arrow2.rotate(angle=PI/4,about_point=arrow2.get_start())group3=group1.copy()arrow3=group3[2]arrow3.rotate(angle=120*DEGREES,about_point=arrow3.get_start())self.add(VGroup(group1,group2,group3).arrange(RIGHT,buff=1))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RotateMethodExample(Scene):\n    def construct(self):\n        circle = Circle(radius=1, color=BLUE)\n        line = Line(start=ORIGIN, end=RIGHT)\n        arrow1 = Arrow(start=ORIGIN, end=RIGHT, buff=0, color=GOLD)\n        group1 = VGroup(circle, line, arrow1)\n\n        group2 = group1.copy()\n        arrow2 = group2[2]\n        arrow2.rotate(angle=PI / 4, about_point=arrow2.get_start())\n\n        group3 = group1.copy()\n        arrow3 = group3[2]\n        arrow3.rotate(angle=120 * DEGREES, about_point=arrow3.get_start())\n\n        self.add(VGroup(group1, group2, group3).arrange(RIGHT, buff=1))",
+      "language": "python",
+      "context": "Example: RotateMethodExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "Circle().set_sheen_direction(UP).rotate_sheen_direction(PI)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classMobjectScaleExample(Scene):defconstruct(self):c1=Circle(1,RED).set_x(-1)c2=Circle(1,GREEN).set_x(1)vg=VGroup(c1,c2)vg.set_stroke(width=50)self.add(vg)self.play(c1.animate.scale(.25),c2.animate.scale(.25,scale_stroke=True))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MobjectScaleExample(Scene):\n    def construct(self):\n        c1 = Circle(1, RED).set_x(-1)\n        c2 = Circle(1, GREEN).set_x(1)\n\n        vg = VGroup(c1, c2)\n        vg.set_stroke(width=50)\n        self.add(vg)\n\n        self.play(\n            c1.animate.scale(.25),\n            c2.animate.scale(.25,\n                scale_stroke=True)\n        )",
+      "language": "python",
+      "context": "Example: MobjectScaleExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classCapStyleExample(Scene):defconstruct(self):line=Line(LEFT,RIGHT,color=YELLOW,stroke_width=20)line.set_cap_style(CapStyleType.ROUND)self.add(line)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CapStyleExample(Scene):\n    def construct(self):\n        line = Line(LEFT, RIGHT, color=YELLOW, stroke_width=20)\n        line.set_cap_style(CapStyleType.ROUND)\n        self.add(line)",
+      "language": "python",
+      "context": "Example: CapStyleExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSetFill(Scene):defconstruct(self):square=Square().scale(2).set_fill(WHITE,1)circle1=Circle().set_fill(GREEN,0.8)circle2=Circle().set_fill(YELLOW)# No fill_opacitycircle3=Circle().set_fill(color='#FF2135',opacity=0.2)group=Group(circle1,circle2,circle3).arrange()self.add(square)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SetFill(Scene):\n    def construct(self):\n        square = Square().scale(2).set_fill(WHITE,1)\n        circle1 = Circle().set_fill(GREEN,0.8)\n        circle2 = Circle().set_fill(YELLOW) # No fill_opacity\n        circle3 = Circle().set_fill(color = '#FF2135', opacity = 0.2)\n        group = Group(circle1,circle2,circle3).arrange()\n        self.add(square)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: SetFill\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPointsAsCornersExample(Scene):defconstruct(self):corners=(# create squareUR,UL,DL,DR,UR,# create crossesDL,UL,DR)vmob=VMobject(stroke_color=RED)vmob.set_points_as_corners(corners).scale(2)self.add(vmob)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PointsAsCornersExample(Scene):\n    def construct(self):\n        corners = (\n            # create square\n            UR, UL,\n            DL, DR,\n            UR,\n            # create crosses\n            DL, UL,\n            DR\n        )\n        vmob = VMobject(stroke_color=RED)\n        vmob.set_points_as_corners(corners).scale(2)\n        self.add(vmob)",
+      "language": "python",
+      "context": "Example: PointsAsCornersExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSetSheen(Scene):defconstruct(self):circle=Circle(fill_opacity=1).set_sheen(-0.3,DR)self.add(circle)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SetSheen(Scene):\n    def construct(self):\n        circle = Circle(fill_opacity=1).set_sheen(-0.3, DR)\n        self.add(circle)",
+      "language": "python",
+      "context": "Example: SetSheen\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "Circle().set_sheen_direction(UP)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "VMobject",
+      "class_name": null,
+      "parameters": [
+        "fill_color=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Mobject"
+    },
+    {
+      "name": "_assert_valid_submobjects",
+      "class_name": null,
+      "parameters": [
+        "submobjects"
+      ],
+      "return_type": null,
+      "description": "Check that all submobjects are actually instances ofMobject, and that none of them isself(aMobjectcannot contain itself)."
+    },
+    {
+      "name": "_gen_subpaths_from_points",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Given an array of points defining the bezier curves of the vmobject, return subpaths formed by these points.\nHere, Two bezier curves form a path if at least two of their anchors are evaluated True by the relation defined by filter_func."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "fill_color=None"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add_cubic_bezier_curve_to",
+      "class_name": null,
+      "parameters": [
+        "handle1"
+      ],
+      "return_type": null,
+      "description": "Add cubic bezier curve to the path."
+    },
+    {
+      "name": "add_line_to",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Add a straight line from the last point of VMobject to the given point."
+    },
+    {
+      "name": "add_points_as_corners",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Append multiple straight lines at the end ofVMobject.points, which connect the givenpointsin order\nstarting from the end of the current path. Thesepointswould be\ntherefore the corners of the new polyline appended to the path."
+    },
+    {
+      "name": "add_quadratic_bezier_curve_to",
+      "class_name": null,
+      "parameters": [
+        "handle"
+      ],
+      "return_type": null,
+      "description": "Add Quadratic bezier curve to the path."
+    },
+    {
+      "name": "add_smooth_curve_to",
+      "class_name": null,
+      "parameters": [
+        "*points"
+      ],
+      "return_type": null,
+      "description": "Creates a smooth curve from given points and add it to the VMobject. If two points are passed in, the first is interpreted\nas a handle, the second as an anchor."
+    },
+    {
+      "name": "align_points",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Adds points to self and vmobject so that they both have the same number of subpaths, with\ncorresponding subpaths each containing the same number of points."
+    },
+    {
+      "name": "append_points",
+      "class_name": null,
+      "parameters": [
+        "new_points"
+      ],
+      "return_type": null,
+      "description": "Append the givennew_pointsto the end ofVMobject.points."
+    },
+    {
+      "name": "change_anchor_mode",
+      "class_name": null,
+      "parameters": [
+        "mode"
+      ],
+      "return_type": null,
+      "description": "Changes the anchor mode of the bezier curves. This will modify the handles."
+    },
+    {
+      "name": "consider_points_equals_2d",
+      "class_name": null,
+      "parameters": [
+        "p0"
+      ],
+      "return_type": null,
+      "description": "Determine if two points are close enough to be considered equal."
+    },
+    {
+      "name": "fill_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "If there are multiple colors (for gradient)\nthis returns the first one"
+    },
+    {
+      "name": "force_direction",
+      "class_name": null,
+      "parameters": [
+        "target_direction"
+      ],
+      "return_type": null,
+      "description": "Makes sure that points are either directed clockwise or\ncounterclockwise."
+    },
+    {
+      "name": "gen_cubic_bezier_tuples_from_points",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Returns the bezier tuples from an array of points."
+    },
+    {
+      "name": "generate_rgbas_array",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "First arg can be either a color, or a tuple/list of colors.\nLikewise, opacity can either be a float, or a tuple of floats.\nIf self.sheen_factor is not zero, and only\none color was passed in, a second slightly light color\nwill automatically be added for the gradient"
+    },
+    {
+      "name": "get_anchors",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the anchors of the curves forming the VMobject."
+    },
+    {
+      "name": "get_anchors_and_handles",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns anchors1, handles1, handles2, anchors2,\nwhere (anchors1[i], handles1[i], handles2[i], anchors2[i])\nwill be four points defining a cubic bezier curve\nfor any i in range(0, len(anchors1))"
+    },
+    {
+      "name": "get_arc_length",
+      "class_name": null,
+      "parameters": [
+        "sample_points_per_curve=None"
+      ],
+      "return_type": null,
+      "description": "Return the approximated length of the whole curve."
+    },
+    {
+      "name": "get_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the color of theMobject"
+    },
+    {
+      "name": "get_curve_functions",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Gets the functions for the curves of the mobject."
+    },
+    {
+      "name": "get_curve_functions_with_lengths",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Gets the functions and lengths of the curves for the mobject."
+    },
+    {
+      "name": "get_direction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Usesshoelace_direction()to calculate the direction.\nThe direction of points determines in which direction the\nobject is drawn, clockwise or counterclockwise."
+    },
+    {
+      "name": "get_end_anchors",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the end anchors of the bezier curves."
+    },
+    {
+      "name": "get_fill_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "If there are multiple colors (for gradient)\nthis returns the first one"
+    },
+    {
+      "name": "get_fill_opacity",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "If there are multiple opacities, this returns the\nfirst"
+    },
+    {
+      "name": "get_mobject_type_class",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the base class of this mobject type."
+    },
+    {
+      "name": "get_nth_curve_function",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Returns the expression of the nth curve."
+    },
+    {
+      "name": "get_nth_curve_function_with_length",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Returns the expression of the nth curve along with its (approximate) length."
+    },
+    {
+      "name": "get_nth_curve_length",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Returns the (approximate) length of the nth curve."
+    },
+    {
+      "name": "get_nth_curve_length_pieces",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Returns the array of short line lengths used for length approximation."
+    },
+    {
+      "name": "get_nth_curve_points",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Returns the points defining the nth curve of the vmobject."
+    },
+    {
+      "name": "get_num_curves",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the number of curves of the vmobject."
+    },
+    {
+      "name": "get_point_mobject",
+      "class_name": null,
+      "parameters": [
+        "center=None"
+      ],
+      "return_type": null,
+      "description": "The simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate type"
+    },
+    {
+      "name": "get_start_anchors",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the start anchors of the bezier curves."
+    },
+    {
+      "name": "get_subcurve",
+      "class_name": null,
+      "parameters": [
+        "a"
+      ],
+      "return_type": null,
+      "description": "Returns the subcurve of the VMobject between the interval [a, b].\nThe curve is a VMobject itself."
+    },
+    {
+      "name": "get_subpaths",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns subpaths formed by the curves of the VMobject."
+    },
+    {
+      "name": "init_colors",
+      "class_name": null,
+      "parameters": [
+        "propagate_colors=True"
+      ],
+      "return_type": null,
+      "description": "Initializes the colors."
+    },
+    {
+      "name": "insert_n_curves",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Inserts n curves to the bezier curves of the vmobject."
+    },
+    {
+      "name": "insert_n_curves_to_point_list",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Given an array of k points defining a bezier curves (anchors and handles), returns points defining exactly k + n bezier curves."
+    },
+    {
+      "name": "point_from_proportion",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Gets the point at a proportion along the path of theVMobject."
+    },
+    {
+      "name": "pointwise_become_partial",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Given a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb."
+    },
+    {
+      "name": "proportion_from_point",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Returns the proportion along the path of theVMobjecta particular given point is at."
+    },
+    {
+      "name": "resize_points",
+      "class_name": null,
+      "parameters": [
+        "new_length"
+      ],
+      "return_type": null,
+      "description": "Resize the array of anchor points and handles to have\nthe specified size."
+    },
+    {
+      "name": "reverse_direction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Reverts the point direction by inverting the point order."
+    },
+    {
+      "name": "rotate",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "Rotates theMobjectaround a specified axis and point."
+    },
+    {
+      "name": "rotate_sheen_direction",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "Rotates the direction of the applied sheen."
+    },
+    {
+      "name": "scale",
+      "class_name": null,
+      "parameters": [
+        "scale_factor"
+      ],
+      "return_type": null,
+      "description": "Scale the size by a factor."
+    },
+    {
+      "name": "scale_handle_to_anchor_distances",
+      "class_name": null,
+      "parameters": [
+        "factor"
+      ],
+      "return_type": null,
+      "description": "If the distance between a given handle point H and its associated\nanchor point A is d, then it changes H to be a distances factor*d\naway from A, but so that the line from A to H doesn\u2019t change.\nThis is mostly useful in the context of applying a (differentiable)\nfunction, to preserve tangency properties.  One would pull all the\nhandles closer to their anchors, apply the function then push them out\nagain."
+    },
+    {
+      "name": "set_anchors_and_handles",
+      "class_name": null,
+      "parameters": [
+        "anchors1"
+      ],
+      "return_type": null,
+      "description": "Given two sets of anchors and handles, process them to set them as anchors\nand handles of the VMobject."
+    },
+    {
+      "name": "set_cap_style",
+      "class_name": null,
+      "parameters": [
+        "cap_style"
+      ],
+      "return_type": null,
+      "description": "Sets the cap style of theVMobject."
+    },
+    {
+      "name": "set_color",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color"
+    },
+    {
+      "name": "set_fill",
+      "class_name": null,
+      "parameters": [
+        "color=None"
+      ],
+      "return_type": null,
+      "description": "Set the fill color and fill opacity of aVMobject."
+    },
+    {
+      "name": "set_points_as_corners",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Given an array of points, set them as corners of theVMobject."
+    },
+    {
+      "name": "set_sheen",
+      "class_name": null,
+      "parameters": [
+        "factor"
+      ],
+      "return_type": null,
+      "description": "Applies a color gradient from a direction."
+    },
+    {
+      "name": "set_sheen_direction",
+      "class_name": null,
+      "parameters": [
+        "direction"
+      ],
+      "return_type": null,
+      "description": "Sets the direction of the applied sheen."
+    },
+    {
+      "name": "start_new_path",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Append apointto theVMobject.points, which will be the\nbeginning of a new B\u00e9zier curve in the path given by the points. If\nthere\u2019s an unfinished curve at the end ofVMobject.points,\ncomplete it by appending the last B\u00e9zier curve\u2019s start anchor as many\ntimes as needed."
+    }
+  ],
+  "related_classes": [
+    "Rotate",
+    "Circle",
+    "Line",
+    "Create",
+    "VGroup",
+    "Indicate",
+    "VMobject",
+    "Arrow",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

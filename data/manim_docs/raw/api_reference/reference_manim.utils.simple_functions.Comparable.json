@@ -1,0 +1,23 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.simple_functions.Comparable.html",
+  "title": "Comparable\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Comparable\u00b6\n\nQualified name:manim.utils.simple\\_functions.Comparable\n\nclassComparable(*args,**kwargs)[source]\u00b6\n\nBases:ProtocolMethods\n\nBases:Protocol\n\nMethods",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Comparable",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:Protocol"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "graph"
+  ]
+}

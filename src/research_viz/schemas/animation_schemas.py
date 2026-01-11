@@ -1,5 +1,13 @@
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
+
+
+class PropertyValue(BaseModel):
+    """Key-value pair for flexible properties."""
+    model_config = ConfigDict(extra="forbid")
+
+    key: str = Field(..., description="Property name")
+    value: str = Field(..., description="Property value (as string)")
 
 
 class ShapeSpec(BaseModel):
@@ -11,15 +19,14 @@ class ShapeSpec(BaseModel):
 
     position: Optional[str] = Field(None, description="Position on screen (e.g., center, left, top_right, above_previous)")
     color: Optional[str] = Field(None, description="Color name or description")
-    scale: Optional[float] = Field(1.0, description="Scale factor")
+    scale: float = Field(1.0, description="Scale factor")
 
     content: Optional[str] = Field(None, description="Text content or LaTeX formula")
 
     represents: str = Field(..., description="What this shape represents conceptually")
     from_kg_component: Optional[str] = Field(None, description="Component ID from KG this relates to")
 
-    properties: Dict[str, Any] = Field(default_factory=dict, description="Additional shape-specific properties")
-
+    properties: Optional[List[PropertyValue]] = Field(None, description="Additional shape-specific properties as key-value pairs")
 
 class AnimationTransform(BaseModel):
     """Specification for an animation/transformation."""
@@ -34,7 +41,7 @@ class AnimationTransform(BaseModel):
     start_time_offset: float = Field(0.0, description="Offset from scene start in seconds")
     sync_with_narration: Optional[str] = Field(None, description="Narration phrase this should sync with")
 
-    target_properties: Optional[Dict[str, Any]] = Field(None, description="Target properties for transform")
+    target_properties: List[PropertyValue] = Field(default_factory=list, description="Target properties for transform as key-value pairs")
     description: str = Field(..., description="What this animation accomplishes")
 
 
@@ -49,7 +56,7 @@ class MathAnimation(BaseModel):
     output_formula: str = Field(..., description="LaTeX formula for output")
 
     from_kg_operation: Optional[str] = Field(None, description="Operation ID from low-level KG")
-    tensor_shapes: Dict[str, str] = Field(default_factory=dict, description="Tensor name → shape string")
+    tensor_shapes: List[PropertyValue] = Field(default_factory=list, description="Tensor shapes as key-value pairs (tensor name → shape string)")
 
     visualization_style: str = Field(..., description="How to visualize this operation (e.g., step_by_step, simultaneous, highlight_flow, heatmap)")
     show_intermediate_steps: bool = Field(True, description="Whether to show intermediate calculations")
@@ -73,10 +80,10 @@ class AnimationScene(BaseModel):
 
     shapes: List[ShapeSpec] = Field(default_factory=list, description="Shapes to create for this scene")
     animations: List[AnimationTransform] = Field(default_factory=list, description="General animations")
-    math_animations: Optional[List[MathAnimation]] = Field(None, description="Mathematical animations if applicable")
+    math_animations: List[MathAnimation] = Field(default_factory=list, description="Mathematical animations if applicable")
 
     concepts_visualized: List[str] = Field(default_factory=list, description="Concept IDs being visualized")
-    kg_operations_shown: Optional[List[str]] = Field(None, description="Operation IDs from low-level KG")
+    kg_operations_shown: List[str] = Field(default_factory=list, description="Operation IDs from low-level KG")
 
     layout_strategy: str = Field("centered", description="Overall layout approach for this scene (e.g., centered, split_screen, sequential, grid, flow_diagram)")
 
@@ -96,8 +103,8 @@ class SegmentAnimationPlan(BaseModel):
     component_ids_visualized: List[str] = Field(default_factory=list, description="Component IDs from high-level KG")
     low_level_kg_sources: List[str] = Field(default_factory=list, description="Low-level KG file names used")
 
-    color_scheme: Optional[Dict[str, str]] = Field(None, description="Color mappings for concepts")
-    recurring_elements: Optional[List[str]] = Field(None, description="Shape IDs that persist across scenes")
+    color_scheme: List[PropertyValue] = Field(default_factory=list, description="Color mappings for concepts as key-value pairs (concept → color)")
+    recurring_elements: List[str] = Field(default_factory=list, description="Shape IDs that persist across scenes")
 
 
 class AnimationRequirements(BaseModel):
@@ -109,13 +116,13 @@ class AnimationRequirements(BaseModel):
 
     segment_plans: List[SegmentAnimationPlan] = Field(..., description="Animation plan for each segment")
 
-    global_color_scheme: Dict[str, str] = Field(
-        default_factory=dict,
-        description="Global color mappings"
+    global_color_scheme: List[PropertyValue] = Field(
+        default_factory=list,
+        description="Global color mappings as key-value pairs"
     )
-    global_style: Dict[str, Any] = Field(
-        default_factory=dict,
-        description="Global style settings"
+    global_style: List[PropertyValue] = Field(
+        default_factory=list,
+        description="Global style settings as key-value pairs"
     )
 
     kg_files_used: List[str] = Field(default_factory=list, description="All low-level KG files referenced")

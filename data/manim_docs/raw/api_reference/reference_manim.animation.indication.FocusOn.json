@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.FocusOn.html",
+  "title": "FocusOn\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "FocusOn\u00b6\n\nQualified name:manim.animation.indication.FocusOn\n\nclassFocusOn(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformShrink a spotlight to a position.Parameters:focus_point(Point3DLike|Mobject) \u2013 The point at which to shrink the spotlight. If it is aMobjectits center will be used.opacity(float) \u2013 The opacity of the spotlight.color(ParsableManimColor) \u2013 The color of the spotlight.run_time(float) \u2013 The duration of the animation.kwargs(Any)ExamplesExample: UsingFocusOn\u00b6frommanimimport*classUsingFocusOn(Scene):defconstruct(self):dot=Dot(color=YELLOW).shift(DOWN)self.add(Tex(\"Focusing on the dot below:\"),dot)self.play(FocusOn(dot))self.wait()class UsingFocusOn(Scene):\n    def construct(self):\n        dot = Dot(color=YELLOW).shift(DOWN)\n        self.add(Tex(\"Focusing on the dot below:\"), dot)\n        self.play(FocusOn(dot))\n        self.wait()Methodscreate_targetAttributespath_arcpath_funcrun_time_original__init__(focus_point,opacity=0.2,color=ManimColor('#888888'),run_time=2,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:focus_point(Point3DLike|Mobject)opacity(float)color(ParsableManimColor)run_time(float)kwargs(Any)\n\nBases:Transform\n\nShrink a spotlight to a position.\n\nParameters:\n\nfocus_point(Point3DLike|Mobject) \u2013 The point at which to shrink the spotlight. If it is aMobjectits center will be used.opacity(float) \u2013 The opacity of the spotlight.color(ParsableManimColor) \u2013 The color of the spotlight.run_time(float) \u2013 The duration of the animation.kwargs(Any)\n\nfocus_point(Point3DLike|Mobject) \u2013 The point at which to shrink the spotlight. If it is aMobjectits center will be used.\n\nfocus_point(Point3DLike|Mobject) \u2013 The point at which to shrink the spotlight. If it is aMobjectits center will be used.\n\nopacity(float) \u2013 The opacity of the spotlight.\n\nopacity(float) \u2013 The opacity of the spotlight.\n\ncolor(ParsableManimColor) \u2013 The color of the spotlight.\n\ncolor(ParsableManimColor) \u2013 The color of the spotlight.\n\nrun_time(float) \u2013 The duration of the animation.\n\nrun_time(float) \u2013 The duration of the animation.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: UsingFocusOn\u00b6\n\nMethods\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(focus_point,opacity=0.2,color=ManimColor('#888888'),run_time=2,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:focus_point(Point3DLike|Mobject)opacity(float)color(ParsableManimColor)run_time(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfocus_point(Point3DLike|Mobject)opacity(float)color(ParsableManimColor)run_time(float)kwargs(Any)\n\nfocus_point(Point3DLike|Mobject)\n\nfocus_point(Point3DLike|Mobject)\n\nopacity(float)\n\nopacity(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUsingFocusOn(Scene):defconstruct(self):dot=Dot(color=YELLOW).shift(DOWN)self.add(Tex(\"Focusing on the dot below:\"),dot)self.play(FocusOn(dot))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UsingFocusOn(Scene):\n    def construct(self):\n        dot = Dot(color=YELLOW).shift(DOWN)\n        self.add(Tex(\"Focusing on the dot below:\"), dot)\n        self.play(FocusOn(dot))\n        self.wait()",
+      "language": "python",
+      "context": "Example: UsingFocusOn\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "FocusOn",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "focus_point"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "Transform",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.manim_directive.html",
+  "title": "manim_directive\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "manim_directive\u00b6\n\nA directive for including Manim videos in a Sphinx document\u00b6\n\nWhen rendering the HTML documentation, the..manim::directive\nimplemented here allows to include rendered videos.\n\nIts basic usage that allows processinginline contentlooks as follows:\n\nIt is required to pass the name of the class representing the\nscene to be rendered to the directive.\n\nAs a second application, the directive can also be used to\nrender scenes that are defined within doctests, for example:\n\nOptions\u00b6\n\nOptions can be passed as follows:\n\nThe following configuration options are supported by the\ndirective:\n\nhide_source\n\nIf this flag is present without argument,\nthe source code is not displayed above the rendered video.\n\nIf this flag is present without argument,\nthe source code is not displayed above the rendered video.\n\nno_autoplay\n\nIf this flag is present without argument,\nthe video will not autoplay.\n\nIf this flag is present without argument,\nthe video will not autoplay.\n\nquality{\u2018low\u2019, \u2018medium\u2019, \u2018high\u2019, \u2018fourk\u2019}\n\nControls render quality of the video, in analogy to\nthe corresponding command line flags.\n\nControls render quality of the video, in analogy to\nthe corresponding command line flags.\n\nsave_as_gif\n\nIf this flag is present without argument,\nthe scene is rendered as a gif.\n\nIf this flag is present without argument,\nthe scene is rendered as a gif.\n\nsave_last_frame\n\nIf this flag is present without argument,\nan image representing the last frame of the scene will\nbe rendered and displayed, instead of a video.\n\nIf this flag is present without argument,\nan image representing the last frame of the scene will\nbe rendered and displayed, instead of a video.\n\nref_classes\n\nA list of classes, separated by spaces, that is\nrendered in a reference block after the source code.\n\nA list of classes, separated by spaces, that is\nrendered in a reference block after the source code.\n\nref_functions\n\nA list of functions, separated by spaces,\nthat is rendered in a reference block after the source code.\n\nA list of functions, separated by spaces,\nthat is rendered in a reference block after the source code.\n\nref_methods\n\nA list of methods, separated by spaces,\nthat is rendered in a reference block after the source code.\n\nA list of methods, separated by spaces,\nthat is rendered in a reference block after the source code.\n\nClasses\n\nManimDirective\n\nThe manim directive, rendering videos while building the documentation.\n\nSetupMetadata\n\nSkipManimNode\n\nAuxiliary node class that is used when theskip-manimtag is present or.potfiles are being built.\n\nFunctions\n\ndepart(self,node)[source]\u00b6\n\nParameters:self(SkipManimNode)node(Element)Return type:None\n\nParameters:\n\nself(SkipManimNode)node(Element)\n\nself(SkipManimNode)\n\nself(SkipManimNode)\n\nnode(Element)\n\nnode(Element)\n\nReturn type:\n\nNone\n\nNone\n\nprocess_name_list(option_input,reference_type)[source]\u00b6\n\nReformats a string of space separated class names\nas a list of strings containing valid Sphinx references.Tests>>>process_name_list(\"Tex TexTemplate\",\"class\")[':class:`~.Tex`', ':class:`~.TexTemplate`']>>>process_name_list(\"Scene.play Mobject.rotate\",\"func\")[':func:`~.Scene.play`', ':func:`~.Mobject.rotate`']Parameters:option_input(str)reference_type(str)Return type:list[str]\n\nReformats a string of space separated class names\nas a list of strings containing valid Sphinx references.\n\nTests\n\nParameters:\n\noption_input(str)reference_type(str)\n\noption_input(str)\n\noption_input(str)\n\nreference_type(str)\n\nreference_type(str)\n\nReturn type:\n\nlist[str]\n\nlist[str]\n\nsetup(app)[source]\u00b6\n\nParameters:app(Sphinx)Return type:SetupMetadata\n\nParameters:\n\napp(Sphinx)\n\napp(Sphinx)\n\nReturn type:\n\nSetupMetadata\n\nSetupMetadata\n\nvisit(self,node,name='')[source]\u00b6\n\nParameters:self(SkipManimNode)node(Element)name(str)Return type:None\n\nParameters:\n\nself(SkipManimNode)node(Element)name(str)\n\nself(SkipManimNode)\n\nself(SkipManimNode)\n\nnode(Element)\n\nnode(Element)\n\nname(str)\n\nname(str)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "..manim::MySceneclassMyScene(Scene):defconstruct(self):...",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "..manim::DirectiveDoctestExample:ref_classes:Dot>>>frommanimimportCreate,Dot,RED,Scene>>>dot=Dot(color=RED)>>>dot.colorManimColor('#FC6255')>>>classDirectiveDoctestExample(Scene):...defconstruct(self):...self.play(Create(dot))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "..manim::<Classname>:<optionname>:<value>",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>process_name_list(\"Tex TexTemplate\",\"class\")[':class:`~.Tex`', ':class:`~.TexTemplate`']>>>process_name_list(\"Scene.play Mobject.rotate\",\"func\")[':func:`~.Scene.play`', ':func:`~.Mobject.rotate`']",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "depart",
+      "class_name": null,
+      "parameters": [
+        "self"
+      ],
+      "return_type": null,
+      "description": "self(SkipManimNode)"
+    },
+    {
+      "name": "process_name_list",
+      "class_name": null,
+      "parameters": [
+        "option_input"
+      ],
+      "return_type": null,
+      "description": "Reformats a string of space separated class names\nas a list of strings containing valid Sphinx references."
+    },
+    {
+      "name": "setup",
+      "class_name": null,
+      "parameters": [
+        "app"
+      ],
+      "return_type": null,
+      "description": "app(Sphinx)"
+    },
+    {
+      "name": "visit",
+      "class_name": null,
+      "parameters": [
+        "self"
+      ],
+      "return_type": null,
+      "description": "self(SkipManimNode)"
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

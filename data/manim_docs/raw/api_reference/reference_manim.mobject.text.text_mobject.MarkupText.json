@@ -1,0 +1,236 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.text_mobject.MarkupText.html",
+  "title": "MarkupText\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MarkupText\u00b6\n\nQualified name:manim.mobject.text.text\\_mobject.MarkupText\n\nclassMarkupText(text,fill_opacity=1,stroke_width=0,color=None,font_size=48,line_spacing=-1,font='',slant='NORMAL',weight='NORMAL',justify=False,gradient=None,tab_width=4,height=None,width=None,should_center=True,disable_ligatures=False,warn_missing_font=True,**kwargs)[source]\u00b6\n\nBases:SVGMobjectDisplay (non-LaTeX) text rendered usingPango.Text objects behave like aVGroup-like iterable of all characters\nin the given text. In particular, slicing is possible.What is PangoMarkup?PangoMarkup is a small markup language like html and it helps you avoid using\n\u201crange of characters\u201d while coloring or styling a piece a Text. You can use\nthis language withMarkupText.A simple example of a marked-up string might be:<span foreground=\"blue\" size=\"x-large\">Blue text</span> is <i>cool</i>!\"and it can be used withMarkupTextasExample: MarkupExample\u00b6frommanimimport*classMarkupExample(Scene):defconstruct(self):text=MarkupText('<span foreground=\"blue\" size=\"x-large\">Blue text</span> is <i>cool</i>!\"')self.add(text)class MarkupExample(Scene):\n    def construct(self):\n        text = MarkupText('Blue textiscool!\"')\n        self.add(text)A more elaborate example would be:Example: MarkupElaborateExample\u00b6frommanimimport*classMarkupElaborateExample(Scene):defconstruct(self):text=MarkupText('<span foreground=\"purple\">\u0627</span><span foreground=\"red\">\u064e</span>''\u0644<span foreground=\"blue\">\u0652</span>\u0639<span foreground=\"red\">\u064e</span>\u0631''<span foreground=\"red\">\u064e</span>\u0628<span foreground=\"red\">\u0650</span>\u064a''<span foreground=\"green\">\u0651</span><span foreground=\"red\">\u064e</span>\u0629''<span foreground=\"blue\">\u064f</span>')self.add(text)class MarkupElaborateExample(Scene):\n    def construct(self):\n        text = MarkupText(\n            '\u0627\u064e'\n            '\u0644\u0652\u0639\u064e\u0631'\n            '\u064e\u0628\u0650\u064a'\n            '\u0651\u064e\u0629'\n            '\u064f'\n        )\n        self.add(text)PangoMarkup can also contain XML features such as numeric character\nentities such as&#169;for \u00a9 can be used too.The most general markup tag is<span>, then there are some\nconvenience tags.Here is a list of supported tags:<b>bold</b>,<i>italic</i>and<b><i>bold+italic</i></b><u>underline</u>and<s>strikethrough</s><tt>typewriterfont</tt><big>biggerfont</big>and<small>smallerfont</small><sup>superscript</sup>and<sub>subscript</sub><spanunderline=\"double\"underline_color=\"green\">doubleunderline</span><spanunderline=\"error\">errorunderline</span><spanoverline=\"single\"overline_color=\"green\">overline</span><spanstrikethrough=\"true\"strikethrough_color=\"red\">strikethrough</span><spanfont_family=\"sans\">temporarychangeoffont</span><spanforeground=\"red\">temporarychangeofcolor</span><spanfgcolor=\"red\">temporarychangeofcolor</span><gradientfrom=\"YELLOW\"to=\"RED\">temporarygradient</gradient>For<span>markup, colors can be specified either as\nhex triples like#aabbccor as named CSS colors likeAliceBlue.\nThe<gradient>tag is handled by Manim rather than\nPango, and supports hex triplets or Manim constants likeREDorRED_A.\nIf you want to use Manim constants likeRED_Atogether\nwith<span>, you will need to use Python\u2019s f-String\nsyntax as follows:MarkupText(f'<span foreground=\"{RED_A}\">here you go</span>')If your text contains ligatures, theMarkupTextclass may\nincorrectly determine the first and last letter when creating the\ngradient. This is due to the fact thatflare two separate characters,\nbut might be set as one single glyph - a ligature. If your language\ndoes not depend on ligatures, consider settingdisable_ligaturestoTrue. If you must use ligatures, thegradienttag supports an optional\nattributeoffsetwhich can be used to compensate for that error.For example:<gradientfrom=\"RED\"to=\"YELLOW\"offset=\"1\">example</gradient>tostartthe gradient one letter earlier<gradientfrom=\"RED\"to=\"YELLOW\"offset=\",1\">example</gradient>toendthe gradient one letter earlier<gradientfrom=\"RED\"to=\"YELLOW\"offset=\"2,1\">example</gradient>tostartthe gradient two letters earlier andendit one letter earlierSpecifying a second offset may be necessary if the text to be colored does\nitself contain ligatures. The same can happen when using HTML entities for\nspecial chars.When usingunderline,overlineorstrikethroughtogether with<gradient>tags, you will also need to use the offset, because\nunderlines are additional paths in the finalSVGMobject.\nCheck out the following example.Escaping of special characters:>shouldbe written as&gt;whereas<and&mustbe written as&lt;and&amp;.You can find more information about Pango markup formatting at the\ncorresponding documentation page:Pango Markup.\nPlease be aware that not all features are supported by this class and that\nthe<gradient>tag mentioned above is not supported by Pango.Parameters:text(str) \u2013 The text that needs to be created as mobject.fill_opacity(float) \u2013 The fill opacity, with 1 meaning opaque and 0 meaning transparent.stroke_width(float) \u2013 Stroke width.font_size(float) \u2013 Font size.line_spacing(float) \u2013 Line spacing.font(str) \u2013 Global font setting for the entire text. Local overrides are possible.slant(str) \u2013 Global slant setting, e.g.NORMALorITALIC. Local overrides are possible.weight(str) \u2013 Global weight setting, e.g.NORMALorBOLD. Local overrides are possible.gradient(Iterable[ParsableManimColor]|None) \u2013 Global gradient setting. Local overrides are possible.warn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().color(ParsableManimColor|None)justify(bool)tab_width(int)height(int|None)width(int|None)should_center(bool)disable_ligatures(bool)kwargs(Any)Returns:The text displayed in form of aVGroup-like mobject.Return type:MarkupTextExamplesExample: BasicMarkupExample\u00b6frommanimimport*classBasicMarkupExample(Scene):defconstruct(self):text1=MarkupText(\"<b>foo</b> <i>bar</i> <b><i>foobar</i></b>\")text2=MarkupText(\"<s>foo</s> <u>bar</u> <big>big</big> <small>small</small>\")text3=MarkupText(\"H<sub>2</sub>O and H<sub>3</sub>O<sup>+</sup>\")text4=MarkupText(\"type <tt>help</tt> for help\")text5=MarkupText('<span underline=\"double\">foo</span> <span underline=\"error\">bar</span>')group=VGroup(text1,text2,text3,text4,text5).arrange(DOWN)self.add(group)class BasicMarkupExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\"foobarfoobar\")\n        text2 = MarkupText(\"foobarbigsmall\")\n        text3 = MarkupText(\"H2O and H3O+\")\n        text4 = MarkupText(\"typehelpfor help\")\n        text5 = MarkupText(\n            'foobar'\n        )\n        group = VGroup(text1, text2, text3, text4, text5).arrange(DOWN)\n        self.add(group)Example: ColorExample\u00b6frommanimimport*classColorExample(Scene):defconstruct(self):text1=MarkupText(f'all in red <span fgcolor=\"{YELLOW}\">except this</span>',color=RED)text2=MarkupText(\"nice gradient\",gradient=(BLUE,GREEN))text3=MarkupText('nice <gradient from=\"RED\" to=\"YELLOW\">intermediate</gradient> gradient',gradient=(BLUE,GREEN),)text4=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\">causing trouble</gradient> here')text5=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\" offset=\"1\">defeated</gradient> with offset')text6=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\" offset=\"1\">floating</gradient> inside')text7=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\" offset=\"1,1\">floating</gradient> inside')group=VGroup(text1,text2,text3,text4,text5,text6,text7).arrange(DOWN)self.add(group)class ColorExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\n            f'all in redexcept this', color=RED\n        )\n        text2 = MarkupText(\"nice gradient\", gradient=(BLUE, GREEN))\n        text3 = MarkupText(\n            'niceintermediategradient',\n            gradient=(BLUE, GREEN),\n        )\n        text4 = MarkupText(\n            'fl ligaturecausing troublehere'\n        )\n        text5 = MarkupText(\n            'fl ligaturedefeatedwith offset'\n        )\n        text6 = MarkupText(\n            'fl ligaturefloatinginside'\n        )\n        text7 = MarkupText(\n            'fl ligaturefloatinginside'\n        )\n        group = VGroup(text1, text2, text3, text4, text5, text6, text7).arrange(DOWN)\n        self.add(group)Example: UnderlineExample\u00b6frommanimimport*classUnderlineExample(Scene):defconstruct(self):text1=MarkupText('<span underline=\"double\" underline_color=\"green\">bla</span>')text2=MarkupText('<span underline=\"single\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\">aabb</gradient>y')text3=MarkupText('<span underline=\"single\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\" offset=\"-1\">aabb</gradient>y')text4=MarkupText('<span underline=\"double\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\">aabb</gradient>y')text5=MarkupText('<span underline=\"double\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\" offset=\"-2\">aabb</gradient>y')group=VGroup(text1,text2,text3,text4,text5).arrange(DOWN)self.add(group)class UnderlineExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\n            'bla'\n        )\n        text2 = MarkupText(\n            'xxxaabby'\n        )\n        text3 = MarkupText(\n            'xxxaabby'\n        )\n        text4 = MarkupText(\n            'xxxaabby'\n        )\n        text5 = MarkupText(\n            'xxxaabby'\n        )\n        group = VGroup(text1, text2, text3, text4, text5).arrange(DOWN)\n        self.add(group)Example: FontExample\u00b6frommanimimport*classFontExample(Scene):defconstruct(self):text1=MarkupText('all in sans <span font_family=\"serif\">except this</span>',font=\"sans\")text2=MarkupText('<span font_family=\"serif\">mixing</span> <span font_family=\"sans\">fonts</span> <span font_family=\"monospace\">is ugly</span>')text3=MarkupText(\"special char > or &gt;\")text4=MarkupText(\"special char &lt; and &amp;\")group=VGroup(text1,text2,text3,text4).arrange(DOWN)self.add(group)class FontExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\n            'all in sansexcept this', font=\"sans\"\n        )\n        text2 = MarkupText(\n            'mixingfontsis ugly'\n        )\n        text3 = MarkupText(\"special char > or >\")\n        text4 = MarkupText(\"special char < and &\")\n        group = VGroup(text1, text2, text3, text4).arrange(DOWN)\n        self.add(group)Example: NewlineExample\u00b6frommanimimport*classNewlineExample(Scene):defconstruct(self):text=MarkupText('foooo<span foreground=\"red\">oo\\nbaa</span>aar')self.add(text)class NewlineExample(Scene):\n    def construct(self):\n        text = MarkupText('foooooo\\nbaaaar')\n        self.add(text)Example: NoLigaturesExample\u00b6frommanimimport*classNoLigaturesExample(Scene):defconstruct(self):text1=MarkupText('fl<gradient from=\"RED\" to=\"GREEN\">oat</gradient>ing')text2=MarkupText('fl<gradient from=\"RED\" to=\"GREEN\">oat</gradient>ing',disable_ligatures=True)group=VGroup(text1,text2).arrange(DOWN)self.add(group)class NoLigaturesExample(Scene):\n    def construct(self):\n        text1 = MarkupText('floating')\n        text2 = MarkupText('floating', disable_ligatures=True)\n        group = VGroup(text1, text2).arrange(DOWN)\n        self.add(group)AsMarkupTextuses Pango to render text, rendering non-English\ncharacters is easily possible:Example: MultiLanguage\u00b6frommanimimport*classMultiLanguage(Scene):defconstruct(self):morning=MarkupText(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\",font=\"sans-serif\")japanese=MarkupText('<span fgcolor=\"blue\">\u65e5\u672c</span>\u3078\u3088\u3046\u3053\u305d')# works as in ``Text``.mess=MarkupText(\"Multi-Language\",weight=BOLD)russ=MarkupText(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \",font=\"sans-serif\")hin=MarkupText(\"\u0928\u092e\u0938\u094d\u0924\u0947\",font=\"sans-serif\")chinese=MarkupText(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\",font=\"sans-serif\")group=VGroup(morning,japanese,mess,russ,hin,chinese).arrange(DOWN)self.add(group)class MultiLanguage(Scene):\n    def construct(self):\n        morning = MarkupText(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\", font=\"sans-serif\")\n        japanese = MarkupText(\n            '\u65e5\u672c\u3078\u3088\u3046\u3053\u305d'\n        )  # works as in ``Text``.\n        mess = MarkupText(\"Multi-Language\", weight=BOLD)\n        russ = MarkupText(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \", font=\"sans-serif\")\n        hin = MarkupText(\"\u0928\u092e\u0938\u094d\u0924\u0947\", font=\"sans-serif\")\n        chinese = MarkupText(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\", font=\"sans-serif\")\n        group = VGroup(morning, japanese, mess, russ, hin, chinese).arrange(DOWN)\n        self.add(group)You can justify the text by passingjustifyparameter.Example: JustifyText\u00b6frommanimimport*classJustifyText(Scene):defconstruct(self):ipsum_text=(\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\"Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere \"\"quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam \"\"fermentum interdum justo, nec rutrum elit pretium ac. Nam quis \"\"leo pulvinar, dignissim est at, venenatis nisi.\")justified_text=MarkupText(ipsum_text,justify=True).scale(0.4)not_justified_text=MarkupText(ipsum_text,justify=False).scale(0.4)just_title=Title(\"Justified\")njust_title=Title(\"Not Justified\")self.add(njust_title,not_justified_text)self.play(FadeOut(not_justified_text),FadeIn(justified_text),FadeOut(njust_title),FadeIn(just_title),)self.wait(1)class JustifyText(Scene):\n    def construct(self):\n        ipsum_text = (\n            \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n            \"Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere \"\n            \"quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam \"\n            \"fermentum interdum justo, nec rutrum elit pretium ac. Nam quis \"\n            \"leo pulvinar, dignissim est at, venenatis nisi.\"\n        )\n        justified_text = MarkupText(ipsum_text, justify=True).scale(0.4)\n        not_justified_text = MarkupText(ipsum_text, justify=False).scale(0.4)\n        just_title = Title(\"Justified\")\n        njust_title = Title(\"Not Justified\")\n        self.add(njust_title, not_justified_text)\n        self.play(\n            FadeOut(not_justified_text),\n            FadeIn(justified_text),\n            FadeOut(njust_title),\n            FadeIn(just_title),\n        )\n        self.wait(1)TestsCheck that the creation ofMarkupTextworks:>>>MarkupText('The horse does not eat cucumber salad.')MarkupText('The horse does not eat cucumber salad.')Methodsfont_listAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizehash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._count_real_chars(s)[source]\u00b6Counts characters that will be displayed.This is needed for partial coloring or gradients, because space\ncounts to the text\u2019slen, but has no corresponding character.Parameters:s(str)Return type:int_extract_color_tags()[source]\u00b6Used to determine which parts (if any) of the string should be formatted\nwith a custom color.Removes the<color>tag, as it is not part of Pango\u2019s markup and would cause an error.Note: Using the<color>tags is deprecated. As soon as the legacy syntax is gone, this function\nwill be removed.Return type:list[dict[str,Any]]_extract_gradient_tags()[source]\u00b6Used to determine which parts (if any) of the string should be formatted\nwith a gradient.Removes the<gradient>tag, as it is not part of Pango\u2019s markup and would cause an error.Return type:list[dict[str,Any]]_original__init__(text,fill_opacity=1,stroke_width=0,color=None,font_size=48,line_spacing=-1,font='',slant='NORMAL',weight='NORMAL',justify=False,gradient=None,tab_width=4,height=None,width=None,should_center=True,disable_ligatures=False,warn_missing_font=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text(str)fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)font(str)slant(str)weight(str)justify(bool)gradient(Iterable[ParsableManimColor]|None)tab_width(int)height(int|None)width(int|None)should_center(bool)disable_ligatures(bool)warn_missing_font(bool)kwargs(Any)_parse_color(col)[source]\u00b6Parse color given in<color>or<gradient>tags.Parameters:col(str)Return type:str_text2hash(color)[source]\u00b6Generatessha256hash for file name.Parameters:color(ParsableManimColor)Return type:str_text2svg(color)[source]\u00b6Convert the text to SVG using Pango.Parameters:color(ParsableManimColor|None)Return type:str\n\nBases:SVGMobject\n\nDisplay (non-LaTeX) text rendered usingPango.\n\nText objects behave like aVGroup-like iterable of all characters\nin the given text. In particular, slicing is possible.\n\nWhat is PangoMarkup?\n\nPangoMarkup is a small markup language like html and it helps you avoid using\n\u201crange of characters\u201d while coloring or styling a piece a Text. You can use\nthis language withMarkupText.\n\nA simple example of a marked-up string might be:\n\nand it can be used withMarkupTextas\n\nExample: MarkupExample\u00b6\n\nA more elaborate example would be:\n\nExample: MarkupElaborateExample\u00b6\n\nPangoMarkup can also contain XML features such as numeric character\nentities such as&#169;for \u00a9 can be used too.\n\nThe most general markup tag is<span>, then there are some\nconvenience tags.\n\nHere is a list of supported tags:\n\n<b>bold</b>,<i>italic</i>and<b><i>bold+italic</i></b>\n\n<b>bold</b>,<i>italic</i>and<b><i>bold+italic</i></b>\n\n<u>underline</u>and<s>strikethrough</s>\n\n<u>underline</u>and<s>strikethrough</s>\n\n<tt>typewriterfont</tt>\n\n<tt>typewriterfont</tt>\n\n<big>biggerfont</big>and<small>smallerfont</small>\n\n<big>biggerfont</big>and<small>smallerfont</small>\n\n<sup>superscript</sup>and<sub>subscript</sub>\n\n<sup>superscript</sup>and<sub>subscript</sub>\n\n<spanunderline=\"double\"underline_color=\"green\">doubleunderline</span>\n\n<spanunderline=\"double\"underline_color=\"green\">doubleunderline</span>\n\n<spanunderline=\"error\">errorunderline</span>\n\n<spanunderline=\"error\">errorunderline</span>\n\n<spanoverline=\"single\"overline_color=\"green\">overline</span>\n\n<spanoverline=\"single\"overline_color=\"green\">overline</span>\n\n<spanstrikethrough=\"true\"strikethrough_color=\"red\">strikethrough</span>\n\n<spanstrikethrough=\"true\"strikethrough_color=\"red\">strikethrough</span>\n\n<spanfont_family=\"sans\">temporarychangeoffont</span>\n\n<spanfont_family=\"sans\">temporarychangeoffont</span>\n\n<spanforeground=\"red\">temporarychangeofcolor</span>\n\n<spanforeground=\"red\">temporarychangeofcolor</span>\n\n<spanfgcolor=\"red\">temporarychangeofcolor</span>\n\n<spanfgcolor=\"red\">temporarychangeofcolor</span>\n\n<gradientfrom=\"YELLOW\"to=\"RED\">temporarygradient</gradient>\n\n<gradientfrom=\"YELLOW\"to=\"RED\">temporarygradient</gradient>\n\nFor<span>markup, colors can be specified either as\nhex triples like#aabbccor as named CSS colors likeAliceBlue.\nThe<gradient>tag is handled by Manim rather than\nPango, and supports hex triplets or Manim constants likeREDorRED_A.\nIf you want to use Manim constants likeRED_Atogether\nwith<span>, you will need to use Python\u2019s f-String\nsyntax as follows:\n\nIf your text contains ligatures, theMarkupTextclass may\nincorrectly determine the first and last letter when creating the\ngradient. This is due to the fact thatflare two separate characters,\nbut might be set as one single glyph - a ligature. If your language\ndoes not depend on ligatures, consider settingdisable_ligaturestoTrue. If you must use ligatures, thegradienttag supports an optional\nattributeoffsetwhich can be used to compensate for that error.\n\nFor example:\n\n<gradientfrom=\"RED\"to=\"YELLOW\"offset=\"1\">example</gradient>tostartthe gradient one letter earlier\n\n<gradientfrom=\"RED\"to=\"YELLOW\"offset=\"1\">example</gradient>tostartthe gradient one letter earlier\n\n<gradientfrom=\"RED\"to=\"YELLOW\"offset=\",1\">example</gradient>toendthe gradient one letter earlier\n\n<gradientfrom=\"RED\"to=\"YELLOW\"offset=\",1\">example</gradient>toendthe gradient one letter earlier\n\n<gradientfrom=\"RED\"to=\"YELLOW\"offset=\"2,1\">example</gradient>tostartthe gradient two letters earlier andendit one letter earlier\n\n<gradientfrom=\"RED\"to=\"YELLOW\"offset=\"2,1\">example</gradient>tostartthe gradient two letters earlier andendit one letter earlier\n\nSpecifying a second offset may be necessary if the text to be colored does\nitself contain ligatures. The same can happen when using HTML entities for\nspecial chars.\n\nWhen usingunderline,overlineorstrikethroughtogether with<gradient>tags, you will also need to use the offset, because\nunderlines are additional paths in the finalSVGMobject.\nCheck out the following example.\n\nEscaping of special characters:>shouldbe written as&gt;whereas<and&mustbe written as&lt;and&amp;.\n\nYou can find more information about Pango markup formatting at the\ncorresponding documentation page:Pango Markup.\nPlease be aware that not all features are supported by this class and that\nthe<gradient>tag mentioned above is not supported by Pango.\n\nParameters:\n\ntext(str) \u2013 The text that needs to be created as mobject.fill_opacity(float) \u2013 The fill opacity, with 1 meaning opaque and 0 meaning transparent.stroke_width(float) \u2013 Stroke width.font_size(float) \u2013 Font size.line_spacing(float) \u2013 Line spacing.font(str) \u2013 Global font setting for the entire text. Local overrides are possible.slant(str) \u2013 Global slant setting, e.g.NORMALorITALIC. Local overrides are possible.weight(str) \u2013 Global weight setting, e.g.NORMALorBOLD. Local overrides are possible.gradient(Iterable[ParsableManimColor]|None) \u2013 Global gradient setting. Local overrides are possible.warn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().color(ParsableManimColor|None)justify(bool)tab_width(int)height(int|None)width(int|None)should_center(bool)disable_ligatures(bool)kwargs(Any)\n\ntext(str) \u2013 The text that needs to be created as mobject.\n\ntext(str) \u2013 The text that needs to be created as mobject.\n\nfill_opacity(float) \u2013 The fill opacity, with 1 meaning opaque and 0 meaning transparent.\n\nfill_opacity(float) \u2013 The fill opacity, with 1 meaning opaque and 0 meaning transparent.\n\nstroke_width(float) \u2013 Stroke width.\n\nstroke_width(float) \u2013 Stroke width.\n\nfont_size(float) \u2013 Font size.\n\nfont_size(float) \u2013 Font size.\n\nline_spacing(float) \u2013 Line spacing.\n\nline_spacing(float) \u2013 Line spacing.\n\nfont(str) \u2013 Global font setting for the entire text. Local overrides are possible.\n\nfont(str) \u2013 Global font setting for the entire text. Local overrides are possible.\n\nslant(str) \u2013 Global slant setting, e.g.NORMALorITALIC. Local overrides are possible.\n\nslant(str) \u2013 Global slant setting, e.g.NORMALorITALIC. Local overrides are possible.\n\nweight(str) \u2013 Global weight setting, e.g.NORMALorBOLD. Local overrides are possible.\n\nweight(str) \u2013 Global weight setting, e.g.NORMALorBOLD. Local overrides are possible.\n\ngradient(Iterable[ParsableManimColor]|None) \u2013 Global gradient setting. Local overrides are possible.\n\ngradient(Iterable[ParsableManimColor]|None) \u2013 Global gradient setting. Local overrides are possible.\n\nwarn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().\n\nwarn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\njustify(bool)\n\njustify(bool)\n\ntab_width(int)\n\ntab_width(int)\n\nheight(int|None)\n\nheight(int|None)\n\nwidth(int|None)\n\nwidth(int|None)\n\nshould_center(bool)\n\nshould_center(bool)\n\ndisable_ligatures(bool)\n\ndisable_ligatures(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturns:\n\nThe text displayed in form of aVGroup-like mobject.\n\nThe text displayed in form of aVGroup-like mobject.\n\nReturn type:\n\nMarkupText\n\nMarkupText\n\nExamples\n\nExample: BasicMarkupExample\u00b6\n\nExample: ColorExample\u00b6\n\nExample: UnderlineExample\u00b6\n\nExample: FontExample\u00b6\n\nExample: NewlineExample\u00b6\n\nExample: NoLigaturesExample\u00b6\n\nAsMarkupTextuses Pango to render text, rendering non-English\ncharacters is easily possible:\n\nExample: MultiLanguage\u00b6\n\nYou can justify the text by passingjustifyparameter.\n\nExample: JustifyText\u00b6\n\nTests\n\nCheck that the creation ofMarkupTextworks:\n\nMethods\n\nfont_list\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_count_real_chars(s)[source]\u00b6\n\nCounts characters that will be displayed.This is needed for partial coloring or gradients, because space\ncounts to the text\u2019slen, but has no corresponding character.Parameters:s(str)Return type:int\n\nCounts characters that will be displayed.\n\nThis is needed for partial coloring or gradients, because space\ncounts to the text\u2019slen, but has no corresponding character.\n\nParameters:\n\ns(str)\n\ns(str)\n\nReturn type:\n\nint\n\nint\n\n_extract_color_tags()[source]\u00b6\n\nUsed to determine which parts (if any) of the string should be formatted\nwith a custom color.Removes the<color>tag, as it is not part of Pango\u2019s markup and would cause an error.Note: Using the<color>tags is deprecated. As soon as the legacy syntax is gone, this function\nwill be removed.Return type:list[dict[str,Any]]\n\nUsed to determine which parts (if any) of the string should be formatted\nwith a custom color.\n\nRemoves the<color>tag, as it is not part of Pango\u2019s markup and would cause an error.\n\nNote: Using the<color>tags is deprecated. As soon as the legacy syntax is gone, this function\nwill be removed.\n\nReturn type:\n\nlist[dict[str,Any]]\n\nlist[dict[str,Any]]\n\n_extract_gradient_tags()[source]\u00b6\n\nUsed to determine which parts (if any) of the string should be formatted\nwith a gradient.Removes the<gradient>tag, as it is not part of Pango\u2019s markup and would cause an error.Return type:list[dict[str,Any]]\n\nUsed to determine which parts (if any) of the string should be formatted\nwith a gradient.\n\nRemoves the<gradient>tag, as it is not part of Pango\u2019s markup and would cause an error.\n\nReturn type:\n\nlist[dict[str,Any]]\n\nlist[dict[str,Any]]\n\n_original__init__(text,fill_opacity=1,stroke_width=0,color=None,font_size=48,line_spacing=-1,font='',slant='NORMAL',weight='NORMAL',justify=False,gradient=None,tab_width=4,height=None,width=None,should_center=True,disable_ligatures=False,warn_missing_font=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text(str)fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)font(str)slant(str)weight(str)justify(bool)gradient(Iterable[ParsableManimColor]|None)tab_width(int)height(int|None)width(int|None)should_center(bool)disable_ligatures(bool)warn_missing_font(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext(str)fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)font(str)slant(str)weight(str)justify(bool)gradient(Iterable[ParsableManimColor]|None)tab_width(int)height(int|None)width(int|None)should_center(bool)disable_ligatures(bool)warn_missing_font(bool)kwargs(Any)\n\ntext(str)\n\ntext(str)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nfont_size(float)\n\nfont_size(float)\n\nline_spacing(float)\n\nline_spacing(float)\n\nfont(str)\n\nfont(str)\n\nslant(str)\n\nslant(str)\n\nweight(str)\n\nweight(str)\n\njustify(bool)\n\njustify(bool)\n\ngradient(Iterable[ParsableManimColor]|None)\n\ngradient(Iterable[ParsableManimColor]|None)\n\ntab_width(int)\n\ntab_width(int)\n\nheight(int|None)\n\nheight(int|None)\n\nwidth(int|None)\n\nwidth(int|None)\n\nshould_center(bool)\n\nshould_center(bool)\n\ndisable_ligatures(bool)\n\ndisable_ligatures(bool)\n\nwarn_missing_font(bool)\n\nwarn_missing_font(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_parse_color(col)[source]\u00b6\n\nParse color given in<color>or<gradient>tags.Parameters:col(str)Return type:str\n\nParse color given in<color>or<gradient>tags.\n\nParameters:\n\ncol(str)\n\ncol(str)\n\nReturn type:\n\nstr\n\nstr\n\n_text2hash(color)[source]\u00b6\n\nGeneratessha256hash for file name.Parameters:color(ParsableManimColor)Return type:str\n\nGeneratessha256hash for file name.\n\nParameters:\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nReturn type:\n\nstr\n\nstr\n\n_text2svg(color)[source]\u00b6\n\nConvert the text to SVG using Pango.Parameters:color(ParsableManimColor|None)Return type:str\n\nConvert the text to SVG using Pango.\n\nParameters:\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nReturn type:\n\nstr\n\nstr",
+  "code_examples": [
+    {
+      "code": "<span foreground=\"blue\" size=\"x-large\">Blue text</span> is <i>cool</i>!\"",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classMarkupExample(Scene):defconstruct(self):text=MarkupText('<span foreground=\"blue\" size=\"x-large\">Blue text</span> is <i>cool</i>!\"')self.add(text)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MarkupExample(Scene):\n    def construct(self):\n        text = MarkupText('Blue textiscool!\"')\n        self.add(text)",
+      "language": "python",
+      "context": "Example: MarkupExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classMarkupElaborateExample(Scene):defconstruct(self):text=MarkupText('<span foreground=\"purple\">\u0627</span><span foreground=\"red\">\u064e</span>''\u0644<span foreground=\"blue\">\u0652</span>\u0639<span foreground=\"red\">\u064e</span>\u0631''<span foreground=\"red\">\u064e</span>\u0628<span foreground=\"red\">\u0650</span>\u064a''<span foreground=\"green\">\u0651</span><span foreground=\"red\">\u064e</span>\u0629''<span foreground=\"blue\">\u064f</span>')self.add(text)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MarkupElaborateExample(Scene):\n    def construct(self):\n        text = MarkupText(\n            '\u0627\u064e'\n            '\u0644\u0652\u0639\u064e\u0631'\n            '\u064e\u0628\u0650\u064a'\n            '\u0651\u064e\u0629'\n            '\u064f'\n        )\n        self.add(text)",
+      "language": "python",
+      "context": "Example: MarkupElaborateExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "MarkupText(f'<span foreground=\"{RED_A}\">here you go</span>')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classBasicMarkupExample(Scene):defconstruct(self):text1=MarkupText(\"<b>foo</b> <i>bar</i> <b><i>foobar</i></b>\")text2=MarkupText(\"<s>foo</s> <u>bar</u> <big>big</big> <small>small</small>\")text3=MarkupText(\"H<sub>2</sub>O and H<sub>3</sub>O<sup>+</sup>\")text4=MarkupText(\"type <tt>help</tt> for help\")text5=MarkupText('<span underline=\"double\">foo</span> <span underline=\"error\">bar</span>')group=VGroup(text1,text2,text3,text4,text5).arrange(DOWN)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BasicMarkupExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\"foobarfoobar\")\n        text2 = MarkupText(\"foobarbigsmall\")\n        text3 = MarkupText(\"H2O and H3O+\")\n        text4 = MarkupText(\"typehelpfor help\")\n        text5 = MarkupText(\n            'foobar'\n        )\n        group = VGroup(text1, text2, text3, text4, text5).arrange(DOWN)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: BasicMarkupExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classColorExample(Scene):defconstruct(self):text1=MarkupText(f'all in red <span fgcolor=\"{YELLOW}\">except this</span>',color=RED)text2=MarkupText(\"nice gradient\",gradient=(BLUE,GREEN))text3=MarkupText('nice <gradient from=\"RED\" to=\"YELLOW\">intermediate</gradient> gradient',gradient=(BLUE,GREEN),)text4=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\">causing trouble</gradient> here')text5=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\" offset=\"1\">defeated</gradient> with offset')text6=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\" offset=\"1\">floating</gradient> inside')text7=MarkupText('fl ligature <gradient from=\"RED\" to=\"YELLOW\" offset=\"1,1\">floating</gradient> inside')group=VGroup(text1,text2,text3,text4,text5,text6,text7).arrange(DOWN)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ColorExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\n            f'all in redexcept this', color=RED\n        )\n        text2 = MarkupText(\"nice gradient\", gradient=(BLUE, GREEN))\n        text3 = MarkupText(\n            'niceintermediategradient',\n            gradient=(BLUE, GREEN),\n        )\n        text4 = MarkupText(\n            'fl ligaturecausing troublehere'\n        )\n        text5 = MarkupText(\n            'fl ligaturedefeatedwith offset'\n        )\n        text6 = MarkupText(\n            'fl ligaturefloatinginside'\n        )\n        text7 = MarkupText(\n            'fl ligaturefloatinginside'\n        )\n        group = VGroup(text1, text2, text3, text4, text5, text6, text7).arrange(DOWN)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: ColorExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classUnderlineExample(Scene):defconstruct(self):text1=MarkupText('<span underline=\"double\" underline_color=\"green\">bla</span>')text2=MarkupText('<span underline=\"single\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\">aabb</gradient>y')text3=MarkupText('<span underline=\"single\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\" offset=\"-1\">aabb</gradient>y')text4=MarkupText('<span underline=\"double\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\">aabb</gradient>y')text5=MarkupText('<span underline=\"double\" underline_color=\"green\">xxx</span><gradient from=\"#ffff00\" to=\"RED\" offset=\"-2\">aabb</gradient>y')group=VGroup(text1,text2,text3,text4,text5).arrange(DOWN)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UnderlineExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\n            'bla'\n        )\n        text2 = MarkupText(\n            'xxxaabby'\n        )\n        text3 = MarkupText(\n            'xxxaabby'\n        )\n        text4 = MarkupText(\n            'xxxaabby'\n        )\n        text5 = MarkupText(\n            'xxxaabby'\n        )\n        group = VGroup(text1, text2, text3, text4, text5).arrange(DOWN)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: UnderlineExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classFontExample(Scene):defconstruct(self):text1=MarkupText('all in sans <span font_family=\"serif\">except this</span>',font=\"sans\")text2=MarkupText('<span font_family=\"serif\">mixing</span> <span font_family=\"sans\">fonts</span> <span font_family=\"monospace\">is ugly</span>')text3=MarkupText(\"special char > or &gt;\")text4=MarkupText(\"special char &lt; and &amp;\")group=VGroup(text1,text2,text3,text4).arrange(DOWN)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class FontExample(Scene):\n    def construct(self):\n        text1 = MarkupText(\n            'all in sansexcept this', font=\"sans\"\n        )\n        text2 = MarkupText(\n            'mixingfontsis ugly'\n        )\n        text3 = MarkupText(\"special char > or >\")\n        text4 = MarkupText(\"special char < and &\")\n        group = VGroup(text1, text2, text3, text4).arrange(DOWN)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: FontExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classNewlineExample(Scene):defconstruct(self):text=MarkupText('foooo<span foreground=\"red\">oo\\nbaa</span>aar')self.add(text)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class NewlineExample(Scene):\n    def construct(self):\n        text = MarkupText('foooooo\\nbaaaar')\n        self.add(text)",
+      "language": "python",
+      "context": "Example: NewlineExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classNoLigaturesExample(Scene):defconstruct(self):text1=MarkupText('fl<gradient from=\"RED\" to=\"GREEN\">oat</gradient>ing')text2=MarkupText('fl<gradient from=\"RED\" to=\"GREEN\">oat</gradient>ing',disable_ligatures=True)group=VGroup(text1,text2).arrange(DOWN)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class NoLigaturesExample(Scene):\n    def construct(self):\n        text1 = MarkupText('floating')\n        text2 = MarkupText('floating', disable_ligatures=True)\n        group = VGroup(text1, text2).arrange(DOWN)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: NoLigaturesExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classMultiLanguage(Scene):defconstruct(self):morning=MarkupText(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\",font=\"sans-serif\")japanese=MarkupText('<span fgcolor=\"blue\">\u65e5\u672c</span>\u3078\u3088\u3046\u3053\u305d')# works as in ``Text``.mess=MarkupText(\"Multi-Language\",weight=BOLD)russ=MarkupText(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \",font=\"sans-serif\")hin=MarkupText(\"\u0928\u092e\u0938\u094d\u0924\u0947\",font=\"sans-serif\")chinese=MarkupText(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\",font=\"sans-serif\")group=VGroup(morning,japanese,mess,russ,hin,chinese).arrange(DOWN)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MultiLanguage(Scene):\n    def construct(self):\n        morning = MarkupText(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\", font=\"sans-serif\")\n        japanese = MarkupText(\n            '\u65e5\u672c\u3078\u3088\u3046\u3053\u305d'\n        )  # works as in ``Text``.\n        mess = MarkupText(\"Multi-Language\", weight=BOLD)\n        russ = MarkupText(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \", font=\"sans-serif\")\n        hin = MarkupText(\"\u0928\u092e\u0938\u094d\u0924\u0947\", font=\"sans-serif\")\n        chinese = MarkupText(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\", font=\"sans-serif\")\n        group = VGroup(morning, japanese, mess, russ, hin, chinese).arrange(DOWN)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: MultiLanguage\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classJustifyText(Scene):defconstruct(self):ipsum_text=(\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\"Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere \"\"quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam \"\"fermentum interdum justo, nec rutrum elit pretium ac. Nam quis \"\"leo pulvinar, dignissim est at, venenatis nisi.\")justified_text=MarkupText(ipsum_text,justify=True).scale(0.4)not_justified_text=MarkupText(ipsum_text,justify=False).scale(0.4)just_title=Title(\"Justified\")njust_title=Title(\"Not Justified\")self.add(njust_title,not_justified_text)self.play(FadeOut(not_justified_text),FadeIn(justified_text),FadeOut(njust_title),FadeIn(just_title),)self.wait(1)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class JustifyText(Scene):\n    def construct(self):\n        ipsum_text = (\n            \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n            \"Praesent feugiat metus sit amet iaculis pulvinar. Nulla posuere \"\n            \"quam a ex aliquam, eleifend consectetur tellus viverra. Aliquam \"\n            \"fermentum interdum justo, nec rutrum elit pretium ac. Nam quis \"\n            \"leo pulvinar, dignissim est at, venenatis nisi.\"\n        )\n        justified_text = MarkupText(ipsum_text, justify=True).scale(0.4)\n        not_justified_text = MarkupText(ipsum_text, justify=False).scale(0.4)\n        just_title = Title(\"Justified\")\n        njust_title = Title(\"Not Justified\")\n        self.add(njust_title, not_justified_text)\n        self.play(\n            FadeOut(not_justified_text),\n            FadeIn(justified_text),\n            FadeOut(njust_title),\n            FadeIn(just_title),\n        )\n        self.wait(1)",
+      "language": "python",
+      "context": "Example: JustifyText\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>MarkupText('The horse does not eat cucumber salad.')MarkupText('The horse does not eat cucumber salad.')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MarkupText",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Bases:SVGMobject"
+    },
+    {
+      "name": "_count_real_chars",
+      "class_name": null,
+      "parameters": [
+        "s"
+      ],
+      "return_type": null,
+      "description": "Counts characters that will be displayed."
+    },
+    {
+      "name": "_extract_color_tags",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Used to determine which parts (if any) of the string should be formatted\nwith a custom color."
+    },
+    {
+      "name": "_extract_gradient_tags",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Used to determine which parts (if any) of the string should be formatted\nwith a gradient."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_parse_color",
+      "class_name": null,
+      "parameters": [
+        "col"
+      ],
+      "return_type": null,
+      "description": "Parse color given in<color>or<gradient>tags."
+    },
+    {
+      "name": "_text2hash",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Generatessha256hash for file name."
+    },
+    {
+      "name": "_text2svg",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Convert the text to SVG using Pango."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "FadeIn",
+    "VGroup",
+    "Tex",
+    "FadeOut",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

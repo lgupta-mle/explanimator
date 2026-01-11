@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.number_line.html",
+  "title": "number_line\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "number_line\u00b6\n\nMobject representing a number line.\n\nClasses\n\nNumberLine\n\nCreates a number line with tick marks.\n\nUnitInterval",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Line",
+    "Create",
+    "Mobject"
+  ],
+  "tags": []
+}

@@ -1,0 +1,51 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.growing.GrowArrow.html",
+  "title": "GrowArrow\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "GrowArrow\u00b6\n\nQualified name:manim.animation.growing.GrowArrow\n\nclassGrowArrow(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:GrowFromPointIntroduce anArrowby growing it from its start toward its tip.Parameters:arrow(Arrow) \u2013 The arrow to be introduced.point_color(ParsableManimColor|None) \u2013 Initial color of the arrow before growing to its full size. Leave empty to match arrow\u2019s color.kwargs(Any)ExamplesExample: GrowArrowExample\u00b6frommanimimport*classGrowArrowExample(Scene):defconstruct(self):arrows=[Arrow(2*LEFT,2*RIGHT),Arrow(2*DR,2*UL)]VGroup(*arrows).set_x(0).arrange(buff=2)self.play(GrowArrow(arrows[0]))self.play(GrowArrow(arrows[1],point_color=RED))class GrowArrowExample(Scene):\n    def construct(self):\n        arrows = [Arrow(2 * LEFT, 2 * RIGHT), Arrow(2 * DR, 2 * UL)]\n        VGroup(*arrows).set_x(0).arrange(buff=2)\n        self.play(GrowArrow(arrows[0]))\n        self.play(GrowArrow(arrows[1], point_color=RED))Methodscreate_starting_mobjectAttributespath_arcpath_funcrun_time_original__init__(arrow,point_color=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:arrow(Arrow)point_color(ParsableManimColor|None)kwargs(Any)\n\nBases:GrowFromPoint\n\nIntroduce anArrowby growing it from its start toward its tip.\n\nParameters:\n\narrow(Arrow) \u2013 The arrow to be introduced.point_color(ParsableManimColor|None) \u2013 Initial color of the arrow before growing to its full size. Leave empty to match arrow\u2019s color.kwargs(Any)\n\narrow(Arrow) \u2013 The arrow to be introduced.\n\narrow(Arrow) \u2013 The arrow to be introduced.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the arrow before growing to its full size. Leave empty to match arrow\u2019s color.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the arrow before growing to its full size. Leave empty to match arrow\u2019s color.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: GrowArrowExample\u00b6\n\nMethods\n\ncreate_starting_mobject\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(arrow,point_color=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:arrow(Arrow)point_color(ParsableManimColor|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\narrow(Arrow)point_color(ParsableManimColor|None)kwargs(Any)\n\narrow(Arrow)\n\narrow(Arrow)\n\npoint_color(ParsableManimColor|None)\n\npoint_color(ParsableManimColor|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classGrowArrowExample(Scene):defconstruct(self):arrows=[Arrow(2*LEFT,2*RIGHT),Arrow(2*DR,2*UL)]VGroup(*arrows).set_x(0).arrange(buff=2)self.play(GrowArrow(arrows[0]))self.play(GrowArrow(arrows[1],point_color=RED))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GrowArrowExample(Scene):\n    def construct(self):\n        arrows = [Arrow(2 * LEFT, 2 * RIGHT), Arrow(2 * DR, 2 * UL)]\n        VGroup(*arrows).set_x(0).arrange(buff=2)\n        self.play(GrowArrow(arrows[0]))\n        self.play(GrowArrow(arrows[1], point_color=RED))",
+      "language": "python",
+      "context": "Example: GrowArrowExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "GrowArrow",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:GrowFromPoint"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "arrow"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Scene",
+    "Arrow"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "timing"
+  ]
+}

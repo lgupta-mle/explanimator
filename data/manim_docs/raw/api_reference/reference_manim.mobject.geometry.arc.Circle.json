@@ -1,0 +1,122 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.Circle.html",
+  "title": "Circle\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Circle\u00b6\n\nQualified name:manim.mobject.geometry.arc.Circle\n\nclassCircle(radius=None,color=ManimColor('#FC6255'),**kwargs)[source]\u00b6\n\nBases:ArcA circle.Parameters:color(ParsableManimColor) \u2013 The color of the shape.kwargs(Any) \u2013 Additional arguments to be passed toArcradius(float|None)ExamplesExample: CircleExample\u00b6frommanimimport*classCircleExample(Scene):defconstruct(self):circle_1=Circle(radius=1.0)circle_2=Circle(radius=1.5,color=GREEN)circle_3=Circle(radius=1.0,color=BLUE_B,fill_opacity=1)circle_group=Group(circle_1,circle_2,circle_3).arrange(buff=1)self.add(circle_group)class CircleExample(Scene):\n    def construct(self):\n        circle_1 = Circle(radius=1.0)\n        circle_2 = Circle(radius=1.5, color=GREEN)\n        circle_3 = Circle(radius=1.0, color=BLUE_B, fill_opacity=1)\n\n        circle_group = Group(circle_1, circle_2, circle_3).arrange(buff=1)\n        self.add(circle_group)Methodsfrom_three_pointsReturns a circle passing through the specified three points.point_at_angleReturns the position of a point on the circle.surroundModifies a circle so that it surrounds a given mobject.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(radius=None,color=ManimColor('#FC6255'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:radius(float|None)color(ParsableManimColor)kwargs(Any)Return type:Nonestaticfrom_three_points(p1,p2,p3,**kwargs)[source]\u00b6Returns a circle passing through the specified\nthree points.ExampleExample: CircleFromPointsExample\u00b6frommanimimport*classCircleFromPointsExample(Scene):defconstruct(self):circle=Circle.from_three_points(LEFT,LEFT+UP,UP*2,color=RED)dots=VGroup(Dot(LEFT),Dot(LEFT+UP),Dot(UP*2),)self.add(NumberPlane(),circle,dots)class CircleFromPointsExample(Scene):\n    def construct(self):\n        circle = Circle.from_three_points(LEFT, LEFT + UP, UP * 2, color=RED)\n        dots = VGroup(\n            Dot(LEFT),\n            Dot(LEFT + UP),\n            Dot(UP * 2),\n        )\n        self.add(NumberPlane(), circle, dots)Parameters:p1(Point3DLike)p2(Point3DLike)p3(Point3DLike)kwargs(Any)Return type:Circlepoint_at_angle(angle)[source]\u00b6Returns the position of a point on the circle.Parameters:angle(float) \u2013 The angle of the point along the circle in radians.Returns:The location of the point along the circle\u2019s circumference.Return type:numpy.ndarrayExamplesExample: PointAtAngleExample\u00b6frommanimimport*classPointAtAngleExample(Scene):defconstruct(self):circle=Circle(radius=2.0)p1=circle.point_at_angle(PI/2)p2=circle.point_at_angle(270*DEGREES)s1=Square(side_length=0.25).move_to(p1)s2=Square(side_length=0.25).move_to(p2)self.add(circle,s1,s2)class PointAtAngleExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2.0)\n        p1 = circle.point_at_angle(PI/2)\n        p2 = circle.point_at_angle(270*DEGREES)\n\n        s1 = Square(side_length=0.25).move_to(p1)\n        s2 = Square(side_length=0.25).move_to(p2)\n        self.add(circle, s1, s2)surround(mobject,dim_to_match=0,stretch=False,buffer_factor=1.2)[source]\u00b6Modifies a circle so that it surrounds a given mobject.Parameters:mobject(Mobject) \u2013 The mobject that the circle will be surrounding.dim_to_match(int)buffer_factor(float) \u2013 Scales the circle with respect to the mobject. Abuffer_factor< 1 makes the circle smaller than the mobject.stretch(bool) \u2013 Stretches the circle to fit more tightly around the mobject. Note: Does not work withLineReturn type:SelfExamplesExample: CircleSurround\u00b6frommanimimport*classCircleSurround(Scene):defconstruct(self):triangle1=Triangle()circle1=Circle().surround(triangle1)group1=Group(triangle1,circle1)# treat the two mobjects as oneline2=Line()circle2=Circle().surround(line2,buffer_factor=2.0)group2=Group(line2,circle2)# buffer_factor < 1, so the circle is smaller than the squaresquare3=Square()circle3=Circle().surround(square3,buffer_factor=0.5)group3=Group(square3,circle3)group=Group(group1,group2,group3).arrange(buff=1)self.add(group)class CircleSurround(Scene):\n    def construct(self):\n        triangle1 = Triangle()\n        circle1 = Circle().surround(triangle1)\n        group1 = Group(triangle1,circle1) # treat the two mobjects as one\n\n        line2 = Line()\n        circle2 = Circle().surround(line2, buffer_factor=2.0)\n        group2 = Group(line2,circle2)\n\n        # buffer_factor < 1, so the circle is smaller than the square\n        square3 = Square()\n        circle3 = Circle().surround(square3, buffer_factor=0.5)\n        group3 = Group(square3, circle3)\n\n        group = Group(group1, group2, group3).arrange(buff=1)\n        self.add(group)\n\nBases:Arc\n\nA circle.\n\nParameters:\n\ncolor(ParsableManimColor) \u2013 The color of the shape.kwargs(Any) \u2013 Additional arguments to be passed toArcradius(float|None)\n\ncolor(ParsableManimColor) \u2013 The color of the shape.\n\ncolor(ParsableManimColor) \u2013 The color of the shape.\n\nkwargs(Any) \u2013 Additional arguments to be passed toArc\n\nkwargs(Any) \u2013 Additional arguments to be passed toArc\n\nradius(float|None)\n\nradius(float|None)\n\nExamples\n\nExample: CircleExample\u00b6\n\nMethods\n\nfrom_three_points\n\nReturns a circle passing through the specified three points.\n\npoint_at_angle\n\nReturns the position of a point on the circle.\n\nsurround\n\nModifies a circle so that it surrounds a given mobject.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(radius=None,color=ManimColor('#FC6255'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:radius(float|None)color(ParsableManimColor)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nradius(float|None)color(ParsableManimColor)kwargs(Any)\n\nradius(float|None)\n\nradius(float|None)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nstaticfrom_three_points(p1,p2,p3,**kwargs)[source]\u00b6\n\nReturns a circle passing through the specified\nthree points.ExampleExample: CircleFromPointsExample\u00b6frommanimimport*classCircleFromPointsExample(Scene):defconstruct(self):circle=Circle.from_three_points(LEFT,LEFT+UP,UP*2,color=RED)dots=VGroup(Dot(LEFT),Dot(LEFT+UP),Dot(UP*2),)self.add(NumberPlane(),circle,dots)class CircleFromPointsExample(Scene):\n    def construct(self):\n        circle = Circle.from_three_points(LEFT, LEFT + UP, UP * 2, color=RED)\n        dots = VGroup(\n            Dot(LEFT),\n            Dot(LEFT + UP),\n            Dot(UP * 2),\n        )\n        self.add(NumberPlane(), circle, dots)Parameters:p1(Point3DLike)p2(Point3DLike)p3(Point3DLike)kwargs(Any)Return type:Circle\n\nReturns a circle passing through the specified\nthree points.\n\nExample\n\nExample: CircleFromPointsExample\u00b6\n\nParameters:\n\np1(Point3DLike)p2(Point3DLike)p3(Point3DLike)kwargs(Any)\n\np1(Point3DLike)\n\np1(Point3DLike)\n\np2(Point3DLike)\n\np2(Point3DLike)\n\np3(Point3DLike)\n\np3(Point3DLike)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nCircle\n\nCircle\n\npoint_at_angle(angle)[source]\u00b6\n\nReturns the position of a point on the circle.Parameters:angle(float) \u2013 The angle of the point along the circle in radians.Returns:The location of the point along the circle\u2019s circumference.Return type:numpy.ndarrayExamplesExample: PointAtAngleExample\u00b6frommanimimport*classPointAtAngleExample(Scene):defconstruct(self):circle=Circle(radius=2.0)p1=circle.point_at_angle(PI/2)p2=circle.point_at_angle(270*DEGREES)s1=Square(side_length=0.25).move_to(p1)s2=Square(side_length=0.25).move_to(p2)self.add(circle,s1,s2)class PointAtAngleExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2.0)\n        p1 = circle.point_at_angle(PI/2)\n        p2 = circle.point_at_angle(270*DEGREES)\n\n        s1 = Square(side_length=0.25).move_to(p1)\n        s2 = Square(side_length=0.25).move_to(p2)\n        self.add(circle, s1, s2)\n\nReturns the position of a point on the circle.\n\nParameters:\n\nangle(float) \u2013 The angle of the point along the circle in radians.\n\nangle(float) \u2013 The angle of the point along the circle in radians.\n\nReturns:\n\nThe location of the point along the circle\u2019s circumference.\n\nThe location of the point along the circle\u2019s circumference.\n\nReturn type:\n\nnumpy.ndarray\n\nnumpy.ndarray\n\nExamples\n\nExample: PointAtAngleExample\u00b6\n\nsurround(mobject,dim_to_match=0,stretch=False,buffer_factor=1.2)[source]\u00b6\n\nModifies a circle so that it surrounds a given mobject.Parameters:mobject(Mobject) \u2013 The mobject that the circle will be surrounding.dim_to_match(int)buffer_factor(float) \u2013 Scales the circle with respect to the mobject. Abuffer_factor< 1 makes the circle smaller than the mobject.stretch(bool) \u2013 Stretches the circle to fit more tightly around the mobject. Note: Does not work withLineReturn type:SelfExamplesExample: CircleSurround\u00b6frommanimimport*classCircleSurround(Scene):defconstruct(self):triangle1=Triangle()circle1=Circle().surround(triangle1)group1=Group(triangle1,circle1)# treat the two mobjects as oneline2=Line()circle2=Circle().surround(line2,buffer_factor=2.0)group2=Group(line2,circle2)# buffer_factor < 1, so the circle is smaller than the squaresquare3=Square()circle3=Circle().surround(square3,buffer_factor=0.5)group3=Group(square3,circle3)group=Group(group1,group2,group3).arrange(buff=1)self.add(group)class CircleSurround(Scene):\n    def construct(self):\n        triangle1 = Triangle()\n        circle1 = Circle().surround(triangle1)\n        group1 = Group(triangle1,circle1) # treat the two mobjects as one\n\n        line2 = Line()\n        circle2 = Circle().surround(line2, buffer_factor=2.0)\n        group2 = Group(line2,circle2)\n\n        # buffer_factor < 1, so the circle is smaller than the square\n        square3 = Square()\n        circle3 = Circle().surround(square3, buffer_factor=0.5)\n        group3 = Group(square3, circle3)\n\n        group = Group(group1, group2, group3).arrange(buff=1)\n        self.add(group)\n\nModifies a circle so that it surrounds a given mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject that the circle will be surrounding.dim_to_match(int)buffer_factor(float) \u2013 Scales the circle with respect to the mobject. Abuffer_factor< 1 makes the circle smaller than the mobject.stretch(bool) \u2013 Stretches the circle to fit more tightly around the mobject. Note: Does not work withLine\n\nmobject(Mobject) \u2013 The mobject that the circle will be surrounding.\n\nmobject(Mobject) \u2013 The mobject that the circle will be surrounding.\n\ndim_to_match(int)\n\ndim_to_match(int)\n\nbuffer_factor(float) \u2013 Scales the circle with respect to the mobject. Abuffer_factor< 1 makes the circle smaller than the mobject.\n\nbuffer_factor(float) \u2013 Scales the circle with respect to the mobject. Abuffer_factor< 1 makes the circle smaller than the mobject.\n\nstretch(bool) \u2013 Stretches the circle to fit more tightly around the mobject. Note: Does not work withLine\n\nstretch(bool) \u2013 Stretches the circle to fit more tightly around the mobject. Note: Does not work withLine\n\nReturn type:\n\nSelf\n\nSelf\n\nExamples\n\nExample: CircleSurround\u00b6",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCircleExample(Scene):defconstruct(self):circle_1=Circle(radius=1.0)circle_2=Circle(radius=1.5,color=GREEN)circle_3=Circle(radius=1.0,color=BLUE_B,fill_opacity=1)circle_group=Group(circle_1,circle_2,circle_3).arrange(buff=1)self.add(circle_group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CircleExample(Scene):\n    def construct(self):\n        circle_1 = Circle(radius=1.0)\n        circle_2 = Circle(radius=1.5, color=GREEN)\n        circle_3 = Circle(radius=1.0, color=BLUE_B, fill_opacity=1)\n\n        circle_group = Group(circle_1, circle_2, circle_3).arrange(buff=1)\n        self.add(circle_group)",
+      "language": "python",
+      "context": "Example: CircleExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classCircleFromPointsExample(Scene):defconstruct(self):circle=Circle.from_three_points(LEFT,LEFT+UP,UP*2,color=RED)dots=VGroup(Dot(LEFT),Dot(LEFT+UP),Dot(UP*2),)self.add(NumberPlane(),circle,dots)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CircleFromPointsExample(Scene):\n    def construct(self):\n        circle = Circle.from_three_points(LEFT, LEFT + UP, UP * 2, color=RED)\n        dots = VGroup(\n            Dot(LEFT),\n            Dot(LEFT + UP),\n            Dot(UP * 2),\n        )\n        self.add(NumberPlane(), circle, dots)",
+      "language": "python",
+      "context": "Example: CircleFromPointsExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPointAtAngleExample(Scene):defconstruct(self):circle=Circle(radius=2.0)p1=circle.point_at_angle(PI/2)p2=circle.point_at_angle(270*DEGREES)s1=Square(side_length=0.25).move_to(p1)s2=Square(side_length=0.25).move_to(p2)self.add(circle,s1,s2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PointAtAngleExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2.0)\n        p1 = circle.point_at_angle(PI/2)\n        p2 = circle.point_at_angle(270*DEGREES)\n\n        s1 = Square(side_length=0.25).move_to(p1)\n        s2 = Square(side_length=0.25).move_to(p2)\n        self.add(circle, s1, s2)",
+      "language": "python",
+      "context": "Example: PointAtAngleExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classCircleSurround(Scene):defconstruct(self):triangle1=Triangle()circle1=Circle().surround(triangle1)group1=Group(triangle1,circle1)# treat the two mobjects as oneline2=Line()circle2=Circle().surround(line2,buffer_factor=2.0)group2=Group(line2,circle2)# buffer_factor < 1, so the circle is smaller than the squaresquare3=Square()circle3=Circle().surround(square3,buffer_factor=0.5)group3=Group(square3,circle3)group=Group(group1,group2,group3).arrange(buff=1)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CircleSurround(Scene):\n    def construct(self):\n        triangle1 = Triangle()\n        circle1 = Circle().surround(triangle1)\n        group1 = Group(triangle1,circle1) # treat the two mobjects as one\n\n        line2 = Line()\n        circle2 = Circle().surround(line2, buffer_factor=2.0)\n        group2 = Group(line2,circle2)\n\n        # buffer_factor < 1, so the circle is smaller than the square\n        square3 = Square()\n        circle3 = Circle().surround(square3, buffer_factor=0.5)\n        group3 = Group(square3, circle3)\n\n        group = Group(group1, group2, group3).arrange(buff=1)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: CircleSurround\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Circle",
+      "class_name": null,
+      "parameters": [
+        "radius=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Arc"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "radius=None"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "from_three_points",
+      "class_name": null,
+      "parameters": [
+        "p1"
+      ],
+      "return_type": null,
+      "description": "Returns a circle passing through the specified\nthree points."
+    },
+    {
+      "name": "point_at_angle",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "Returns the position of a point on the circle."
+    },
+    {
+      "name": "surround",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Modifies a circle so that it surrounds a given mobject."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Line",
+    "VGroup",
+    "NumberPlane",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

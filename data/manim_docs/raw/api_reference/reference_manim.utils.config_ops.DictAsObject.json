@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.config_ops.DictAsObject.html",
+  "title": "DictAsObject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DictAsObject\u00b6\n\nQualified name:manim.utils.config\\_ops.DictAsObject\n\nclassDictAsObject(dictin)[source]\u00b6\n\nBases:objectMethodsParameters:dictin(dict[str,Any])\n\nBases:object\n\nMethods\n\nParameters:\n\ndictin(dict[str,Any])\n\ndictin(dict[str,Any])",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "DictAsObject",
+      "class_name": null,
+      "parameters": [
+        "dictin"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    }
+  ],
+  "related_classes": [],
+  "tags": []
+}

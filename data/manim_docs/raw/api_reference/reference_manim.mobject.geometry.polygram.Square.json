@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.Square.html",
+  "title": "Square\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Square\u00b6\n\nQualified name:manim.mobject.geometry.polygram.Square\n\nclassSquare(side_length=2.0,**kwargs)[source]\u00b6\n\nBases:RectangleA rectangle with equal side lengths.Parameters:side_length(float) \u2013 The length of the sides of the square.kwargs(Any) \u2013 Additional arguments to be passed toRectangle.ExamplesExample: SquareExample\u00b6frommanimimport*classSquareExample(Scene):defconstruct(self):square_1=Square(side_length=2.0).shift(DOWN)square_2=Square(side_length=1.0).next_to(square_1,direction=UP)square_3=Square(side_length=0.5).next_to(square_2,direction=UP)self.add(square_1,square_2,square_3)class SquareExample(Scene):\n    def construct(self):\n        square_1 = Square(side_length=2.0).shift(DOWN)\n        square_2 = Square(side_length=1.0).next_to(square_1, direction=UP)\n        square_3 = Square(side_length=0.5).next_to(square_2, direction=UP)\n        self.add(square_1, square_2, square_3)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorside_lengthstroke_colorwidthThe width of the mobject._original__init__(side_length=2.0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:side_length(float)kwargs(Any)Return type:None\n\nBases:Rectangle\n\nA rectangle with equal side lengths.\n\nParameters:\n\nside_length(float) \u2013 The length of the sides of the square.kwargs(Any) \u2013 Additional arguments to be passed toRectangle.\n\nside_length(float) \u2013 The length of the sides of the square.\n\nside_length(float) \u2013 The length of the sides of the square.\n\nkwargs(Any) \u2013 Additional arguments to be passed toRectangle.\n\nkwargs(Any) \u2013 Additional arguments to be passed toRectangle.\n\nExamples\n\nExample: SquareExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nside_length\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(side_length=2.0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:side_length(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nside_length(float)kwargs(Any)\n\nside_length(float)\n\nside_length(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classSquareExample(Scene):defconstruct(self):square_1=Square(side_length=2.0).shift(DOWN)square_2=Square(side_length=1.0).next_to(square_1,direction=UP)square_3=Square(side_length=0.5).next_to(square_2,direction=UP)self.add(square_1,square_2,square_3)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SquareExample(Scene):\n    def construct(self):\n        square_1 = Square(side_length=2.0).shift(DOWN)\n        square_2 = Square(side_length=1.0).next_to(square_1, direction=UP)\n        square_3 = Square(side_length=0.5).next_to(square_2, direction=UP)\n        self.add(square_1, square_2, square_3)",
+      "language": "python",
+      "context": "Example: SquareExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Square",
+      "class_name": null,
+      "parameters": [
+        "side_length=2.0"
+      ],
+      "return_type": null,
+      "description": "Bases:Rectangle"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "side_length=2.0"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Rectangle",
+    "Scene",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

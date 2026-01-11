@@ -1,0 +1,35 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.coordinate_systems.html",
+  "title": "coordinate_systems\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "coordinate_systems\u00b6\n\nMobjects that represent coordinate systems.\n\nTypeVar\u2019s\n\nclassLineType\u00b6\n\nTypeVar('LineType',bound=Line)\n\nClasses\n\nAxes\n\nCreates a set of axes.\n\nComplexPlane\n\nANumberPlanespecialized for use with complex numbers.\n\nCoordinateSystem\n\nAbstract base class for Axes and NumberPlane.\n\nNumberPlane\n\nCreates a cartesian plane with background lines.\n\nPolarPlane\n\nCreates a polar plane with background lines.\n\nThreeDAxes\n\nA 3-dimensional set of axes.",
+  "code_examples": [
+    {
+      "code": "TypeVar('LineType',bound=Line)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LineType",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Create",
+    "NumberPlane",
+    "Axes",
+    "Mobject"
+  ],
+  "tags": [
+    "3d",
+    "graph"
+  ]
+}

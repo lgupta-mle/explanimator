@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.growing.GrowFromPoint.html",
+  "title": "GrowFromPoint\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "GrowFromPoint\u00b6\n\nQualified name:manim.animation.growing.GrowFromPoint\n\nclassGrowFromPoint(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformIntroduce anMobjectby growing it from a point.Parameters:mobject(Mobject) \u2013 The mobjects to be introduced.point(Point3DLike) \u2013 The point from which the mobject grows.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)ExamplesExample: GrowFromPointExample\u00b6frommanimimport*classGrowFromPointExample(Scene):defconstruct(self):dot=Dot(3*UR,color=GREEN)squares=[Square()for_inrange(4)]VGroup(*squares).set_x(0).arrange(buff=1)self.add(dot)self.play(GrowFromPoint(squares[0],ORIGIN))self.play(GrowFromPoint(squares[1],[-2,2,0]))self.play(GrowFromPoint(squares[2],[3,-2,0],RED))self.play(GrowFromPoint(squares[3],dot,dot.get_color()))class GrowFromPointExample(Scene):\n    def construct(self):\n        dot = Dot(3 * UR, color=GREEN)\n        squares = [Square() for _ in range(4)]\n        VGroup(*squares).set_x(0).arrange(buff=1)\n        self.add(dot)\n        self.play(GrowFromPoint(squares[0], ORIGIN))\n        self.play(GrowFromPoint(squares[1], [-2, 2, 0]))\n        self.play(GrowFromPoint(squares[2], [3, -2, 0], RED))\n        self.play(GrowFromPoint(squares[3], dot, dot.get_color()))Methodscreate_starting_mobjectcreate_targetAttributespath_arcpath_funcrun_time_original__init__(mobject,point,point_color=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)point(Point3DLike)point_color(ParsableManimColor|None)kwargs(Any)\n\nBases:Transform\n\nIntroduce anMobjectby growing it from a point.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobjects to be introduced.point(Point3DLike) \u2013 The point from which the mobject grows.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\npoint(Point3DLike) \u2013 The point from which the mobject grows.\n\npoint(Point3DLike) \u2013 The point from which the mobject grows.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: GrowFromPointExample\u00b6\n\nMethods\n\ncreate_starting_mobject\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,point,point_color=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)point(Point3DLike)point_color(ParsableManimColor|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)point(Point3DLike)point_color(ParsableManimColor|None)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\npoint(Point3DLike)\n\npoint(Point3DLike)\n\npoint_color(ParsableManimColor|None)\n\npoint_color(ParsableManimColor|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classGrowFromPointExample(Scene):defconstruct(self):dot=Dot(3*UR,color=GREEN)squares=[Square()for_inrange(4)]VGroup(*squares).set_x(0).arrange(buff=1)self.add(dot)self.play(GrowFromPoint(squares[0],ORIGIN))self.play(GrowFromPoint(squares[1],[-2,2,0]))self.play(GrowFromPoint(squares[2],[3,-2,0],RED))self.play(GrowFromPoint(squares[3],dot,dot.get_color()))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GrowFromPointExample(Scene):\n    def construct(self):\n        dot = Dot(3 * UR, color=GREEN)\n        squares = [Square() for _ in range(4)]\n        VGroup(*squares).set_x(0).arrange(buff=1)\n        self.add(dot)\n        self.play(GrowFromPoint(squares[0], ORIGIN))\n        self.play(GrowFromPoint(squares[1], [-2, 2, 0]))\n        self.play(GrowFromPoint(squares[2], [3, -2, 0], RED))\n        self.play(GrowFromPoint(squares[3], dot, dot.get_color()))",
+      "language": "python",
+      "context": "Example: GrowFromPointExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "GrowFromPoint",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Transform",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

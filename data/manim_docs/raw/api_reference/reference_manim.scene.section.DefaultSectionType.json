@@ -1,0 +1,31 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.section.DefaultSectionType.html",
+  "title": "DefaultSectionType\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DefaultSectionType\u00b6\n\nQualified name:manim.scene.section.DefaultSectionType\n\nclassDefaultSectionType(*values)[source]\u00b6\n\nBases:str,EnumThe type of a section can be used for third party applications.\nA presentation system could for example use the types to created loops.ExamplesThis class can be reimplemented for more types:classPresentationSectionType(str,Enum):# start, end, wait for continuation by userNORMAL=\"presentation.normal\"# start, end, immediately continue to next sectionSKIP=\"presentation.skip\"# start, end, restart, immediately continue to next section when continued by userLOOP=\"presentation.loop\"# start, end, restart, finish animation first when user continuesCOMPLETE_LOOP=\"presentation.complete_loop\"MethodsAttributesNORMAL\n\nBases:str,Enum\n\nThe type of a section can be used for third party applications.\nA presentation system could for example use the types to created loops.\n\nExamples\n\nThis class can be reimplemented for more types:\n\nMethods\n\nAttributes\n\nNORMAL",
+  "code_examples": [
+    {
+      "code": "classPresentationSectionType(str,Enum):# start, end, wait for continuation by userNORMAL=\"presentation.normal\"# start, end, immediately continue to next sectionSKIP=\"presentation.skip\"# start, end, restart, immediately continue to next section when continued by userLOOP=\"presentation.loop\"# start, end, restart, finish animation first when user continuesCOMPLETE_LOOP=\"presentation.complete_loop\"",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "DefaultSectionType",
+      "class_name": null,
+      "parameters": [
+        "*values"
+      ],
+      "return_type": null,
+      "description": "Bases:str,Enum"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "animation",
+    "timing"
+  ]
+}

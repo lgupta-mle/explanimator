@@ -1,0 +1,27 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.html",
+  "title": "color\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "color\u00b6\n\nUtilities for working with colors and predefined color constants.\n\nColor data structure\u00b6\n\ncore\n\nManim's (internal) color data structure and some utilities for color conversion.\n\nPredefined colors\u00b6\n\nThere are several predefined colors available in Manim:\n\nThe colors listed incolor.manim_colorsare loaded into\nManim\u2019s global name space.\n\nThe colors listed incolor.manim_colorsare loaded into\nManim\u2019s global name space.\n\nThe colors incolor.AS2700,color.BS381,color.DVIPSNAMES,color.SVGNAMES,color.X11andcolor.XKCDneed to be accessed via their module (which are available\nin Manim\u2019s global name space), or imported separately. For example:>>>frommanimimportXKCD>>>XKCD.AVOCADOManimColor('#90B134')Or, alternatively:>>>frommanim.utils.color.XKCDimportAVOCADO>>>AVOCADOManimColor('#90B134')\n\nThe colors incolor.AS2700,color.BS381,color.DVIPSNAMES,color.SVGNAMES,color.X11andcolor.XKCDneed to be accessed via their module (which are available\nin Manim\u2019s global name space), or imported separately. For example:\n\nOr, alternatively:\n\nThe following modules contain the predefined color constants:\n\nmanim_colors\n\nColors included in the global name space.\n\nAS2700\n\nAustralian Color Standard\n\nBS381\n\nBritish Color Standard\n\nDVIPSNAMES\n\ndvips Colors\n\nSVGNAMES\n\nSVG 1.1 Colors\n\nXKCD\n\nColors from the XKCD Color Name Survey\n\nX11\n\nX11 Colors",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportXKCD>>>XKCD.AVOCADOManimColor('#90B134')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanim.utils.color.XKCDimportAVOCADO>>>AVOCADOManimColor('#90B134')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "timing"
+  ]
+}

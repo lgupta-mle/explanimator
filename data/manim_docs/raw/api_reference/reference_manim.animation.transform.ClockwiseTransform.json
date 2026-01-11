@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ClockwiseTransform.html",
+  "title": "ClockwiseTransform\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ClockwiseTransform\u00b6\n\nQualified name:manim.animation.transform.ClockwiseTransform\n\nclassClockwiseTransform(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformTransforms the points of a mobject along a clockwise oriented arc.See alsoTransform,CounterclockwiseTransformExamplesExample: ClockwiseExample\u00b6frommanimimport*classClockwiseExample(Scene):defconstruct(self):dl,dr=Dot(),Dot()sl,sr=Square(),Square()VGroup(dl,sl).arrange(DOWN).shift(2*LEFT)VGroup(dr,sr).arrange(DOWN).shift(2*RIGHT)self.add(dl,dr)self.wait()self.play(ClockwiseTransform(dl,sl),Transform(dr,sr))self.wait()class ClockwiseExample(Scene):\n    def construct(self):\n        dl, dr = Dot(), Dot()\n        sl, sr = Square(), Square()\n\n        VGroup(dl, sl).arrange(DOWN).shift(2*LEFT)\n        VGroup(dr, sr).arrange(DOWN).shift(2*RIGHT)\n\n        self.add(dl, dr)\n        self.wait()\n        self.play(\n            ClockwiseTransform(dl, sl),\n            Transform(dr, sr)\n        )\n        self.wait()MethodsAttributespath_arcpath_funcrun_timeParameters:mobject(Mobject)target_mobject(Mobject)path_arc(float)_original__init__(mobject,target_mobject,path_arc=-3.141592653589793,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)path_arc(float)Return type:None\n\nBases:Transform\n\nTransforms the points of a mobject along a clockwise oriented arc.\n\nSee also\n\nTransform,CounterclockwiseTransform\n\nExamples\n\nExample: ClockwiseExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)path_arc(float)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\n_original__init__(mobject,target_mobject,path_arc=-3.141592653589793,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)path_arc(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)path_arc(float)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classClockwiseExample(Scene):defconstruct(self):dl,dr=Dot(),Dot()sl,sr=Square(),Square()VGroup(dl,sl).arrange(DOWN).shift(2*LEFT)VGroup(dr,sr).arrange(DOWN).shift(2*RIGHT)self.add(dl,dr)self.wait()self.play(ClockwiseTransform(dl,sl),Transform(dr,sr))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ClockwiseExample(Scene):\n    def construct(self):\n        dl, dr = Dot(), Dot()\n        sl, sr = Square(), Square()\n\n        VGroup(dl, sl).arrange(DOWN).shift(2*LEFT)\n        VGroup(dr, sr).arrange(DOWN).shift(2*RIGHT)\n\n        self.add(dl, dr)\n        self.wait()\n        self.play(\n            ClockwiseTransform(dl, sl),\n            Transform(dr, sr)\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: ClockwiseExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ClockwiseTransform",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Transform",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Cube.html",
+  "title": "Cube\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Cube\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Cube\n\nclassCube(side_length=2,fill_opacity=0.75,fill_color=ManimColor('#58C4DD'),stroke_width=0,**kwargs)[source]\u00b6\n\nBases:VGroupA three-dimensional cube.Parameters:side_length(float) \u2013 Length of each side of theCube.fill_opacity(float) \u2013 The opacity of theCube, from 0 being fully transparent to 1 being\nfully opaque. Defaults to 0.75.fill_color(ParsableManimColor) \u2013 The color of theCube.stroke_width(float) \u2013 The width of the stroke surrounding each face of theCube.ExamplesExample: CubeExample\u00b6frommanimimport*classCubeExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=-45*DEGREES)axes=ThreeDAxes()cube=Cube(side_length=3,fill_opacity=0.7,fill_color=BLUE)self.add(cube)class CubeExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75*DEGREES, theta=-45*DEGREES)\n\n        axes = ThreeDAxes()\n        cube = Cube(side_length=3, fill_opacity=0.7, fill_color=BLUE)\n        self.add(cube)Methodsgenerate_pointsCreates the sides of theCube.init_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(side_length=2,fill_opacity=0.75,fill_color=ManimColor('#58C4DD'),stroke_width=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:side_length(float)fill_opacity(float)fill_color(ParsableManimColor)stroke_width(float)Return type:Nonegenerate_points()[source]\u00b6Creates the sides of theCube.Return type:None\n\nBases:VGroup\n\nA three-dimensional cube.\n\nParameters:\n\nside_length(float) \u2013 Length of each side of theCube.fill_opacity(float) \u2013 The opacity of theCube, from 0 being fully transparent to 1 being\nfully opaque. Defaults to 0.75.fill_color(ParsableManimColor) \u2013 The color of theCube.stroke_width(float) \u2013 The width of the stroke surrounding each face of theCube.\n\nside_length(float) \u2013 Length of each side of theCube.\n\nside_length(float) \u2013 Length of each side of theCube.\n\nfill_opacity(float) \u2013 The opacity of theCube, from 0 being fully transparent to 1 being\nfully opaque. Defaults to 0.75.\n\nfill_opacity(float) \u2013 The opacity of theCube, from 0 being fully transparent to 1 being\nfully opaque. Defaults to 0.75.\n\nfill_color(ParsableManimColor) \u2013 The color of theCube.\n\nfill_color(ParsableManimColor) \u2013 The color of theCube.\n\nstroke_width(float) \u2013 The width of the stroke surrounding each face of theCube.\n\nstroke_width(float) \u2013 The width of the stroke surrounding each face of theCube.\n\nExamples\n\nExample: CubeExample\u00b6\n\nMethods\n\ngenerate_points\n\nCreates the sides of theCube.\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(side_length=2,fill_opacity=0.75,fill_color=ManimColor('#58C4DD'),stroke_width=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:side_length(float)fill_opacity(float)fill_color(ParsableManimColor)stroke_width(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nside_length(float)fill_opacity(float)fill_color(ParsableManimColor)stroke_width(float)\n\nside_length(float)\n\nside_length(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nfill_color(ParsableManimColor)\n\nfill_color(ParsableManimColor)\n\nstroke_width(float)\n\nstroke_width(float)\n\nReturn type:\n\nNone\n\nNone\n\ngenerate_points()[source]\u00b6\n\nCreates the sides of theCube.Return type:None\n\nCreates the sides of theCube.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCubeExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=-45*DEGREES)axes=ThreeDAxes()cube=Cube(side_length=3,fill_opacity=0.7,fill_color=BLUE)self.add(cube)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CubeExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75*DEGREES, theta=-45*DEGREES)\n\n        axes = ThreeDAxes()\n        cube = Cube(side_length=3, fill_opacity=0.7, fill_color=BLUE)\n        self.add(cube)",
+      "language": "python",
+      "context": "Example: CubeExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Cube",
+      "class_name": null,
+      "parameters": [
+        "side_length=2"
+      ],
+      "return_type": null,
+      "description": "Bases:VGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "side_length=2"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Creates the sides of theCube."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "VGroup",
+    "ThreeDScene",
+    "Axes",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

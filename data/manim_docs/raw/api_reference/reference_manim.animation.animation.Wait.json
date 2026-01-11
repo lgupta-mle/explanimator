@@ -1,0 +1,80 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.animation.Wait.html",
+  "title": "Wait\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Wait\u00b6\n\nQualified name:manim.animation.animation.Wait\n\nclassWait(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationA \u201cno operation\u201d animation.Parameters:run_time(float) \u2013 The amount of time that should pass.stop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that evaluates to a boolean.\nThe function is evaluated after every new frame has been rendered.\nPlaying the animation stops after the return value is truthy, or\nafter the specifiedrun_timehas passed.frozen_frame(bool|None) \u2013 Controls whether or not the wait animation is static, i.e., corresponds\nto a frozen frame. IfFalseis passed, the render loop still\nprogresses through the animation as usual and (among other things)\ncontinues to call updater functions. IfNone(the default value),\ntheScene.play()call tries to determine whether the Wait call\ncan be static or not itself viaScene.should_mobjects_update().kwargs\u2013 Keyword arguments to be passed to the parent class,Animation.rate_func(Callable[[float],float])MethodsbeginBegin the animation.clean_up_from_sceneClean up theSceneafter finishing the animation.finishFinish the animation.interpolateSet the animation progress.update_mobjectsUpdates things like starting_mobject, and (for Transforms) target_mobject.Attributesrun_time_original__init__(run_time=1,stop_condition=None,frozen_frame=None,rate_func=<functionlinear>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:run_time(float)stop_condition(Callable[[],bool]|None)frozen_frame(bool|None)rate_func(Callable[[float],float])begin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonefinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:Noneinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:Noneupdate_mobjects(dt)[source]\u00b6Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nBases:Animation\n\nA \u201cno operation\u201d animation.\n\nParameters:\n\nrun_time(float) \u2013 The amount of time that should pass.stop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that evaluates to a boolean.\nThe function is evaluated after every new frame has been rendered.\nPlaying the animation stops after the return value is truthy, or\nafter the specifiedrun_timehas passed.frozen_frame(bool|None) \u2013 Controls whether or not the wait animation is static, i.e., corresponds\nto a frozen frame. IfFalseis passed, the render loop still\nprogresses through the animation as usual and (among other things)\ncontinues to call updater functions. IfNone(the default value),\ntheScene.play()call tries to determine whether the Wait call\ncan be static or not itself viaScene.should_mobjects_update().kwargs\u2013 Keyword arguments to be passed to the parent class,Animation.rate_func(Callable[[float],float])\n\nrun_time(float) \u2013 The amount of time that should pass.\n\nrun_time(float) \u2013 The amount of time that should pass.\n\nstop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that evaluates to a boolean.\nThe function is evaluated after every new frame has been rendered.\nPlaying the animation stops after the return value is truthy, or\nafter the specifiedrun_timehas passed.\n\nstop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that evaluates to a boolean.\nThe function is evaluated after every new frame has been rendered.\nPlaying the animation stops after the return value is truthy, or\nafter the specifiedrun_timehas passed.\n\nfrozen_frame(bool|None) \u2013 Controls whether or not the wait animation is static, i.e., corresponds\nto a frozen frame. IfFalseis passed, the render loop still\nprogresses through the animation as usual and (among other things)\ncontinues to call updater functions. IfNone(the default value),\ntheScene.play()call tries to determine whether the Wait call\ncan be static or not itself viaScene.should_mobjects_update().\n\nfrozen_frame(bool|None) \u2013 Controls whether or not the wait animation is static, i.e., corresponds\nto a frozen frame. IfFalseis passed, the render loop still\nprogresses through the animation as usual and (among other things)\ncontinues to call updater functions. IfNone(the default value),\ntheScene.play()call tries to determine whether the Wait call\ncan be static or not itself viaScene.should_mobjects_update().\n\nkwargs\u2013 Keyword arguments to be passed to the parent class,Animation.\n\nkwargs\u2013 Keyword arguments to be passed to the parent class,Animation.\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nMethods\n\nbegin\n\nBegin the animation.\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nfinish\n\nFinish the animation.\n\ninterpolate\n\nSet the animation progress.\n\nupdate_mobjects\n\nUpdates things like starting_mobject, and (for Transforms) target_mobject.\n\nAttributes\n\nrun_time\n\n_original__init__(run_time=1,stop_condition=None,frozen_frame=None,rate_func=<functionlinear>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:run_time(float)stop_condition(Callable[[],bool]|None)frozen_frame(bool|None)rate_func(Callable[[float],float])\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nrun_time(float)stop_condition(Callable[[],bool]|None)frozen_frame(bool|None)rate_func(Callable[[float],float])\n\nrun_time(float)\n\nrun_time(float)\n\nstop_condition(Callable[[],bool]|None)\n\nstop_condition(Callable[[],bool]|None)\n\nfrozen_frame(bool|None)\n\nfrozen_frame(bool|None)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone\n\nupdate_mobjects(dt)[source]\u00b6\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.\n\nParameters:\n\ndt(float)\n\ndt(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Wait",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "run_time=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    },
+    {
+      "name": "update_mobjects",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject."
+    }
+  ],
+  "related_classes": [
+    "Transform",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "transformation",
+    "timing",
+    "graph"
+  ]
+}

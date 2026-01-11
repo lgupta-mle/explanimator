@@ -1,0 +1,84 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.numbers.DecimalNumber.html",
+  "title": "DecimalNumber\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DecimalNumber\u00b6\n\nQualified name:manim.mobject.text.numbers.DecimalNumber\n\nclassDecimalNumber(number=0,num_decimal_places=2,mob_class=<class'manim.mobject.text.tex_mobject.MathTex'>,include_sign=False,group_with_commas=True,digit_buff_per_font_unit=0.001,show_ellipsis=False,unit=None,unit_buff_per_font_unit=0,include_background_rectangle=False,edge_to_fix=array([-1.,0.,0.]),font_size=48,stroke_width=0,fill_opacity=1.0,**kwargs)[source]\u00b6\n\nBases:VMobjectAn mobject representing a decimal number.Parameters:number(float) \u2013 The numeric value to be displayed. It can later be modified usingset_value().num_decimal_places(int) \u2013 The number of decimal places after the decimal separator. Values are automatically rounded.mob_class(type[SingleStringMathTex]) \u2013 The class for rendering digits and units, by defaultMathTex.include_sign(bool) \u2013 Set toTrueto include a sign for positive numbers and zero.group_with_commas(bool) \u2013 WhenTruethousands groups are separated by commas for readability.digit_buff_per_font_unit(float) \u2013 Additional spacing between digits. Scales with font size.show_ellipsis(bool) \u2013 When a number has been truncated by rounding, indicate with an ellipsis (...).unit(str|None) \u2013 A unit string which can be placed to the right of the numerical values.unit_buff_per_font_unit(float) \u2013 An additional spacing between the numerical values and the unit. A value\nofunit_buff_per_font_unit=0.003gives a decent spacing. Scales with font size.include_background_rectangle(bool) \u2013 Adds a background rectangle to increase contrast on busy scenes.edge_to_fix(Vector3DLike) \u2013 Assuring right- or left-alignment of the full object.font_size(float) \u2013 Size of the font.stroke_width(float)fill_opacity(float)kwargs(Any)ExamplesExample: MovingSquareWithUpdaters\u00b6frommanimimport*classMovingSquareWithUpdaters(Scene):defconstruct(self):decimal=DecimalNumber(0,show_ellipsis=True,num_decimal_places=3,include_sign=True,unit=r\"\\text{M-Units}\",unit_buff_per_font_unit=0.003)square=Square().to_edge(UP)decimal.add_updater(lambdad:d.next_to(square,RIGHT))decimal.add_updater(lambdad:d.set_value(square.get_center()[1]))self.add(square,decimal)self.play(square.animate.to_edge(DOWN),rate_func=there_and_back,run_time=5,)self.wait()class MovingSquareWithUpdaters(Scene):\n    def construct(self):\n        decimal = DecimalNumber(\n            0,\n            show_ellipsis=True,\n            num_decimal_places=3,\n            include_sign=True,\n            unit=r\"\\text{M-Units}\",\n            unit_buff_per_font_unit=0.003\n        )\n        square = Square().to_edge(UP)\n\n        decimal.add_updater(lambda d: d.next_to(square, RIGHT))\n        decimal.add_updater(lambda d: d.set_value(square.get_center()[1]))\n        self.add(square, decimal)\n        self.play(\n            square.animate.to_edge(DOWN),\n            rate_func=there_and_back,\n            run_time=5,\n        )\n        self.wait()Methodsget_valueincrement_valueset_valueSet the value of theDecimalNumberto a new number.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizeThe font size of the tex mobject.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._get_formatter(**kwargs)[source]\u00b6Configuration is based first off instance attributes,\nbut overwritten by any kew word argument.  Relevant\nkey words:\n- include_sign\n- group_with_commas\n- num_decimal_places\n- field_name (e.g. 0 or 0.real)Parameters:kwargs(Any)Return type:str_original__init__(number=0,num_decimal_places=2,mob_class=<class'manim.mobject.text.tex_mobject.MathTex'>,include_sign=False,group_with_commas=True,digit_buff_per_font_unit=0.001,show_ellipsis=False,unit=None,unit_buff_per_font_unit=0,include_background_rectangle=False,edge_to_fix=array([-1.,0.,0.]),font_size=48,stroke_width=0,fill_opacity=1.0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:number(float)num_decimal_places(int)mob_class(type[SingleStringMathTex])include_sign(bool)group_with_commas(bool)digit_buff_per_font_unit(float)show_ellipsis(bool)unit(str|None)unit_buff_per_font_unit(float)include_background_rectangle(bool)edge_to_fix(Vector3DLike)font_size(float)stroke_width(float)fill_opacity(float)kwargs(Any)propertyfont_size:float\u00b6The font size of the tex mobject.set_value(number)[source]\u00b6Set the value of theDecimalNumberto a new number.Parameters:number(float) \u2013 The value that will overwrite the current number of theDecimalNumber.Return type:Self\n\nBases:VMobject\n\nAn mobject representing a decimal number.\n\nParameters:\n\nnumber(float) \u2013 The numeric value to be displayed. It can later be modified usingset_value().num_decimal_places(int) \u2013 The number of decimal places after the decimal separator. Values are automatically rounded.mob_class(type[SingleStringMathTex]) \u2013 The class for rendering digits and units, by defaultMathTex.include_sign(bool) \u2013 Set toTrueto include a sign for positive numbers and zero.group_with_commas(bool) \u2013 WhenTruethousands groups are separated by commas for readability.digit_buff_per_font_unit(float) \u2013 Additional spacing between digits. Scales with font size.show_ellipsis(bool) \u2013 When a number has been truncated by rounding, indicate with an ellipsis (...).unit(str|None) \u2013 A unit string which can be placed to the right of the numerical values.unit_buff_per_font_unit(float) \u2013 An additional spacing between the numerical values and the unit. A value\nofunit_buff_per_font_unit=0.003gives a decent spacing. Scales with font size.include_background_rectangle(bool) \u2013 Adds a background rectangle to increase contrast on busy scenes.edge_to_fix(Vector3DLike) \u2013 Assuring right- or left-alignment of the full object.font_size(float) \u2013 Size of the font.stroke_width(float)fill_opacity(float)kwargs(Any)\n\nnumber(float) \u2013 The numeric value to be displayed. It can later be modified usingset_value().\n\nnumber(float) \u2013 The numeric value to be displayed. It can later be modified usingset_value().\n\nnum_decimal_places(int) \u2013 The number of decimal places after the decimal separator. Values are automatically rounded.\n\nnum_decimal_places(int) \u2013 The number of decimal places after the decimal separator. Values are automatically rounded.\n\nmob_class(type[SingleStringMathTex]) \u2013 The class for rendering digits and units, by defaultMathTex.\n\nmob_class(type[SingleStringMathTex]) \u2013 The class for rendering digits and units, by defaultMathTex.\n\ninclude_sign(bool) \u2013 Set toTrueto include a sign for positive numbers and zero.\n\ninclude_sign(bool) \u2013 Set toTrueto include a sign for positive numbers and zero.\n\ngroup_with_commas(bool) \u2013 WhenTruethousands groups are separated by commas for readability.\n\ngroup_with_commas(bool) \u2013 WhenTruethousands groups are separated by commas for readability.\n\ndigit_buff_per_font_unit(float) \u2013 Additional spacing between digits. Scales with font size.\n\ndigit_buff_per_font_unit(float) \u2013 Additional spacing between digits. Scales with font size.\n\nshow_ellipsis(bool) \u2013 When a number has been truncated by rounding, indicate with an ellipsis (...).\n\nshow_ellipsis(bool) \u2013 When a number has been truncated by rounding, indicate with an ellipsis (...).\n\nunit(str|None) \u2013 A unit string which can be placed to the right of the numerical values.\n\nunit(str|None) \u2013 A unit string which can be placed to the right of the numerical values.\n\nunit_buff_per_font_unit(float) \u2013 An additional spacing between the numerical values and the unit. A value\nofunit_buff_per_font_unit=0.003gives a decent spacing. Scales with font size.\n\nunit_buff_per_font_unit(float) \u2013 An additional spacing between the numerical values and the unit. A value\nofunit_buff_per_font_unit=0.003gives a decent spacing. Scales with font size.\n\ninclude_background_rectangle(bool) \u2013 Adds a background rectangle to increase contrast on busy scenes.\n\ninclude_background_rectangle(bool) \u2013 Adds a background rectangle to increase contrast on busy scenes.\n\nedge_to_fix(Vector3DLike) \u2013 Assuring right- or left-alignment of the full object.\n\nedge_to_fix(Vector3DLike) \u2013 Assuring right- or left-alignment of the full object.\n\nfont_size(float) \u2013 Size of the font.\n\nfont_size(float) \u2013 Size of the font.\n\nstroke_width(float)\n\nstroke_width(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: MovingSquareWithUpdaters\u00b6\n\nMethods\n\nget_value\n\nincrement_value\n\nset_value\n\nSet the value of theDecimalNumberto a new number.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nThe font size of the tex mobject.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_get_formatter(**kwargs)[source]\u00b6\n\nConfiguration is based first off instance attributes,\nbut overwritten by any kew word argument.  Relevant\nkey words:\n- include_sign\n- group_with_commas\n- num_decimal_places\n- field_name (e.g. 0 or 0.real)Parameters:kwargs(Any)Return type:str\n\nConfiguration is based first off instance attributes,\nbut overwritten by any kew word argument.  Relevant\nkey words:\n- include_sign\n- group_with_commas\n- num_decimal_places\n- field_name (e.g. 0 or 0.real)\n\nParameters:\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nstr\n\nstr\n\n_original__init__(number=0,num_decimal_places=2,mob_class=<class'manim.mobject.text.tex_mobject.MathTex'>,include_sign=False,group_with_commas=True,digit_buff_per_font_unit=0.001,show_ellipsis=False,unit=None,unit_buff_per_font_unit=0,include_background_rectangle=False,edge_to_fix=array([-1.,0.,0.]),font_size=48,stroke_width=0,fill_opacity=1.0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:number(float)num_decimal_places(int)mob_class(type[SingleStringMathTex])include_sign(bool)group_with_commas(bool)digit_buff_per_font_unit(float)show_ellipsis(bool)unit(str|None)unit_buff_per_font_unit(float)include_background_rectangle(bool)edge_to_fix(Vector3DLike)font_size(float)stroke_width(float)fill_opacity(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nnumber(float)num_decimal_places(int)mob_class(type[SingleStringMathTex])include_sign(bool)group_with_commas(bool)digit_buff_per_font_unit(float)show_ellipsis(bool)unit(str|None)unit_buff_per_font_unit(float)include_background_rectangle(bool)edge_to_fix(Vector3DLike)font_size(float)stroke_width(float)fill_opacity(float)kwargs(Any)\n\nnumber(float)\n\nnumber(float)\n\nnum_decimal_places(int)\n\nnum_decimal_places(int)\n\nmob_class(type[SingleStringMathTex])\n\nmob_class(type[SingleStringMathTex])\n\ninclude_sign(bool)\n\ninclude_sign(bool)\n\ngroup_with_commas(bool)\n\ngroup_with_commas(bool)\n\ndigit_buff_per_font_unit(float)\n\ndigit_buff_per_font_unit(float)\n\nshow_ellipsis(bool)\n\nshow_ellipsis(bool)\n\nunit(str|None)\n\nunit(str|None)\n\nunit_buff_per_font_unit(float)\n\nunit_buff_per_font_unit(float)\n\ninclude_background_rectangle(bool)\n\ninclude_background_rectangle(bool)\n\nedge_to_fix(Vector3DLike)\n\nedge_to_fix(Vector3DLike)\n\nfont_size(float)\n\nfont_size(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\npropertyfont_size:float\u00b6\n\nThe font size of the tex mobject.\n\nThe font size of the tex mobject.\n\nset_value(number)[source]\u00b6\n\nSet the value of theDecimalNumberto a new number.Parameters:number(float) \u2013 The value that will overwrite the current number of theDecimalNumber.Return type:Self\n\nSet the value of theDecimalNumberto a new number.\n\nParameters:\n\nnumber(float) \u2013 The value that will overwrite the current number of theDecimalNumber.\n\nnumber(float) \u2013 The value that will overwrite the current number of theDecimalNumber.\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMovingSquareWithUpdaters(Scene):defconstruct(self):decimal=DecimalNumber(0,show_ellipsis=True,num_decimal_places=3,include_sign=True,unit=r\"\\text{M-Units}\",unit_buff_per_font_unit=0.003)square=Square().to_edge(UP)decimal.add_updater(lambdad:d.next_to(square,RIGHT))decimal.add_updater(lambdad:d.set_value(square.get_center()[1]))self.add(square,decimal)self.play(square.animate.to_edge(DOWN),rate_func=there_and_back,run_time=5,)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MovingSquareWithUpdaters(Scene):\n    def construct(self):\n        decimal = DecimalNumber(\n            0,\n            show_ellipsis=True,\n            num_decimal_places=3,\n            include_sign=True,\n            unit=r\"\\text{M-Units}\",\n            unit_buff_per_font_unit=0.003\n        )\n        square = Square().to_edge(UP)\n\n        decimal.add_updater(lambda d: d.next_to(square, RIGHT))\n        decimal.add_updater(lambda d: d.set_value(square.get_center()[1]))\n        self.add(square, decimal)\n        self.play(\n            square.animate.to_edge(DOWN),\n            rate_func=there_and_back,\n            run_time=5,\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: MovingSquareWithUpdaters\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "DecimalNumber",
+      "class_name": null,
+      "parameters": [
+        "number=0"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_get_formatter",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Configuration is based first off instance attributes,\nbut overwritten by any kew word argument.  Relevant\nkey words:\n- include_sign\n- group_with_commas\n- num_decimal_places\n- field_name (e.g. 0 or 0.real)"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "number=0"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "font_size",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The font size of the tex mobject."
+    },
+    {
+      "name": "set_value",
+      "class_name": null,
+      "parameters": [
+        "number"
+      ],
+      "return_type": null,
+      "description": "Set the value of theDecimalNumberto a new number."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

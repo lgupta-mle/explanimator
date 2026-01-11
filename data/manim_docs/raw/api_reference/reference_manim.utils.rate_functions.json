@@ -1,0 +1,482 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.rate_functions.html",
+  "title": "rate_functions\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "rate_functions\u00b6\n\nA selection of rate functions, i.e.,speed curvesfor animations.\nPlease find a standard list athttps://easings.net/. Here is a picture\nfor the non-standard ones\n\nExample: RateFuncExample\u00b6\n\nThere are primarily 3 kinds of standard easing functions:\n\nEase In - The animation has a smooth start.\n\nEase In - The animation has a smooth start.\n\nEase Out - The animation has a smooth end.\n\nEase Out - The animation has a smooth end.\n\nEase In Out - The animation has a smooth start as well as smooth end.\n\nEase In Out - The animation has a smooth start as well as smooth end.\n\nNote\n\nThe standard functions are not exported, so to use them you do something like this:\nrate_func=rate_functions.ease_in_sine\nOn the other hand, the non-standard functions, which are used more commonly, are exported and can be used directly.\n\nExample: RateFunctions1Example\u00b6\n\nClasses\n\nRateFunction\n\nFunctions\n\ndouble_smooth(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_back(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_bounce(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_circ(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_cubic(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_elastic(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_expo(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_back(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_bounce(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_circ(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_cubic(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_elastic(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_expo(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_quad(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_quart(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_quint(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_out_sine(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_quad(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_quart(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_quint(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_in_sine(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_back(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_bounce(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_circ(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_cubic(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_elastic(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_expo(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_quad(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_quart(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_quint(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nease_out_sine(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nexponential_decay(t,half_life=0.1)[source]\u00b6\n\nParameters:t(float)half_life(float)Return type:float\n\nParameters:\n\nt(float)half_life(float)\n\nt(float)\n\nt(float)\n\nhalf_life(float)\n\nhalf_life(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nlinear(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nlingering(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nnot_quite_there(func=<functionsmooth>,proportion=0.7)[source]\u00b6\n\nParameters:func(RateFunction)proportion(float)Return type:RateFunction\n\nParameters:\n\nfunc(RateFunction)proportion(float)\n\nfunc(RateFunction)\n\nfunc(RateFunction)\n\nproportion(float)\n\nproportion(float)\n\nReturn type:\n\nRateFunction\n\nRateFunction\n\nrunning_start(t,pull_factor=-0.5)[source]\u00b6\n\nParameters:t(float)pull_factor(float)Return type:float\n\nParameters:\n\nt(float)pull_factor(float)\n\nt(float)\n\nt(float)\n\npull_factor(float)\n\npull_factor(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nrush_from(t,inflection=10.0)[source]\u00b6\n\nParameters:t(float)inflection(float)Return type:float\n\nParameters:\n\nt(float)inflection(float)\n\nt(float)\n\nt(float)\n\ninflection(float)\n\ninflection(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nrush_into(t,inflection=10.0)[source]\u00b6\n\nParameters:t(float)inflection(float)Return type:float\n\nParameters:\n\nt(float)inflection(float)\n\nt(float)\n\nt(float)\n\ninflection(float)\n\ninflection(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nslow_into(t)[source]\u00b6\n\nParameters:t(float)Return type:float\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nsmooth(t,inflection=10.0)[source]\u00b6\n\nParameters:t(float)inflection(float)Return type:float\n\nParameters:\n\nt(float)inflection(float)\n\nt(float)\n\nt(float)\n\ninflection(float)\n\ninflection(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nsmoothererstep(t)[source]\u00b6\n\nImplementation of the 3rd order SmoothStep sigmoid function.\nThe 1st, 2nd and 3rd derivatives (speed, acceleration and jerk) are zero at the endpoints.https://en.wikipedia.org/wiki/SmoothstepParameters:t(float)Return type:float\n\nImplementation of the 3rd order SmoothStep sigmoid function.\nThe 1st, 2nd and 3rd derivatives (speed, acceleration and jerk) are zero at the endpoints.https://en.wikipedia.org/wiki/Smoothstep\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nsmootherstep(t)[source]\u00b6\n\nImplementation of the 2nd order SmoothStep sigmoid function.\nThe 1st and 2nd derivatives (speed and acceleration) are zero at the endpoints.https://en.wikipedia.org/wiki/SmoothstepParameters:t(float)Return type:float\n\nImplementation of the 2nd order SmoothStep sigmoid function.\nThe 1st and 2nd derivatives (speed and acceleration) are zero at the endpoints.https://en.wikipedia.org/wiki/Smoothstep\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nsmoothstep(t)[source]\u00b6\n\nImplementation of the 1st order SmoothStep sigmoid function.\nThe 1st derivative (speed) is zero at the endpoints.https://en.wikipedia.org/wiki/SmoothstepParameters:t(float)Return type:float\n\nImplementation of the 1st order SmoothStep sigmoid function.\nThe 1st derivative (speed) is zero at the endpoints.https://en.wikipedia.org/wiki/Smoothstep\n\nParameters:\n\nt(float)\n\nt(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nsquish_rate_func(func,a=0.4,b=0.6)[source]\u00b6\n\nParameters:func(RateFunction)a(float)b(float)Return type:RateFunction\n\nParameters:\n\nfunc(RateFunction)a(float)b(float)\n\nfunc(RateFunction)\n\nfunc(RateFunction)\n\na(float)\n\na(float)\n\nb(float)\n\nb(float)\n\nReturn type:\n\nRateFunction\n\nRateFunction\n\nthere_and_back(t,inflection=10.0)[source]\u00b6\n\nParameters:t(float)inflection(float)Return type:float\n\nParameters:\n\nt(float)inflection(float)\n\nt(float)\n\nt(float)\n\ninflection(float)\n\ninflection(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nthere_and_back_with_pause(t,pause_ratio=0.3333333333333333)[source]\u00b6\n\nParameters:t(float)pause_ratio(float)Return type:float\n\nParameters:\n\nt(float)pause_ratio(float)\n\nt(float)\n\nt(float)\n\npause_ratio(float)\n\npause_ratio(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nunit_interval(function)[source]\u00b6\n\nParameters:function(RateFunction)Return type:RateFunction\n\nParameters:\n\nfunction(RateFunction)\n\nfunction(RateFunction)\n\nReturn type:\n\nRateFunction\n\nRateFunction\n\nwiggle(t,wiggles=2)[source]\u00b6\n\nParameters:t(float)wiggles(float)Return type:float\n\nParameters:\n\nt(float)wiggles(float)\n\nt(float)\n\nt(float)\n\nwiggles(float)\n\nwiggles(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nzero(function)[source]\u00b6\n\nParameters:function(RateFunction)Return type:RateFunction\n\nParameters:\n\nfunction(RateFunction)\n\nfunction(RateFunction)\n\nReturn type:\n\nRateFunction\n\nRateFunction",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classRateFuncExample(Scene):defconstruct(self):x=VGroup()fork,vinrate_functions.__dict__.items():if\"function\"instr(v):if(notk.startswith(\"__\")andnotk.startswith(\"sqrt\")andnotk.startswith(\"bezier\")):try:rate_func=vplot=(ParametricFunction(lambdax:[x,rate_func(x),0],t_range=[0,1,.01],use_smoothing=False,color=YELLOW,).stretch_to_fit_width(1.5).stretch_to_fit_height(1))plot_bg=SurroundingRectangle(plot).set_color(WHITE)plot_title=(Text(rate_func.__name__,weight=BOLD).scale(0.5).next_to(plot_bg,UP,buff=0.1))x.add(VGroup(plot_bg,plot,plot_title))except:# because functions `not_quite_there`, `function squish_rate_func` are not working.passx.arrange_in_grid(cols=8)x.height=config.frame_heightx.width=config.frame_widthx.move_to(ORIGIN).scale(0.95)self.add(x)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RateFuncExample(Scene):\n    def construct(self):\n        x = VGroup()\n        for k, v in rate_functions.__dict__.items():\n            if \"function\" in str(v):\n                if (\n                    not k.startswith(\"__\")\n                    and not k.startswith(\"sqrt\")\n                    and not k.startswith(\"bezier\")\n                ):\n                    try:\n                        rate_func = v\n                        plot = (\n                            ParametricFunction(\n                                lambda x: [x, rate_func(x), 0],\n                                t_range=[0, 1, .01],\n                                use_smoothing=False,\n                                color=YELLOW,\n                            )\n                            .stretch_to_fit_width(1.5)\n                            .stretch_to_fit_height(1)\n                        )\n                        plot_bg = SurroundingRectangle(plot).set_color(WHITE)\n                        plot_title = (\n                            Text(rate_func.__name__, weight=BOLD)\n                            .scale(0.5)\n                            .next_to(plot_bg, UP, buff=0.1)\n                        )\n                        x.add(VGroup(plot_bg, plot, plot_title))\n                    except: # because functions `not_quite_there`, `function squish_rate_func` are not working.\n                        pass\n        x.arrange_in_grid(cols=8)\n        x.height = config.frame_height\n        x.width = config.frame_width\n        x.move_to(ORIGIN).scale(0.95)\n        self.add(x)",
+      "language": "python",
+      "context": "Example: RateFuncExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classRateFunctions1Example(Scene):defconstruct(self):line1=Line(3*LEFT,3*RIGHT).shift(UP).set_color(RED)line2=Line(3*LEFT,3*RIGHT).set_color(GREEN)line3=Line(3*LEFT,3*RIGHT).shift(DOWN).set_color(BLUE)dot1=Dot().move_to(line1.get_left())dot2=Dot().move_to(line2.get_left())dot3=Dot().move_to(line3.get_left())label1=Tex(\"Ease In\").next_to(line1,RIGHT)label2=Tex(\"Ease out\").next_to(line2,RIGHT)label3=Tex(\"Ease In Out\").next_to(line3,RIGHT)self.play(FadeIn(VGroup(line1,line2,line3)),FadeIn(VGroup(dot1,dot2,dot3)),Write(VGroup(label1,label2,label3)),)self.play(MoveAlongPath(dot1,line1,rate_func=rate_functions.ease_in_sine),MoveAlongPath(dot2,line2,rate_func=rate_functions.ease_out_sine),MoveAlongPath(dot3,line3,rate_func=rate_functions.ease_in_out_sine),run_time=7)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RateFunctions1Example(Scene):\n    def construct(self):\n        line1 = Line(3*LEFT, 3*RIGHT).shift(UP).set_color(RED)\n        line2 = Line(3*LEFT, 3*RIGHT).set_color(GREEN)\n        line3 = Line(3*LEFT, 3*RIGHT).shift(DOWN).set_color(BLUE)\n\n        dot1 = Dot().move_to(line1.get_left())\n        dot2 = Dot().move_to(line2.get_left())\n        dot3 = Dot().move_to(line3.get_left())\n\n        label1 = Tex(\"Ease In\").next_to(line1, RIGHT)\n        label2 = Tex(\"Ease out\").next_to(line2, RIGHT)\n        label3 = Tex(\"Ease In Out\").next_to(line3, RIGHT)\n\n        self.play(\n            FadeIn(VGroup(line1, line2, line3)),\n            FadeIn(VGroup(dot1, dot2, dot3)),\n            Write(VGroup(label1, label2, label3)),\n        )\n        self.play(\n            MoveAlongPath(dot1, line1, rate_func=rate_functions.ease_in_sine),\n            MoveAlongPath(dot2, line2, rate_func=rate_functions.ease_out_sine),\n            MoveAlongPath(dot3, line3, rate_func=rate_functions.ease_in_out_sine),\n            run_time=7\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: RateFunctions1Example\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "double_smooth",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_back",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_bounce",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_circ",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_cubic",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_elastic",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_expo",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_back",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_bounce",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_circ",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_cubic",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_elastic",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_expo",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_quad",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_quart",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_quint",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_out_sine",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_quad",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_quart",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_quint",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_in_sine",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_back",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_bounce",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_circ",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_cubic",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_elastic",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_expo",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_quad",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_quart",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_quint",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "ease_out_sine",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "exponential_decay",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "linear",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "lingering",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "not_quite_there",
+      "class_name": null,
+      "parameters": [
+        "func=<function smooth>"
+      ],
+      "return_type": null,
+      "description": "func(RateFunction)"
+    },
+    {
+      "name": "running_start",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "rush_from",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "rush_into",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "slow_into",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "smooth",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "smoothererstep",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "Implementation of the 3rd order SmoothStep sigmoid function.\nThe 1st, 2nd and 3rd derivatives (speed, acceleration and jerk) are zero at the endpoints.https://en.wikipedia.org/wiki/Smoothstep"
+    },
+    {
+      "name": "smootherstep",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "Implementation of the 2nd order SmoothStep sigmoid function.\nThe 1st and 2nd derivatives (speed and acceleration) are zero at the endpoints.https://en.wikipedia.org/wiki/Smoothstep"
+    },
+    {
+      "name": "smoothstep",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "Implementation of the 1st order SmoothStep sigmoid function.\nThe 1st derivative (speed) is zero at the endpoints.https://en.wikipedia.org/wiki/Smoothstep"
+    },
+    {
+      "name": "squish_rate_func",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "func(RateFunction)"
+    },
+    {
+      "name": "there_and_back",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "there_and_back_with_pause",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "unit_interval",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "function(RateFunction)"
+    },
+    {
+      "name": "wiggle",
+      "class_name": null,
+      "parameters": [
+        "t"
+      ],
+      "return_type": null,
+      "description": "t(float)"
+    },
+    {
+      "name": "zero",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "function(RateFunction)"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

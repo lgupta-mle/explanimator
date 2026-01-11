@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.Create.html",
+  "title": "Create\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Create\u00b6\n\nQualified name:manim.animation.creation.Create\n\nclassCreate(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ShowPartialIncrementally show a VMobject.Parameters:mobject(VMobject|OpenGLVMobject|OpenGLSurface) \u2013 The VMobject to animate.lag_ratio(float)introducer(bool)Raises:TypeError\u2013 Ifmobjectis not an instance ofVMobject.ExamplesExample: CreateScene\u00b6frommanimimport*classCreateScene(Scene):defconstruct(self):self.play(Create(Square()))class CreateScene(Scene):\n    def construct(self):\n        self.play(Create(Square()))See alsoShowPassingFlashMethodsAttributesrun_time_original__init__(mobject,lag_ratio=1.0,introducer=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject|OpenGLVMobject|OpenGLSurface)lag_ratio(float)introducer(bool)Return type:None\n\nBases:ShowPartial\n\nIncrementally show a VMobject.\n\nParameters:\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface) \u2013 The VMobject to animate.lag_ratio(float)introducer(bool)\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface) \u2013 The VMobject to animate.\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface) \u2013 The VMobject to animate.\n\nlag_ratio(float)\n\nlag_ratio(float)\n\nintroducer(bool)\n\nintroducer(bool)\n\nRaises:\n\nTypeError\u2013 Ifmobjectis not an instance ofVMobject.\n\nTypeError\u2013 Ifmobjectis not an instance ofVMobject.\n\nExamples\n\nExample: CreateScene\u00b6\n\nSee also\n\nShowPassingFlash\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,lag_ratio=1.0,introducer=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject|OpenGLVMobject|OpenGLSurface)lag_ratio(float)introducer(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface)lag_ratio(float)introducer(bool)\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface)\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface)\n\nlag_ratio(float)\n\nlag_ratio(float)\n\nintroducer(bool)\n\nintroducer(bool)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCreateScene(Scene):defconstruct(self):self.play(Create(Square()))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CreateScene(Scene):\n    def construct(self):\n        self.play(Create(Square()))",
+      "language": "python",
+      "context": "Example: CreateScene\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Create",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ShowPartial"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "Flash",
+    "VMobject",
+    "ShowPassingFlash",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing"
+  ]
+}

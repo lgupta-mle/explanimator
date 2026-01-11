@@ -13,6 +13,7 @@ import os
 import json
 import glob
 import re
+from tqdm import tqdm
 from research_viz.utils.llm_utils import create_llm_response
 from research_viz.schemas.animation_schemas import (
     AnimationRequirements,
@@ -227,7 +228,7 @@ def create_animation_requirements(
     )
 
     segment_plans = []
-    for segment_data in explanation_data["video_segments"]:
+    for segment_data in tqdm(explanation_data["video_segments"], desc="Generating segment plans", total=len(explanation_data["video_segments"])):
         segment = VideoSegment.model_validate(segment_data)
 
         matched_kg = match_kgs_to_segment(segment, low_level_kgs)

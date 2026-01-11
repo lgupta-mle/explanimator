@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.image_mobject.ImageMobjectFromCamera.html",
+  "title": "ImageMobjectFromCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ImageMobjectFromCamera\u00b6\n\nQualified name:manim.mobject.types.image\\_mobject.ImageMobjectFromCamera\n\nclassImageMobjectFromCamera(camera,default_display_frame_config=None,**kwargs)[source]\u00b6\n\nBases:AbstractImageMobjectMethodsadd_display_frameget_pixel_arrayinterpolate_colorAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:camera(MovingCamera)default_display_frame_config(dict[str,Any]|None)kwargs(Any)_original__init__(camera,default_display_frame_config=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:camera(MovingCamera)default_display_frame_config(dict[str,Any]|None)kwargs(Any)Return type:None\n\nBases:AbstractImageMobject\n\nMethods\n\nadd_display_frame\n\nget_pixel_array\n\ninterpolate_color\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ncamera(MovingCamera)default_display_frame_config(dict[str,Any]|None)kwargs(Any)\n\ncamera(MovingCamera)\n\ncamera(MovingCamera)\n\ndefault_display_frame_config(dict[str,Any]|None)\n\ndefault_display_frame_config(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(camera,default_display_frame_config=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:camera(MovingCamera)default_display_frame_config(dict[str,Any]|None)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ncamera(MovingCamera)default_display_frame_config(dict[str,Any]|None)kwargs(Any)\n\ncamera(MovingCamera)\n\ncamera(MovingCamera)\n\ndefault_display_frame_config(dict[str,Any]|None)\n\ndefault_display_frame_config(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ImageMobjectFromCamera",
+      "class_name": null,
+      "parameters": [
+        "camera"
+      ],
+      "return_type": null,
+      "description": "Bases:AbstractImageMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "camera"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "MovingCamera",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

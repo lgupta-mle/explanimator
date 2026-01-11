@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/tutorials/index.html",
+  "title": "Tutorials\u00b6",
+  "section": "tutorials",
+  "breadcrumb": [],
+  "content": "Tutorials\u00b6\n\nTable of Contents\n\nQuickstartOverviewStarting a new projectAnimating a circleTransforming a square into a circlePositioningMobjectsUsing.animatesyntax to animate methodsTransformvsReplacementTransform\n\nOverview\n\nStarting a new project\n\nAnimating a circle\n\nTransforming a square into a circle\n\nPositioningMobjects\n\nUsing.animatesyntax to animate methods\n\nTransformvsReplacementTransform\n\nManim\u2019s Output SettingsManim output foldersSectionsSome command line flags\n\nManim output folders\n\nSections\n\nSome command line flags\n\nManim\u2019s building blocksMobjectsAnimationsScenes\n\nMobjects\n\nAnimations\n\nScenes",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "ReplacementTransform",
+    "Transform",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

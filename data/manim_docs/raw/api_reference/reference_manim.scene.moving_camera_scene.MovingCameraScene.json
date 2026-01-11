@@ -1,0 +1,38 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.moving_camera_scene.MovingCameraScene.html",
+  "title": "MovingCameraScene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MovingCameraScene\u00b6\n\nQualified name:manim.scene.moving\\_camera\\_scene.MovingCameraScene\n\nclassMovingCameraScene(camera_class=<class'manim.camera.moving_camera.MovingCamera'>,**kwargs)[source]\u00b6\n\nBases:SceneThis is a Scene, with special configurations and properties that\nmake it suitable for cases where the camera must be moved around.Note: Examples are included in the moving_camera_scene module\ndocumentation, see below in the \u2018see also\u2019 section.See alsomoving_camera_sceneMovingCameraMethodsget_moving_mobjectsThis method returns a list of all of the Mobjects in the Scene that are moving, that are also in the animations passed.AttributescameratimeThe time since the start of the scene.Parameters:camera_class(type[Camera])kwargs(Any)get_moving_mobjects(*animations)[source]\u00b6This method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed.Parameters:*animations(Animation) \u2013 The Animations whose mobjects will be checked.Return type:list[Mobject]\n\nBases:Scene\n\nThis is a Scene, with special configurations and properties that\nmake it suitable for cases where the camera must be moved around.\n\nNote: Examples are included in the moving_camera_scene module\ndocumentation, see below in the \u2018see also\u2019 section.\n\nSee also\n\nmoving_camera_sceneMovingCamera\n\nMethods\n\nget_moving_mobjects\n\nThis method returns a list of all of the Mobjects in the Scene that are moving, that are also in the animations passed.\n\nAttributes\n\ncamera\n\ntime\n\nThe time since the start of the scene.\n\nParameters:\n\ncamera_class(type[Camera])kwargs(Any)\n\ncamera_class(type[Camera])\n\ncamera_class(type[Camera])\n\nkwargs(Any)\n\nkwargs(Any)\n\nget_moving_mobjects(*animations)[source]\u00b6\n\nThis method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed.Parameters:*animations(Animation) \u2013 The Animations whose mobjects will be checked.Return type:list[Mobject]\n\nThis method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed.\n\nParameters:\n\n*animations(Animation) \u2013 The Animations whose mobjects will be checked.\n\n*animations(Animation) \u2013 The Animations whose mobjects will be checked.\n\nReturn type:\n\nlist[Mobject]\n\nlist[Mobject]",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "MovingCameraScene",
+      "class_name": null,
+      "parameters": [
+        "camera_class=<class 'manim.camera.moving_camera.MovingCamera'>"
+      ],
+      "return_type": null,
+      "description": "Bases:Scene"
+    },
+    {
+      "name": "get_moving_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*animations"
+      ],
+      "return_type": null,
+      "description": "This method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "MovingCamera",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "3d"
+  ]
+}

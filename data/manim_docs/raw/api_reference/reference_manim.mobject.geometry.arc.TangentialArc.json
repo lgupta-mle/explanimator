@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.TangentialArc.html",
+  "title": "TangentialArc\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TangentialArc\u00b6\n\nQualified name:manim.mobject.geometry.arc.TangentialArc\n\nclassTangentialArc(line1,line2,radius,corner=(1,1),**kwargs)[source]\u00b6\n\nBases:ArcBetweenPointsConstruct an arc that is tangent to two intersecting lines.\nYou can choose any of the 4 possible corner arcs via thecornertuple.\ncorner = (s1, s2) where each si is \u00b11 to control direction along each line.Exampleclass TangentialArcExample(Scene):def construct(self):line1 = DashedLine(start=3 * LEFT, end=3 * RIGHT)\nline1.rotate(angle=31 * DEGREES, about_point=ORIGIN)\nline2 = DashedLine(start=3 * UP, end=3 * DOWN)\nline2.rotate(angle=12 * DEGREES, about_point=ORIGIN)arc = TangentialArc(line1, line2, radius=2.25, corner=(1, 1), color=TEAL)\nself.add(arc, line1, line2)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:line1(Line)line2(Line)radius(float)corner(Any)kwargs(Any)_original__init__(line1,line2,radius,corner=(1,1),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:line1(Line)line2(Line)radius(float)corner(Any)kwargs(Any)\n\nBases:ArcBetweenPoints\n\nConstruct an arc that is tangent to two intersecting lines.\nYou can choose any of the 4 possible corner arcs via thecornertuple.\ncorner = (s1, s2) where each si is \u00b11 to control direction along each line.\n\nExample\n\nclass TangentialArcExample(Scene):\n\ndef construct(self):line1 = DashedLine(start=3 * LEFT, end=3 * RIGHT)\nline1.rotate(angle=31 * DEGREES, about_point=ORIGIN)\nline2 = DashedLine(start=3 * UP, end=3 * DOWN)\nline2.rotate(angle=12 * DEGREES, about_point=ORIGIN)arc = TangentialArc(line1, line2, radius=2.25, corner=(1, 1), color=TEAL)\nself.add(arc, line1, line2)\n\ndef construct(self):\n\nline1 = DashedLine(start=3 * LEFT, end=3 * RIGHT)\nline1.rotate(angle=31 * DEGREES, about_point=ORIGIN)\nline2 = DashedLine(start=3 * UP, end=3 * DOWN)\nline2.rotate(angle=12 * DEGREES, about_point=ORIGIN)arc = TangentialArc(line1, line2, radius=2.25, corner=(1, 1), color=TEAL)\nself.add(arc, line1, line2)\n\nline1 = DashedLine(start=3 * LEFT, end=3 * RIGHT)\nline1.rotate(angle=31 * DEGREES, about_point=ORIGIN)\nline2 = DashedLine(start=3 * UP, end=3 * DOWN)\nline2.rotate(angle=12 * DEGREES, about_point=ORIGIN)\n\narc = TangentialArc(line1, line2, radius=2.25, corner=(1, 1), color=TEAL)\nself.add(arc, line1, line2)\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nline1(Line)line2(Line)radius(float)corner(Any)kwargs(Any)\n\nline1(Line)\n\nline1(Line)\n\nline2(Line)\n\nline2(Line)\n\nradius(float)\n\nradius(float)\n\ncorner(Any)\n\ncorner(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(line1,line2,radius,corner=(1,1),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:line1(Line)line2(Line)radius(float)corner(Any)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nline1(Line)line2(Line)radius(float)corner(Any)kwargs(Any)\n\nline1(Line)\n\nline1(Line)\n\nline2(Line)\n\nline2(Line)\n\nradius(float)\n\nradius(float)\n\ncorner(Any)\n\ncorner(Any)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "TangentialArc",
+      "class_name": null,
+      "parameters": [
+        "line1"
+      ],
+      "return_type": null,
+      "description": "Bases:ArcBetweenPoints"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "line1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "animation"
+  ]
+}

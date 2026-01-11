@@ -1,0 +1,432 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene.Scene.html",
+  "title": "Scene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Scene\u00b6\n\nQualified name:manim.scene.scene.Scene\n\nclassScene(renderer=None,camera_class=<class'manim.camera.camera.Camera'>,always_update_mobjects=False,random_seed=None,skip_animations=False)[source]\u00b6\n\nBases:objectA Scene is the canvas of your animation.The primary role ofSceneis to provide the user with tools to manage\nmobjects and animations.  Generally speaking, a manim script consists of a class\nthat derives fromScenewhoseScene.construct()method is overridden\nby the user\u2019s code.Mobjects are displayed on screen by callingScene.add()and removed from\nscreen by callingScene.remove().  All mobjects currently on screen are kept\ninScene.mobjects.  Animations are played by callingScene.play().ASceneis rendered internally by callingScene.render().  This in\nturn callsScene.setup(),Scene.construct(), andScene.tear_down(), in that order.It is not recommended to override the__init__method in user Scenes.  For code\nthat should be ran before a Scene is rendered, useScene.setup()instead.ExamplesOverride theScene.construct()method with your code.classMyScene(Scene):defconstruct(self):self.play(Write(Text(\"Hello World!\")))MethodsaddMobjects will be displayed, from background to foreground in the order with which they are added.add_foreground_mobjectAdds a single mobject to the foreground, and internally to the list foreground_mobjects, and mobjects.add_foreground_mobjectsAdds mobjects to the foreground, and internally to the list foreground_mobjects, and mobjects.add_mobjects_from_animationsadd_soundThis method is used to add a sound to the animation.add_subcaptionAdds an entry in the corresponding subcaption file at the current time stamp.add_updaterAdd an update function to the scene.begin_animationsStart the animations of the scene.bring_to_backRemoves the mobject from the scene and adds them to the back of the scene.bring_to_frontAdds the passed mobjects to the scene again, pushing them to he front of the scene.check_interactive_embed_is_validclearRemoves all mobjects present in self.mobjects and self.foreground_mobjects from the scene.compile_animation_dataGiven a list of animations, compile the corresponding static and moving mobjects, and gather the animation durations.compile_animationsCreates _MethodAnimations from any _AnimationBuilders and updates animation kwargs with kwargs passed to play().constructAdd content to the Scene.embedget_attrsGets attributes of a scene given the attribute's identifier/name.get_mobject_family_membersReturns list of family-members of all mobjects in scene.get_moving_and_static_mobjectsget_moving_mobjectsGets all moving mobjects in the passed animation(s).get_restructured_mobject_listGiven a list of mobjects and a list of mobjects to be removed, this filters out the removable mobjects from the list of mobjects.get_run_timeGets the total run time for a list of animations.get_time_progressionYou will hardly use this when making your own animations.get_top_level_mobjectsReturns all mobjects which are not submobjects.interactinteractive_embedLike embed(), but allows for screen interaction.is_current_animation_frozen_frameReturns whether the current animation produces a static frame (generally a Wait).mouse_drag_orbit_controlsmouse_scroll_orbit_controlsnext_sectionCreate separation here; the last section gets finished and a new one gets created.on_key_presson_key_releaseon_mouse_dragon_mouse_motionon_mouse_presson_mouse_scrollpausePauses the scene (i.e., displays a frozen frame).playPlays an animation in this scene.play_internalThis method is used to prep the animations for rendering, apply the arguments and parameters required to them, render them, and write them to the video file.removeRemoves mobjects in the passed list of mobjects from the scene and the foreground, by removing them from \"mobjects\" and \"foreground_mobjects\"remove_foreground_mobjectRemoves a single mobject from the foreground, and internally from the list foreground_mobjects.remove_foreground_mobjectsRemoves mobjects from the foreground, and internally from the list foreground_mobjects.remove_updaterRemove an update function from the scene.renderRenders this Scene.replaceReplace one mobject in the scene with another, preserving draw order.restructure_mobjectstl:wrset_key_functionsetupThis is meant to be implemented by any scenes which are commonly subclassed, and have some common setup involved before the construct method is called.should_update_mobjectsReturns True if the mobjects of this scene should be updated.tear_downThis is meant to be implemented by any scenes which are commonly subclassed, and have some common method to be invoked before the scene ends.update_meshesupdate_mobjectsBegins updating all mobjects in the Scene.update_selfRun all scene updater functions.update_to_timevalidate_run_timewaitPlays a \"no operation\" animation.wait_untilWait until a condition is satisfied, up to a given maximum duration.AttributescameratimeThe time since the start of the scene.Parameters:renderer(CairoRenderer|OpenGLRenderer|None)camera_class(type[Camera])always_update_mobjects(bool)random_seed(int|None)skip_animations(bool)_get_animation_time_progression(animations,duration)[source]\u00b6You will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use.Usesget_time_progression()to obtain a\nCommandLine ProgressBar whosefill_timeis\ndependent on the qualities of the passed Animation,Parameters:animations(list[Animation]) \u2013 The list of animations to get\nthe time progression for.duration(float) \u2013 duration of wait timeReturns:The CommandLine Progress Bar.Return type:time_progressionadd(*mobjects)[source]\u00b6Mobjects will be displayed, from background to\nforeground in the order with which they are added.Parameters:*mobjects(Mobject|OpenGLMobject) \u2013 Mobjects to add.Returns:The same scene after adding the Mobjects in.Return type:Sceneadd_foreground_mobject(mobject)[source]\u00b6Adds a single mobject to the foreground, and internally to the list\nforeground_mobjects, and mobjects.Parameters:mobject(Mobject) \u2013 The Mobject to add to the foreground.Returns:The Scene, with the foreground mobject added.Return type:Sceneadd_foreground_mobjects(*mobjects)[source]\u00b6Adds mobjects to the foreground, and internally to the list\nforeground_mobjects, and mobjects.Parameters:*mobjects(Mobject) \u2013 The Mobjects to add to the foreground.Returns:The Scene, with the foreground mobjects added.Return type:Sceneadd_sound(sound_file,time_offset=0,gain=None,**kwargs)[source]\u00b6This method is used to add a sound to the animation.Parameters:sound_file(str) \u2013 The path to the sound file.time_offset(float) \u2013 The offset in the sound file after which\nthe sound can be played.gain(float|None) \u2013 Amplification of the sound.kwargs(Any)Return type:NoneExamplesExample: SoundExample\u00b6frommanimimport*classSoundExample(Scene):# Source of sound under Creative Commons 0 License. https://freesound.org/people/Druminfected/sounds/250551/defconstruct(self):dot=Dot().set_color(GREEN)self.add_sound(\"click.wav\")self.add(dot)self.wait()self.add_sound(\"click.wav\")dot.set_color(BLUE)self.wait()self.add_sound(\"click.wav\")dot.set_color(RED)self.wait()class SoundExample(Scene):\n    # Source of sound under Creative Commons 0 License. https://freesound.org/people/Druminfected/sounds/250551/\n    def construct(self):\n        dot = Dot().set_color(GREEN)\n        self.add_sound(\"click.wav\")\n        self.add(dot)\n        self.wait()\n        self.add_sound(\"click.wav\")\n        dot.set_color(BLUE)\n        self.wait()\n        self.add_sound(\"click.wav\")\n        dot.set_color(RED)\n        self.wait()Download the resource for the previous examplehere.add_subcaption(content,duration=1,offset=0)[source]\u00b6Adds an entry in the corresponding subcaption file\nat the current time stamp.The current time stamp is obtained fromScene.time.Parameters:content(str) \u2013 The subcaption content.duration(float) \u2013 The duration (in seconds) for which the subcaption is shown.offset(float) \u2013 This offset (in seconds) is added to the starting time stamp\nof the subcaption.Return type:NoneExamplesThis example illustrates both possibilities for adding\nsubcaptions to Manimations:classSubcaptionExample(Scene):defconstruct(self):square=Square()circle=Circle()# first option: via the add_subcaption methodself.add_subcaption(\"Hello square!\",duration=1)self.play(Create(square))# second option: within the call to Scene.playself.play(Transform(square,circle),subcaption=\"The square transforms.\")add_updater(func)[source]\u00b6Add an update function to the scene.The scene updater functions are run every frame,\nand they are the last type of updaters to run.WarningWhen using the Cairo renderer, scene updaters that\nmodify mobjects are not detected in the same way\nthat mobject updaters are. To be more concrete,\na mobject only modified via a scene updater will\nnot necessarily be added to the list ofmoving\nmobjectsand thus might not be updated every frame.TL;DR: Use mobject updaters to update mobjects.Parameters:func(Callable[[float],None]) \u2013 The updater function. It takes a float, which is the\ntime difference since the last update (usually equal\nto the frame rate).Return type:NoneSee alsoScene.remove_updater(),Scene.update_self()begin_animations()[source]\u00b6Start the animations of the scene.Return type:Nonebring_to_back(*mobjects)[source]\u00b6Removes the mobject from the scene and\nadds them to the back of the scene.Parameters:*mobjects(Mobject) \u2013 The mobject(s) to push to the back of the scene.Returns:The Scene, with the mobjects pushed to the back\nof the scene.Return type:Scenebring_to_front(*mobjects)[source]\u00b6Adds the passed mobjects to the scene again,\npushing them to he front of the scene.Parameters:*mobjects(Mobject) \u2013 The mobject(s) to bring to the front of the scene.Returns:The Scene, with the mobjects brought to the front\nof the scene.Return type:Sceneclear()[source]\u00b6Removes all mobjects present in self.mobjects\nand self.foreground_mobjects from the scene.Returns:The Scene, with all of its mobjects in\nself.mobjects and self.foreground_mobjects\nremoved.Return type:Scenecompile_animation_data(*animations,**play_kwargs)[source]\u00b6Given a list of animations, compile the corresponding\nstatic and moving mobjects, and gather the animation durations.This also begins the animations.Parameters:animations(Animation|Mobject|_AnimationBuilder) \u2013 Animation or mobject with mobject method and paramsplay_kwargs(Any) \u2013 Named parameters affecting what was passed inanimations,\ne.g.run_time,lag_ratioand so on.Returns:None if there is nothing to play, or self otherwise.Return type:self, Nonecompile_animations(*args,**kwargs)[source]\u00b6Creates _MethodAnimations from any _AnimationBuilders and updates animation\nkwargs with kwargs passed to play().Parameters:*args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.**kwargs(Any) \u2013 Configuration for the call to play().Returns:Animations to be played.Return type:Tuple[Animation]construct()[source]\u00b6Add content to the Scene.From withinScene.construct(), display mobjects on screen by callingScene.add()and remove them from screen by callingScene.remove().\nAll mobjects currently on screen are kept inScene.mobjects.  Play\nanimations by callingScene.play().NotesInitialization code should go inScene.setup().  Termination code should\ngo inScene.tear_down().ExamplesA typical manim script includes a class derived fromScenewith an\noverriddenScene.construct()method:classMyScene(Scene):defconstruct(self):self.play(Write(Text(\"Hello World!\")))See alsoScene.setup(),Scene.render(),Scene.tear_down()Return type:Noneget_attrs(*keys)[source]\u00b6Gets attributes of a scene given the attribute\u2019s identifier/name.Parameters:*keys(str) \u2013 Name(s) of the argument(s) to return the attribute of.Returns:List of attributes of the passed identifiers.Return type:listget_mobject_family_members()[source]\u00b6Returns list of family-members of all mobjects in scene.\nIf a Circle() and a VGroup(Rectangle(),Triangle()) were added,\nit returns not only the Circle(), Rectangle() and Triangle(), but\nalso the VGroup() object.Returns:List of mobject family members.Return type:listget_moving_mobjects(*animations)[source]\u00b6Gets all moving mobjects in the passed animation(s).Parameters:*animations(Animation) \u2013 The animations to check for moving mobjects.Returns:The list of mobjects that could be moving in\nthe Animation(s)Return type:listget_restructured_mobject_list(mobjects,to_remove)[source]\u00b6Given a list of mobjects and a list of mobjects to be removed, this\nfilters out the removable mobjects from the list of mobjects.Parameters:mobjects(Iterable[Mobject]) \u2013 The Mobjects to check.to_remove(Iterable[Mobject]) \u2013 The list of mobjects to remove.Returns:The list of mobjects with the mobjects to remove removed.Return type:listget_run_time(animations)[source]\u00b6Gets the total run time for a list of animations.Parameters:animations(list[Animation]) \u2013 A list of the animations whose totalrun_timeis to be calculated.Returns:The totalrun_timeof all of the animations in the list.Return type:floatget_time_progression(run_time,description,n_iterations=None,override_skip_animations=False)[source]\u00b6You will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use.Returns a CommandLine ProgressBar whosefill_timeis dependent on therun_timeof an animation,\nthe iterations to perform in that animation\nand a bool saying whether or not to consider\nthe skipped animations.Parameters:run_time(float) \u2013 Therun_timeof the animation.n_iterations(int|None) \u2013 The number of iterations in the animation.override_skip_animations(bool) \u2013 Whether or not to show skipped animations in the progress bar.description(str)Returns:The CommandLine Progress Bar.Return type:time_progressionget_top_level_mobjects()[source]\u00b6Returns all mobjects which are not submobjects.Returns:List of top level mobjects.Return type:listinteractive_embed()[source]\u00b6Like embed(), but allows for screen interaction.Return type:Noneis_current_animation_frozen_frame()[source]\u00b6Returns whether the current animation produces a static frame (generally a Wait).Return type:boolnext_section(name='unnamed',section_type=DefaultSectionType.NORMAL,skip_animations=False)[source]\u00b6Create separation here; the last section gets finished and a new one gets created.skip_animationsskips the rendering of all animations in this section.\nRefer tothe documentationon how to use sections.Parameters:name(str)section_type(str)skip_animations(bool)Return type:Nonepause(duration=1.0)[source]\u00b6Pauses the scene (i.e., displays a frozen frame).This is an alias forwait()withfrozen_frameset toTrue.Parameters:duration(float) \u2013 The duration of the pause.Return type:NoneSee alsowait(),Waitplay(*args,subcaption=None,subcaption_duration=None,subcaption_offset=0,**kwargs)[source]\u00b6Plays an animation in this scene.Parameters:args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.subcaption(str|None) \u2013 The content of the external subcaption that should\nbe added during the animation.subcaption_duration(float|None) \u2013 The duration for which the specified subcaption is\nadded. IfNone(the default), the run time of the\nanimation is taken.subcaption_offset(float) \u2013 An offset (in seconds) for the start time of the\nadded subcaption.kwargs(Any) \u2013 All other keywords are passed to the renderer.Return type:Noneplay_internal(skip_rendering=False)[source]\u00b6This method is used to prep the animations for rendering,\napply the arguments and parameters required to them,\nrender them, and write them to the video file.Parameters:skip_rendering(bool) \u2013 Whether the rendering should be skipped, by default FalseReturn type:Noneremove(*mobjects)[source]\u00b6Removes mobjects in the passed list of mobjects\nfrom the scene and the foreground, by removing them\nfrom \u201cmobjects\u201d and \u201cforeground_mobjects\u201dParameters:*mobjects(Mobject) \u2013 The mobjects to remove.Return type:Selfremove_foreground_mobject(mobject)[source]\u00b6Removes a single mobject from the foreground, and internally from the list\nforeground_mobjects.Parameters:mobject(Mobject) \u2013 The mobject to remove from the foreground.Returns:The Scene, with the foreground mobject removed.Return type:Sceneremove_foreground_mobjects(*to_remove)[source]\u00b6Removes mobjects from the foreground, and internally from the list\nforeground_mobjects.Parameters:*to_remove(Mobject) \u2013 The mobject(s) to remove from the foreground.Returns:The Scene, with the foreground mobjects removed.Return type:Sceneremove_updater(func)[source]\u00b6Remove an update function from the scene.Parameters:func(Callable[[float],None]) \u2013 The updater function to be removed.Return type:NoneSee alsoScene.add_updater(),Scene.update_self()render(preview=False)[source]\u00b6Renders this Scene.Parameters:preview(bool) \u2013 If true, opens scene in a file viewer.Return type:boolreplace(old_mobject,new_mobject)[source]\u00b6Replace one mobject in the scene with another, preserving draw order.Ifold_mobjectis a submobject of some other Mobject (e.g. aGroup), the new_mobject will replace it inside the group,\nwithout otherwise changing the parent mobject.Parameters:old_mobject(Mobject) \u2013 The mobject to be replaced. Must be present in the scene.new_mobject(Mobject) \u2013 A mobject which must not already be in the scene.Return type:Nonerestructure_mobjects(to_remove,mobject_list_name='mobjects',extract_families=True)[source]\u00b6tl:wrIf your scene has a Group(), and you removed a mobject from the Group,\nthis dissolves the group and puts the rest of the mobjects directly\nin self.mobjects or self.foreground_mobjects.In cases where the scene contains a group, e.g. Group(m1, m2, m3), but one\nof its submobjects is removed, e.g. scene.remove(m1), the list of mobjects\nwill be edited to contain other submobjects, but not m1, e.g. it will now\ninsert m2 and m3 to where the group once was.Parameters:to_remove(Sequence[Mobject]) \u2013 The Mobject to remove.mobject_list_name(str) \u2013 The list of mobjects (\u201cmobjects\u201d, \u201cforeground_mobjects\u201d etc) to remove from.extract_families(bool) \u2013 Whether the mobject\u2019s families should be recursively extracted.Returns:The Scene mobject with restructured Mobjects.Return type:Scenesetup()[source]\u00b6This is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called.Return type:Noneshould_update_mobjects()[source]\u00b6Returns True if the mobjects of this scene should be updated.In particular, this checks whetherthealways_update_mobjectsattribute ofSceneis set toTrue,theSceneitself has time-based updaters attached,any mobject in thisScenehas time-based updaters attached.This is only called when a single Wait animation is played.Return type:booltear_down()[source]\u00b6This is meant to be implemented by any scenes which\nare commonly subclassed, and have some common method\nto be invoked before the scene ends.Return type:Nonepropertytime:float\u00b6The time since the start of the scene.update_mobjects(dt)[source]\u00b6Begins updating all mobjects in the Scene.Parameters:dt(float) \u2013 Change in time between updates. Defaults (mostly) to 1/frames_per_secondReturn type:Noneupdate_self(dt)[source]\u00b6Run all scene updater functions.Among all types of update functions (mobject updaters, mesh updaters,\nscene updaters), scene update functions are called last.Parameters:dt(float) \u2013 Scene time since last update.Return type:NoneSee alsoScene.add_updater(),Scene.remove_updater()wait(duration=1.0,stop_condition=None,frozen_frame=None)[source]\u00b6Plays a \u201cno operation\u201d animation.Parameters:duration(float) \u2013 The run time of the animation.stop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that is evaluated every time\na frame is rendered. The animation only stops when the return value\nof the function is truthy, or when the time specified indurationpasses.frozen_frame(bool|None) \u2013 If True, updater functions are not evaluated, and the animation outputs\na frozen frame. If False, updater functions are called and frames\nare rendered as usual. If None (the default), the scene tries to\ndetermine whether or not the frame is frozen on its own.Return type:NoneSee alsoWait,should_mobjects_update()wait_until(stop_condition,max_time=60)[source]\u00b6Wait until a condition is satisfied, up to a given maximum duration.Parameters:stop_condition(Callable[[],bool]) \u2013 A function with no arguments that determines whether or not the\nscene should keep waiting.max_time(float) \u2013 The maximum wait time in seconds.Return type:None\n\nBases:object\n\nA Scene is the canvas of your animation.\n\nThe primary role ofSceneis to provide the user with tools to manage\nmobjects and animations.  Generally speaking, a manim script consists of a class\nthat derives fromScenewhoseScene.construct()method is overridden\nby the user\u2019s code.\n\nMobjects are displayed on screen by callingScene.add()and removed from\nscreen by callingScene.remove().  All mobjects currently on screen are kept\ninScene.mobjects.  Animations are played by callingScene.play().\n\nASceneis rendered internally by callingScene.render().  This in\nturn callsScene.setup(),Scene.construct(), andScene.tear_down(), in that order.\n\nIt is not recommended to override the__init__method in user Scenes.  For code\nthat should be ran before a Scene is rendered, useScene.setup()instead.\n\nExamples\n\nOverride theScene.construct()method with your code.\n\nMethods\n\nadd\n\nMobjects will be displayed, from background to foreground in the order with which they are added.\n\nadd_foreground_mobject\n\nAdds a single mobject to the foreground, and internally to the list foreground_mobjects, and mobjects.\n\nadd_foreground_mobjects\n\nAdds mobjects to the foreground, and internally to the list foreground_mobjects, and mobjects.\n\nadd_mobjects_from_animations\n\nadd_sound\n\nThis method is used to add a sound to the animation.\n\nadd_subcaption\n\nAdds an entry in the corresponding subcaption file at the current time stamp.\n\nadd_updater\n\nAdd an update function to the scene.\n\nbegin_animations\n\nStart the animations of the scene.\n\nbring_to_back\n\nRemoves the mobject from the scene and adds them to the back of the scene.\n\nbring_to_front\n\nAdds the passed mobjects to the scene again, pushing them to he front of the scene.\n\ncheck_interactive_embed_is_valid\n\nclear\n\nRemoves all mobjects present in self.mobjects and self.foreground_mobjects from the scene.\n\ncompile_animation_data\n\nGiven a list of animations, compile the corresponding static and moving mobjects, and gather the animation durations.\n\ncompile_animations\n\nCreates _MethodAnimations from any _AnimationBuilders and updates animation kwargs with kwargs passed to play().\n\nconstruct\n\nAdd content to the Scene.\n\nembed\n\nget_attrs\n\nGets attributes of a scene given the attribute's identifier/name.\n\nget_mobject_family_members\n\nReturns list of family-members of all mobjects in scene.\n\nget_moving_and_static_mobjects\n\nget_moving_mobjects\n\nGets all moving mobjects in the passed animation(s).\n\nget_restructured_mobject_list\n\nGiven a list of mobjects and a list of mobjects to be removed, this filters out the removable mobjects from the list of mobjects.\n\nget_run_time\n\nGets the total run time for a list of animations.\n\nget_time_progression\n\nYou will hardly use this when making your own animations.\n\nget_top_level_mobjects\n\nReturns all mobjects which are not submobjects.\n\ninteract\n\ninteractive_embed\n\nLike embed(), but allows for screen interaction.\n\nis_current_animation_frozen_frame\n\nReturns whether the current animation produces a static frame (generally a Wait).\n\nmouse_drag_orbit_controls\n\nmouse_scroll_orbit_controls\n\nnext_section\n\nCreate separation here; the last section gets finished and a new one gets created.\n\non_key_press\n\non_key_release\n\non_mouse_drag\n\non_mouse_motion\n\non_mouse_press\n\non_mouse_scroll\n\npause\n\nPauses the scene (i.e., displays a frozen frame).\n\nplay\n\nPlays an animation in this scene.\n\nplay_internal\n\nThis method is used to prep the animations for rendering, apply the arguments and parameters required to them, render them, and write them to the video file.\n\nremove\n\nRemoves mobjects in the passed list of mobjects from the scene and the foreground, by removing them from \"mobjects\" and \"foreground_mobjects\"\n\nremove_foreground_mobject\n\nRemoves a single mobject from the foreground, and internally from the list foreground_mobjects.\n\nremove_foreground_mobjects\n\nRemoves mobjects from the foreground, and internally from the list foreground_mobjects.\n\nremove_updater\n\nRemove an update function from the scene.\n\nrender\n\nRenders this Scene.\n\nreplace\n\nReplace one mobject in the scene with another, preserving draw order.\n\nrestructure_mobjects\n\ntl:wr\n\nset_key_function\n\nsetup\n\nThis is meant to be implemented by any scenes which are commonly subclassed, and have some common setup involved before the construct method is called.\n\nshould_update_mobjects\n\nReturns True if the mobjects of this scene should be updated.\n\ntear_down\n\nThis is meant to be implemented by any scenes which are commonly subclassed, and have some common method to be invoked before the scene ends.\n\nupdate_meshes\n\nupdate_mobjects\n\nBegins updating all mobjects in the Scene.\n\nupdate_self\n\nRun all scene updater functions.\n\nupdate_to_time\n\nvalidate_run_time\n\nwait\n\nPlays a \"no operation\" animation.\n\nwait_until\n\nWait until a condition is satisfied, up to a given maximum duration.\n\nAttributes\n\ncamera\n\ntime\n\nThe time since the start of the scene.\n\nParameters:\n\nrenderer(CairoRenderer|OpenGLRenderer|None)camera_class(type[Camera])always_update_mobjects(bool)random_seed(int|None)skip_animations(bool)\n\nrenderer(CairoRenderer|OpenGLRenderer|None)\n\nrenderer(CairoRenderer|OpenGLRenderer|None)\n\ncamera_class(type[Camera])\n\ncamera_class(type[Camera])\n\nalways_update_mobjects(bool)\n\nalways_update_mobjects(bool)\n\nrandom_seed(int|None)\n\nrandom_seed(int|None)\n\nskip_animations(bool)\n\nskip_animations(bool)\n\n_get_animation_time_progression(animations,duration)[source]\u00b6\n\nYou will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use.Usesget_time_progression()to obtain a\nCommandLine ProgressBar whosefill_timeis\ndependent on the qualities of the passed Animation,Parameters:animations(list[Animation]) \u2013 The list of animations to get\nthe time progression for.duration(float) \u2013 duration of wait timeReturns:The CommandLine Progress Bar.Return type:time_progression\n\nYou will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use.\n\nUsesget_time_progression()to obtain a\nCommandLine ProgressBar whosefill_timeis\ndependent on the qualities of the passed Animation,\n\nParameters:\n\nanimations(list[Animation]) \u2013 The list of animations to get\nthe time progression for.duration(float) \u2013 duration of wait time\n\nanimations(list[Animation]) \u2013 The list of animations to get\nthe time progression for.\n\nanimations(list[Animation]) \u2013 The list of animations to get\nthe time progression for.\n\nduration(float) \u2013 duration of wait time\n\nduration(float) \u2013 duration of wait time\n\nReturns:\n\nThe CommandLine Progress Bar.\n\nThe CommandLine Progress Bar.\n\nReturn type:\n\ntime_progression\n\ntime_progression\n\nadd(*mobjects)[source]\u00b6\n\nMobjects will be displayed, from background to\nforeground in the order with which they are added.Parameters:*mobjects(Mobject|OpenGLMobject) \u2013 Mobjects to add.Returns:The same scene after adding the Mobjects in.Return type:Scene\n\nMobjects will be displayed, from background to\nforeground in the order with which they are added.\n\nParameters:\n\n*mobjects(Mobject|OpenGLMobject) \u2013 Mobjects to add.\n\n*mobjects(Mobject|OpenGLMobject) \u2013 Mobjects to add.\n\nReturns:\n\nThe same scene after adding the Mobjects in.\n\nThe same scene after adding the Mobjects in.\n\nReturn type:\n\nScene\n\nScene\n\nadd_foreground_mobject(mobject)[source]\u00b6\n\nAdds a single mobject to the foreground, and internally to the list\nforeground_mobjects, and mobjects.Parameters:mobject(Mobject) \u2013 The Mobject to add to the foreground.Returns:The Scene, with the foreground mobject added.Return type:Scene\n\nAdds a single mobject to the foreground, and internally to the list\nforeground_mobjects, and mobjects.\n\nParameters:\n\nmobject(Mobject) \u2013 The Mobject to add to the foreground.\n\nmobject(Mobject) \u2013 The Mobject to add to the foreground.\n\nReturns:\n\nThe Scene, with the foreground mobject added.\n\nThe Scene, with the foreground mobject added.\n\nReturn type:\n\nScene\n\nScene\n\nadd_foreground_mobjects(*mobjects)[source]\u00b6\n\nAdds mobjects to the foreground, and internally to the list\nforeground_mobjects, and mobjects.Parameters:*mobjects(Mobject) \u2013 The Mobjects to add to the foreground.Returns:The Scene, with the foreground mobjects added.Return type:Scene\n\nAdds mobjects to the foreground, and internally to the list\nforeground_mobjects, and mobjects.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The Mobjects to add to the foreground.\n\n*mobjects(Mobject) \u2013 The Mobjects to add to the foreground.\n\nReturns:\n\nThe Scene, with the foreground mobjects added.\n\nThe Scene, with the foreground mobjects added.\n\nReturn type:\n\nScene\n\nScene\n\nadd_sound(sound_file,time_offset=0,gain=None,**kwargs)[source]\u00b6\n\nThis method is used to add a sound to the animation.Parameters:sound_file(str) \u2013 The path to the sound file.time_offset(float) \u2013 The offset in the sound file after which\nthe sound can be played.gain(float|None) \u2013 Amplification of the sound.kwargs(Any)Return type:NoneExamplesExample: SoundExample\u00b6frommanimimport*classSoundExample(Scene):# Source of sound under Creative Commons 0 License. https://freesound.org/people/Druminfected/sounds/250551/defconstruct(self):dot=Dot().set_color(GREEN)self.add_sound(\"click.wav\")self.add(dot)self.wait()self.add_sound(\"click.wav\")dot.set_color(BLUE)self.wait()self.add_sound(\"click.wav\")dot.set_color(RED)self.wait()class SoundExample(Scene):\n    # Source of sound under Creative Commons 0 License. https://freesound.org/people/Druminfected/sounds/250551/\n    def construct(self):\n        dot = Dot().set_color(GREEN)\n        self.add_sound(\"click.wav\")\n        self.add(dot)\n        self.wait()\n        self.add_sound(\"click.wav\")\n        dot.set_color(BLUE)\n        self.wait()\n        self.add_sound(\"click.wav\")\n        dot.set_color(RED)\n        self.wait()Download the resource for the previous examplehere.\n\nThis method is used to add a sound to the animation.\n\nParameters:\n\nsound_file(str) \u2013 The path to the sound file.time_offset(float) \u2013 The offset in the sound file after which\nthe sound can be played.gain(float|None) \u2013 Amplification of the sound.kwargs(Any)\n\nsound_file(str) \u2013 The path to the sound file.\n\nsound_file(str) \u2013 The path to the sound file.\n\ntime_offset(float) \u2013 The offset in the sound file after which\nthe sound can be played.\n\ntime_offset(float) \u2013 The offset in the sound file after which\nthe sound can be played.\n\ngain(float|None) \u2013 Amplification of the sound.\n\ngain(float|None) \u2013 Amplification of the sound.\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nExamples\n\nExample: SoundExample\u00b6\n\nDownload the resource for the previous examplehere.\n\nadd_subcaption(content,duration=1,offset=0)[source]\u00b6\n\nAdds an entry in the corresponding subcaption file\nat the current time stamp.The current time stamp is obtained fromScene.time.Parameters:content(str) \u2013 The subcaption content.duration(float) \u2013 The duration (in seconds) for which the subcaption is shown.offset(float) \u2013 This offset (in seconds) is added to the starting time stamp\nof the subcaption.Return type:NoneExamplesThis example illustrates both possibilities for adding\nsubcaptions to Manimations:classSubcaptionExample(Scene):defconstruct(self):square=Square()circle=Circle()# first option: via the add_subcaption methodself.add_subcaption(\"Hello square!\",duration=1)self.play(Create(square))# second option: within the call to Scene.playself.play(Transform(square,circle),subcaption=\"The square transforms.\")\n\nAdds an entry in the corresponding subcaption file\nat the current time stamp.\n\nThe current time stamp is obtained fromScene.time.\n\nParameters:\n\ncontent(str) \u2013 The subcaption content.duration(float) \u2013 The duration (in seconds) for which the subcaption is shown.offset(float) \u2013 This offset (in seconds) is added to the starting time stamp\nof the subcaption.\n\ncontent(str) \u2013 The subcaption content.\n\ncontent(str) \u2013 The subcaption content.\n\nduration(float) \u2013 The duration (in seconds) for which the subcaption is shown.\n\nduration(float) \u2013 The duration (in seconds) for which the subcaption is shown.\n\noffset(float) \u2013 This offset (in seconds) is added to the starting time stamp\nof the subcaption.\n\noffset(float) \u2013 This offset (in seconds) is added to the starting time stamp\nof the subcaption.\n\nReturn type:\n\nNone\n\nNone\n\nExamples\n\nThis example illustrates both possibilities for adding\nsubcaptions to Manimations:\n\nadd_updater(func)[source]\u00b6\n\nAdd an update function to the scene.The scene updater functions are run every frame,\nand they are the last type of updaters to run.WarningWhen using the Cairo renderer, scene updaters that\nmodify mobjects are not detected in the same way\nthat mobject updaters are. To be more concrete,\na mobject only modified via a scene updater will\nnot necessarily be added to the list ofmoving\nmobjectsand thus might not be updated every frame.TL;DR: Use mobject updaters to update mobjects.Parameters:func(Callable[[float],None]) \u2013 The updater function. It takes a float, which is the\ntime difference since the last update (usually equal\nto the frame rate).Return type:NoneSee alsoScene.remove_updater(),Scene.update_self()\n\nAdd an update function to the scene.\n\nThe scene updater functions are run every frame,\nand they are the last type of updaters to run.\n\nWarning\n\nWhen using the Cairo renderer, scene updaters that\nmodify mobjects are not detected in the same way\nthat mobject updaters are. To be more concrete,\na mobject only modified via a scene updater will\nnot necessarily be added to the list ofmoving\nmobjectsand thus might not be updated every frame.\n\nTL;DR: Use mobject updaters to update mobjects.\n\nParameters:\n\nfunc(Callable[[float],None]) \u2013 The updater function. It takes a float, which is the\ntime difference since the last update (usually equal\nto the frame rate).\n\nfunc(Callable[[float],None]) \u2013 The updater function. It takes a float, which is the\ntime difference since the last update (usually equal\nto the frame rate).\n\nReturn type:\n\nNone\n\nNone\n\nSee also\n\nScene.remove_updater(),Scene.update_self()\n\nbegin_animations()[source]\u00b6\n\nStart the animations of the scene.Return type:None\n\nStart the animations of the scene.\n\nReturn type:\n\nNone\n\nNone\n\nbring_to_back(*mobjects)[source]\u00b6\n\nRemoves the mobject from the scene and\nadds them to the back of the scene.Parameters:*mobjects(Mobject) \u2013 The mobject(s) to push to the back of the scene.Returns:The Scene, with the mobjects pushed to the back\nof the scene.Return type:Scene\n\nRemoves the mobject from the scene and\nadds them to the back of the scene.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobject(s) to push to the back of the scene.\n\n*mobjects(Mobject) \u2013 The mobject(s) to push to the back of the scene.\n\nReturns:\n\nThe Scene, with the mobjects pushed to the back\nof the scene.\n\nThe Scene, with the mobjects pushed to the back\nof the scene.\n\nReturn type:\n\nScene\n\nScene\n\nbring_to_front(*mobjects)[source]\u00b6\n\nAdds the passed mobjects to the scene again,\npushing them to he front of the scene.Parameters:*mobjects(Mobject) \u2013 The mobject(s) to bring to the front of the scene.Returns:The Scene, with the mobjects brought to the front\nof the scene.Return type:Scene\n\nAdds the passed mobjects to the scene again,\npushing them to he front of the scene.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobject(s) to bring to the front of the scene.\n\n*mobjects(Mobject) \u2013 The mobject(s) to bring to the front of the scene.\n\nReturns:\n\nThe Scene, with the mobjects brought to the front\nof the scene.\n\nThe Scene, with the mobjects brought to the front\nof the scene.\n\nReturn type:\n\nScene\n\nScene\n\nclear()[source]\u00b6\n\nRemoves all mobjects present in self.mobjects\nand self.foreground_mobjects from the scene.Returns:The Scene, with all of its mobjects in\nself.mobjects and self.foreground_mobjects\nremoved.Return type:Scene\n\nRemoves all mobjects present in self.mobjects\nand self.foreground_mobjects from the scene.\n\nReturns:\n\nThe Scene, with all of its mobjects in\nself.mobjects and self.foreground_mobjects\nremoved.\n\nThe Scene, with all of its mobjects in\nself.mobjects and self.foreground_mobjects\nremoved.\n\nReturn type:\n\nScene\n\nScene\n\ncompile_animation_data(*animations,**play_kwargs)[source]\u00b6\n\nGiven a list of animations, compile the corresponding\nstatic and moving mobjects, and gather the animation durations.This also begins the animations.Parameters:animations(Animation|Mobject|_AnimationBuilder) \u2013 Animation or mobject with mobject method and paramsplay_kwargs(Any) \u2013 Named parameters affecting what was passed inanimations,\ne.g.run_time,lag_ratioand so on.Returns:None if there is nothing to play, or self otherwise.Return type:self, None\n\nGiven a list of animations, compile the corresponding\nstatic and moving mobjects, and gather the animation durations.\n\nThis also begins the animations.\n\nParameters:\n\nanimations(Animation|Mobject|_AnimationBuilder) \u2013 Animation or mobject with mobject method and paramsplay_kwargs(Any) \u2013 Named parameters affecting what was passed inanimations,\ne.g.run_time,lag_ratioand so on.\n\nanimations(Animation|Mobject|_AnimationBuilder) \u2013 Animation or mobject with mobject method and params\n\nanimations(Animation|Mobject|_AnimationBuilder) \u2013 Animation or mobject with mobject method and params\n\nplay_kwargs(Any) \u2013 Named parameters affecting what was passed inanimations,\ne.g.run_time,lag_ratioand so on.\n\nplay_kwargs(Any) \u2013 Named parameters affecting what was passed inanimations,\ne.g.run_time,lag_ratioand so on.\n\nReturns:\n\nNone if there is nothing to play, or self otherwise.\n\nNone if there is nothing to play, or self otherwise.\n\nReturn type:\n\nself, None\n\nself, None\n\ncompile_animations(*args,**kwargs)[source]\u00b6\n\nCreates _MethodAnimations from any _AnimationBuilders and updates animation\nkwargs with kwargs passed to play().Parameters:*args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.**kwargs(Any) \u2013 Configuration for the call to play().Returns:Animations to be played.Return type:Tuple[Animation]\n\nCreates _MethodAnimations from any _AnimationBuilders and updates animation\nkwargs with kwargs passed to play().\n\nParameters:\n\n*args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.**kwargs(Any) \u2013 Configuration for the call to play().\n\n*args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.\n\n*args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.\n\n**kwargs(Any) \u2013 Configuration for the call to play().\n\n**kwargs(Any) \u2013 Configuration for the call to play().\n\nReturns:\n\nAnimations to be played.\n\nAnimations to be played.\n\nReturn type:\n\nTuple[Animation]\n\nTuple[Animation]\n\nconstruct()[source]\u00b6\n\nAdd content to the Scene.From withinScene.construct(), display mobjects on screen by callingScene.add()and remove them from screen by callingScene.remove().\nAll mobjects currently on screen are kept inScene.mobjects.  Play\nanimations by callingScene.play().NotesInitialization code should go inScene.setup().  Termination code should\ngo inScene.tear_down().ExamplesA typical manim script includes a class derived fromScenewith an\noverriddenScene.construct()method:classMyScene(Scene):defconstruct(self):self.play(Write(Text(\"Hello World!\")))See alsoScene.setup(),Scene.render(),Scene.tear_down()Return type:None\n\nAdd content to the Scene.\n\nFrom withinScene.construct(), display mobjects on screen by callingScene.add()and remove them from screen by callingScene.remove().\nAll mobjects currently on screen are kept inScene.mobjects.  Play\nanimations by callingScene.play().\n\nNotes\n\nInitialization code should go inScene.setup().  Termination code should\ngo inScene.tear_down().\n\nExamples\n\nA typical manim script includes a class derived fromScenewith an\noverriddenScene.construct()method:\n\nSee also\n\nScene.setup(),Scene.render(),Scene.tear_down()\n\nReturn type:\n\nNone\n\nNone\n\nget_attrs(*keys)[source]\u00b6\n\nGets attributes of a scene given the attribute\u2019s identifier/name.Parameters:*keys(str) \u2013 Name(s) of the argument(s) to return the attribute of.Returns:List of attributes of the passed identifiers.Return type:list\n\nGets attributes of a scene given the attribute\u2019s identifier/name.\n\nParameters:\n\n*keys(str) \u2013 Name(s) of the argument(s) to return the attribute of.\n\n*keys(str) \u2013 Name(s) of the argument(s) to return the attribute of.\n\nReturns:\n\nList of attributes of the passed identifiers.\n\nList of attributes of the passed identifiers.\n\nReturn type:\n\nlist\n\nlist\n\nget_mobject_family_members()[source]\u00b6\n\nReturns list of family-members of all mobjects in scene.\nIf a Circle() and a VGroup(Rectangle(),Triangle()) were added,\nit returns not only the Circle(), Rectangle() and Triangle(), but\nalso the VGroup() object.Returns:List of mobject family members.Return type:list\n\nReturns list of family-members of all mobjects in scene.\nIf a Circle() and a VGroup(Rectangle(),Triangle()) were added,\nit returns not only the Circle(), Rectangle() and Triangle(), but\nalso the VGroup() object.\n\nReturns:\n\nList of mobject family members.\n\nList of mobject family members.\n\nReturn type:\n\nlist\n\nlist\n\nget_moving_mobjects(*animations)[source]\u00b6\n\nGets all moving mobjects in the passed animation(s).Parameters:*animations(Animation) \u2013 The animations to check for moving mobjects.Returns:The list of mobjects that could be moving in\nthe Animation(s)Return type:list\n\nGets all moving mobjects in the passed animation(s).\n\nParameters:\n\n*animations(Animation) \u2013 The animations to check for moving mobjects.\n\n*animations(Animation) \u2013 The animations to check for moving mobjects.\n\nReturns:\n\nThe list of mobjects that could be moving in\nthe Animation(s)\n\nThe list of mobjects that could be moving in\nthe Animation(s)\n\nReturn type:\n\nlist\n\nlist\n\nget_restructured_mobject_list(mobjects,to_remove)[source]\u00b6\n\nGiven a list of mobjects and a list of mobjects to be removed, this\nfilters out the removable mobjects from the list of mobjects.Parameters:mobjects(Iterable[Mobject]) \u2013 The Mobjects to check.to_remove(Iterable[Mobject]) \u2013 The list of mobjects to remove.Returns:The list of mobjects with the mobjects to remove removed.Return type:list\n\nGiven a list of mobjects and a list of mobjects to be removed, this\nfilters out the removable mobjects from the list of mobjects.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 The Mobjects to check.to_remove(Iterable[Mobject]) \u2013 The list of mobjects to remove.\n\nmobjects(Iterable[Mobject]) \u2013 The Mobjects to check.\n\nmobjects(Iterable[Mobject]) \u2013 The Mobjects to check.\n\nto_remove(Iterable[Mobject]) \u2013 The list of mobjects to remove.\n\nto_remove(Iterable[Mobject]) \u2013 The list of mobjects to remove.\n\nReturns:\n\nThe list of mobjects with the mobjects to remove removed.\n\nThe list of mobjects with the mobjects to remove removed.\n\nReturn type:\n\nlist\n\nlist\n\nget_run_time(animations)[source]\u00b6\n\nGets the total run time for a list of animations.Parameters:animations(list[Animation]) \u2013 A list of the animations whose totalrun_timeis to be calculated.Returns:The totalrun_timeof all of the animations in the list.Return type:float\n\nGets the total run time for a list of animations.\n\nParameters:\n\nanimations(list[Animation]) \u2013 A list of the animations whose totalrun_timeis to be calculated.\n\nanimations(list[Animation]) \u2013 A list of the animations whose totalrun_timeis to be calculated.\n\nReturns:\n\nThe totalrun_timeof all of the animations in the list.\n\nThe totalrun_timeof all of the animations in the list.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_time_progression(run_time,description,n_iterations=None,override_skip_animations=False)[source]\u00b6\n\nYou will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use.Returns a CommandLine ProgressBar whosefill_timeis dependent on therun_timeof an animation,\nthe iterations to perform in that animation\nand a bool saying whether or not to consider\nthe skipped animations.Parameters:run_time(float) \u2013 Therun_timeof the animation.n_iterations(int|None) \u2013 The number of iterations in the animation.override_skip_animations(bool) \u2013 Whether or not to show skipped animations in the progress bar.description(str)Returns:The CommandLine Progress Bar.Return type:time_progression\n\nYou will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use.\n\nReturns a CommandLine ProgressBar whosefill_timeis dependent on therun_timeof an animation,\nthe iterations to perform in that animation\nand a bool saying whether or not to consider\nthe skipped animations.\n\nParameters:\n\nrun_time(float) \u2013 Therun_timeof the animation.n_iterations(int|None) \u2013 The number of iterations in the animation.override_skip_animations(bool) \u2013 Whether or not to show skipped animations in the progress bar.description(str)\n\nrun_time(float) \u2013 Therun_timeof the animation.\n\nrun_time(float) \u2013 Therun_timeof the animation.\n\nn_iterations(int|None) \u2013 The number of iterations in the animation.\n\nn_iterations(int|None) \u2013 The number of iterations in the animation.\n\noverride_skip_animations(bool) \u2013 Whether or not to show skipped animations in the progress bar.\n\noverride_skip_animations(bool) \u2013 Whether or not to show skipped animations in the progress bar.\n\ndescription(str)\n\ndescription(str)\n\nReturns:\n\nThe CommandLine Progress Bar.\n\nThe CommandLine Progress Bar.\n\nReturn type:\n\ntime_progression\n\ntime_progression\n\nget_top_level_mobjects()[source]\u00b6\n\nReturns all mobjects which are not submobjects.Returns:List of top level mobjects.Return type:list\n\nReturns all mobjects which are not submobjects.\n\nReturns:\n\nList of top level mobjects.\n\nList of top level mobjects.\n\nReturn type:\n\nlist\n\nlist\n\ninteractive_embed()[source]\u00b6\n\nLike embed(), but allows for screen interaction.Return type:None\n\nLike embed(), but allows for screen interaction.\n\nReturn type:\n\nNone\n\nNone\n\nis_current_animation_frozen_frame()[source]\u00b6\n\nReturns whether the current animation produces a static frame (generally a Wait).Return type:bool\n\nReturns whether the current animation produces a static frame (generally a Wait).\n\nReturn type:\n\nbool\n\nbool\n\nnext_section(name='unnamed',section_type=DefaultSectionType.NORMAL,skip_animations=False)[source]\u00b6\n\nCreate separation here; the last section gets finished and a new one gets created.skip_animationsskips the rendering of all animations in this section.\nRefer tothe documentationon how to use sections.Parameters:name(str)section_type(str)skip_animations(bool)Return type:None\n\nCreate separation here; the last section gets finished and a new one gets created.skip_animationsskips the rendering of all animations in this section.\nRefer tothe documentationon how to use sections.\n\nParameters:\n\nname(str)section_type(str)skip_animations(bool)\n\nname(str)\n\nname(str)\n\nsection_type(str)\n\nsection_type(str)\n\nskip_animations(bool)\n\nskip_animations(bool)\n\nReturn type:\n\nNone\n\nNone\n\npause(duration=1.0)[source]\u00b6\n\nPauses the scene (i.e., displays a frozen frame).This is an alias forwait()withfrozen_frameset toTrue.Parameters:duration(float) \u2013 The duration of the pause.Return type:NoneSee alsowait(),Wait\n\nPauses the scene (i.e., displays a frozen frame).\n\nThis is an alias forwait()withfrozen_frameset toTrue.\n\nParameters:\n\nduration(float) \u2013 The duration of the pause.\n\nduration(float) \u2013 The duration of the pause.\n\nReturn type:\n\nNone\n\nNone\n\nSee also\n\nwait(),Wait\n\nplay(*args,subcaption=None,subcaption_duration=None,subcaption_offset=0,**kwargs)[source]\u00b6\n\nPlays an animation in this scene.Parameters:args(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.subcaption(str|None) \u2013 The content of the external subcaption that should\nbe added during the animation.subcaption_duration(float|None) \u2013 The duration for which the specified subcaption is\nadded. IfNone(the default), the run time of the\nanimation is taken.subcaption_offset(float) \u2013 An offset (in seconds) for the start time of the\nadded subcaption.kwargs(Any) \u2013 All other keywords are passed to the renderer.Return type:None\n\nPlays an animation in this scene.\n\nParameters:\n\nargs(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.subcaption(str|None) \u2013 The content of the external subcaption that should\nbe added during the animation.subcaption_duration(float|None) \u2013 The duration for which the specified subcaption is\nadded. IfNone(the default), the run time of the\nanimation is taken.subcaption_offset(float) \u2013 An offset (in seconds) for the start time of the\nadded subcaption.kwargs(Any) \u2013 All other keywords are passed to the renderer.\n\nargs(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.\n\nargs(Animation|Mobject|_AnimationBuilder) \u2013 Animations to be played.\n\nsubcaption(str|None) \u2013 The content of the external subcaption that should\nbe added during the animation.\n\nsubcaption(str|None) \u2013 The content of the external subcaption that should\nbe added during the animation.\n\nsubcaption_duration(float|None) \u2013 The duration for which the specified subcaption is\nadded. IfNone(the default), the run time of the\nanimation is taken.\n\nsubcaption_duration(float|None) \u2013 The duration for which the specified subcaption is\nadded. IfNone(the default), the run time of the\nanimation is taken.\n\nsubcaption_offset(float) \u2013 An offset (in seconds) for the start time of the\nadded subcaption.\n\nsubcaption_offset(float) \u2013 An offset (in seconds) for the start time of the\nadded subcaption.\n\nkwargs(Any) \u2013 All other keywords are passed to the renderer.\n\nkwargs(Any) \u2013 All other keywords are passed to the renderer.\n\nReturn type:\n\nNone\n\nNone\n\nplay_internal(skip_rendering=False)[source]\u00b6\n\nThis method is used to prep the animations for rendering,\napply the arguments and parameters required to them,\nrender them, and write them to the video file.Parameters:skip_rendering(bool) \u2013 Whether the rendering should be skipped, by default FalseReturn type:None\n\nThis method is used to prep the animations for rendering,\napply the arguments and parameters required to them,\nrender them, and write them to the video file.\n\nParameters:\n\nskip_rendering(bool) \u2013 Whether the rendering should be skipped, by default False\n\nskip_rendering(bool) \u2013 Whether the rendering should be skipped, by default False\n\nReturn type:\n\nNone\n\nNone\n\nremove(*mobjects)[source]\u00b6\n\nRemoves mobjects in the passed list of mobjects\nfrom the scene and the foreground, by removing them\nfrom \u201cmobjects\u201d and \u201cforeground_mobjects\u201dParameters:*mobjects(Mobject) \u2013 The mobjects to remove.Return type:Self\n\nRemoves mobjects in the passed list of mobjects\nfrom the scene and the foreground, by removing them\nfrom \u201cmobjects\u201d and \u201cforeground_mobjects\u201d\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobjects to remove.\n\n*mobjects(Mobject) \u2013 The mobjects to remove.\n\nReturn type:\n\nSelf\n\nSelf\n\nremove_foreground_mobject(mobject)[source]\u00b6\n\nRemoves a single mobject from the foreground, and internally from the list\nforeground_mobjects.Parameters:mobject(Mobject) \u2013 The mobject to remove from the foreground.Returns:The Scene, with the foreground mobject removed.Return type:Scene\n\nRemoves a single mobject from the foreground, and internally from the list\nforeground_mobjects.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to remove from the foreground.\n\nmobject(Mobject) \u2013 The mobject to remove from the foreground.\n\nReturns:\n\nThe Scene, with the foreground mobject removed.\n\nThe Scene, with the foreground mobject removed.\n\nReturn type:\n\nScene\n\nScene\n\nremove_foreground_mobjects(*to_remove)[source]\u00b6\n\nRemoves mobjects from the foreground, and internally from the list\nforeground_mobjects.Parameters:*to_remove(Mobject) \u2013 The mobject(s) to remove from the foreground.Returns:The Scene, with the foreground mobjects removed.Return type:Scene\n\nRemoves mobjects from the foreground, and internally from the list\nforeground_mobjects.\n\nParameters:\n\n*to_remove(Mobject) \u2013 The mobject(s) to remove from the foreground.\n\n*to_remove(Mobject) \u2013 The mobject(s) to remove from the foreground.\n\nReturns:\n\nThe Scene, with the foreground mobjects removed.\n\nThe Scene, with the foreground mobjects removed.\n\nReturn type:\n\nScene\n\nScene\n\nremove_updater(func)[source]\u00b6\n\nRemove an update function from the scene.Parameters:func(Callable[[float],None]) \u2013 The updater function to be removed.Return type:NoneSee alsoScene.add_updater(),Scene.update_self()\n\nRemove an update function from the scene.\n\nParameters:\n\nfunc(Callable[[float],None]) \u2013 The updater function to be removed.\n\nfunc(Callable[[float],None]) \u2013 The updater function to be removed.\n\nReturn type:\n\nNone\n\nNone\n\nSee also\n\nScene.add_updater(),Scene.update_self()\n\nrender(preview=False)[source]\u00b6\n\nRenders this Scene.Parameters:preview(bool) \u2013 If true, opens scene in a file viewer.Return type:bool\n\nRenders this Scene.\n\nParameters:\n\npreview(bool) \u2013 If true, opens scene in a file viewer.\n\npreview(bool) \u2013 If true, opens scene in a file viewer.\n\nReturn type:\n\nbool\n\nbool\n\nreplace(old_mobject,new_mobject)[source]\u00b6\n\nReplace one mobject in the scene with another, preserving draw order.Ifold_mobjectis a submobject of some other Mobject (e.g. aGroup), the new_mobject will replace it inside the group,\nwithout otherwise changing the parent mobject.Parameters:old_mobject(Mobject) \u2013 The mobject to be replaced. Must be present in the scene.new_mobject(Mobject) \u2013 A mobject which must not already be in the scene.Return type:None\n\nReplace one mobject in the scene with another, preserving draw order.\n\nIfold_mobjectis a submobject of some other Mobject (e.g. aGroup), the new_mobject will replace it inside the group,\nwithout otherwise changing the parent mobject.\n\nParameters:\n\nold_mobject(Mobject) \u2013 The mobject to be replaced. Must be present in the scene.new_mobject(Mobject) \u2013 A mobject which must not already be in the scene.\n\nold_mobject(Mobject) \u2013 The mobject to be replaced. Must be present in the scene.\n\nold_mobject(Mobject) \u2013 The mobject to be replaced. Must be present in the scene.\n\nnew_mobject(Mobject) \u2013 A mobject which must not already be in the scene.\n\nnew_mobject(Mobject) \u2013 A mobject which must not already be in the scene.\n\nReturn type:\n\nNone\n\nNone\n\nrestructure_mobjects(to_remove,mobject_list_name='mobjects',extract_families=True)[source]\u00b6\n\ntl:wrIf your scene has a Group(), and you removed a mobject from the Group,\nthis dissolves the group and puts the rest of the mobjects directly\nin self.mobjects or self.foreground_mobjects.In cases where the scene contains a group, e.g. Group(m1, m2, m3), but one\nof its submobjects is removed, e.g. scene.remove(m1), the list of mobjects\nwill be edited to contain other submobjects, but not m1, e.g. it will now\ninsert m2 and m3 to where the group once was.Parameters:to_remove(Sequence[Mobject]) \u2013 The Mobject to remove.mobject_list_name(str) \u2013 The list of mobjects (\u201cmobjects\u201d, \u201cforeground_mobjects\u201d etc) to remove from.extract_families(bool) \u2013 Whether the mobject\u2019s families should be recursively extracted.Returns:The Scene mobject with restructured Mobjects.Return type:Scene\n\ntl:wr\n\nIf your scene has a Group(), and you removed a mobject from the Group,\nthis dissolves the group and puts the rest of the mobjects directly\nin self.mobjects or self.foreground_mobjects.\n\nIf your scene has a Group(), and you removed a mobject from the Group,\nthis dissolves the group and puts the rest of the mobjects directly\nin self.mobjects or self.foreground_mobjects.\n\nIn cases where the scene contains a group, e.g. Group(m1, m2, m3), but one\nof its submobjects is removed, e.g. scene.remove(m1), the list of mobjects\nwill be edited to contain other submobjects, but not m1, e.g. it will now\ninsert m2 and m3 to where the group once was.\n\nParameters:\n\nto_remove(Sequence[Mobject]) \u2013 The Mobject to remove.mobject_list_name(str) \u2013 The list of mobjects (\u201cmobjects\u201d, \u201cforeground_mobjects\u201d etc) to remove from.extract_families(bool) \u2013 Whether the mobject\u2019s families should be recursively extracted.\n\nto_remove(Sequence[Mobject]) \u2013 The Mobject to remove.\n\nto_remove(Sequence[Mobject]) \u2013 The Mobject to remove.\n\nmobject_list_name(str) \u2013 The list of mobjects (\u201cmobjects\u201d, \u201cforeground_mobjects\u201d etc) to remove from.\n\nmobject_list_name(str) \u2013 The list of mobjects (\u201cmobjects\u201d, \u201cforeground_mobjects\u201d etc) to remove from.\n\nextract_families(bool) \u2013 Whether the mobject\u2019s families should be recursively extracted.\n\nextract_families(bool) \u2013 Whether the mobject\u2019s families should be recursively extracted.\n\nReturns:\n\nThe Scene mobject with restructured Mobjects.\n\nThe Scene mobject with restructured Mobjects.\n\nReturn type:\n\nScene\n\nScene\n\nsetup()[source]\u00b6\n\nThis is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called.Return type:None\n\nThis is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called.\n\nReturn type:\n\nNone\n\nNone\n\nshould_update_mobjects()[source]\u00b6\n\nReturns True if the mobjects of this scene should be updated.In particular, this checks whetherthealways_update_mobjectsattribute ofSceneis set toTrue,theSceneitself has time-based updaters attached,any mobject in thisScenehas time-based updaters attached.This is only called when a single Wait animation is played.Return type:bool\n\nReturns True if the mobjects of this scene should be updated.\n\nIn particular, this checks whether\n\nthealways_update_mobjectsattribute ofSceneis set toTrue,\n\nthealways_update_mobjectsattribute ofSceneis set toTrue,\n\ntheSceneitself has time-based updaters attached,\n\ntheSceneitself has time-based updaters attached,\n\nany mobject in thisScenehas time-based updaters attached.\n\nany mobject in thisScenehas time-based updaters attached.\n\nThis is only called when a single Wait animation is played.\n\nReturn type:\n\nbool\n\nbool\n\ntear_down()[source]\u00b6\n\nThis is meant to be implemented by any scenes which\nare commonly subclassed, and have some common method\nto be invoked before the scene ends.Return type:None\n\nThis is meant to be implemented by any scenes which\nare commonly subclassed, and have some common method\nto be invoked before the scene ends.\n\nReturn type:\n\nNone\n\nNone\n\npropertytime:float\u00b6\n\nThe time since the start of the scene.\n\nThe time since the start of the scene.\n\nupdate_mobjects(dt)[source]\u00b6\n\nBegins updating all mobjects in the Scene.Parameters:dt(float) \u2013 Change in time between updates. Defaults (mostly) to 1/frames_per_secondReturn type:None\n\nBegins updating all mobjects in the Scene.\n\nParameters:\n\ndt(float) \u2013 Change in time between updates. Defaults (mostly) to 1/frames_per_second\n\ndt(float) \u2013 Change in time between updates. Defaults (mostly) to 1/frames_per_second\n\nReturn type:\n\nNone\n\nNone\n\nupdate_self(dt)[source]\u00b6\n\nRun all scene updater functions.Among all types of update functions (mobject updaters, mesh updaters,\nscene updaters), scene update functions are called last.Parameters:dt(float) \u2013 Scene time since last update.Return type:NoneSee alsoScene.add_updater(),Scene.remove_updater()\n\nRun all scene updater functions.\n\nAmong all types of update functions (mobject updaters, mesh updaters,\nscene updaters), scene update functions are called last.\n\nParameters:\n\ndt(float) \u2013 Scene time since last update.\n\ndt(float) \u2013 Scene time since last update.\n\nReturn type:\n\nNone\n\nNone\n\nSee also\n\nScene.add_updater(),Scene.remove_updater()\n\nwait(duration=1.0,stop_condition=None,frozen_frame=None)[source]\u00b6\n\nPlays a \u201cno operation\u201d animation.Parameters:duration(float) \u2013 The run time of the animation.stop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that is evaluated every time\na frame is rendered. The animation only stops when the return value\nof the function is truthy, or when the time specified indurationpasses.frozen_frame(bool|None) \u2013 If True, updater functions are not evaluated, and the animation outputs\na frozen frame. If False, updater functions are called and frames\nare rendered as usual. If None (the default), the scene tries to\ndetermine whether or not the frame is frozen on its own.Return type:NoneSee alsoWait,should_mobjects_update()\n\nPlays a \u201cno operation\u201d animation.\n\nParameters:\n\nduration(float) \u2013 The run time of the animation.stop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that is evaluated every time\na frame is rendered. The animation only stops when the return value\nof the function is truthy, or when the time specified indurationpasses.frozen_frame(bool|None) \u2013 If True, updater functions are not evaluated, and the animation outputs\na frozen frame. If False, updater functions are called and frames\nare rendered as usual. If None (the default), the scene tries to\ndetermine whether or not the frame is frozen on its own.\n\nduration(float) \u2013 The run time of the animation.\n\nduration(float) \u2013 The run time of the animation.\n\nstop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that is evaluated every time\na frame is rendered. The animation only stops when the return value\nof the function is truthy, or when the time specified indurationpasses.\n\nstop_condition(Callable[[],bool]|None) \u2013 A function without positional arguments that is evaluated every time\na frame is rendered. The animation only stops when the return value\nof the function is truthy, or when the time specified indurationpasses.\n\nfrozen_frame(bool|None) \u2013 If True, updater functions are not evaluated, and the animation outputs\na frozen frame. If False, updater functions are called and frames\nare rendered as usual. If None (the default), the scene tries to\ndetermine whether or not the frame is frozen on its own.\n\nfrozen_frame(bool|None) \u2013 If True, updater functions are not evaluated, and the animation outputs\na frozen frame. If False, updater functions are called and frames\nare rendered as usual. If None (the default), the scene tries to\ndetermine whether or not the frame is frozen on its own.\n\nReturn type:\n\nNone\n\nNone\n\nSee also\n\nWait,should_mobjects_update()\n\nwait_until(stop_condition,max_time=60)[source]\u00b6\n\nWait until a condition is satisfied, up to a given maximum duration.Parameters:stop_condition(Callable[[],bool]) \u2013 A function with no arguments that determines whether or not the\nscene should keep waiting.max_time(float) \u2013 The maximum wait time in seconds.Return type:None\n\nWait until a condition is satisfied, up to a given maximum duration.\n\nParameters:\n\nstop_condition(Callable[[],bool]) \u2013 A function with no arguments that determines whether or not the\nscene should keep waiting.max_time(float) \u2013 The maximum wait time in seconds.\n\nstop_condition(Callable[[],bool]) \u2013 A function with no arguments that determines whether or not the\nscene should keep waiting.\n\nstop_condition(Callable[[],bool]) \u2013 A function with no arguments that determines whether or not the\nscene should keep waiting.\n\nmax_time(float) \u2013 The maximum wait time in seconds.\n\nmax_time(float) \u2013 The maximum wait time in seconds.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "classMyScene(Scene):defconstruct(self):self.play(Write(Text(\"Hello World!\")))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSoundExample(Scene):# Source of sound under Creative Commons 0 License. https://freesound.org/people/Druminfected/sounds/250551/defconstruct(self):dot=Dot().set_color(GREEN)self.add_sound(\"click.wav\")self.add(dot)self.wait()self.add_sound(\"click.wav\")dot.set_color(BLUE)self.wait()self.add_sound(\"click.wav\")dot.set_color(RED)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SoundExample(Scene):\n    # Source of sound under Creative Commons 0 License. https://freesound.org/people/Druminfected/sounds/250551/\n    def construct(self):\n        dot = Dot().set_color(GREEN)\n        self.add_sound(\"click.wav\")\n        self.add(dot)\n        self.wait()\n        self.add_sound(\"click.wav\")\n        dot.set_color(BLUE)\n        self.wait()\n        self.add_sound(\"click.wav\")\n        dot.set_color(RED)\n        self.wait()",
+      "language": "python",
+      "context": "Example: SoundExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "classSubcaptionExample(Scene):defconstruct(self):square=Square()circle=Circle()# first option: via the add_subcaption methodself.add_subcaption(\"Hello square!\",duration=1)self.play(Create(square))# second option: within the call to Scene.playself.play(Transform(square,circle),subcaption=\"The square transforms.\")",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "classMyScene(Scene):defconstruct(self):self.play(Write(Text(\"Hello World!\")))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Scene",
+      "class_name": null,
+      "parameters": [
+        "renderer=None"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "_get_animation_time_progression",
+      "class_name": null,
+      "parameters": [
+        "animations"
+      ],
+      "return_type": null,
+      "description": "You will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use."
+    },
+    {
+      "name": "add",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Mobjects will be displayed, from background to\nforeground in the order with which they are added."
+    },
+    {
+      "name": "add_foreground_mobject",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Adds a single mobject to the foreground, and internally to the list\nforeground_mobjects, and mobjects."
+    },
+    {
+      "name": "add_foreground_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Adds mobjects to the foreground, and internally to the list\nforeground_mobjects, and mobjects."
+    },
+    {
+      "name": "add_sound",
+      "class_name": null,
+      "parameters": [
+        "sound_file"
+      ],
+      "return_type": null,
+      "description": "This method is used to add a sound to the animation."
+    },
+    {
+      "name": "add_subcaption",
+      "class_name": null,
+      "parameters": [
+        "content"
+      ],
+      "return_type": null,
+      "description": "Adds an entry in the corresponding subcaption file\nat the current time stamp."
+    },
+    {
+      "name": "add_updater",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "Add an update function to the scene."
+    },
+    {
+      "name": "begin_animations",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Start the animations of the scene."
+    },
+    {
+      "name": "bring_to_back",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Removes the mobject from the scene and\nadds them to the back of the scene."
+    },
+    {
+      "name": "bring_to_front",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Adds the passed mobjects to the scene again,\npushing them to he front of the scene."
+    },
+    {
+      "name": "clear",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Removes all mobjects present in self.mobjects\nand self.foreground_mobjects from the scene."
+    },
+    {
+      "name": "compile_animation_data",
+      "class_name": null,
+      "parameters": [
+        "*animations"
+      ],
+      "return_type": null,
+      "description": "Given a list of animations, compile the corresponding\nstatic and moving mobjects, and gather the animation durations."
+    },
+    {
+      "name": "compile_animations",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Creates _MethodAnimations from any _AnimationBuilders and updates animation\nkwargs with kwargs passed to play()."
+    },
+    {
+      "name": "construct",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Add content to the Scene."
+    },
+    {
+      "name": "get_attrs",
+      "class_name": null,
+      "parameters": [
+        "*keys"
+      ],
+      "return_type": null,
+      "description": "Gets attributes of a scene given the attribute\u2019s identifier/name."
+    },
+    {
+      "name": "get_mobject_family_members",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns list of family-members of all mobjects in scene.\nIf a Circle() and a VGroup(Rectangle(),Triangle()) were added,\nit returns not only the Circle(), Rectangle() and Triangle(), but\nalso the VGroup() object."
+    },
+    {
+      "name": "get_moving_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*animations"
+      ],
+      "return_type": null,
+      "description": "Gets all moving mobjects in the passed animation(s)."
+    },
+    {
+      "name": "get_restructured_mobject_list",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Given a list of mobjects and a list of mobjects to be removed, this\nfilters out the removable mobjects from the list of mobjects."
+    },
+    {
+      "name": "get_run_time",
+      "class_name": null,
+      "parameters": [
+        "animations"
+      ],
+      "return_type": null,
+      "description": "Gets the total run time for a list of animations."
+    },
+    {
+      "name": "get_time_progression",
+      "class_name": null,
+      "parameters": [
+        "run_time"
+      ],
+      "return_type": null,
+      "description": "You will hardly use this when making your own animations.\nThis method is for Manim\u2019s internal use."
+    },
+    {
+      "name": "get_top_level_mobjects",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns all mobjects which are not submobjects."
+    },
+    {
+      "name": "interactive_embed",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Like embed(), but allows for screen interaction."
+    },
+    {
+      "name": "is_current_animation_frozen_frame",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns whether the current animation produces a static frame (generally a Wait)."
+    },
+    {
+      "name": "next_section",
+      "class_name": null,
+      "parameters": [
+        "name='unnamed'"
+      ],
+      "return_type": null,
+      "description": "Create separation here; the last section gets finished and a new one gets created.skip_animationsskips the rendering of all animations in this section.\nRefer tothe documentationon how to use sections."
+    },
+    {
+      "name": "pause",
+      "class_name": null,
+      "parameters": [
+        "duration=1.0"
+      ],
+      "return_type": null,
+      "description": "Pauses the scene (i.e., displays a frozen frame)."
+    },
+    {
+      "name": "play",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Plays an animation in this scene."
+    },
+    {
+      "name": "play_internal",
+      "class_name": null,
+      "parameters": [
+        "skip_rendering=False"
+      ],
+      "return_type": null,
+      "description": "This method is used to prep the animations for rendering,\napply the arguments and parameters required to them,\nrender them, and write them to the video file."
+    },
+    {
+      "name": "remove",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Removes mobjects in the passed list of mobjects\nfrom the scene and the foreground, by removing them\nfrom \u201cmobjects\u201d and \u201cforeground_mobjects\u201d"
+    },
+    {
+      "name": "remove_foreground_mobject",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Removes a single mobject from the foreground, and internally from the list\nforeground_mobjects."
+    },
+    {
+      "name": "remove_foreground_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*to_remove"
+      ],
+      "return_type": null,
+      "description": "Removes mobjects from the foreground, and internally from the list\nforeground_mobjects."
+    },
+    {
+      "name": "remove_updater",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "Remove an update function from the scene."
+    },
+    {
+      "name": "render",
+      "class_name": null,
+      "parameters": [
+        "preview=False"
+      ],
+      "return_type": null,
+      "description": "Renders this Scene."
+    },
+    {
+      "name": "replace",
+      "class_name": null,
+      "parameters": [
+        "old_mobject"
+      ],
+      "return_type": null,
+      "description": "Replace one mobject in the scene with another, preserving draw order."
+    },
+    {
+      "name": "restructure_mobjects",
+      "class_name": null,
+      "parameters": [
+        "to_remove"
+      ],
+      "return_type": null,
+      "description": "If your scene has a Group(), and you removed a mobject from the Group,\nthis dissolves the group and puts the rest of the mobjects directly\nin self.mobjects or self.foreground_mobjects."
+    },
+    {
+      "name": "setup",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called."
+    },
+    {
+      "name": "should_update_mobjects",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns True if the mobjects of this scene should be updated."
+    },
+    {
+      "name": "tear_down",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This is meant to be implemented by any scenes which\nare commonly subclassed, and have some common method\nto be invoked before the scene ends."
+    },
+    {
+      "name": "time",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The time since the start of the scene."
+    },
+    {
+      "name": "update_mobjects",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Begins updating all mobjects in the Scene."
+    },
+    {
+      "name": "update_self",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Run all scene updater functions."
+    },
+    {
+      "name": "wait",
+      "class_name": null,
+      "parameters": [
+        "duration=1.0"
+      ],
+      "return_type": null,
+      "description": "Plays a \u201cno operation\u201d animation."
+    },
+    {
+      "name": "wait_until",
+      "class_name": null,
+      "parameters": [
+        "stop_condition"
+      ],
+      "return_type": null,
+      "description": "Wait until a condition is satisfied, up to a given maximum duration."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Square",
+    "Line",
+    "Create",
+    "Write",
+    "VGroup",
+    "Tex",
+    "Transform",
+    "Camera",
+    "Text",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

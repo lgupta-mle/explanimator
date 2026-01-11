@@ -1,0 +1,24 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.autocolor_directive.html",
+  "title": "autocolor_directive\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "autocolor_directive\u00b6\n\nA directive for documenting colors in Manim.\n\nClasses\n\nManimColorModuleDocumenter\n\nFunctions\n\nsetup(app)[source]\u00b6\n\nParameters:app(Sphinx)Return type:None\n\nParameters:\n\napp(Sphinx)\n\napp(Sphinx)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "setup",
+      "class_name": null,
+      "parameters": [
+        "app"
+      ],
+      "return_type": null,
+      "description": "app(Sphinx)"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "graph"
+  ]
+}

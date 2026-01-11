@@ -1,0 +1,60 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.Annulus.html",
+  "title": "Annulus\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Annulus\u00b6\n\nQualified name:manim.mobject.geometry.arc.Annulus\n\nclassAnnulus(inner_radius=1,outer_radius=2,fill_opacity=1,stroke_width=0,color=ManimColor('#FFFFFF'),mark_paths_closed=False,**kwargs)[source]\u00b6\n\nBases:CircleRegion between two concentricCircles.Parameters:inner_radius(float) \u2013 The radius of the innerCircle.outer_radius(float) \u2013 The radius of the outerCircle.kwargs(Any) \u2013 Additional arguments to be passed toAnnulusfill_opacity(float)stroke_width(float)color(ManimColor)mark_paths_closed(bool)ExamplesExample: AnnulusExample\u00b6frommanimimport*classAnnulusExample(Scene):defconstruct(self):annulus_1=Annulus(inner_radius=0.5,outer_radius=1).shift(UP)annulus_2=Annulus(inner_radius=0.3,outer_radius=0.6,color=RED).next_to(annulus_1,DOWN)self.add(annulus_1,annulus_2)class AnnulusExample(Scene):\n    def construct(self):\n        annulus_1 = Annulus(inner_radius=0.5, outer_radius=1).shift(UP)\n        annulus_2 = Annulus(inner_radius=0.3, outer_radius=0.6, color=RED).next_to(annulus_1, DOWN)\n        self.add(annulus_1, annulus_2)Methodsgenerate_pointsInitializespointsand therefore the shape.init_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(inner_radius=1,outer_radius=2,fill_opacity=1,stroke_width=0,color=ManimColor('#FFFFFF'),mark_paths_closed=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:inner_radius(float)outer_radius(float)fill_opacity(float)stroke_width(float)color(ParsableManimColor)mark_paths_closed(bool)kwargs(Any)Return type:Nonegenerate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nBases:Circle\n\nRegion between two concentricCircles.\n\nParameters:\n\ninner_radius(float) \u2013 The radius of the innerCircle.outer_radius(float) \u2013 The radius of the outerCircle.kwargs(Any) \u2013 Additional arguments to be passed toAnnulusfill_opacity(float)stroke_width(float)color(ManimColor)mark_paths_closed(bool)\n\ninner_radius(float) \u2013 The radius of the innerCircle.\n\ninner_radius(float) \u2013 The radius of the innerCircle.\n\nouter_radius(float) \u2013 The radius of the outerCircle.\n\nouter_radius(float) \u2013 The radius of the outerCircle.\n\nkwargs(Any) \u2013 Additional arguments to be passed toAnnulus\n\nkwargs(Any) \u2013 Additional arguments to be passed toAnnulus\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nmark_paths_closed(bool)\n\nmark_paths_closed(bool)\n\nExamples\n\nExample: AnnulusExample\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(inner_radius=1,outer_radius=2,fill_opacity=1,stroke_width=0,color=ManimColor('#FFFFFF'),mark_paths_closed=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:inner_radius(float)outer_radius(float)fill_opacity(float)stroke_width(float)color(ParsableManimColor)mark_paths_closed(bool)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ninner_radius(float)outer_radius(float)fill_opacity(float)stroke_width(float)color(ParsableManimColor)mark_paths_closed(bool)kwargs(Any)\n\ninner_radius(float)\n\ninner_radius(float)\n\nouter_radius(float)\n\nouter_radius(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nmark_paths_closed(bool)\n\nmark_paths_closed(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classAnnulusExample(Scene):defconstruct(self):annulus_1=Annulus(inner_radius=0.5,outer_radius=1).shift(UP)annulus_2=Annulus(inner_radius=0.3,outer_radius=0.6,color=RED).next_to(annulus_1,DOWN)self.add(annulus_1,annulus_2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class AnnulusExample(Scene):\n    def construct(self):\n        annulus_1 = Annulus(inner_radius=0.5, outer_radius=1).shift(UP)\n        annulus_2 = Annulus(inner_radius=0.3, outer_radius=0.6, color=RED).next_to(annulus_1, DOWN)\n        self.add(annulus_1, annulus_2)",
+      "language": "python",
+      "context": "Example: AnnulusExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Annulus",
+      "class_name": null,
+      "parameters": [
+        "inner_radius=1"
+      ],
+      "return_type": null,
+      "description": "Bases:Circle"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "inner_radius=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

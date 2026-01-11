@@ -1,0 +1,68 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.SpiralIn.html",
+  "title": "SpiralIn\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SpiralIn\u00b6\n\nQualified name:manim.animation.creation.SpiralIn\n\nclassSpiralIn(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationCreate the Mobject with sub-Mobjects flying in on spiral trajectories.Parameters:shapes(Mobject) \u2013 The Mobject on which to be operated.scale_factor(float) \u2013 The factor used for scaling the effect.fade_in_fraction\u2013 Fractional duration of initial fade-in of sub-Mobjects as they fly inward.ExamplesExample: SpiralInExample\u00b6frommanimimport*classSpiralInExample(Scene):defconstruct(self):pi=MathTex(r\"\\pi\").scale(7)pi.shift(2.25*LEFT+1.5*UP)circle=Circle(color=GREEN_C,fill_opacity=1).shift(LEFT)square=Square(color=BLUE_D,fill_opacity=1).shift(UP)shapes=VGroup(pi,circle,square)self.play(SpiralIn(shapes))class SpiralInExample(Scene):\n    def construct(self):\n        pi = MathTex(r\"\\pi\").scale(7)\n        pi.shift(2.25 * LEFT + 1.5 * UP)\n        circle = Circle(color=GREEN_C, fill_opacity=1).shift(LEFT)\n        square = Square(color=BLUE_D, fill_opacity=1).shift(UP)\n        shapes = VGroup(pi, circle, square)\n        self.play(SpiralIn(shapes))Methodsinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.Attributesrun_time_original__init__(shapes,scale_factor=8,fade_in_fraction=0.3,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:shapes(Mobject)scale_factor(float)Return type:Noneinterpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:Animation\n\nCreate the Mobject with sub-Mobjects flying in on spiral trajectories.\n\nParameters:\n\nshapes(Mobject) \u2013 The Mobject on which to be operated.scale_factor(float) \u2013 The factor used for scaling the effect.fade_in_fraction\u2013 Fractional duration of initial fade-in of sub-Mobjects as they fly inward.\n\nshapes(Mobject) \u2013 The Mobject on which to be operated.\n\nshapes(Mobject) \u2013 The Mobject on which to be operated.\n\nscale_factor(float) \u2013 The factor used for scaling the effect.\n\nscale_factor(float) \u2013 The factor used for scaling the effect.\n\nfade_in_fraction\u2013 Fractional duration of initial fade-in of sub-Mobjects as they fly inward.\n\nfade_in_fraction\u2013 Fractional duration of initial fade-in of sub-Mobjects as they fly inward.\n\nExamples\n\nExample: SpiralInExample\u00b6\n\nMethods\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nAttributes\n\nrun_time\n\n_original__init__(shapes,scale_factor=8,fade_in_fraction=0.3,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:shapes(Mobject)scale_factor(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nshapes(Mobject)scale_factor(float)\n\nshapes(Mobject)\n\nshapes(Mobject)\n\nscale_factor(float)\n\nscale_factor(float)\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classSpiralInExample(Scene):defconstruct(self):pi=MathTex(r\"\\pi\").scale(7)pi.shift(2.25*LEFT+1.5*UP)circle=Circle(color=GREEN_C,fill_opacity=1).shift(LEFT)square=Square(color=BLUE_D,fill_opacity=1).shift(UP)shapes=VGroup(pi,circle,square)self.play(SpiralIn(shapes))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpiralInExample(Scene):\n    def construct(self):\n        pi = MathTex(r\"\\pi\").scale(7)\n        pi.shift(2.25 * LEFT + 1.5 * UP)\n        circle = Circle(color=GREEN_C, fill_opacity=1).shift(LEFT)\n        square = Square(color=BLUE_D, fill_opacity=1).shift(UP)\n        shapes = VGroup(pi, circle, square)\n        self.play(SpiralIn(shapes))",
+      "language": "python",
+      "context": "Example: SpiralInExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "SpiralIn",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "shapes"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Create",
+    "VGroup",
+    "Tex",
+    "MathTex",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.html#modules",
+  "title": "geometry\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "geometry\u00b6\n\nVarious geometric Mobjects.\n\nModules\u00b6\n\narc\n\nMobjects that are curved.\n\nboolean_ops\n\nBoolean operations for two-dimensional mobjects.\n\nlabeled\n\nMobjects that inherit from lines and contain a label along the length.\n\nline\n\nMobjects that are lines or variations of them.\n\npolygram\n\nMobjects that are simple geometric shapes.\n\nshape_matchers\n\nMobjects used to mark and annotate other mobjects.\n\ntips\n\nA collection of tip mobjects for use withTipableVMobject.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "geometry"
+  ]
+}

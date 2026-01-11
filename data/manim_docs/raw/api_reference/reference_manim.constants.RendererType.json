@@ -1,0 +1,48 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.constants.RendererType.html",
+  "title": "RendererType\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "RendererType\u00b6\n\nQualified name:manim.constants.RendererType\n\nclassRendererType(*values)[source]\u00b6\n\nBases:EnumAn enumeration of all renderer types that can be assigned to\ntheconfig.rendererattribute.Manim\u2019s configuration allows assigning string values to the renderer\nsetting, the values are then replaced by the corresponding enum object.\nIn other words, you can run:config.renderer=\"opengl\"and checking the renderer afterwards reveals that the attribute has\nassumed the value:<RendererType.OPENGL:'opengl'>AttributesCAIROA renderer based on the cairo backend.OPENGLAn OpenGL-based renderer.CAIRO='cairo'\u00b6A renderer based on the cairo backend.OPENGL='opengl'\u00b6An OpenGL-based renderer.\n\nBases:Enum\n\nAn enumeration of all renderer types that can be assigned to\ntheconfig.rendererattribute.\n\nManim\u2019s configuration allows assigning string values to the renderer\nsetting, the values are then replaced by the corresponding enum object.\nIn other words, you can run:\n\nand checking the renderer afterwards reveals that the attribute has\nassumed the value:\n\nAttributes\n\nCAIRO\n\nA renderer based on the cairo backend.\n\nOPENGL\n\nAn OpenGL-based renderer.\n\nCAIRO='cairo'\u00b6\n\nA renderer based on the cairo backend.\n\nA renderer based on the cairo backend.\n\nOPENGL='opengl'\u00b6\n\nAn OpenGL-based renderer.\n\nAn OpenGL-based renderer.",
+  "code_examples": [
+    {
+      "code": "config.renderer=\"opengl\"",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "<RendererType.OPENGL:'opengl'>",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "RendererType",
+      "class_name": null,
+      "parameters": [
+        "*values"
+      ],
+      "return_type": null,
+      "description": "Bases:Enum"
+    },
+    {
+      "name": "CAIRO",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A renderer based on the cairo backend."
+    },
+    {
+      "name": "OPENGL",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "An OpenGL-based renderer."
+    }
+  ],
+  "related_classes": [],
+  "tags": []
+}

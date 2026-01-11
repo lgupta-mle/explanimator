@@ -1,0 +1,42 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.data_structures.MethodWithArgs.html",
+  "title": "MethodWithArgs\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MethodWithArgs\u00b6\n\nQualified name:manim.data\\_structures.MethodWithArgs\n\nclassMethodWithArgs(method,args,kwargs)[source]\u00b6\n\nBases:objectObject containing amethodwhich is intended to be called later\nwith the positional argumentsargsand the keyword argumentskwargs.Parameters:method(MethodType)args(Iterable[Any])kwargs(dict[str,Any])method\u00b6A callable representing a method of some class.Type:MethodTypeargs\u00b6Positional arguments formethod.Type:Iterable[Any]kwargs\u00b6Keyword arguments formethod.Type:dict[str, Any]MethodsAttributesmethodargskwargs\n\nBases:object\n\nObject containing amethodwhich is intended to be called later\nwith the positional argumentsargsand the keyword argumentskwargs.\n\nParameters:\n\nmethod(MethodType)args(Iterable[Any])kwargs(dict[str,Any])\n\nmethod(MethodType)\n\nmethod(MethodType)\n\nargs(Iterable[Any])\n\nargs(Iterable[Any])\n\nkwargs(dict[str,Any])\n\nkwargs(dict[str,Any])\n\nmethod\u00b6\n\nA callable representing a method of some class.Type:MethodType\n\nA callable representing a method of some class.\n\nType:\n\nMethodType\n\nMethodType\n\nargs\u00b6\n\nPositional arguments formethod.Type:Iterable[Any]\n\nPositional arguments formethod.\n\nType:\n\nIterable[Any]\n\nIterable[Any]\n\nkwargs\u00b6\n\nKeyword arguments formethod.Type:dict[str, Any]\n\nKeyword arguments formethod.\n\nType:\n\ndict[str, Any]\n\ndict[str, Any]\n\nMethods\n\nAttributes\n\nmethod\n\nargs\n\nkwargs",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "MethodWithArgs",
+      "class_name": null,
+      "parameters": [
+        "method"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "method",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A callable representing a method of some class."
+    },
+    {
+      "name": "args",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Positional arguments formethod."
+    },
+    {
+      "name": "kwargs",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Keyword arguments formethod."
+    }
+  ],
+  "related_classes": [],
+  "tags": []
+}

@@ -1,0 +1,22 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.html",
+  "title": "three_dimensions\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "three_dimensions\u00b6\n\nThree-dimensional mobjects.\n\nClasses\n\nArrow3D\n\nAn arrow made out of a cylindrical line and a conical tip.\n\nCone\n\nA circular cone.\n\nCube\n\nA three-dimensional cube.\n\nCylinder\n\nA cylinder, defined by its height, radius and direction,\n\nDot3D\n\nA spherical dot.\n\nLine3D\n\nA cylindrical line, for use in ThreeDScene.\n\nPrism\n\nA right rectangular prism (or rectangular cuboid).\n\nSphere\n\nA three-dimensional sphere.\n\nSurface\n\nCreates a Parametric Surface using a checkerboard pattern.\n\nThreeDVMobject\n\nTorus\n\nA torus.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Line",
+    "Create",
+    "ThreeDScene",
+    "VMobject",
+    "Arrow",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "3d"
+  ]
+}

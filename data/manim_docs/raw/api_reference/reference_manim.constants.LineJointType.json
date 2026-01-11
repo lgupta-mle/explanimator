@@ -1,0 +1,45 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.constants.LineJointType.html",
+  "title": "LineJointType\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LineJointType\u00b6\n\nQualified name:manim.constants.LineJointType\n\nclassLineJointType(*values)[source]\u00b6\n\nBases:EnumCollection of available line joint types.See the example below for a visual illustration of the different\njoint types.ExamplesExample: LineJointVariants\u00b6frommanimimport*classLineJointVariants(Scene):defconstruct(self):mob=VMobject(stroke_width=20,color=GREEN).set_points_as_corners([np.array([-2,0,0]),np.array([0,0,0]),np.array([-2,1,0]),])lines=VGroup(*[mob.copy()for_inrange(len(LineJointType))])forline,joint_typeinzip(lines,LineJointType):line.joint_type=joint_typelines.arrange(RIGHT,buff=1)self.add(lines)forlineinlines:label=Text(line.joint_type.name).next_to(line,DOWN)self.add(label)class LineJointVariants(Scene):\n    def construct(self):\n        mob = VMobject(stroke_width=20, color=GREEN).set_points_as_corners([\n            np.array([-2, 0, 0]),\n            np.array([0, 0, 0]),\n            np.array([-2, 1, 0]),\n        ])\n        lines = VGroup(*[mob.copy() for _ in range(len(LineJointType))])\n        for line, joint_type in zip(lines, LineJointType):\n            line.joint_type = joint_type\n\n        lines.arrange(RIGHT, buff=1)\n        self.add(lines)\n        for line in lines:\n            label = Text(line.joint_type.name).next_to(line, DOWN)\n            self.add(label)AttributesAUTOROUNDBEVELMITER\n\nBases:Enum\n\nCollection of available line joint types.\n\nSee the example below for a visual illustration of the different\njoint types.\n\nExamples\n\nExample: LineJointVariants\u00b6\n\nAttributes\n\nAUTO\n\nROUND\n\nBEVEL\n\nMITER",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLineJointVariants(Scene):defconstruct(self):mob=VMobject(stroke_width=20,color=GREEN).set_points_as_corners([np.array([-2,0,0]),np.array([0,0,0]),np.array([-2,1,0]),])lines=VGroup(*[mob.copy()for_inrange(len(LineJointType))])forline,joint_typeinzip(lines,LineJointType):line.joint_type=joint_typelines.arrange(RIGHT,buff=1)self.add(lines)forlineinlines:label=Text(line.joint_type.name).next_to(line,DOWN)self.add(label)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LineJointVariants(Scene):\n    def construct(self):\n        mob = VMobject(stroke_width=20, color=GREEN).set_points_as_corners([\n            np.array([-2, 0, 0]),\n            np.array([0, 0, 0]),\n            np.array([-2, 1, 0]),\n        ])\n        lines = VGroup(*[mob.copy() for _ in range(len(LineJointType))])\n        for line, joint_type in zip(lines, LineJointType):\n            line.joint_type = joint_type\n\n        lines.arrange(RIGHT, buff=1)\n        self.add(lines)\n        for line in lines:\n            label = Text(line.joint_type.name).next_to(line, DOWN)\n            self.add(label)",
+      "language": "python",
+      "context": "Example: LineJointVariants\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LineJointType",
+      "class_name": null,
+      "parameters": [
+        "*values"
+      ],
+      "return_type": null,
+      "description": "Bases:Enum"
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VGroup",
+    "Tex",
+    "VMobject",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "text"
+  ]
+}

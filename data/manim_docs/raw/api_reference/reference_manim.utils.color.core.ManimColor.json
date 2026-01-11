@@ -1,0 +1,339 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.core.ManimColor.html",
+  "title": "ManimColor\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimColor\u00b6\n\nQualified name:manim.utils.color.core.ManimColor\n\nclassManimColor(value,alpha=1.0)[source]\u00b6\n\nBases:objectInternal representation of a color.TheManimColorclass is the main class for the representation of a color.\nIts internal representation is an array of 4 floats corresponding to a[r,g,b,a]value wherer,g,b,acan be between 0.0 and 1.0.This is done in order to reduce the amount of color inconsistencies by constantly\ncasting between integers and floats which introduces errors.The class can accept any value of typeParsableManimColori.e.ManimColor,int,str,RGB_Tuple_Int,RGB_Tuple_Float,RGBA_Tuple_Int,RGBA_Tuple_Float,RGB_Array_Int,RGB_Array_Float,RGBA_Array_Int,RGBA_Array_FloatManimColoritself only accepts singular values and will directly interpret\nthem into a single color if possible. Be careful when passing strings toManimColor: it can create a big overhead for the color processing.If you want to parse a list of colors, use theparse()method, which assumes\nthat you\u2019re going to pass a list of colors so that arrays will not be interpreted as\na single color.WarningIf you pass an array of numbers toparse(), it will interpret ther,g,b,anumbers in that array as colors: Instead of the expected\nsingular color, you will get an array with 4 colors.For conversion behaviors, see the_internalfunctions for further documentation.You can create aManimColorinstance via its classmethods. See the\nrespective methods for more info.mycolor=ManimColor.from_rgb((0,1,0.4,0.5))myothercolor=ManimColor.from_rgb((153,255,255))You can also convert between different color spaces:mycolor_hex=mycolor.to_hex()myoriginalcolor=ManimColor.from_hex(mycolor_hex).to_hsv()Parameters:value(ParsableManimColor|None) \u2013 Some representation of a color (e.g., a string or\na suitable tuple). The defaultNoneisBLACK.alpha(float) \u2013 The opacity of the color. By default, colors are\nfully opaque (value 1.0).MethodscontrastingReturn one of two colors, light or dark (by default white or black), that contrasts with the current color (depending on its luminance).darkerReturn a new color that is darker than the current color, i.e. interpolated withBLACK.from_hexCreate aManimColorfrom a hex string.from_hslCreate aManimColorfrom an HSL array.from_hsvCreate aManimColorfrom an HSV array.from_rgbCreate a ManimColor from an RGB array.from_rgbaCreate a ManimColor from an RGBA Array.gradientThis method is currently not implemented.interpolateInterpolate between the current and the givenManimColor, and return the result.intoConvert the current color into a different colorspace given byclass_type, without changing the_internal_value.invertReturn a new, linearly inverted version of thisManimColor(no inplace changes).lighterReturn a new color that is lighter than the current color, i.e. interpolated withWHITE.opacityCreate a newManimColorwith the given opacity and the same color values as before.parseParse one color as aManimColoror a sequence of colors as a list ofManimColor's.to_hexConvert theManimColorto a hexadecimal representation of the color.to_hslConvert theManimColorto an HSL array.to_hsvConvert theManimColorto an HSV array.to_int_rgbConvert the currentManimColorinto an RGB array of integers.to_int_rgbaConvert the current ManimColor into an RGBA array of integers.to_int_rgba_with_alphaConvert the currentManimColorinto an RGBA array of integers.to_integerConvert the currentManimColorinto an integer.to_rgbConvert the currentManimColorinto an RGB array of floats.to_rgbaConvert the currentManimColorinto an RGBA array of floats.to_rgba_with_alphaConvert the currentManimColorinto an RGBA array of floats.classmethod_construct_from_space(_space)[source]\u00b6This function is used as a proxy for constructing a color with an internal\nvalue. This can be used by subclasses to hook into the construction of new\nobjects using the internal value format.Parameters:_space(ndarray[tuple[Any,...],dtype[TypeAliasForwardRef('~manim.typing.ManimFloat')]]|tuple[float,float,float]|tuple[float,float,float,float])Return type:Selfclassmethod_from_internal(value)[source]\u00b6This method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor.The method constructs a new object of the given class by transforming the value\nin the internal format[r,g,b,a]into a format which the constructor of the\ncustom class can understand. Look atHSVfor an example.Parameters:value(ManimColorInternal)Return type:Selfstatic_internal_from_hex_string(hex_,alpha)[source]\u00b6Internal function for converting a hex string into the internal representation\nof aManimColor.WarningThis does not accept any prefixes like # or similar in front of the hex string.\nThis is just intended for the raw hex part.For internal use onlyParameters:hex\u2013 Hex string to be parsed.alpha(float) \u2013 Alpha value used for the color, if the color is only 3 bytes long. Otherwise,\nif the color is 4 bytes long, this parameter will not be used.hex_(str)Returns:Internal color representationReturn type:ManimColorInternalstatic_internal_from_int_rgb(rgb,alpha=1.0)[source]\u00b6Internal function for converting an RGB tuple of integers into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgb(IntRGBLike) \u2013 Integer RGB tuple to be parsedalpha(float) \u2013 Optional alpha value. Default is 1.0.Returns:Internal color representation.Return type:ManimColorInternalstatic_internal_from_int_rgba(rgba)[source]\u00b6Internal function for converting an RGBA tuple of integers into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgba(IntRGBALike) \u2013 Int RGBA tuple to be parsed.Returns:Internal color representation.Return type:ManimColorInternalstatic_internal_from_rgb(rgb,alpha=1.0)[source]\u00b6Internal function for converting a rgb tuple of floats into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgb(FloatRGBLike) \u2013 Float RGB tuple to be parsed.alpha(float) \u2013 Optional alpha value. Default is 1.0.Returns:Internal color representation.Return type:ManimColorInternalstatic_internal_from_rgba(rgba)[source]\u00b6Internal function for converting an RGBA tuple of floats into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgba(FloatRGBALike) \u2013 Int RGBA tuple to be parsed.Returns:Internal color representation.Return type:ManimColorInternalstatic_internal_from_string(name,alpha)[source]\u00b6Internal function for converting a string into the internal representation of\naManimColor. This is not used for hex strings: please refer to_internal_from_hex()for this functionality.For internal use onlyParameters:name(str) \u2013 The color name to be parsed into a color. Refer to the different color\nmodules in the documentation page to find the corresponding color names.alpha(float)Returns:Internal color representation.Return type:ManimColorInternalRaises:ValueError\u2013 If the color name is not present in Manim.property_internal_space:ndarray[tuple[Any,...],dtype[TypeAliasForwardRef('~manim.typing.ManimFloat')]]\u00b6This is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space.property_internal_value:ManimColorInternal\u00b6Return the internal value of the current Manim color[r,g,b,a]float\narray.Returns:Internal color representation.Return type:ManimColorInternalcontrasting(threshold=0.5,light=None,dark=None)[source]\u00b6Return one of two colors, light or dark (by default white or black),\nthat contrasts with the current color (depending on its luminance).\nThis is typically used to set text in a contrasting color that ensures\nit is readable against a background of the current color.Parameters:threshold(float) \u2013 The luminance threshold which dictates whether the current color is\nconsidered light or dark (and thus whether to return the dark or\nlight color, respectively). Default is 0.5.light(Self|None) \u2013 The light color to return if the current color is considered dark.\nDefault isNone: in this case, pureWHITEwill be returned.dark(Self|None) \u2013 The dark color to return if the current color is considered light,\nDefault isNone: in this case, pureBLACKwill be returned.Returns:The contrastingManimColor.Return type:ManimColordarker(blend=0.2)[source]\u00b6Return a new color that is darker than the current color, i.e.\ninterpolated withBLACK. The opacity is unchanged.Parameters:blend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure black). Default is 0.2, which results in a\nslightly darker color.Returns:The darkerManimColor.Return type:ManimColorSee alsolighter()classmethodfrom_hex(hex_str,alpha=1.0)[source]\u00b6Create aManimColorfrom a hex string.Parameters:hex_str(str) \u2013 The hex string to be converted.  The allowed prefixes for this string are#and0x. Currently, this method only supports 6 nibbles, i.e. only\nstrings in the format#XXXXXXor0xXXXXXX.alpha(float) \u2013 Alpha value to be used for the hex string. Default is 1.0.Returns:TheManimColorrepresented by the hex string.Return type:ManimColorclassmethodfrom_hsl(hsl,alpha=1.0)[source]\u00b6Create aManimColorfrom an HSL array.Parameters:hsl(FloatHSLLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.alpha(float) \u2013 The alpha value to be used. Default is 1.0.Returns:TheManimColorwith the corresponding RGB values to the given HSL\narray.Return type:ManimColorclassmethodfrom_hsv(hsv,alpha=1.0)[source]\u00b6Create aManimColorfrom an HSV array.Parameters:hsv(FloatHSVLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.alpha(float) \u2013 The alpha value to be used. Default is 1.0.Returns:TheManimColorwith the corresponding RGB values to the given HSV\narray.Return type:ManimColorclassmethodfrom_rgb(rgb,alpha=1.0)[source]\u00b6Create a ManimColor from an RGB array. Automagically decides which type it\nis:intorfloat.WarningPlease make sure that your elements are not floats if you want integers. A5.0will result in the input being interpreted as if it was an RGB float\narray with the value5.0and not the integer5.Parameters:rgb(FloatRGBLike|IntRGBLike) \u2013 Any iterable of 3 floats or 3 integers.alpha(float) \u2013 Alpha value to be used in the color. Default is 1.0.Returns:TheManimColorwhich corresponds to the givenrgb.Return type:ManimColorclassmethodfrom_rgba(rgba)[source]\u00b6Create a ManimColor from an RGBA Array. Automagically decides which type it\nis:intorfloat.WarningPlease make sure that your elements are not floats if you want integers. A5.0will result in the input being interpreted as if it was a float RGB\narray with the float5.0and not the integer5.Parameters:rgba(FloatRGBALike|IntRGBALike) \u2013 Any iterable of 4 floats or 4 integers.Returns:TheManimColorcorresponding to the givenrgba.Return type:ManimColorstaticgradient(colors,length)[source]\u00b6This method is currently not implemented. Refer tocolor_gradient()for\na working implementation for now.Parameters:colors(list[ManimColor])length(int)Return type:ManimColor| list[ManimColor]interpolate(other,alpha)[source]\u00b6Interpolate between the current and the givenManimColor, and return\nthe result.Parameters:other(Self) \u2013 The otherManimColorto be used for interpolation.alpha(float) \u2013 A point on the line in RGBA colorspace connecting the two colors, i.e. the\ninterpolation point. 0.0 corresponds to the currentManimColorand\n1.0 corresponds to the otherManimColor.Returns:The interpolatedManimColor.Return type:ManimColorinto(class_type)[source]\u00b6Convert the current color into a different colorspace given byclass_type,\nwithout changing the_internal_value.Parameters:class_type(type[ManimColorT]) \u2013 The class that is used for conversion. It must be a subclass ofManimColorwhich respects the specification HSV, RGBA, \u2026Returns:A new color object of typeclass_typeand the same_internal_valueas the original color.Return type:ManimColorTinvert(with_alpha=False)[source]\u00b6Return a new, linearly inverted version of thisManimColor(no\ninplace changes).Parameters:with_alpha(bool) \u2013IfTrue, the alpha value will be inverted too. Default isFalse.NoteSettingwith_alpha=Truecan result in unintended behavior where\nobjects are not displayed because their new alpha value is suddenly 0 or\nvery low.Returns:The linearly invertedManimColor.Return type:ManimColorlighter(blend=0.2)[source]\u00b6Return a new color that is lighter than the current color, i.e.\ninterpolated withWHITE. The opacity is unchanged.Parameters:blend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure white). Default is 0.2, which results in a\nslightly lighter color.Returns:The lighterManimColor.Return type:ManimColorSee alsodarker()opacity(opacity)[source]\u00b6Create a newManimColorwith the given opacity and the same color\nvalues as before.Parameters:opacity(float) \u2013 The new opacity value to be used.Returns:The newManimColorwith the same color values and the new opacity.Return type:ManimColorclassmethodparse(color:ParsableManimColor|None,alpha:float=1.0)\u2192Self[source]\u00b6classmethodparse(color:Sequence[ParsableManimColor],alpha:float=1.0)\u2192list[Self]Parse one color as aManimColoror a sequence of colors as a list ofManimColor\u2019s.Parameters:color\u2013 The color or list of colors to parse. Note that this function can not accept\ntuples: it will assume that you meanSequence[ParsableManimColor]and will\nreturn alist[ManimColor].alpha\u2013 The alpha (opacity) value to use for the passed color(s).Returns:Either a list of colors or a singular color, depending on the input.Return type:ManimColor| list[ManimColor]to_hex(with_alpha=False)[source]\u00b6Convert theManimColorto a hexadecimal representation of the color.Parameters:with_alpha(bool) \u2013 IfTrue, append 2 extra characters to the hex string which represent the\nalpha value of the color between 0 and 255. Default isFalse.Returns:A hex string starting with a#, with either 6 or 8 nibbles depending on\nthewith_alphaparameter. By default, it has 6 nibbles, i.e.#XXXXXX.Return type:strto_hsl()[source]\u00b6Convert theManimColorto an HSL array.NoteBe careful: this returns an array in the form[h,s,l], where the\nelements are floats. This might be confusing, because RGB can also be an array\nof floats. You might want to annotate the usage of this function in your code\nby typing your HSL array variables asHSL_Array_Floatin order to\ndifferentiate them from RGB arrays.Returns:An HSL array of 3 floats from 0.0 to 1.0.Return type:HSL_Array_Floatto_hsv()[source]\u00b6Convert theManimColorto an HSV array.NoteBe careful: this returns an array in the form[h,s,v], where the\nelements are floats. This might be confusing, because RGB can also be an array\nof floats. You might want to annotate the usage of this function in your code\nby typing your HSV array variables asHSV_Array_Floatin order to\ndifferentiate them from RGB arrays.Returns:An HSV array of 3 floats from 0.0 to 1.0.Return type:HSV_Array_Floatto_int_rgb()[source]\u00b6Convert the currentManimColorinto an RGB array of integers.Returns:RGB array of 3 integers from 0 to 255.Return type:RGB_Array_Intto_int_rgba()[source]\u00b6Convert the current ManimColor into an RGBA array of integers.Returns:RGBA array of 4 integers from 0 to 255.Return type:RGBA_Array_Intto_int_rgba_with_alpha(alpha)[source]\u00b6Convert the currentManimColorinto an RGBA array of integers. This\nis similar toto_int_rgba(), but you can change the alpha value.Parameters:alpha(float) \u2013 Alpha value to be used for the return value. Pass a float between 0.0 and\n1.0: it will automatically be scaled to an integer between 0 and 255.Returns:RGBA array of 4 integers from 0 to 255.Return type:RGBA_Array_Intto_integer()[source]\u00b6Convert the currentManimColorinto an integer.WarningThis will return only the RGB part of the color.Returns:Integer representation of the color.Return type:intto_rgb()[source]\u00b6Convert the currentManimColorinto an RGB array of floats.Returns:RGB array of 3 floats from 0.0 to 1.0.Return type:RGB_Array_Floatto_rgba()[source]\u00b6Convert the currentManimColorinto an RGBA array of floats.Returns:RGBA array of 4 floats from 0.0 to 1.0.Return type:RGBA_Array_Floatto_rgba_with_alpha(alpha)[source]\u00b6Convert the currentManimColorinto an RGBA array of floats. This is\nsimilar toto_rgba(), but you can change the alpha value.Parameters:alpha(float) \u2013 Alpha value to be used in the return value.Returns:RGBA array of 4 floats from 0.0 to 1.0.Return type:RGBA_Array_Float\n\nBases:object\n\nInternal representation of a color.\n\nTheManimColorclass is the main class for the representation of a color.\nIts internal representation is an array of 4 floats corresponding to a[r,g,b,a]value wherer,g,b,acan be between 0.0 and 1.0.\n\nThis is done in order to reduce the amount of color inconsistencies by constantly\ncasting between integers and floats which introduces errors.\n\nThe class can accept any value of typeParsableManimColori.e.\n\nManimColor,int,str,RGB_Tuple_Int,RGB_Tuple_Float,RGBA_Tuple_Int,RGBA_Tuple_Float,RGB_Array_Int,RGB_Array_Float,RGBA_Array_Int,RGBA_Array_Float\n\nManimColoritself only accepts singular values and will directly interpret\nthem into a single color if possible. Be careful when passing strings toManimColor: it can create a big overhead for the color processing.\n\nIf you want to parse a list of colors, use theparse()method, which assumes\nthat you\u2019re going to pass a list of colors so that arrays will not be interpreted as\na single color.\n\nWarning\n\nIf you pass an array of numbers toparse(), it will interpret ther,g,b,anumbers in that array as colors: Instead of the expected\nsingular color, you will get an array with 4 colors.\n\nFor conversion behaviors, see the_internalfunctions for further documentation.\n\nYou can create aManimColorinstance via its classmethods. See the\nrespective methods for more info.\n\nYou can also convert between different color spaces:\n\nParameters:\n\nvalue(ParsableManimColor|None) \u2013 Some representation of a color (e.g., a string or\na suitable tuple). The defaultNoneisBLACK.alpha(float) \u2013 The opacity of the color. By default, colors are\nfully opaque (value 1.0).\n\nvalue(ParsableManimColor|None) \u2013 Some representation of a color (e.g., a string or\na suitable tuple). The defaultNoneisBLACK.\n\nvalue(ParsableManimColor|None) \u2013 Some representation of a color (e.g., a string or\na suitable tuple). The defaultNoneisBLACK.\n\nalpha(float) \u2013 The opacity of the color. By default, colors are\nfully opaque (value 1.0).\n\nalpha(float) \u2013 The opacity of the color. By default, colors are\nfully opaque (value 1.0).\n\nMethods\n\ncontrasting\n\nReturn one of two colors, light or dark (by default white or black), that contrasts with the current color (depending on its luminance).\n\ndarker\n\nReturn a new color that is darker than the current color, i.e. interpolated withBLACK.\n\nfrom_hex\n\nCreate aManimColorfrom a hex string.\n\nfrom_hsl\n\nCreate aManimColorfrom an HSL array.\n\nfrom_hsv\n\nCreate aManimColorfrom an HSV array.\n\nfrom_rgb\n\nCreate a ManimColor from an RGB array.\n\nfrom_rgba\n\nCreate a ManimColor from an RGBA Array.\n\ngradient\n\nThis method is currently not implemented.\n\ninterpolate\n\nInterpolate between the current and the givenManimColor, and return the result.\n\ninto\n\nConvert the current color into a different colorspace given byclass_type, without changing the_internal_value.\n\ninvert\n\nReturn a new, linearly inverted version of thisManimColor(no inplace changes).\n\nlighter\n\nReturn a new color that is lighter than the current color, i.e. interpolated withWHITE.\n\nopacity\n\nCreate a newManimColorwith the given opacity and the same color values as before.\n\nparse\n\nParse one color as aManimColoror a sequence of colors as a list ofManimColor's.\n\nto_hex\n\nConvert theManimColorto a hexadecimal representation of the color.\n\nto_hsl\n\nConvert theManimColorto an HSL array.\n\nto_hsv\n\nConvert theManimColorto an HSV array.\n\nto_int_rgb\n\nConvert the currentManimColorinto an RGB array of integers.\n\nto_int_rgba\n\nConvert the current ManimColor into an RGBA array of integers.\n\nto_int_rgba_with_alpha\n\nConvert the currentManimColorinto an RGBA array of integers.\n\nto_integer\n\nConvert the currentManimColorinto an integer.\n\nto_rgb\n\nConvert the currentManimColorinto an RGB array of floats.\n\nto_rgba\n\nConvert the currentManimColorinto an RGBA array of floats.\n\nto_rgba_with_alpha\n\nConvert the currentManimColorinto an RGBA array of floats.\n\nclassmethod_construct_from_space(_space)[source]\u00b6\n\nThis function is used as a proxy for constructing a color with an internal\nvalue. This can be used by subclasses to hook into the construction of new\nobjects using the internal value format.Parameters:_space(ndarray[tuple[Any,...],dtype[TypeAliasForwardRef('~manim.typing.ManimFloat')]]|tuple[float,float,float]|tuple[float,float,float,float])Return type:Self\n\nThis function is used as a proxy for constructing a color with an internal\nvalue. This can be used by subclasses to hook into the construction of new\nobjects using the internal value format.\n\nParameters:\n\n_space(ndarray[tuple[Any,...],dtype[TypeAliasForwardRef('~manim.typing.ManimFloat')]]|tuple[float,float,float]|tuple[float,float,float,float])\n\n_space(ndarray[tuple[Any,...],dtype[TypeAliasForwardRef('~manim.typing.ManimFloat')]]|tuple[float,float,float]|tuple[float,float,float,float])\n\nReturn type:\n\nSelf\n\nSelf\n\nclassmethod_from_internal(value)[source]\u00b6\n\nThis method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor.The method constructs a new object of the given class by transforming the value\nin the internal format[r,g,b,a]into a format which the constructor of the\ncustom class can understand. Look atHSVfor an example.Parameters:value(ManimColorInternal)Return type:Self\n\nThis method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor.\n\nThe method constructs a new object of the given class by transforming the value\nin the internal format[r,g,b,a]into a format which the constructor of the\ncustom class can understand. Look atHSVfor an example.\n\nParameters:\n\nvalue(ManimColorInternal)\n\nvalue(ManimColorInternal)\n\nReturn type:\n\nSelf\n\nSelf\n\nstatic_internal_from_hex_string(hex_,alpha)[source]\u00b6\n\nInternal function for converting a hex string into the internal representation\nof aManimColor.WarningThis does not accept any prefixes like # or similar in front of the hex string.\nThis is just intended for the raw hex part.For internal use onlyParameters:hex\u2013 Hex string to be parsed.alpha(float) \u2013 Alpha value used for the color, if the color is only 3 bytes long. Otherwise,\nif the color is 4 bytes long, this parameter will not be used.hex_(str)Returns:Internal color representationReturn type:ManimColorInternal\n\nInternal function for converting a hex string into the internal representation\nof aManimColor.\n\nWarning\n\nThis does not accept any prefixes like # or similar in front of the hex string.\nThis is just intended for the raw hex part.\n\nFor internal use only\n\nParameters:\n\nhex\u2013 Hex string to be parsed.alpha(float) \u2013 Alpha value used for the color, if the color is only 3 bytes long. Otherwise,\nif the color is 4 bytes long, this parameter will not be used.hex_(str)\n\nhex\u2013 Hex string to be parsed.\n\nhex\u2013 Hex string to be parsed.\n\nalpha(float) \u2013 Alpha value used for the color, if the color is only 3 bytes long. Otherwise,\nif the color is 4 bytes long, this parameter will not be used.\n\nalpha(float) \u2013 Alpha value used for the color, if the color is only 3 bytes long. Otherwise,\nif the color is 4 bytes long, this parameter will not be used.\n\nhex_(str)\n\nhex_(str)\n\nReturns:\n\nInternal color representation\n\nInternal color representation\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\nstatic_internal_from_int_rgb(rgb,alpha=1.0)[source]\u00b6\n\nInternal function for converting an RGB tuple of integers into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgb(IntRGBLike) \u2013 Integer RGB tuple to be parsedalpha(float) \u2013 Optional alpha value. Default is 1.0.Returns:Internal color representation.Return type:ManimColorInternal\n\nInternal function for converting an RGB tuple of integers into the internal\nrepresentation of aManimColor.\n\nFor internal use only\n\nParameters:\n\nrgb(IntRGBLike) \u2013 Integer RGB tuple to be parsedalpha(float) \u2013 Optional alpha value. Default is 1.0.\n\nrgb(IntRGBLike) \u2013 Integer RGB tuple to be parsed\n\nrgb(IntRGBLike) \u2013 Integer RGB tuple to be parsed\n\nalpha(float) \u2013 Optional alpha value. Default is 1.0.\n\nalpha(float) \u2013 Optional alpha value. Default is 1.0.\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\nstatic_internal_from_int_rgba(rgba)[source]\u00b6\n\nInternal function for converting an RGBA tuple of integers into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgba(IntRGBALike) \u2013 Int RGBA tuple to be parsed.Returns:Internal color representation.Return type:ManimColorInternal\n\nInternal function for converting an RGBA tuple of integers into the internal\nrepresentation of aManimColor.\n\nFor internal use only\n\nParameters:\n\nrgba(IntRGBALike) \u2013 Int RGBA tuple to be parsed.\n\nrgba(IntRGBALike) \u2013 Int RGBA tuple to be parsed.\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\nstatic_internal_from_rgb(rgb,alpha=1.0)[source]\u00b6\n\nInternal function for converting a rgb tuple of floats into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgb(FloatRGBLike) \u2013 Float RGB tuple to be parsed.alpha(float) \u2013 Optional alpha value. Default is 1.0.Returns:Internal color representation.Return type:ManimColorInternal\n\nInternal function for converting a rgb tuple of floats into the internal\nrepresentation of aManimColor.\n\nFor internal use only\n\nParameters:\n\nrgb(FloatRGBLike) \u2013 Float RGB tuple to be parsed.alpha(float) \u2013 Optional alpha value. Default is 1.0.\n\nrgb(FloatRGBLike) \u2013 Float RGB tuple to be parsed.\n\nrgb(FloatRGBLike) \u2013 Float RGB tuple to be parsed.\n\nalpha(float) \u2013 Optional alpha value. Default is 1.0.\n\nalpha(float) \u2013 Optional alpha value. Default is 1.0.\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\nstatic_internal_from_rgba(rgba)[source]\u00b6\n\nInternal function for converting an RGBA tuple of floats into the internal\nrepresentation of aManimColor.For internal use onlyParameters:rgba(FloatRGBALike) \u2013 Int RGBA tuple to be parsed.Returns:Internal color representation.Return type:ManimColorInternal\n\nInternal function for converting an RGBA tuple of floats into the internal\nrepresentation of aManimColor.\n\nFor internal use only\n\nParameters:\n\nrgba(FloatRGBALike) \u2013 Int RGBA tuple to be parsed.\n\nrgba(FloatRGBALike) \u2013 Int RGBA tuple to be parsed.\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\nstatic_internal_from_string(name,alpha)[source]\u00b6\n\nInternal function for converting a string into the internal representation of\naManimColor. This is not used for hex strings: please refer to_internal_from_hex()for this functionality.For internal use onlyParameters:name(str) \u2013 The color name to be parsed into a color. Refer to the different color\nmodules in the documentation page to find the corresponding color names.alpha(float)Returns:Internal color representation.Return type:ManimColorInternalRaises:ValueError\u2013 If the color name is not present in Manim.\n\nInternal function for converting a string into the internal representation of\naManimColor. This is not used for hex strings: please refer to_internal_from_hex()for this functionality.\n\nFor internal use only\n\nParameters:\n\nname(str) \u2013 The color name to be parsed into a color. Refer to the different color\nmodules in the documentation page to find the corresponding color names.alpha(float)\n\nname(str) \u2013 The color name to be parsed into a color. Refer to the different color\nmodules in the documentation page to find the corresponding color names.\n\nname(str) \u2013 The color name to be parsed into a color. Refer to the different color\nmodules in the documentation page to find the corresponding color names.\n\nalpha(float)\n\nalpha(float)\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\nRaises:\n\nValueError\u2013 If the color name is not present in Manim.\n\nValueError\u2013 If the color name is not present in Manim.\n\nproperty_internal_space:ndarray[tuple[Any,...],dtype[TypeAliasForwardRef('~manim.typing.ManimFloat')]]\u00b6\n\nThis is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space.\n\nThis is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space.\n\nproperty_internal_value:ManimColorInternal\u00b6\n\nReturn the internal value of the current Manim color[r,g,b,a]float\narray.Returns:Internal color representation.Return type:ManimColorInternal\n\nReturn the internal value of the current Manim color[r,g,b,a]float\narray.\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal\n\ncontrasting(threshold=0.5,light=None,dark=None)[source]\u00b6\n\nReturn one of two colors, light or dark (by default white or black),\nthat contrasts with the current color (depending on its luminance).\nThis is typically used to set text in a contrasting color that ensures\nit is readable against a background of the current color.Parameters:threshold(float) \u2013 The luminance threshold which dictates whether the current color is\nconsidered light or dark (and thus whether to return the dark or\nlight color, respectively). Default is 0.5.light(Self|None) \u2013 The light color to return if the current color is considered dark.\nDefault isNone: in this case, pureWHITEwill be returned.dark(Self|None) \u2013 The dark color to return if the current color is considered light,\nDefault isNone: in this case, pureBLACKwill be returned.Returns:The contrastingManimColor.Return type:ManimColor\n\nReturn one of two colors, light or dark (by default white or black),\nthat contrasts with the current color (depending on its luminance).\nThis is typically used to set text in a contrasting color that ensures\nit is readable against a background of the current color.\n\nParameters:\n\nthreshold(float) \u2013 The luminance threshold which dictates whether the current color is\nconsidered light or dark (and thus whether to return the dark or\nlight color, respectively). Default is 0.5.light(Self|None) \u2013 The light color to return if the current color is considered dark.\nDefault isNone: in this case, pureWHITEwill be returned.dark(Self|None) \u2013 The dark color to return if the current color is considered light,\nDefault isNone: in this case, pureBLACKwill be returned.\n\nthreshold(float) \u2013 The luminance threshold which dictates whether the current color is\nconsidered light or dark (and thus whether to return the dark or\nlight color, respectively). Default is 0.5.\n\nthreshold(float) \u2013 The luminance threshold which dictates whether the current color is\nconsidered light or dark (and thus whether to return the dark or\nlight color, respectively). Default is 0.5.\n\nlight(Self|None) \u2013 The light color to return if the current color is considered dark.\nDefault isNone: in this case, pureWHITEwill be returned.\n\nlight(Self|None) \u2013 The light color to return if the current color is considered dark.\nDefault isNone: in this case, pureWHITEwill be returned.\n\ndark(Self|None) \u2013 The dark color to return if the current color is considered light,\nDefault isNone: in this case, pureBLACKwill be returned.\n\ndark(Self|None) \u2013 The dark color to return if the current color is considered light,\nDefault isNone: in this case, pureBLACKwill be returned.\n\nReturns:\n\nThe contrastingManimColor.\n\nThe contrastingManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\ndarker(blend=0.2)[source]\u00b6\n\nReturn a new color that is darker than the current color, i.e.\ninterpolated withBLACK. The opacity is unchanged.Parameters:blend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure black). Default is 0.2, which results in a\nslightly darker color.Returns:The darkerManimColor.Return type:ManimColorSee alsolighter()\n\nReturn a new color that is darker than the current color, i.e.\ninterpolated withBLACK. The opacity is unchanged.\n\nParameters:\n\nblend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure black). Default is 0.2, which results in a\nslightly darker color.\n\nblend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure black). Default is 0.2, which results in a\nslightly darker color.\n\nReturns:\n\nThe darkerManimColor.\n\nThe darkerManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nSee also\n\nlighter()\n\nclassmethodfrom_hex(hex_str,alpha=1.0)[source]\u00b6\n\nCreate aManimColorfrom a hex string.Parameters:hex_str(str) \u2013 The hex string to be converted.  The allowed prefixes for this string are#and0x. Currently, this method only supports 6 nibbles, i.e. only\nstrings in the format#XXXXXXor0xXXXXXX.alpha(float) \u2013 Alpha value to be used for the hex string. Default is 1.0.Returns:TheManimColorrepresented by the hex string.Return type:ManimColor\n\nCreate aManimColorfrom a hex string.\n\nParameters:\n\nhex_str(str) \u2013 The hex string to be converted.  The allowed prefixes for this string are#and0x. Currently, this method only supports 6 nibbles, i.e. only\nstrings in the format#XXXXXXor0xXXXXXX.alpha(float) \u2013 Alpha value to be used for the hex string. Default is 1.0.\n\nhex_str(str) \u2013 The hex string to be converted.  The allowed prefixes for this string are#and0x. Currently, this method only supports 6 nibbles, i.e. only\nstrings in the format#XXXXXXor0xXXXXXX.\n\nhex_str(str) \u2013 The hex string to be converted.  The allowed prefixes for this string are#and0x. Currently, this method only supports 6 nibbles, i.e. only\nstrings in the format#XXXXXXor0xXXXXXX.\n\nalpha(float) \u2013 Alpha value to be used for the hex string. Default is 1.0.\n\nalpha(float) \u2013 Alpha value to be used for the hex string. Default is 1.0.\n\nReturns:\n\nTheManimColorrepresented by the hex string.\n\nTheManimColorrepresented by the hex string.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nclassmethodfrom_hsl(hsl,alpha=1.0)[source]\u00b6\n\nCreate aManimColorfrom an HSL array.Parameters:hsl(FloatHSLLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.alpha(float) \u2013 The alpha value to be used. Default is 1.0.Returns:TheManimColorwith the corresponding RGB values to the given HSL\narray.Return type:ManimColor\n\nCreate aManimColorfrom an HSL array.\n\nParameters:\n\nhsl(FloatHSLLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.alpha(float) \u2013 The alpha value to be used. Default is 1.0.\n\nhsl(FloatHSLLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.\n\nhsl(FloatHSLLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.\n\nalpha(float) \u2013 The alpha value to be used. Default is 1.0.\n\nalpha(float) \u2013 The alpha value to be used. Default is 1.0.\n\nReturns:\n\nTheManimColorwith the corresponding RGB values to the given HSL\narray.\n\nTheManimColorwith the corresponding RGB values to the given HSL\narray.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nclassmethodfrom_hsv(hsv,alpha=1.0)[source]\u00b6\n\nCreate aManimColorfrom an HSV array.Parameters:hsv(FloatHSVLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.alpha(float) \u2013 The alpha value to be used. Default is 1.0.Returns:TheManimColorwith the corresponding RGB values to the given HSV\narray.Return type:ManimColor\n\nCreate aManimColorfrom an HSV array.\n\nParameters:\n\nhsv(FloatHSVLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.alpha(float) \u2013 The alpha value to be used. Default is 1.0.\n\nhsv(FloatHSVLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.\n\nhsv(FloatHSVLike) \u2013 Any iterable containing 3 floats from 0.0 to 1.0.\n\nalpha(float) \u2013 The alpha value to be used. Default is 1.0.\n\nalpha(float) \u2013 The alpha value to be used. Default is 1.0.\n\nReturns:\n\nTheManimColorwith the corresponding RGB values to the given HSV\narray.\n\nTheManimColorwith the corresponding RGB values to the given HSV\narray.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nclassmethodfrom_rgb(rgb,alpha=1.0)[source]\u00b6\n\nCreate a ManimColor from an RGB array. Automagically decides which type it\nis:intorfloat.WarningPlease make sure that your elements are not floats if you want integers. A5.0will result in the input being interpreted as if it was an RGB float\narray with the value5.0and not the integer5.Parameters:rgb(FloatRGBLike|IntRGBLike) \u2013 Any iterable of 3 floats or 3 integers.alpha(float) \u2013 Alpha value to be used in the color. Default is 1.0.Returns:TheManimColorwhich corresponds to the givenrgb.Return type:ManimColor\n\nCreate a ManimColor from an RGB array. Automagically decides which type it\nis:intorfloat.\n\nWarning\n\nPlease make sure that your elements are not floats if you want integers. A5.0will result in the input being interpreted as if it was an RGB float\narray with the value5.0and not the integer5.\n\nParameters:\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 Any iterable of 3 floats or 3 integers.alpha(float) \u2013 Alpha value to be used in the color. Default is 1.0.\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 Any iterable of 3 floats or 3 integers.\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 Any iterable of 3 floats or 3 integers.\n\nalpha(float) \u2013 Alpha value to be used in the color. Default is 1.0.\n\nalpha(float) \u2013 Alpha value to be used in the color. Default is 1.0.\n\nReturns:\n\nTheManimColorwhich corresponds to the givenrgb.\n\nTheManimColorwhich corresponds to the givenrgb.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nclassmethodfrom_rgba(rgba)[source]\u00b6\n\nCreate a ManimColor from an RGBA Array. Automagically decides which type it\nis:intorfloat.WarningPlease make sure that your elements are not floats if you want integers. A5.0will result in the input being interpreted as if it was a float RGB\narray with the float5.0and not the integer5.Parameters:rgba(FloatRGBALike|IntRGBALike) \u2013 Any iterable of 4 floats or 4 integers.Returns:TheManimColorcorresponding to the givenrgba.Return type:ManimColor\n\nCreate a ManimColor from an RGBA Array. Automagically decides which type it\nis:intorfloat.\n\nWarning\n\nPlease make sure that your elements are not floats if you want integers. A5.0will result in the input being interpreted as if it was a float RGB\narray with the float5.0and not the integer5.\n\nParameters:\n\nrgba(FloatRGBALike|IntRGBALike) \u2013 Any iterable of 4 floats or 4 integers.\n\nrgba(FloatRGBALike|IntRGBALike) \u2013 Any iterable of 4 floats or 4 integers.\n\nReturns:\n\nTheManimColorcorresponding to the givenrgba.\n\nTheManimColorcorresponding to the givenrgba.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nstaticgradient(colors,length)[source]\u00b6\n\nThis method is currently not implemented. Refer tocolor_gradient()for\na working implementation for now.Parameters:colors(list[ManimColor])length(int)Return type:ManimColor| list[ManimColor]\n\nThis method is currently not implemented. Refer tocolor_gradient()for\na working implementation for now.\n\nParameters:\n\ncolors(list[ManimColor])length(int)\n\ncolors(list[ManimColor])\n\ncolors(list[ManimColor])\n\nlength(int)\n\nlength(int)\n\nReturn type:\n\nManimColor| list[ManimColor]\n\nManimColor| list[ManimColor]\n\ninterpolate(other,alpha)[source]\u00b6\n\nInterpolate between the current and the givenManimColor, and return\nthe result.Parameters:other(Self) \u2013 The otherManimColorto be used for interpolation.alpha(float) \u2013 A point on the line in RGBA colorspace connecting the two colors, i.e. the\ninterpolation point. 0.0 corresponds to the currentManimColorand\n1.0 corresponds to the otherManimColor.Returns:The interpolatedManimColor.Return type:ManimColor\n\nInterpolate between the current and the givenManimColor, and return\nthe result.\n\nParameters:\n\nother(Self) \u2013 The otherManimColorto be used for interpolation.alpha(float) \u2013 A point on the line in RGBA colorspace connecting the two colors, i.e. the\ninterpolation point. 0.0 corresponds to the currentManimColorand\n1.0 corresponds to the otherManimColor.\n\nother(Self) \u2013 The otherManimColorto be used for interpolation.\n\nother(Self) \u2013 The otherManimColorto be used for interpolation.\n\nalpha(float) \u2013 A point on the line in RGBA colorspace connecting the two colors, i.e. the\ninterpolation point. 0.0 corresponds to the currentManimColorand\n1.0 corresponds to the otherManimColor.\n\nalpha(float) \u2013 A point on the line in RGBA colorspace connecting the two colors, i.e. the\ninterpolation point. 0.0 corresponds to the currentManimColorand\n1.0 corresponds to the otherManimColor.\n\nReturns:\n\nThe interpolatedManimColor.\n\nThe interpolatedManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\ninto(class_type)[source]\u00b6\n\nConvert the current color into a different colorspace given byclass_type,\nwithout changing the_internal_value.Parameters:class_type(type[ManimColorT]) \u2013 The class that is used for conversion. It must be a subclass ofManimColorwhich respects the specification HSV, RGBA, \u2026Returns:A new color object of typeclass_typeand the same_internal_valueas the original color.Return type:ManimColorT\n\nConvert the current color into a different colorspace given byclass_type,\nwithout changing the_internal_value.\n\nParameters:\n\nclass_type(type[ManimColorT]) \u2013 The class that is used for conversion. It must be a subclass ofManimColorwhich respects the specification HSV, RGBA, \u2026\n\nclass_type(type[ManimColorT]) \u2013 The class that is used for conversion. It must be a subclass ofManimColorwhich respects the specification HSV, RGBA, \u2026\n\nReturns:\n\nA new color object of typeclass_typeand the same_internal_valueas the original color.\n\nA new color object of typeclass_typeand the same_internal_valueas the original color.\n\nReturn type:\n\nManimColorT\n\nManimColorT\n\ninvert(with_alpha=False)[source]\u00b6\n\nReturn a new, linearly inverted version of thisManimColor(no\ninplace changes).Parameters:with_alpha(bool) \u2013IfTrue, the alpha value will be inverted too. Default isFalse.NoteSettingwith_alpha=Truecan result in unintended behavior where\nobjects are not displayed because their new alpha value is suddenly 0 or\nvery low.Returns:The linearly invertedManimColor.Return type:ManimColor\n\nReturn a new, linearly inverted version of thisManimColor(no\ninplace changes).\n\nParameters:\n\nwith_alpha(bool) \u2013IfTrue, the alpha value will be inverted too. Default isFalse.NoteSettingwith_alpha=Truecan result in unintended behavior where\nobjects are not displayed because their new alpha value is suddenly 0 or\nvery low.\n\nwith_alpha(bool) \u2013IfTrue, the alpha value will be inverted too. Default isFalse.NoteSettingwith_alpha=Truecan result in unintended behavior where\nobjects are not displayed because their new alpha value is suddenly 0 or\nvery low.\n\nIfTrue, the alpha value will be inverted too. Default isFalse.\n\nNote\n\nSettingwith_alpha=Truecan result in unintended behavior where\nobjects are not displayed because their new alpha value is suddenly 0 or\nvery low.\n\nReturns:\n\nThe linearly invertedManimColor.\n\nThe linearly invertedManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nlighter(blend=0.2)[source]\u00b6\n\nReturn a new color that is lighter than the current color, i.e.\ninterpolated withWHITE. The opacity is unchanged.Parameters:blend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure white). Default is 0.2, which results in a\nslightly lighter color.Returns:The lighterManimColor.Return type:ManimColorSee alsodarker()\n\nReturn a new color that is lighter than the current color, i.e.\ninterpolated withWHITE. The opacity is unchanged.\n\nParameters:\n\nblend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure white). Default is 0.2, which results in a\nslightly lighter color.\n\nblend(float) \u2013 The blend ratio for the interpolation, from 0.0 (the current color\nunchanged) to 1.0 (pure white). Default is 0.2, which results in a\nslightly lighter color.\n\nReturns:\n\nThe lighterManimColor.\n\nThe lighterManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nSee also\n\ndarker()\n\nopacity(opacity)[source]\u00b6\n\nCreate a newManimColorwith the given opacity and the same color\nvalues as before.Parameters:opacity(float) \u2013 The new opacity value to be used.Returns:The newManimColorwith the same color values and the new opacity.Return type:ManimColor\n\nCreate a newManimColorwith the given opacity and the same color\nvalues as before.\n\nParameters:\n\nopacity(float) \u2013 The new opacity value to be used.\n\nopacity(float) \u2013 The new opacity value to be used.\n\nReturns:\n\nThe newManimColorwith the same color values and the new opacity.\n\nThe newManimColorwith the same color values and the new opacity.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nclassmethodparse(color:ParsableManimColor|None,alpha:float=1.0)\u2192Self[source]\u00b6\n\nclassmethodparse(color:Sequence[ParsableManimColor],alpha:float=1.0)\u2192list[Self]\n\nParse one color as aManimColoror a sequence of colors as a list ofManimColor\u2019s.Parameters:color\u2013 The color or list of colors to parse. Note that this function can not accept\ntuples: it will assume that you meanSequence[ParsableManimColor]and will\nreturn alist[ManimColor].alpha\u2013 The alpha (opacity) value to use for the passed color(s).Returns:Either a list of colors or a singular color, depending on the input.Return type:ManimColor| list[ManimColor]\n\nParse one color as aManimColoror a sequence of colors as a list ofManimColor\u2019s.\n\nParameters:\n\ncolor\u2013 The color or list of colors to parse. Note that this function can not accept\ntuples: it will assume that you meanSequence[ParsableManimColor]and will\nreturn alist[ManimColor].alpha\u2013 The alpha (opacity) value to use for the passed color(s).\n\ncolor\u2013 The color or list of colors to parse. Note that this function can not accept\ntuples: it will assume that you meanSequence[ParsableManimColor]and will\nreturn alist[ManimColor].\n\ncolor\u2013 The color or list of colors to parse. Note that this function can not accept\ntuples: it will assume that you meanSequence[ParsableManimColor]and will\nreturn alist[ManimColor].\n\nalpha\u2013 The alpha (opacity) value to use for the passed color(s).\n\nalpha\u2013 The alpha (opacity) value to use for the passed color(s).\n\nReturns:\n\nEither a list of colors or a singular color, depending on the input.\n\nEither a list of colors or a singular color, depending on the input.\n\nReturn type:\n\nManimColor| list[ManimColor]\n\nManimColor| list[ManimColor]\n\nto_hex(with_alpha=False)[source]\u00b6\n\nConvert theManimColorto a hexadecimal representation of the color.Parameters:with_alpha(bool) \u2013 IfTrue, append 2 extra characters to the hex string which represent the\nalpha value of the color between 0 and 255. Default isFalse.Returns:A hex string starting with a#, with either 6 or 8 nibbles depending on\nthewith_alphaparameter. By default, it has 6 nibbles, i.e.#XXXXXX.Return type:str\n\nConvert theManimColorto a hexadecimal representation of the color.\n\nParameters:\n\nwith_alpha(bool) \u2013 IfTrue, append 2 extra characters to the hex string which represent the\nalpha value of the color between 0 and 255. Default isFalse.\n\nwith_alpha(bool) \u2013 IfTrue, append 2 extra characters to the hex string which represent the\nalpha value of the color between 0 and 255. Default isFalse.\n\nReturns:\n\nA hex string starting with a#, with either 6 or 8 nibbles depending on\nthewith_alphaparameter. By default, it has 6 nibbles, i.e.#XXXXXX.\n\nA hex string starting with a#, with either 6 or 8 nibbles depending on\nthewith_alphaparameter. By default, it has 6 nibbles, i.e.#XXXXXX.\n\nReturn type:\n\nstr\n\nstr\n\nto_hsl()[source]\u00b6\n\nConvert theManimColorto an HSL array.NoteBe careful: this returns an array in the form[h,s,l], where the\nelements are floats. This might be confusing, because RGB can also be an array\nof floats. You might want to annotate the usage of this function in your code\nby typing your HSL array variables asHSL_Array_Floatin order to\ndifferentiate them from RGB arrays.Returns:An HSL array of 3 floats from 0.0 to 1.0.Return type:HSL_Array_Float\n\nConvert theManimColorto an HSL array.\n\nNote\n\nBe careful: this returns an array in the form[h,s,l], where the\nelements are floats. This might be confusing, because RGB can also be an array\nof floats. You might want to annotate the usage of this function in your code\nby typing your HSL array variables asHSL_Array_Floatin order to\ndifferentiate them from RGB arrays.\n\nReturns:\n\nAn HSL array of 3 floats from 0.0 to 1.0.\n\nAn HSL array of 3 floats from 0.0 to 1.0.\n\nReturn type:\n\nHSL_Array_Float\n\nHSL_Array_Float\n\nto_hsv()[source]\u00b6\n\nConvert theManimColorto an HSV array.NoteBe careful: this returns an array in the form[h,s,v], where the\nelements are floats. This might be confusing, because RGB can also be an array\nof floats. You might want to annotate the usage of this function in your code\nby typing your HSV array variables asHSV_Array_Floatin order to\ndifferentiate them from RGB arrays.Returns:An HSV array of 3 floats from 0.0 to 1.0.Return type:HSV_Array_Float\n\nConvert theManimColorto an HSV array.\n\nNote\n\nBe careful: this returns an array in the form[h,s,v], where the\nelements are floats. This might be confusing, because RGB can also be an array\nof floats. You might want to annotate the usage of this function in your code\nby typing your HSV array variables asHSV_Array_Floatin order to\ndifferentiate them from RGB arrays.\n\nReturns:\n\nAn HSV array of 3 floats from 0.0 to 1.0.\n\nAn HSV array of 3 floats from 0.0 to 1.0.\n\nReturn type:\n\nHSV_Array_Float\n\nHSV_Array_Float\n\nto_int_rgb()[source]\u00b6\n\nConvert the currentManimColorinto an RGB array of integers.Returns:RGB array of 3 integers from 0 to 255.Return type:RGB_Array_Int\n\nConvert the currentManimColorinto an RGB array of integers.\n\nReturns:\n\nRGB array of 3 integers from 0 to 255.\n\nRGB array of 3 integers from 0 to 255.\n\nReturn type:\n\nRGB_Array_Int\n\nRGB_Array_Int\n\nto_int_rgba()[source]\u00b6\n\nConvert the current ManimColor into an RGBA array of integers.Returns:RGBA array of 4 integers from 0 to 255.Return type:RGBA_Array_Int\n\nConvert the current ManimColor into an RGBA array of integers.\n\nReturns:\n\nRGBA array of 4 integers from 0 to 255.\n\nRGBA array of 4 integers from 0 to 255.\n\nReturn type:\n\nRGBA_Array_Int\n\nRGBA_Array_Int\n\nto_int_rgba_with_alpha(alpha)[source]\u00b6\n\nConvert the currentManimColorinto an RGBA array of integers. This\nis similar toto_int_rgba(), but you can change the alpha value.Parameters:alpha(float) \u2013 Alpha value to be used for the return value. Pass a float between 0.0 and\n1.0: it will automatically be scaled to an integer between 0 and 255.Returns:RGBA array of 4 integers from 0 to 255.Return type:RGBA_Array_Int\n\nConvert the currentManimColorinto an RGBA array of integers. This\nis similar toto_int_rgba(), but you can change the alpha value.\n\nParameters:\n\nalpha(float) \u2013 Alpha value to be used for the return value. Pass a float between 0.0 and\n1.0: it will automatically be scaled to an integer between 0 and 255.\n\nalpha(float) \u2013 Alpha value to be used for the return value. Pass a float between 0.0 and\n1.0: it will automatically be scaled to an integer between 0 and 255.\n\nReturns:\n\nRGBA array of 4 integers from 0 to 255.\n\nRGBA array of 4 integers from 0 to 255.\n\nReturn type:\n\nRGBA_Array_Int\n\nRGBA_Array_Int\n\nto_integer()[source]\u00b6\n\nConvert the currentManimColorinto an integer.WarningThis will return only the RGB part of the color.Returns:Integer representation of the color.Return type:int\n\nConvert the currentManimColorinto an integer.\n\nWarning\n\nThis will return only the RGB part of the color.\n\nReturns:\n\nInteger representation of the color.\n\nInteger representation of the color.\n\nReturn type:\n\nint\n\nint\n\nto_rgb()[source]\u00b6\n\nConvert the currentManimColorinto an RGB array of floats.Returns:RGB array of 3 floats from 0.0 to 1.0.Return type:RGB_Array_Float\n\nConvert the currentManimColorinto an RGB array of floats.\n\nReturns:\n\nRGB array of 3 floats from 0.0 to 1.0.\n\nRGB array of 3 floats from 0.0 to 1.0.\n\nReturn type:\n\nRGB_Array_Float\n\nRGB_Array_Float\n\nto_rgba()[source]\u00b6\n\nConvert the currentManimColorinto an RGBA array of floats.Returns:RGBA array of 4 floats from 0.0 to 1.0.Return type:RGBA_Array_Float\n\nConvert the currentManimColorinto an RGBA array of floats.\n\nReturns:\n\nRGBA array of 4 floats from 0.0 to 1.0.\n\nRGBA array of 4 floats from 0.0 to 1.0.\n\nReturn type:\n\nRGBA_Array_Float\n\nRGBA_Array_Float\n\nto_rgba_with_alpha(alpha)[source]\u00b6\n\nConvert the currentManimColorinto an RGBA array of floats. This is\nsimilar toto_rgba(), but you can change the alpha value.Parameters:alpha(float) \u2013 Alpha value to be used in the return value.Returns:RGBA array of 4 floats from 0.0 to 1.0.Return type:RGBA_Array_Float\n\nConvert the currentManimColorinto an RGBA array of floats. This is\nsimilar toto_rgba(), but you can change the alpha value.\n\nParameters:\n\nalpha(float) \u2013 Alpha value to be used in the return value.\n\nalpha(float) \u2013 Alpha value to be used in the return value.\n\nReturns:\n\nRGBA array of 4 floats from 0.0 to 1.0.\n\nRGBA array of 4 floats from 0.0 to 1.0.\n\nReturn type:\n\nRGBA_Array_Float\n\nRGBA_Array_Float",
+  "code_examples": [
+    {
+      "code": "mycolor=ManimColor.from_rgb((0,1,0.4,0.5))myothercolor=ManimColor.from_rgb((153,255,255))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "mycolor_hex=mycolor.to_hex()myoriginalcolor=ManimColor.from_hex(mycolor_hex).to_hsv()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ManimColor",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "_construct_from_space",
+      "class_name": null,
+      "parameters": [
+        "_space"
+      ],
+      "return_type": null,
+      "description": "This function is used as a proxy for constructing a color with an internal\nvalue. This can be used by subclasses to hook into the construction of new\nobjects using the internal value format."
+    },
+    {
+      "name": "_from_internal",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "This method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor."
+    },
+    {
+      "name": "_internal_from_hex_string",
+      "class_name": null,
+      "parameters": [
+        "hex_"
+      ],
+      "return_type": null,
+      "description": "Internal function for converting a hex string into the internal representation\nof aManimColor."
+    },
+    {
+      "name": "_internal_from_int_rgb",
+      "class_name": null,
+      "parameters": [
+        "rgb"
+      ],
+      "return_type": null,
+      "description": "Internal function for converting an RGB tuple of integers into the internal\nrepresentation of aManimColor."
+    },
+    {
+      "name": "_internal_from_int_rgba",
+      "class_name": null,
+      "parameters": [
+        "rgba"
+      ],
+      "return_type": null,
+      "description": "Internal function for converting an RGBA tuple of integers into the internal\nrepresentation of aManimColor."
+    },
+    {
+      "name": "_internal_from_rgb",
+      "class_name": null,
+      "parameters": [
+        "rgb"
+      ],
+      "return_type": null,
+      "description": "Internal function for converting a rgb tuple of floats into the internal\nrepresentation of aManimColor."
+    },
+    {
+      "name": "_internal_from_rgba",
+      "class_name": null,
+      "parameters": [
+        "rgba"
+      ],
+      "return_type": null,
+      "description": "Internal function for converting an RGBA tuple of floats into the internal\nrepresentation of aManimColor."
+    },
+    {
+      "name": "_internal_from_string",
+      "class_name": null,
+      "parameters": [
+        "name"
+      ],
+      "return_type": null,
+      "description": "Internal function for converting a string into the internal representation of\naManimColor. This is not used for hex strings: please refer to_internal_from_hex()for this functionality."
+    },
+    {
+      "name": "_internal_space",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space."
+    },
+    {
+      "name": "_internal_value",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the internal value of the current Manim color[r,g,b,a]float\narray."
+    },
+    {
+      "name": "contrasting",
+      "class_name": null,
+      "parameters": [
+        "threshold=0.5"
+      ],
+      "return_type": null,
+      "description": "Return one of two colors, light or dark (by default white or black),\nthat contrasts with the current color (depending on its luminance).\nThis is typically used to set text in a contrasting color that ensures\nit is readable against a background of the current color."
+    },
+    {
+      "name": "darker",
+      "class_name": null,
+      "parameters": [
+        "blend=0.2"
+      ],
+      "return_type": null,
+      "description": "Return a new color that is darker than the current color, i.e.\ninterpolated withBLACK. The opacity is unchanged."
+    },
+    {
+      "name": "from_hex",
+      "class_name": null,
+      "parameters": [
+        "hex_str"
+      ],
+      "return_type": null,
+      "description": "Create aManimColorfrom a hex string."
+    },
+    {
+      "name": "from_hsl",
+      "class_name": null,
+      "parameters": [
+        "hsl"
+      ],
+      "return_type": null,
+      "description": "Create aManimColorfrom an HSL array."
+    },
+    {
+      "name": "from_hsv",
+      "class_name": null,
+      "parameters": [
+        "hsv"
+      ],
+      "return_type": null,
+      "description": "Create aManimColorfrom an HSV array."
+    },
+    {
+      "name": "from_rgb",
+      "class_name": null,
+      "parameters": [
+        "rgb"
+      ],
+      "return_type": null,
+      "description": "Create a ManimColor from an RGB array. Automagically decides which type it\nis:intorfloat."
+    },
+    {
+      "name": "from_rgba",
+      "class_name": null,
+      "parameters": [
+        "rgba"
+      ],
+      "return_type": null,
+      "description": "Create a ManimColor from an RGBA Array. Automagically decides which type it\nis:intorfloat."
+    },
+    {
+      "name": "gradient",
+      "class_name": null,
+      "parameters": [
+        "colors"
+      ],
+      "return_type": null,
+      "description": "This method is currently not implemented. Refer tocolor_gradient()for\na working implementation for now."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "other"
+      ],
+      "return_type": null,
+      "description": "Interpolate between the current and the givenManimColor, and return\nthe result."
+    },
+    {
+      "name": "into",
+      "class_name": null,
+      "parameters": [
+        "class_type"
+      ],
+      "return_type": null,
+      "description": "Convert the current color into a different colorspace given byclass_type,\nwithout changing the_internal_value."
+    },
+    {
+      "name": "invert",
+      "class_name": null,
+      "parameters": [
+        "with_alpha=False"
+      ],
+      "return_type": null,
+      "description": "Return a new, linearly inverted version of thisManimColor(no\ninplace changes)."
+    },
+    {
+      "name": "lighter",
+      "class_name": null,
+      "parameters": [
+        "blend=0.2"
+      ],
+      "return_type": null,
+      "description": "Return a new color that is lighter than the current color, i.e.\ninterpolated withWHITE. The opacity is unchanged."
+    },
+    {
+      "name": "opacity",
+      "class_name": null,
+      "parameters": [
+        "opacity"
+      ],
+      "return_type": null,
+      "description": "Create a newManimColorwith the given opacity and the same color\nvalues as before."
+    },
+    {
+      "name": "parse",
+      "class_name": null,
+      "parameters": [
+        "color: ParsableManimColor | None"
+      ],
+      "return_type": "\u2192Self",
+      "description": "Parse one color as aManimColoror a sequence of colors as a list ofManimColor\u2019s."
+    },
+    {
+      "name": "parse",
+      "class_name": null,
+      "parameters": [
+        "color: Sequence[ParsableManimColor]"
+      ],
+      "return_type": "\u2192list[Self]",
+      "description": "Parse one color as aManimColoror a sequence of colors as a list ofManimColor\u2019s."
+    },
+    {
+      "name": "to_hex",
+      "class_name": null,
+      "parameters": [
+        "with_alpha=False"
+      ],
+      "return_type": null,
+      "description": "Convert theManimColorto a hexadecimal representation of the color."
+    },
+    {
+      "name": "to_hsl",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert theManimColorto an HSL array."
+    },
+    {
+      "name": "to_hsv",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert theManimColorto an HSV array."
+    },
+    {
+      "name": "to_int_rgb",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert the currentManimColorinto an RGB array of integers."
+    },
+    {
+      "name": "to_int_rgba",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert the current ManimColor into an RGBA array of integers."
+    },
+    {
+      "name": "to_int_rgba_with_alpha",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Convert the currentManimColorinto an RGBA array of integers. This\nis similar toto_int_rgba(), but you can change the alpha value."
+    },
+    {
+      "name": "to_integer",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert the currentManimColorinto an integer."
+    },
+    {
+      "name": "to_rgb",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert the currentManimColorinto an RGB array of floats."
+    },
+    {
+      "name": "to_rgba",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Convert the currentManimColorinto an RGBA array of floats."
+    },
+    {
+      "name": "to_rgba_with_alpha",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Convert the currentManimColorinto an RGBA array of floats. This is\nsimilar toto_rgba(), but you can change the alpha value."
+    }
+  ],
+  "related_classes": [
+    "Create"
+  ],
+  "tags": [
+    "color",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

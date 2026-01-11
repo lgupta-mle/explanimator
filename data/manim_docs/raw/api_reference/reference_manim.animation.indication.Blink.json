@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.Blink.html",
+  "title": "Blink\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Blink\u00b6\n\nQualified name:manim.animation.indication.Blink\n\nclassBlink(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:SuccessionBlink the mobject.Parameters:mobject(Mobject) \u2013 The mobject to be blinked.time_on(float) \u2013 The duration that the mobject is shown for one blink.time_off(float) \u2013 The duration that the mobject is hidden for one blink.blinks(int) \u2013 The number of blinkshide_at_end(bool) \u2013 Whether to hide the mobject at the end of the animation.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor.ExamplesExample: BlinkingExample\u00b6frommanimimport*classBlinkingExample(Scene):defconstruct(self):text=Text(\"Blinking\").scale(1.5)self.add(text)self.play(Blink(text,blinks=3))class BlinkingExample(Scene):\n    def construct(self):\n        text = Text(\"Blinking\").scale(1.5)\n        self.add(text)\n        self.play(Blink(text, blinks=3))MethodsAttributesrun_time_original__init__(mobject,time_on=0.5,time_off=0.5,blinks=1,hide_at_end=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)time_on(float)time_off(float)blinks(int)hide_at_end(bool)kwargs(Any)\n\nBases:Succession\n\nBlink the mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be blinked.time_on(float) \u2013 The duration that the mobject is shown for one blink.time_off(float) \u2013 The duration that the mobject is hidden for one blink.blinks(int) \u2013 The number of blinkshide_at_end(bool) \u2013 Whether to hide the mobject at the end of the animation.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor.\n\nmobject(Mobject) \u2013 The mobject to be blinked.\n\nmobject(Mobject) \u2013 The mobject to be blinked.\n\ntime_on(float) \u2013 The duration that the mobject is shown for one blink.\n\ntime_on(float) \u2013 The duration that the mobject is shown for one blink.\n\ntime_off(float) \u2013 The duration that the mobject is hidden for one blink.\n\ntime_off(float) \u2013 The duration that the mobject is hidden for one blink.\n\nblinks(int) \u2013 The number of blinks\n\nblinks(int) \u2013 The number of blinks\n\nhide_at_end(bool) \u2013 Whether to hide the mobject at the end of the animation.\n\nhide_at_end(bool) \u2013 Whether to hide the mobject at the end of the animation.\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor.\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor.\n\nExamples\n\nExample: BlinkingExample\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,time_on=0.5,time_off=0.5,blinks=1,hide_at_end=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)time_on(float)time_off(float)blinks(int)hide_at_end(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)time_on(float)time_off(float)blinks(int)hide_at_end(bool)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntime_on(float)\n\ntime_on(float)\n\ntime_off(float)\n\ntime_off(float)\n\nblinks(int)\n\nblinks(int)\n\nhide_at_end(bool)\n\nhide_at_end(bool)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBlinkingExample(Scene):defconstruct(self):text=Text(\"Blinking\").scale(1.5)self.add(text)self.play(Blink(text,blinks=3))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BlinkingExample(Scene):\n    def construct(self):\n        text = Text(\"Blinking\").scale(1.5)\n        self.add(text)\n        self.play(Blink(text, blinks=3))",
+      "language": "python",
+      "context": "Example: BlinkingExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Blink",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Succession"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "Text",
+    "Succession",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "text",
+    "transformation"
+  ]
+}

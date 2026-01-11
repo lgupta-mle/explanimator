@@ -1,0 +1,88 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.Write.html",
+  "title": "Write\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Write\u00b6\n\nQualified name:manim.animation.creation.Write\n\nclassWrite(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:DrawBorderThenFillSimulate hand-writing aTextor hand-drawing aVMobject.ExamplesExample: ShowWrite\u00b6frommanimimport*classShowWrite(Scene):defconstruct(self):self.play(Write(Text(\"Hello\",font_size=144)))class ShowWrite(Scene):\n    def construct(self):\n        self.play(Write(Text(\"Hello\", font_size=144)))Example: ShowWriteReversed\u00b6frommanimimport*classShowWriteReversed(Scene):defconstruct(self):self.play(Write(Text(\"Hello\",font_size=144),reverse=True,remover=False))class ShowWriteReversed(Scene):\n    def construct(self):\n        self.play(Write(Text(\"Hello\", font_size=144), reverse=True, remover=False))TestsCheck that creating emptyWriteanimations works:>>>frommanimimportWrite,Text>>>Write(Text(''))Write(Text(''))MethodsbeginBegin the animation.finishFinish the animation.reverse_submobjectsAttributesrun_timeParameters:vmobject(VMobject|OpenGLVMobject)rate_func(Callable[[float],float])reverse(bool)_original__init__(vmobject,rate_func=<functionlinear>,reverse=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject|OpenGLVMobject)rate_func(Callable[[float],float])reverse(bool)Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Nonefinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:None\n\nBases:DrawBorderThenFill\n\nSimulate hand-writing aTextor hand-drawing aVMobject.\n\nExamples\n\nExample: ShowWrite\u00b6\n\nExample: ShowWriteReversed\u00b6\n\nTests\n\nCheck that creating emptyWriteanimations works:\n\nMethods\n\nbegin\n\nBegin the animation.\n\nfinish\n\nFinish the animation.\n\nreverse_submobjects\n\nAttributes\n\nrun_time\n\nParameters:\n\nvmobject(VMobject|OpenGLVMobject)rate_func(Callable[[float],float])reverse(bool)\n\nvmobject(VMobject|OpenGLVMobject)\n\nvmobject(VMobject|OpenGLVMobject)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nreverse(bool)\n\nreverse(bool)\n\n_original__init__(vmobject,rate_func=<functionlinear>,reverse=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject|OpenGLVMobject)rate_func(Callable[[float],float])reverse(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobject(VMobject|OpenGLVMobject)rate_func(Callable[[float],float])reverse(bool)\n\nvmobject(VMobject|OpenGLVMobject)\n\nvmobject(VMobject|OpenGLVMobject)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nreverse(bool)\n\nreverse(bool)\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classShowWrite(Scene):defconstruct(self):self.play(Write(Text(\"Hello\",font_size=144)))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShowWrite(Scene):\n    def construct(self):\n        self.play(Write(Text(\"Hello\", font_size=144)))",
+      "language": "python",
+      "context": "Example: ShowWrite\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classShowWriteReversed(Scene):defconstruct(self):self.play(Write(Text(\"Hello\",font_size=144),reverse=True,remover=False))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShowWriteReversed(Scene):\n    def construct(self):\n        self.play(Write(Text(\"Hello\", font_size=144), reverse=True, remover=False))",
+      "language": "python",
+      "context": "Example: ShowWriteReversed\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportWrite,Text>>>Write(Text(''))Write(Text(''))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Write",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:DrawBorderThenFill"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "Tex",
+    "VMobject",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "animation",
+    "graph"
+  ]
+}

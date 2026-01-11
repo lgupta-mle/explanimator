@@ -1,0 +1,83 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.simple_functions.html",
+  "title": "simple_functions\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "simple_functions\u00b6\n\nA collection of simple functions.\n\nTypeVar\u2019s\n\nclassComparableT\u00b6\n\nTypeVar('ComparableT',bound=Comparable)\n\nClasses\n\nComparable\n\nFunctions\n\nbinary_search(function,target,lower_bound,upper_bound,tolerance=0.0001)[source]\u00b6\n\nSearches for a value in a range by repeatedly dividing the range in half.To be more precise, performs numerical binary search to determine the\ninput tofunction, between the bounds given, that outputstargetto withintolerance(default of 0.0001).\nReturnsNoneif no input can be found within the bounds.ExamplesConsider the polynomial\\(x^2 + 3x + 1\\)where we search for\na target value of\\(11\\). An exact solution is\\(x = 2\\).>>>solution=binary_search(lambdax:x**2+3*x+1,11,0,5)>>>bool(abs(solution-2)<1e-4)True>>>solution=binary_search(lambdax:x**2+3*x+1,11,0,5,tolerance=0.01)>>>bool(abs(solution-2)<0.01)TrueSearching in the interval\\([0, 5]\\)for a target value of\\(71\\)does not yield a solution:>>>binary_search(lambdax:x**2+3*x+1,71,0,5)isNoneTrueParameters:function(Callable[[float],float])target(float)lower_bound(float)upper_bound(float)tolerance(float)Return type:float | None\n\nSearches for a value in a range by repeatedly dividing the range in half.\n\nTo be more precise, performs numerical binary search to determine the\ninput tofunction, between the bounds given, that outputstargetto withintolerance(default of 0.0001).\nReturnsNoneif no input can be found within the bounds.\n\nExamples\n\nConsider the polynomial\\(x^2 + 3x + 1\\)where we search for\na target value of\\(11\\). An exact solution is\\(x = 2\\).\n\nSearching in the interval\\([0, 5]\\)for a target value of\\(71\\)does not yield a solution:\n\nParameters:\n\nfunction(Callable[[float],float])target(float)lower_bound(float)upper_bound(float)tolerance(float)\n\nfunction(Callable[[float],float])\n\nfunction(Callable[[float],float])\n\ntarget(float)\n\ntarget(float)\n\nlower_bound(float)\n\nlower_bound(float)\n\nupper_bound(float)\n\nupper_bound(float)\n\ntolerance(float)\n\ntolerance(float)\n\nReturn type:\n\nfloat | None\n\nfloat | None\n\nchoose(n,k)[source]\u00b6\n\nThe binomial coefficient n choose k.\\(\\binom{n}{k}\\)describes the number of possible choices of\\(k\\)elements from a set of\\(n\\)elements.Referenceshttps://en.wikipedia.org/wiki/Combinationhttps://docs.scipy.org/doc/scipy/reference/generated/scipy.special.comb.htmlParameters:n(int)k(int)Return type:int\n\nThe binomial coefficient n choose k.\n\n\\(\\binom{n}{k}\\)describes the number of possible choices of\\(k\\)elements from a set of\\(n\\)elements.\n\nReferences\n\nhttps://en.wikipedia.org/wiki/Combination\n\nhttps://en.wikipedia.org/wiki/Combination\n\nhttps://docs.scipy.org/doc/scipy/reference/generated/scipy.special.comb.html\n\nhttps://docs.scipy.org/doc/scipy/reference/generated/scipy.special.comb.html\n\nParameters:\n\nn(int)k(int)\n\nn(int)\n\nn(int)\n\nk(int)\n\nk(int)\n\nReturn type:\n\nint\n\nint\n\nclip(a,min_a,max_a)[source]\u00b6\n\nClipsato the interval [min_a,max_a].Accepts any comparable objects (i.e. those that support <, >).\nReturnsaif it is betweenmin_aandmax_a.\nOtherwise, whichever ofmin_aandmax_ais closest.Examples>>>clip(15,11,20)15>>>clip('a','h','k')'h'Parameters:a(ComparableT)min_a(ComparableT)max_a(ComparableT)Return type:ComparableT\n\nClipsato the interval [min_a,max_a].\n\nAccepts any comparable objects (i.e. those that support <, >).\nReturnsaif it is betweenmin_aandmax_a.\nOtherwise, whichever ofmin_aandmax_ais closest.\n\nExamples\n\nParameters:\n\na(ComparableT)min_a(ComparableT)max_a(ComparableT)\n\na(ComparableT)\n\na(ComparableT)\n\nmin_a(ComparableT)\n\nmin_a(ComparableT)\n\nmax_a(ComparableT)\n\nmax_a(ComparableT)\n\nReturn type:\n\nComparableT\n\nComparableT\n\nsigmoid(x)[source]\u00b6\n\nReturns the output of the logistic function.The logistic function, a common example of a sigmoid function, is defined\nas\\(\\frac{1}{1 + e^{-x}}\\).Referenceshttps://en.wikipedia.org/wiki/Sigmoid_functionhttps://en.wikipedia.org/wiki/Logistic_functionParameters:x(float)Return type:float\n\nReturns the output of the logistic function.\n\nThe logistic function, a common example of a sigmoid function, is defined\nas\\(\\frac{1}{1 + e^{-x}}\\).\n\nReferences\n\nhttps://en.wikipedia.org/wiki/Sigmoid_function\n\nhttps://en.wikipedia.org/wiki/Sigmoid_function\n\nhttps://en.wikipedia.org/wiki/Logistic_function\n\nhttps://en.wikipedia.org/wiki/Logistic_function\n\nParameters:\n\nx(float)\n\nx(float)\n\nReturn type:\n\nfloat\n\nfloat",
+  "code_examples": [
+    {
+      "code": "TypeVar('ComparableT',bound=Comparable)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>solution=binary_search(lambdax:x**2+3*x+1,11,0,5)>>>bool(abs(solution-2)<1e-4)True>>>solution=binary_search(lambdax:x**2+3*x+1,11,0,5,tolerance=0.01)>>>bool(abs(solution-2)<0.01)True",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>binary_search(lambdax:x**2+3*x+1,71,0,5)isNoneTrue",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>clip(15,11,20)15>>>clip('a','h','k')'h'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ComparableT",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "binary_search",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Searches for a value in a range by repeatedly dividing the range in half."
+    },
+    {
+      "name": "choose",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "The binomial coefficient n choose k."
+    },
+    {
+      "name": "clip",
+      "class_name": null,
+      "parameters": [
+        "a"
+      ],
+      "return_type": null,
+      "description": "Clipsato the interval [min_a,max_a]."
+    },
+    {
+      "name": "sigmoid",
+      "class_name": null,
+      "parameters": [
+        "x"
+      ],
+      "return_type": null,
+      "description": "Returns the output of the logistic function."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "timing",
+    "graph"
+  ]
+}

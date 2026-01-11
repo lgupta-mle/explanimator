@@ -1,0 +1,13 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.ipython_magic.html",
+  "title": "ipython_magic\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ipython_magic\u00b6\n\nUtilities for using Manim with IPython (in particular: Jupyter notebooks)\n\nClasses\n\nManimMagic\n\nCreate a configurable given a config config.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Create"
+  ],
+  "tags": []
+}

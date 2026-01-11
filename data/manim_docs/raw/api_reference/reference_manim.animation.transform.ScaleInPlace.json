@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ScaleInPlace.html",
+  "title": "ScaleInPlace\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ScaleInPlace\u00b6\n\nQualified name:manim.animation.transform.ScaleInPlace\n\nclassScaleInPlace(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ApplyMethodAnimation that scales a mobject by a certain factor.ExamplesExample: ScaleInPlaceExample\u00b6frommanimimport*classScaleInPlaceExample(Scene):defconstruct(self):self.play(ScaleInPlace(Text(\"Hello World!\"),2))class ScaleInPlaceExample(Scene):\n    def construct(self):\n        self.play(ScaleInPlace(Text(\"Hello World!\"), 2))MethodsAttributespath_arcpath_funcrun_timeParameters:mobject(Mobject)scale_factor(float)_original__init__(mobject,scale_factor,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)scale_factor(float)Return type:None\n\nBases:ApplyMethod\n\nAnimation that scales a mobject by a certain factor.\n\nExamples\n\nExample: ScaleInPlaceExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)scale_factor(float)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nscale_factor(float)\n\nscale_factor(float)\n\n_original__init__(mobject,scale_factor,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)scale_factor(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)scale_factor(float)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nscale_factor(float)\n\nscale_factor(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classScaleInPlaceExample(Scene):defconstruct(self):self.play(ScaleInPlace(Text(\"Hello World!\"),2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ScaleInPlaceExample(Scene):\n    def construct(self):\n        self.play(ScaleInPlace(Text(\"Hello World!\"), 2))",
+      "language": "python",
+      "context": "Example: ScaleInPlaceExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ScaleInPlace",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ApplyMethod"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "ScaleInPlace",
+    "Tex",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "text",
+    "transformation"
+  ]
+}

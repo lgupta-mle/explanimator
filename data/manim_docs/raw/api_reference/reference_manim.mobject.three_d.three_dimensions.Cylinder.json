@@ -1,0 +1,85 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Cylinder.html",
+  "title": "Cylinder\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Cylinder\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Cylinder\n\nclassCylinder(radius=1,height=2,direction=array([0.,0.,1.]),v_range=[0,6.283185307179586],show_ends=True,resolution=(24,24),**kwargs)[source]\u00b6\n\nBases:SurfaceA cylinder, defined by its height, radius and direction,Parameters:radius(float) \u2013 The radius of the cylinder.height(float) \u2013 The height of the cylinder.direction(np.ndarray) \u2013 The direction of the central axis of the cylinder.v_range(Sequence[float]) \u2013 The height along the height axis (given by direction) to start and end on.show_ends(bool) \u2013 Whether to show the end caps or not.resolution(Sequence[int]) \u2013 The number of samples taken of theCylinder. A tuple can be used\nto define different resolutions foruandvrespectively.ExamplesExample: ExampleCylinder\u00b6frommanimimport*classExampleCylinder(ThreeDScene):defconstruct(self):axes=ThreeDAxes()cylinder=Cylinder(radius=2,height=3)self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,cylinder)class ExampleCylinder(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        cylinder = Cylinder(radius=2, height=3)\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, cylinder)Methodsadd_basesAdds the end caps of the cylinder.funcConverts from cylindrical coordinates to cartesian.get_directionReturns the direction of the central axis of theCylinder.set_directionSets the direction of the central axis of theCylinder.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(radius=1,height=2,direction=array([0.,0.,1.]),v_range=[0,6.283185307179586],show_ends=True,resolution=(24,24),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:radius(float)height(float)direction(ndarray)v_range(Sequence[float])show_ends(bool)resolution(Sequence[int])Return type:Noneadd_bases()[source]\u00b6Adds the end caps of the cylinder.Return type:Nonefunc(u,v)[source]\u00b6Converts from cylindrical coordinates to cartesian.Parameters:u(float) \u2013 The height.v(float) \u2013 The azimuthal angle.Returns:Points defining theCylinder.Return type:numpy.ndarrayget_direction()[source]\u00b6Returns the direction of the central axis of theCylinder.Returns:direction\u2013 The direction of the central axis of theCylinder.Return type:numpy.arrayset_direction(direction)[source]\u00b6Sets the direction of the central axis of theCylinder.Parameters:direction(numpy.array) \u2013 The direction of the central axis of theCylinder.Return type:None\n\nBases:Surface\n\nA cylinder, defined by its height, radius and direction,\n\nParameters:\n\nradius(float) \u2013 The radius of the cylinder.height(float) \u2013 The height of the cylinder.direction(np.ndarray) \u2013 The direction of the central axis of the cylinder.v_range(Sequence[float]) \u2013 The height along the height axis (given by direction) to start and end on.show_ends(bool) \u2013 Whether to show the end caps or not.resolution(Sequence[int]) \u2013 The number of samples taken of theCylinder. A tuple can be used\nto define different resolutions foruandvrespectively.\n\nradius(float) \u2013 The radius of the cylinder.\n\nradius(float) \u2013 The radius of the cylinder.\n\nheight(float) \u2013 The height of the cylinder.\n\nheight(float) \u2013 The height of the cylinder.\n\ndirection(np.ndarray) \u2013 The direction of the central axis of the cylinder.\n\ndirection(np.ndarray) \u2013 The direction of the central axis of the cylinder.\n\nv_range(Sequence[float]) \u2013 The height along the height axis (given by direction) to start and end on.\n\nv_range(Sequence[float]) \u2013 The height along the height axis (given by direction) to start and end on.\n\nshow_ends(bool) \u2013 Whether to show the end caps or not.\n\nshow_ends(bool) \u2013 Whether to show the end caps or not.\n\nresolution(Sequence[int]) \u2013 The number of samples taken of theCylinder. A tuple can be used\nto define different resolutions foruandvrespectively.\n\nresolution(Sequence[int]) \u2013 The number of samples taken of theCylinder. A tuple can be used\nto define different resolutions foruandvrespectively.\n\nExamples\n\nExample: ExampleCylinder\u00b6\n\nMethods\n\nadd_bases\n\nAdds the end caps of the cylinder.\n\nfunc\n\nConverts from cylindrical coordinates to cartesian.\n\nget_direction\n\nReturns the direction of the central axis of theCylinder.\n\nset_direction\n\nSets the direction of the central axis of theCylinder.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(radius=1,height=2,direction=array([0.,0.,1.]),v_range=[0,6.283185307179586],show_ends=True,resolution=(24,24),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:radius(float)height(float)direction(ndarray)v_range(Sequence[float])show_ends(bool)resolution(Sequence[int])Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nradius(float)height(float)direction(ndarray)v_range(Sequence[float])show_ends(bool)resolution(Sequence[int])\n\nradius(float)\n\nradius(float)\n\nheight(float)\n\nheight(float)\n\ndirection(ndarray)\n\ndirection(ndarray)\n\nv_range(Sequence[float])\n\nv_range(Sequence[float])\n\nshow_ends(bool)\n\nshow_ends(bool)\n\nresolution(Sequence[int])\n\nresolution(Sequence[int])\n\nReturn type:\n\nNone\n\nNone\n\nadd_bases()[source]\u00b6\n\nAdds the end caps of the cylinder.Return type:None\n\nAdds the end caps of the cylinder.\n\nReturn type:\n\nNone\n\nNone\n\nfunc(u,v)[source]\u00b6\n\nConverts from cylindrical coordinates to cartesian.Parameters:u(float) \u2013 The height.v(float) \u2013 The azimuthal angle.Returns:Points defining theCylinder.Return type:numpy.ndarray\n\nConverts from cylindrical coordinates to cartesian.\n\nParameters:\n\nu(float) \u2013 The height.v(float) \u2013 The azimuthal angle.\n\nu(float) \u2013 The height.\n\nu(float) \u2013 The height.\n\nv(float) \u2013 The azimuthal angle.\n\nv(float) \u2013 The azimuthal angle.\n\nReturns:\n\nPoints defining theCylinder.\n\nPoints defining theCylinder.\n\nReturn type:\n\nnumpy.ndarray\n\nnumpy.ndarray\n\nget_direction()[source]\u00b6\n\nReturns the direction of the central axis of theCylinder.Returns:direction\u2013 The direction of the central axis of theCylinder.Return type:numpy.array\n\nReturns the direction of the central axis of theCylinder.\n\nReturns:\n\ndirection\u2013 The direction of the central axis of theCylinder.\n\ndirection\u2013 The direction of the central axis of theCylinder.\n\nReturn type:\n\nnumpy.array\n\nnumpy.array\n\nset_direction(direction)[source]\u00b6\n\nSets the direction of the central axis of theCylinder.Parameters:direction(numpy.array) \u2013 The direction of the central axis of theCylinder.Return type:None\n\nSets the direction of the central axis of theCylinder.\n\nParameters:\n\ndirection(numpy.array) \u2013 The direction of the central axis of theCylinder.\n\ndirection(numpy.array) \u2013 The direction of the central axis of theCylinder.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleCylinder(ThreeDScene):defconstruct(self):axes=ThreeDAxes()cylinder=Cylinder(radius=2,height=3)self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,cylinder)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleCylinder(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        cylinder = Cylinder(radius=2, height=3)\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, cylinder)",
+      "language": "python",
+      "context": "Example: ExampleCylinder\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Cylinder",
+      "class_name": null,
+      "parameters": [
+        "radius=1"
+      ],
+      "return_type": null,
+      "description": "Bases:Surface"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "radius=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add_bases",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Adds the end caps of the cylinder."
+    },
+    {
+      "name": "func",
+      "class_name": null,
+      "parameters": [
+        "u"
+      ],
+      "return_type": null,
+      "description": "Converts from cylindrical coordinates to cartesian."
+    },
+    {
+      "name": "get_direction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the direction of the central axis of theCylinder."
+    },
+    {
+      "name": "set_direction",
+      "class_name": null,
+      "parameters": [
+        "direction"
+      ],
+      "return_type": null,
+      "description": "Sets the direction of the central axis of theCylinder."
+    }
+  ],
+  "related_classes": [
+    "Axes",
+    "ThreeDScene",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene.SceneInteractContinue.html",
+  "title": "SceneInteractContinue\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SceneInteractContinue\u00b6\n\nQualified name:manim.scene.scene.SceneInteractContinue\n\nclassSceneInteractContinue(sender)[source]\u00b6\n\nBases:objectObject which, when encountered inScene.interact(), triggers\nthe end of the scene interaction, continuing with the rest of the\nanimations, if any. This object can be queued inScene.queuefor later use inScene.interact().Parameters:sender(str)sender\u00b6The name of the entity which issued the end of the scene interaction,\nsuch as\"gui\"or\"keyboard\".Type:strMethodsAttributessender\n\nBases:object\n\nObject which, when encountered inScene.interact(), triggers\nthe end of the scene interaction, continuing with the rest of the\nanimations, if any. This object can be queued inScene.queuefor later use inScene.interact().\n\nParameters:\n\nsender(str)\n\nsender(str)\n\nsender\u00b6\n\nThe name of the entity which issued the end of the scene interaction,\nsuch as\"gui\"or\"keyboard\".Type:str\n\nThe name of the entity which issued the end of the scene interaction,\nsuch as\"gui\"or\"keyboard\".\n\nType:\n\nstr\n\nstr\n\nMethods\n\nAttributes\n\nsender",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SceneInteractContinue",
+      "class_name": null,
+      "parameters": [
+        "sender"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "sender",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The name of the entity which issued the end of the scene interaction,\nsuch as\"gui\"or\"keyboard\"."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation"
+  ]
+}

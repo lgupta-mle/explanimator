@@ -1,0 +1,36 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.point_cloud_mobject.Mobject2D.html",
+  "title": "Mobject2D\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Mobject2D\u00b6\n\nQualified name:manim.mobject.types.point\\_cloud\\_mobject.Mobject2D\n\nclassMobject2D(density=25,**kwargs)[source]\u00b6\n\nBases:PMobjectMethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:density(int)kwargs(Any)_original__init__(density=25,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:density(int)kwargs(Any)Return type:None\n\nBases:PMobject\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ndensity(int)kwargs(Any)\n\ndensity(int)\n\ndensity(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(density=25,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:density(int)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ndensity(int)kwargs(Any)\n\ndensity(int)\n\ndensity(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Mobject2D",
+      "class_name": null,
+      "parameters": [
+        "density=25"
+      ],
+      "return_type": null,
+      "description": "Bases:PMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "density=25"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

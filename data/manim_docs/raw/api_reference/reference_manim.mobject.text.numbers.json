@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.numbers.html",
+  "title": "numbers\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "numbers\u00b6\n\nMobjects representing numbers.\n\nClasses\n\nDecimalNumber\n\nAn mobject representing a decimal number.\n\nInteger\n\nA class for displaying Integers.\n\nVariable\n\nA class for displaying text that shows \"label = value\" with the value continuously updated from aValueTracker.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "text"
+  ]
+}

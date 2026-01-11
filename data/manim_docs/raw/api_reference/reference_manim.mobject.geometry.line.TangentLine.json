@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.TangentLine.html",
+  "title": "TangentLine\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TangentLine\u00b6\n\nQualified name:manim.mobject.geometry.line.TangentLine\n\nclassTangentLine(vmob,alpha,length=1,d_alpha=1e-06,**kwargs)[source]\u00b6\n\nBases:LineConstructs a line tangent to aVMobjectat a specific point.Parameters:vmob(VMobject) \u2013 The VMobject on which the tangent line is drawn.alpha(float) \u2013 How far along the shape that the line will be constructed. range: 0-1.length(float) \u2013 Length of the tangent line.d_alpha(float) \u2013 Thedxvaluekwargs(Any) \u2013 Additional arguments to be passed toLineSee alsopoint_from_proportion()ExamplesExample: TangentLineExample\u00b6frommanimimport*classTangentLineExample(Scene):defconstruct(self):circle=Circle(radius=2)line_1=TangentLine(circle,alpha=0.0,length=4,color=BLUE_D)# rightline_2=TangentLine(circle,alpha=0.4,length=4,color=GREEN)# top leftself.add(circle,line_1,line_2)class TangentLineExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2)\n        line_1 = TangentLine(circle, alpha=0.0, length=4, color=BLUE_D) # right\n        line_2 = TangentLine(circle, alpha=0.4, length=4, color=GREEN) # top left\n        self.add(circle, line_1, line_2)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(vmob,alpha,length=1,d_alpha=1e-06,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmob(VMobject)alpha(float)length(float)d_alpha(float)kwargs(Any)Return type:None\n\nBases:Line\n\nConstructs a line tangent to aVMobjectat a specific point.\n\nParameters:\n\nvmob(VMobject) \u2013 The VMobject on which the tangent line is drawn.alpha(float) \u2013 How far along the shape that the line will be constructed. range: 0-1.length(float) \u2013 Length of the tangent line.d_alpha(float) \u2013 Thedxvaluekwargs(Any) \u2013 Additional arguments to be passed toLine\n\nvmob(VMobject) \u2013 The VMobject on which the tangent line is drawn.\n\nvmob(VMobject) \u2013 The VMobject on which the tangent line is drawn.\n\nalpha(float) \u2013 How far along the shape that the line will be constructed. range: 0-1.\n\nalpha(float) \u2013 How far along the shape that the line will be constructed. range: 0-1.\n\nlength(float) \u2013 Length of the tangent line.\n\nlength(float) \u2013 Length of the tangent line.\n\nd_alpha(float) \u2013 Thedxvalue\n\nd_alpha(float) \u2013 Thedxvalue\n\nkwargs(Any) \u2013 Additional arguments to be passed toLine\n\nkwargs(Any) \u2013 Additional arguments to be passed toLine\n\nSee also\n\npoint_from_proportion()\n\nExamples\n\nExample: TangentLineExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(vmob,alpha,length=1,d_alpha=1e-06,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmob(VMobject)alpha(float)length(float)d_alpha(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmob(VMobject)alpha(float)length(float)d_alpha(float)kwargs(Any)\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nalpha(float)\n\nalpha(float)\n\nlength(float)\n\nlength(float)\n\nd_alpha(float)\n\nd_alpha(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classTangentLineExample(Scene):defconstruct(self):circle=Circle(radius=2)line_1=TangentLine(circle,alpha=0.0,length=4,color=BLUE_D)# rightline_2=TangentLine(circle,alpha=0.4,length=4,color=GREEN)# top leftself.add(circle,line_1,line_2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TangentLineExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2)\n        line_1 = TangentLine(circle, alpha=0.0, length=4, color=BLUE_D) # right\n        line_2 = TangentLine(circle, alpha=0.4, length=4, color=GREEN) # top left\n        self.add(circle, line_1, line_2)",
+      "language": "python",
+      "context": "Example: TangentLineExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TangentLine",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "Bases:Line"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Line",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

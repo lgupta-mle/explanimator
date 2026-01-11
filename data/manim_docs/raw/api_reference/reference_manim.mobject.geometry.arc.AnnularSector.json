@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.AnnularSector.html",
+  "title": "AnnularSector\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AnnularSector\u00b6\n\nQualified name:manim.mobject.geometry.arc.AnnularSector\n\nclassAnnularSector(inner_radius=1,outer_radius=2,angle=1.5707963267948966,start_angle=0,fill_opacity=1,stroke_width=0,color=ManimColor('#FFFFFF'),**kwargs)[source]\u00b6\n\nBases:ArcA sector of an annulus.Parameters:inner_radius(float) \u2013 The inside radius of the Annular Sector.outer_radius(float) \u2013 The outside radius of the Annular Sector.angle(float) \u2013 The clockwise angle of the Annular Sector.start_angle(float) \u2013 The starting clockwise angle of the Annular Sector.fill_opacity(float) \u2013 The opacity of the color filled in the Annular Sector.stroke_width(float) \u2013 The stroke width of the Annular Sector.color(manim.utils.color.core.ManimColor) \u2013 The color filled into the Annular Sector.kwargs(Any)ExamplesExample: AnnularSectorExample\u00b6frommanimimport*classAnnularSectorExample(Scene):defconstruct(self):# Changes background color to clearly visualize changes in fill_opacity.self.camera.background_color=WHITE# The default parameter start_angle is 0, so the AnnularSector starts from the +x-axis.s1=AnnularSector(color=YELLOW).move_to(2*UL)# Different inner_radius and outer_radius than the default.s2=AnnularSector(inner_radius=1.5,outer_radius=2,angle=45*DEGREES,color=RED).move_to(2*UR)# fill_opacity is typically a number > 0 and <= 1. If fill_opacity=0, the AnnularSector is transparent.s3=AnnularSector(inner_radius=1,outer_radius=1.5,angle=PI,fill_opacity=0.25,color=BLUE).move_to(2*DL)# With a negative value for the angle, the AnnularSector is drawn clockwise from the start value.s4=AnnularSector(inner_radius=1,outer_radius=1.5,angle=-3*PI/2,color=GREEN).move_to(2*DR)self.add(s1,s2,s3,s4)class AnnularSectorExample(Scene):\n    def construct(self):\n        # Changes background color to clearly visualize changes in fill_opacity.\n        self.camera.background_color = WHITE\n\n        # The default parameter start_angle is 0, so the AnnularSector starts from the +x-axis.\n        s1 = AnnularSector(color=YELLOW).move_to(2 * UL)\n\n        # Different inner_radius and outer_radius than the default.\n        s2 = AnnularSector(inner_radius=1.5, outer_radius=2, angle=45 * DEGREES, color=RED).move_to(2 * UR)\n\n        # fill_opacity is typically a number > 0 and <= 1. If fill_opacity=0, the AnnularSector is transparent.\n        s3 = AnnularSector(inner_radius=1, outer_radius=1.5, angle=PI, fill_opacity=0.25, color=BLUE).move_to(2 * DL)\n\n        # With a negative value for the angle, the AnnularSector is drawn clockwise from the start value.\n        s4 = AnnularSector(inner_radius=1, outer_radius=1.5, angle=-3 * PI / 2, color=GREEN).move_to(2 * DR)\n\n        self.add(s1, s2, s3, s4)Methodsgenerate_pointsInitializespointsand therefore the shape.init_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(inner_radius=1,outer_radius=2,angle=1.5707963267948966,start_angle=0,fill_opacity=1,stroke_width=0,color=ManimColor('#FFFFFF'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:inner_radius(float)outer_radius(float)angle(float)start_angle(float)fill_opacity(float)stroke_width(float)color(ParsableManimColor)kwargs(Any)Return type:Nonegenerate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nBases:Arc\n\nA sector of an annulus.\n\nParameters:\n\ninner_radius(float) \u2013 The inside radius of the Annular Sector.outer_radius(float) \u2013 The outside radius of the Annular Sector.angle(float) \u2013 The clockwise angle of the Annular Sector.start_angle(float) \u2013 The starting clockwise angle of the Annular Sector.fill_opacity(float) \u2013 The opacity of the color filled in the Annular Sector.stroke_width(float) \u2013 The stroke width of the Annular Sector.color(manim.utils.color.core.ManimColor) \u2013 The color filled into the Annular Sector.kwargs(Any)\n\ninner_radius(float) \u2013 The inside radius of the Annular Sector.\n\ninner_radius(float) \u2013 The inside radius of the Annular Sector.\n\nouter_radius(float) \u2013 The outside radius of the Annular Sector.\n\nouter_radius(float) \u2013 The outside radius of the Annular Sector.\n\nangle(float) \u2013 The clockwise angle of the Annular Sector.\n\nangle(float) \u2013 The clockwise angle of the Annular Sector.\n\nstart_angle(float) \u2013 The starting clockwise angle of the Annular Sector.\n\nstart_angle(float) \u2013 The starting clockwise angle of the Annular Sector.\n\nfill_opacity(float) \u2013 The opacity of the color filled in the Annular Sector.\n\nfill_opacity(float) \u2013 The opacity of the color filled in the Annular Sector.\n\nstroke_width(float) \u2013 The stroke width of the Annular Sector.\n\nstroke_width(float) \u2013 The stroke width of the Annular Sector.\n\ncolor(manim.utils.color.core.ManimColor) \u2013 The color filled into the Annular Sector.\n\ncolor(manim.utils.color.core.ManimColor) \u2013 The color filled into the Annular Sector.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: AnnularSectorExample\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(inner_radius=1,outer_radius=2,angle=1.5707963267948966,start_angle=0,fill_opacity=1,stroke_width=0,color=ManimColor('#FFFFFF'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:inner_radius(float)outer_radius(float)angle(float)start_angle(float)fill_opacity(float)stroke_width(float)color(ParsableManimColor)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ninner_radius(float)outer_radius(float)angle(float)start_angle(float)fill_opacity(float)stroke_width(float)color(ParsableManimColor)kwargs(Any)\n\ninner_radius(float)\n\ninner_radius(float)\n\nouter_radius(float)\n\nouter_radius(float)\n\nangle(float)\n\nangle(float)\n\nstart_angle(float)\n\nstart_angle(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classAnnularSectorExample(Scene):defconstruct(self):# Changes background color to clearly visualize changes in fill_opacity.self.camera.background_color=WHITE# The default parameter start_angle is 0, so the AnnularSector starts from the +x-axis.s1=AnnularSector(color=YELLOW).move_to(2*UL)# Different inner_radius and outer_radius than the default.s2=AnnularSector(inner_radius=1.5,outer_radius=2,angle=45*DEGREES,color=RED).move_to(2*UR)# fill_opacity is typically a number > 0 and <= 1. If fill_opacity=0, the AnnularSector is transparent.s3=AnnularSector(inner_radius=1,outer_radius=1.5,angle=PI,fill_opacity=0.25,color=BLUE).move_to(2*DL)# With a negative value for the angle, the AnnularSector is drawn clockwise from the start value.s4=AnnularSector(inner_radius=1,outer_radius=1.5,angle=-3*PI/2,color=GREEN).move_to(2*DR)self.add(s1,s2,s3,s4)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class AnnularSectorExample(Scene):\n    def construct(self):\n        # Changes background color to clearly visualize changes in fill_opacity.\n        self.camera.background_color = WHITE\n\n        # The default parameter start_angle is 0, so the AnnularSector starts from the +x-axis.\n        s1 = AnnularSector(color=YELLOW).move_to(2 * UL)\n\n        # Different inner_radius and outer_radius than the default.\n        s2 = AnnularSector(inner_radius=1.5, outer_radius=2, angle=45 * DEGREES, color=RED).move_to(2 * UR)\n\n        # fill_opacity is typically a number > 0 and <= 1. If fill_opacity=0, the AnnularSector is transparent.\n        s3 = AnnularSector(inner_radius=1, outer_radius=1.5, angle=PI, fill_opacity=0.25, color=BLUE).move_to(2 * DL)\n\n        # With a negative value for the angle, the AnnularSector is drawn clockwise from the start value.\n        s4 = AnnularSector(inner_radius=1, outer_radius=1.5, angle=-3 * PI / 2, color=GREEN).move_to(2 * DR)\n\n        self.add(s1, s2, s3, s4)",
+      "language": "python",
+      "context": "Example: AnnularSectorExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "AnnularSector",
+      "class_name": null,
+      "parameters": [
+        "inner_radius=1"
+      ],
+      "return_type": null,
+      "description": "Bases:Arc"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "inner_radius=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.ArcPolygonFromArcs.html",
+  "title": "ArcPolygonFromArcs\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArcPolygonFromArcs\u00b6\n\nQualified name:manim.mobject.geometry.arc.ArcPolygonFromArcs\n\nclassArcPolygonFromArcs(*arcs,**kwargs)[source]\u00b6\n\nBases:VMobjectA generalized polygon allowing for points to be connected with arcs.This version takes in pre-defined arcs to generate the arcpolygon and introduces\nlittle new syntax. However unlikePolygonit can\u2019t be created with points\ndirectly.For proper appearance the passed arcs should connect seamlessly:[a,b][b,c][c,a]If there are any gaps between the arcs, those will be filled in\nwith straight lines, which can be used deliberately for any straight\nsections. Arcs can also be passed as straight lines such as an arc\ninitialized withangle=0.Parameters:arcs(Arc|ArcBetweenPoints) \u2013 These are the arcs from which the arcpolygon is assembled.kwargs(Any) \u2013 Keyword arguments that are passed to the constructor ofVMobject. Affects how the ArcPolygon itself is drawn,\nbut doesn\u2019t affect passed arcs.arcs\u00b6The arcs used to initialize the ArcPolygonFromArcs:>>>frommanimimportArcPolygonFromArcs,Arc,ArcBetweenPoints>>>ap=ArcPolygonFromArcs(Arc(),ArcBetweenPoints([1,0,0],[0,1,0]),Arc())>>>ap.arcs[Arc, ArcBetweenPoints, Arc]TipTwo instances ofArcPolygoncan be transformed properly into\none another as well. Be advised that any arc initialized withangle=0will actually be a straight line, so if a straight section should seamlessly\ntransform into an arced section or vice versa, initialize the straight\nsection with a negligible angle instead (such asangle=0.0001).NoteThere is an alternative version (ArcPolygon) that can be instantiated\nwith points.See alsoArcPolygonExamplesOne example of an arcpolygon is the Reuleaux triangle.\nInstead of 3 straight lines connecting the outer points,\na Reuleaux triangle has 3 arcs connecting those points,\nmaking a shape with constant width.Passed arcs are stored as submobjects in the arcpolygon.\nThis means that the arcs are changed along with the arcpolygon,\nfor example when it\u2019s shifted, and these arcs can be manipulated\nafter the arcpolygon has been initialized.Also both the arcs contained in anArcPolygonFromArcs, as well as the\narcpolygon itself are drawn, which affects draw time inCreatefor example. In most cases the arcs themselves don\u2019t\nneed to be drawn, in which case they can be passed as invisible.Example: ArcPolygonExample\u00b6frommanimimport*classArcPolygonExample(Scene):defconstruct(self):arc_conf={\"stroke_width\":0}poly_conf={\"stroke_width\":10,\"stroke_color\":BLUE,\"fill_opacity\":1,\"color\":PURPLE}a=[-1,0,0]b=[1,0,0]c=[0,np.sqrt(3),0]arc0=ArcBetweenPoints(a,b,radius=2,**arc_conf)arc1=ArcBetweenPoints(b,c,radius=2,**arc_conf)arc2=ArcBetweenPoints(c,a,radius=2,**arc_conf)reuleaux_tri=ArcPolygonFromArcs(arc0,arc1,arc2,**poly_conf)self.play(FadeIn(reuleaux_tri))self.wait(2)class ArcPolygonExample(Scene):\n    def construct(self):\n        arc_conf = {\"stroke_width\": 0}\n        poly_conf = {\"stroke_width\": 10, \"stroke_color\": BLUE,\n              \"fill_opacity\": 1, \"color\": PURPLE}\n        a = [-1, 0, 0]\n        b = [1, 0, 0]\n        c = [0, np.sqrt(3), 0]\n        arc0 = ArcBetweenPoints(a, b, radius=2, **arc_conf)\n        arc1 = ArcBetweenPoints(b, c, radius=2, **arc_conf)\n        arc2 = ArcBetweenPoints(c, a, radius=2, **arc_conf)\n        reuleaux_tri = ArcPolygonFromArcs(arc0, arc1, arc2, **poly_conf)\n        self.play(FadeIn(reuleaux_tri))\n        self.wait(2)The arcpolygon itself can also be hidden so that instead only the contained\narcs are drawn. This can be used to easily debug arcs or to highlight them.Example: ArcPolygonExample2\u00b6frommanimimport*classArcPolygonExample2(Scene):defconstruct(self):arc_conf={\"stroke_width\":3,\"stroke_color\":BLUE,\"fill_opacity\":0.5,\"color\":GREEN}poly_conf={\"color\":None}a=[-1,0,0]b=[1,0,0]c=[0,np.sqrt(3),0]arc0=ArcBetweenPoints(a,b,radius=2,**arc_conf)arc1=ArcBetweenPoints(b,c,radius=2,**arc_conf)arc2=ArcBetweenPoints(c,a,radius=2,stroke_color=RED)reuleaux_tri=ArcPolygonFromArcs(arc0,arc1,arc2,**poly_conf)self.play(FadeIn(reuleaux_tri))self.wait(2)class ArcPolygonExample2(Scene):\n    def construct(self):\n        arc_conf = {\"stroke_width\": 3, \"stroke_color\": BLUE,\n            \"fill_opacity\": 0.5, \"color\": GREEN}\n        poly_conf = {\"color\": None}\n        a = [-1, 0, 0]\n        b = [1, 0, 0]\n        c = [0, np.sqrt(3), 0]\n        arc0 = ArcBetweenPoints(a, b, radius=2, **arc_conf)\n        arc1 = ArcBetweenPoints(b, c, radius=2, **arc_conf)\n        arc2 = ArcBetweenPoints(c, a, radius=2, stroke_color=RED)\n        reuleaux_tri = ArcPolygonFromArcs(arc0, arc1, arc2, **poly_conf)\n        self.play(FadeIn(reuleaux_tri))\n        self.wait(2)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*arcs,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:arcs(Arc|ArcBetweenPoints)kwargs(Any)Return type:None\n\nBases:VMobject\n\nA generalized polygon allowing for points to be connected with arcs.\n\nThis version takes in pre-defined arcs to generate the arcpolygon and introduces\nlittle new syntax. However unlikePolygonit can\u2019t be created with points\ndirectly.\n\nFor proper appearance the passed arcs should connect seamlessly:[a,b][b,c][c,a]\n\nIf there are any gaps between the arcs, those will be filled in\nwith straight lines, which can be used deliberately for any straight\nsections. Arcs can also be passed as straight lines such as an arc\ninitialized withangle=0.\n\nParameters:\n\narcs(Arc|ArcBetweenPoints) \u2013 These are the arcs from which the arcpolygon is assembled.kwargs(Any) \u2013 Keyword arguments that are passed to the constructor ofVMobject. Affects how the ArcPolygon itself is drawn,\nbut doesn\u2019t affect passed arcs.\n\narcs(Arc|ArcBetweenPoints) \u2013 These are the arcs from which the arcpolygon is assembled.\n\narcs(Arc|ArcBetweenPoints) \u2013 These are the arcs from which the arcpolygon is assembled.\n\nkwargs(Any) \u2013 Keyword arguments that are passed to the constructor ofVMobject. Affects how the ArcPolygon itself is drawn,\nbut doesn\u2019t affect passed arcs.\n\nkwargs(Any) \u2013 Keyword arguments that are passed to the constructor ofVMobject. Affects how the ArcPolygon itself is drawn,\nbut doesn\u2019t affect passed arcs.\n\narcs\u00b6\n\nThe arcs used to initialize the ArcPolygonFromArcs:>>>frommanimimportArcPolygonFromArcs,Arc,ArcBetweenPoints>>>ap=ArcPolygonFromArcs(Arc(),ArcBetweenPoints([1,0,0],[0,1,0]),Arc())>>>ap.arcs[Arc, ArcBetweenPoints, Arc]\n\nThe arcs used to initialize the ArcPolygonFromArcs:\n\nTip\n\nTwo instances ofArcPolygoncan be transformed properly into\none another as well. Be advised that any arc initialized withangle=0will actually be a straight line, so if a straight section should seamlessly\ntransform into an arced section or vice versa, initialize the straight\nsection with a negligible angle instead (such asangle=0.0001).\n\nNote\n\nThere is an alternative version (ArcPolygon) that can be instantiated\nwith points.\n\nSee also\n\nArcPolygon\n\nExamples\n\nOne example of an arcpolygon is the Reuleaux triangle.\nInstead of 3 straight lines connecting the outer points,\na Reuleaux triangle has 3 arcs connecting those points,\nmaking a shape with constant width.\n\nPassed arcs are stored as submobjects in the arcpolygon.\nThis means that the arcs are changed along with the arcpolygon,\nfor example when it\u2019s shifted, and these arcs can be manipulated\nafter the arcpolygon has been initialized.\n\nAlso both the arcs contained in anArcPolygonFromArcs, as well as the\narcpolygon itself are drawn, which affects draw time inCreatefor example. In most cases the arcs themselves don\u2019t\nneed to be drawn, in which case they can be passed as invisible.\n\nExample: ArcPolygonExample\u00b6\n\nThe arcpolygon itself can also be hidden so that instead only the contained\narcs are drawn. This can be used to easily debug arcs or to highlight them.\n\nExample: ArcPolygonExample2\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*arcs,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:arcs(Arc|ArcBetweenPoints)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\narcs(Arc|ArcBetweenPoints)kwargs(Any)\n\narcs(Arc|ArcBetweenPoints)\n\narcs(Arc|ArcBetweenPoints)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportArcPolygonFromArcs,Arc,ArcBetweenPoints>>>ap=ArcPolygonFromArcs(Arc(),ArcBetweenPoints([1,0,0],[0,1,0]),Arc())>>>ap.arcs[Arc, ArcBetweenPoints, Arc]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classArcPolygonExample(Scene):defconstruct(self):arc_conf={\"stroke_width\":0}poly_conf={\"stroke_width\":10,\"stroke_color\":BLUE,\"fill_opacity\":1,\"color\":PURPLE}a=[-1,0,0]b=[1,0,0]c=[0,np.sqrt(3),0]arc0=ArcBetweenPoints(a,b,radius=2,**arc_conf)arc1=ArcBetweenPoints(b,c,radius=2,**arc_conf)arc2=ArcBetweenPoints(c,a,radius=2,**arc_conf)reuleaux_tri=ArcPolygonFromArcs(arc0,arc1,arc2,**poly_conf)self.play(FadeIn(reuleaux_tri))self.wait(2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArcPolygonExample(Scene):\n    def construct(self):\n        arc_conf = {\"stroke_width\": 0}\n        poly_conf = {\"stroke_width\": 10, \"stroke_color\": BLUE,\n              \"fill_opacity\": 1, \"color\": PURPLE}\n        a = [-1, 0, 0]\n        b = [1, 0, 0]\n        c = [0, np.sqrt(3), 0]\n        arc0 = ArcBetweenPoints(a, b, radius=2, **arc_conf)\n        arc1 = ArcBetweenPoints(b, c, radius=2, **arc_conf)\n        arc2 = ArcBetweenPoints(c, a, radius=2, **arc_conf)\n        reuleaux_tri = ArcPolygonFromArcs(arc0, arc1, arc2, **poly_conf)\n        self.play(FadeIn(reuleaux_tri))\n        self.wait(2)",
+      "language": "python",
+      "context": "Example: ArcPolygonExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classArcPolygonExample2(Scene):defconstruct(self):arc_conf={\"stroke_width\":3,\"stroke_color\":BLUE,\"fill_opacity\":0.5,\"color\":GREEN}poly_conf={\"color\":None}a=[-1,0,0]b=[1,0,0]c=[0,np.sqrt(3),0]arc0=ArcBetweenPoints(a,b,radius=2,**arc_conf)arc1=ArcBetweenPoints(b,c,radius=2,**arc_conf)arc2=ArcBetweenPoints(c,a,radius=2,stroke_color=RED)reuleaux_tri=ArcPolygonFromArcs(arc0,arc1,arc2,**poly_conf)self.play(FadeIn(reuleaux_tri))self.wait(2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArcPolygonExample2(Scene):\n    def construct(self):\n        arc_conf = {\"stroke_width\": 3, \"stroke_color\": BLUE,\n            \"fill_opacity\": 0.5, \"color\": GREEN}\n        poly_conf = {\"color\": None}\n        a = [-1, 0, 0]\n        b = [1, 0, 0]\n        c = [0, np.sqrt(3), 0]\n        arc0 = ArcBetweenPoints(a, b, radius=2, **arc_conf)\n        arc1 = ArcBetweenPoints(b, c, radius=2, **arc_conf)\n        arc2 = ArcBetweenPoints(c, a, radius=2, stroke_color=RED)\n        reuleaux_tri = ArcPolygonFromArcs(arc0, arc1, arc2, **poly_conf)\n        self.play(FadeIn(reuleaux_tri))\n        self.wait(2)",
+      "language": "python",
+      "context": "Example: ArcPolygonExample2\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ArcPolygonFromArcs",
+      "class_name": null,
+      "parameters": [
+        "*arcs"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "arcs",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The arcs used to initialize the ArcPolygonFromArcs:"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*arcs"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "FadeIn",
+    "Create",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

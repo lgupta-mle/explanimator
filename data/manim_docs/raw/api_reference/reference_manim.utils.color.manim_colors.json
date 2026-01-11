@@ -1,0 +1,13 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.manim_colors.html",
+  "title": "manim_colors\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "manim_colors\u00b6\n\nColors included in the global name space.\n\nThese colors form Manim\u2019s default color space.\n\nColor Name\n\nRGB Hex Code\n\nColor Name\n\nRGB Hex Code",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color"
+  ]
+}

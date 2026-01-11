@@ -1,0 +1,73 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.shape_matchers.BackgroundRectangle.html",
+  "title": "BackgroundRectangle\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BackgroundRectangle\u00b6\n\nQualified name:manim.mobject.geometry.shape\\_matchers.BackgroundRectangle\n\nclassBackgroundRectangle(*mobjects,color=None,stroke_width=0,stroke_opacity=0,fill_opacity=0.75,buff=0,**kwargs)[source]\u00b6\n\nBases:SurroundingRectangleA background rectangle. Its default color is the background color\nof the scene.ExamplesExample: ExampleBackgroundRectangle\u00b6frommanimimport*classExampleBackgroundRectangle(Scene):defconstruct(self):circle=Circle().shift(LEFT)circle.set_stroke(color=GREEN,width=20)triangle=Triangle().shift(2*RIGHT)triangle.set_fill(PINK,opacity=0.5)backgroundRectangle1=BackgroundRectangle(circle,color=WHITE,fill_opacity=0.15)backgroundRectangle2=BackgroundRectangle(triangle,color=WHITE,fill_opacity=0.15)self.add(backgroundRectangle1)self.add(backgroundRectangle2)self.add(circle)self.add(triangle)self.play(Rotate(backgroundRectangle1,PI/4))self.play(Rotate(backgroundRectangle2,PI/2))class ExampleBackgroundRectangle(Scene):\n    def construct(self):\n        circle = Circle().shift(LEFT)\n        circle.set_stroke(color=GREEN, width=20)\n        triangle = Triangle().shift(2 * RIGHT)\n        triangle.set_fill(PINK, opacity=0.5)\n        backgroundRectangle1 = BackgroundRectangle(circle, color=WHITE, fill_opacity=0.15)\n        backgroundRectangle2 = BackgroundRectangle(triangle, color=WHITE, fill_opacity=0.15)\n        self.add(backgroundRectangle1)\n        self.add(backgroundRectangle2)\n        self.add(circle)\n        self.add(triangle)\n        self.play(Rotate(backgroundRectangle1, PI / 4))\n        self.play(Rotate(backgroundRectangle2, PI / 2))Methodsget_fill_colorIf there are multiple colors (for gradient) this returns the first onepointwise_become_partialGiven a 2ndVMobjectvmobject, a lower boundaand an upper boundb, modify thisVMobject's points to match the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.set_styleAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:mobjects(Mobject)color(ParsableManimColor|None)stroke_width(float)stroke_opacity(float)fill_opacity(float)buff(float|tuple[float,float])kwargs(Any)_original__init__(*mobjects,color=None,stroke_width=0,stroke_opacity=0,fill_opacity=0.75,buff=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)color(ParsableManimColor|None)stroke_width(float)stroke_opacity(float)fill_opacity(float)buff(float|tuple[float,float])kwargs(Any)Return type:Noneget_fill_color()[source]\u00b6If there are multiple colors (for gradient)\nthis returns the first oneReturn type:ManimColorpointwise_become_partial(mobject,a,b)[source]\u00b6Given a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.Parameters:vmobject\u2013 TheVMobjectthat will serve as a model.a(Any) \u2013 The lower bound fort.b(float) \u2013 The upper bound fortmobject(Mobject)Returns:TheVMobjectitself, after the transformation.Return type:VMobjectRaises:TypeError\u2013 Ifvmobjectis not an instance ofVMobject.\n\nBases:SurroundingRectangle\n\nA background rectangle. Its default color is the background color\nof the scene.\n\nExamples\n\nExample: ExampleBackgroundRectangle\u00b6\n\nMethods\n\nget_fill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\npointwise_become_partial\n\nGiven a 2ndVMobjectvmobject, a lower boundaand an upper boundb, modify thisVMobject's points to match the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.\n\nset_style\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nmobjects(Mobject)color(ParsableManimColor|None)stroke_width(float)stroke_opacity(float)fill_opacity(float)buff(float|tuple[float,float])kwargs(Any)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nstroke_width(float)\n\nstroke_width(float)\n\nstroke_opacity(float)\n\nstroke_opacity(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nbuff(float|tuple[float,float])\n\nbuff(float|tuple[float,float])\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*mobjects,color=None,stroke_width=0,stroke_opacity=0,fill_opacity=0.75,buff=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)color(ParsableManimColor|None)stroke_width(float)stroke_opacity(float)fill_opacity(float)buff(float|tuple[float,float])kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobjects(Mobject)color(ParsableManimColor|None)stroke_width(float)stroke_opacity(float)fill_opacity(float)buff(float|tuple[float,float])kwargs(Any)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nstroke_width(float)\n\nstroke_width(float)\n\nstroke_opacity(float)\n\nstroke_opacity(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nbuff(float|tuple[float,float])\n\nbuff(float|tuple[float,float])\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nget_fill_color()[source]\u00b6\n\nIf there are multiple colors (for gradient)\nthis returns the first oneReturn type:ManimColor\n\nIf there are multiple colors (for gradient)\nthis returns the first one\n\nReturn type:\n\nManimColor\n\nManimColor\n\npointwise_become_partial(mobject,a,b)[source]\u00b6\n\nGiven a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.Parameters:vmobject\u2013 TheVMobjectthat will serve as a model.a(Any) \u2013 The lower bound fort.b(float) \u2013 The upper bound fortmobject(Mobject)Returns:TheVMobjectitself, after the transformation.Return type:VMobjectRaises:TypeError\u2013 Ifvmobjectis not an instance ofVMobject.\n\nGiven a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb.\n\nParameters:\n\nvmobject\u2013 TheVMobjectthat will serve as a model.a(Any) \u2013 The lower bound fort.b(float) \u2013 The upper bound fortmobject(Mobject)\n\nvmobject\u2013 TheVMobjectthat will serve as a model.\n\nvmobject\u2013 TheVMobjectthat will serve as a model.\n\na(Any) \u2013 The lower bound fort.\n\na(Any) \u2013 The lower bound fort.\n\nb(float) \u2013 The upper bound fort\n\nb(float) \u2013 The upper bound fort\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nReturns:\n\nTheVMobjectitself, after the transformation.\n\nTheVMobjectitself, after the transformation.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nRaises:\n\nTypeError\u2013 Ifvmobjectis not an instance ofVMobject.\n\nTypeError\u2013 Ifvmobjectis not an instance ofVMobject.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleBackgroundRectangle(Scene):defconstruct(self):circle=Circle().shift(LEFT)circle.set_stroke(color=GREEN,width=20)triangle=Triangle().shift(2*RIGHT)triangle.set_fill(PINK,opacity=0.5)backgroundRectangle1=BackgroundRectangle(circle,color=WHITE,fill_opacity=0.15)backgroundRectangle2=BackgroundRectangle(triangle,color=WHITE,fill_opacity=0.15)self.add(backgroundRectangle1)self.add(backgroundRectangle2)self.add(circle)self.add(triangle)self.play(Rotate(backgroundRectangle1,PI/4))self.play(Rotate(backgroundRectangle2,PI/2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleBackgroundRectangle(Scene):\n    def construct(self):\n        circle = Circle().shift(LEFT)\n        circle.set_stroke(color=GREEN, width=20)\n        triangle = Triangle().shift(2 * RIGHT)\n        triangle.set_fill(PINK, opacity=0.5)\n        backgroundRectangle1 = BackgroundRectangle(circle, color=WHITE, fill_opacity=0.15)\n        backgroundRectangle2 = BackgroundRectangle(triangle, color=WHITE, fill_opacity=0.15)\n        self.add(backgroundRectangle1)\n        self.add(backgroundRectangle2)\n        self.add(circle)\n        self.add(triangle)\n        self.play(Rotate(backgroundRectangle1, PI / 4))\n        self.play(Rotate(backgroundRectangle2, PI / 2))",
+      "language": "python",
+      "context": "Example: ExampleBackgroundRectangle\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "BackgroundRectangle",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Bases:SurroundingRectangle"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_fill_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "If there are multiple colors (for gradient)\nthis returns the first one"
+    },
+    {
+      "name": "pointwise_become_partial",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Given a 2ndVMobjectvmobject, a lower boundaand\nan upper boundb, modify thisVMobject\u2019s points to\nmatch the portion of the B\u00e9zier spline described byvmobject.pointswith the parametertbetweenaandb."
+    }
+  ],
+  "related_classes": [
+    "Rotate",
+    "Circle",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

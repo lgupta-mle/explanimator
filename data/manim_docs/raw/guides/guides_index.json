@@ -1,0 +1,19 @@
+{
+  "url": "https://docs.manim.community/en/stable/guides/index.html",
+  "title": "Thematic Guides\u00b6",
+  "section": "guides",
+  "breadcrumb": [],
+  "content": "Thematic Guides\u00b6\n\nTable of Contents\n\nConfigurationCommand-line argumentsThe ManimConfig classThe config filesOrder of operationsA list of all config optionsAccessing CLI command options\n\nCommand-line arguments\n\nThe ManimConfig class\n\nThe config files\n\nOrder of operations\n\nA list of all config options\n\nAccessing CLI command options\n\nA deep dive into Manim\u2019s internalsIntroductionOverviewPreliminariesMobject InitializationAnimations and the Render Loop\n\nIntroduction\n\nOverview\n\nPreliminaries\n\nMobject Initialization\n\nAnimations and the Render Loop\n\nRendering Text and FormulasText Without LaTeXText With LaTeX\n\nText Without LaTeX\n\nText With LaTeX\n\nAdding Voiceovers to VideosBasic Usage\n\nBasic Usage",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Text",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "text",
+    "math"
+  ]
+}

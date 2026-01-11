@@ -1,0 +1,92 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_d_utils.html",
+  "title": "three_d_utils\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "three_d_utils\u00b6\n\nUtility functions for three-dimensional mobjects.\n\nFunctions\n\nget_3d_vmob_end_corner(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:Point3D\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\nget_3d_vmob_end_corner_index(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:int\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\nint\n\nint\n\nget_3d_vmob_end_corner_unit_normal(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:Vector3D\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\nVector3D\n\nVector3D\n\nget_3d_vmob_gradient_start_and_end_points(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:tuple[Point3D,Point3D]\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\ntuple[Point3D,Point3D]\n\ntuple[Point3D,Point3D]\n\nget_3d_vmob_start_corner(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:Point3D\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\nget_3d_vmob_start_corner_index(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:Literal[0]\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\nLiteral[0]\n\nLiteral[0]\n\nget_3d_vmob_start_corner_unit_normal(vmob)[source]\u00b6\n\nParameters:vmob(VMobject)Return type:Vector3D\n\nParameters:\n\nvmob(VMobject)\n\nvmob(VMobject)\n\nReturn type:\n\nVector3D\n\nVector3D\n\nget_3d_vmob_unit_normal(vmob,point_index)[source]\u00b6\n\nParameters:vmob(VMobject)point_index(int)Return type:Vector3D\n\nParameters:\n\nvmob(VMobject)point_index(int)\n\nvmob(VMobject)\n\nvmob(VMobject)\n\npoint_index(int)\n\npoint_index(int)\n\nReturn type:\n\nVector3D\n\nVector3D",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "get_3d_vmob_end_corner",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_end_corner_index",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_end_corner_unit_normal",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_gradient_start_and_end_points",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_start_corner",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_start_corner_index",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_start_corner_unit_normal",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    },
+    {
+      "name": "get_3d_vmob_unit_normal",
+      "class_name": null,
+      "parameters": [
+        "vmob"
+      ],
+      "return_type": null,
+      "description": "vmob(VMobject)"
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "graph",
+    "3d",
+    "math"
+  ]
+}

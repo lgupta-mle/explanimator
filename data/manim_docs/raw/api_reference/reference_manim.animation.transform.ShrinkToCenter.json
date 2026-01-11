@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ShrinkToCenter.html",
+  "title": "ShrinkToCenter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ShrinkToCenter\u00b6\n\nQualified name:manim.animation.transform.ShrinkToCenter\n\nclassShrinkToCenter(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ScaleInPlaceAnimation that makes a mobject shrink to center.ExamplesExample: ShrinkToCenterExample\u00b6frommanimimport*classShrinkToCenterExample(Scene):defconstruct(self):self.play(ShrinkToCenter(Text(\"Hello World!\")))class ShrinkToCenterExample(Scene):\n    def construct(self):\n        self.play(ShrinkToCenter(Text(\"Hello World!\")))MethodsAttributespath_arcpath_funcrun_timeParameters:mobject(Mobject)_original__init__(mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)Return type:None\n\nBases:ScaleInPlace\n\nAnimation that makes a mobject shrink to center.\n\nExamples\n\nExample: ShrinkToCenterExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)\n\n_original__init__(mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classShrinkToCenterExample(Scene):defconstruct(self):self.play(ShrinkToCenter(Text(\"Hello World!\")))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShrinkToCenterExample(Scene):\n    def construct(self):\n        self.play(ShrinkToCenter(Text(\"Hello World!\")))",
+      "language": "python",
+      "context": "Example: ShrinkToCenterExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ShrinkToCenter",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ScaleInPlace"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "ScaleInPlace",
+    "Tex",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "text",
+    "transformation"
+  ]
+}

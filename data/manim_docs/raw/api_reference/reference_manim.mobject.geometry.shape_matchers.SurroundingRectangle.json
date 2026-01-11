@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.shape_matchers.SurroundingRectangle.html",
+  "title": "SurroundingRectangle\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SurroundingRectangle\u00b6\n\nQualified name:manim.mobject.geometry.shape\\_matchers.SurroundingRectangle\n\nclassSurroundingRectangle(*mobjects,color=ManimColor('#FFFF00'),buff=0.1,corner_radius=0.0,**kwargs)[source]\u00b6\n\nBases:RoundedRectangleA rectangle surrounding aMobjectExamplesExample: SurroundingRectExample\u00b6frommanimimport*classSurroundingRectExample(Scene):defconstruct(self):title=Title(\"A Quote from Newton\")quote=Text(\"If I have seen further than others,\\n\"\"it is by standing upon the shoulders of giants.\",color=BLUE,).scale(0.75)box=SurroundingRectangle(quote,color=YELLOW,buff=MED_LARGE_BUFF)t2=Tex(r\"Hello World\").scale(1.5)box2=SurroundingRectangle(t2,corner_radius=0.2)mobjects=VGroup(VGroup(box,quote),VGroup(t2,box2)).arrange(DOWN)self.add(title,mobjects)class SurroundingRectExample(Scene):\n    def construct(self):\n        title = Title(\"A Quote from Newton\")\n        quote = Text(\n            \"If I have seen further than others, \\n\"\n            \"it is by standing upon the shoulders of giants.\",\n            color=BLUE,\n        ).scale(0.75)\n        box = SurroundingRectangle(quote, color=YELLOW, buff=MED_LARGE_BUFF)\n\n        t2 = Tex(r\"Hello World\").scale(1.5)\n        box2 = SurroundingRectangle(t2, corner_radius=0.2)\n        mobjects = VGroup(VGroup(box, quote), VGroup(t2, box2)).arrange(DOWN)\n        self.add(title, mobjects)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:mobjects(Mobject)color(ParsableManimColor)buff(float|tuple[float,float])corner_radius(float)kwargs(Any)_original__init__(*mobjects,color=ManimColor('#FFFF00'),buff=0.1,corner_radius=0.0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)color(ParsableManimColor)buff(float|tuple[float,float])corner_radius(float)kwargs(Any)Return type:None\n\nBases:RoundedRectangle\n\nA rectangle surrounding aMobject\n\nExamples\n\nExample: SurroundingRectExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nmobjects(Mobject)color(ParsableManimColor)buff(float|tuple[float,float])corner_radius(float)kwargs(Any)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nbuff(float|tuple[float,float])\n\nbuff(float|tuple[float,float])\n\ncorner_radius(float)\n\ncorner_radius(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*mobjects,color=ManimColor('#FFFF00'),buff=0.1,corner_radius=0.0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)color(ParsableManimColor)buff(float|tuple[float,float])corner_radius(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobjects(Mobject)color(ParsableManimColor)buff(float|tuple[float,float])corner_radius(float)kwargs(Any)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nbuff(float|tuple[float,float])\n\nbuff(float|tuple[float,float])\n\ncorner_radius(float)\n\ncorner_radius(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classSurroundingRectExample(Scene):defconstruct(self):title=Title(\"A Quote from Newton\")quote=Text(\"If I have seen further than others,\\n\"\"it is by standing upon the shoulders of giants.\",color=BLUE,).scale(0.75)box=SurroundingRectangle(quote,color=YELLOW,buff=MED_LARGE_BUFF)t2=Tex(r\"Hello World\").scale(1.5)box2=SurroundingRectangle(t2,corner_radius=0.2)mobjects=VGroup(VGroup(box,quote),VGroup(t2,box2)).arrange(DOWN)self.add(title,mobjects)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SurroundingRectExample(Scene):\n    def construct(self):\n        title = Title(\"A Quote from Newton\")\n        quote = Text(\n            \"If I have seen further than others, \\n\"\n            \"it is by standing upon the shoulders of giants.\",\n            color=BLUE,\n        ).scale(0.75)\n        box = SurroundingRectangle(quote, color=YELLOW, buff=MED_LARGE_BUFF)\n\n        t2 = Tex(r\"Hello World\").scale(1.5)\n        box2 = SurroundingRectangle(t2, corner_radius=0.2)\n        mobjects = VGroup(VGroup(box, quote), VGroup(t2, box2)).arrange(DOWN)\n        self.add(title, mobjects)",
+      "language": "python",
+      "context": "Example: SurroundingRectExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "SurroundingRectangle",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Bases:RoundedRectangle"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "Text",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

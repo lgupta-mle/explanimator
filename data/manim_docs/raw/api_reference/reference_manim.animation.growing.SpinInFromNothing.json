@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.growing.SpinInFromNothing.html",
+  "title": "SpinInFromNothing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SpinInFromNothing\u00b6\n\nQualified name:manim.animation.growing.SpinInFromNothing\n\nclassSpinInFromNothing(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:GrowFromCenterIntroduce anMobjectspinning and growing it from its center.Parameters:mobject(Mobject) \u2013 The mobjects to be introduced.angle(float) \u2013 The amount of spinning before mobject reaches its full size. E.g. 2*PI means\nthat the object will do one full spin before being fully introduced.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)ExamplesExample: SpinInFromNothingExample\u00b6frommanimimport*classSpinInFromNothingExample(Scene):defconstruct(self):squares=[Square()for_inrange(3)]VGroup(*squares).set_x(0).arrange(buff=2)self.play(SpinInFromNothing(squares[0]))self.play(SpinInFromNothing(squares[1],angle=2*PI))self.play(SpinInFromNothing(squares[2],point_color=RED))class SpinInFromNothingExample(Scene):\n    def construct(self):\n        squares = [Square() for _ in range(3)]\n        VGroup(*squares).set_x(0).arrange(buff=2)\n        self.play(SpinInFromNothing(squares[0]))\n        self.play(SpinInFromNothing(squares[1], angle=2 * PI))\n        self.play(SpinInFromNothing(squares[2], point_color=RED))MethodsAttributespath_arcpath_funcrun_time_original__init__(mobject,angle=1.5707963267948966,point_color=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)angle(float)point_color(ParsableManimColor|None)kwargs(Any)\n\nBases:GrowFromCenter\n\nIntroduce anMobjectspinning and growing it from its center.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobjects to be introduced.angle(float) \u2013 The amount of spinning before mobject reaches its full size. E.g. 2*PI means\nthat the object will do one full spin before being fully introduced.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\nangle(float) \u2013 The amount of spinning before mobject reaches its full size. E.g. 2*PI means\nthat the object will do one full spin before being fully introduced.\n\nangle(float) \u2013 The amount of spinning before mobject reaches its full size. E.g. 2*PI means\nthat the object will do one full spin before being fully introduced.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: SpinInFromNothingExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,angle=1.5707963267948966,point_color=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)angle(float)point_color(ParsableManimColor|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)angle(float)point_color(ParsableManimColor|None)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nangle(float)\n\nangle(float)\n\npoint_color(ParsableManimColor|None)\n\npoint_color(ParsableManimColor|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classSpinInFromNothingExample(Scene):defconstruct(self):squares=[Square()for_inrange(3)]VGroup(*squares).set_x(0).arrange(buff=2)self.play(SpinInFromNothing(squares[0]))self.play(SpinInFromNothing(squares[1],angle=2*PI))self.play(SpinInFromNothing(squares[2],point_color=RED))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpinInFromNothingExample(Scene):\n    def construct(self):\n        squares = [Square() for _ in range(3)]\n        VGroup(*squares).set_x(0).arrange(buff=2)\n        self.play(SpinInFromNothing(squares[0]))\n        self.play(SpinInFromNothing(squares[1], angle=2 * PI))\n        self.play(SpinInFromNothing(squares[2], point_color=RED))",
+      "language": "python",
+      "context": "Example: SpinInFromNothingExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "SpinInFromNothing",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:GrowFromCenter"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "GrowFromCenter",
+    "VGroup",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "color",
+    "timing"
+  ]
+}

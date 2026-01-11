@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform_matching_parts.TransformMatchingTex.html",
+  "title": "TransformMatchingTex\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TransformMatchingTex\u00b6\n\nQualified name:manim.animation.transform\\_matching\\_parts.TransformMatchingTex\n\nclassTransformMatchingTex(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformMatchingAbstractBaseA transformation trying to transform rendered LaTeX strings.Two submobjects match if theirtex_stringmatches.See alsoTransformMatchingAbstractBaseExamplesExample: MatchingEquationParts\u00b6frommanimimport*classMatchingEquationParts(Scene):defconstruct(self):variables=VGroup(MathTex(\"a\"),MathTex(\"b\"),MathTex(\"c\")).arrange_submobjects().shift(UP)eq1=MathTex(\"{{x}}^2\",\"+\",\"{{y}}^2\",\"=\",\"{{z}}^2\")eq2=MathTex(\"{{a}}^2\",\"+\",\"{{b}}^2\",\"=\",\"{{c}}^2\")eq3=MathTex(\"{{a}}^2\",\"=\",\"{{c}}^2\",\"-\",\"{{b}}^2\")self.add(eq1)self.wait(0.5)self.play(TransformMatchingTex(Group(eq1,variables),eq2))self.wait(0.5)self.play(TransformMatchingTex(eq2,eq3))self.wait(0.5)class MatchingEquationParts(Scene):\n    def construct(self):\n        variables = VGroup(MathTex(\"a\"), MathTex(\"b\"), MathTex(\"c\")).arrange_submobjects().shift(UP)\n\n        eq1 = MathTex(\"{{x}}^2\", \"+\", \"{{y}}^2\", \"=\", \"{{z}}^2\")\n        eq2 = MathTex(\"{{a}}^2\", \"+\", \"{{b}}^2\", \"=\", \"{{c}}^2\")\n        eq3 = MathTex(\"{{a}}^2\", \"=\", \"{{c}}^2\", \"-\", \"{{b}}^2\")\n\n        self.add(eq1)\n        self.wait(0.5)\n        self.play(TransformMatchingTex(Group(eq1, variables), eq2))\n        self.wait(0.5)\n        self.play(TransformMatchingTex(eq2, eq3))\n        self.wait(0.5)Methodsget_mobject_keyget_mobject_partsAttributesrun_timeParameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)_original__init__(mobject,target_mobject,transform_mismatches=False,fade_transform_mismatches=False,key_map=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nBases:TransformMatchingAbstractBase\n\nA transformation trying to transform rendered LaTeX strings.\n\nTwo submobjects match if theirtex_stringmatches.\n\nSee also\n\nTransformMatchingAbstractBase\n\nExamples\n\nExample: MatchingEquationParts\u00b6\n\nMethods\n\nget_mobject_key\n\nget_mobject_parts\n\nAttributes\n\nrun_time\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntransform_mismatches(bool)\n\ntransform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nkey_map(dict|None)\n\nkey_map(dict|None)\n\n_original__init__(mobject,target_mobject,transform_mismatches=False,fade_transform_mismatches=False,key_map=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntransform_mismatches(bool)\n\ntransform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nkey_map(dict|None)\n\nkey_map(dict|None)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMatchingEquationParts(Scene):defconstruct(self):variables=VGroup(MathTex(\"a\"),MathTex(\"b\"),MathTex(\"c\")).arrange_submobjects().shift(UP)eq1=MathTex(\"{{x}}^2\",\"+\",\"{{y}}^2\",\"=\",\"{{z}}^2\")eq2=MathTex(\"{{a}}^2\",\"+\",\"{{b}}^2\",\"=\",\"{{c}}^2\")eq3=MathTex(\"{{a}}^2\",\"=\",\"{{c}}^2\",\"-\",\"{{b}}^2\")self.add(eq1)self.wait(0.5)self.play(TransformMatchingTex(Group(eq1,variables),eq2))self.wait(0.5)self.play(TransformMatchingTex(eq2,eq3))self.wait(0.5)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MatchingEquationParts(Scene):\n    def construct(self):\n        variables = VGroup(MathTex(\"a\"), MathTex(\"b\"), MathTex(\"c\")).arrange_submobjects().shift(UP)\n\n        eq1 = MathTex(\"{{x}}^2\", \"+\", \"{{y}}^2\", \"=\", \"{{z}}^2\")\n        eq2 = MathTex(\"{{a}}^2\", \"+\", \"{{b}}^2\", \"=\", \"{{c}}^2\")\n        eq3 = MathTex(\"{{a}}^2\", \"=\", \"{{c}}^2\", \"-\", \"{{b}}^2\")\n\n        self.add(eq1)\n        self.wait(0.5)\n        self.play(TransformMatchingTex(Group(eq1, variables), eq2))\n        self.wait(0.5)\n        self.play(TransformMatchingTex(eq2, eq3))\n        self.wait(0.5)",
+      "language": "python",
+      "context": "Example: MatchingEquationParts\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TransformMatchingTex",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:TransformMatchingAbstractBase"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "Transform",
+    "MathTex",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "transformation",
+    "math",
+    "animation"
+  ]
+}

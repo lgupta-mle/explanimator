@@ -1,0 +1,13 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.html",
+  "title": "docbuild\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "docbuild\u00b6\n\nUtilities for building the Manim documentation.\n\nFor more information about the Manim documentation building, see:\n\nManim Development Process, specifically theDocumentationbullet point underPolishing Changes and Submitting a Pull Request\n\nManim Development Process, specifically theDocumentationbullet point underPolishing Changes and Submitting a Pull Request\n\nAdding Documentation\n\nAdding Documentation\n\nautoaliasattr_directive\n\nA directive for documenting type aliases and other module-level attributes.\n\nautocolor_directive\n\nA directive for documenting colors in Manim.\n\nmanim_directive\n\nA directive for including Manim videos in a Sphinx document\n\nmodule_parsing\n\nRead and parse all the Manim modules and extract documentation from them.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color"
+  ]
+}

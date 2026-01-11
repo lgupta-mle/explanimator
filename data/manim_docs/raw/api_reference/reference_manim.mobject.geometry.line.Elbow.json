@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.Elbow.html",
+  "title": "Elbow\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Elbow\u00b6\n\nQualified name:manim.mobject.geometry.line.Elbow\n\nclassElbow(width=0.2,angle=0,**kwargs)[source]\u00b6\n\nBases:VMobjectTwo lines that create a right angle about each other: L-shape.Parameters:width(float) \u2013 The length of the elbow\u2019s sides.angle(float) \u2013 The rotation of the elbow.kwargs(Any) \u2013 Additional arguments to be passed toVMobjectseealso::(..) \u2013RightAngleExamplesExample: ElbowExample\u00b6frommanimimport*classElbowExample(Scene):defconstruct(self):elbow_1=Elbow()elbow_2=Elbow(width=2.0)elbow_3=Elbow(width=2.0,angle=5*PI/4)elbow_group=Group(elbow_1,elbow_2,elbow_3).arrange(buff=1)self.add(elbow_group)class ElbowExample(Scene):\n    def construct(self):\n        elbow_1 = Elbow()\n        elbow_2 = Elbow(width=2.0)\n        elbow_3 = Elbow(width=2.0, angle=5*PI/4)\n\n        elbow_group = Group(elbow_1, elbow_2, elbow_3).arrange(buff=1)\n        self.add(elbow_group)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(width=0.2,angle=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:width(float)angle(float)kwargs(Any)Return type:None\n\nBases:VMobject\n\nTwo lines that create a right angle about each other: L-shape.\n\nParameters:\n\nwidth(float) \u2013 The length of the elbow\u2019s sides.angle(float) \u2013 The rotation of the elbow.kwargs(Any) \u2013 Additional arguments to be passed toVMobjectseealso::(..) \u2013RightAngle\n\nwidth(float) \u2013 The length of the elbow\u2019s sides.\n\nwidth(float) \u2013 The length of the elbow\u2019s sides.\n\nangle(float) \u2013 The rotation of the elbow.\n\nangle(float) \u2013 The rotation of the elbow.\n\nkwargs(Any) \u2013 Additional arguments to be passed toVMobject\n\nkwargs(Any) \u2013 Additional arguments to be passed toVMobject\n\nseealso::(..) \u2013RightAngle\n\nseealso::(..) \u2013RightAngle\n\nExamples\n\nExample: ElbowExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(width=0.2,angle=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:width(float)angle(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nwidth(float)angle(float)kwargs(Any)\n\nwidth(float)\n\nwidth(float)\n\nangle(float)\n\nangle(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classElbowExample(Scene):defconstruct(self):elbow_1=Elbow()elbow_2=Elbow(width=2.0)elbow_3=Elbow(width=2.0,angle=5*PI/4)elbow_group=Group(elbow_1,elbow_2,elbow_3).arrange(buff=1)self.add(elbow_group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ElbowExample(Scene):\n    def construct(self):\n        elbow_1 = Elbow()\n        elbow_2 = Elbow(width=2.0)\n        elbow_3 = Elbow(width=2.0, angle=5*PI/4)\n\n        elbow_group = Group(elbow_1, elbow_2, elbow_3).arrange(buff=1)\n        self.add(elbow_group)",
+      "language": "python",
+      "context": "Example: ElbowExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Elbow",
+      "class_name": null,
+      "parameters": [
+        "width=0.2"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "width=0.2"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

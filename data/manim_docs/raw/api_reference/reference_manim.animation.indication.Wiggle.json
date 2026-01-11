@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.Wiggle.html",
+  "title": "Wiggle\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Wiggle\u00b6\n\nQualified name:manim.animation.indication.Wiggle\n\nclassWiggle(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationWiggle a Mobject.Parameters:mobject(Mobject) \u2013 The mobject to wiggle.scale_value(float) \u2013 The factor by which the mobject will be temporarily scaled.rotation_angle(float) \u2013 The wiggle angle.n_wiggles(int) \u2013 The number of wiggles.scale_about_point(Point3DLike|None) \u2013 The point about which the mobject gets scaled.rotate_about_point(Point3DLike|None) \u2013 The point around which the mobject gets rotated.run_time(float) \u2013 The duration of the animationkwargs(Any)ExamplesExample: ApplyingWaves\u00b6frommanimimport*classApplyingWaves(Scene):defconstruct(self):tex=Tex(\"Wiggle\").scale(3)self.play(Wiggle(tex))self.wait()class ApplyingWaves(Scene):\n    def construct(self):\n        tex = Tex(\"Wiggle\").scale(3)\n        self.play(Wiggle(tex))\n        self.wait()Methodsget_rotate_about_pointget_scale_about_pointinterpolate_submobjectAttributesrun_time_original__init__(mobject,scale_value=1.1,rotation_angle=0.06283185307179587,n_wiggles=6,scale_about_point=None,rotate_about_point=None,run_time=2,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)scale_value(float)rotation_angle(float)n_wiggles(int)scale_about_point(Point3DLike|None)rotate_about_point(Point3DLike|None)run_time(float)kwargs(Any)\n\nBases:Animation\n\nWiggle a Mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to wiggle.scale_value(float) \u2013 The factor by which the mobject will be temporarily scaled.rotation_angle(float) \u2013 The wiggle angle.n_wiggles(int) \u2013 The number of wiggles.scale_about_point(Point3DLike|None) \u2013 The point about which the mobject gets scaled.rotate_about_point(Point3DLike|None) \u2013 The point around which the mobject gets rotated.run_time(float) \u2013 The duration of the animationkwargs(Any)\n\nmobject(Mobject) \u2013 The mobject to wiggle.\n\nmobject(Mobject) \u2013 The mobject to wiggle.\n\nscale_value(float) \u2013 The factor by which the mobject will be temporarily scaled.\n\nscale_value(float) \u2013 The factor by which the mobject will be temporarily scaled.\n\nrotation_angle(float) \u2013 The wiggle angle.\n\nrotation_angle(float) \u2013 The wiggle angle.\n\nn_wiggles(int) \u2013 The number of wiggles.\n\nn_wiggles(int) \u2013 The number of wiggles.\n\nscale_about_point(Point3DLike|None) \u2013 The point about which the mobject gets scaled.\n\nscale_about_point(Point3DLike|None) \u2013 The point about which the mobject gets scaled.\n\nrotate_about_point(Point3DLike|None) \u2013 The point around which the mobject gets rotated.\n\nrotate_about_point(Point3DLike|None) \u2013 The point around which the mobject gets rotated.\n\nrun_time(float) \u2013 The duration of the animation\n\nrun_time(float) \u2013 The duration of the animation\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: ApplyingWaves\u00b6\n\nMethods\n\nget_rotate_about_point\n\nget_scale_about_point\n\ninterpolate_submobject\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,scale_value=1.1,rotation_angle=0.06283185307179587,n_wiggles=6,scale_about_point=None,rotate_about_point=None,run_time=2,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)scale_value(float)rotation_angle(float)n_wiggles(int)scale_about_point(Point3DLike|None)rotate_about_point(Point3DLike|None)run_time(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)scale_value(float)rotation_angle(float)n_wiggles(int)scale_about_point(Point3DLike|None)rotate_about_point(Point3DLike|None)run_time(float)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nscale_value(float)\n\nscale_value(float)\n\nrotation_angle(float)\n\nrotation_angle(float)\n\nn_wiggles(int)\n\nn_wiggles(int)\n\nscale_about_point(Point3DLike|None)\n\nscale_about_point(Point3DLike|None)\n\nrotate_about_point(Point3DLike|None)\n\nrotate_about_point(Point3DLike|None)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classApplyingWaves(Scene):defconstruct(self):tex=Tex(\"Wiggle\").scale(3)self.play(Wiggle(tex))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ApplyingWaves(Scene):\n    def construct(self):\n        tex = Tex(\"Wiggle\").scale(3)\n        self.play(Wiggle(tex))\n        self.wait()",
+      "language": "python",
+      "context": "Example: ApplyingWaves\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Wiggle",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

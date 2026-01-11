@@ -1,0 +1,232 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.three_d_camera.ThreeDCamera.html",
+  "title": "ThreeDCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ThreeDCamera\u00b6\n\nQualified name:manim.camera.three\\_d\\_camera.ThreeDCamera\n\nclassThreeDCamera(focal_distance=20.0,shading_factor=0.2,default_distance=5.0,light_source_start_point=array([-7.,-9.,10.]),should_apply_shading=True,exponential_projection=False,phi=0,theta=-1.5707963267948966,gamma=0,zoom=1,**kwargs)[source]\u00b6\n\nBases:CameraInitializes the ThreeDCameraParameters:*kwargs(Any) \u2013 Any keyword argument of Camera.focal_distance(float)shading_factor(float)default_distance(float)light_source_start_point(Point3DLike)should_apply_shading(bool)exponential_projection(bool)phi(float)theta(float)gamma(float)zoom(float)*kwargsMethodsadd_fixed_in_frame_mobjectsThis method allows the mobject to have a fixed position, even when the camera moves around.add_fixed_orientation_mobjectsThis method allows the mobject to have a fixed orientation, even when the camera moves around.capture_mobjectsCapture mobjects by printing them onpixel_array.generate_rotation_matrixGenerates a rotation matrix based off the current position of the camera.get_fill_rgbasReturns the RGBA array of the fill of the passed VMobjectget_focal_distanceReturns focal_distance of the Camera.get_gammaReturns the rotation of the camera about the vector from the ORIGIN to the Camera.get_mobjects_to_displayUsed to get the list of mobjects to display with the camera.get_phiReturns the Polar angle (the angle off Z_AXIS) phi.get_rotation_matrixReturns the matrix corresponding to the current position of the camera.get_stroke_rgbasGets the RGBA array for the stroke of the passed VMobject.get_thetaReturns the Azimuthal i.e the angle that spins the camera around the Z_AXIS.get_value_trackersA list ofValueTrackersof phi, theta, focal_distance, gamma and zoom.get_zoomReturns the zoom amount of the camera.modified_rgbasproject_pointApplies the current rotation_matrix as a projection matrix to the passed point.project_pointsApplies the current rotation_matrix as a projection matrix to the passed array of points.remove_fixed_in_frame_mobjectsIf a mobject was fixed in frame by passing it throughadd_fixed_in_frame_mobjects(), then this undoes that fixing.remove_fixed_orientation_mobjectsIf a mobject was fixed in its orientation by passing it throughadd_fixed_orientation_mobjects(), then this undoes that fixing.reset_rotation_matrixSets the value of self.rotation_matrix to the matrix corresponding to the current position of the cameraset_focal_distanceSets the focal_distance of the Camera.set_gammaSets the angle of rotation of the camera about the vector from the ORIGIN to the Camera.set_phiSets the polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.set_thetaSets the azimuthal angle i.e the angle that spins the camera around Z_AXIS in radians.set_zoomSets the zoom amount of the camera.transform_points_pre_displayAttributesbackground_colorbackground_opacityframe_centeradd_fixed_in_frame_mobjects(*mobjects)[source]\u00b6This method allows the mobject to have a fixed position,\neven when the camera moves around.\nE.G If it was passed through this method, at the top of the frame, it\nwill continue to be displayed at the top of the frame.Highly useful when displaying Titles or formulae or the like.Parameters:**mobjects(Mobject) \u2013 The mobject to fix in frame.Return type:Noneadd_fixed_orientation_mobjects(*mobjects,use_static_center_func=False,center_func=None)[source]\u00b6This method allows the mobject to have a fixed orientation,\neven when the camera moves around.\nE.G If it was passed through this method, facing the camera, it\nwill continue to face the camera even as the camera moves.\nHighly useful when adding labels to graphs and the like.Parameters:*mobjects(Mobject) \u2013 The mobject whose orientation must be fixed.use_static_center_func(bool) \u2013 Whether or not to use the function that takes the mobject\u2019s\ncenter as centerpoint, by default Falsecenter_func(Callable[[],TypeAliasForwardRef('~manim.typing.Point3D')]|None) \u2013 The function which returns the centerpoint\nwith respect to which the mobject will be oriented, by default NoneReturn type:Nonecapture_mobjects(mobjects,**kwargs)[source]\u00b6Capture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().generate_rotation_matrix()[source]\u00b6Generates a rotation matrix based off the current position of the camera.Returns:The matrix corresponding to the current position of the camera.Return type:np.arrayget_fill_rgbas(vmobject)[source]\u00b6Returns the RGBA array of the fill of the passed VMobjectParameters:vmobject(VMobject) \u2013 The VMobjectReturns:The RGBA Array of the fill of the VMobjectReturn type:np.arrayget_focal_distance()[source]\u00b6Returns focal_distance of the Camera.Returns:The focal_distance of the Camera in MUnits.Return type:floatget_gamma()[source]\u00b6Returns the rotation of the camera about the vector from the ORIGIN to the Camera.Returns:The angle of rotation of the camera about the vector\nfrom the ORIGIN to the Camera in radiansReturn type:floatget_mobjects_to_display(*args,**kwargs)[source]\u00b6Used to get the list of mobjects to display\nwith the camera.Parameters:mobjects\u2013 The Mobjectsinclude_submobjects\u2013 Whether or not to include the submobjects of mobjects, by default Trueexcluded_mobjects\u2013 Any mobjects to exclude, by default Noneargs(Any)kwargs(Any)Returns:list of mobjectsReturn type:listget_phi()[source]\u00b6Returns the Polar angle (the angle off Z_AXIS) phi.Returns:The Polar angle in radians.Return type:floatget_rotation_matrix()[source]\u00b6Returns the matrix corresponding to the current position of the camera.Returns:The matrix corresponding to the current position of the camera.Return type:np.arrayget_stroke_rgbas(vmobject,background=False)[source]\u00b6Gets the RGBA array for the stroke of the passed\nVMobject.Parameters:vmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default FalseReturns:The RGBA array of the stroke.Return type:np.ndarrayget_theta()[source]\u00b6Returns the Azimuthal i.e the angle that spins the camera around the Z_AXIS.Returns:The Azimuthal angle in radians.Return type:floatget_value_trackers()[source]\u00b6A list ofValueTrackersof phi, theta, focal_distance,\ngamma and zoom.Returns:list of ValueTracker objectsReturn type:listget_zoom()[source]\u00b6Returns the zoom amount of the camera.Returns:The zoom amount of the camera.Return type:floatproject_point(point)[source]\u00b6Applies the current rotation_matrix as a projection\nmatrix to the passed point.Parameters:point(Point3D) \u2013 The point to project.Returns:The point after projection.Return type:np.arrayproject_points(points)[source]\u00b6Applies the current rotation_matrix as a projection\nmatrix to the passed array of points.Parameters:points(Point3D_Array) \u2013 The list of points to project.Returns:The points after projecting.Return type:np.arrayremove_fixed_in_frame_mobjects(*mobjects)[source]\u00b6If a mobject was fixed in frame by passing it throughadd_fixed_in_frame_mobjects(), then this undoes that fixing.\nThe Mobject will no longer be fixed in frame.Parameters:mobjects(Mobject) \u2013 The mobjects which need not be fixed in frame any longer.Return type:Noneremove_fixed_orientation_mobjects(*mobjects)[source]\u00b6If a mobject was fixed in its orientation by passing it throughadd_fixed_orientation_mobjects(), then this undoes that fixing.\nThe Mobject will no longer have a fixed orientation.Parameters:mobjects(Mobject) \u2013 The mobjects whose orientation need not be fixed any longer.Return type:Nonereset_rotation_matrix()[source]\u00b6Sets the value of self.rotation_matrix to\nthe matrix corresponding to the current position of the cameraReturn type:Noneset_focal_distance(value)[source]\u00b6Sets the focal_distance of the Camera.Parameters:value(float) \u2013 The focal_distance of the Camera.Return type:Noneset_gamma(value)[source]\u00b6Sets the angle of rotation of the camera about the vector from the ORIGIN to the Camera.Parameters:value(float) \u2013 The new angle of rotation of the camera.Return type:Noneset_phi(value)[source]\u00b6Sets the polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.Parameters:value(float) \u2013 The new value of the polar angle in radians.Return type:Noneset_theta(value)[source]\u00b6Sets the azimuthal angle i.e the angle that spins the camera around Z_AXIS in radians.Parameters:value(float) \u2013 The new value of the azimuthal angle in radians.Return type:Noneset_zoom(value)[source]\u00b6Sets the zoom amount of the camera.Parameters:value(float) \u2013 The zoom amount of the camera.Return type:None\n\nBases:Camera\n\nInitializes the ThreeDCamera\n\nParameters:\n\n*kwargs(Any) \u2013 Any keyword argument of Camera.focal_distance(float)shading_factor(float)default_distance(float)light_source_start_point(Point3DLike)should_apply_shading(bool)exponential_projection(bool)phi(float)theta(float)gamma(float)zoom(float)*kwargs\n\n*kwargs(Any) \u2013 Any keyword argument of Camera.\n\n*kwargs(Any) \u2013 Any keyword argument of Camera.\n\nfocal_distance(float)\n\nfocal_distance(float)\n\nshading_factor(float)\n\nshading_factor(float)\n\ndefault_distance(float)\n\ndefault_distance(float)\n\nlight_source_start_point(Point3DLike)\n\nlight_source_start_point(Point3DLike)\n\nshould_apply_shading(bool)\n\nshould_apply_shading(bool)\n\nexponential_projection(bool)\n\nexponential_projection(bool)\n\nphi(float)\n\nphi(float)\n\ntheta(float)\n\ntheta(float)\n\ngamma(float)\n\ngamma(float)\n\nzoom(float)\n\nzoom(float)\n\n*kwargs\n\n*kwargs\n\nMethods\n\nadd_fixed_in_frame_mobjects\n\nThis method allows the mobject to have a fixed position, even when the camera moves around.\n\nadd_fixed_orientation_mobjects\n\nThis method allows the mobject to have a fixed orientation, even when the camera moves around.\n\ncapture_mobjects\n\nCapture mobjects by printing them onpixel_array.\n\ngenerate_rotation_matrix\n\nGenerates a rotation matrix based off the current position of the camera.\n\nget_fill_rgbas\n\nReturns the RGBA array of the fill of the passed VMobject\n\nget_focal_distance\n\nReturns focal_distance of the Camera.\n\nget_gamma\n\nReturns the rotation of the camera about the vector from the ORIGIN to the Camera.\n\nget_mobjects_to_display\n\nUsed to get the list of mobjects to display with the camera.\n\nget_phi\n\nReturns the Polar angle (the angle off Z_AXIS) phi.\n\nget_rotation_matrix\n\nReturns the matrix corresponding to the current position of the camera.\n\nget_stroke_rgbas\n\nGets the RGBA array for the stroke of the passed VMobject.\n\nget_theta\n\nReturns the Azimuthal i.e the angle that spins the camera around the Z_AXIS.\n\nget_value_trackers\n\nA list ofValueTrackersof phi, theta, focal_distance, gamma and zoom.\n\nget_zoom\n\nReturns the zoom amount of the camera.\n\nmodified_rgbas\n\nproject_point\n\nApplies the current rotation_matrix as a projection matrix to the passed point.\n\nproject_points\n\nApplies the current rotation_matrix as a projection matrix to the passed array of points.\n\nremove_fixed_in_frame_mobjects\n\nIf a mobject was fixed in frame by passing it throughadd_fixed_in_frame_mobjects(), then this undoes that fixing.\n\nremove_fixed_orientation_mobjects\n\nIf a mobject was fixed in its orientation by passing it throughadd_fixed_orientation_mobjects(), then this undoes that fixing.\n\nreset_rotation_matrix\n\nSets the value of self.rotation_matrix to the matrix corresponding to the current position of the camera\n\nset_focal_distance\n\nSets the focal_distance of the Camera.\n\nset_gamma\n\nSets the angle of rotation of the camera about the vector from the ORIGIN to the Camera.\n\nset_phi\n\nSets the polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.\n\nset_theta\n\nSets the azimuthal angle i.e the angle that spins the camera around Z_AXIS in radians.\n\nset_zoom\n\nSets the zoom amount of the camera.\n\ntransform_points_pre_display\n\nAttributes\n\nbackground_color\n\nbackground_opacity\n\nframe_center\n\nadd_fixed_in_frame_mobjects(*mobjects)[source]\u00b6\n\nThis method allows the mobject to have a fixed position,\neven when the camera moves around.\nE.G If it was passed through this method, at the top of the frame, it\nwill continue to be displayed at the top of the frame.Highly useful when displaying Titles or formulae or the like.Parameters:**mobjects(Mobject) \u2013 The mobject to fix in frame.Return type:None\n\nThis method allows the mobject to have a fixed position,\neven when the camera moves around.\nE.G If it was passed through this method, at the top of the frame, it\nwill continue to be displayed at the top of the frame.\n\nHighly useful when displaying Titles or formulae or the like.\n\nParameters:\n\n**mobjects(Mobject) \u2013 The mobject to fix in frame.\n\n**mobjects(Mobject) \u2013 The mobject to fix in frame.\n\nReturn type:\n\nNone\n\nNone\n\nadd_fixed_orientation_mobjects(*mobjects,use_static_center_func=False,center_func=None)[source]\u00b6\n\nThis method allows the mobject to have a fixed orientation,\neven when the camera moves around.\nE.G If it was passed through this method, facing the camera, it\nwill continue to face the camera even as the camera moves.\nHighly useful when adding labels to graphs and the like.Parameters:*mobjects(Mobject) \u2013 The mobject whose orientation must be fixed.use_static_center_func(bool) \u2013 Whether or not to use the function that takes the mobject\u2019s\ncenter as centerpoint, by default Falsecenter_func(Callable[[],TypeAliasForwardRef('~manim.typing.Point3D')]|None) \u2013 The function which returns the centerpoint\nwith respect to which the mobject will be oriented, by default NoneReturn type:None\n\nThis method allows the mobject to have a fixed orientation,\neven when the camera moves around.\nE.G If it was passed through this method, facing the camera, it\nwill continue to face the camera even as the camera moves.\nHighly useful when adding labels to graphs and the like.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobject whose orientation must be fixed.use_static_center_func(bool) \u2013 Whether or not to use the function that takes the mobject\u2019s\ncenter as centerpoint, by default Falsecenter_func(Callable[[],TypeAliasForwardRef('~manim.typing.Point3D')]|None) \u2013 The function which returns the centerpoint\nwith respect to which the mobject will be oriented, by default None\n\n*mobjects(Mobject) \u2013 The mobject whose orientation must be fixed.\n\n*mobjects(Mobject) \u2013 The mobject whose orientation must be fixed.\n\nuse_static_center_func(bool) \u2013 Whether or not to use the function that takes the mobject\u2019s\ncenter as centerpoint, by default False\n\nuse_static_center_func(bool) \u2013 Whether or not to use the function that takes the mobject\u2019s\ncenter as centerpoint, by default False\n\ncenter_func(Callable[[],TypeAliasForwardRef('~manim.typing.Point3D')]|None) \u2013 The function which returns the centerpoint\nwith respect to which the mobject will be oriented, by default None\n\ncenter_func(Callable[[],TypeAliasForwardRef('~manim.typing.Point3D')]|None) \u2013 The function which returns the centerpoint\nwith respect to which the mobject will be oriented, by default None\n\nReturn type:\n\nNone\n\nNone\n\ncapture_mobjects(mobjects,**kwargs)[source]\u00b6\n\nCapture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nCapture mobjects by printing them onpixel_array.\n\nThis is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nReturn type:\n\nNone\n\nNone\n\nNotes\n\nFor a list of classes that can currently be rendered, seedisplay_funcs().\n\ngenerate_rotation_matrix()[source]\u00b6\n\nGenerates a rotation matrix based off the current position of the camera.Returns:The matrix corresponding to the current position of the camera.Return type:np.array\n\nGenerates a rotation matrix based off the current position of the camera.\n\nReturns:\n\nThe matrix corresponding to the current position of the camera.\n\nThe matrix corresponding to the current position of the camera.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nget_fill_rgbas(vmobject)[source]\u00b6\n\nReturns the RGBA array of the fill of the passed VMobjectParameters:vmobject(VMobject) \u2013 The VMobjectReturns:The RGBA Array of the fill of the VMobjectReturn type:np.array\n\nReturns the RGBA array of the fill of the passed VMobject\n\nParameters:\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nReturns:\n\nThe RGBA Array of the fill of the VMobject\n\nThe RGBA Array of the fill of the VMobject\n\nReturn type:\n\nnp.array\n\nnp.array\n\nget_focal_distance()[source]\u00b6\n\nReturns focal_distance of the Camera.Returns:The focal_distance of the Camera in MUnits.Return type:float\n\nReturns focal_distance of the Camera.\n\nReturns:\n\nThe focal_distance of the Camera in MUnits.\n\nThe focal_distance of the Camera in MUnits.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_gamma()[source]\u00b6\n\nReturns the rotation of the camera about the vector from the ORIGIN to the Camera.Returns:The angle of rotation of the camera about the vector\nfrom the ORIGIN to the Camera in radiansReturn type:float\n\nReturns the rotation of the camera about the vector from the ORIGIN to the Camera.\n\nReturns:\n\nThe angle of rotation of the camera about the vector\nfrom the ORIGIN to the Camera in radians\n\nThe angle of rotation of the camera about the vector\nfrom the ORIGIN to the Camera in radians\n\nReturn type:\n\nfloat\n\nfloat\n\nget_mobjects_to_display(*args,**kwargs)[source]\u00b6\n\nUsed to get the list of mobjects to display\nwith the camera.Parameters:mobjects\u2013 The Mobjectsinclude_submobjects\u2013 Whether or not to include the submobjects of mobjects, by default Trueexcluded_mobjects\u2013 Any mobjects to exclude, by default Noneargs(Any)kwargs(Any)Returns:list of mobjectsReturn type:list\n\nUsed to get the list of mobjects to display\nwith the camera.\n\nParameters:\n\nmobjects\u2013 The Mobjectsinclude_submobjects\u2013 Whether or not to include the submobjects of mobjects, by default Trueexcluded_mobjects\u2013 Any mobjects to exclude, by default Noneargs(Any)kwargs(Any)\n\nmobjects\u2013 The Mobjects\n\nmobjects\u2013 The Mobjects\n\ninclude_submobjects\u2013 Whether or not to include the submobjects of mobjects, by default True\n\ninclude_submobjects\u2013 Whether or not to include the submobjects of mobjects, by default True\n\nexcluded_mobjects\u2013 Any mobjects to exclude, by default None\n\nexcluded_mobjects\u2013 Any mobjects to exclude, by default None\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturns:\n\nlist of mobjects\n\nlist of mobjects\n\nReturn type:\n\nlist\n\nlist\n\nget_phi()[source]\u00b6\n\nReturns the Polar angle (the angle off Z_AXIS) phi.Returns:The Polar angle in radians.Return type:float\n\nReturns the Polar angle (the angle off Z_AXIS) phi.\n\nReturns:\n\nThe Polar angle in radians.\n\nThe Polar angle in radians.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_rotation_matrix()[source]\u00b6\n\nReturns the matrix corresponding to the current position of the camera.Returns:The matrix corresponding to the current position of the camera.Return type:np.array\n\nReturns the matrix corresponding to the current position of the camera.\n\nReturns:\n\nThe matrix corresponding to the current position of the camera.\n\nThe matrix corresponding to the current position of the camera.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nget_stroke_rgbas(vmobject,background=False)[source]\u00b6\n\nGets the RGBA array for the stroke of the passed\nVMobject.Parameters:vmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default FalseReturns:The RGBA array of the stroke.Return type:np.ndarray\n\nGets the RGBA array for the stroke of the passed\nVMobject.\n\nParameters:\n\nvmobject(VMobject) \u2013 The VMobjectbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default False\n\nvmobject(VMobject) \u2013 The VMobject\n\nvmobject(VMobject) \u2013 The VMobject\n\nbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default False\n\nbackground(bool) \u2013 Whether or not to consider the background when getting the stroke\nRGBAs, by default False\n\nReturns:\n\nThe RGBA array of the stroke.\n\nThe RGBA array of the stroke.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nget_theta()[source]\u00b6\n\nReturns the Azimuthal i.e the angle that spins the camera around the Z_AXIS.Returns:The Azimuthal angle in radians.Return type:float\n\nReturns the Azimuthal i.e the angle that spins the camera around the Z_AXIS.\n\nReturns:\n\nThe Azimuthal angle in radians.\n\nThe Azimuthal angle in radians.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_value_trackers()[source]\u00b6\n\nA list ofValueTrackersof phi, theta, focal_distance,\ngamma and zoom.Returns:list of ValueTracker objectsReturn type:list\n\nA list ofValueTrackersof phi, theta, focal_distance,\ngamma and zoom.\n\nReturns:\n\nlist of ValueTracker objects\n\nlist of ValueTracker objects\n\nReturn type:\n\nlist\n\nlist\n\nget_zoom()[source]\u00b6\n\nReturns the zoom amount of the camera.Returns:The zoom amount of the camera.Return type:float\n\nReturns the zoom amount of the camera.\n\nReturns:\n\nThe zoom amount of the camera.\n\nThe zoom amount of the camera.\n\nReturn type:\n\nfloat\n\nfloat\n\nproject_point(point)[source]\u00b6\n\nApplies the current rotation_matrix as a projection\nmatrix to the passed point.Parameters:point(Point3D) \u2013 The point to project.Returns:The point after projection.Return type:np.array\n\nApplies the current rotation_matrix as a projection\nmatrix to the passed point.\n\nParameters:\n\npoint(Point3D) \u2013 The point to project.\n\npoint(Point3D) \u2013 The point to project.\n\nReturns:\n\nThe point after projection.\n\nThe point after projection.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nproject_points(points)[source]\u00b6\n\nApplies the current rotation_matrix as a projection\nmatrix to the passed array of points.Parameters:points(Point3D_Array) \u2013 The list of points to project.Returns:The points after projecting.Return type:np.array\n\nApplies the current rotation_matrix as a projection\nmatrix to the passed array of points.\n\nParameters:\n\npoints(Point3D_Array) \u2013 The list of points to project.\n\npoints(Point3D_Array) \u2013 The list of points to project.\n\nReturns:\n\nThe points after projecting.\n\nThe points after projecting.\n\nReturn type:\n\nnp.array\n\nnp.array\n\nremove_fixed_in_frame_mobjects(*mobjects)[source]\u00b6\n\nIf a mobject was fixed in frame by passing it throughadd_fixed_in_frame_mobjects(), then this undoes that fixing.\nThe Mobject will no longer be fixed in frame.Parameters:mobjects(Mobject) \u2013 The mobjects which need not be fixed in frame any longer.Return type:None\n\nIf a mobject was fixed in frame by passing it throughadd_fixed_in_frame_mobjects(), then this undoes that fixing.\nThe Mobject will no longer be fixed in frame.\n\nParameters:\n\nmobjects(Mobject) \u2013 The mobjects which need not be fixed in frame any longer.\n\nmobjects(Mobject) \u2013 The mobjects which need not be fixed in frame any longer.\n\nReturn type:\n\nNone\n\nNone\n\nremove_fixed_orientation_mobjects(*mobjects)[source]\u00b6\n\nIf a mobject was fixed in its orientation by passing it throughadd_fixed_orientation_mobjects(), then this undoes that fixing.\nThe Mobject will no longer have a fixed orientation.Parameters:mobjects(Mobject) \u2013 The mobjects whose orientation need not be fixed any longer.Return type:None\n\nIf a mobject was fixed in its orientation by passing it throughadd_fixed_orientation_mobjects(), then this undoes that fixing.\nThe Mobject will no longer have a fixed orientation.\n\nParameters:\n\nmobjects(Mobject) \u2013 The mobjects whose orientation need not be fixed any longer.\n\nmobjects(Mobject) \u2013 The mobjects whose orientation need not be fixed any longer.\n\nReturn type:\n\nNone\n\nNone\n\nreset_rotation_matrix()[source]\u00b6\n\nSets the value of self.rotation_matrix to\nthe matrix corresponding to the current position of the cameraReturn type:None\n\nSets the value of self.rotation_matrix to\nthe matrix corresponding to the current position of the camera\n\nReturn type:\n\nNone\n\nNone\n\nset_focal_distance(value)[source]\u00b6\n\nSets the focal_distance of the Camera.Parameters:value(float) \u2013 The focal_distance of the Camera.Return type:None\n\nSets the focal_distance of the Camera.\n\nParameters:\n\nvalue(float) \u2013 The focal_distance of the Camera.\n\nvalue(float) \u2013 The focal_distance of the Camera.\n\nReturn type:\n\nNone\n\nNone\n\nset_gamma(value)[source]\u00b6\n\nSets the angle of rotation of the camera about the vector from the ORIGIN to the Camera.Parameters:value(float) \u2013 The new angle of rotation of the camera.Return type:None\n\nSets the angle of rotation of the camera about the vector from the ORIGIN to the Camera.\n\nParameters:\n\nvalue(float) \u2013 The new angle of rotation of the camera.\n\nvalue(float) \u2013 The new angle of rotation of the camera.\n\nReturn type:\n\nNone\n\nNone\n\nset_phi(value)[source]\u00b6\n\nSets the polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.Parameters:value(float) \u2013 The new value of the polar angle in radians.Return type:None\n\nSets the polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.\n\nParameters:\n\nvalue(float) \u2013 The new value of the polar angle in radians.\n\nvalue(float) \u2013 The new value of the polar angle in radians.\n\nReturn type:\n\nNone\n\nNone\n\nset_theta(value)[source]\u00b6\n\nSets the azimuthal angle i.e the angle that spins the camera around Z_AXIS in radians.Parameters:value(float) \u2013 The new value of the azimuthal angle in radians.Return type:None\n\nSets the azimuthal angle i.e the angle that spins the camera around Z_AXIS in radians.\n\nParameters:\n\nvalue(float) \u2013 The new value of the azimuthal angle in radians.\n\nvalue(float) \u2013 The new value of the azimuthal angle in radians.\n\nReturn type:\n\nNone\n\nNone\n\nset_zoom(value)[source]\u00b6\n\nSets the zoom amount of the camera.Parameters:value(float) \u2013 The zoom amount of the camera.Return type:None\n\nSets the zoom amount of the camera.\n\nParameters:\n\nvalue(float) \u2013 The zoom amount of the camera.\n\nvalue(float) \u2013 The zoom amount of the camera.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ThreeDCamera",
+      "class_name": null,
+      "parameters": [
+        "focal_distance=20.0"
+      ],
+      "return_type": null,
+      "description": "Bases:Camera"
+    },
+    {
+      "name": "add_fixed_in_frame_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "This method allows the mobject to have a fixed position,\neven when the camera moves around.\nE.G If it was passed through this method, at the top of the frame, it\nwill continue to be displayed at the top of the frame."
+    },
+    {
+      "name": "add_fixed_orientation_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "This method allows the mobject to have a fixed orientation,\neven when the camera moves around.\nE.G If it was passed through this method, facing the camera, it\nwill continue to face the camera even as the camera moves.\nHighly useful when adding labels to graphs and the like."
+    },
+    {
+      "name": "capture_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects by printing them onpixel_array."
+    },
+    {
+      "name": "generate_rotation_matrix",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Generates a rotation matrix based off the current position of the camera."
+    },
+    {
+      "name": "get_fill_rgbas",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Returns the RGBA array of the fill of the passed VMobject"
+    },
+    {
+      "name": "get_focal_distance",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns focal_distance of the Camera."
+    },
+    {
+      "name": "get_gamma",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the rotation of the camera about the vector from the ORIGIN to the Camera."
+    },
+    {
+      "name": "get_mobjects_to_display",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Used to get the list of mobjects to display\nwith the camera."
+    },
+    {
+      "name": "get_phi",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the Polar angle (the angle off Z_AXIS) phi."
+    },
+    {
+      "name": "get_rotation_matrix",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the matrix corresponding to the current position of the camera."
+    },
+    {
+      "name": "get_stroke_rgbas",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Gets the RGBA array for the stroke of the passed\nVMobject."
+    },
+    {
+      "name": "get_theta",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the Azimuthal i.e the angle that spins the camera around the Z_AXIS."
+    },
+    {
+      "name": "get_value_trackers",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A list ofValueTrackersof phi, theta, focal_distance,\ngamma and zoom."
+    },
+    {
+      "name": "get_zoom",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the zoom amount of the camera."
+    },
+    {
+      "name": "project_point",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Applies the current rotation_matrix as a projection\nmatrix to the passed point."
+    },
+    {
+      "name": "project_points",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Applies the current rotation_matrix as a projection\nmatrix to the passed array of points."
+    },
+    {
+      "name": "remove_fixed_in_frame_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "If a mobject was fixed in frame by passing it throughadd_fixed_in_frame_mobjects(), then this undoes that fixing.\nThe Mobject will no longer be fixed in frame."
+    },
+    {
+      "name": "remove_fixed_orientation_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "If a mobject was fixed in its orientation by passing it throughadd_fixed_orientation_mobjects(), then this undoes that fixing.\nThe Mobject will no longer have a fixed orientation."
+    },
+    {
+      "name": "reset_rotation_matrix",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Sets the value of self.rotation_matrix to\nthe matrix corresponding to the current position of the camera"
+    },
+    {
+      "name": "set_focal_distance",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets the focal_distance of the Camera."
+    },
+    {
+      "name": "set_gamma",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets the angle of rotation of the camera about the vector from the ORIGIN to the Camera."
+    },
+    {
+      "name": "set_phi",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets the polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians."
+    },
+    {
+      "name": "set_theta",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets the azimuthal angle i.e the angle that spins the camera around Z_AXIS in radians."
+    },
+    {
+      "name": "set_zoom",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets the zoom amount of the camera."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.scale.LogBase.html",
+  "title": "LogBase\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LogBase\u00b6\n\nQualified name:manim.mobject.graphing.scale.LogBase\n\nclassLogBase(base=10,custom_labels=True)[source]\u00b6\n\nBases:_ScaleBaseScale for logarithmic graphs/functions.Parameters:base(float) \u2013 The base of the log, by default 10.custom_labels(bool) \u2013 For use withAxes:\nWhether or not to includeLaTeXaxis labels, by default True.Examplesfunc=ParametricFunction(lambdax:x,scaling=LogBase(base=2))MethodsfunctionScales the value to fit it to a logarithmic scale.``self.function(5)==10**5``get_custom_labelsProduces customIntegerlabels in the form of10^2.inverse_functionInverse offunction.function(value)[source]\u00b6Scales the value to fit it to a logarithmic scale.``self.function(5)==10**5``Parameters:value(float)Return type:floatget_custom_labels(val_range,unit_decimal_places=0,**base_config)[source]\u00b6Produces customIntegerlabels in the form of10^2.Parameters:val_range(Iterable[float]) \u2013 The iterable of values used to create the labels. Determines the exponent.unit_decimal_places(int) \u2013 The number of decimal places to include in the exponentbase_config(Any) \u2013 Additional arguments to be passed toInteger.Return type:list[Integer]inverse_function(value)[source]\u00b6Inverse offunction. The value must be greater than 0Parameters:value(float)Return type:float\n\nBases:_ScaleBase\n\nScale for logarithmic graphs/functions.\n\nParameters:\n\nbase(float) \u2013 The base of the log, by default 10.custom_labels(bool) \u2013 For use withAxes:\nWhether or not to includeLaTeXaxis labels, by default True.\n\nbase(float) \u2013 The base of the log, by default 10.\n\nbase(float) \u2013 The base of the log, by default 10.\n\ncustom_labels(bool) \u2013 For use withAxes:\nWhether or not to includeLaTeXaxis labels, by default True.\n\ncustom_labels(bool) \u2013 For use withAxes:\nWhether or not to includeLaTeXaxis labels, by default True.\n\nExamples\n\nMethods\n\nfunction\n\nScales the value to fit it to a logarithmic scale.``self.function(5)==10**5``\n\nget_custom_labels\n\nProduces customIntegerlabels in the form of10^2.\n\ninverse_function\n\nInverse offunction.\n\nfunction(value)[source]\u00b6\n\nScales the value to fit it to a logarithmic scale.``self.function(5)==10**5``Parameters:value(float)Return type:float\n\nScales the value to fit it to a logarithmic scale.``self.function(5)==10**5``\n\nParameters:\n\nvalue(float)\n\nvalue(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nget_custom_labels(val_range,unit_decimal_places=0,**base_config)[source]\u00b6\n\nProduces customIntegerlabels in the form of10^2.Parameters:val_range(Iterable[float]) \u2013 The iterable of values used to create the labels. Determines the exponent.unit_decimal_places(int) \u2013 The number of decimal places to include in the exponentbase_config(Any) \u2013 Additional arguments to be passed toInteger.Return type:list[Integer]\n\nProduces customIntegerlabels in the form of10^2.\n\nParameters:\n\nval_range(Iterable[float]) \u2013 The iterable of values used to create the labels. Determines the exponent.unit_decimal_places(int) \u2013 The number of decimal places to include in the exponentbase_config(Any) \u2013 Additional arguments to be passed toInteger.\n\nval_range(Iterable[float]) \u2013 The iterable of values used to create the labels. Determines the exponent.\n\nval_range(Iterable[float]) \u2013 The iterable of values used to create the labels. Determines the exponent.\n\nunit_decimal_places(int) \u2013 The number of decimal places to include in the exponent\n\nunit_decimal_places(int) \u2013 The number of decimal places to include in the exponent\n\nbase_config(Any) \u2013 Additional arguments to be passed toInteger.\n\nbase_config(Any) \u2013 Additional arguments to be passed toInteger.\n\nReturn type:\n\nlist[Integer]\n\nlist[Integer]\n\ninverse_function(value)[source]\u00b6\n\nInverse offunction. The value must be greater than 0Parameters:value(float)Return type:float\n\nInverse offunction. The value must be greater than 0\n\nParameters:\n\nvalue(float)\n\nvalue(float)\n\nReturn type:\n\nfloat\n\nfloat",
+  "code_examples": [
+    {
+      "code": "func=ParametricFunction(lambdax:x,scaling=LogBase(base=2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LogBase",
+      "class_name": null,
+      "parameters": [
+        "base=10"
+      ],
+      "return_type": null,
+      "description": "Bases:_ScaleBase"
+    },
+    {
+      "name": "function",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Scales the value to fit it to a logarithmic scale.``self.function(5)==10**5``"
+    },
+    {
+      "name": "get_custom_labels",
+      "class_name": null,
+      "parameters": [
+        "val_range"
+      ],
+      "return_type": null,
+      "description": "Produces customIntegerlabels in the form of10^2."
+    },
+    {
+      "name": "inverse_function",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Inverse offunction. The value must be greater than 0"
+    }
+  ],
+  "related_classes": [
+    "Axes",
+    "ParametricFunction"
+  ],
+  "tags": [
+    "transformation",
+    "text",
+    "graph"
+  ]
+}

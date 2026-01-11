@@ -1,0 +1,78 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.point_cloud_mobject.PointCloudDot.html",
+  "title": "PointCloudDot\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "PointCloudDot\u00b6\n\nQualified name:manim.mobject.types.point\\_cloud\\_mobject.PointCloudDot\n\nclassPointCloudDot(center=array([0.,0.,0.]),radius=2.0,stroke_width=2,density=10,color=ManimColor('#FFFF00'),**kwargs)[source]\u00b6\n\nBases:Mobject1DA disc made of a cloud of dots.ExamplesExample: PointCloudDotExample\u00b6frommanimimport*classPointCloudDotExample(Scene):defconstruct(self):cloud_1=PointCloudDot(color=RED)cloud_2=PointCloudDot(stroke_width=4,radius=1)cloud_3=PointCloudDot(density=15)group=Group(cloud_1,cloud_2,cloud_3).arrange()self.add(group)class PointCloudDotExample(Scene):\n    def construct(self):\n        cloud_1 = PointCloudDot(color=RED)\n        cloud_2 = PointCloudDot(stroke_width=4, radius=1)\n        cloud_3 = PointCloudDot(density=15)\n\n        group = Group(cloud_1, cloud_2, cloud_3).arrange()\n        self.add(group)Example: PointCloudDotExample2\u00b6frommanimimport*classPointCloudDotExample2(Scene):defconstruct(self):plane=ComplexPlane()cloud=PointCloudDot(color=RED)self.add(plane,cloud)self.wait()self.play(cloud.animate.apply_complex_function(lambdaz:np.exp(z)))class PointCloudDotExample2(Scene):\n    def construct(self):\n        plane = ComplexPlane()\n        cloud = PointCloudDot(color=RED)\n        self.add(\n            plane, cloud\n        )\n        self.wait()\n        self.play(\n            cloud.animate.apply_complex_function(lambda z: np.exp(z))\n        )Methodsgenerate_pointsInitializespointsand therefore the shape.init_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:center(Point3DLike)radius(float)stroke_width(int)density(int)color(ManimColor)kwargs(Any)_original__init__(center=array([0.,0.,0.]),radius=2.0,stroke_width=2,density=10,color=ManimColor('#FFFF00'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:center(Point3DLike)radius(float)stroke_width(int)density(int)color(ManimColor)kwargs(Any)Return type:Nonegenerate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nBases:Mobject1D\n\nA disc made of a cloud of dots.\n\nExamples\n\nExample: PointCloudDotExample\u00b6\n\nExample: PointCloudDotExample2\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ncenter(Point3DLike)radius(float)stroke_width(int)density(int)color(ManimColor)kwargs(Any)\n\ncenter(Point3DLike)\n\ncenter(Point3DLike)\n\nradius(float)\n\nradius(float)\n\nstroke_width(int)\n\nstroke_width(int)\n\ndensity(int)\n\ndensity(int)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(center=array([0.,0.,0.]),radius=2.0,stroke_width=2,density=10,color=ManimColor('#FFFF00'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:center(Point3DLike)radius(float)stroke_width(int)density(int)color(ManimColor)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ncenter(Point3DLike)radius(float)stroke_width(int)density(int)color(ManimColor)kwargs(Any)\n\ncenter(Point3DLike)\n\ncenter(Point3DLike)\n\nradius(float)\n\nradius(float)\n\nstroke_width(int)\n\nstroke_width(int)\n\ndensity(int)\n\ndensity(int)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classPointCloudDotExample(Scene):defconstruct(self):cloud_1=PointCloudDot(color=RED)cloud_2=PointCloudDot(stroke_width=4,radius=1)cloud_3=PointCloudDot(density=15)group=Group(cloud_1,cloud_2,cloud_3).arrange()self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PointCloudDotExample(Scene):\n    def construct(self):\n        cloud_1 = PointCloudDot(color=RED)\n        cloud_2 = PointCloudDot(stroke_width=4, radius=1)\n        cloud_3 = PointCloudDot(density=15)\n\n        group = Group(cloud_1, cloud_2, cloud_3).arrange()\n        self.add(group)",
+      "language": "python",
+      "context": "Example: PointCloudDotExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPointCloudDotExample2(Scene):defconstruct(self):plane=ComplexPlane()cloud=PointCloudDot(color=RED)self.add(plane,cloud)self.wait()self.play(cloud.animate.apply_complex_function(lambdaz:np.exp(z)))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PointCloudDotExample2(Scene):\n    def construct(self):\n        plane = ComplexPlane()\n        cloud = PointCloudDot(color=RED)\n        self.add(\n            plane, cloud\n        )\n        self.wait()\n        self.play(\n            cloud.animate.apply_complex_function(lambda z: np.exp(z))\n        )",
+      "language": "python",
+      "context": "Example: PointCloudDotExample2\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "PointCloudDot",
+      "class_name": null,
+      "parameters": [
+        "center=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:Mobject1D"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "center=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

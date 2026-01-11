@@ -1,0 +1,113 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.animation.Add.html",
+  "title": "Add\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Add\u00b6\n\nQualified name:manim.animation.animation.Add\n\nclassAdd(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationAdd Mobjects to a scene, without animating them in any other way. This\nis similar to theScene.add()method, butAddis an\nanimation which can be grouped into other animations.Parameters:mobjects(Mobject) \u2013 OneMobjector more to add to a scene.run_time(float) \u2013 The duration of the animation after adding themobjects. Defaults\nto 0, which means this is an instant animation without extra wait time\nafter adding them.**kwargs(Any) \u2013 Additional arguments to pass to the parentAnimationclass.ExamplesExample: DefaultAddScene\u00b6frommanimimport*classDefaultAddScene(Scene):defconstruct(self):text_1=Text(\"I was added with Add!\")text_2=Text(\"Me too!\")text_3=Text(\"And me!\")texts=VGroup(text_1,text_2,text_3).arrange(DOWN)rect=SurroundingRectangle(texts,buff=0.5)self.play(Create(rect,run_time=3.0),Succession(Wait(1.0),# You can Add a Mobject in the middle of an animation...Add(text_1),Wait(1.0),# ...or multiple Mobjects at once!Add(text_2,text_3),),)self.wait()class DefaultAddScene(Scene):\n    def construct(self):\n        text_1 = Text(\"I was added with Add!\")\n        text_2 = Text(\"Me too!\")\n        text_3 = Text(\"And me!\")\n        texts = VGroup(text_1, text_2, text_3).arrange(DOWN)\n        rect = SurroundingRectangle(texts, buff=0.5)\n\n        self.play(\n            Create(rect, run_time=3.0),\n            Succession(\n                Wait(1.0),\n                # You can Add a Mobject in the middle of an animation...\n                Add(text_1),\n                Wait(1.0),\n                # ...or multiple Mobjects at once!\n                Add(text_2, text_3),\n            ),\n        )\n        self.wait()Example: AddWithRunTimeScene\u00b6frommanimimport*classAddWithRunTimeScene(Scene):defconstruct(self):# A 5x5 grid of circlescircles=VGroup(*[Circle(radius=0.5)for_inrange(25)]).arrange_in_grid(5,5)self.play(Succession(# Add a run_time of 0.2 to wait for 0.2 seconds after# adding the circle, instead of using Wait(0.2) after Add!*[Add(circle,run_time=0.2)forcircleincircles],rate_func=smooth,))self.wait()class AddWithRunTimeScene(Scene):\n    def construct(self):\n        # A 5x5 grid of circles\n        circles = VGroup(\n            *[Circle(radius=0.5) for _ in range(25)]\n        ).arrange_in_grid(5, 5)\n\n        self.play(\n            Succession(\n                # Add a run_time of 0.2 to wait for 0.2 seconds after\n                # adding the circle, instead of using Wait(0.2) after Add!\n                *[Add(circle, run_time=0.2) for circle in circles],\n                rate_func=smooth,\n            )\n        )\n        self.wait()MethodsbeginBegin the animation.clean_up_from_sceneClean up theSceneafter finishing the animation.finishFinish the animation.interpolateSet the animation progress.update_mobjectsUpdates things like starting_mobject, and (for Transforms) target_mobject.Attributesrun_time_original__init__(*mobjects,run_time=0.0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)run_time(float)kwargs(Any)Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonefinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:Noneinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:Noneupdate_mobjects(dt)[source]\u00b6Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nBases:Animation\n\nAdd Mobjects to a scene, without animating them in any other way. This\nis similar to theScene.add()method, butAddis an\nanimation which can be grouped into other animations.\n\nParameters:\n\nmobjects(Mobject) \u2013 OneMobjector more to add to a scene.run_time(float) \u2013 The duration of the animation after adding themobjects. Defaults\nto 0, which means this is an instant animation without extra wait time\nafter adding them.**kwargs(Any) \u2013 Additional arguments to pass to the parentAnimationclass.\n\nmobjects(Mobject) \u2013 OneMobjector more to add to a scene.\n\nmobjects(Mobject) \u2013 OneMobjector more to add to a scene.\n\nrun_time(float) \u2013 The duration of the animation after adding themobjects. Defaults\nto 0, which means this is an instant animation without extra wait time\nafter adding them.\n\nrun_time(float) \u2013 The duration of the animation after adding themobjects. Defaults\nto 0, which means this is an instant animation without extra wait time\nafter adding them.\n\n**kwargs(Any) \u2013 Additional arguments to pass to the parentAnimationclass.\n\n**kwargs(Any) \u2013 Additional arguments to pass to the parentAnimationclass.\n\nExamples\n\nExample: DefaultAddScene\u00b6\n\nExample: AddWithRunTimeScene\u00b6\n\nMethods\n\nbegin\n\nBegin the animation.\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nfinish\n\nFinish the animation.\n\ninterpolate\n\nSet the animation progress.\n\nupdate_mobjects\n\nUpdates things like starting_mobject, and (for Transforms) target_mobject.\n\nAttributes\n\nrun_time\n\n_original__init__(*mobjects,run_time=0.0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)run_time(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobjects(Mobject)run_time(float)kwargs(Any)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone\n\nupdate_mobjects(dt)[source]\u00b6\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.\n\nParameters:\n\ndt(float)\n\ndt(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classDefaultAddScene(Scene):defconstruct(self):text_1=Text(\"I was added with Add!\")text_2=Text(\"Me too!\")text_3=Text(\"And me!\")texts=VGroup(text_1,text_2,text_3).arrange(DOWN)rect=SurroundingRectangle(texts,buff=0.5)self.play(Create(rect,run_time=3.0),Succession(Wait(1.0),# You can Add a Mobject in the middle of an animation...Add(text_1),Wait(1.0),# ...or multiple Mobjects at once!Add(text_2,text_3),),)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class DefaultAddScene(Scene):\n    def construct(self):\n        text_1 = Text(\"I was added with Add!\")\n        text_2 = Text(\"Me too!\")\n        text_3 = Text(\"And me!\")\n        texts = VGroup(text_1, text_2, text_3).arrange(DOWN)\n        rect = SurroundingRectangle(texts, buff=0.5)\n\n        self.play(\n            Create(rect, run_time=3.0),\n            Succession(\n                Wait(1.0),\n                # You can Add a Mobject in the middle of an animation...\n                Add(text_1),\n                Wait(1.0),\n                # ...or multiple Mobjects at once!\n                Add(text_2, text_3),\n            ),\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: DefaultAddScene\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classAddWithRunTimeScene(Scene):defconstruct(self):# A 5x5 grid of circlescircles=VGroup(*[Circle(radius=0.5)for_inrange(25)]).arrange_in_grid(5,5)self.play(Succession(# Add a run_time of 0.2 to wait for 0.2 seconds after# adding the circle, instead of using Wait(0.2) after Add!*[Add(circle,run_time=0.2)forcircleincircles],rate_func=smooth,))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class AddWithRunTimeScene(Scene):\n    def construct(self):\n        # A 5x5 grid of circles\n        circles = VGroup(\n            *[Circle(radius=0.5) for _ in range(25)]\n        ).arrange_in_grid(5, 5)\n\n        self.play(\n            Succession(\n                # Add a run_time of 0.2 to wait for 0.2 seconds after\n                # adding the circle, instead of using Wait(0.2) after Add!\n                *[Add(circle, run_time=0.2) for circle in circles],\n                rate_func=smooth,\n            )\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: AddWithRunTimeScene\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Add",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    },
+    {
+      "name": "update_mobjects",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Create",
+    "VGroup",
+    "Tex",
+    "Transform",
+    "Text",
+    "Succession",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

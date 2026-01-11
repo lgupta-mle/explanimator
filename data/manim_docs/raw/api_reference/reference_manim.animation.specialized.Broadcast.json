@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.specialized.Broadcast.html",
+  "title": "Broadcast\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Broadcast\u00b6\n\nQualified name:manim.animation.specialized.Broadcast\n\nclassBroadcast(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:LaggedStartBroadcast a mobject starting from aninitial_width, up to the actual size of the mobject.Parameters:mobject(Mobject) \u2013 The mobject to be broadcast.focal_point(Sequence[float]) \u2013 The center of the broadcast, by default ORIGIN.n_mobs(int) \u2013 The number of mobjects that emerge from the focal point, by default 5.initial_opacity(float) \u2013 The starting stroke opacity of the mobjects emitted from the broadcast, by default 1.final_opacity(float) \u2013 The final stroke opacity of the mobjects emitted from the broadcast, by default 0.initial_width(float) \u2013 The initial width of the mobjects, by default 0.0.remover(bool) \u2013 Whether the mobjects should be removed from the scene after the animation, by default True.lag_ratio(float) \u2013 The time between each iteration of the mobject, by default 0.2.run_time(float) \u2013 The total duration of the animation, by default 3.kwargs(Any) \u2013 Additional arguments to be passed toLaggedStart.ExamplesExample: BroadcastExample\u00b6frommanimimport*classBroadcastExample(Scene):defconstruct(self):mob=Circle(radius=4,color=TEAL_A)self.play(Broadcast(mob))class BroadcastExample(Scene):\n    def construct(self):\n        mob = Circle(radius=4, color=TEAL_A)\n        self.play(Broadcast(mob))MethodsAttributesrun_time_original__init__(mobject,focal_point=array([0.,0.,0.]),n_mobs=5,initial_opacity=1,final_opacity=0,initial_width=0.0,remover=True,lag_ratio=0.2,run_time=3,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)focal_point(Sequence[float])n_mobs(int)initial_opacity(float)final_opacity(float)initial_width(float)remover(bool)lag_ratio(float)run_time(float)kwargs(Any)\n\nBases:LaggedStart\n\nBroadcast a mobject starting from aninitial_width, up to the actual size of the mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be broadcast.focal_point(Sequence[float]) \u2013 The center of the broadcast, by default ORIGIN.n_mobs(int) \u2013 The number of mobjects that emerge from the focal point, by default 5.initial_opacity(float) \u2013 The starting stroke opacity of the mobjects emitted from the broadcast, by default 1.final_opacity(float) \u2013 The final stroke opacity of the mobjects emitted from the broadcast, by default 0.initial_width(float) \u2013 The initial width of the mobjects, by default 0.0.remover(bool) \u2013 Whether the mobjects should be removed from the scene after the animation, by default True.lag_ratio(float) \u2013 The time between each iteration of the mobject, by default 0.2.run_time(float) \u2013 The total duration of the animation, by default 3.kwargs(Any) \u2013 Additional arguments to be passed toLaggedStart.\n\nmobject(Mobject) \u2013 The mobject to be broadcast.\n\nmobject(Mobject) \u2013 The mobject to be broadcast.\n\nfocal_point(Sequence[float]) \u2013 The center of the broadcast, by default ORIGIN.\n\nfocal_point(Sequence[float]) \u2013 The center of the broadcast, by default ORIGIN.\n\nn_mobs(int) \u2013 The number of mobjects that emerge from the focal point, by default 5.\n\nn_mobs(int) \u2013 The number of mobjects that emerge from the focal point, by default 5.\n\ninitial_opacity(float) \u2013 The starting stroke opacity of the mobjects emitted from the broadcast, by default 1.\n\ninitial_opacity(float) \u2013 The starting stroke opacity of the mobjects emitted from the broadcast, by default 1.\n\nfinal_opacity(float) \u2013 The final stroke opacity of the mobjects emitted from the broadcast, by default 0.\n\nfinal_opacity(float) \u2013 The final stroke opacity of the mobjects emitted from the broadcast, by default 0.\n\ninitial_width(float) \u2013 The initial width of the mobjects, by default 0.0.\n\ninitial_width(float) \u2013 The initial width of the mobjects, by default 0.0.\n\nremover(bool) \u2013 Whether the mobjects should be removed from the scene after the animation, by default True.\n\nremover(bool) \u2013 Whether the mobjects should be removed from the scene after the animation, by default True.\n\nlag_ratio(float) \u2013 The time between each iteration of the mobject, by default 0.2.\n\nlag_ratio(float) \u2013 The time between each iteration of the mobject, by default 0.2.\n\nrun_time(float) \u2013 The total duration of the animation, by default 3.\n\nrun_time(float) \u2013 The total duration of the animation, by default 3.\n\nkwargs(Any) \u2013 Additional arguments to be passed toLaggedStart.\n\nkwargs(Any) \u2013 Additional arguments to be passed toLaggedStart.\n\nExamples\n\nExample: BroadcastExample\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,focal_point=array([0.,0.,0.]),n_mobs=5,initial_opacity=1,final_opacity=0,initial_width=0.0,remover=True,lag_ratio=0.2,run_time=3,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)focal_point(Sequence[float])n_mobs(int)initial_opacity(float)final_opacity(float)initial_width(float)remover(bool)lag_ratio(float)run_time(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)focal_point(Sequence[float])n_mobs(int)initial_opacity(float)final_opacity(float)initial_width(float)remover(bool)lag_ratio(float)run_time(float)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nfocal_point(Sequence[float])\n\nfocal_point(Sequence[float])\n\nn_mobs(int)\n\nn_mobs(int)\n\ninitial_opacity(float)\n\ninitial_opacity(float)\n\nfinal_opacity(float)\n\nfinal_opacity(float)\n\ninitial_width(float)\n\ninitial_width(float)\n\nremover(bool)\n\nremover(bool)\n\nlag_ratio(float)\n\nlag_ratio(float)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBroadcastExample(Scene):defconstruct(self):mob=Circle(radius=4,color=TEAL_A)self.play(Broadcast(mob))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BroadcastExample(Scene):\n    def construct(self):\n        mob = Circle(radius=4, color=TEAL_A)\n        self.play(Broadcast(mob))",
+      "language": "python",
+      "context": "Example: BroadcastExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Broadcast",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:LaggedStart"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "LaggedStart",
+    "Circle",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "geometry",
+    "animation"
+  ]
+}

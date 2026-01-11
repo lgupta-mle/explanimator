@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.rotation.html",
+  "title": "rotation\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "rotation\u00b6\n\nAnimations related to rotation.\n\nClasses\n\nRotate\n\nAnimation that rotates a Mobject.\n\nRotating\n\nAnimation that rotates a Mobject.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Rotate",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "transformation"
+  ]
+}

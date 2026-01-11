@@ -1,0 +1,61 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.vectorized_mobject.DashedVMobject.html",
+  "title": "DashedVMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DashedVMobject\u00b6\n\nQualified name:manim.mobject.types.vectorized\\_mobject.DashedVMobject\n\nclassDashedVMobject(vmobject,num_dashes=15,dashed_ratio=0.5,dash_offset=0,color=ManimColor('#FFFFFF'),equal_lengths=True,**kwargs)[source]\u00b6\n\nBases:VMobjectAVMobjectcomposed of dashes instead of lines.Parameters:vmobject(VMobject) \u2013 The object that will get dashednum_dashes(int) \u2013 Number of dashes to add.dashed_ratio(float) \u2013 Ratio of dash to empty space.dash_offset(float) \u2013 Shifts the starting point of dashes along the\npath. Value 1 shifts by one full dash length.equal_lengths(bool) \u2013 IfTrue, dashes will be (approximately) equally long.\nIfFalse, dashes will be split evenly in the curve\u2019s\ninput t variable (legacy behavior).color(ManimColor)ExamplesExample: DashedVMobjectExample\u00b6frommanimimport*classDashedVMobjectExample(Scene):defconstruct(self):r=0.5top_row=VGroup()# Increasing num_dashesfordashesinrange(1,12):circ=DashedVMobject(Circle(radius=r,color=WHITE),num_dashes=dashes)top_row.add(circ)middle_row=VGroup()# Increasing dashed_ratioforratioinnp.arange(1/11,1,1/11):circ=DashedVMobject(Circle(radius=r,color=WHITE),dashed_ratio=ratio)middle_row.add(circ)func1=FunctionGraph(lambdat:t**5,[-1,1],color=WHITE)func_even=DashedVMobject(func1,num_dashes=6,equal_lengths=True)func_stretched=DashedVMobject(func1,num_dashes=6,equal_lengths=False)bottom_row=VGroup(func_even,func_stretched)top_row.arrange(buff=0.3)middle_row.arrange()bottom_row.arrange(buff=1)everything=VGroup(top_row,middle_row,bottom_row).arrange(DOWN,buff=1)self.add(everything)class DashedVMobjectExample(Scene):\n    def construct(self):\n        r = 0.5\n\n        top_row = VGroup()  # Increasing num_dashes\n        for dashes in range(1, 12):\n            circ = DashedVMobject(Circle(radius=r, color=WHITE), num_dashes=dashes)\n            top_row.add(circ)\n\n        middle_row = VGroup()  # Increasing dashed_ratio\n        for ratio in np.arange(1 / 11, 1, 1 / 11):\n            circ = DashedVMobject(\n                Circle(radius=r, color=WHITE), dashed_ratio=ratio\n            )\n            middle_row.add(circ)\n\n        func1 = FunctionGraph(lambda t: t**5,[-1,1],color=WHITE)\n        func_even = DashedVMobject(func1,num_dashes=6,equal_lengths=True)\n        func_stretched = DashedVMobject(func1, num_dashes=6, equal_lengths=False)\n        bottom_row = VGroup(func_even,func_stretched)\n\n        top_row.arrange(buff=0.3)\n        middle_row.arrange()\n        bottom_row.arrange(buff=1)\n        everything = VGroup(top_row, middle_row, bottom_row).arrange(DOWN, buff=1)\n        self.add(everything)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(vmobject,num_dashes=15,dashed_ratio=0.5,dash_offset=0,color=ManimColor('#FFFFFF'),equal_lengths=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)num_dashes(int)dashed_ratio(float)dash_offset(float)color(ManimColor)equal_lengths(bool)Return type:None\n\nBases:VMobject\n\nAVMobjectcomposed of dashes instead of lines.\n\nParameters:\n\nvmobject(VMobject) \u2013 The object that will get dashednum_dashes(int) \u2013 Number of dashes to add.dashed_ratio(float) \u2013 Ratio of dash to empty space.dash_offset(float) \u2013 Shifts the starting point of dashes along the\npath. Value 1 shifts by one full dash length.equal_lengths(bool) \u2013 IfTrue, dashes will be (approximately) equally long.\nIfFalse, dashes will be split evenly in the curve\u2019s\ninput t variable (legacy behavior).color(ManimColor)\n\nvmobject(VMobject) \u2013 The object that will get dashed\n\nvmobject(VMobject) \u2013 The object that will get dashed\n\nnum_dashes(int) \u2013 Number of dashes to add.\n\nnum_dashes(int) \u2013 Number of dashes to add.\n\ndashed_ratio(float) \u2013 Ratio of dash to empty space.\n\ndashed_ratio(float) \u2013 Ratio of dash to empty space.\n\ndash_offset(float) \u2013 Shifts the starting point of dashes along the\npath. Value 1 shifts by one full dash length.\n\ndash_offset(float) \u2013 Shifts the starting point of dashes along the\npath. Value 1 shifts by one full dash length.\n\nequal_lengths(bool) \u2013 IfTrue, dashes will be (approximately) equally long.\nIfFalse, dashes will be split evenly in the curve\u2019s\ninput t variable (legacy behavior).\n\nequal_lengths(bool) \u2013 IfTrue, dashes will be (approximately) equally long.\nIfFalse, dashes will be split evenly in the curve\u2019s\ninput t variable (legacy behavior).\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nExamples\n\nExample: DashedVMobjectExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(vmobject,num_dashes=15,dashed_ratio=0.5,dash_offset=0,color=ManimColor('#FFFFFF'),equal_lengths=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)num_dashes(int)dashed_ratio(float)dash_offset(float)color(ManimColor)equal_lengths(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobject(VMobject)num_dashes(int)dashed_ratio(float)dash_offset(float)color(ManimColor)equal_lengths(bool)\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\nnum_dashes(int)\n\nnum_dashes(int)\n\ndashed_ratio(float)\n\ndashed_ratio(float)\n\ndash_offset(float)\n\ndash_offset(float)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nequal_lengths(bool)\n\nequal_lengths(bool)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classDashedVMobjectExample(Scene):defconstruct(self):r=0.5top_row=VGroup()# Increasing num_dashesfordashesinrange(1,12):circ=DashedVMobject(Circle(radius=r,color=WHITE),num_dashes=dashes)top_row.add(circ)middle_row=VGroup()# Increasing dashed_ratioforratioinnp.arange(1/11,1,1/11):circ=DashedVMobject(Circle(radius=r,color=WHITE),dashed_ratio=ratio)middle_row.add(circ)func1=FunctionGraph(lambdat:t**5,[-1,1],color=WHITE)func_even=DashedVMobject(func1,num_dashes=6,equal_lengths=True)func_stretched=DashedVMobject(func1,num_dashes=6,equal_lengths=False)bottom_row=VGroup(func_even,func_stretched)top_row.arrange(buff=0.3)middle_row.arrange()bottom_row.arrange(buff=1)everything=VGroup(top_row,middle_row,bottom_row).arrange(DOWN,buff=1)self.add(everything)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class DashedVMobjectExample(Scene):\n    def construct(self):\n        r = 0.5\n\n        top_row = VGroup()  # Increasing num_dashes\n        for dashes in range(1, 12):\n            circ = DashedVMobject(Circle(radius=r, color=WHITE), num_dashes=dashes)\n            top_row.add(circ)\n\n        middle_row = VGroup()  # Increasing dashed_ratio\n        for ratio in np.arange(1 / 11, 1, 1 / 11):\n            circ = DashedVMobject(\n                Circle(radius=r, color=WHITE), dashed_ratio=ratio\n            )\n            middle_row.add(circ)\n\n        func1 = FunctionGraph(lambda t: t**5,[-1,1],color=WHITE)\n        func_even = DashedVMobject(func1,num_dashes=6,equal_lengths=True)\n        func_stretched = DashedVMobject(func1, num_dashes=6, equal_lengths=False)\n        bottom_row = VGroup(func_even,func_stretched)\n\n        top_row.arrange(buff=0.3)\n        middle_row.arrange()\n        bottom_row.arrange(buff=1)\n        everything = VGroup(top_row, middle_row, bottom_row).arrange(DOWN, buff=1)\n        self.add(everything)",
+      "language": "python",
+      "context": "Example: DashedVMobjectExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "DashedVMobject",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "VGroup",
+    "Graph",
+    "VMobject",
+    "Shift",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

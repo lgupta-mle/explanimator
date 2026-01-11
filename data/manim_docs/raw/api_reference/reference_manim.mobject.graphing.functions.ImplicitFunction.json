@@ -1,0 +1,74 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.functions.ImplicitFunction.html",
+  "title": "ImplicitFunction\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ImplicitFunction\u00b6\n\nQualified name:manim.mobject.graphing.functions.ImplicitFunction\n\nclassImplicitFunction(func,x_range=None,y_range=None,min_depth=5,max_quads=1500,use_smoothing=True,**kwargs)[source]\u00b6\n\nBases:VMobjectAn implicit function.Parameters:func(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.x_range(Sequence[float]|None) \u2013 The x min and max of the function.y_range(Sequence[float]|None) \u2013 The y min and max of the function.min_depth(int) \u2013 The minimum depth of the function to calculate.max_quads(int) \u2013 The maximum number of quads to use.use_smoothing(bool) \u2013 Whether or not to smoothen the curves.kwargs(Any) \u2013 Additional parameters to pass intoVMobjectNoteA smallmin_depth\\(d\\)means that some small details might\nbe ignored if they don\u2019t cross an edge of one of the\\(4^d\\)uniform quads.The value ofmax_quadsstrongly corresponds to the\nquality of the curve, but a higher number of quads\nmay take longer to render.ExamplesExample: ImplicitFunctionExample\u00b6frommanimimport*classImplicitFunctionExample(Scene):defconstruct(self):graph=ImplicitFunction(lambdax,y:x*y**2-x**2*y-2,color=YELLOW)self.add(NumberPlane(),graph)class ImplicitFunctionExample(Scene):\n    def construct(self):\n        graph = ImplicitFunction(\n            lambda x, y: x * y ** 2 - x ** 2 * y - 2,\n            color=YELLOW\n        )\n        self.add(NumberPlane(), graph)Methodsgenerate_pointsInitializespointsand therefore the shape.init_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(func,x_range=None,y_range=None,min_depth=5,max_quads=1500,use_smoothing=True,**kwargs)\u00b6An implicit function.Parameters:func(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.x_range(Sequence[float]|None) \u2013 The x min and max of the function.y_range(Sequence[float]|None) \u2013 The y min and max of the function.min_depth(int) \u2013 The minimum depth of the function to calculate.max_quads(int) \u2013 The maximum number of quads to use.use_smoothing(bool) \u2013 Whether or not to smoothen the curves.kwargs(Any) \u2013 Additional parameters to pass intoVMobjectNoteA smallmin_depth\\(d\\)means that some small details might\nbe ignored if they don\u2019t cross an edge of one of the\\(4^d\\)uniform quads.The value ofmax_quadsstrongly corresponds to the\nquality of the curve, but a higher number of quads\nmay take longer to render.ExamplesExample: ImplicitFunctionExample\u00b6frommanimimport*classImplicitFunctionExample(Scene):defconstruct(self):graph=ImplicitFunction(lambdax,y:x*y**2-x**2*y-2,color=YELLOW)self.add(NumberPlane(),graph)class ImplicitFunctionExample(Scene):\n    def construct(self):\n        graph = ImplicitFunction(\n            lambda x, y: x * y ** 2 - x ** 2 * y - 2,\n            color=YELLOW\n        )\n        self.add(NumberPlane(), graph)generate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:Self\n\nBases:VMobject\n\nAn implicit function.\n\nParameters:\n\nfunc(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.x_range(Sequence[float]|None) \u2013 The x min and max of the function.y_range(Sequence[float]|None) \u2013 The y min and max of the function.min_depth(int) \u2013 The minimum depth of the function to calculate.max_quads(int) \u2013 The maximum number of quads to use.use_smoothing(bool) \u2013 Whether or not to smoothen the curves.kwargs(Any) \u2013 Additional parameters to pass intoVMobject\n\nfunc(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.\n\nfunc(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.\n\nx_range(Sequence[float]|None) \u2013 The x min and max of the function.\n\nx_range(Sequence[float]|None) \u2013 The x min and max of the function.\n\ny_range(Sequence[float]|None) \u2013 The y min and max of the function.\n\ny_range(Sequence[float]|None) \u2013 The y min and max of the function.\n\nmin_depth(int) \u2013 The minimum depth of the function to calculate.\n\nmin_depth(int) \u2013 The minimum depth of the function to calculate.\n\nmax_quads(int) \u2013 The maximum number of quads to use.\n\nmax_quads(int) \u2013 The maximum number of quads to use.\n\nuse_smoothing(bool) \u2013 Whether or not to smoothen the curves.\n\nuse_smoothing(bool) \u2013 Whether or not to smoothen the curves.\n\nkwargs(Any) \u2013 Additional parameters to pass intoVMobject\n\nkwargs(Any) \u2013 Additional parameters to pass intoVMobject\n\nNote\n\nA smallmin_depth\\(d\\)means that some small details might\nbe ignored if they don\u2019t cross an edge of one of the\\(4^d\\)uniform quads.\n\nThe value ofmax_quadsstrongly corresponds to the\nquality of the curve, but a higher number of quads\nmay take longer to render.\n\nExamples\n\nExample: ImplicitFunctionExample\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(func,x_range=None,y_range=None,min_depth=5,max_quads=1500,use_smoothing=True,**kwargs)\u00b6\n\nAn implicit function.Parameters:func(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.x_range(Sequence[float]|None) \u2013 The x min and max of the function.y_range(Sequence[float]|None) \u2013 The y min and max of the function.min_depth(int) \u2013 The minimum depth of the function to calculate.max_quads(int) \u2013 The maximum number of quads to use.use_smoothing(bool) \u2013 Whether or not to smoothen the curves.kwargs(Any) \u2013 Additional parameters to pass intoVMobjectNoteA smallmin_depth\\(d\\)means that some small details might\nbe ignored if they don\u2019t cross an edge of one of the\\(4^d\\)uniform quads.The value ofmax_quadsstrongly corresponds to the\nquality of the curve, but a higher number of quads\nmay take longer to render.ExamplesExample: ImplicitFunctionExample\u00b6frommanimimport*classImplicitFunctionExample(Scene):defconstruct(self):graph=ImplicitFunction(lambdax,y:x*y**2-x**2*y-2,color=YELLOW)self.add(NumberPlane(),graph)class ImplicitFunctionExample(Scene):\n    def construct(self):\n        graph = ImplicitFunction(\n            lambda x, y: x * y ** 2 - x ** 2 * y - 2,\n            color=YELLOW\n        )\n        self.add(NumberPlane(), graph)\n\nAn implicit function.\n\nParameters:\n\nfunc(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.x_range(Sequence[float]|None) \u2013 The x min and max of the function.y_range(Sequence[float]|None) \u2013 The y min and max of the function.min_depth(int) \u2013 The minimum depth of the function to calculate.max_quads(int) \u2013 The maximum number of quads to use.use_smoothing(bool) \u2013 Whether or not to smoothen the curves.kwargs(Any) \u2013 Additional parameters to pass intoVMobject\n\nfunc(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.\n\nfunc(Callable[[float,float],float]) \u2013 The implicit function in the formf(x,y)=0.\n\nx_range(Sequence[float]|None) \u2013 The x min and max of the function.\n\nx_range(Sequence[float]|None) \u2013 The x min and max of the function.\n\ny_range(Sequence[float]|None) \u2013 The y min and max of the function.\n\ny_range(Sequence[float]|None) \u2013 The y min and max of the function.\n\nmin_depth(int) \u2013 The minimum depth of the function to calculate.\n\nmin_depth(int) \u2013 The minimum depth of the function to calculate.\n\nmax_quads(int) \u2013 The maximum number of quads to use.\n\nmax_quads(int) \u2013 The maximum number of quads to use.\n\nuse_smoothing(bool) \u2013 Whether or not to smoothen the curves.\n\nuse_smoothing(bool) \u2013 Whether or not to smoothen the curves.\n\nkwargs(Any) \u2013 Additional parameters to pass intoVMobject\n\nkwargs(Any) \u2013 Additional parameters to pass intoVMobject\n\nNote\n\nA smallmin_depth\\(d\\)means that some small details might\nbe ignored if they don\u2019t cross an edge of one of the\\(4^d\\)uniform quads.\n\nThe value ofmax_quadsstrongly corresponds to the\nquality of the curve, but a higher number of quads\nmay take longer to render.\n\nExamples\n\nExample: ImplicitFunctionExample\u00b6\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:Self\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classImplicitFunctionExample(Scene):defconstruct(self):graph=ImplicitFunction(lambdax,y:x*y**2-x**2*y-2,color=YELLOW)self.add(NumberPlane(),graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ImplicitFunctionExample(Scene):\n    def construct(self):\n        graph = ImplicitFunction(\n            lambda x, y: x * y ** 2 - x ** 2 * y - 2,\n            color=YELLOW\n        )\n        self.add(NumberPlane(), graph)",
+      "language": "python",
+      "context": "Example: ImplicitFunctionExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classImplicitFunctionExample(Scene):defconstruct(self):graph=ImplicitFunction(lambdax,y:x*y**2-x**2*y-2,color=YELLOW)self.add(NumberPlane(),graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ImplicitFunctionExample(Scene):\n    def construct(self):\n        graph = ImplicitFunction(\n            lambda x, y: x * y ** 2 - x ** 2 * y - 2,\n            color=YELLOW\n        )\n        self.add(NumberPlane(), graph)",
+      "language": "python",
+      "context": "Example: ImplicitFunctionExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ImplicitFunction",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "An implicit function."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "NumberPlane"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

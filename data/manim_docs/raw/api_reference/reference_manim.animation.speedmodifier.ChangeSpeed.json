@@ -1,0 +1,144 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.speedmodifier.ChangeSpeed.html",
+  "title": "ChangeSpeed\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ChangeSpeed\u00b6\n\nQualified name:manim.animation.speedmodifier.ChangeSpeed\n\nclassChangeSpeed(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationModifies the speed of passed animation.AnimationGroupwith differentlag_ratiocan also be used\nwhich combines multiple animations into one.\nTherun_timeof the passed animation is changed to modify the speed.Parameters:anim(Animation|_AnimationBuilder) \u2013 Animation of which the speed is to be modified.speedinfo(dict[float,float]) \u2013 Contains nodes (percentage ofrun_time) and its corresponding speed factor.rate_func(Callable[[float],float]|None) \u2013 Overridesrate_funcof passed animation, applied before changing speed.affects_speed_updaters(bool)ExamplesExample: SpeedModifierExample\u00b6frommanimimport*classSpeedModifierExample(Scene):defconstruct(self):a=Dot().shift(LEFT*4)b=Dot().shift(RIGHT*4)self.add(a,b)self.play(ChangeSpeed(AnimationGroup(a.animate(run_time=1).shift(RIGHT*8),b.animate(run_time=1).shift(LEFT*8),),speedinfo={0.3:1,0.4:0.1,0.6:0.1,1:1},rate_func=linear,))class SpeedModifierExample(Scene):\n    def construct(self):\n        a = Dot().shift(LEFT * 4)\n        b = Dot().shift(RIGHT * 4)\n        self.add(a, b)\n        self.play(\n            ChangeSpeed(\n                AnimationGroup(\n                    a.animate(run_time=1).shift(RIGHT * 8),\n                    b.animate(run_time=1).shift(LEFT * 8),\n                ),\n                speedinfo={0.3: 1, 0.4: 0.1, 0.6: 0.1, 1: 1},\n                rate_func=linear,\n            )\n        )Example: SpeedModifierUpdaterExample\u00b6frommanimimport*classSpeedModifierUpdaterExample(Scene):defconstruct(self):a=Dot().shift(LEFT*4)self.add(a)ChangeSpeed.add_updater(a,lambdax,dt:x.shift(RIGHT*4*dt))self.play(ChangeSpeed(Wait(2),speedinfo={0.4:1,0.5:0.2,0.8:0.2,1:1},affects_speed_updaters=True,))class SpeedModifierUpdaterExample(Scene):\n    def construct(self):\n        a = Dot().shift(LEFT * 4)\n        self.add(a)\n\n        ChangeSpeed.add_updater(a, lambda x, dt: x.shift(RIGHT * 4 * dt))\n        self.play(\n            ChangeSpeed(\n                Wait(2),\n                speedinfo={0.4: 1, 0.5: 0.2, 0.8: 0.2, 1: 1},\n                affects_speed_updaters=True,\n            )\n        )Example: SpeedModifierUpdaterExample2\u00b6frommanimimport*classSpeedModifierUpdaterExample2(Scene):defconstruct(self):a=Dot().shift(LEFT*4)self.add(a)ChangeSpeed.add_updater(a,lambdax,dt:x.shift(RIGHT*4*dt))self.wait()self.play(ChangeSpeed(Wait(),speedinfo={1:0},affects_speed_updaters=True,))class SpeedModifierUpdaterExample2(Scene):\n    def construct(self):\n        a = Dot().shift(LEFT * 4)\n        self.add(a)\n\n        ChangeSpeed.add_updater(a, lambda x, dt: x.shift(RIGHT * 4 * dt))\n        self.wait()\n        self.play(\n            ChangeSpeed(\n                Wait(),\n                speedinfo={1: 0},\n                affects_speed_updaters=True,\n            )\n        )Methodsadd_updaterThis static method can be used to apply speed change to updaters.beginBegin the animation.clean_up_from_sceneClean up theSceneafter finishing the animation.finishFinish the animation.get_scaled_total_timeThe time taken by the animation under the assumption that therun_timeis 1.interpolateSet the animation progress.setupupdate_mobjectsUpdates things like starting_mobject, and (for Transforms) target_mobject.Attributesdtis_changing_dtrun_time_original__init__(anim,speedinfo,rate_func=None,affects_speed_updaters=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:anim(Animation|_AnimationBuilder)speedinfo(dict[float,float])rate_func(Callable[[float],float]|None)affects_speed_updaters(bool)Return type:None_setup_scene(scene)[source]\u00b6Setup up theScenebefore starting the animation.This includes toadd()the Animation\u2019sMobjectif the animation is an introducer.Parameters:scene\u2013 The scene the animation should be cleaned up from.Return type:Noneclassmethodadd_updater(mobject,update_function,index=None,call_updater=False)[source]\u00b6This static method can be used to apply speed change to updaters.This updater will follow speed and rate function of anyChangeSpeedanimation that is playing withaffects_speed_updaters=True. By default,\nupdater functions added via the usualMobject.add_updater()method\ndo not respect the change of animation speed.Parameters:mobject(Mobject) \u2013 The mobject to which the updater should be attached.update_function(Updater) \u2013 The function that is called whenever a new frame is rendered.index(int|None) \u2013 The position in the list of the mobject\u2019s updaters at which the\nfunction should be inserted.call_updater(bool) \u2013 IfTrue, calls the update function when attaching it to the\nmobject.See alsoChangeSpeed,Mobject.add_updater()begin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonefinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:Noneget_scaled_total_time()[source]\u00b6The time taken by the animation under the assumption that therun_timeis 1.Return type:floatinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:Noneupdate_mobjects(dt)[source]\u00b6Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nBases:Animation\n\nModifies the speed of passed animation.AnimationGroupwith differentlag_ratiocan also be used\nwhich combines multiple animations into one.\nTherun_timeof the passed animation is changed to modify the speed.\n\nParameters:\n\nanim(Animation|_AnimationBuilder) \u2013 Animation of which the speed is to be modified.speedinfo(dict[float,float]) \u2013 Contains nodes (percentage ofrun_time) and its corresponding speed factor.rate_func(Callable[[float],float]|None) \u2013 Overridesrate_funcof passed animation, applied before changing speed.affects_speed_updaters(bool)\n\nanim(Animation|_AnimationBuilder) \u2013 Animation of which the speed is to be modified.\n\nanim(Animation|_AnimationBuilder) \u2013 Animation of which the speed is to be modified.\n\nspeedinfo(dict[float,float]) \u2013 Contains nodes (percentage ofrun_time) and its corresponding speed factor.\n\nspeedinfo(dict[float,float]) \u2013 Contains nodes (percentage ofrun_time) and its corresponding speed factor.\n\nrate_func(Callable[[float],float]|None) \u2013 Overridesrate_funcof passed animation, applied before changing speed.\n\nrate_func(Callable[[float],float]|None) \u2013 Overridesrate_funcof passed animation, applied before changing speed.\n\naffects_speed_updaters(bool)\n\naffects_speed_updaters(bool)\n\nExamples\n\nExample: SpeedModifierExample\u00b6\n\nExample: SpeedModifierUpdaterExample\u00b6\n\nExample: SpeedModifierUpdaterExample2\u00b6\n\nMethods\n\nadd_updater\n\nThis static method can be used to apply speed change to updaters.\n\nbegin\n\nBegin the animation.\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nfinish\n\nFinish the animation.\n\nget_scaled_total_time\n\nThe time taken by the animation under the assumption that therun_timeis 1.\n\ninterpolate\n\nSet the animation progress.\n\nsetup\n\nupdate_mobjects\n\nUpdates things like starting_mobject, and (for Transforms) target_mobject.\n\nAttributes\n\ndt\n\nis_changing_dt\n\nrun_time\n\n_original__init__(anim,speedinfo,rate_func=None,affects_speed_updaters=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:anim(Animation|_AnimationBuilder)speedinfo(dict[float,float])rate_func(Callable[[float],float]|None)affects_speed_updaters(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nanim(Animation|_AnimationBuilder)speedinfo(dict[float,float])rate_func(Callable[[float],float]|None)affects_speed_updaters(bool)\n\nanim(Animation|_AnimationBuilder)\n\nanim(Animation|_AnimationBuilder)\n\nspeedinfo(dict[float,float])\n\nspeedinfo(dict[float,float])\n\nrate_func(Callable[[float],float]|None)\n\nrate_func(Callable[[float],float]|None)\n\naffects_speed_updaters(bool)\n\naffects_speed_updaters(bool)\n\nReturn type:\n\nNone\n\nNone\n\n_setup_scene(scene)[source]\u00b6\n\nSetup up theScenebefore starting the animation.This includes toadd()the Animation\u2019sMobjectif the animation is an introducer.Parameters:scene\u2013 The scene the animation should be cleaned up from.Return type:None\n\nSetup up theScenebefore starting the animation.\n\nThis includes toadd()the Animation\u2019sMobjectif the animation is an introducer.\n\nParameters:\n\nscene\u2013 The scene the animation should be cleaned up from.\n\nscene\u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nclassmethodadd_updater(mobject,update_function,index=None,call_updater=False)[source]\u00b6\n\nThis static method can be used to apply speed change to updaters.This updater will follow speed and rate function of anyChangeSpeedanimation that is playing withaffects_speed_updaters=True. By default,\nupdater functions added via the usualMobject.add_updater()method\ndo not respect the change of animation speed.Parameters:mobject(Mobject) \u2013 The mobject to which the updater should be attached.update_function(Updater) \u2013 The function that is called whenever a new frame is rendered.index(int|None) \u2013 The position in the list of the mobject\u2019s updaters at which the\nfunction should be inserted.call_updater(bool) \u2013 IfTrue, calls the update function when attaching it to the\nmobject.See alsoChangeSpeed,Mobject.add_updater()\n\nThis static method can be used to apply speed change to updaters.\n\nThis updater will follow speed and rate function of anyChangeSpeedanimation that is playing withaffects_speed_updaters=True. By default,\nupdater functions added via the usualMobject.add_updater()method\ndo not respect the change of animation speed.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to which the updater should be attached.update_function(Updater) \u2013 The function that is called whenever a new frame is rendered.index(int|None) \u2013 The position in the list of the mobject\u2019s updaters at which the\nfunction should be inserted.call_updater(bool) \u2013 IfTrue, calls the update function when attaching it to the\nmobject.\n\nmobject(Mobject) \u2013 The mobject to which the updater should be attached.\n\nmobject(Mobject) \u2013 The mobject to which the updater should be attached.\n\nupdate_function(Updater) \u2013 The function that is called whenever a new frame is rendered.\n\nupdate_function(Updater) \u2013 The function that is called whenever a new frame is rendered.\n\nindex(int|None) \u2013 The position in the list of the mobject\u2019s updaters at which the\nfunction should be inserted.\n\nindex(int|None) \u2013 The position in the list of the mobject\u2019s updaters at which the\nfunction should be inserted.\n\ncall_updater(bool) \u2013 IfTrue, calls the update function when attaching it to the\nmobject.\n\ncall_updater(bool) \u2013 IfTrue, calls the update function when attaching it to the\nmobject.\n\nSee also\n\nChangeSpeed,Mobject.add_updater()\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone\n\nget_scaled_total_time()[source]\u00b6\n\nThe time taken by the animation under the assumption that therun_timeis 1.Return type:float\n\nThe time taken by the animation under the assumption that therun_timeis 1.\n\nReturn type:\n\nfloat\n\nfloat\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone\n\nupdate_mobjects(dt)[source]\u00b6\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.\n\nParameters:\n\ndt(float)\n\ndt(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classSpeedModifierExample(Scene):defconstruct(self):a=Dot().shift(LEFT*4)b=Dot().shift(RIGHT*4)self.add(a,b)self.play(ChangeSpeed(AnimationGroup(a.animate(run_time=1).shift(RIGHT*8),b.animate(run_time=1).shift(LEFT*8),),speedinfo={0.3:1,0.4:0.1,0.6:0.1,1:1},rate_func=linear,))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpeedModifierExample(Scene):\n    def construct(self):\n        a = Dot().shift(LEFT * 4)\n        b = Dot().shift(RIGHT * 4)\n        self.add(a, b)\n        self.play(\n            ChangeSpeed(\n                AnimationGroup(\n                    a.animate(run_time=1).shift(RIGHT * 8),\n                    b.animate(run_time=1).shift(LEFT * 8),\n                ),\n                speedinfo={0.3: 1, 0.4: 0.1, 0.6: 0.1, 1: 1},\n                rate_func=linear,\n            )\n        )",
+      "language": "python",
+      "context": "Example: SpeedModifierExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSpeedModifierUpdaterExample(Scene):defconstruct(self):a=Dot().shift(LEFT*4)self.add(a)ChangeSpeed.add_updater(a,lambdax,dt:x.shift(RIGHT*4*dt))self.play(ChangeSpeed(Wait(2),speedinfo={0.4:1,0.5:0.2,0.8:0.2,1:1},affects_speed_updaters=True,))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpeedModifierUpdaterExample(Scene):\n    def construct(self):\n        a = Dot().shift(LEFT * 4)\n        self.add(a)\n\n        ChangeSpeed.add_updater(a, lambda x, dt: x.shift(RIGHT * 4 * dt))\n        self.play(\n            ChangeSpeed(\n                Wait(2),\n                speedinfo={0.4: 1, 0.5: 0.2, 0.8: 0.2, 1: 1},\n                affects_speed_updaters=True,\n            )\n        )",
+      "language": "python",
+      "context": "Example: SpeedModifierUpdaterExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSpeedModifierUpdaterExample2(Scene):defconstruct(self):a=Dot().shift(LEFT*4)self.add(a)ChangeSpeed.add_updater(a,lambdax,dt:x.shift(RIGHT*4*dt))self.wait()self.play(ChangeSpeed(Wait(),speedinfo={1:0},affects_speed_updaters=True,))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpeedModifierUpdaterExample2(Scene):\n    def construct(self):\n        a = Dot().shift(LEFT * 4)\n        self.add(a)\n\n        ChangeSpeed.add_updater(a, lambda x, dt: x.shift(RIGHT * 4 * dt))\n        self.wait()\n        self.play(\n            ChangeSpeed(\n                Wait(),\n                speedinfo={1: 0},\n                affects_speed_updaters=True,\n            )\n        )",
+      "language": "python",
+      "context": "Example: SpeedModifierUpdaterExample2\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ChangeSpeed",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "anim"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_setup_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Setup up theScenebefore starting the animation."
+    },
+    {
+      "name": "add_updater",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "This static method can be used to apply speed change to updaters."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    },
+    {
+      "name": "get_scaled_total_time",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The time taken by the animation under the assumption that therun_timeis 1."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    },
+    {
+      "name": "update_mobjects",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject."
+    }
+  ],
+  "related_classes": [
+    "AnimationGroup",
+    "Transform",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "transformation",
+    "timing",
+    "graph"
+  ]
+}

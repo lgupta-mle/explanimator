@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.table.IntegerTable.html",
+  "title": "IntegerTable\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "IntegerTable\u00b6\n\nQualified name:manim.mobject.table.IntegerTable\n\nclassIntegerTable(table,element_to_mobject=<class'manim.mobject.text.numbers.Integer'>,**kwargs)[source]\u00b6\n\nBases:TableA specializedTablemobject for use withInteger.ExamplesExample: IntegerTableExample\u00b6frommanimimport*classIntegerTableExample(Scene):defconstruct(self):t0=IntegerTable([[0,30,45,60,90],[90,60,45,30,0]],col_labels=[MathTex(r\"\\frac{\\sqrt{0}}{2}\"),MathTex(r\"\\frac{\\sqrt{1}}{2}\"),MathTex(r\"\\frac{\\sqrt{2}}{2}\"),MathTex(r\"\\frac{\\sqrt{3}}{2}\"),MathTex(r\"\\frac{\\sqrt{4}}{2}\")],row_labels=[MathTex(r\"\\sin\"),MathTex(r\"\\cos\")],h_buff=1,element_to_mobject_config={\"unit\":r\"^{\\circ}\"})self.add(t0)class IntegerTableExample(Scene):\n    def construct(self):\n        t0 = IntegerTable(\n            [[0,30,45,60,90],\n            [90,60,45,30,0]],\n            col_labels=[\n                MathTex(r\"\\frac{\\sqrt{0}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{1}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{2}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{3}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{4}}{2}\")],\n            row_labels=[MathTex(r\"\\sin\"), MathTex(r\"\\cos\")],\n            h_buff=1,\n            element_to_mobject_config={\"unit\": r\"^{\\circ}\"})\n        self.add(t0)Special case ofTablewithelement_to_mobjectset toInteger.\nWill round if there are decimal entries in the table.Parameters:table(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.kwargs\u2013 Additional arguments to be passed toTable.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(table,element_to_mobject=<class'manim.mobject.text.numbers.Integer'>,**kwargs)\u00b6Special case ofTablewithelement_to_mobjectset toInteger.\nWill round if there are decimal entries in the table.Parameters:table(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.kwargs\u2013 Additional arguments to be passed toTable.\n\nBases:Table\n\nA specializedTablemobject for use withInteger.\n\nExamples\n\nExample: IntegerTableExample\u00b6\n\nSpecial case ofTablewithelement_to_mobjectset toInteger.\nWill round if there are decimal entries in the table.\n\nParameters:\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.kwargs\u2013 Additional arguments to be passed toTable.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(table,element_to_mobject=<class'manim.mobject.text.numbers.Integer'>,**kwargs)\u00b6\n\nSpecial case ofTablewithelement_to_mobjectset toInteger.\nWill round if there are decimal entries in the table.Parameters:table(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.kwargs\u2013 Additional arguments to be passed toTable.\n\nSpecial case ofTablewithelement_to_mobjectset toInteger.\nWill round if there are decimal entries in the table.\n\nParameters:\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.kwargs\u2013 Additional arguments to be passed toTable.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table has to be valid input\nforInteger.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asInteger.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nkwargs\u2013 Additional arguments to be passed toTable.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classIntegerTableExample(Scene):defconstruct(self):t0=IntegerTable([[0,30,45,60,90],[90,60,45,30,0]],col_labels=[MathTex(r\"\\frac{\\sqrt{0}}{2}\"),MathTex(r\"\\frac{\\sqrt{1}}{2}\"),MathTex(r\"\\frac{\\sqrt{2}}{2}\"),MathTex(r\"\\frac{\\sqrt{3}}{2}\"),MathTex(r\"\\frac{\\sqrt{4}}{2}\")],row_labels=[MathTex(r\"\\sin\"),MathTex(r\"\\cos\")],h_buff=1,element_to_mobject_config={\"unit\":r\"^{\\circ}\"})self.add(t0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class IntegerTableExample(Scene):\n    def construct(self):\n        t0 = IntegerTable(\n            [[0,30,45,60,90],\n            [90,60,45,30,0]],\n            col_labels=[\n                MathTex(r\"\\frac{\\sqrt{0}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{1}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{2}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{3}}{2}\"),\n                MathTex(r\"\\frac{\\sqrt{4}}{2}\")],\n            row_labels=[MathTex(r\"\\sin\"), MathTex(r\"\\cos\")],\n            h_buff=1,\n            element_to_mobject_config={\"unit\": r\"^{\\circ}\"})\n        self.add(t0)",
+      "language": "python",
+      "context": "Example: IntegerTableExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "IntegerTable",
+      "class_name": null,
+      "parameters": [
+        "table"
+      ],
+      "return_type": null,
+      "description": "Bases:Table"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "table"
+      ],
+      "return_type": null,
+      "description": "Special case ofTablewithelement_to_mobjectset toInteger.\nWill round if there are decimal entries in the table."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "text"
+  ]
+}

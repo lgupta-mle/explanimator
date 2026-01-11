@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.camera.html",
+  "title": "camera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "camera\u00b6\n\nA camera converts the mobjects contained in a Scene into an array of pixels.\n\nClasses\n\nBackgroundColoredVMobjectDisplayer\n\nAuxiliary class that handles displaying vectorized mobjects with a set background image.\n\nCamera\n\nBase camera class.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Camera",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "math"
+  ]
+}

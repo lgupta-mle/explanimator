@@ -1,0 +1,68 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.DrawBorderThenFill.html",
+  "title": "DrawBorderThenFill\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DrawBorderThenFill\u00b6\n\nQualified name:manim.animation.creation.DrawBorderThenFill\n\nclassDrawBorderThenFill(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationDraw the border first and then show the fill.ExamplesExample: ShowDrawBorderThenFill\u00b6frommanimimport*classShowDrawBorderThenFill(Scene):defconstruct(self):self.play(DrawBorderThenFill(Square(fill_opacity=1,fill_color=ORANGE)))class ShowDrawBorderThenFill(Scene):\n    def construct(self):\n        self.play(DrawBorderThenFill(Square(fill_opacity=1, fill_color=ORANGE)))MethodsbeginBegin the animation.get_all_mobjectsGet all mobjects involved in the animation.get_outlineget_stroke_colorinterpolate_submobjectAttributesrun_timeParameters:vmobject(VMobject|OpenGLVMobject)run_time(float)rate_func(Callable[[float],float])stroke_width(float)stroke_color(str)introducer(bool)_original__init__(vmobject,run_time=2,rate_func=<functiondouble_smooth>,stroke_width=2,stroke_color=None,introducer=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject|OpenGLVMobject)run_time(float)rate_func(Callable[[float],float])stroke_width(float)stroke_color(str)introducer(bool)Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Noneget_all_mobjects()[source]\u00b6Get all mobjects involved in the animation.Ordering must match the ordering of arguments to interpolate_submobjectReturns:The sequence of mobjects.Return type:Sequence[Mobject]\n\nBases:Animation\n\nDraw the border first and then show the fill.\n\nExamples\n\nExample: ShowDrawBorderThenFill\u00b6\n\nMethods\n\nbegin\n\nBegin the animation.\n\nget_all_mobjects\n\nGet all mobjects involved in the animation.\n\nget_outline\n\nget_stroke_color\n\ninterpolate_submobject\n\nAttributes\n\nrun_time\n\nParameters:\n\nvmobject(VMobject|OpenGLVMobject)run_time(float)rate_func(Callable[[float],float])stroke_width(float)stroke_color(str)introducer(bool)\n\nvmobject(VMobject|OpenGLVMobject)\n\nvmobject(VMobject|OpenGLVMobject)\n\nrun_time(float)\n\nrun_time(float)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nstroke_width(float)\n\nstroke_width(float)\n\nstroke_color(str)\n\nstroke_color(str)\n\nintroducer(bool)\n\nintroducer(bool)\n\n_original__init__(vmobject,run_time=2,rate_func=<functiondouble_smooth>,stroke_width=2,stroke_color=None,introducer=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject|OpenGLVMobject)run_time(float)rate_func(Callable[[float],float])stroke_width(float)stroke_color(str)introducer(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobject(VMobject|OpenGLVMobject)run_time(float)rate_func(Callable[[float],float])stroke_width(float)stroke_color(str)introducer(bool)\n\nvmobject(VMobject|OpenGLVMobject)\n\nvmobject(VMobject|OpenGLVMobject)\n\nrun_time(float)\n\nrun_time(float)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nstroke_width(float)\n\nstroke_width(float)\n\nstroke_color(str)\n\nstroke_color(str)\n\nintroducer(bool)\n\nintroducer(bool)\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nget_all_mobjects()[source]\u00b6\n\nGet all mobjects involved in the animation.Ordering must match the ordering of arguments to interpolate_submobjectReturns:The sequence of mobjects.Return type:Sequence[Mobject]\n\nGet all mobjects involved in the animation.\n\nOrdering must match the ordering of arguments to interpolate_submobject\n\nReturns:\n\nThe sequence of mobjects.\n\nThe sequence of mobjects.\n\nReturn type:\n\nSequence[Mobject]\n\nSequence[Mobject]",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classShowDrawBorderThenFill(Scene):defconstruct(self):self.play(DrawBorderThenFill(Square(fill_opacity=1,fill_color=ORANGE)))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShowDrawBorderThenFill(Scene):\n    def construct(self):\n        self.play(DrawBorderThenFill(Square(fill_opacity=1, fill_color=ORANGE)))",
+      "language": "python",
+      "context": "Example: ShowDrawBorderThenFill\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "DrawBorderThenFill",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "get_all_mobjects",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get all mobjects involved in the animation."
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

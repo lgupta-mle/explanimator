@@ -1,0 +1,20 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.AS2700.html",
+  "title": "AS2700\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AS2700\u00b6\n\nAustralian Color Standard\n\nIn 1985 the Australian Independent Color Standard AS 2700 was created. In\nthis standard, all colors can be identified via a category code (one of\nB \u2013 Blue, G \u2013 Green, N \u2013 Neutrals (grey), P \u2013 Purple, R \u2013 Red, T \u2013 Blue/Green,\nX \u2013 Yellow/Red, Y \u2013 Yellow) and a number. The colors also have (natural) names.\n\nTo use the colors from this list, access them directly from the module (which\nis exposed to Manim\u2019s global name space):\n\nList of Color Constants\u00b6\n\nThese hex values (taken fromhttps://www.w3schools.com/colors/colors_australia.asp)\nare non official approximate values intended to simulate AS 2700 colors:\n\nColor Name\n\nRGB Hex Code\n\nColor Name\n\nRGB Hex Code",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportAS2700>>>AS2700.B23_BRIGHT_BLUEManimColor('#174F90')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color"
+  ]
+}

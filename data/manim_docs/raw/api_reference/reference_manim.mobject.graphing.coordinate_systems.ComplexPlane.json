@@ -1,0 +1,118 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.coordinate_systems.ComplexPlane.html",
+  "title": "ComplexPlane\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ComplexPlane\u00b6\n\nQualified name:manim.mobject.graphing.coordinate\\_systems.ComplexPlane\n\nclassComplexPlane(**kwargs)[source]\u00b6\n\nBases:NumberPlaneANumberPlanespecialized for use with complex numbers.ExamplesExample: ComplexPlaneExample\u00b6frommanimimport*classComplexPlaneExample(Scene):defconstruct(self):plane=ComplexPlane().add_coordinates()self.add(plane)d1=Dot(plane.n2p(2+1j),color=YELLOW)d2=Dot(plane.n2p(-3-2j),color=YELLOW)label1=MathTex(\"2+i\").next_to(d1,UR,0.1)label2=MathTex(\"-3-2i\").next_to(d2,UR,0.1)self.add(d1,label1,d2,label2,)class ComplexPlaneExample(Scene):\n    def construct(self):\n        plane = ComplexPlane().add_coordinates()\n        self.add(plane)\n        d1 = Dot(plane.n2p(2 + 1j), color=YELLOW)\n        d2 = Dot(plane.n2p(-3 - 2j), color=YELLOW)\n        label1 = MathTex(\"2+i\").next_to(d1, UR, 0.1)\n        label2 = MathTex(\"-3-2i\").next_to(d2, UR, 0.1)\n        self.add(\n            d1,\n            label1,\n            d2,\n            label2,\n        )References:DotMathTexMethodsadd_coordinatesAdds the labels produced fromget_coordinate_labels()to the plane.get_coordinate_labelsGenerates theDecimalNumbermobjects for the coordinates of the plane.n2pAbbreviation fornumber_to_point().number_to_pointAccepts a float/complex number and returns the equivalent point on the plane.p2nAbbreviation forpoint_to_number().point_to_numberAccepts a point and returns a complex number equivalent to that point on the plane.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:kwargs(Any)_get_default_coordinate_values()[source]\u00b6Generate a list containing the numerical values of the plane\u2019s labels.Returns:A list of floats representing the x-axis and complex numbers representing the y-axis.Return type:List[float | complex]_original__init__(**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:kwargs(Any)add_coordinates(*numbers,**kwargs)[source]\u00b6Adds the labels produced fromget_coordinate_labels()to the plane.Parameters:numbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.kwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.Return type:Selfget_coordinate_labels(*numbers,**kwargs)[source]\u00b6Generates theDecimalNumbermobjects for the coordinates of the plane.Parameters:numbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.kwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.Returns:AVGroupcontaining the positioned label mobjects.Return type:VGroupn2p(number)[source]\u00b6Abbreviation fornumber_to_point().Parameters:number(float|complex)Return type:ndarraynumber_to_point(number)[source]\u00b6Accepts a float/complex number and returns the equivalent point on the plane.Parameters:number(float|complex) \u2013 The number. Can be a float or a complex number.Returns:The point on the plane.Return type:np.ndarrayp2n(point)[source]\u00b6Abbreviation forpoint_to_number().Parameters:point(Point3DLike)Return type:complexpoint_to_number(point)[source]\u00b6Accepts a point and returns a complex number equivalent to that point on the plane.Parameters:point(Point3DLike) \u2013 The point in manim\u2019s coordinate-systemReturns:A complex number consisting of real and imaginary components.Return type:complex\n\nBases:NumberPlane\n\nANumberPlanespecialized for use with complex numbers.\n\nExamples\n\nExample: ComplexPlaneExample\u00b6\n\nReferences:DotMathTex\n\nMethods\n\nadd_coordinates\n\nAdds the labels produced fromget_coordinate_labels()to the plane.\n\nget_coordinate_labels\n\nGenerates theDecimalNumbermobjects for the coordinates of the plane.\n\nn2p\n\nAbbreviation fornumber_to_point().\n\nnumber_to_point\n\nAccepts a float/complex number and returns the equivalent point on the plane.\n\np2n\n\nAbbreviation forpoint_to_number().\n\npoint_to_number\n\nAccepts a point and returns a complex number equivalent to that point on the plane.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nkwargs(Any)\n\nkwargs(Any)\n\n_get_default_coordinate_values()[source]\u00b6\n\nGenerate a list containing the numerical values of the plane\u2019s labels.Returns:A list of floats representing the x-axis and complex numbers representing the y-axis.Return type:List[float | complex]\n\nGenerate a list containing the numerical values of the plane\u2019s labels.\n\nReturns:\n\nA list of floats representing the x-axis and complex numbers representing the y-axis.\n\nA list of floats representing the x-axis and complex numbers representing the y-axis.\n\nReturn type:\n\nList[float | complex]\n\nList[float | complex]\n\n_original__init__(**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nkwargs(Any)\n\nkwargs(Any)\n\nadd_coordinates(*numbers,**kwargs)[source]\u00b6\n\nAdds the labels produced fromget_coordinate_labels()to the plane.Parameters:numbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.kwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.Return type:Self\n\nAdds the labels produced fromget_coordinate_labels()to the plane.\n\nParameters:\n\nnumbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.kwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.\n\nnumbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.\n\nnumbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.\n\nkwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.\n\nkwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.\n\nReturn type:\n\nSelf\n\nSelf\n\nget_coordinate_labels(*numbers,**kwargs)[source]\u00b6\n\nGenerates theDecimalNumbermobjects for the coordinates of the plane.Parameters:numbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.kwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.Returns:AVGroupcontaining the positioned label mobjects.Return type:VGroup\n\nGenerates theDecimalNumbermobjects for the coordinates of the plane.\n\nParameters:\n\nnumbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.kwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.\n\nnumbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.\n\nnumbers(Iterable[float|complex]) \u2013 An iterable of floats/complex numbers. Floats are positioned along the x-axis, complex numbers along the y-axis.\n\nkwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.\n\nkwargs(Any) \u2013 Additional arguments to be passed toget_number_mobject(), i.e.DecimalNumber.\n\nReturns:\n\nAVGroupcontaining the positioned label mobjects.\n\nAVGroupcontaining the positioned label mobjects.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nn2p(number)[source]\u00b6\n\nAbbreviation fornumber_to_point().Parameters:number(float|complex)Return type:ndarray\n\nAbbreviation fornumber_to_point().\n\nParameters:\n\nnumber(float|complex)\n\nnumber(float|complex)\n\nReturn type:\n\nndarray\n\nndarray\n\nnumber_to_point(number)[source]\u00b6\n\nAccepts a float/complex number and returns the equivalent point on the plane.Parameters:number(float|complex) \u2013 The number. Can be a float or a complex number.Returns:The point on the plane.Return type:np.ndarray\n\nAccepts a float/complex number and returns the equivalent point on the plane.\n\nParameters:\n\nnumber(float|complex) \u2013 The number. Can be a float or a complex number.\n\nnumber(float|complex) \u2013 The number. Can be a float or a complex number.\n\nReturns:\n\nThe point on the plane.\n\nThe point on the plane.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\np2n(point)[source]\u00b6\n\nAbbreviation forpoint_to_number().Parameters:point(Point3DLike)Return type:complex\n\nAbbreviation forpoint_to_number().\n\nParameters:\n\npoint(Point3DLike)\n\npoint(Point3DLike)\n\nReturn type:\n\ncomplex\n\ncomplex\n\npoint_to_number(point)[source]\u00b6\n\nAccepts a point and returns a complex number equivalent to that point on the plane.Parameters:point(Point3DLike) \u2013 The point in manim\u2019s coordinate-systemReturns:A complex number consisting of real and imaginary components.Return type:complex\n\nAccepts a point and returns a complex number equivalent to that point on the plane.\n\nParameters:\n\npoint(Point3DLike) \u2013 The point in manim\u2019s coordinate-system\n\npoint(Point3DLike) \u2013 The point in manim\u2019s coordinate-system\n\nReturns:\n\nA complex number consisting of real and imaginary components.\n\nA complex number consisting of real and imaginary components.\n\nReturn type:\n\ncomplex\n\ncomplex",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classComplexPlaneExample(Scene):defconstruct(self):plane=ComplexPlane().add_coordinates()self.add(plane)d1=Dot(plane.n2p(2+1j),color=YELLOW)d2=Dot(plane.n2p(-3-2j),color=YELLOW)label1=MathTex(\"2+i\").next_to(d1,UR,0.1)label2=MathTex(\"-3-2i\").next_to(d2,UR,0.1)self.add(d1,label1,d2,label2,)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ComplexPlaneExample(Scene):\n    def construct(self):\n        plane = ComplexPlane().add_coordinates()\n        self.add(plane)\n        d1 = Dot(plane.n2p(2 + 1j), color=YELLOW)\n        d2 = Dot(plane.n2p(-3 - 2j), color=YELLOW)\n        label1 = MathTex(\"2+i\").next_to(d1, UR, 0.1)\n        label2 = MathTex(\"-3-2i\").next_to(d2, UR, 0.1)\n        self.add(\n            d1,\n            label1,\n            d2,\n            label2,\n        )",
+      "language": "python",
+      "context": "Example: ComplexPlaneExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ComplexPlane",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Bases:NumberPlane"
+    },
+    {
+      "name": "_get_default_coordinate_values",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Generate a list containing the numerical values of the plane\u2019s labels."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add_coordinates",
+      "class_name": null,
+      "parameters": [
+        "*numbers"
+      ],
+      "return_type": null,
+      "description": "Adds the labels produced fromget_coordinate_labels()to the plane."
+    },
+    {
+      "name": "get_coordinate_labels",
+      "class_name": null,
+      "parameters": [
+        "*numbers"
+      ],
+      "return_type": null,
+      "description": "Generates theDecimalNumbermobjects for the coordinates of the plane."
+    },
+    {
+      "name": "n2p",
+      "class_name": null,
+      "parameters": [
+        "number"
+      ],
+      "return_type": null,
+      "description": "Abbreviation fornumber_to_point()."
+    },
+    {
+      "name": "number_to_point",
+      "class_name": null,
+      "parameters": [
+        "number"
+      ],
+      "return_type": null,
+      "description": "Accepts a float/complex number and returns the equivalent point on the plane."
+    },
+    {
+      "name": "p2n",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Abbreviation forpoint_to_number()."
+    },
+    {
+      "name": "point_to_number",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Accepts a point and returns a complex number equivalent to that point on the plane."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "MathTex",
+    "NumberPlane",
+    "Dot",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "animation",
+    "graph"
+  ]
+}

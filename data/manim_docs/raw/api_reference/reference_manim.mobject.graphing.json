@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.html",
+  "title": "graphing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "graphing\u00b6\n\nCoordinate systems and function graphing related mobjects.\n\nModules\u00b6\n\ncoordinate_systems\n\nMobjects that represent coordinate systems.\n\nfunctions\n\nMobjects representing function graphs.\n\nnumber_line\n\nMobject representing a number line.\n\nprobability\n\nMobjects representing objects from probability theory and statistics.\n\nscale",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "transformation",
+    "graph"
+  ]
+}

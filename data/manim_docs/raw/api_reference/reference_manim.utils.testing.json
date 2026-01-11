@@ -1,0 +1,11 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.testing.html",
+  "title": "testing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "testing\u00b6\n\nUtilities for Manim tests usingpytest.\n\nFor more information about Manim testing, see:\n\nManim Development Process, specifically theTestsbullet\npoint underPolishing Changes and Submitting a Pull Request\n\nManim Development Process, specifically theTestsbullet\npoint underPolishing Changes and Submitting a Pull Request\n\nAdding Tests\n\nAdding Tests\n\n_frames_testers\n\n_show_diff\n\n_test_class_makers",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": []
+}

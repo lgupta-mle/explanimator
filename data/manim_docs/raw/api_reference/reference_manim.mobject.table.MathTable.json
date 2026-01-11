@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.table.MathTable.html",
+  "title": "MathTable\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MathTable\u00b6\n\nQualified name:manim.mobject.table.MathTable\n\nclassMathTable(table,element_to_mobject=<class'manim.mobject.text.tex_mobject.MathTex'>,**kwargs)[source]\u00b6\n\nBases:TableA specializedTablemobject for use with LaTeX.ExamplesExample: MathTableExample\u00b6frommanimimport*classMathTableExample(Scene):defconstruct(self):t0=MathTable([[\"+\",0,5,10],[0,0,5,10],[2,2,7,12],[4,4,9,14]],include_outer_lines=True)self.add(t0)class MathTableExample(Scene):\n    def construct(self):\n        t0 = MathTable(\n            [[\"+\", 0, 5, 10],\n            [0, 0, 5, 10],\n            [2, 2, 7, 12],\n            [4, 4, 9, 14]],\n            include_outer_lines=True)\n        self.add(t0)Special case ofTablewithelement_to_mobjectset toMathTex.\nEvery entry intableis set in a Latexalignenvironment.Parameters:table(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.kwargs\u2013 Additional arguments to be passed toTable.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(table,element_to_mobject=<class'manim.mobject.text.tex_mobject.MathTex'>,**kwargs)\u00b6Special case ofTablewithelement_to_mobjectset toMathTex.\nEvery entry intableis set in a Latexalignenvironment.Parameters:table(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.kwargs\u2013 Additional arguments to be passed toTable.\n\nBases:Table\n\nA specializedTablemobject for use with LaTeX.\n\nExamples\n\nExample: MathTableExample\u00b6\n\nSpecial case ofTablewithelement_to_mobjectset toMathTex.\nEvery entry intableis set in a Latexalignenvironment.\n\nParameters:\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.kwargs\u2013 Additional arguments to be passed toTable.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(table,element_to_mobject=<class'manim.mobject.text.tex_mobject.MathTex'>,**kwargs)\u00b6\n\nSpecial case ofTablewithelement_to_mobjectset toMathTex.\nEvery entry intableis set in a Latexalignenvironment.Parameters:table(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.kwargs\u2013 Additional arguments to be passed toTable.\n\nSpecial case ofTablewithelement_to_mobjectset toMathTex.\nEvery entry intableis set in a Latexalignenvironment.\n\nParameters:\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.element_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.kwargs\u2013 Additional arguments to be passed toTable.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.\n\ntable(Iterable[Iterable[float|str]]) \u2013 A 2d array or list of lists. Content of the table have to be valid input\nforMathTex.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.\n\nelement_to_mobject(Callable[[float|str],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set asMathTex.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nkwargs\u2013 Additional arguments to be passed toTable.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMathTableExample(Scene):defconstruct(self):t0=MathTable([[\"+\",0,5,10],[0,0,5,10],[2,2,7,12],[4,4,9,14]],include_outer_lines=True)self.add(t0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MathTableExample(Scene):\n    def construct(self):\n        t0 = MathTable(\n            [[\"+\", 0, 5, 10],\n            [0, 0, 5, 10],\n            [2, 2, 7, 12],\n            [4, 4, 9, 14]],\n            include_outer_lines=True)\n        self.add(t0)",
+      "language": "python",
+      "context": "Example: MathTableExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MathTable",
+      "class_name": null,
+      "parameters": [
+        "table"
+      ],
+      "return_type": null,
+      "description": "Bases:Table"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "table"
+      ],
+      "return_type": null,
+      "description": "Special case ofTablewithelement_to_mobjectset toMathTex.\nEvery entry intableis set in a Latexalignenvironment."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "text"
+  ]
+}

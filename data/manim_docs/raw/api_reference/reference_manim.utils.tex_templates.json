@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.tex_templates.html",
+  "title": "tex_templates\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "tex_templates\u00b6\n\nA library of LaTeX templates.\n\nClasses\n\nTexFontTemplates\n\nA collection of TeX templates for the fonts described athttp://jf.burnol.free.fr/showcase.html\n\nTexTemplateLibrary\n\nA collection of basic TeX template objects",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Tex"
+  ],
+  "tags": [
+    "text"
+  ]
+}

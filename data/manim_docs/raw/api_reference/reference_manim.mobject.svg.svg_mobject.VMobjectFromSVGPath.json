@@ -1,0 +1,47 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.svg_mobject.VMobjectFromSVGPath.html",
+  "title": "VMobjectFromSVGPath\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "VMobjectFromSVGPath\u00b6\n\nQualified name:manim.mobject.svg.svg\\_mobject.VMobjectFromSVGPath\n\nclassVMobjectFromSVGPath(path_obj,long_lines=False,should_subdivide_sharp_curves=False,should_remove_null_curves=False,**kwargs)[source]\u00b6\n\nBases:VMobjectA vectorized mobject representing an SVG path.NoteThelong_lines,should_subdivide_sharp_curves,\nandshould_remove_null_curveskeyword arguments are\nonly respected with the OpenGL renderer.Parameters:path_obj(se.Path) \u2013 A parsed SVG path object.long_lines(bool) \u2013 Whether or not straight lines in the vectorized mobject\nare drawn in one or two segments.should_subdivide_sharp_curves(bool) \u2013 Whether or not to subdivide subcurves further in case\ntwo segments meet at an angle that is sharper than a\ngiven threshold.should_remove_null_curves(bool) \u2013 Whether or not to remove subcurves of length 0.kwargs(Any) \u2013 Further keyword arguments are passed to the parent\nclass.Methodsgenerate_pointsInitializespointsand therefore the shape.handle_commandsinit_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(path_obj,long_lines=False,should_subdivide_sharp_curves=False,should_remove_null_curves=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:path_obj(Path)long_lines(bool)should_subdivide_sharp_curves(bool)should_remove_null_curves(bool)kwargs(Any)generate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nBases:VMobject\n\nA vectorized mobject representing an SVG path.\n\nNote\n\nThelong_lines,should_subdivide_sharp_curves,\nandshould_remove_null_curveskeyword arguments are\nonly respected with the OpenGL renderer.\n\nParameters:\n\npath_obj(se.Path) \u2013 A parsed SVG path object.long_lines(bool) \u2013 Whether or not straight lines in the vectorized mobject\nare drawn in one or two segments.should_subdivide_sharp_curves(bool) \u2013 Whether or not to subdivide subcurves further in case\ntwo segments meet at an angle that is sharper than a\ngiven threshold.should_remove_null_curves(bool) \u2013 Whether or not to remove subcurves of length 0.kwargs(Any) \u2013 Further keyword arguments are passed to the parent\nclass.\n\npath_obj(se.Path) \u2013 A parsed SVG path object.\n\npath_obj(se.Path) \u2013 A parsed SVG path object.\n\nlong_lines(bool) \u2013 Whether or not straight lines in the vectorized mobject\nare drawn in one or two segments.\n\nlong_lines(bool) \u2013 Whether or not straight lines in the vectorized mobject\nare drawn in one or two segments.\n\nshould_subdivide_sharp_curves(bool) \u2013 Whether or not to subdivide subcurves further in case\ntwo segments meet at an angle that is sharper than a\ngiven threshold.\n\nshould_subdivide_sharp_curves(bool) \u2013 Whether or not to subdivide subcurves further in case\ntwo segments meet at an angle that is sharper than a\ngiven threshold.\n\nshould_remove_null_curves(bool) \u2013 Whether or not to remove subcurves of length 0.\n\nshould_remove_null_curves(bool) \u2013 Whether or not to remove subcurves of length 0.\n\nkwargs(Any) \u2013 Further keyword arguments are passed to the parent\nclass.\n\nkwargs(Any) \u2013 Further keyword arguments are passed to the parent\nclass.\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\nhandle_commands\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(path_obj,long_lines=False,should_subdivide_sharp_curves=False,should_remove_null_curves=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:path_obj(Path)long_lines(bool)should_subdivide_sharp_curves(bool)should_remove_null_curves(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npath_obj(Path)long_lines(bool)should_subdivide_sharp_curves(bool)should_remove_null_curves(bool)kwargs(Any)\n\npath_obj(Path)\n\npath_obj(Path)\n\nlong_lines(bool)\n\nlong_lines(bool)\n\nshould_subdivide_sharp_curves(bool)\n\nshould_subdivide_sharp_curves(bool)\n\nshould_remove_null_curves(bool)\n\nshould_remove_null_curves(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "VMobjectFromSVGPath",
+      "class_name": null,
+      "parameters": [
+        "path_obj"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "path_obj"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.DoubleArrow.html",
+  "title": "DoubleArrow\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DoubleArrow\u00b6\n\nQualified name:manim.mobject.geometry.line.DoubleArrow\n\nclassDoubleArrow(*args,**kwargs)[source]\u00b6\n\nBases:ArrowAn arrow with tips on both ends.Parameters:args(Any) \u2013 Arguments to be passed toArrowkwargs(Any) \u2013 Additional arguments to be passed toArrowSee alsoArrowTipCurvedDoubleArrowExamplesExample: DoubleArrowExample\u00b6frommanimimport*frommanim.mobject.geometry.tipsimportArrowCircleFilledTipclassDoubleArrowExample(Scene):defconstruct(self):circle=Circle(radius=2.0)d_arrow=DoubleArrow(start=circle.get_left(),end=circle.get_right())d_arrow_2=DoubleArrow(tip_shape_end=ArrowCircleFilledTip,tip_shape_start=ArrowCircleFilledTip)group=Group(Group(circle,d_arrow),d_arrow_2).arrange(UP,buff=1)self.add(group)from manim.mobject.geometry.tips import ArrowCircleFilledTip\nclass DoubleArrowExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2.0)\n        d_arrow = DoubleArrow(start=circle.get_left(), end=circle.get_right())\n        d_arrow_2 = DoubleArrow(tip_shape_end=ArrowCircleFilledTip, tip_shape_start=ArrowCircleFilledTip)\n        group = Group(Group(circle, d_arrow), d_arrow_2).arrange(UP, buff=1)\n        self.add(group)Example: DoubleArrowExample2\u00b6frommanimimport*classDoubleArrowExample2(Scene):defconstruct(self):box=Square()p1=box.get_left()p2=box.get_right()d1=DoubleArrow(p1,p2,buff=0)d2=DoubleArrow(p1,p2,buff=0,tip_length=0.2,color=YELLOW)d3=DoubleArrow(p1,p2,buff=0,tip_length=0.4,color=BLUE)Group(d1,d2,d3).arrange(DOWN)self.add(box,d1,d2,d3)class DoubleArrowExample2(Scene):\n    def construct(self):\n        box = Square()\n        p1 = box.get_left()\n        p2 = box.get_right()\n        d1 = DoubleArrow(p1, p2, buff=0)\n        d2 = DoubleArrow(p1, p2, buff=0, tip_length=0.2, color=YELLOW)\n        d3 = DoubleArrow(p1, p2, buff=0, tip_length=0.4, color=BLUE)\n        Group(d1, d2, d3).arrange(DOWN)\n        self.add(box, d1, d2, d3)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*args,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)kwargs(Any)Return type:None\n\nBases:Arrow\n\nAn arrow with tips on both ends.\n\nParameters:\n\nargs(Any) \u2013 Arguments to be passed toArrowkwargs(Any) \u2013 Additional arguments to be passed toArrow\n\nargs(Any) \u2013 Arguments to be passed toArrow\n\nargs(Any) \u2013 Arguments to be passed toArrow\n\nkwargs(Any) \u2013 Additional arguments to be passed toArrow\n\nkwargs(Any) \u2013 Additional arguments to be passed toArrow\n\nSee also\n\nArrowTipCurvedDoubleArrow\n\nExamples\n\nExample: DoubleArrowExample\u00b6\n\nExample: DoubleArrowExample2\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*args,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nargs(Any)kwargs(Any)\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*frommanim.mobject.geometry.tipsimportArrowCircleFilledTipclassDoubleArrowExample(Scene):defconstruct(self):circle=Circle(radius=2.0)d_arrow=DoubleArrow(start=circle.get_left(),end=circle.get_right())d_arrow_2=DoubleArrow(tip_shape_end=ArrowCircleFilledTip,tip_shape_start=ArrowCircleFilledTip)group=Group(Group(circle,d_arrow),d_arrow_2).arrange(UP,buff=1)self.add(group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "from manim.mobject.geometry.tips import ArrowCircleFilledTip\nclass DoubleArrowExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2.0)\n        d_arrow = DoubleArrow(start=circle.get_left(), end=circle.get_right())\n        d_arrow_2 = DoubleArrow(tip_shape_end=ArrowCircleFilledTip, tip_shape_start=ArrowCircleFilledTip)\n        group = Group(Group(circle, d_arrow), d_arrow_2).arrange(UP, buff=1)\n        self.add(group)",
+      "language": "python",
+      "context": "Example: DoubleArrowExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classDoubleArrowExample2(Scene):defconstruct(self):box=Square()p1=box.get_left()p2=box.get_right()d1=DoubleArrow(p1,p2,buff=0)d2=DoubleArrow(p1,p2,buff=0,tip_length=0.2,color=YELLOW)d3=DoubleArrow(p1,p2,buff=0,tip_length=0.4,color=BLUE)Group(d1,d2,d3).arrange(DOWN)self.add(box,d1,d2,d3)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class DoubleArrowExample2(Scene):\n    def construct(self):\n        box = Square()\n        p1 = box.get_left()\n        p2 = box.get_right()\n        d1 = DoubleArrow(p1, p2, buff=0)\n        d2 = DoubleArrow(p1, p2, buff=0, tip_length=0.2, color=YELLOW)\n        d3 = DoubleArrow(p1, p2, buff=0, tip_length=0.4, color=BLUE)\n        Group(d1, d2, d3).arrange(DOWN)\n        self.add(box, d1, d2, d3)",
+      "language": "python",
+      "context": "Example: DoubleArrowExample2\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "DoubleArrow",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:Arrow"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Scene",
+    "Arrow",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

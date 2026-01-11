@@ -1,0 +1,40 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.ShowPassingFlashWithThinningStrokeWidth.html",
+  "title": "ShowPassingFlashWithThinningStrokeWidth\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ShowPassingFlashWithThinningStrokeWidth\u00b6\n\nQualified name:manim.animation.indication.ShowPassingFlashWithThinningStrokeWidth\n\nclassShowPassingFlashWithThinningStrokeWidth(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationGroupMethodsAttributesrun_timeParameters:vmobject(VMobject)n_segments(int)time_width(float)remover(bool)kwargs(Any)_original__init__(vmobject,n_segments=10,time_width=0.1,remover=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)n_segments(int)time_width(float)remover(bool)kwargs(Any)\n\nBases:AnimationGroup\n\nMethods\n\nAttributes\n\nrun_time\n\nParameters:\n\nvmobject(VMobject)n_segments(int)time_width(float)remover(bool)kwargs(Any)\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\nn_segments(int)\n\nn_segments(int)\n\ntime_width(float)\n\ntime_width(float)\n\nremover(bool)\n\nremover(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(vmobject,n_segments=10,time_width=0.1,remover=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)n_segments(int)time_width(float)remover(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobject(VMobject)n_segments(int)time_width(float)remover(bool)kwargs(Any)\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\nn_segments(int)\n\nn_segments(int)\n\ntime_width(float)\n\ntime_width(float)\n\nremover(bool)\n\nremover(bool)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ShowPassingFlashWithThinningStrokeWidth",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:AnimationGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Flash",
+    "VMobject",
+    "ShowPassingFlash",
+    "AnimationGroup",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "timing"
+  ]
+}

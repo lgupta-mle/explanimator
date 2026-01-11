@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim._config.utils.ManimFrame.html",
+  "title": "ManimFrame\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimFrame\u00b6\n\nQualified name:manim.\\_config.utils.ManimFrame\n\nclassManimFrame(c)[source]\u00b6\n\nBases:MappingMethodsAttributesDLDOWNDRINLEFTORIGINOUTRIGHTULUPURX_AXISY_AXISZ_AXISaspect_ratiobottomframe_heightframe_widthframe_x_radiusframe_y_radiusleft_sidepixel_heightpixel_widthright_sidetopParameters:c(ManimConfig)\n\nBases:Mapping\n\nMethods\n\nAttributes\n\nDL\n\nDOWN\n\nDR\n\nIN\n\nLEFT\n\nORIGIN\n\nOUT\n\nRIGHT\n\nUL\n\nUP\n\nUR\n\nX_AXIS\n\nY_AXIS\n\nZ_AXIS\n\naspect_ratio\n\nbottom\n\nframe_height\n\nframe_width\n\nframe_x_radius\n\nframe_y_radius\n\nleft_side\n\npixel_height\n\npixel_width\n\nright_side\n\ntop\n\nParameters:\n\nc(ManimConfig)\n\nc(ManimConfig)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ManimFrame",
+      "class_name": null,
+      "parameters": [
+        "c"
+      ],
+      "return_type": null,
+      "description": "Bases:Mapping"
+    }
+  ],
+  "related_classes": [],
+  "tags": []
+}

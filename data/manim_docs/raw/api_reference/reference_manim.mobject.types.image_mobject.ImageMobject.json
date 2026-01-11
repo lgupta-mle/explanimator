@@ -1,0 +1,111 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.image_mobject.ImageMobject.html",
+  "title": "ImageMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ImageMobject\u00b6\n\nQualified name:manim.mobject.types.image\\_mobject.ImageMobject\n\nclassImageMobject(filename_or_array,scale_to_resolution=1080,invert=False,image_mode='RGBA',**kwargs)[source]\u00b6\n\nBases:AbstractImageMobjectDisplays an Image from a numpy array or a file.Parameters:scale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.filename_or_array(StrPath|npt.NDArray)invert(bool)image_mode(str)kwargs(Any)ExampleExample: ImageFromArray\u00b6frommanimimport*classImageFromArray(Scene):defconstruct(self):image=ImageMobject(np.uint8([[0,100,30,200],[255,0,5,33]]))image.height=7self.add(image)class ImageFromArray(Scene):\n    def construct(self):\n        image = ImageMobject(np.uint8([[0, 100, 30, 200],\n                                       [255, 0, 5, 33]]))\n        image.height = 7\n        self.add(image)Changing interpolation style:Example: ImageInterpolationEx\u00b6frommanimimport*classImageInterpolationEx(Scene):defconstruct(self):img=ImageMobject(np.uint8([[63,0,0,0],[0,127,0,0],[0,0,191,0],[0,0,0,255]]))img.height=2img1=img.copy()img2=img.copy()img3=img.copy()img4=img.copy()img5=img.copy()img1.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"nearest\"])img2.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"lanczos\"])img3.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"linear\"])img4.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"cubic\"])img5.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"box\"])img1.add(Text(\"nearest\").scale(0.5).next_to(img1,UP))img2.add(Text(\"lanczos\").scale(0.5).next_to(img2,UP))img3.add(Text(\"linear\").scale(0.5).next_to(img3,UP))img4.add(Text(\"cubic\").scale(0.5).next_to(img4,UP))img5.add(Text(\"box\").scale(0.5).next_to(img5,UP))x=Group(img1,img2,img3,img4,img5)x.arrange()self.add(x)class ImageInterpolationEx(Scene):\n    def construct(self):\n        img = ImageMobject(np.uint8([[63, 0, 0, 0],\n                                        [0, 127, 0, 0],\n                                        [0, 0, 191, 0],\n                                        [0, 0, 0, 255]\n                                        ]))\n\n        img.height = 2\n        img1 = img.copy()\n        img2 = img.copy()\n        img3 = img.copy()\n        img4 = img.copy()\n        img5 = img.copy()\n\n        img1.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"nearest\"])\n        img2.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"lanczos\"])\n        img3.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"linear\"])\n        img4.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"cubic\"])\n        img5.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"box\"])\n        img1.add(Text(\"nearest\").scale(0.5).next_to(img1,UP))\n        img2.add(Text(\"lanczos\").scale(0.5).next_to(img2,UP))\n        img3.add(Text(\"linear\").scale(0.5).next_to(img3,UP))\n        img4.add(Text(\"cubic\").scale(0.5).next_to(img4,UP))\n        img5.add(Text(\"box\").scale(0.5).next_to(img5,UP))\n\n        x= Group(img1,img2,img3,img4,img5)\n        x.arrange()\n        self.add(x)MethodsfadeSets the image's opacity using a 1 - alpha relationship.get_pixel_arrayA simple getter method.get_styleinterpolate_colorInterpolates the array of pixel color values from one ImageMobject into an array of equal size in the target ImageMobject.set_colorCondition is function which takes in one arguments, (x, y, z).set_opacitySets the image's opacity.AttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject._original__init__(filename_or_array,scale_to_resolution=1080,invert=False,image_mode='RGBA',**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:filename_or_array(StrPath|npt.NDArray)scale_to_resolution(int)invert(bool)image_mode(str)kwargs(Any)Return type:Nonefade(darkness=0.5,family=True)[source]\u00b6Sets the image\u2019s opacity using a 1 - alpha relationship.Parameters:darkness(float) \u2013 The alpha value of the object, 1 being transparent and 0 being\nopaque.family(bool) \u2013 Whether the submobjects of the ImageMobject should be affected.Return type:Selfget_pixel_array()[source]\u00b6A simple getter method.interpolate_color(mobject1,mobject2,alpha)[source]\u00b6Interpolates the array of pixel color values from one ImageMobject\ninto an array of equal size in the target ImageMobject.Parameters:mobject1(ImageMobject) \u2013 The ImageMobject to transform from.mobject2(ImageMobject) \u2013 The ImageMobject to transform into.alpha(float) \u2013 Used to track the lerp relationship. Not opacity related.Return type:Noneset_color(color,alpha=None,family=True)[source]\u00b6Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof colorset_opacity(alpha)[source]\u00b6Sets the image\u2019s opacity.Parameters:alpha(float) \u2013 The alpha value of the object, 1 being opaque and 0 being\ntransparent.Return type:Self\n\nBases:AbstractImageMobject\n\nDisplays an Image from a numpy array or a file.\n\nParameters:\n\nscale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.filename_or_array(StrPath|npt.NDArray)invert(bool)image_mode(str)kwargs(Any)\n\nscale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.\n\nscale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.\n\nfilename_or_array(StrPath|npt.NDArray)\n\nfilename_or_array(StrPath|npt.NDArray)\n\ninvert(bool)\n\ninvert(bool)\n\nimage_mode(str)\n\nimage_mode(str)\n\nkwargs(Any)\n\nkwargs(Any)\n\nExample\n\nExample: ImageFromArray\u00b6\n\nChanging interpolation style:\n\nExample: ImageInterpolationEx\u00b6\n\nMethods\n\nfade\n\nSets the image's opacity using a 1 - alpha relationship.\n\nget_pixel_array\n\nA simple getter method.\n\nget_style\n\ninterpolate_color\n\nInterpolates the array of pixel color values from one ImageMobject into an array of equal size in the target ImageMobject.\n\nset_color\n\nCondition is function which takes in one arguments, (x, y, z).\n\nset_opacity\n\nSets the image's opacity.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(filename_or_array,scale_to_resolution=1080,invert=False,image_mode='RGBA',**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:filename_or_array(StrPath|npt.NDArray)scale_to_resolution(int)invert(bool)image_mode(str)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfilename_or_array(StrPath|npt.NDArray)scale_to_resolution(int)invert(bool)image_mode(str)kwargs(Any)\n\nfilename_or_array(StrPath|npt.NDArray)\n\nfilename_or_array(StrPath|npt.NDArray)\n\nscale_to_resolution(int)\n\nscale_to_resolution(int)\n\ninvert(bool)\n\ninvert(bool)\n\nimage_mode(str)\n\nimage_mode(str)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nfade(darkness=0.5,family=True)[source]\u00b6\n\nSets the image\u2019s opacity using a 1 - alpha relationship.Parameters:darkness(float) \u2013 The alpha value of the object, 1 being transparent and 0 being\nopaque.family(bool) \u2013 Whether the submobjects of the ImageMobject should be affected.Return type:Self\n\nSets the image\u2019s opacity using a 1 - alpha relationship.\n\nParameters:\n\ndarkness(float) \u2013 The alpha value of the object, 1 being transparent and 0 being\nopaque.family(bool) \u2013 Whether the submobjects of the ImageMobject should be affected.\n\ndarkness(float) \u2013 The alpha value of the object, 1 being transparent and 0 being\nopaque.\n\ndarkness(float) \u2013 The alpha value of the object, 1 being transparent and 0 being\nopaque.\n\nfamily(bool) \u2013 Whether the submobjects of the ImageMobject should be affected.\n\nfamily(bool) \u2013 Whether the submobjects of the ImageMobject should be affected.\n\nReturn type:\n\nSelf\n\nSelf\n\nget_pixel_array()[source]\u00b6\n\nA simple getter method.\n\nA simple getter method.\n\ninterpolate_color(mobject1,mobject2,alpha)[source]\u00b6\n\nInterpolates the array of pixel color values from one ImageMobject\ninto an array of equal size in the target ImageMobject.Parameters:mobject1(ImageMobject) \u2013 The ImageMobject to transform from.mobject2(ImageMobject) \u2013 The ImageMobject to transform into.alpha(float) \u2013 Used to track the lerp relationship. Not opacity related.Return type:None\n\nInterpolates the array of pixel color values from one ImageMobject\ninto an array of equal size in the target ImageMobject.\n\nParameters:\n\nmobject1(ImageMobject) \u2013 The ImageMobject to transform from.mobject2(ImageMobject) \u2013 The ImageMobject to transform into.alpha(float) \u2013 Used to track the lerp relationship. Not opacity related.\n\nmobject1(ImageMobject) \u2013 The ImageMobject to transform from.\n\nmobject1(ImageMobject) \u2013 The ImageMobject to transform from.\n\nmobject2(ImageMobject) \u2013 The ImageMobject to transform into.\n\nmobject2(ImageMobject) \u2013 The ImageMobject to transform into.\n\nalpha(float) \u2013 Used to track the lerp relationship. Not opacity related.\n\nalpha(float) \u2013 Used to track the lerp relationship. Not opacity related.\n\nReturn type:\n\nNone\n\nNone\n\nset_color(color,alpha=None,family=True)[source]\u00b6\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color\n\nset_opacity(alpha)[source]\u00b6\n\nSets the image\u2019s opacity.Parameters:alpha(float) \u2013 The alpha value of the object, 1 being opaque and 0 being\ntransparent.Return type:Self\n\nSets the image\u2019s opacity.\n\nParameters:\n\nalpha(float) \u2013 The alpha value of the object, 1 being opaque and 0 being\ntransparent.\n\nalpha(float) \u2013 The alpha value of the object, 1 being opaque and 0 being\ntransparent.\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classImageFromArray(Scene):defconstruct(self):image=ImageMobject(np.uint8([[0,100,30,200],[255,0,5,33]]))image.height=7self.add(image)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ImageFromArray(Scene):\n    def construct(self):\n        image = ImageMobject(np.uint8([[0, 100, 30, 200],\n                                       [255, 0, 5, 33]]))\n        image.height = 7\n        self.add(image)",
+      "language": "python",
+      "context": "Example: ImageFromArray\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classImageInterpolationEx(Scene):defconstruct(self):img=ImageMobject(np.uint8([[63,0,0,0],[0,127,0,0],[0,0,191,0],[0,0,0,255]]))img.height=2img1=img.copy()img2=img.copy()img3=img.copy()img4=img.copy()img5=img.copy()img1.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"nearest\"])img2.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"lanczos\"])img3.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"linear\"])img4.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"cubic\"])img5.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"box\"])img1.add(Text(\"nearest\").scale(0.5).next_to(img1,UP))img2.add(Text(\"lanczos\").scale(0.5).next_to(img2,UP))img3.add(Text(\"linear\").scale(0.5).next_to(img3,UP))img4.add(Text(\"cubic\").scale(0.5).next_to(img4,UP))img5.add(Text(\"box\").scale(0.5).next_to(img5,UP))x=Group(img1,img2,img3,img4,img5)x.arrange()self.add(x)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ImageInterpolationEx(Scene):\n    def construct(self):\n        img = ImageMobject(np.uint8([[63, 0, 0, 0],\n                                        [0, 127, 0, 0],\n                                        [0, 0, 191, 0],\n                                        [0, 0, 0, 255]\n                                        ]))\n\n        img.height = 2\n        img1 = img.copy()\n        img2 = img.copy()\n        img3 = img.copy()\n        img4 = img.copy()\n        img5 = img.copy()\n\n        img1.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"nearest\"])\n        img2.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"lanczos\"])\n        img3.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"linear\"])\n        img4.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"cubic\"])\n        img5.set_resampling_algorithm(RESAMPLING_ALGORITHMS[\"box\"])\n        img1.add(Text(\"nearest\").scale(0.5).next_to(img1,UP))\n        img2.add(Text(\"lanczos\").scale(0.5).next_to(img2,UP))\n        img3.add(Text(\"linear\").scale(0.5).next_to(img3,UP))\n        img4.add(Text(\"cubic\").scale(0.5).next_to(img4,UP))\n        img5.add(Text(\"box\").scale(0.5).next_to(img5,UP))\n\n        x= Group(img1,img2,img3,img4,img5)\n        x.arrange()\n        self.add(x)",
+      "language": "python",
+      "context": "Example: ImageInterpolationEx\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ImageMobject",
+      "class_name": null,
+      "parameters": [
+        "filename_or_array"
+      ],
+      "return_type": null,
+      "description": "Bases:AbstractImageMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "filename_or_array"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "fade",
+      "class_name": null,
+      "parameters": [
+        "darkness=0.5"
+      ],
+      "return_type": null,
+      "description": "Sets the image\u2019s opacity using a 1 - alpha relationship."
+    },
+    {
+      "name": "get_pixel_array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A simple getter method."
+    },
+    {
+      "name": "interpolate_color",
+      "class_name": null,
+      "parameters": [
+        "mobject1"
+      ],
+      "return_type": null,
+      "description": "Interpolates the array of pixel color values from one ImageMobject\ninto an array of equal size in the target ImageMobject."
+    },
+    {
+      "name": "set_color",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color"
+    },
+    {
+      "name": "set_opacity",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Sets the image\u2019s opacity."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Tex",
+    "Text",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

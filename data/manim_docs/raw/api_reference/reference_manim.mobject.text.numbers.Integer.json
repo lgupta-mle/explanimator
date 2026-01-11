@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.numbers.Integer.html",
+  "title": "Integer\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Integer\u00b6\n\nQualified name:manim.mobject.text.numbers.Integer\n\nclassInteger(number=0,num_decimal_places=0,**kwargs)[source]\u00b6\n\nBases:DecimalNumberA class for displaying Integers.ExamplesExample: IntegerExample\u00b6frommanimimport*classIntegerExample(Scene):defconstruct(self):self.add(Integer(number=2.5).set_color(ORANGE).scale(2.5).set_x(-0.5).set_y(0.8))self.add(Integer(number=3.14159,show_ellipsis=True).set_x(3).set_y(3.3).scale(3.14159))self.add(Integer(number=42).set_x(2.5).set_y(-2.3).set_color_by_gradient(BLUE,TEAL).scale(1.7))self.add(Integer(number=6.28).set_x(-1.5).set_y(-2).set_color(YELLOW).scale(1.4))class IntegerExample(Scene):\n    def construct(self):\n        self.add(Integer(number=2.5).set_color(ORANGE).scale(2.5).set_x(-0.5).set_y(0.8))\n        self.add(Integer(number=3.14159, show_ellipsis=True).set_x(3).set_y(3.3).scale(3.14159))\n        self.add(Integer(number=42).set_x(2.5).set_y(-2.3).set_color_by_gradient(BLUE, TEAL).scale(1.7))\n        self.add(Integer(number=6.28).set_x(-1.5).set_y(-2).set_color(YELLOW).scale(1.4))Methodsget_valueAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizeThe font size of the tex mobject.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:number(float)num_decimal_places(int)kwargs(Any)_original__init__(number=0,num_decimal_places=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:number(float)num_decimal_places(int)kwargs(Any)Return type:None\n\nBases:DecimalNumber\n\nA class for displaying Integers.\n\nExamples\n\nExample: IntegerExample\u00b6\n\nMethods\n\nget_value\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nThe font size of the tex mobject.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nnumber(float)num_decimal_places(int)kwargs(Any)\n\nnumber(float)\n\nnumber(float)\n\nnum_decimal_places(int)\n\nnum_decimal_places(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(number=0,num_decimal_places=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:number(float)num_decimal_places(int)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nnumber(float)num_decimal_places(int)kwargs(Any)\n\nnumber(float)\n\nnumber(float)\n\nnum_decimal_places(int)\n\nnum_decimal_places(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classIntegerExample(Scene):defconstruct(self):self.add(Integer(number=2.5).set_color(ORANGE).scale(2.5).set_x(-0.5).set_y(0.8))self.add(Integer(number=3.14159,show_ellipsis=True).set_x(3).set_y(3.3).scale(3.14159))self.add(Integer(number=42).set_x(2.5).set_y(-2.3).set_color_by_gradient(BLUE,TEAL).scale(1.7))self.add(Integer(number=6.28).set_x(-1.5).set_y(-2).set_color(YELLOW).scale(1.4))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class IntegerExample(Scene):\n    def construct(self):\n        self.add(Integer(number=2.5).set_color(ORANGE).scale(2.5).set_x(-0.5).set_y(0.8))\n        self.add(Integer(number=3.14159, show_ellipsis=True).set_x(3).set_y(3.3).scale(3.14159))\n        self.add(Integer(number=42).set_x(2.5).set_y(-2.3).set_color_by_gradient(BLUE, TEAL).scale(1.7))\n        self.add(Integer(number=6.28).set_x(-1.5).set_y(-2).set_color(YELLOW).scale(1.4))",
+      "language": "python",
+      "context": "Example: IntegerExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Integer",
+      "class_name": null,
+      "parameters": [
+        "number=0"
+      ],
+      "return_type": null,
+      "description": "Bases:DecimalNumber"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "number=0"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

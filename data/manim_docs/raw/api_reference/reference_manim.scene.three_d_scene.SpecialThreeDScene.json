@@ -1,0 +1,60 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.three_d_scene.SpecialThreeDScene.html",
+  "title": "SpecialThreeDScene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SpecialThreeDScene\u00b6\n\nQualified name:manim.scene.three\\_d\\_scene.SpecialThreeDScene\n\nclassSpecialThreeDScene(cut_axes_at_radius=True,camera_config={'exponential_projection':True,'should_apply_shading':True},three_d_axes_config={'axis_config':{'numbers_with_elongated_ticks':[0,1,2],'stroke_width':2,'tick_frequency':1,'unit_size':2},'num_axis_pieces':1},sphere_config={'radius':2,'resolution':(24,48)},default_angled_camera_position={'phi':1.2217304763960306,'theta':-1.9198621771937625},low_quality_config={'camera_config':{'should_apply_shading':False},'sphere_config':{'resolution':(12,24)},'three_d_axes_config':{'num_axis_pieces':1}},**kwargs)[source]\u00b6\n\nBases:ThreeDSceneAn extension ofThreeDScenewith more settings.It has some extra configuration for axes, spheres,\nand an override for low quality rendering. Further key differences\nare:The camera shades applicable 3DMobjects by default,\nexcept if rendering in low quality.Some default params for Spheres and Axes have been added.Methodsget_axesReturn a set of 3D axes.get_default_camera_positionReturns the default_angled_camera position.get_sphereReturns a sphere with the passed keyword arguments as properties.set_camera_to_default_positionSets the camera to its default position.AttributescameratimeThe time since the start of the scene.get_axes()[source]\u00b6Return a set of 3D axes.Returns:A set of 3D axes.Return type:ThreeDAxesget_default_camera_position()[source]\u00b6Returns the default_angled_camera position.Returns:Dictionary of phi, theta, focal_distance, and gamma.Return type:dictget_sphere(**kwargs)[source]\u00b6Returns a sphere with the passed keyword arguments as properties.Parameters:**kwargs\u2013 Any valid parameter ofSphereorSurface.Returns:The sphere object.Return type:Sphereset_camera_to_default_position()[source]\u00b6Sets the camera to its default position.\n\nBases:ThreeDScene\n\nAn extension ofThreeDScenewith more settings.\n\nIt has some extra configuration for axes, spheres,\nand an override for low quality rendering. Further key differences\nare:\n\nThe camera shades applicable 3DMobjects by default,\nexcept if rendering in low quality.\n\nThe camera shades applicable 3DMobjects by default,\nexcept if rendering in low quality.\n\nSome default params for Spheres and Axes have been added.\n\nSome default params for Spheres and Axes have been added.\n\nMethods\n\nget_axes\n\nReturn a set of 3D axes.\n\nget_default_camera_position\n\nReturns the default_angled_camera position.\n\nget_sphere\n\nReturns a sphere with the passed keyword arguments as properties.\n\nset_camera_to_default_position\n\nSets the camera to its default position.\n\nAttributes\n\ncamera\n\ntime\n\nThe time since the start of the scene.\n\nget_axes()[source]\u00b6\n\nReturn a set of 3D axes.Returns:A set of 3D axes.Return type:ThreeDAxes\n\nReturn a set of 3D axes.\n\nReturns:\n\nA set of 3D axes.\n\nA set of 3D axes.\n\nReturn type:\n\nThreeDAxes\n\nThreeDAxes\n\nget_default_camera_position()[source]\u00b6\n\nReturns the default_angled_camera position.Returns:Dictionary of phi, theta, focal_distance, and gamma.Return type:dict\n\nReturns the default_angled_camera position.\n\nReturns:\n\nDictionary of phi, theta, focal_distance, and gamma.\n\nDictionary of phi, theta, focal_distance, and gamma.\n\nReturn type:\n\ndict\n\ndict\n\nget_sphere(**kwargs)[source]\u00b6\n\nReturns a sphere with the passed keyword arguments as properties.Parameters:**kwargs\u2013 Any valid parameter ofSphereorSurface.Returns:The sphere object.Return type:Sphere\n\nReturns a sphere with the passed keyword arguments as properties.\n\nParameters:\n\n**kwargs\u2013 Any valid parameter ofSphereorSurface.\n\n**kwargs\u2013 Any valid parameter ofSphereorSurface.\n\nReturns:\n\nThe sphere object.\n\nThe sphere object.\n\nReturn type:\n\nSphere\n\nSphere\n\nset_camera_to_default_position()[source]\u00b6\n\nSets the camera to its default position.\n\nSets the camera to its default position.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SpecialThreeDScene",
+      "class_name": null,
+      "parameters": [
+        "cut_axes_at_radius=True"
+      ],
+      "return_type": null,
+      "description": "Bases:ThreeDScene"
+    },
+    {
+      "name": "get_axes",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return a set of 3D axes."
+    },
+    {
+      "name": "get_default_camera_position",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the default_angled_camera position."
+    },
+    {
+      "name": "get_sphere",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Returns a sphere with the passed keyword arguments as properties."
+    },
+    {
+      "name": "set_camera_to_default_position",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Sets the camera to its default position."
+    }
+  ],
+  "related_classes": [
+    "Axes",
+    "ThreeDScene",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "3d",
+    "graph"
+  ]
+}

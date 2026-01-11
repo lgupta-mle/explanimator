@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.SVGNAMES.html",
+  "title": "SVGNAMES\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SVGNAMES\u00b6\n\nSVG 1.1 Colors\n\nThis module contains the colors defined in the SVG 1.1 specification, which are commonly\naccessed as named colors in LaTeX via the\\usepackage[svgnames]{xcolor}package.\n\nTo use the colors from this list, access them directly from the module (which\nis exposed to Manim\u2019s global name space):\n\nList of Color Constants\u00b6\n\nThese hex values are derived from those specified in thexcolorpackage\ndocumentation (seehttps://ctan.org/pkg/xcolor):\n\nColor Name\n\nRGB Hex Code\n\nColor Name\n\nRGB Hex Code",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportSVGNAMES>>>SVGNAMES.LIGHTCORALManimColor('#EF7F7F')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "text"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.functions.html",
+  "title": "functions\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "functions\u00b6\n\nMobjects representing function graphs.\n\nClasses\n\nFunctionGraph\n\nAParametricFunctionthat spans the length of the scene by default.\n\nImplicitFunction\n\nAn implicit function.\n\nParametricFunction\n\nA parametric curve.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Graph",
+    "ParametricFunction",
+    "Mobject"
+  ],
+  "tags": [
+    "graph"
+  ]
+}

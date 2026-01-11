@@ -1,0 +1,14 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.boolean_ops.html",
+  "title": "boolean_ops\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "boolean_ops\u00b6\n\nBoolean operations for two-dimensional mobjects.\n\nClasses\n\nDifference\n\nSubtracts oneVMobjectfrom another one.\n\nExclusion\n\nFind the XOR between twoVMobject.\n\nIntersection\n\nFind the intersection of twoVMobjects.\n\nUnion\n\nUnion of two or moreVMobjects.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": []
+}

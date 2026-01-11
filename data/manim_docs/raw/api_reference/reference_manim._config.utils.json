@@ -1,0 +1,32 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim._config.utils.html",
+  "title": "utils\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "utils\u00b6\n\nUtilities to create and set the config.\n\nThe main class exported by this module isManimConfig.  This class\ncontains all configuration options, including frame geometry (e.g. frame\nheight/width, frame rate), output (e.g. directories, logging), styling\n(e.g. background color, transparency), and general behavior (e.g. writing a\nmovie vs writing a single frame).\n\nSeeConfigurationfor an introduction to Manim\u2019s configuration system.\n\nClasses\n\nManimConfig\n\nDict-like class storing all config options.\n\nManimFrame\n\nFunctions\n\nconfig_file_paths()[source]\u00b6\n\nThe paths where.cfgfiles will be searched for.When manim is first imported, it processes any.cfgfiles it finds.  This\nfunction returns the locations in which these files are searched for.  In\nascending order of precedence, these are: the library-wide config file, the\nuser-wide config file, and the folder-wide config file.The library-wide config file determines manim\u2019s default behavior.  The\nuser-wide config file is stored in the user\u2019s home folder, and determines\nthe behavior of manim whenever the user invokes it from anywhere in the\nsystem.  The folder-wide config file only affects scenes that are in the\nsame folder.  The latter two files are optional.These files, if they exist, are meant to loaded into a singleconfigparser.ConfigParserobject, and then processed byManimConfig.Returns:List of paths which may contain.cfgfiles, in ascending order of\nprecedence.Return type:List[Path]See alsomake_config_parser(),ManimConfig.digest_file(),ManimConfig.digest_parser()NotesThe location of the user-wide config file is OS-specific.\n\nThe paths where.cfgfiles will be searched for.\n\nWhen manim is first imported, it processes any.cfgfiles it finds.  This\nfunction returns the locations in which these files are searched for.  In\nascending order of precedence, these are: the library-wide config file, the\nuser-wide config file, and the folder-wide config file.\n\nThe library-wide config file determines manim\u2019s default behavior.  The\nuser-wide config file is stored in the user\u2019s home folder, and determines\nthe behavior of manim whenever the user invokes it from anywhere in the\nsystem.  The folder-wide config file only affects scenes that are in the\nsame folder.  The latter two files are optional.\n\nThese files, if they exist, are meant to loaded into a singleconfigparser.ConfigParserobject, and then processed byManimConfig.\n\nReturns:\n\nList of paths which may contain.cfgfiles, in ascending order of\nprecedence.\n\nList of paths which may contain.cfgfiles, in ascending order of\nprecedence.\n\nReturn type:\n\nList[Path]\n\nList[Path]\n\nSee also\n\nmake_config_parser(),ManimConfig.digest_file(),ManimConfig.digest_parser()\n\nNotes\n\nThe location of the user-wide config file is OS-specific.\n\nmake_config_parser(custom_file=None)[source]\u00b6\n\nMake aConfigParserobject and load any.cfgfiles.The user-wide file, if it exists, overrides the library-wide file.  The\nfolder-wide file, if it exists, overrides the other two.The folder-wide file can be ignored by passingcustom_file.  However,\nthe user-wide and library-wide config files cannot be ignored.Parameters:custom_file(StrPath|None) \u2013 Path to a custom config file.  If used, the folder-wide file in the\nrelevant directory will be ignored, if it exists.  If None, the\nfolder-wide file will be used, if it exists.Returns:A parser containing the config options found in the .cfg files that\nwere found.  It is guaranteed to contain at least the config options\nfound in the library-wide file.Return type:ConfigParserSee alsoconfig_file_paths()\n\nMake aConfigParserobject and load any.cfgfiles.\n\nThe user-wide file, if it exists, overrides the library-wide file.  The\nfolder-wide file, if it exists, overrides the other two.\n\nThe folder-wide file can be ignored by passingcustom_file.  However,\nthe user-wide and library-wide config files cannot be ignored.\n\nParameters:\n\ncustom_file(StrPath|None) \u2013 Path to a custom config file.  If used, the folder-wide file in the\nrelevant directory will be ignored, if it exists.  If None, the\nfolder-wide file will be used, if it exists.\n\ncustom_file(StrPath|None) \u2013 Path to a custom config file.  If used, the folder-wide file in the\nrelevant directory will be ignored, if it exists.  If None, the\nfolder-wide file will be used, if it exists.\n\nReturns:\n\nA parser containing the config options found in the .cfg files that\nwere found.  It is guaranteed to contain at least the config options\nfound in the library-wide file.\n\nA parser containing the config options found in the .cfg files that\nwere found.  It is guaranteed to contain at least the config options\nfound in the library-wide file.\n\nReturn type:\n\nConfigParser\n\nConfigParser\n\nSee also\n\nconfig_file_paths()",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "config_file_paths",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The paths where.cfgfiles will be searched for."
+    },
+    {
+      "name": "make_config_parser",
+      "class_name": null,
+      "parameters": [
+        "custom_file=None"
+      ],
+      "return_type": null,
+      "description": "Make aConfigParserobject and load any.cfgfiles."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "timing",
+    "graph"
+  ]
+}

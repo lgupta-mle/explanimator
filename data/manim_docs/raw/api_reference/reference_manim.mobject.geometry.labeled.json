@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.labeled.html",
+  "title": "labeled\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "labeled\u00b6\n\nMobjects that inherit from lines and contain a label along the length.\n\nClasses\n\nLabel\n\nA Label consisting of text surrounded by a frame.\n\nLabeledArrow\n\nConstructs an arrow containing a label box somewhere along its length.\n\nLabeledLine\n\nConstructs a line containing a label box somewhere along its length.\n\nLabeledPolygram\n\nConstructs a polygram containing a label box at its pole of inaccessibility.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Line",
+    "Arrow",
+    "Mobject"
+  ],
+  "tags": [
+    "text"
+  ]
+}

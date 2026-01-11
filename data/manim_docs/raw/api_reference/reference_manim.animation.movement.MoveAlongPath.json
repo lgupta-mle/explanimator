@@ -1,0 +1,62 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.movement.MoveAlongPath.html",
+  "title": "MoveAlongPath\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MoveAlongPath\u00b6\n\nQualified name:manim.animation.movement.MoveAlongPath\n\nclassMoveAlongPath(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationMake one mobject move along the path of another mobject.Example: MoveAlongPathExample\u00b6frommanimimport*classMoveAlongPathExample(Scene):defconstruct(self):d1=Dot().set_color(ORANGE)l1=Line(LEFT,RIGHT)l2=VMobject()self.add(d1,l1,l2)l2.add_updater(lambdax:x.become(Line(LEFT,d1.get_center()).set_color(ORANGE)))self.play(MoveAlongPath(d1,l1),rate_func=linear)class MoveAlongPathExample(Scene):\n    def construct(self):\n        d1 = Dot().set_color(ORANGE)\n        l1 = Line(LEFT, RIGHT)\n        l2 = VMobject()\n        self.add(d1, l1, l2)\n        l2.add_updater(lambda x: x.become(Line(LEFT, d1.get_center()).set_color(ORANGE)))\n        self.play(MoveAlongPath(d1, l1), rate_func=linear)Methodsinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.Attributesrun_timeParameters:mobject(Mobject)path(VMobject)suspend_mobject_updating(bool)kwargs(Any)_original__init__(mobject,path,suspend_mobject_updating=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)path(VMobject)suspend_mobject_updating(bool)kwargs(Any)interpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:Animation\n\nMake one mobject move along the path of another mobject.\n\nExample: MoveAlongPathExample\u00b6\n\nMethods\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nAttributes\n\nrun_time\n\nParameters:\n\nmobject(Mobject)path(VMobject)suspend_mobject_updating(bool)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\npath(VMobject)\n\npath(VMobject)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(mobject,path,suspend_mobject_updating=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)path(VMobject)suspend_mobject_updating(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)path(VMobject)suspend_mobject_updating(bool)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\npath(VMobject)\n\npath(VMobject)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMoveAlongPathExample(Scene):defconstruct(self):d1=Dot().set_color(ORANGE)l1=Line(LEFT,RIGHT)l2=VMobject()self.add(d1,l1,l2)l2.add_updater(lambdax:x.become(Line(LEFT,d1.get_center()).set_color(ORANGE)))self.play(MoveAlongPath(d1,l1),rate_func=linear)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MoveAlongPathExample(Scene):\n    def construct(self):\n        d1 = Dot().set_color(ORANGE)\n        l1 = Line(LEFT, RIGHT)\n        l2 = VMobject()\n        self.add(d1, l1, l2)\n        l2.add_updater(lambda x: x.become(Line(LEFT, d1.get_center()).set_color(ORANGE)))\n        self.play(MoveAlongPath(d1, l1), rate_func=linear)",
+      "language": "python",
+      "context": "Example: MoveAlongPathExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MoveAlongPath",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VMobject",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "timing"
+  ]
+}

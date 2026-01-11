@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.utils.html#manim.mobject.utils.get_mobject_class",
+  "title": "utils\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "utils\u00b6\n\nUtilities for working with mobjects.\n\nFunctions\n\nget_mobject_class()[source]\u00b6\n\nGets the base mobject class, depending on the currently active renderer.NoteThis method is intended to be used in the code base of Manim itself\nor in plugins where code should work independent of the selected\nrenderer.ExamplesThe function has to be explicitly imported. We test that\nthe name of the returned class is one of the known mobject\nbase classes:>>>frommanim.mobject.utilsimportget_mobject_class>>>get_mobject_class().__name__in['Mobject','OpenGLMobject']TrueReturn type:type\n\nGets the base mobject class, depending on the currently active renderer.\n\nNote\n\nThis method is intended to be used in the code base of Manim itself\nor in plugins where code should work independent of the selected\nrenderer.\n\nExamples\n\nThe function has to be explicitly imported. We test that\nthe name of the returned class is one of the known mobject\nbase classes:\n\nReturn type:\n\ntype\n\ntype\n\nget_point_mobject_class()[source]\u00b6\n\nGets the point cloud mobject class, depending on the currently\nactive renderer.NoteThis method is intended to be used in the code base of Manim itself\nor in plugins where code should work independent of the selected\nrenderer.ExamplesThe function has to be explicitly imported. We test that\nthe name of the returned class is one of the known mobject\nbase classes:>>>frommanim.mobject.utilsimportget_point_mobject_class>>>get_point_mobject_class().__name__in['PMobject','OpenGLPMobject']TrueReturn type:type\n\nGets the point cloud mobject class, depending on the currently\nactive renderer.\n\nNote\n\nThis method is intended to be used in the code base of Manim itself\nor in plugins where code should work independent of the selected\nrenderer.\n\nExamples\n\nThe function has to be explicitly imported. We test that\nthe name of the returned class is one of the known mobject\nbase classes:\n\nReturn type:\n\ntype\n\ntype\n\nget_vectorized_mobject_class()[source]\u00b6\n\nGets the vectorized mobject class, depending on the currently\nactive renderer.NoteThis method is intended to be used in the code base of Manim itself\nor in plugins where code should work independent of the selected\nrenderer.ExamplesThe function has to be explicitly imported. We test that\nthe name of the returned class is one of the known mobject\nbase classes:>>>frommanim.mobject.utilsimportget_vectorized_mobject_class>>>get_vectorized_mobject_class().__name__in['VMobject','OpenGLVMobject']TrueReturn type:type\n\nGets the vectorized mobject class, depending on the currently\nactive renderer.\n\nNote\n\nThis method is intended to be used in the code base of Manim itself\nor in plugins where code should work independent of the selected\nrenderer.\n\nExamples\n\nThe function has to be explicitly imported. We test that\nthe name of the returned class is one of the known mobject\nbase classes:\n\nReturn type:\n\ntype\n\ntype",
+  "code_examples": [
+    {
+      "code": ">>>frommanim.mobject.utilsimportget_mobject_class>>>get_mobject_class().__name__in['Mobject','OpenGLMobject']True",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanim.mobject.utilsimportget_point_mobject_class>>>get_point_mobject_class().__name__in['PMobject','OpenGLPMobject']True",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanim.mobject.utilsimportget_vectorized_mobject_class>>>get_vectorized_mobject_class().__name__in['VMobject','OpenGLVMobject']True",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "get_mobject_class",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Gets the base mobject class, depending on the currently active renderer."
+    },
+    {
+      "name": "get_point_mobject_class",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Gets the point cloud mobject class, depending on the currently\nactive renderer."
+    },
+    {
+      "name": "get_vectorized_mobject_class",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Gets the vectorized mobject class, depending on the currently\nactive renderer."
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "graph",
+    "math"
+  ]
+}

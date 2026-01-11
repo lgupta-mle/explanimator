@@ -1,0 +1,63 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.ShowIncreasingSubsets.html",
+  "title": "ShowIncreasingSubsets\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ShowIncreasingSubsets\u00b6\n\nQualified name:manim.animation.creation.ShowIncreasingSubsets\n\nclassShowIncreasingSubsets(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationShow one submobject at a time, leaving all previous ones displayed on screen.ExamplesExample: ShowIncreasingSubsetsScene\u00b6frommanimimport*classShowIncreasingSubsetsScene(Scene):defconstruct(self):p=VGroup(Dot(),Square(),Triangle())self.add(p)self.play(ShowIncreasingSubsets(p))self.wait()class ShowIncreasingSubsetsScene(Scene):\n    def construct(self):\n        p = VGroup(Dot(), Square(), Triangle())\n        self.add(p)\n        self.play(ShowIncreasingSubsets(p))\n        self.wait()Methodsinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.update_submobject_listAttributesrun_timeParameters:group(Mobject)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])_original__init__(group,suspend_mobject_updating=False,int_func=<ufunc'floor'>,reverse_rate_function=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:group(Mobject)suspend_mobject_updating(bool)int_func(Callable[[ndarray],ndarray])Return type:Noneinterpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:Animation\n\nShow one submobject at a time, leaving all previous ones displayed on screen.\n\nExamples\n\nExample: ShowIncreasingSubsetsScene\u00b6\n\nMethods\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nupdate_submobject_list\n\nAttributes\n\nrun_time\n\nParameters:\n\ngroup(Mobject)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])\n\ngroup(Mobject)\n\ngroup(Mobject)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\n_original__init__(group,suspend_mobject_updating=False,int_func=<ufunc'floor'>,reverse_rate_function=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:group(Mobject)suspend_mobject_updating(bool)int_func(Callable[[ndarray],ndarray])Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ngroup(Mobject)suspend_mobject_updating(bool)int_func(Callable[[ndarray],ndarray])\n\ngroup(Mobject)\n\ngroup(Mobject)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nint_func(Callable[[ndarray],ndarray])\n\nint_func(Callable[[ndarray],ndarray])\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classShowIncreasingSubsetsScene(Scene):defconstruct(self):p=VGroup(Dot(),Square(),Triangle())self.add(p)self.play(ShowIncreasingSubsets(p))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShowIncreasingSubsetsScene(Scene):\n    def construct(self):\n        p = VGroup(Dot(), Square(), Triangle())\n        self.add(p)\n        self.play(ShowIncreasingSubsets(p))\n        self.wait()",
+      "language": "python",
+      "context": "Example: ShowIncreasingSubsetsScene\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ShowIncreasingSubsets",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "group"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

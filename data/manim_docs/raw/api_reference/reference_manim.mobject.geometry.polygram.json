@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.html",
+  "title": "polygram\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "polygram\u00b6\n\nMobjects that are simple geometric shapes.\n\nClasses\n\nConvexHull\n\nConstructs a convex hull for a set of points in no particular order.\n\nCutout\n\nA shape with smaller cutouts.\n\nPolygon\n\nA shape consisting of one closed loop of vertices.\n\nPolygram\n\nA generalizedPolygon, allowing for disconnected sets of edges.\n\nRectangle\n\nA quadrilateral with two sets of parallel sides.\n\nRegularPolygon\n\nAn n-sided regularPolygon.\n\nRegularPolygram\n\nAPolygramwith regularly spaced vertices.\n\nRoundedRectangle\n\nA rectangle with rounded corners.\n\nSquare\n\nA rectangle with equal side lengths.\n\nStar\n\nA regular polygram without the intersecting lines.\n\nTriangle\n\nAn equilateral triangle.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Rectangle",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry"
+  ]
+}

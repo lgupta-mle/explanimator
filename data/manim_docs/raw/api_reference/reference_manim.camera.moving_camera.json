@@ -1,0 +1,19 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.moving_camera.html",
+  "title": "moving_camera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "moving_camera\u00b6\n\nDefines the MovingCamera class, a camera that can pan and zoom through a scene.\n\nSee also\n\nmoving_camera_scene\n\nClasses\n\nMovingCamera\n\nA camera that follows and matches the size and position of its 'frame', a Rectangle (or similar Mobject).",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Camera",
+    "MovingCamera",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "geometry",
+    "3d"
+  ]
+}

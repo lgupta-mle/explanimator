@@ -1,0 +1,99 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.TipableVMobject.html",
+  "title": "TipableVMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TipableVMobject\u00b6\n\nQualified name:manim.mobject.geometry.arc.TipableVMobject\n\nclassTipableVMobject(tip_length=0.35,normal_vector=array([0.,0.,1.]),tip_style={},**kwargs)[source]\u00b6\n\nBases:VMobjectMeant for shared functionality between Arc and Line.\nFunctionality can be classified broadly into these groups:Adding, Creating, Modifying tipsadd_tip calls create_tip, before pushing the new tipinto the TipableVMobject\u2019s list of submobjectsstylistic and positional configurationChecking for tipsBoolean checks for whether the TipableVMobject has a tipand a starting tipGettersStraightforward accessors, returning information pertainingto the TipableVMobject instance\u2019s tip(s), its length etcMethodsadd_tipAdds a tip to the TipableVMobject instance, recognising that the endpoints might need to be switched if it's a 'starting tip' or not.asign_tip_attrcreate_tipStylises the tip, positions it spatially, and returns the newly instantiated tip to the caller.get_default_tip_lengthget_endReturns the point, where the stroke that surrounds theMobjectends.get_first_handleget_last_handleget_lengthget_startReturns the point, where the stroke that surrounds theMobjectstarts.get_tipReturns the TipableVMobject instance's (first) tip, otherwise throws an exception.get_tipsReturns a VGroup (collection of VMobjects) containing the TipableVMObject instance's tips.get_unpositioned_tipReturns a tip that has been stylistically configured, but has not yet been given a position in space.has_start_tiphas_tippop_tipsposition_tipreset_endpoints_based_on_tipAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:tip_length(float)normal_vector(Vector3DLike)tip_style(dict)kwargs(Any)_original__init__(tip_length=0.35,normal_vector=array([0.,0.,1.]),tip_style={},**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:tip_length(float)normal_vector(Vector3DLike)tip_style(dict)kwargs(Any)Return type:Noneadd_tip(tip=None,tip_shape=None,tip_length=None,tip_width=None,at_start=False)[source]\u00b6Adds a tip to the TipableVMobject instance, recognising\nthat the endpoints might need to be switched if it\u2019s\na \u2018starting tip\u2019 or not.Parameters:tip(tips.ArrowTip|None)tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)at_start(bool)Return type:Selfcreate_tip(tip_shape=None,tip_length=None,tip_width=None,at_start=False)[source]\u00b6Stylises the tip, positions it spatially, and returns\nthe newly instantiated tip to the caller.Parameters:tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)at_start(bool)Return type:tips.ArrowTipget_end()[source]\u00b6Returns the point, where the stroke that surrounds theMobjectends.Return type:Point3Dget_start()[source]\u00b6Returns the point, where the stroke that surrounds theMobjectstarts.Return type:Point3Dget_tip()[source]\u00b6Returns the TipableVMobject instance\u2019s (first) tip,\notherwise throws an exception.Return type:VMobjectget_tips()[source]\u00b6Returns a VGroup (collection of VMobjects) containing\nthe TipableVMObject instance\u2019s tips.Return type:VGroupget_unpositioned_tip(tip_shape=None,tip_length=None,tip_width=None)[source]\u00b6Returns a tip that has been stylistically configured,\nbut has not yet been given a position in space.Parameters:tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)Return type:tips.ArrowTip|tips.ArrowTriangleFilledTip\n\nBases:VMobject\n\nMeant for shared functionality between Arc and Line.\nFunctionality can be classified broadly into these groups:\n\nAdding, Creating, Modifying tipsadd_tip calls create_tip, before pushing the new tipinto the TipableVMobject\u2019s list of submobjectsstylistic and positional configuration\n\nAdding, Creating, Modifying tips\n\nadd_tip calls create_tip, before pushing the new tipinto the TipableVMobject\u2019s list of submobjectsstylistic and positional configuration\n\nadd_tip calls create_tip, before pushing the new tipinto the TipableVMobject\u2019s list of submobjects\n\nadd_tip calls create_tip, before pushing the new tip\n\ninto the TipableVMobject\u2019s list of submobjects\n\ninto the TipableVMobject\u2019s list of submobjects\n\nstylistic and positional configuration\n\nstylistic and positional configuration\n\nChecking for tipsBoolean checks for whether the TipableVMobject has a tipand a starting tip\n\nChecking for tips\n\nBoolean checks for whether the TipableVMobject has a tipand a starting tip\n\nBoolean checks for whether the TipableVMobject has a tipand a starting tip\n\nBoolean checks for whether the TipableVMobject has a tip\n\nand a starting tip\n\nand a starting tip\n\nGettersStraightforward accessors, returning information pertainingto the TipableVMobject instance\u2019s tip(s), its length etc\n\nGetters\n\nStraightforward accessors, returning information pertainingto the TipableVMobject instance\u2019s tip(s), its length etc\n\nStraightforward accessors, returning information pertainingto the TipableVMobject instance\u2019s tip(s), its length etc\n\nStraightforward accessors, returning information pertaining\n\nto the TipableVMobject instance\u2019s tip(s), its length etc\n\nto the TipableVMobject instance\u2019s tip(s), its length etc\n\nMethods\n\nadd_tip\n\nAdds a tip to the TipableVMobject instance, recognising that the endpoints might need to be switched if it's a 'starting tip' or not.\n\nasign_tip_attr\n\ncreate_tip\n\nStylises the tip, positions it spatially, and returns the newly instantiated tip to the caller.\n\nget_default_tip_length\n\nget_end\n\nReturns the point, where the stroke that surrounds theMobjectends.\n\nget_first_handle\n\nget_last_handle\n\nget_length\n\nget_start\n\nReturns the point, where the stroke that surrounds theMobjectstarts.\n\nget_tip\n\nReturns the TipableVMobject instance's (first) tip, otherwise throws an exception.\n\nget_tips\n\nReturns a VGroup (collection of VMobjects) containing the TipableVMObject instance's tips.\n\nget_unpositioned_tip\n\nReturns a tip that has been stylistically configured, but has not yet been given a position in space.\n\nhas_start_tip\n\nhas_tip\n\npop_tips\n\nposition_tip\n\nreset_endpoints_based_on_tip\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ntip_length(float)normal_vector(Vector3DLike)tip_style(dict)kwargs(Any)\n\ntip_length(float)\n\ntip_length(float)\n\nnormal_vector(Vector3DLike)\n\nnormal_vector(Vector3DLike)\n\ntip_style(dict)\n\ntip_style(dict)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(tip_length=0.35,normal_vector=array([0.,0.,1.]),tip_style={},**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:tip_length(float)normal_vector(Vector3DLike)tip_style(dict)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntip_length(float)normal_vector(Vector3DLike)tip_style(dict)kwargs(Any)\n\ntip_length(float)\n\ntip_length(float)\n\nnormal_vector(Vector3DLike)\n\nnormal_vector(Vector3DLike)\n\ntip_style(dict)\n\ntip_style(dict)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nadd_tip(tip=None,tip_shape=None,tip_length=None,tip_width=None,at_start=False)[source]\u00b6\n\nAdds a tip to the TipableVMobject instance, recognising\nthat the endpoints might need to be switched if it\u2019s\na \u2018starting tip\u2019 or not.Parameters:tip(tips.ArrowTip|None)tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)at_start(bool)Return type:Self\n\nAdds a tip to the TipableVMobject instance, recognising\nthat the endpoints might need to be switched if it\u2019s\na \u2018starting tip\u2019 or not.\n\nParameters:\n\ntip(tips.ArrowTip|None)tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)at_start(bool)\n\ntip(tips.ArrowTip|None)\n\ntip(tips.ArrowTip|None)\n\ntip_shape(type[tips.ArrowTip]|None)\n\ntip_shape(type[tips.ArrowTip]|None)\n\ntip_length(float|None)\n\ntip_length(float|None)\n\ntip_width(float|None)\n\ntip_width(float|None)\n\nat_start(bool)\n\nat_start(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\ncreate_tip(tip_shape=None,tip_length=None,tip_width=None,at_start=False)[source]\u00b6\n\nStylises the tip, positions it spatially, and returns\nthe newly instantiated tip to the caller.Parameters:tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)at_start(bool)Return type:tips.ArrowTip\n\nStylises the tip, positions it spatially, and returns\nthe newly instantiated tip to the caller.\n\nParameters:\n\ntip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)at_start(bool)\n\ntip_shape(type[tips.ArrowTip]|None)\n\ntip_shape(type[tips.ArrowTip]|None)\n\ntip_length(float|None)\n\ntip_length(float|None)\n\ntip_width(float|None)\n\ntip_width(float|None)\n\nat_start(bool)\n\nat_start(bool)\n\nReturn type:\n\ntips.ArrowTip\n\ntips.ArrowTip\n\nget_end()[source]\u00b6\n\nReturns the point, where the stroke that surrounds theMobjectends.Return type:Point3D\n\nReturns the point, where the stroke that surrounds theMobjectends.\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\nget_start()[source]\u00b6\n\nReturns the point, where the stroke that surrounds theMobjectstarts.Return type:Point3D\n\nReturns the point, where the stroke that surrounds theMobjectstarts.\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\nget_tip()[source]\u00b6\n\nReturns the TipableVMobject instance\u2019s (first) tip,\notherwise throws an exception.Return type:VMobject\n\nReturns the TipableVMobject instance\u2019s (first) tip,\notherwise throws an exception.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nget_tips()[source]\u00b6\n\nReturns a VGroup (collection of VMobjects) containing\nthe TipableVMObject instance\u2019s tips.Return type:VGroup\n\nReturns a VGroup (collection of VMobjects) containing\nthe TipableVMObject instance\u2019s tips.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nget_unpositioned_tip(tip_shape=None,tip_length=None,tip_width=None)[source]\u00b6\n\nReturns a tip that has been stylistically configured,\nbut has not yet been given a position in space.Parameters:tip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)Return type:tips.ArrowTip|tips.ArrowTriangleFilledTip\n\nReturns a tip that has been stylistically configured,\nbut has not yet been given a position in space.\n\nParameters:\n\ntip_shape(type[tips.ArrowTip]|None)tip_length(float|None)tip_width(float|None)\n\ntip_shape(type[tips.ArrowTip]|None)\n\ntip_shape(type[tips.ArrowTip]|None)\n\ntip_length(float|None)\n\ntip_length(float|None)\n\ntip_width(float|None)\n\ntip_width(float|None)\n\nReturn type:\n\ntips.ArrowTip|tips.ArrowTriangleFilledTip\n\ntips.ArrowTip|tips.ArrowTriangleFilledTip",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "TipableVMobject",
+      "class_name": null,
+      "parameters": [
+        "tip_length=0.35"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "tip_length=0.35"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add_tip",
+      "class_name": null,
+      "parameters": [
+        "tip=None"
+      ],
+      "return_type": null,
+      "description": "Adds a tip to the TipableVMobject instance, recognising\nthat the endpoints might need to be switched if it\u2019s\na \u2018starting tip\u2019 or not."
+    },
+    {
+      "name": "create_tip",
+      "class_name": null,
+      "parameters": [
+        "tip_shape=None"
+      ],
+      "return_type": null,
+      "description": "Stylises the tip, positions it spatially, and returns\nthe newly instantiated tip to the caller."
+    },
+    {
+      "name": "get_end",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the point, where the stroke that surrounds theMobjectends."
+    },
+    {
+      "name": "get_start",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the point, where the stroke that surrounds theMobjectstarts."
+    },
+    {
+      "name": "get_tip",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the TipableVMobject instance\u2019s (first) tip,\notherwise throws an exception."
+    },
+    {
+      "name": "get_tips",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns a VGroup (collection of VMobjects) containing\nthe TipableVMObject instance\u2019s tips."
+    },
+    {
+      "name": "get_unpositioned_tip",
+      "class_name": null,
+      "parameters": [
+        "tip_shape=None"
+      ],
+      "return_type": null,
+      "description": "Returns a tip that has been stylistically configured,\nbut has not yet been given a position in space."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VGroup",
+    "VMobject",
+    "Arrow",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

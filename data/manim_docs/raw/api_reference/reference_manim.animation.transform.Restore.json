@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.Restore.html",
+  "title": "Restore\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Restore\u00b6\n\nQualified name:manim.animation.transform.Restore\n\nclassRestore(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ApplyMethodTransforms a mobject to its last saved state.To save the state of a mobject, use thesave_state()method.ExamplesExample: RestoreExample\u00b6frommanimimport*classRestoreExample(Scene):defconstruct(self):s=Square()s.save_state()self.play(FadeIn(s))self.play(s.animate.set_color(PURPLE).set_opacity(0.5).shift(2*LEFT).scale(3))self.play(s.animate.shift(5*DOWN).rotate(PI/4))self.wait()self.play(Restore(s),run_time=2)class RestoreExample(Scene):\n    def construct(self):\n        s = Square()\n        s.save_state()\n        self.play(FadeIn(s))\n        self.play(s.animate.set_color(PURPLE).set_opacity(0.5).shift(2*LEFT).scale(3))\n        self.play(s.animate.shift(5*DOWN).rotate(PI/4))\n        self.wait()\n        self.play(Restore(s), run_time=2)MethodsAttributespath_arcpath_funcrun_timeParameters:mobject(Mobject)_original__init__(mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)Return type:None\n\nBases:ApplyMethod\n\nTransforms a mobject to its last saved state.\n\nTo save the state of a mobject, use thesave_state()method.\n\nExamples\n\nExample: RestoreExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)\n\n_original__init__(mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classRestoreExample(Scene):defconstruct(self):s=Square()s.save_state()self.play(FadeIn(s))self.play(s.animate.set_color(PURPLE).set_opacity(0.5).shift(2*LEFT).scale(3))self.play(s.animate.shift(5*DOWN).rotate(PI/4))self.wait()self.play(Restore(s),run_time=2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RestoreExample(Scene):\n    def construct(self):\n        s = Square()\n        s.save_state()\n        self.play(FadeIn(s))\n        self.play(s.animate.set_color(PURPLE).set_opacity(0.5).shift(2*LEFT).scale(3))\n        self.play(s.animate.shift(5*DOWN).rotate(PI/4))\n        self.wait()\n        self.play(Restore(s), run_time=2)",
+      "language": "python",
+      "context": "Example: RestoreExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Restore",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ApplyMethod"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "FadeIn",
+    "Transform",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

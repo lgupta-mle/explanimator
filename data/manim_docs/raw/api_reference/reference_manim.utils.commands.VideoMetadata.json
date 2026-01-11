@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.commands.VideoMetadata.html",
+  "title": "VideoMetadata\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "VideoMetadata\u00b6\n\nQualified name:manim.utils.commands.VideoMetadata\n\nclassVideoMetadata[source]\u00b6\n\nBases:TypedDictMethodsAttributeswidthheightnb_framesdurationavg_frame_ratecodec_namepix_fmt\n\nBases:TypedDict\n\nMethods\n\nAttributes\n\nwidth\n\nheight\n\nnb_frames\n\nduration\n\navg_frame_rate\n\ncodec_name\n\npix_fmt",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "VideoMetadata",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Bases:TypedDict"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "timing"
+  ]
+}

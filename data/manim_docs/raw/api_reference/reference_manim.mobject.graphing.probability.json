@@ -1,0 +1,14 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.probability.html",
+  "title": "probability\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "probability\u00b6\n\nMobjects representing objects from probability theory and statistics.\n\nClasses\n\nBarChart\n\nCreates a bar chart.\n\nSampleSpace\n\nA mobject representing a twodimensional rectangular sampling space.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Create",
+    "Mobject"
+  ],
+  "tags": []
+}

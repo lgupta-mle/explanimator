@@ -1,0 +1,72 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.zoomed_scene.ZoomedScene.html",
+  "title": "ZoomedScene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ZoomedScene\u00b6\n\nQualified name:manim.scene.zoomed\\_scene.ZoomedScene\n\nclassZoomedScene(camera_class=<class'manim.camera.multi_camera.MultiCamera'>,zoomed_display_height=3,zoomed_display_width=3,zoomed_display_center=None,zoomed_display_corner=array([1.,1.,0.]),zoomed_display_corner_buff=0.5,zoomed_camera_config={'background_opacity':1,'default_frame_stroke_width':2},zoomed_camera_image_mobject_config={},zoomed_camera_frame_starting_position=array([0.,0.,0.]),zoom_factor=0.15,image_frame_stroke_width=3,zoom_activated=False,**kwargs)[source]\u00b6\n\nBases:MovingCameraSceneThis is a Scene with special configurations made for when\na particular part of the scene must be zoomed in on and displayed\nseparately.Methodsactivate_zoomingThis method is used to activate the zooming for the zoomed_camera.get_zoom_factorReturns the Zoom factor of the Zoomed camera.get_zoom_in_animationReturns the animation of camera zooming in.get_zoomed_display_pop_out_animationThis is the animation of the popping out of the mini-display that shows the content of the zoomed camera.setupThis method is used internally by Manim to setup the scene for proper use.AttributescameratimeThe time since the start of the scene.Parameters:camera_class(type[Camera])zoomed_display_height(float)zoomed_display_width(float)zoomed_display_center(Point3DLike|None)zoomed_display_corner(Vector3D)zoomed_display_corner_buff(float)zoomed_camera_config(dict[str,Any])zoomed_camera_image_mobject_config(dict[str,Any])zoomed_camera_frame_starting_position(Point3DLike)zoom_factor(float)image_frame_stroke_width(float)zoom_activated(bool)kwargs(Any)activate_zooming(animate=False)[source]\u00b6This method is used to activate the zooming for the zoomed_camera.Parameters:animate(bool) \u2013 Whether or not to animate the activation\nof the zoomed camera.Return type:Noneget_zoom_factor()[source]\u00b6Returns the Zoom factor of the Zoomed camera.Defined as the ratio between the height of the zoomed camera and\nthe height of the zoomed mini display.Returns:The zoom factor.Return type:floatget_zoom_in_animation(run_time=2,**kwargs)[source]\u00b6Returns the animation of camera zooming in.Parameters:run_time(float) \u2013 The run_time of the animation of the camera zooming in.**kwargs(Any) \u2013 Any valid keyword arguments of ApplyMethod()Returns:The animation of the camera zooming in.Return type:ApplyMethodget_zoomed_display_pop_out_animation(**kwargs)[source]\u00b6This is the animation of the popping out of the mini-display that\nshows the content of the zoomed camera.Returns:The Animation of the Zoomed Display popping out.Return type:ApplyMethodParameters:kwargs(Any)setup()[source]\u00b6This method is used internally by Manim to\nsetup the scene for proper use.Return type:None\n\nBases:MovingCameraScene\n\nThis is a Scene with special configurations made for when\na particular part of the scene must be zoomed in on and displayed\nseparately.\n\nMethods\n\nactivate_zooming\n\nThis method is used to activate the zooming for the zoomed_camera.\n\nget_zoom_factor\n\nReturns the Zoom factor of the Zoomed camera.\n\nget_zoom_in_animation\n\nReturns the animation of camera zooming in.\n\nget_zoomed_display_pop_out_animation\n\nThis is the animation of the popping out of the mini-display that shows the content of the zoomed camera.\n\nsetup\n\nThis method is used internally by Manim to setup the scene for proper use.\n\nAttributes\n\ncamera\n\ntime\n\nThe time since the start of the scene.\n\nParameters:\n\ncamera_class(type[Camera])zoomed_display_height(float)zoomed_display_width(float)zoomed_display_center(Point3DLike|None)zoomed_display_corner(Vector3D)zoomed_display_corner_buff(float)zoomed_camera_config(dict[str,Any])zoomed_camera_image_mobject_config(dict[str,Any])zoomed_camera_frame_starting_position(Point3DLike)zoom_factor(float)image_frame_stroke_width(float)zoom_activated(bool)kwargs(Any)\n\ncamera_class(type[Camera])\n\ncamera_class(type[Camera])\n\nzoomed_display_height(float)\n\nzoomed_display_height(float)\n\nzoomed_display_width(float)\n\nzoomed_display_width(float)\n\nzoomed_display_center(Point3DLike|None)\n\nzoomed_display_center(Point3DLike|None)\n\nzoomed_display_corner(Vector3D)\n\nzoomed_display_corner(Vector3D)\n\nzoomed_display_corner_buff(float)\n\nzoomed_display_corner_buff(float)\n\nzoomed_camera_config(dict[str,Any])\n\nzoomed_camera_config(dict[str,Any])\n\nzoomed_camera_image_mobject_config(dict[str,Any])\n\nzoomed_camera_image_mobject_config(dict[str,Any])\n\nzoomed_camera_frame_starting_position(Point3DLike)\n\nzoomed_camera_frame_starting_position(Point3DLike)\n\nzoom_factor(float)\n\nzoom_factor(float)\n\nimage_frame_stroke_width(float)\n\nimage_frame_stroke_width(float)\n\nzoom_activated(bool)\n\nzoom_activated(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nactivate_zooming(animate=False)[source]\u00b6\n\nThis method is used to activate the zooming for the zoomed_camera.Parameters:animate(bool) \u2013 Whether or not to animate the activation\nof the zoomed camera.Return type:None\n\nThis method is used to activate the zooming for the zoomed_camera.\n\nParameters:\n\nanimate(bool) \u2013 Whether or not to animate the activation\nof the zoomed camera.\n\nanimate(bool) \u2013 Whether or not to animate the activation\nof the zoomed camera.\n\nReturn type:\n\nNone\n\nNone\n\nget_zoom_factor()[source]\u00b6\n\nReturns the Zoom factor of the Zoomed camera.Defined as the ratio between the height of the zoomed camera and\nthe height of the zoomed mini display.Returns:The zoom factor.Return type:float\n\nReturns the Zoom factor of the Zoomed camera.\n\nDefined as the ratio between the height of the zoomed camera and\nthe height of the zoomed mini display.\n\nReturns:\n\nThe zoom factor.\n\nThe zoom factor.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_zoom_in_animation(run_time=2,**kwargs)[source]\u00b6\n\nReturns the animation of camera zooming in.Parameters:run_time(float) \u2013 The run_time of the animation of the camera zooming in.**kwargs(Any) \u2013 Any valid keyword arguments of ApplyMethod()Returns:The animation of the camera zooming in.Return type:ApplyMethod\n\nReturns the animation of camera zooming in.\n\nParameters:\n\nrun_time(float) \u2013 The run_time of the animation of the camera zooming in.**kwargs(Any) \u2013 Any valid keyword arguments of ApplyMethod()\n\nrun_time(float) \u2013 The run_time of the animation of the camera zooming in.\n\nrun_time(float) \u2013 The run_time of the animation of the camera zooming in.\n\n**kwargs(Any) \u2013 Any valid keyword arguments of ApplyMethod()\n\n**kwargs(Any) \u2013 Any valid keyword arguments of ApplyMethod()\n\nReturns:\n\nThe animation of the camera zooming in.\n\nThe animation of the camera zooming in.\n\nReturn type:\n\nApplyMethod\n\nApplyMethod\n\nget_zoomed_display_pop_out_animation(**kwargs)[source]\u00b6\n\nThis is the animation of the popping out of the mini-display that\nshows the content of the zoomed camera.Returns:The Animation of the Zoomed Display popping out.Return type:ApplyMethodParameters:kwargs(Any)\n\nThis is the animation of the popping out of the mini-display that\nshows the content of the zoomed camera.\n\nReturns:\n\nThe Animation of the Zoomed Display popping out.\n\nThe Animation of the Zoomed Display popping out.\n\nReturn type:\n\nApplyMethod\n\nApplyMethod\n\nParameters:\n\nkwargs(Any)\n\nkwargs(Any)\n\nsetup()[source]\u00b6\n\nThis method is used internally by Manim to\nsetup the scene for proper use.Return type:None\n\nThis method is used internally by Manim to\nsetup the scene for proper use.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ZoomedScene",
+      "class_name": null,
+      "parameters": [
+        "camera_class=<class 'manim.camera.multi_camera.MultiCamera'>"
+      ],
+      "return_type": null,
+      "description": "Bases:MovingCameraScene"
+    },
+    {
+      "name": "activate_zooming",
+      "class_name": null,
+      "parameters": [
+        "animate=False"
+      ],
+      "return_type": null,
+      "description": "This method is used to activate the zooming for the zoomed_camera."
+    },
+    {
+      "name": "get_zoom_factor",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the Zoom factor of the Zoomed camera."
+    },
+    {
+      "name": "get_zoom_in_animation",
+      "class_name": null,
+      "parameters": [
+        "run_time=2"
+      ],
+      "return_type": null,
+      "description": "Returns the animation of camera zooming in."
+    },
+    {
+      "name": "get_zoomed_display_pop_out_animation",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "This is the animation of the popping out of the mini-display that\nshows the content of the zoomed camera."
+    },
+    {
+      "name": "setup",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This method is used internally by Manim to\nsetup the scene for proper use."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "MovingCamera",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "math",
+    "animation"
+  ]
+}

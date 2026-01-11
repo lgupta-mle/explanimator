@@ -1,0 +1,82 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.Vector.html",
+  "title": "Vector\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Vector\u00b6\n\nQualified name:manim.mobject.geometry.line.Vector\n\nclassVector(direction=array([1.,0.,0.]),buff=0,**kwargs)[source]\u00b6\n\nBases:ArrowA vector specialized for use in graphs.CautionDo not confuse with theVector2D,Vector3DorVectorNDtype aliases,\nwhich are not Mobjects!Parameters:direction(Vector2DLike|Vector3DLike) \u2013 The direction of the arrow.buff(float) \u2013 The distance of the vector from its endpoints.kwargs(Any) \u2013 Additional arguments to be passed toArrowExamplesExample: VectorExample\u00b6frommanimimport*classVectorExample(Scene):defconstruct(self):plane=NumberPlane()vector_1=Vector([1,2])vector_2=Vector([-5,-2])self.add(plane,vector_1,vector_2)class VectorExample(Scene):\n    def construct(self):\n        plane = NumberPlane()\n        vector_1 = Vector([1,2])\n        vector_2 = Vector([-5,-2])\n        self.add(plane, vector_1, vector_2)Methodscoordinate_labelCreates a label based on the coordinates of the vector.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(direction=array([1.,0.,0.]),buff=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:direction(Vector2DLike|Vector3DLike)buff(float)kwargs(Any)Return type:Nonecoordinate_label(integer_labels=True,n_dim=2,color=None,**kwargs)[source]\u00b6Creates a label based on the coordinates of the vector.Parameters:integer_labels(bool) \u2013 Whether or not to round the coordinates to integers.n_dim(int) \u2013 The number of dimensions of the vector.color(ParsableManimColor|None) \u2013 Sets the color of label, optional.kwargs(Any) \u2013 Additional arguments to be passed toMatrix.Returns:The label.Return type:MatrixExamplesExample: VectorCoordinateLabel\u00b6frommanimimport*classVectorCoordinateLabel(Scene):defconstruct(self):plane=NumberPlane()vec_1=Vector([1,2])vec_2=Vector([-3,-2])label_1=vec_1.coordinate_label()label_2=vec_2.coordinate_label(color=YELLOW)self.add(plane,vec_1,vec_2,label_1,label_2)class VectorCoordinateLabel(Scene):\n    def construct(self):\n        plane = NumberPlane()\n\n        vec_1 = Vector([1, 2])\n        vec_2 = Vector([-3, -2])\n        label_1 = vec_1.coordinate_label()\n        label_2 = vec_2.coordinate_label(color=YELLOW)\n\n        self.add(plane, vec_1, vec_2, label_1, label_2)\n\nBases:Arrow\n\nA vector specialized for use in graphs.\n\nCaution\n\nDo not confuse with theVector2D,Vector3DorVectorNDtype aliases,\nwhich are not Mobjects!\n\nParameters:\n\ndirection(Vector2DLike|Vector3DLike) \u2013 The direction of the arrow.buff(float) \u2013 The distance of the vector from its endpoints.kwargs(Any) \u2013 Additional arguments to be passed toArrow\n\ndirection(Vector2DLike|Vector3DLike) \u2013 The direction of the arrow.\n\ndirection(Vector2DLike|Vector3DLike) \u2013 The direction of the arrow.\n\nbuff(float) \u2013 The distance of the vector from its endpoints.\n\nbuff(float) \u2013 The distance of the vector from its endpoints.\n\nkwargs(Any) \u2013 Additional arguments to be passed toArrow\n\nkwargs(Any) \u2013 Additional arguments to be passed toArrow\n\nExamples\n\nExample: VectorExample\u00b6\n\nMethods\n\ncoordinate_label\n\nCreates a label based on the coordinates of the vector.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(direction=array([1.,0.,0.]),buff=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:direction(Vector2DLike|Vector3DLike)buff(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ndirection(Vector2DLike|Vector3DLike)buff(float)kwargs(Any)\n\ndirection(Vector2DLike|Vector3DLike)\n\ndirection(Vector2DLike|Vector3DLike)\n\nbuff(float)\n\nbuff(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ncoordinate_label(integer_labels=True,n_dim=2,color=None,**kwargs)[source]\u00b6\n\nCreates a label based on the coordinates of the vector.Parameters:integer_labels(bool) \u2013 Whether or not to round the coordinates to integers.n_dim(int) \u2013 The number of dimensions of the vector.color(ParsableManimColor|None) \u2013 Sets the color of label, optional.kwargs(Any) \u2013 Additional arguments to be passed toMatrix.Returns:The label.Return type:MatrixExamplesExample: VectorCoordinateLabel\u00b6frommanimimport*classVectorCoordinateLabel(Scene):defconstruct(self):plane=NumberPlane()vec_1=Vector([1,2])vec_2=Vector([-3,-2])label_1=vec_1.coordinate_label()label_2=vec_2.coordinate_label(color=YELLOW)self.add(plane,vec_1,vec_2,label_1,label_2)class VectorCoordinateLabel(Scene):\n    def construct(self):\n        plane = NumberPlane()\n\n        vec_1 = Vector([1, 2])\n        vec_2 = Vector([-3, -2])\n        label_1 = vec_1.coordinate_label()\n        label_2 = vec_2.coordinate_label(color=YELLOW)\n\n        self.add(plane, vec_1, vec_2, label_1, label_2)\n\nCreates a label based on the coordinates of the vector.\n\nParameters:\n\ninteger_labels(bool) \u2013 Whether or not to round the coordinates to integers.n_dim(int) \u2013 The number of dimensions of the vector.color(ParsableManimColor|None) \u2013 Sets the color of label, optional.kwargs(Any) \u2013 Additional arguments to be passed toMatrix.\n\ninteger_labels(bool) \u2013 Whether or not to round the coordinates to integers.\n\ninteger_labels(bool) \u2013 Whether or not to round the coordinates to integers.\n\nn_dim(int) \u2013 The number of dimensions of the vector.\n\nn_dim(int) \u2013 The number of dimensions of the vector.\n\ncolor(ParsableManimColor|None) \u2013 Sets the color of label, optional.\n\ncolor(ParsableManimColor|None) \u2013 Sets the color of label, optional.\n\nkwargs(Any) \u2013 Additional arguments to be passed toMatrix.\n\nkwargs(Any) \u2013 Additional arguments to be passed toMatrix.\n\nReturns:\n\nThe label.\n\nThe label.\n\nReturn type:\n\nMatrix\n\nMatrix\n\nExamples\n\nExample: VectorCoordinateLabel\u00b6",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classVectorExample(Scene):defconstruct(self):plane=NumberPlane()vector_1=Vector([1,2])vector_2=Vector([-5,-2])self.add(plane,vector_1,vector_2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class VectorExample(Scene):\n    def construct(self):\n        plane = NumberPlane()\n        vector_1 = Vector([1,2])\n        vector_2 = Vector([-5,-2])\n        self.add(plane, vector_1, vector_2)",
+      "language": "python",
+      "context": "Example: VectorExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classVectorCoordinateLabel(Scene):defconstruct(self):plane=NumberPlane()vec_1=Vector([1,2])vec_2=Vector([-3,-2])label_1=vec_1.coordinate_label()label_2=vec_2.coordinate_label(color=YELLOW)self.add(plane,vec_1,vec_2,label_1,label_2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class VectorCoordinateLabel(Scene):\n    def construct(self):\n        plane = NumberPlane()\n\n        vec_1 = Vector([1, 2])\n        vec_2 = Vector([-3, -2])\n        label_1 = vec_1.coordinate_label()\n        label_2 = vec_2.coordinate_label(color=YELLOW)\n\n        self.add(plane, vec_1, vec_2, label_1, label_2)",
+      "language": "python",
+      "context": "Example: VectorCoordinateLabel\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Vector",
+      "class_name": null,
+      "parameters": [
+        "direction=array([1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:Arrow"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "direction=array([1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "coordinate_label",
+      "class_name": null,
+      "parameters": [
+        "integer_labels=True"
+      ],
+      "return_type": null,
+      "description": "Creates a label based on the coordinates of the vector."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "Arrow",
+    "NumberPlane",
+    "Scene",
+    "Matrix",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

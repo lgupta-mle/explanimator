@@ -1,0 +1,18 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.vector_space_scene.html",
+  "title": "vector_space_scene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "vector_space_scene\u00b6\n\nA scene suitable for vector spaces.\n\nClasses\n\nLinearTransformationScene\n\nThis scene contains special methods that make it especially suitable for showing linear transformations.\n\nVectorScene",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Line",
+    "Scene",
+    "Transform"
+  ],
+  "tags": [
+    "transformation",
+    "math"
+  ]
+}

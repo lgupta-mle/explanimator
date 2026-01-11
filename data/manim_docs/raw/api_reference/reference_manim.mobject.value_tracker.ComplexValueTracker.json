@@ -1,0 +1,67 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.value_tracker.ComplexValueTracker.html",
+  "title": "ComplexValueTracker\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ComplexValueTracker\u00b6\n\nQualified name:manim.mobject.value\\_tracker.ComplexValueTracker\n\nclassComplexValueTracker(value=0,**kwargs)[source]\u00b6\n\nBases:ValueTrackerTracks a complex-valued parameter.The value is internally stored as a points array [a, b, 0]. This can be accessed directly\nto represent the value geometrically, see the usage example.\nWhen the value is set throughanimate, the value will take a straight path from the\nsource point to the destination point.ExamplesExample: ComplexValueTrackerExample\u00b6frommanimimport*classComplexValueTrackerExample(Scene):defconstruct(self):tracker=ComplexValueTracker(-2+1j)dot=Dot().add_updater(lambdax:x.move_to(tracker.points))self.add(NumberPlane(),dot)self.play(tracker.animate.set_value(3+2j))self.play(tracker.animate.set_value(tracker.get_value()*1j))self.play(tracker.animate.set_value(tracker.get_value()-2j))self.play(tracker.animate.set_value(tracker.get_value()/(-2+3j)))class ComplexValueTrackerExample(Scene):\n    def construct(self):\n        tracker = ComplexValueTracker(-2+1j)\n        dot = Dot().add_updater(\n            lambda x: x.move_to(tracker.points)\n        )\n\n        self.add(NumberPlane(), dot)\n\n        self.play(tracker.animate.set_value(3+2j))\n        self.play(tracker.animate.set_value(tracker.get_value() * 1j))\n        self.play(tracker.animate.set_value(tracker.get_value() - 2j))\n        self.play(tracker.animate.set_value(tracker.get_value() / (-2 + 3j)))Methodsget_valueGet the current value of this ComplexValueTracker as a complex number.set_valueSets a new complex value to the ComplexValueTracker.AttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:value(float)kwargs(Any)_original__init__(value=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:value(float)kwargs(Any)Return type:Noneget_value()[source]\u00b6Get the current value of this ComplexValueTracker as a complex number.Return type:complexset_value(value)[source]\u00b6Sets a new complex value to the ComplexValueTracker.Parameters:value(complex|float)Return type:Self\n\nBases:ValueTracker\n\nTracks a complex-valued parameter.\n\nThe value is internally stored as a points array [a, b, 0]. This can be accessed directly\nto represent the value geometrically, see the usage example.\nWhen the value is set throughanimate, the value will take a straight path from the\nsource point to the destination point.\n\nExamples\n\nExample: ComplexValueTrackerExample\u00b6\n\nMethods\n\nget_value\n\nGet the current value of this ComplexValueTracker as a complex number.\n\nset_value\n\nSets a new complex value to the ComplexValueTracker.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nvalue(float)kwargs(Any)\n\nvalue(float)\n\nvalue(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(value=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:value(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvalue(float)kwargs(Any)\n\nvalue(float)\n\nvalue(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nget_value()[source]\u00b6\n\nGet the current value of this ComplexValueTracker as a complex number.Return type:complex\n\nGet the current value of this ComplexValueTracker as a complex number.\n\nReturn type:\n\ncomplex\n\ncomplex\n\nset_value(value)[source]\u00b6\n\nSets a new complex value to the ComplexValueTracker.Parameters:value(complex|float)Return type:Self\n\nSets a new complex value to the ComplexValueTracker.\n\nParameters:\n\nvalue(complex|float)\n\nvalue(complex|float)\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classComplexValueTrackerExample(Scene):defconstruct(self):tracker=ComplexValueTracker(-2+1j)dot=Dot().add_updater(lambdax:x.move_to(tracker.points))self.add(NumberPlane(),dot)self.play(tracker.animate.set_value(3+2j))self.play(tracker.animate.set_value(tracker.get_value()*1j))self.play(tracker.animate.set_value(tracker.get_value()-2j))self.play(tracker.animate.set_value(tracker.get_value()/(-2+3j)))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ComplexValueTrackerExample(Scene):\n    def construct(self):\n        tracker = ComplexValueTracker(-2+1j)\n        dot = Dot().add_updater(\n            lambda x: x.move_to(tracker.points)\n        )\n\n        self.add(NumberPlane(), dot)\n\n        self.play(tracker.animate.set_value(3+2j))\n        self.play(tracker.animate.set_value(tracker.get_value() * 1j))\n        self.play(tracker.animate.set_value(tracker.get_value() - 2j))\n        self.play(tracker.animate.set_value(tracker.get_value() / (-2 + 3j)))",
+      "language": "python",
+      "context": "Example: ComplexValueTrackerExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ComplexValueTracker",
+      "class_name": null,
+      "parameters": [
+        "value=0"
+      ],
+      "return_type": null,
+      "description": "Bases:ValueTracker"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "value=0"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_value",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get the current value of this ComplexValueTracker as a complex number."
+    },
+    {
+      "name": "set_value",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Sets a new complex value to the ComplexValueTracker."
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "Scene",
+    "NumberPlane"
+  ],
+  "tags": [
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

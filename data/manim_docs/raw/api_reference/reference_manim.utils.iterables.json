@@ -1,0 +1,364 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.iterables.html",
+  "title": "iterables\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "iterables\u00b6\n\nOperations on iterables.\n\nTypeVar\u2019s\n\nclassT\u00b6\n\nTypeVar('T')\n\nclassU\u00b6\n\nTypeVar('U')\n\nclassF\u00b6\n\nTypeVar('F', np.float64, np.int_)\n\nclassH\u00b6\n\nTypeVar('H',bound=Hashable)\n\nFunctions\n\nadjacent_n_tuples(objects,n)[source]\u00b6\n\nReturns the Sequence objects cyclically split into n length tuples.See alsoadjacent_pairsalias with n=2Examples>>>list(adjacent_n_tuples([1,2,3,4],2))[(1, 2), (2, 3), (3, 4), (4, 1)]>>>list(adjacent_n_tuples([1,2,3,4],3))[(1, 2, 3), (2, 3, 4), (3, 4, 1), (4, 1, 2)]Parameters:objects(Sequence[T])n(int)Return type:zip[tuple[T, \u2026]]\n\nReturns the Sequence objects cyclically split into n length tuples.\n\nSee also\n\nadjacent_pairs\n\nalias with n=2\n\nalias with n=2\n\nExamples\n\nParameters:\n\nobjects(Sequence[T])n(int)\n\nobjects(Sequence[T])\n\nobjects(Sequence[T])\n\nn(int)\n\nn(int)\n\nReturn type:\n\nzip[tuple[T, \u2026]]\n\nzip[tuple[T, \u2026]]\n\nadjacent_pairs(objects)[source]\u00b6\n\nAlias foradjacent_n_tuples(objects,2).See alsoadjacent_n_tuplesExamples>>>list(adjacent_pairs([1,2,3,4]))[(1, 2), (2, 3), (3, 4), (4, 1)]Parameters:objects(Sequence[T])Return type:zip[tuple[T, \u2026]]\n\nAlias foradjacent_n_tuples(objects,2).\n\nSee also\n\nadjacent_n_tuples\n\nExamples\n\nParameters:\n\nobjects(Sequence[T])\n\nobjects(Sequence[T])\n\nReturn type:\n\nzip[tuple[T, \u2026]]\n\nzip[tuple[T, \u2026]]\n\nall_elements_are_instances(iterable,Class)[source]\u00b6\n\nReturnsTrueif all elements of iterable are instances of Class.\nFalse otherwise.Parameters:iterable(Iterable[object])Class(type[object])Return type:bool\n\nReturnsTrueif all elements of iterable are instances of Class.\nFalse otherwise.\n\nParameters:\n\niterable(Iterable[object])Class(type[object])\n\niterable(Iterable[object])\n\niterable(Iterable[object])\n\nClass(type[object])\n\nClass(type[object])\n\nReturn type:\n\nbool\n\nbool\n\nbatch_by_property(items,property_func)[source]\u00b6\n\nTakes in a Sequence, and returns a list of tuples, (batch, prop)\nsuch that all items in a batch have the same output when\nput into the Callable property_func, and such that chaining all these\nbatches together would give the original Sequence (i.e. order is\npreserved).Examples>>>batch_by_property([(1,2),(3,4),(5,6,7),(8,9)],len)[([(1, 2), (3, 4)], 2), ([(5, 6, 7)], 3), ([(8, 9)], 2)]Parameters:items(Iterable[T])property_func(Callable[[T],U])Return type:list[tuple[list[T],U| None]]\n\nTakes in a Sequence, and returns a list of tuples, (batch, prop)\nsuch that all items in a batch have the same output when\nput into the Callable property_func, and such that chaining all these\nbatches together would give the original Sequence (i.e. order is\npreserved).\n\nExamples\n\nParameters:\n\nitems(Iterable[T])property_func(Callable[[T],U])\n\nitems(Iterable[T])\n\nitems(Iterable[T])\n\nproperty_func(Callable[[T],U])\n\nproperty_func(Callable[[T],U])\n\nReturn type:\n\nlist[tuple[list[T],U| None]]\n\nlist[tuple[list[T],U| None]]\n\nconcatenate_lists(*list_of_lists)[source]\u00b6\n\nCombines the Iterables provided as arguments into one list.Examples>>>concatenate_lists([1,2],[3,4],[5])[1, 2, 3, 4, 5]Parameters:list_of_lists(Iterable[T])Return type:list[T]\n\nCombines the Iterables provided as arguments into one list.\n\nExamples\n\nParameters:\n\nlist_of_lists(Iterable[T])\n\nlist_of_lists(Iterable[T])\n\nReturn type:\n\nlist[T]\n\nlist[T]\n\nhash_obj(obj)[source]\u00b6\n\nDetermines a hash, even of potentially mutable objects.Parameters:obj(object)Return type:int\n\nDetermines a hash, even of potentially mutable objects.\n\nParameters:\n\nobj(object)\n\nobj(object)\n\nReturn type:\n\nint\n\nint\n\nlist_difference_update(l1,l2)[source]\u00b6\n\nReturns a list containing all the elements of l1 not in l2.Examples>>>list_difference_update([1,2,3,4],[2,4])[1, 3]Parameters:l1(Iterable[T])l2(Iterable[T])Return type:list[T]\n\nReturns a list containing all the elements of l1 not in l2.\n\nExamples\n\nParameters:\n\nl1(Iterable[T])l2(Iterable[T])\n\nl1(Iterable[T])\n\nl1(Iterable[T])\n\nl2(Iterable[T])\n\nl2(Iterable[T])\n\nReturn type:\n\nlist[T]\n\nlist[T]\n\nlist_update(l1,l2)[source]\u00b6\n\nUsed instead ofset.update()to maintain order,making sure duplicates are removed from l1, not l2.\nRemoves overlap of l1 and l2 and then concatenates l2 unchanged.Examples>>>list_update([1,2,3],[2,4,4])[1, 3, 2, 4, 4]Parameters:l1(Iterable[T])l2(Iterable[T])Return type:list[T]\n\nUsed instead ofset.update()to maintain order,\n\nmaking sure duplicates are removed from l1, not l2.\nRemoves overlap of l1 and l2 and then concatenates l2 unchanged.\n\nmaking sure duplicates are removed from l1, not l2.\nRemoves overlap of l1 and l2 and then concatenates l2 unchanged.\n\nExamples\n\nParameters:\n\nl1(Iterable[T])l2(Iterable[T])\n\nl1(Iterable[T])\n\nl1(Iterable[T])\n\nl2(Iterable[T])\n\nl2(Iterable[T])\n\nReturn type:\n\nlist[T]\n\nlist[T]\n\nlistify(obj:str)\u2192list[str][source]\u00b6\n\nlistify(obj:Iterable[T])\u2192list[T]\n\nlistify(obj:T)\u2192list[T]\n\nConverts obj to a list intelligently.Examples>>>listify(\"str\")['str']>>>listify((1,2))[1, 2]>>>listify(len)[<built-in function len>]\n\nConverts obj to a list intelligently.\n\nExamples\n\nmake_even(iterable_1,iterable_2)[source]\u00b6\n\nExtends the shorter of the two iterables with duplicate values until itslength is equal to the longer iterable (favours earlier elements).See alsomake_even_by_cyclingcycles elements instead of favouring earlier onesExamples>>>make_even([1,2],[3,4,5,6])([1, 1, 2, 2], [3, 4, 5, 6])>>>make_even([1,2],[3,4,5,6,7])([1, 1, 1, 2, 2], [3, 4, 5, 6, 7])Parameters:iterable_1(Iterable[T])iterable_2(Iterable[U])Return type:tuple[list[T], list[U]]\n\nExtends the shorter of the two iterables with duplicate values until its\n\nlength is equal to the longer iterable (favours earlier elements).\n\nlength is equal to the longer iterable (favours earlier elements).\n\nSee also\n\nmake_even_by_cycling\n\ncycles elements instead of favouring earlier ones\n\ncycles elements instead of favouring earlier ones\n\nExamples\n\nParameters:\n\niterable_1(Iterable[T])iterable_2(Iterable[U])\n\niterable_1(Iterable[T])\n\niterable_1(Iterable[T])\n\niterable_2(Iterable[U])\n\niterable_2(Iterable[U])\n\nReturn type:\n\ntuple[list[T], list[U]]\n\ntuple[list[T], list[U]]\n\nmake_even_by_cycling(iterable_1,iterable_2)[source]\u00b6\n\nExtends the shorter of the two iterables with duplicate values until itslength is equal to the longer iterable (cycles over shorter iterable).See alsomake_evenfavours earlier elements instead of cycling themExamples>>>make_even_by_cycling([1,2],[3,4,5,6])([1, 2, 1, 2], [3, 4, 5, 6])>>>make_even_by_cycling([1,2],[3,4,5,6,7])([1, 2, 1, 2, 1], [3, 4, 5, 6, 7])Parameters:iterable_1(Collection[T])iterable_2(Collection[U])Return type:tuple[list[T], list[U]]\n\nExtends the shorter of the two iterables with duplicate values until its\n\nlength is equal to the longer iterable (cycles over shorter iterable).\n\nlength is equal to the longer iterable (cycles over shorter iterable).\n\nSee also\n\nmake_even\n\nfavours earlier elements instead of cycling them\n\nfavours earlier elements instead of cycling them\n\nExamples\n\nParameters:\n\niterable_1(Collection[T])iterable_2(Collection[U])\n\niterable_1(Collection[T])\n\niterable_1(Collection[T])\n\niterable_2(Collection[U])\n\niterable_2(Collection[U])\n\nReturn type:\n\ntuple[list[T], list[U]]\n\ntuple[list[T], list[U]]\n\nremove_list_redundancies(lst)[source]\u00b6\n\nUsed instead oflist(set(l))to maintain order.\nKeeps the last occurrence of each element.Parameters:lst(Reversible[H])Return type:list[H]\n\nUsed instead oflist(set(l))to maintain order.\nKeeps the last occurrence of each element.\n\nParameters:\n\nlst(Reversible[H])\n\nlst(Reversible[H])\n\nReturn type:\n\nlist[H]\n\nlist[H]\n\nremove_nones(sequence)[source]\u00b6\n\nRemoves elements where bool(x) evaluates to False.Examples>>>remove_nones([\"m\",\"\",\"l\",0,42,False,True])['m', 'l', 42, True]Parameters:sequence(Iterable[T|None])Return type:list[T]\n\nRemoves elements where bool(x) evaluates to False.\n\nExamples\n\nParameters:\n\nsequence(Iterable[T|None])\n\nsequence(Iterable[T|None])\n\nReturn type:\n\nlist[T]\n\nlist[T]\n\nresize_array(nparray,length)[source]\u00b6\n\nExtends/truncates nparray so thatlen(result)==length.The elements of nparray are cycled to achieve the desired length.See alsoresize_preserving_orderfavours earlier elements instead of cycling themmake_even_by_cyclingsimilar cycling behaviour for balancing 2 iterablesExamples>>>points=np.array([[1,2],[3,4]])>>>resize_array(points,1)array([[1, 2]])>>>resize_array(points,3)array([[1, 2],[3, 4],[1, 2]])>>>resize_array(points,2)array([[1, 2],[3, 4]])Parameters:nparray(npt.NDArray[F])length(int)Return type:npt.NDArray[F]\n\nExtends/truncates nparray so thatlen(result)==length.\n\nThe elements of nparray are cycled to achieve the desired length.\n\nThe elements of nparray are cycled to achieve the desired length.\n\nSee also\n\nresize_preserving_order\n\nfavours earlier elements instead of cycling them\n\nfavours earlier elements instead of cycling them\n\nmake_even_by_cycling\n\nsimilar cycling behaviour for balancing 2 iterables\n\nsimilar cycling behaviour for balancing 2 iterables\n\nExamples\n\nParameters:\n\nnparray(npt.NDArray[F])length(int)\n\nnparray(npt.NDArray[F])\n\nnparray(npt.NDArray[F])\n\nlength(int)\n\nlength(int)\n\nReturn type:\n\nnpt.NDArray[F]\n\nnpt.NDArray[F]\n\nresize_preserving_order(nparray,length)[source]\u00b6\n\nExtends/truncates nparray so thatlen(result)==length.The elements of nparray are duplicated to achieve the desired length\n(favours earlier elements).Constructs a zeroes array of length if nparray is empty.See alsoresize_arraycycles elements instead of favouring earlier onesmake_evensimilar earlier-favouring behaviour for balancing 2 iterablesExamples>>>resize_preserving_order(np.array([]),5)array([0., 0., 0., 0., 0.])>>>nparray=np.array([[1,2],[3,4]])>>>resize_preserving_order(nparray,1)array([[1, 2]])>>>resize_preserving_order(nparray,3)array([[1, 2],[1, 2],[3, 4]])Parameters:nparray(npt.NDArray[np.float64])length(int)Return type:npt.NDArray[np.float64]\n\nExtends/truncates nparray so thatlen(result)==length.\n\nThe elements of nparray are duplicated to achieve the desired length\n(favours earlier elements).Constructs a zeroes array of length if nparray is empty.\n\nThe elements of nparray are duplicated to achieve the desired length\n(favours earlier elements).\n\nConstructs a zeroes array of length if nparray is empty.\n\nSee also\n\nresize_array\n\ncycles elements instead of favouring earlier ones\n\ncycles elements instead of favouring earlier ones\n\nmake_even\n\nsimilar earlier-favouring behaviour for balancing 2 iterables\n\nsimilar earlier-favouring behaviour for balancing 2 iterables\n\nExamples\n\nParameters:\n\nnparray(npt.NDArray[np.float64])length(int)\n\nnparray(npt.NDArray[np.float64])\n\nnparray(npt.NDArray[np.float64])\n\nlength(int)\n\nlength(int)\n\nReturn type:\n\nnpt.NDArray[np.float64]\n\nnpt.NDArray[np.float64]\n\nresize_with_interpolation(nparray,length)[source]\u00b6\n\nExtends/truncates nparray so thatlen(result)==length.New elements are interpolated to achieve the desired length.Note that if nparray\u2019s length changes, its dtype may too\n(e.g. int -> float: see Examples)See alsoresize_arraycycles elements instead of interpolatingresize_preserving_orderfavours earlier elements instead of interpolatingExamples>>>nparray=np.array([[1,2],[3,4]])>>>resize_with_interpolation(nparray,1)array([[1., 2.]])>>>resize_with_interpolation(nparray,4)array([[1.        , 2.        ],[1.66666667, 2.66666667],[2.33333333, 3.33333333],[3.        , 4.        ]])>>>nparray=np.array([[[1,2],[3,4]]])>>>nparray=np.array([[1,2],[3,4],[5,6]])>>>resize_with_interpolation(nparray,4)array([[1.        , 2.        ],[2.33333333, 3.33333333],[3.66666667, 4.66666667],[5.        , 6.        ]])>>>nparray=np.array([[1,2],[3,4],[1,2]])>>>resize_with_interpolation(nparray,4)array([[1.        , 2.        ],[2.33333333, 3.33333333],[2.33333333, 3.33333333],[1.        , 2.        ]])Parameters:nparray(npt.NDArray[F])length(int)Return type:npt.NDArray[F]\n\nExtends/truncates nparray so thatlen(result)==length.\n\nNew elements are interpolated to achieve the desired length.Note that if nparray\u2019s length changes, its dtype may too\n(e.g. int -> float: see Examples)\n\nNew elements are interpolated to achieve the desired length.\n\nNote that if nparray\u2019s length changes, its dtype may too\n(e.g. int -> float: see Examples)\n\nSee also\n\nresize_array\n\ncycles elements instead of interpolating\n\ncycles elements instead of interpolating\n\nresize_preserving_order\n\nfavours earlier elements instead of interpolating\n\nfavours earlier elements instead of interpolating\n\nExamples\n\nParameters:\n\nnparray(npt.NDArray[F])length(int)\n\nnparray(npt.NDArray[F])\n\nnparray(npt.NDArray[F])\n\nlength(int)\n\nlength(int)\n\nReturn type:\n\nnpt.NDArray[F]\n\nnpt.NDArray[F]\n\nstretch_array_to_length(nparray,length)[source]\u00b6\n\nParameters:nparray(npt.NDArray[F])length(int)Return type:npt.NDArray[F]\n\nParameters:\n\nnparray(npt.NDArray[F])length(int)\n\nnparray(npt.NDArray[F])\n\nnparray(npt.NDArray[F])\n\nlength(int)\n\nlength(int)\n\nReturn type:\n\nnpt.NDArray[F]\n\nnpt.NDArray[F]\n\ntuplify(obj:str)\u2192tuple[str][source]\u00b6\n\ntuplify(obj:Iterable[T])\u2192tuple[T]\n\ntuplify(obj:T)\u2192tuple[T]\n\nConverts obj to a tuple intelligently.Examples>>>tuplify(\"str\")('str',)>>>tuplify([1,2])(1, 2)>>>tuplify(len)(<built-in function len>,)\n\nConverts obj to a tuple intelligently.\n\nExamples\n\nuniq_chain(*args)[source]\u00b6\n\nReturns a generator that yields all unique elements of the Iterablesprovided via args in the order provided.Examples>>>gen=uniq_chain([1,2],[2,3],[1,4,4])>>>fromcollections.abcimportGenerator>>>isinstance(gen,Generator)True>>>tuple(gen)(1, 2, 3, 4)Parameters:args(Iterable[T])Return type:Generator[T, None, None]\n\nReturns a generator that yields all unique elements of the Iterables\n\nprovided via args in the order provided.\n\nprovided via args in the order provided.\n\nExamples\n\nParameters:\n\nargs(Iterable[T])\n\nargs(Iterable[T])\n\nReturn type:\n\nGenerator[T, None, None]\n\nGenerator[T, None, None]",
+  "code_examples": [
+    {
+      "code": "TypeVar('T')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "TypeVar('U')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "TypeVar('F', np.float64, np.int_)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "TypeVar('H',bound=Hashable)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>list(adjacent_n_tuples([1,2,3,4],2))[(1, 2), (2, 3), (3, 4), (4, 1)]>>>list(adjacent_n_tuples([1,2,3,4],3))[(1, 2, 3), (2, 3, 4), (3, 4, 1), (4, 1, 2)]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>list(adjacent_pairs([1,2,3,4]))[(1, 2), (2, 3), (3, 4), (4, 1)]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>batch_by_property([(1,2),(3,4),(5,6,7),(8,9)],len)[([(1, 2), (3, 4)], 2), ([(5, 6, 7)], 3), ([(8, 9)], 2)]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>concatenate_lists([1,2],[3,4],[5])[1, 2, 3, 4, 5]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>list_difference_update([1,2,3,4],[2,4])[1, 3]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>list_update([1,2,3],[2,4,4])[1, 3, 2, 4, 4]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>listify(\"str\")['str']>>>listify((1,2))[1, 2]>>>listify(len)[<built-in function len>]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>make_even([1,2],[3,4,5,6])([1, 1, 2, 2], [3, 4, 5, 6])>>>make_even([1,2],[3,4,5,6,7])([1, 1, 1, 2, 2], [3, 4, 5, 6, 7])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>make_even_by_cycling([1,2],[3,4,5,6])([1, 2, 1, 2], [3, 4, 5, 6])>>>make_even_by_cycling([1,2],[3,4,5,6,7])([1, 2, 1, 2, 1], [3, 4, 5, 6, 7])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>remove_nones([\"m\",\"\",\"l\",0,42,False,True])['m', 'l', 42, True]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>points=np.array([[1,2],[3,4]])>>>resize_array(points,1)array([[1, 2]])>>>resize_array(points,3)array([[1, 2],[3, 4],[1, 2]])>>>resize_array(points,2)array([[1, 2],[3, 4]])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>resize_preserving_order(np.array([]),5)array([0., 0., 0., 0., 0.])>>>nparray=np.array([[1,2],[3,4]])>>>resize_preserving_order(nparray,1)array([[1, 2]])>>>resize_preserving_order(nparray,3)array([[1, 2],[1, 2],[3, 4]])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>nparray=np.array([[1,2],[3,4]])>>>resize_with_interpolation(nparray,1)array([[1., 2.]])>>>resize_with_interpolation(nparray,4)array([[1.        , 2.        ],[1.66666667, 2.66666667],[2.33333333, 3.33333333],[3.        , 4.        ]])>>>nparray=np.array([[[1,2],[3,4]]])>>>nparray=np.array([[1,2],[3,4],[5,6]])>>>resize_with_interpolation(nparray,4)array([[1.        , 2.        ],[2.33333333, 3.33333333],[3.66666667, 4.66666667],[5.        , 6.        ]])>>>nparray=np.array([[1,2],[3,4],[1,2]])>>>resize_with_interpolation(nparray,4)array([[1.        , 2.        ],[2.33333333, 3.33333333],[2.33333333, 3.33333333],[1.        , 2.        ]])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>tuplify(\"str\")('str',)>>>tuplify([1,2])(1, 2)>>>tuplify(len)(<built-in function len>,)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>gen=uniq_chain([1,2],[2,3],[1,4,4])>>>fromcollections.abcimportGenerator>>>isinstance(gen,Generator)True>>>tuple(gen)(1, 2, 3, 4)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "T",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "U",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "F",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "H",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "adjacent_n_tuples",
+      "class_name": null,
+      "parameters": [
+        "objects"
+      ],
+      "return_type": null,
+      "description": "Returns the Sequence objects cyclically split into n length tuples."
+    },
+    {
+      "name": "adjacent_pairs",
+      "class_name": null,
+      "parameters": [
+        "objects"
+      ],
+      "return_type": null,
+      "description": "Alias foradjacent_n_tuples(objects,2)."
+    },
+    {
+      "name": "all_elements_are_instances",
+      "class_name": null,
+      "parameters": [
+        "iterable"
+      ],
+      "return_type": null,
+      "description": "ReturnsTrueif all elements of iterable are instances of Class.\nFalse otherwise."
+    },
+    {
+      "name": "batch_by_property",
+      "class_name": null,
+      "parameters": [
+        "items"
+      ],
+      "return_type": null,
+      "description": "Takes in a Sequence, and returns a list of tuples, (batch, prop)\nsuch that all items in a batch have the same output when\nput into the Callable property_func, and such that chaining all these\nbatches together would give the original Sequence (i.e. order is\npreserved)."
+    },
+    {
+      "name": "concatenate_lists",
+      "class_name": null,
+      "parameters": [
+        "*list_of_lists"
+      ],
+      "return_type": null,
+      "description": "Combines the Iterables provided as arguments into one list."
+    },
+    {
+      "name": "hash_obj",
+      "class_name": null,
+      "parameters": [
+        "obj"
+      ],
+      "return_type": null,
+      "description": "Determines a hash, even of potentially mutable objects."
+    },
+    {
+      "name": "list_difference_update",
+      "class_name": null,
+      "parameters": [
+        "l1"
+      ],
+      "return_type": null,
+      "description": "Returns a list containing all the elements of l1 not in l2."
+    },
+    {
+      "name": "list_update",
+      "class_name": null,
+      "parameters": [
+        "l1"
+      ],
+      "return_type": null,
+      "description": "making sure duplicates are removed from l1, not l2.\nRemoves overlap of l1 and l2 and then concatenates l2 unchanged."
+    },
+    {
+      "name": "listify",
+      "class_name": null,
+      "parameters": [
+        "obj: str"
+      ],
+      "return_type": "\u2192list[str]",
+      "description": "Converts obj to a list intelligently."
+    },
+    {
+      "name": "listify",
+      "class_name": null,
+      "parameters": [
+        "obj: Iterable[T]"
+      ],
+      "return_type": "\u2192list[T]",
+      "description": "Converts obj to a list intelligently."
+    },
+    {
+      "name": "listify",
+      "class_name": null,
+      "parameters": [
+        "obj: T"
+      ],
+      "return_type": "\u2192list[T]",
+      "description": "Converts obj to a list intelligently."
+    },
+    {
+      "name": "make_even",
+      "class_name": null,
+      "parameters": [
+        "iterable_1"
+      ],
+      "return_type": null,
+      "description": "length is equal to the longer iterable (favours earlier elements)."
+    },
+    {
+      "name": "make_even_by_cycling",
+      "class_name": null,
+      "parameters": [
+        "iterable_1"
+      ],
+      "return_type": null,
+      "description": "length is equal to the longer iterable (cycles over shorter iterable)."
+    },
+    {
+      "name": "remove_list_redundancies",
+      "class_name": null,
+      "parameters": [
+        "lst"
+      ],
+      "return_type": null,
+      "description": "Used instead oflist(set(l))to maintain order.\nKeeps the last occurrence of each element."
+    },
+    {
+      "name": "remove_nones",
+      "class_name": null,
+      "parameters": [
+        "sequence"
+      ],
+      "return_type": null,
+      "description": "Removes elements where bool(x) evaluates to False."
+    },
+    {
+      "name": "resize_array",
+      "class_name": null,
+      "parameters": [
+        "nparray"
+      ],
+      "return_type": null,
+      "description": "The elements of nparray are cycled to achieve the desired length."
+    },
+    {
+      "name": "resize_preserving_order",
+      "class_name": null,
+      "parameters": [
+        "nparray"
+      ],
+      "return_type": null,
+      "description": "The elements of nparray are duplicated to achieve the desired length\n(favours earlier elements)."
+    },
+    {
+      "name": "resize_with_interpolation",
+      "class_name": null,
+      "parameters": [
+        "nparray"
+      ],
+      "return_type": null,
+      "description": "New elements are interpolated to achieve the desired length."
+    },
+    {
+      "name": "stretch_array_to_length",
+      "class_name": null,
+      "parameters": [
+        "nparray"
+      ],
+      "return_type": null,
+      "description": "nparray(npt.NDArray[F])"
+    },
+    {
+      "name": "tuplify",
+      "class_name": null,
+      "parameters": [
+        "obj: str"
+      ],
+      "return_type": "\u2192tuple[str]",
+      "description": "Converts obj to a tuple intelligently."
+    },
+    {
+      "name": "tuplify",
+      "class_name": null,
+      "parameters": [
+        "obj: Iterable[T]"
+      ],
+      "return_type": "\u2192tuple[T]",
+      "description": "Converts obj to a tuple intelligently."
+    },
+    {
+      "name": "tuplify",
+      "class_name": null,
+      "parameters": [
+        "obj: T"
+      ],
+      "return_type": "\u2192tuple[T]",
+      "description": "Converts obj to a tuple intelligently."
+    },
+    {
+      "name": "uniq_chain",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "provided via args in the order provided."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "graph"
+  ]
+}

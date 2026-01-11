@@ -1,0 +1,36 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.Swap.html",
+  "title": "Swap\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Swap\u00b6\n\nQualified name:manim.animation.transform.Swap\n\nclassSwap(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:CyclicReplaceMethodsAttributespath_arcpath_funcrun_timeParameters:mobjects(Mobject)path_arc(float)_original__init__(*mobjects,path_arc=1.5707963267948966,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)path_arc(float)Return type:None\n\nBases:CyclicReplace\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobjects(Mobject)path_arc(float)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\n_original__init__(*mobjects,path_arc=1.5707963267948966,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobjects(Mobject)path_arc(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobjects(Mobject)path_arc(float)\n\nmobjects(Mobject)\n\nmobjects(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Swap",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:CyclicReplace"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

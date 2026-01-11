@@ -1,0 +1,71 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.text_mobject.html",
+  "title": "text_mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "text_mobject\u00b6\n\nMobjects used for displaying (non-LaTeX) text.\n\nNote\n\nJust as you can useTexandMathTex(from the moduletex_mobject)\nto insert LaTeX to your videos, you can useTextto to add normal text.\n\nImportant\n\nSee the corresponding tutorialText Without LaTeX, especially for information about fonts.\n\nThe simplest way to add text to your animations is to use theTextclass. It uses the Pango library to render text.\nWith Pango, you are also able to render non-English alphabets like\u4f60\u597dor\u3053\u3093\u306b\u3061\u306for\uc548\ub155\ud558\uc138\uc694or\u0645\u0631\u062d\u0628\u0627 \u0628\u0627\u0644\u0639\u0627\u0644\u0645.\n\nExamples\n\nExample: HelloWorld\u00b6\n\nExample: TextAlignment\u00b6\n\nClasses\n\nMarkupText\n\nDisplay (non-LaTeX) text rendered usingPango.\n\nParagraph\n\nDisplay a paragraph of text.\n\nText\n\nFunctions\n\nregister_font(font_file)[source]\u00b6\n\nTemporarily add a font file to Pango\u2019s search path.This searches for the font_file at various places. The order it searches it described below.Absolute path.Inassets/fontsfolder.Infont/folder.In the same directory.Parameters:font_file(str|Path) \u2013 The font file to add.Return type:Iterator[None]ExamplesUsewithregister_font(...)to add a font file to search\npath.withregister_font(\"path/to/font_file.ttf\"):a=Text(\"Hello\",font=\"Custom Font Name\")Raises:FileNotFoundError:\u2013 If the font doesn\u2019t exists.AttributeError:\u2013 If this method is used on macOS... important ::\u2013 This method is available for macOS forManimPango>=v0.2.3. Using this\n    method with previous releases will raise anAttributeErroron macOS.Parameters:font_file(str|Path)Return type:Iterator[None]\n\nTemporarily add a font file to Pango\u2019s search path.\n\nThis searches for the font_file at various places. The order it searches it described below.\n\nAbsolute path.\n\nAbsolute path.\n\nInassets/fontsfolder.\n\nInassets/fontsfolder.\n\nInfont/folder.\n\nInfont/folder.\n\nIn the same directory.\n\nIn the same directory.\n\nParameters:\n\nfont_file(str|Path) \u2013 The font file to add.\n\nfont_file(str|Path) \u2013 The font file to add.\n\nReturn type:\n\nIterator[None]\n\nIterator[None]\n\nExamples\n\nUsewithregister_font(...)to add a font file to search\npath.\n\nRaises:\n\nFileNotFoundError:\u2013 If the font doesn\u2019t exists.AttributeError:\u2013 If this method is used on macOS... important ::\u2013 This method is available for macOS forManimPango>=v0.2.3. Using this\n    method with previous releases will raise anAttributeErroron macOS.\n\nFileNotFoundError:\u2013 If the font doesn\u2019t exists.\n\nFileNotFoundError:\u2013 If the font doesn\u2019t exists.\n\nAttributeError:\u2013 If this method is used on macOS.\n\nAttributeError:\u2013 If this method is used on macOS.\n\n.. important ::\u2013 This method is available for macOS forManimPango>=v0.2.3. Using this\n    method with previous releases will raise anAttributeErroron macOS.\n\n.. important ::\u2013 This method is available for macOS forManimPango>=v0.2.3. Using this\n    method with previous releases will raise anAttributeErroron macOS.\n\nParameters:\n\nfont_file(str|Path)\n\nfont_file(str|Path)\n\nReturn type:\n\nIterator[None]\n\nIterator[None]\n\nremove_invisible_chars(mobject)[source]\u00b6\n\nFunction to remove unwanted invisible characters from some mobjects.Parameters:mobject(VMobject) \u2013 Any SVGMobject from which we want to remove unwanted invisible characters.Returns:The SVGMobject without unwanted invisible characters.Return type:SVGMobject\n\nFunction to remove unwanted invisible characters from some mobjects.\n\nParameters:\n\nmobject(VMobject) \u2013 Any SVGMobject from which we want to remove unwanted invisible characters.\n\nmobject(VMobject) \u2013 Any SVGMobject from which we want to remove unwanted invisible characters.\n\nReturns:\n\nThe SVGMobject without unwanted invisible characters.\n\nThe SVGMobject without unwanted invisible characters.\n\nReturn type:\n\nSVGMobject\n\nSVGMobject",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classHelloWorld(Scene):defconstruct(self):text=Text('Hello world').scale(3)self.add(text)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class HelloWorld(Scene):\n    def construct(self):\n        text = Text('Hello world').scale(3)\n        self.add(text)",
+      "language": "python",
+      "context": "Example: HelloWorld\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classTextAlignment(Scene):defconstruct(self):title=Text(\"K-means clustering and Logistic Regression\",color=WHITE)title.scale(0.75)self.add(title.to_edge(UP))t1=Text(\"1. Measuring\").set_color(WHITE)t2=Text(\"2. Clustering\").set_color(WHITE)t3=Text(\"3. Regression\").set_color(WHITE)t4=Text(\"4. Prediction\").set_color(WHITE)x=VGroup(t1,t2,t3,t4).arrange(direction=DOWN,aligned_edge=LEFT).scale(0.7).next_to(ORIGIN,DR)x.set_opacity(0.5)x.submobjects[1].set_opacity(1)self.add(x)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TextAlignment(Scene):\n    def construct(self):\n        title = Text(\"K-means clustering and Logistic Regression\", color=WHITE)\n        title.scale(0.75)\n        self.add(title.to_edge(UP))\n\n        t1 = Text(\"1. Measuring\").set_color(WHITE)\n\n        t2 = Text(\"2. Clustering\").set_color(WHITE)\n\n        t3 = Text(\"3. Regression\").set_color(WHITE)\n\n        t4 = Text(\"4. Prediction\").set_color(WHITE)\n\n        x = VGroup(t1, t2, t3, t4).arrange(direction=DOWN, aligned_edge=LEFT).scale(0.7).next_to(ORIGIN,DR)\n        x.set_opacity(0.5)\n        x.submobjects[1].set_opacity(1)\n        self.add(x)",
+      "language": "python",
+      "context": "Example: TextAlignment\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "withregister_font(\"path/to/font_file.ttf\"):a=Text(\"Hello\",font=\"Custom Font Name\")",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "register_font",
+      "class_name": null,
+      "parameters": [
+        "font_file"
+      ],
+      "return_type": null,
+      "description": "Temporarily add a font file to Pango\u2019s search path."
+    },
+    {
+      "name": "remove_invisible_chars",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Function to remove unwanted invisible characters from some mobjects."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Text",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "text",
+    "graph"
+  ]
+}

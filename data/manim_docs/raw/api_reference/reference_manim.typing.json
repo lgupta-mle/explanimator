@@ -1,0 +1,1043 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.typing.html",
+  "title": "typing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "typing\u00b6\n\nCustom type definitions used in Manim.\n\nNote for developers\n\nAround the source code there are multiple strings which look like this:\n\nAll type aliases defined under those strings will be automatically\nclassified under that category.\n\nIf you need to define a new category, respect the format described above.\n\nType Aliases\n\nPrimitive data types\u00b6\n\nclassManimFloat\u00b6\n\nnp.float64A double-precision floating-point value (64 bits, or 8 bytes),\naccording to the IEEE 754 standard.\n\nA double-precision floating-point value (64 bits, or 8 bytes),\naccording to the IEEE 754 standard.\n\nclassManimInt\u00b6\n\nnp.int64A long integer (64 bits, or 8 bytes).It can take values between\\(-2^{63}\\)and\\(+2^{63} - 1\\),\nwhich expressed in base 10 is a range between around\\(-9.223 \\cdot 10^{18}\\)and\\(+9.223 \\cdot 10^{18}\\).\n\nA long integer (64 bits, or 8 bytes).\n\nIt can take values between\\(-2^{63}\\)and\\(+2^{63} - 1\\),\nwhich expressed in base 10 is a range between around\\(-9.223 \\cdot 10^{18}\\)and\\(+9.223 \\cdot 10^{18}\\).\n\nColor types\u00b6\n\nclassManimColorDType\u00b6\n\nManimFloatData type used inManimColorInternal: a\ndouble-precision float between 0 and 1.\n\nData type used inManimColorInternal: a\ndouble-precision float between 0 and 1.\n\nclassFloatRGB\u00b6\n\nNDArray[ManimColorDType]shape:(3,)Anumpy.ndarrayof 3 floats between 0 and 1, representing a\ncolor in RGB format.Its components describe, in order, the intensity of Red, Green, and\nBlue in the represented color.\n\nshape:(3,)\n\nAnumpy.ndarrayof 3 floats between 0 and 1, representing a\ncolor in RGB format.\n\nIts components describe, in order, the intensity of Red, Green, and\nBlue in the represented color.\n\nclassFloatRGBLike\u00b6\n\nFloatRGB| tuple[float, float, float]shape:(3,)An array of 3 floats between 0 and 1, representing a color in RGB\nformat.This represents anything which can be converted to aFloatRGBNumPy\narray.\n\nshape:(3,)\n\nAn array of 3 floats between 0 and 1, representing a color in RGB\nformat.\n\nThis represents anything which can be converted to aFloatRGBNumPy\narray.\n\nclassFloatRGB_Array\u00b6\n\nNDArray[ManimColorDType]shape:(M,3)Anumpy.ndarrayof many rows of 3 floats representing RGB colors.\n\nshape:(M,3)\n\nAnumpy.ndarrayof many rows of 3 floats representing RGB colors.\n\nclassFloatRGBLike_Array\u00b6\n\nFloatRGB_Array| Sequence[FloatRGBLike]shape:(M,3)An array of many rows of 3 floats representing RGB colors.This represents anything which can be converted to aFloatRGB_ArrayNumPy\narray.\n\nshape:(M,3)\n\nAn array of many rows of 3 floats representing RGB colors.\n\nThis represents anything which can be converted to aFloatRGB_ArrayNumPy\narray.\n\nclassIntRGB\u00b6\n\nNDArray[ManimInt]shape:(3,)Anumpy.ndarrayof 3 integers between 0 and 255,\nrepresenting a color in RGB format.Its components describe, in order, the intensity of Red, Green, and\nBlue in the represented color.\n\nshape:(3,)\n\nAnumpy.ndarrayof 3 integers between 0 and 255,\nrepresenting a color in RGB format.\n\nIts components describe, in order, the intensity of Red, Green, and\nBlue in the represented color.\n\nclassIntRGBLike\u00b6\n\nIntRGB| tuple[int, int, int]shape:(3,)An array of 3 integers between 0 and 255, representing a color in RGB\nformat.This represents anything which can be converted to anIntRGBNumPy\narray.\n\nshape:(3,)\n\nAn array of 3 integers between 0 and 255, representing a color in RGB\nformat.\n\nThis represents anything which can be converted to anIntRGBNumPy\narray.\n\nclassFloatRGBA\u00b6\n\nNDArray[ManimColorDType]shape:(4,)Anumpy.ndarrayof 4 floats between 0 and 1, representing a\ncolor in RGBA format.Its components describe, in order, the intensity of Red, Green, Blue\nand Alpha (opacity) in the represented color.\n\nshape:(4,)\n\nAnumpy.ndarrayof 4 floats between 0 and 1, representing a\ncolor in RGBA format.\n\nIts components describe, in order, the intensity of Red, Green, Blue\nand Alpha (opacity) in the represented color.\n\nclassFloatRGBALike\u00b6\n\nFloatRGBA| tuple[float, float, float, float]shape:(4,)An array of 4 floats between 0 and 1, representing a color in RGBA\nformat.This represents anything which can be converted to aFloatRGBANumPy\narray.\n\nshape:(4,)\n\nAn array of 4 floats between 0 and 1, representing a color in RGBA\nformat.\n\nThis represents anything which can be converted to aFloatRGBANumPy\narray.\n\nclassFloatRGBA_Array\u00b6\n\nNDArray[ManimColorDType]shape:(M,4)Anumpy.ndarrayof many rows of 4 floats representing RGBA colors.\n\nshape:(M,4)\n\nAnumpy.ndarrayof many rows of 4 floats representing RGBA colors.\n\nclassFloatRGBALike_Array\u00b6\n\nFloatRGBA_Array| Sequence[FloatRGBALike]shape:(M,4)An array of many rows of 4 floats representing RGBA colors.This represents anything which can be converted to aFloatRGBA_ArrayNumPy\narray.\n\nshape:(M,4)\n\nAn array of many rows of 4 floats representing RGBA colors.\n\nThis represents anything which can be converted to aFloatRGBA_ArrayNumPy\narray.\n\nclassIntRGBA\u00b6\n\nNDArray[ManimInt]shape:(4,)Anumpy.ndarrayof 4 integers between 0 and 255,\nrepresenting a color in RGBA format.Its components describe, in order, the intensity of Red, Green, Blue\nand Alpha (opacity) in the represented color.\n\nshape:(4,)\n\nAnumpy.ndarrayof 4 integers between 0 and 255,\nrepresenting a color in RGBA format.\n\nIts components describe, in order, the intensity of Red, Green, Blue\nand Alpha (opacity) in the represented color.\n\nclassIntRGBALike\u00b6\n\nIntRGBA| tuple[int, int, int, int]shape:(4,)An array of 4 integers between 0 and 255, representing a color in RGBA\nformat.This represents anything which can be converted to anIntRGBANumPy\narray.\n\nshape:(4,)\n\nAn array of 4 integers between 0 and 255, representing a color in RGBA\nformat.\n\nThis represents anything which can be converted to anIntRGBANumPy\narray.\n\nclassFloatHSV\u00b6\n\nFloatRGBshape:(3,)Anumpy.ndarrayof 3 floats between 0 and 1, representing a\ncolor in HSV (or HSB) format.Its components describe, in order, the Hue, Saturation and Value (or\nBrightness) in the represented color.\n\nshape:(3,)\n\nAnumpy.ndarrayof 3 floats between 0 and 1, representing a\ncolor in HSV (or HSB) format.\n\nIts components describe, in order, the Hue, Saturation and Value (or\nBrightness) in the represented color.\n\nclassFloatHSVLike\u00b6\n\nFloatRGBLikeshape:(3,)An array of 3 floats between 0 and 1, representing a color in HSV (or\nHSB) format.This represents anything which can be converted to aFloatHSVNumPy\narray.\n\nshape:(3,)\n\nAn array of 3 floats between 0 and 1, representing a color in HSV (or\nHSB) format.\n\nThis represents anything which can be converted to aFloatHSVNumPy\narray.\n\nclassFloatHSVA\u00b6\n\nFloatRGBAshape:(4,)Anumpy.ndarrayof 4 floats between 0 and 1, representing a\ncolor in HSVA (or HSBA) format.Its components describe, in order, the Hue, Saturation and Value (or\nBrightness) in the represented color.\n\nshape:(4,)\n\nAnumpy.ndarrayof 4 floats between 0 and 1, representing a\ncolor in HSVA (or HSBA) format.\n\nIts components describe, in order, the Hue, Saturation and Value (or\nBrightness) in the represented color.\n\nclassFloatHSVALike\u00b6\n\nFloatRGBALikeshape:(4,)An array of 4 floats between 0 and 1, representing a color in HSVA (or\nHSBA) format.This represents anything which can be converted to aFloatHSVANumPy\narray.\n\nshape:(4,)\n\nAn array of 4 floats between 0 and 1, representing a color in HSVA (or\nHSBA) format.\n\nThis represents anything which can be converted to aFloatHSVANumPy\narray.\n\nclassFloatHSL\u00b6\n\nFloatRGBshape:(3,)Anumpy.ndarrayof 3 floats between 0 and 1, representing a\ncolor in HSL format.Its components describe, in order, the Hue, Saturation and Lightness\nin the represented color.\n\nshape:(3,)\n\nAnumpy.ndarrayof 3 floats between 0 and 1, representing a\ncolor in HSL format.\n\nIts components describe, in order, the Hue, Saturation and Lightness\nin the represented color.\n\nclassFloatHSLLike\u00b6\n\nFloatRGBLikeshape:(3,)An array of 3 floats between 0 and 1, representing a color in HSL format.This represents anything which can be converted to aFloatHSLNumPy\narray.\n\nshape:(3,)\n\nAn array of 3 floats between 0 and 1, representing a color in HSL format.\n\nThis represents anything which can be converted to aFloatHSLNumPy\narray.\n\nclassManimColorInternal\u00b6\n\nFloatRGBAshape:(4,)Internal color representation used byManimColor,\nfollowing the RGBA format.It is anumpy.ndarrayconsisting of 4 floats between 0 and\n1, describing respectively the intensities of Red, Green, Blue and\nAlpha (opacity) in the represented color.\n\nshape:(4,)\n\nInternal color representation used byManimColor,\nfollowing the RGBA format.\n\nIt is anumpy.ndarrayconsisting of 4 floats between 0 and\n1, describing respectively the intensities of Red, Green, Blue and\nAlpha (opacity) in the represented color.\n\nPoint types\u00b6\n\nclassPointDType\u00b6\n\nManimFloatDefault type for arrays representing points: a double-precision\nfloating point value.\n\nDefault type for arrays representing points: a double-precision\nfloating point value.\n\nclassPoint2D\u00b6\n\nNDArray[PointDType]shape:(2,)A NumPy array representing a 2-dimensional point:[float,float].\n\nshape:(2,)\n\nA NumPy array representing a 2-dimensional point:[float,float].\n\nclassPoint2DLike\u00b6\n\nPoint2D| tuple[float, float]shape:(2,)A 2-dimensional point:[float,float].This represents anything which can be converted to aPoint2DNumPy\narray.\n\nshape:(2,)\n\nA 2-dimensional point:[float,float].\n\nThis represents anything which can be converted to aPoint2DNumPy\narray.\n\nclassPoint2D_Array\u00b6\n\nNDArray[PointDType]shape:(M,2)A NumPy array representing a sequence ofPoint2Dobjects:[[float,float],...].\n\nshape:(M,2)\n\nA NumPy array representing a sequence ofPoint2Dobjects:[[float,float],...].\n\nclassPoint2DLike_Array\u00b6\n\nPoint2D_Array| Sequence[Point2DLike]shape:(M,2)An array ofPoint2DLikeobjects:[[float,float],...].This represents anything which can be converted to aPoint2D_ArrayNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(M,2)\n\nAn array ofPoint2DLikeobjects:[[float,float],...].\n\nThis represents anything which can be converted to aPoint2D_ArrayNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassPoint3D\u00b6\n\nNDArray[PointDType]shape:(3,)A NumPy array representing a 3-dimensional point:[float,float,float].\n\nshape:(3,)\n\nA NumPy array representing a 3-dimensional point:[float,float,float].\n\nclassPoint3DLike\u00b6\n\nPoint3D| tuple[float, float, float]shape:(3,)A 3-dimensional point:[float,float,float].This represents anything which can be converted to aPoint3DNumPy\narray.\n\nshape:(3,)\n\nA 3-dimensional point:[float,float,float].\n\nThis represents anything which can be converted to aPoint3DNumPy\narray.\n\nclassPoint3D_Array\u00b6\n\nNDArray[PointDType]shape:(M,3)A NumPy array representing a sequence ofPoint3Dobjects:[[float,float,float],...].\n\nshape:(M,3)\n\nA NumPy array representing a sequence ofPoint3Dobjects:[[float,float,float],...].\n\nclassPoint3DLike_Array\u00b6\n\nPoint3D_Array| Sequence[Point3DLike]shape:(M,3)An array ofPoint3DLikeobjects:[[float,float,float],...].This represents anything which can be converted to aPoint3D_ArrayNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(M,3)\n\nAn array ofPoint3DLikeobjects:[[float,float,float],...].\n\nThis represents anything which can be converted to aPoint3D_ArrayNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassPointND\u00b6\n\nNDArray[PointDType]shape:(N,)A NumPy array representing an N-dimensional point:[float,...].\n\nshape:(N,)\n\nA NumPy array representing an N-dimensional point:[float,...].\n\nclassPointNDLike\u00b6\n\nPointND| Sequence[float]shape:(N,)An N-dimensional point:[float,...].This represents anything which can be converted to aPointNDNumPy\narray.\n\nshape:(N,)\n\nAn N-dimensional point:[float,...].\n\nThis represents anything which can be converted to aPointNDNumPy\narray.\n\nclassPointND_Array\u00b6\n\nNDArray[PointDType]shape:(M,N)A NumPy array representing a sequence ofPointNDobjects:[[float,...],...].\n\nshape:(M,N)\n\nA NumPy array representing a sequence ofPointNDobjects:[[float,...],...].\n\nclassPointNDLike_Array\u00b6\n\nPointND_Array| Sequence[PointNDLike]shape:(M,N)An array ofPointNDLikeobjects:[[float,...],...].This represents anything which can be converted to aPointND_ArrayNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(M,N)\n\nAn array ofPointNDLikeobjects:[[float,...],...].\n\nThis represents anything which can be converted to aPointND_ArrayNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nVector types\u00b6\n\nclassVector2D\u00b6\n\nNDArray[PointDType]shape:(2,)A NumPy array representing a 2-dimensional vector:[float,float].CautionDo not confuse with theVectororArrowVMobjects!\n\nshape:(2,)\n\nA NumPy array representing a 2-dimensional vector:[float,float].\n\nCaution\n\nDo not confuse with theVectororArrowVMobjects!\n\nclassVector2DLike\u00b6\n\nNDArray[PointDType] | tuple[float, float]shape:(2,)A 2-dimensional vector:[float,float].This represents anything which can be converted to aVector2DNumPy\narray.CautionDo not confuse with theVectororArrowVMobjects!\n\nshape:(2,)\n\nA 2-dimensional vector:[float,float].\n\nThis represents anything which can be converted to aVector2DNumPy\narray.\n\nCaution\n\nDo not confuse with theVectororArrowVMobjects!\n\nclassVector2D_Array\u00b6\n\nNDArray[PointDType]shape:(M,2)A NumPy array representing a sequence ofVector2Dobjects:[[float,float],...].\n\nshape:(M,2)\n\nA NumPy array representing a sequence ofVector2Dobjects:[[float,float],...].\n\nclassVector2DLike_Array\u00b6\n\nVector2D_Array| Sequence[Vector2DLike]shape:(M,2)An array ofVector2DLikeobjects:[[float,float],...].This represents anything which can be converted to aVector2D_ArrayNumPy array.\n\nshape:(M,2)\n\nAn array ofVector2DLikeobjects:[[float,float],...].\n\nThis represents anything which can be converted to aVector2D_ArrayNumPy array.\n\nclassVector3D\u00b6\n\nNDArray[PointDType]shape:(3,)A NumPy array representing a 3-dimensional vector:[float,float,float].CautionDo not confuse with theVectororArrow3DVMobjects!\n\nshape:(3,)\n\nA NumPy array representing a 3-dimensional vector:[float,float,float].\n\nCaution\n\nDo not confuse with theVectororArrow3DVMobjects!\n\nclassVector3DLike\u00b6\n\nNDArray[PointDType] | tuple[float, float, float]shape:(3,)A 3-dimensional vector:[float,float,float].This represents anything which can be converted to aVector3DNumPy\narray.CautionDo not confuse with theVectororArrow3DVMobjects!\n\nshape:(3,)\n\nA 3-dimensional vector:[float,float,float].\n\nThis represents anything which can be converted to aVector3DNumPy\narray.\n\nCaution\n\nDo not confuse with theVectororArrow3DVMobjects!\n\nclassVector3D_Array\u00b6\n\nNDArray[PointDType]shape:(M,3)An NumPy array representing a sequence ofVector3Dobjects:[[float,float,float],...].\n\nshape:(M,3)\n\nAn NumPy array representing a sequence ofVector3Dobjects:[[float,float,float],...].\n\nclassVector3DLike_Array\u00b6\n\nNDArray[PointDType] | Sequence[Vector3DLike]shape:(M,3)An array ofVector3DLikeobjects:[[float,float,float],...].This represents anything which can be converted to aVector3D_ArrayNumPy array.\n\nshape:(M,3)\n\nAn array ofVector3DLikeobjects:[[float,float,float],...].\n\nThis represents anything which can be converted to aVector3D_ArrayNumPy array.\n\nclassVectorND\u00b6\n\nNDArray[PointDType]shape(N,)A NumPy array representing an\\(N\\)-dimensional vector:[float,...].CautionDo not confuse with theVectorVMobject! This type alias\nis named \u201cVectorND\u201d instead of \u201cVector\u201d to avoid potential name\ncollisions.\n\nshape(N,)\n\nA NumPy array representing an\\(N\\)-dimensional vector:[float,...].\n\nCaution\n\nDo not confuse with theVectorVMobject! This type alias\nis named \u201cVectorND\u201d instead of \u201cVector\u201d to avoid potential name\ncollisions.\n\nclassVectorNDLike\u00b6\n\nNDArray[PointDType] | Sequence[float]shape(N,)An\\(N\\)-dimensional vector:[float,...].This represents anything which can be converted to aVectorNDNumPy\narray.CautionDo not confuse with theVectorVMobject! This type alias\nis named \u201cVectorND\u201d instead of \u201cVector\u201d to avoid potential name\ncollisions.\n\nshape(N,)\n\nAn\\(N\\)-dimensional vector:[float,...].\n\nThis represents anything which can be converted to aVectorNDNumPy\narray.\n\nCaution\n\nDo not confuse with theVectorVMobject! This type alias\nis named \u201cVectorND\u201d instead of \u201cVector\u201d to avoid potential name\ncollisions.\n\nclassVectorND_Array\u00b6\n\nNDArray[PointDType]shape(M,N)A NumPy array representing a sequence ofVectorNDobjects:[[float,...],...].\n\nshape(M,N)\n\nA NumPy array representing a sequence ofVectorNDobjects:[[float,...],...].\n\nclassVectorNDLike_Array\u00b6\n\nNDArray[PointDType] | Sequence[VectorNDLike]shape(M,N)An array ofVectorNDLikeobjects:[[float,...],...].This represents anything which can be converted to aVectorND_ArrayNumPy array.\n\nshape(M,N)\n\nAn array ofVectorNDLikeobjects:[[float,...],...].\n\nThis represents anything which can be converted to aVectorND_ArrayNumPy array.\n\nclassRowVector\u00b6\n\nNDArray[PointDType]shape:(1,N)A row vector:[[float,...]].\n\nshape:(1,N)\n\nA row vector:[[float,...]].\n\nclassColVector\u00b6\n\nNDArray[PointDType]shape:(N,1)A column vector:[[float],[float],...].\n\nshape:(N,1)\n\nA column vector:[[float],[float],...].\n\nMatrix types\u00b6\n\nclassMatrixMN\u00b6\n\nNDArray[PointDType]shape:(M,N)A matrix:[[float,...],[float,...],...].\n\nshape:(M,N)\n\nA matrix:[[float,...],[float,...],...].\n\nclassZeros\u00b6\n\nMatrixMNshape:(M,N)AMatrixMNfilled with zeros, typically created withnumpy.zeros((M,N)).\n\nshape:(M,N)\n\nAMatrixMNfilled with zeros, typically created withnumpy.zeros((M,N)).\n\nB\u00e9zier types\u00b6\n\nclassQuadraticBezierPoints\u00b6\n\nPoint3D_Arrayshape:(3,3)APoint3D_Arrayof three 3D control points for a single quadratic B\u00e9zier\ncurve:[[float,float,float],[float,float,float],[float,float,float]].\n\nshape:(3,3)\n\nAPoint3D_Arrayof three 3D control points for a single quadratic B\u00e9zier\ncurve:[[float,float,float],[float,float,float],[float,float,float]].\n\nclassQuadraticBezierPointsLike\u00b6\n\nQuadraticBezierPoints| tuple[Point3DLike,Point3DLike,Point3DLike]shape:(3,3)APoint3DLike_Arrayof three 3D control points for a single quadratic B\u00e9zier\ncurve:[[float,float,float],[float,float,float],[float,float,float]].This represents anything which can be converted to aQuadraticBezierPointsNumPy array.\n\nshape:(3,3)\n\nAPoint3DLike_Arrayof three 3D control points for a single quadratic B\u00e9zier\ncurve:[[float,float,float],[float,float,float],[float,float,float]].\n\nThis represents anything which can be converted to aQuadraticBezierPointsNumPy array.\n\nclassQuadraticBezierPoints_Array\u00b6\n\nNDArray[PointDType]shape:(N,3,3)A NumPy array containing\\(N\\)QuadraticBezierPointsobjects:[[[float,float,float],[float,float,float],[float,float,float]],...].\n\nshape:(N,3,3)\n\nA NumPy array containing\\(N\\)QuadraticBezierPointsobjects:[[[float,float,float],[float,float,float],[float,float,float]],...].\n\nclassQuadraticBezierPointsLike_Array\u00b6\n\nQuadraticBezierPoints_Array| Sequence[QuadraticBezierPointsLike]shape:(N,3,3)A sequence of\\(N\\)QuadraticBezierPointsLikeobjects:[[[float,float,float],[float,float,float],[float,float,float]],...].This represents anything which can be converted to aQuadraticBezierPoints_ArrayNumPy array.\n\nshape:(N,3,3)\n\nA sequence of\\(N\\)QuadraticBezierPointsLikeobjects:[[[float,float,float],[float,float,float],[float,float,float]],...].\n\nThis represents anything which can be converted to aQuadraticBezierPoints_ArrayNumPy array.\n\nclassQuadraticBezierPath\u00b6\n\nPoint3D_Arrayshape:(3*N,3)APoint3D_Arrayof\\(3N\\)points, where each one of the\\(N\\)consecutive blocks of 3 points represents a quadratic\nB\u00e9zier curve:[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(3*N,3)\n\nAPoint3D_Arrayof\\(3N\\)points, where each one of the\\(N\\)consecutive blocks of 3 points represents a quadratic\nB\u00e9zier curve:[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassQuadraticBezierPathLike\u00b6\n\nPoint3DLike_Arrayshape:(3*N,3)APoint3DLike_Arrayof\\(3N\\)points, where each one of the\\(N\\)consecutive blocks of 3 points represents a quadratic\nB\u00e9zier curve:[[float,float,float],...],...].This represents anything which can be converted to aQuadraticBezierPathNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(3*N,3)\n\nAPoint3DLike_Arrayof\\(3N\\)points, where each one of the\\(N\\)consecutive blocks of 3 points represents a quadratic\nB\u00e9zier curve:[[float,float,float],...],...].\n\nThis represents anything which can be converted to aQuadraticBezierPathNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassQuadraticSpline\u00b6\n\nQuadraticBezierPathshape:(3*N,3)A special case ofQuadraticBezierPathwhere all the\\(N\\)quadratic B\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(3*N,3)\n\nA special case ofQuadraticBezierPathwhere all the\\(N\\)quadratic B\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassQuadraticSplineLike\u00b6\n\nQuadraticBezierPathLikeshape:(3*N,3)A special case ofQuadraticBezierPathLikewhere all the\\(N\\)quadratic B\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].This represents anything which can be converted to aQuadraticSplineNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(3*N,3)\n\nA special case ofQuadraticBezierPathLikewhere all the\\(N\\)quadratic B\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].\n\nThis represents anything which can be converted to aQuadraticSplineNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassCubicBezierPoints\u00b6\n\nPoint3D_Arrayshape:(4,3)APoint3D_Arrayof four 3D control points for a single cubic B\u00e9zier curve:[[float,float,float],[float,float,float],[float,float,float],[float,float,float]].\n\nshape:(4,3)\n\nAPoint3D_Arrayof four 3D control points for a single cubic B\u00e9zier curve:[[float,float,float],[float,float,float],[float,float,float],[float,float,float]].\n\nclassCubicBezierPointsLike\u00b6\n\nCubicBezierPoints| tuple[Point3DLike,Point3DLike,Point3DLike,Point3DLike]shape:(4,3)APoint3DLike_Arrayof 4 control points for a single cubic B\u00e9zier curve:[[float,float,float],[float,float,float],[float,float,float],[float,float,float]].This represents anything which can be converted to aCubicBezierPointsNumPy array.\n\nshape:(4,3)\n\nAPoint3DLike_Arrayof 4 control points for a single cubic B\u00e9zier curve:[[float,float,float],[float,float,float],[float,float,float],[float,float,float]].\n\nThis represents anything which can be converted to aCubicBezierPointsNumPy array.\n\nclassCubicBezierPoints_Array\u00b6\n\nNDArray[PointDType]shape:(N,4,3)A NumPy array containing\\(N\\)CubicBezierPointsobjects:[[[float,float,float],[float,float,float],[float,float,float],[float,float,float]],...].\n\nshape:(N,4,3)\n\nA NumPy array containing\\(N\\)CubicBezierPointsobjects:[[[float,float,float],[float,float,float],[float,float,float],[float,float,float]],...].\n\nclassCubicBezierPointsLike_Array\u00b6\n\nCubicBezierPoints_Array| Sequence[CubicBezierPointsLike]shape:(N,4,3)A sequence of\\(N\\)CubicBezierPointsLikeobjects:[[[float,float,float],[float,float,float],[float,float,float],[float,float,float]],...].This represents anything which can be converted to aCubicBezierPoints_ArrayNumPy array.\n\nshape:(N,4,3)\n\nA sequence of\\(N\\)CubicBezierPointsLikeobjects:[[[float,float,float],[float,float,float],[float,float,float],[float,float,float]],...].\n\nThis represents anything which can be converted to aCubicBezierPoints_ArrayNumPy array.\n\nclassCubicBezierPath\u00b6\n\nPoint3D_Arrayshape:(4*N,3)APoint3D_Arrayof\\(4N\\)points, where each one of the\\(N\\)consecutive blocks of 4 points represents a cubic B\u00e9zier\ncurve:[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(4*N,3)\n\nAPoint3D_Arrayof\\(4N\\)points, where each one of the\\(N\\)consecutive blocks of 4 points represents a cubic B\u00e9zier\ncurve:[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassCubicBezierPathLike\u00b6\n\nPoint3DLike_Arrayshape:(4*N,3)APoint3DLike_Arrayof\\(4N\\)points, where each one of the\\(N\\)consecutive blocks of 4 points represents a cubic B\u00e9zier\ncurve:[[float,float,float],...],...].This represents anything which can be converted to aCubicBezierPathNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(4*N,3)\n\nAPoint3DLike_Arrayof\\(4N\\)points, where each one of the\\(N\\)consecutive blocks of 4 points represents a cubic B\u00e9zier\ncurve:[[float,float,float],...],...].\n\nThis represents anything which can be converted to aCubicBezierPathNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassCubicSpline\u00b6\n\nCubicBezierPathshape:(4*N,3)A special case ofCubicBezierPathwhere all the\\(N\\)cubic\nB\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(4*N,3)\n\nA special case ofCubicBezierPathwhere all the\\(N\\)cubic\nB\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassCubicSplineLike\u00b6\n\nCubicBezierPathLikeshape:(4*N,3)A special case ofCubicBezierPathwhere all the\\(N\\)cubic\nB\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].This represents anything which can be converted to aCubicSplineNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(4*N,3)\n\nA special case ofCubicBezierPathwhere all the\\(N\\)cubic\nB\u00e9zier curves are connected, forming a quadratic spline:[[float,float,float],...],...].\n\nThis represents anything which can be converted to aCubicSplineNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassBezierPoints\u00b6\n\nPoint3D_Arrayshape:(PPC,3)APoint3D_Arrayof\\(\\text{PPC}\\)control points\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) for a single\\(n\\)-th degree B\u00e9zier curve:[[float,float,float],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(PPC,3)\n\nAPoint3D_Arrayof\\(\\text{PPC}\\)control points\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) for a single\\(n\\)-th degree B\u00e9zier curve:[[float,float,float],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassBezierPointsLike\u00b6\n\nPoint3DLike_Arrayshape:(PPC,3)APoint3DLike_Arrayof\\(\\text{PPC}\\)control points\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) for a single\\(n\\)-th degree B\u00e9zier curve:[[float,float,float],...].This represents anything which can be converted to aBezierPointsNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(PPC,3)\n\nAPoint3DLike_Arrayof\\(\\text{PPC}\\)control points\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) for a single\\(n\\)-th degree B\u00e9zier curve:[[float,float,float],...].\n\nThis represents anything which can be converted to aBezierPointsNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassBezierPoints_Array\u00b6\n\nNDArray[PointDType]shape:(N,PPC,3)A NumPy array of\\(N\\)BezierPointsobjects containing\\(\\text{PPC}\\)Point3Dobjects each\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)):[[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(N,PPC,3)\n\nA NumPy array of\\(N\\)BezierPointsobjects containing\\(\\text{PPC}\\)Point3Dobjects each\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)):[[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassBezierPointsLike_Array\u00b6\n\nBezierPoints_Array| Sequence[BezierPointsLike]shape:(N,PPC,3)A sequence of\\(N\\)BezierPointsLikeobjects containing\\(\\text{PPC}\\)Point3DLikeobjects each\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)):[[[float,float,float],...],...].This represents anything which can be converted to aBezierPoints_ArrayNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(N,PPC,3)\n\nA sequence of\\(N\\)BezierPointsLikeobjects containing\\(\\text{PPC}\\)Point3DLikeobjects each\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)):[[[float,float,float],...],...].\n\nThis represents anything which can be converted to aBezierPoints_ArrayNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassBezierPath\u00b6\n\nPoint3D_Arrayshape:(PPC*N,3)APoint3D_Arrayof\\(\\text{PPC} \\cdot N\\)points, where each\none of the\\(N\\)consecutive blocks of\\(\\text{PPC}\\)control\npoints (\\(\\text{PPC: Points Per Curve} = n + 1\\)) represents a\nB\u00e9zier curve of\\(n\\)-th degree:[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(PPC*N,3)\n\nAPoint3D_Arrayof\\(\\text{PPC} \\cdot N\\)points, where each\none of the\\(N\\)consecutive blocks of\\(\\text{PPC}\\)control\npoints (\\(\\text{PPC: Points Per Curve} = n + 1\\)) represents a\nB\u00e9zier curve of\\(n\\)-th degree:[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassBezierPathLike\u00b6\n\nPoint3DLike_Arrayshape:(PPC*N,3)APoint3DLike_Arrayof\\(\\text{PPC} \\cdot N\\)points, where each\none of the\\(N\\)consecutive blocks of\\(\\text{PPC}\\)control\npoints (\\(\\text{PPC: Points Per Curve} = n + 1\\)) represents a\nB\u00e9zier curve of\\(n\\)-th degree:[[float,float,float],...],...].This represents anything which can be converted to aBezierPathNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(PPC*N,3)\n\nAPoint3DLike_Arrayof\\(\\text{PPC} \\cdot N\\)points, where each\none of the\\(N\\)consecutive blocks of\\(\\text{PPC}\\)control\npoints (\\(\\text{PPC: Points Per Curve} = n + 1\\)) represents a\nB\u00e9zier curve of\\(n\\)-th degree:[[float,float,float],...],...].\n\nThis represents anything which can be converted to aBezierPathNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassSpline\u00b6\n\nBezierPathshape:(PPC*N,3)A special case ofBezierPathwhere all the\\(N\\)B\u00e9zier curves\nconsisting of\\(\\text{PPC}\\)Point3Dobjects\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) are connected, forming\nan\\(n\\)-th degree spline:[[float,float,float],...],...].Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(PPC*N,3)\n\nA special case ofBezierPathwhere all the\\(N\\)B\u00e9zier curves\nconsisting of\\(\\text{PPC}\\)Point3Dobjects\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) are connected, forming\nan\\(n\\)-th degree spline:[[float,float,float],...],...].\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassSplineLike\u00b6\n\nBezierPathLikeshape:(PPC*N,3)A special case ofBezierPathLikewhere all the\\(N\\)B\u00e9zier curves\nconsisting of\\(\\text{PPC}\\)Point3Dobjects\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) are connected, forming\nan\\(n\\)-th degree spline:[[float,float,float],...],...].This represents anything which can be converted to aSplineNumPy array.Please refer to the documentation of the function you are using for\nfurther type information.\n\nshape:(PPC*N,3)\n\nA special case ofBezierPathLikewhere all the\\(N\\)B\u00e9zier curves\nconsisting of\\(\\text{PPC}\\)Point3Dobjects\n(\\(\\text{PPC: Points Per Curve} = n + 1\\)) are connected, forming\nan\\(n\\)-th degree spline:[[float,float,float],...],...].\n\nThis represents anything which can be converted to aSplineNumPy array.\n\nPlease refer to the documentation of the function you are using for\nfurther type information.\n\nclassFlatBezierPoints\u00b6\n\nNDArray[PointDType] | tuple[float, ...]shape:(3*PPC*N,)A flattened array of B\u00e9zier control points:[float,...].\n\nshape:(3*PPC*N,)\n\nA flattened array of B\u00e9zier control points:[float,...].\n\nFunction types\u00b6\n\nclassFunctionOverride\u00b6\n\nCallableFunction type returning anAnimationfor the specifiedMobject.\n\nFunction type returning anAnimationfor the specifiedMobject.\n\nclassPathFuncType\u00b6\n\nCallable[[Point3DLike,Point3DLike, float],Point3DLike]Function mapping twoPoint3Dobjects and an alpha value to a newPoint3D.\n\nFunction mapping twoPoint3Dobjects and an alpha value to a newPoint3D.\n\nclassMappingFunction\u00b6\n\nCallable[[Point3D],Point3D]A function mapping aPoint3Dto anotherPoint3D.\n\nA function mapping aPoint3Dto anotherPoint3D.\n\nclassMultiMappingFunction\u00b6\n\nCallable[[Point3D_Array],Point3D_Array]A function mapping aPoint3D_Arrayto anotherPoint3D_Array.\n\nA function mapping aPoint3D_Arrayto anotherPoint3D_Array.\n\nImage types\u00b6\n\nclassPixelArray\u00b6\n\nNDArray[ManimInt]shape:(height,width)|(height,width,3)|(height,width,4)A rasterized image with a height ofheightpixels and a width ofwidthpixels.Every value in the array is an integer from 0 to 255.Every pixel is represented either by a single integer indicating its\nlightness (for greyscale images), anRGB_Array_Intor anRGBA_Array_Int.\n\nshape:(height,width)|(height,width,3)|(height,width,4)\n\nA rasterized image with a height ofheightpixels and a width ofwidthpixels.\n\nEvery value in the array is an integer from 0 to 255.\n\nEvery pixel is represented either by a single integer indicating its\nlightness (for greyscale images), anRGB_Array_Intor anRGBA_Array_Int.\n\nclassGrayscalePixelArray\u00b6\n\nPixelArrayshape:(height,width)A 100% opaque grayscalePixelArray, where every pixel value is aManimIntindicating its lightness (black -> gray -> white).\n\nshape:(height,width)\n\nA 100% opaque grayscalePixelArray, where every pixel value is aManimIntindicating its lightness (black -> gray -> white).\n\nclassRGBPixelArray\u00b6\n\nPixelArrayshape:(height,width,3)A 100% opaquePixelArrayin color, where every pixel value is anRGB_Array_Intobject.\n\nshape:(height,width,3)\n\nA 100% opaquePixelArrayin color, where every pixel value is anRGB_Array_Intobject.\n\nclassRGBAPixelArray\u00b6\n\nPixelArrayshape:(height,width,4)APixelArrayin color where pixels can be transparent. Every pixel\nvalue is anRGBA_Array_Intobject.\n\nshape:(height,width,4)\n\nAPixelArrayin color where pixels can be transparent. Every pixel\nvalue is anRGBA_Array_Intobject.\n\nPath types\u00b6\n\nclassStrPath\u00b6\n\nstr|PathLike[str]A string oros.PathLikerepresenting a path to a\ndirectory or file.\n\nA string oros.PathLikerepresenting a path to a\ndirectory or file.\n\nclassStrOrBytesPath\u00b6\n\nstr|bytes|PathLike[str]|PathLike[bytes]A string, bytes oros.PathLikeobject representing a path\nto a directory or file.\n\nA string, bytes oros.PathLikeobject representing a path\nto a directory or file.",
+  "code_examples": [
+    {
+      "code": "'''[CATEGORY]<category_name>'''",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "np.float64",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "ManimFloat",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "ManimColorDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "ManimColorDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "FloatRGB_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "ManimColorDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "ManimColorDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "FloatRGBA_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "FloatRGBLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "FloatRGBALike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "FloatRGBLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "ManimFloat",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point2D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointND_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Vector2D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "QuadraticBezierPoints",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "QuadraticBezierPoints_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3DLike_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "QuadraticBezierPath",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "QuadraticBezierPathLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "CubicBezierPoints",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "CubicBezierPoints_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3DLike_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "CubicBezierPath",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "CubicBezierPathLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3DLike_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "BezierPoints_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3DLike_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "BezierPath",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "BezierPathLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PointDType",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3DLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Point3D_Array",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PixelArray",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PixelArray",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "PixelArray",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "str|PathLike[str]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "str|bytes|PathLike[str]|PathLike[bytes]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ManimFloat",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A double-precision floating-point value (64 bits, or 8 bytes),\naccording to the IEEE 754 standard."
+    },
+    {
+      "name": "ManimInt",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A long integer (64 bits, or 8 bytes)."
+    },
+    {
+      "name": "ManimColorDType",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Data type used inManimColorInternal: a\ndouble-precision float between 0 and 1."
+    },
+    {
+      "name": "FloatRGB",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "FloatRGBLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "FloatRGB_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,3)"
+    },
+    {
+      "name": "FloatRGBLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,3)"
+    },
+    {
+      "name": "IntRGB",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "IntRGBLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "FloatRGBA",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "FloatRGBALike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "FloatRGBA_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,4)"
+    },
+    {
+      "name": "FloatRGBALike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,4)"
+    },
+    {
+      "name": "IntRGBA",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "IntRGBALike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "FloatHSV",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "FloatHSVLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "FloatHSVA",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "FloatHSVALike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "FloatHSL",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "FloatHSLLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "ManimColorInternal",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,)"
+    },
+    {
+      "name": "PointDType",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Default type for arrays representing points: a double-precision\nfloating point value."
+    },
+    {
+      "name": "Point2D",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(2,)"
+    },
+    {
+      "name": "Point2DLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(2,)"
+    },
+    {
+      "name": "Point2D_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,2)"
+    },
+    {
+      "name": "Point2DLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,2)"
+    },
+    {
+      "name": "Point3D",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "Point3DLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "Point3D_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,3)"
+    },
+    {
+      "name": "Point3DLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,3)"
+    },
+    {
+      "name": "PointND",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,)"
+    },
+    {
+      "name": "PointNDLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,)"
+    },
+    {
+      "name": "PointND_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,N)"
+    },
+    {
+      "name": "PointNDLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,N)"
+    },
+    {
+      "name": "Vector2D",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(2,)"
+    },
+    {
+      "name": "Vector2DLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(2,)"
+    },
+    {
+      "name": "Vector2D_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,2)"
+    },
+    {
+      "name": "Vector2DLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,2)"
+    },
+    {
+      "name": "Vector3D",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "Vector3DLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,)"
+    },
+    {
+      "name": "Vector3D_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,3)"
+    },
+    {
+      "name": "Vector3DLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,3)"
+    },
+    {
+      "name": "VectorND",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape(N,)"
+    },
+    {
+      "name": "VectorNDLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape(N,)"
+    },
+    {
+      "name": "VectorND_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape(M,N)"
+    },
+    {
+      "name": "VectorNDLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape(M,N)"
+    },
+    {
+      "name": "RowVector",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(1,N)"
+    },
+    {
+      "name": "ColVector",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,1)"
+    },
+    {
+      "name": "MatrixMN",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,N)"
+    },
+    {
+      "name": "Zeros",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(M,N)"
+    },
+    {
+      "name": "QuadraticBezierPoints",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,3)"
+    },
+    {
+      "name": "QuadraticBezierPointsLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3,3)"
+    },
+    {
+      "name": "QuadraticBezierPoints_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,3,3)"
+    },
+    {
+      "name": "QuadraticBezierPointsLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,3,3)"
+    },
+    {
+      "name": "QuadraticBezierPath",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3*N,3)"
+    },
+    {
+      "name": "QuadraticBezierPathLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3*N,3)"
+    },
+    {
+      "name": "QuadraticSpline",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3*N,3)"
+    },
+    {
+      "name": "QuadraticSplineLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3*N,3)"
+    },
+    {
+      "name": "CubicBezierPoints",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,3)"
+    },
+    {
+      "name": "CubicBezierPointsLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4,3)"
+    },
+    {
+      "name": "CubicBezierPoints_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,4,3)"
+    },
+    {
+      "name": "CubicBezierPointsLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,4,3)"
+    },
+    {
+      "name": "CubicBezierPath",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4*N,3)"
+    },
+    {
+      "name": "CubicBezierPathLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4*N,3)"
+    },
+    {
+      "name": "CubicSpline",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4*N,3)"
+    },
+    {
+      "name": "CubicSplineLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(4*N,3)"
+    },
+    {
+      "name": "BezierPoints",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(PPC,3)"
+    },
+    {
+      "name": "BezierPointsLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(PPC,3)"
+    },
+    {
+      "name": "BezierPoints_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,PPC,3)"
+    },
+    {
+      "name": "BezierPointsLike_Array",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(N,PPC,3)"
+    },
+    {
+      "name": "BezierPath",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(PPC*N,3)"
+    },
+    {
+      "name": "BezierPathLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(PPC*N,3)"
+    },
+    {
+      "name": "Spline",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(PPC*N,3)"
+    },
+    {
+      "name": "SplineLike",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(PPC*N,3)"
+    },
+    {
+      "name": "FlatBezierPoints",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(3*PPC*N,)"
+    },
+    {
+      "name": "FunctionOverride",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Function type returning anAnimationfor the specifiedMobject."
+    },
+    {
+      "name": "PathFuncType",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Function mapping twoPoint3Dobjects and an alpha value to a newPoint3D."
+    },
+    {
+      "name": "MappingFunction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A function mapping aPoint3Dto anotherPoint3D."
+    },
+    {
+      "name": "MultiMappingFunction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A function mapping aPoint3D_Arrayto anotherPoint3D_Array."
+    },
+    {
+      "name": "PixelArray",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(height,width)|(height,width,3)|(height,width,4)"
+    },
+    {
+      "name": "GrayscalePixelArray",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(height,width)"
+    },
+    {
+      "name": "RGBPixelArray",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(height,width,3)"
+    },
+    {
+      "name": "RGBAPixelArray",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "shape:(height,width,4)"
+    },
+    {
+      "name": "StrPath",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A string oros.PathLikerepresenting a path to a\ndirectory or file."
+    },
+    {
+      "name": "StrOrBytesPath",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A string, bytes oros.PathLikeobject representing a path\nto a directory or file."
+    }
+  ],
+  "related_classes": [
+    "Matrix",
+    "VMobject",
+    "Arrow",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

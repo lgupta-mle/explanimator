@@ -1,0 +1,276 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.vector_space_scene.LinearTransformationScene.html",
+  "title": "LinearTransformationScene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LinearTransformationScene\u00b6\n\nQualified name:manim.scene.vector\\_space\\_scene.LinearTransformationScene\n\nclassLinearTransformationScene(include_background_plane=True,include_foreground_plane=True,background_plane_kwargs=None,foreground_plane_kwargs=None,show_coordinates=False,show_basis_vectors=True,basis_vector_stroke_width=6,i_hat_color=ManimColor('#83C167'),j_hat_color=ManimColor('#FC6255'),leave_ghost_vectors=False,**kwargs)[source]\u00b6\n\nBases:VectorSceneThis scene contains special methods that make it\nespecially suitable for showing linear transformations.Parameters:include_background_plane(bool) \u2013 Whether or not to include the background plane in the scene.include_foreground_plane(bool) \u2013 Whether or not to include the foreground plane in the scene.background_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the background plane.foreground_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the foreground plane.show_coordinates(bool) \u2013 Whether or not to include the coordinates for the background plane.show_basis_vectors(bool) \u2013 Whether to show the basis x_axis ->i_hatand y_axis ->j_hatvectors.basis_vector_stroke_width(float) \u2013 Thestroke_widthof the basis vectors.i_hat_color(ParsableManimColor) \u2013 The color of thei_hatvector.j_hat_color(ParsableManimColor) \u2013 The color of thej_hatvector.leave_ghost_vectors(bool) \u2013 Indicates the previous position of the basis vectors following a transformation.kwargs(Any)ExamplesExample: LinearTransformationSceneExample\u00b6frommanimimport*classLinearTransformationSceneExample(LinearTransformationScene):def__init__(self,**kwargs):LinearTransformationScene.__init__(self,show_coordinates=True,leave_ghost_vectors=True,**kwargs)defconstruct(self):matrix=[[1,1],[0,1]]self.apply_matrix(matrix)self.wait()class LinearTransformationSceneExample(LinearTransformationScene):\n    def __init__(self, **kwargs):\n        LinearTransformationScene.__init__(\n            self,\n            show_coordinates=True,\n            leave_ghost_vectors=True,\n            **kwargs\n        )\n\n    def construct(self):\n        matrix = [[1, 1], [0, 1]]\n        self.apply_matrix(matrix)\n        self.wait()Methodsadd_background_mobjectAdds the mobjects to the special list self.background_mobjects.add_foreground_mobjectAdds the mobjects to the special list self.foreground_mobjects.add_moving_mobjectAdds the mobject to the special list self.moving_mobject, and adds a property to the mobject called mobject.target, which keeps track of what the mobject will move to or become etc.add_special_mobjectsAdds mobjects to a separate list that can be tracked, if these mobjects have some extra importance.add_titleAdds a title, after scaling it, adding a background rectangle, moving it to the top and adding it to foreground_mobjects adding it as a local variable of self.add_transformable_labelMethod for creating, and animating the addition of a transformable label for the vector.add_transformable_mobjectAdds the mobjects to the special list self.transformable_mobjects.add_unit_squareAdds a unit square to the scene via self.get_unit_square.add_vectorAdds a vector to the scene, and puts it in the special list self.moving_vectors.apply_functionApplies the given function to each of the mobjects in self.transformable_mobjects, and plays the animation showing this.apply_inverseThis method applies the linear transformation represented by the inverse of the passed matrix to the number plane, and each vector/similar mobject on it.apply_inverse_transposeApplies the inverse of the transformation represented by the given transposed matrix to the number plane and each vector/similar mobject on it.apply_matrixApplies the transformation represented by the given matrix to the number plane, and each vector/similar mobject on it.apply_nonlinear_transformationApplies the non-linear transformation represented by the given function to the number plane and each vector/similar mobject on it.apply_transposed_matrixApplies the transformation represented by the given transposed matrix to the number plane, and each vector/similar mobject on it.get_ghost_vectorsReturns all ghost vectors ever added toself.get_matrix_transformationReturns a function corresponding to the linear transformation represented by the matrix passed.get_moving_mobject_movementThis method returns an animation that moves a mobject in \"self.moving_mobjects\"  to its corresponding .target value.get_piece_movementThis method returns an animation that moves an arbitrary mobject in \"pieces\" to its corresponding .target value.get_transformable_label_movementThis method returns an animation that moves all labels in \"self.transformable_labels\" to its corresponding .target .get_transposed_matrix_transformationReturns a function corresponding to the linear transformation represented by the transposed matrix passed.get_unit_squareReturns a unit square for the current NumberPlane.get_vector_movementThis method returns an animation that moves a mobject in \"self.moving_vectors\"  to its corresponding .target value.setupThis is meant to be implemented by any scenes which are commonly subclassed, and have some common setup involved before the construct method is called.update_default_configswrite_vector_coordinatesReturns a column matrix indicating the vector coordinates, after writing them to the screen, and adding them to the special list self.foreground_mobjectsAttributescameratimeThe time since the start of the scene.add_background_mobject(*mobjects)[source]\u00b6Adds the mobjects to the special list\nself.background_mobjects.Parameters:*mobjects(Mobject) \u2013 The mobjects to add to the list.Return type:Noneadd_foreground_mobject(*mobjects)[source]\u00b6Adds the mobjects to the special list\nself.foreground_mobjects.Parameters:*mobjects(Mobject) \u2013 The mobjects to add to the listReturn type:Noneadd_moving_mobject(mobject,target_mobject=None)[source]\u00b6Adds the mobject to the special list\nself.moving_mobject, and adds a property\nto the mobject called mobject.target, which\nkeeps track of what the mobject will move to\nor become etc.Parameters:mobject(Mobject) \u2013 The mobjects to add to the listtarget_mobject(Mobject|None) \u2013 What the moving_mobject goes to, etc.Return type:Noneadd_special_mobjects(mob_list,*mobs_to_add)[source]\u00b6Adds mobjects to a separate list that can be tracked,\nif these mobjects have some extra importance.Parameters:mob_list(list[Mobject]) \u2013 The special list to which you want to add\nthese mobjects.*mobs_to_add(Mobject) \u2013 The mobjects to add.Return type:Noneadd_title(title,scale_factor=1.5,animate=False)[source]\u00b6Adds a title, after scaling it, adding a background rectangle,\nmoving it to the top and adding it to foreground_mobjects adding\nit as a local variable of self. Returns the Scene.Parameters:title(str|MathTex|Tex) \u2013 What the title should be.scale_factor(float) \u2013 How much the title should be scaled by.animate(bool) \u2013 Whether or not to animate the addition.Returns:The scene with the title added to it.Return type:LinearTransformationSceneadd_transformable_label(vector,label,transformation_name='L',new_label=None,**kwargs)[source]\u00b6Method for creating, and animating the addition of\na transformable label for the vector.Parameters:vector(Vector) \u2013 The vector for which the label must be added.label(MathTex|str) \u2013 The MathTex/string of the label.transformation_name(str|MathTex) \u2013 The name to give the transformation as a label.new_label(str|MathTex|None) \u2013 What the label should display after a Linear Transformation**kwargs(Any) \u2013 Any valid keyword argument of get_vector_labelReturns:The MathTex of the label.Return type:MathTexadd_transformable_mobject(*mobjects)[source]\u00b6Adds the mobjects to the special list\nself.transformable_mobjects.Parameters:*mobjects(Mobject) \u2013 The mobjects to add to the list.Return type:Noneadd_unit_square(animate=False,**kwargs)[source]\u00b6Adds a unit square to the scene via\nself.get_unit_square.Parameters:animate(bool) \u2013 Whether or not to animate the addition\nwith DrawBorderThenFill.**kwargs(Any) \u2013 Any valid keyword arguments of\nself.get_unit_square()Returns:The unit square.Return type:Squareadd_vector(vector,color=ManimColor('#FFFF00'),animate=False,**kwargs)[source]\u00b6Adds a vector to the scene, and puts it in the special\nlist self.moving_vectors.Parameters:vector(Arrow|list|tuple|ndarray) \u2013 It can be a pre-made graphical vector, or the\ncoordinates of one.color(ParsableManimColor) \u2013 The string of the hex color of the vector.\nThis is only taken into consideration if\n\u2018vector\u2019 is not an Arrow. Defaults to YELLOW.**kwargs(Any) \u2013 Any valid keyword argument of VectorScene.add_vector.animate(bool)**kwargsReturns:The arrow representing the vector.Return type:Arrowapply_function(function,added_anims=[],**kwargs)[source]\u00b6Applies the given function to each of the mobjects in\nself.transformable_mobjects, and plays the animation showing\nthis.Parameters:function(MappingFunction) \u2013 The function that affects each point\nof each mobject in self.transformable_mobjects.added_anims(list[Animation]) \u2013 Any other animations that need to be played\nsimultaneously with this.**kwargs(Any) \u2013 Any valid keyword argument of a self.play() call.Return type:Noneapply_inverse(matrix,**kwargs)[source]\u00b6This method applies the linear transformation\nrepresented by the inverse of the passed matrix\nto the number plane, and each vector/similar mobject on it.Parameters:matrix(ndarray|list|tuple) \u2013 The matrix whose inverse is to be applied.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_matrix()Return type:Noneapply_inverse_transpose(t_matrix,**kwargs)[source]\u00b6Applies the inverse of the transformation represented\nby the given transposed matrix to the number plane and each\nvector/similar mobject on it.Parameters:t_matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()Return type:Noneapply_matrix(matrix,**kwargs)[source]\u00b6Applies the transformation represented by the\ngiven matrix to the number plane, and each vector/similar\nmobject on it.Parameters:matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()Return type:Noneapply_nonlinear_transformation(function,**kwargs)[source]\u00b6Applies the non-linear transformation represented\nby the given function to the number plane and each\nvector/similar mobject on it.Parameters:function(Callable[[ndarray],ndarray]) \u2013 The function.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()Return type:Noneapply_transposed_matrix(transposed_matrix,**kwargs)[source]\u00b6Applies the transformation represented by the\ngiven transposed matrix to the number plane,\nand each vector/similar mobject on it.Parameters:transposed_matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()Return type:Noneget_ghost_vectors()[source]\u00b6Returns all ghost vectors ever added toself. Each element is aVGroupof\ntwo ghost vectors.Return type:VGroupget_matrix_transformation(matrix)[source]\u00b6Returns a function corresponding to the linear\ntransformation represented by the matrix passed.Parameters:matrix(ndarray|list|tuple) \u2013 The matrix.Return type:Callable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]get_moving_mobject_movement(func)[source]\u00b6This method returns an animation that moves a mobject\nin \u201cself.moving_mobjects\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes.Parameters:func(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.Returns:The animation of the movement.Return type:Animationget_piece_movement(pieces)[source]\u00b6This method returns an animation that moves an arbitrary\nmobject in \u201cpieces\u201d to its corresponding .target value.\nIf self.leave_ghost_vectors is True, ghosts of the original\npositions/mobjects are left on screenParameters:pieces(Iterable[Mobject]) \u2013 The pieces for which the movement must be shown.Returns:The animation of the movement.Return type:Animationget_transformable_label_movement()[source]\u00b6This method returns an animation that moves all labels\nin \u201cself.transformable_labels\u201d to its corresponding .target .Returns:The animation of the movement.Return type:Animationget_transposed_matrix_transformation(transposed_matrix)[source]\u00b6Returns a function corresponding to the linear\ntransformation represented by the transposed\nmatrix passed.Parameters:transposed_matrix(ndarray|list|tuple) \u2013 The matrix.Return type:Callable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]get_unit_square(color=ManimColor('#FFFF00'),opacity=0.3,stroke_width=3)[source]\u00b6Returns a unit square for the current NumberPlane.Parameters:color(ParsableManimColor|Iterable[ParsableManimColor]) \u2013 The string of the hex color code of the color wanted.opacity(float) \u2013 The opacity of the squarestroke_width(float) \u2013 The stroke_width in pixels of the border of the squareReturn type:Squareget_vector_movement(func)[source]\u00b6This method returns an animation that moves a mobject\nin \u201cself.moving_vectors\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes.Parameters:func(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.Returns:The animation of the movement.Return type:Animationsetup()[source]\u00b6This is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called.Return type:Nonewrite_vector_coordinates(vector,**kwargs)[source]\u00b6Returns a column matrix indicating the vector coordinates,\nafter writing them to the screen, and adding them to the\nspecial list self.foreground_mobjectsParameters:vector(Vector) \u2013 The arrow representing the vector.**kwargs(Any) \u2013 Any valid keyword arguments of VectorScene.write_vector_coordinatesReturns:The column matrix representing the vector.Return type:Matrix\n\nBases:VectorScene\n\nThis scene contains special methods that make it\nespecially suitable for showing linear transformations.\n\nParameters:\n\ninclude_background_plane(bool) \u2013 Whether or not to include the background plane in the scene.include_foreground_plane(bool) \u2013 Whether or not to include the foreground plane in the scene.background_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the background plane.foreground_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the foreground plane.show_coordinates(bool) \u2013 Whether or not to include the coordinates for the background plane.show_basis_vectors(bool) \u2013 Whether to show the basis x_axis ->i_hatand y_axis ->j_hatvectors.basis_vector_stroke_width(float) \u2013 Thestroke_widthof the basis vectors.i_hat_color(ParsableManimColor) \u2013 The color of thei_hatvector.j_hat_color(ParsableManimColor) \u2013 The color of thej_hatvector.leave_ghost_vectors(bool) \u2013 Indicates the previous position of the basis vectors following a transformation.kwargs(Any)\n\ninclude_background_plane(bool) \u2013 Whether or not to include the background plane in the scene.\n\ninclude_background_plane(bool) \u2013 Whether or not to include the background plane in the scene.\n\ninclude_foreground_plane(bool) \u2013 Whether or not to include the foreground plane in the scene.\n\ninclude_foreground_plane(bool) \u2013 Whether or not to include the foreground plane in the scene.\n\nbackground_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the background plane.\n\nbackground_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the background plane.\n\nforeground_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the foreground plane.\n\nforeground_plane_kwargs(dict[str,Any]|None) \u2013 Parameters to be passed toNumberPlaneto adjust the foreground plane.\n\nshow_coordinates(bool) \u2013 Whether or not to include the coordinates for the background plane.\n\nshow_coordinates(bool) \u2013 Whether or not to include the coordinates for the background plane.\n\nshow_basis_vectors(bool) \u2013 Whether to show the basis x_axis ->i_hatand y_axis ->j_hatvectors.\n\nshow_basis_vectors(bool) \u2013 Whether to show the basis x_axis ->i_hatand y_axis ->j_hatvectors.\n\nbasis_vector_stroke_width(float) \u2013 Thestroke_widthof the basis vectors.\n\nbasis_vector_stroke_width(float) \u2013 Thestroke_widthof the basis vectors.\n\ni_hat_color(ParsableManimColor) \u2013 The color of thei_hatvector.\n\ni_hat_color(ParsableManimColor) \u2013 The color of thei_hatvector.\n\nj_hat_color(ParsableManimColor) \u2013 The color of thej_hatvector.\n\nj_hat_color(ParsableManimColor) \u2013 The color of thej_hatvector.\n\nleave_ghost_vectors(bool) \u2013 Indicates the previous position of the basis vectors following a transformation.\n\nleave_ghost_vectors(bool) \u2013 Indicates the previous position of the basis vectors following a transformation.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: LinearTransformationSceneExample\u00b6\n\nMethods\n\nadd_background_mobject\n\nAdds the mobjects to the special list self.background_mobjects.\n\nadd_foreground_mobject\n\nAdds the mobjects to the special list self.foreground_mobjects.\n\nadd_moving_mobject\n\nAdds the mobject to the special list self.moving_mobject, and adds a property to the mobject called mobject.target, which keeps track of what the mobject will move to or become etc.\n\nadd_special_mobjects\n\nAdds mobjects to a separate list that can be tracked, if these mobjects have some extra importance.\n\nadd_title\n\nAdds a title, after scaling it, adding a background rectangle, moving it to the top and adding it to foreground_mobjects adding it as a local variable of self.\n\nadd_transformable_label\n\nMethod for creating, and animating the addition of a transformable label for the vector.\n\nadd_transformable_mobject\n\nAdds the mobjects to the special list self.transformable_mobjects.\n\nadd_unit_square\n\nAdds a unit square to the scene via self.get_unit_square.\n\nadd_vector\n\nAdds a vector to the scene, and puts it in the special list self.moving_vectors.\n\napply_function\n\nApplies the given function to each of the mobjects in self.transformable_mobjects, and plays the animation showing this.\n\napply_inverse\n\nThis method applies the linear transformation represented by the inverse of the passed matrix to the number plane, and each vector/similar mobject on it.\n\napply_inverse_transpose\n\nApplies the inverse of the transformation represented by the given transposed matrix to the number plane and each vector/similar mobject on it.\n\napply_matrix\n\nApplies the transformation represented by the given matrix to the number plane, and each vector/similar mobject on it.\n\napply_nonlinear_transformation\n\nApplies the non-linear transformation represented by the given function to the number plane and each vector/similar mobject on it.\n\napply_transposed_matrix\n\nApplies the transformation represented by the given transposed matrix to the number plane, and each vector/similar mobject on it.\n\nget_ghost_vectors\n\nReturns all ghost vectors ever added toself.\n\nget_matrix_transformation\n\nReturns a function corresponding to the linear transformation represented by the matrix passed.\n\nget_moving_mobject_movement\n\nThis method returns an animation that moves a mobject in \"self.moving_mobjects\"  to its corresponding .target value.\n\nget_piece_movement\n\nThis method returns an animation that moves an arbitrary mobject in \"pieces\" to its corresponding .target value.\n\nget_transformable_label_movement\n\nThis method returns an animation that moves all labels in \"self.transformable_labels\" to its corresponding .target .\n\nget_transposed_matrix_transformation\n\nReturns a function corresponding to the linear transformation represented by the transposed matrix passed.\n\nget_unit_square\n\nReturns a unit square for the current NumberPlane.\n\nget_vector_movement\n\nThis method returns an animation that moves a mobject in \"self.moving_vectors\"  to its corresponding .target value.\n\nsetup\n\nThis is meant to be implemented by any scenes which are commonly subclassed, and have some common setup involved before the construct method is called.\n\nupdate_default_configs\n\nwrite_vector_coordinates\n\nReturns a column matrix indicating the vector coordinates, after writing them to the screen, and adding them to the special list self.foreground_mobjects\n\nAttributes\n\ncamera\n\ntime\n\nThe time since the start of the scene.\n\nadd_background_mobject(*mobjects)[source]\u00b6\n\nAdds the mobjects to the special list\nself.background_mobjects.Parameters:*mobjects(Mobject) \u2013 The mobjects to add to the list.Return type:None\n\nAdds the mobjects to the special list\nself.background_mobjects.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobjects to add to the list.\n\n*mobjects(Mobject) \u2013 The mobjects to add to the list.\n\nReturn type:\n\nNone\n\nNone\n\nadd_foreground_mobject(*mobjects)[source]\u00b6\n\nAdds the mobjects to the special list\nself.foreground_mobjects.Parameters:*mobjects(Mobject) \u2013 The mobjects to add to the listReturn type:None\n\nAdds the mobjects to the special list\nself.foreground_mobjects.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobjects to add to the list\n\n*mobjects(Mobject) \u2013 The mobjects to add to the list\n\nReturn type:\n\nNone\n\nNone\n\nadd_moving_mobject(mobject,target_mobject=None)[source]\u00b6\n\nAdds the mobject to the special list\nself.moving_mobject, and adds a property\nto the mobject called mobject.target, which\nkeeps track of what the mobject will move to\nor become etc.Parameters:mobject(Mobject) \u2013 The mobjects to add to the listtarget_mobject(Mobject|None) \u2013 What the moving_mobject goes to, etc.Return type:None\n\nAdds the mobject to the special list\nself.moving_mobject, and adds a property\nto the mobject called mobject.target, which\nkeeps track of what the mobject will move to\nor become etc.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobjects to add to the listtarget_mobject(Mobject|None) \u2013 What the moving_mobject goes to, etc.\n\nmobject(Mobject) \u2013 The mobjects to add to the list\n\nmobject(Mobject) \u2013 The mobjects to add to the list\n\ntarget_mobject(Mobject|None) \u2013 What the moving_mobject goes to, etc.\n\ntarget_mobject(Mobject|None) \u2013 What the moving_mobject goes to, etc.\n\nReturn type:\n\nNone\n\nNone\n\nadd_special_mobjects(mob_list,*mobs_to_add)[source]\u00b6\n\nAdds mobjects to a separate list that can be tracked,\nif these mobjects have some extra importance.Parameters:mob_list(list[Mobject]) \u2013 The special list to which you want to add\nthese mobjects.*mobs_to_add(Mobject) \u2013 The mobjects to add.Return type:None\n\nAdds mobjects to a separate list that can be tracked,\nif these mobjects have some extra importance.\n\nParameters:\n\nmob_list(list[Mobject]) \u2013 The special list to which you want to add\nthese mobjects.*mobs_to_add(Mobject) \u2013 The mobjects to add.\n\nmob_list(list[Mobject]) \u2013 The special list to which you want to add\nthese mobjects.\n\nmob_list(list[Mobject]) \u2013 The special list to which you want to add\nthese mobjects.\n\n*mobs_to_add(Mobject) \u2013 The mobjects to add.\n\n*mobs_to_add(Mobject) \u2013 The mobjects to add.\n\nReturn type:\n\nNone\n\nNone\n\nadd_title(title,scale_factor=1.5,animate=False)[source]\u00b6\n\nAdds a title, after scaling it, adding a background rectangle,\nmoving it to the top and adding it to foreground_mobjects adding\nit as a local variable of self. Returns the Scene.Parameters:title(str|MathTex|Tex) \u2013 What the title should be.scale_factor(float) \u2013 How much the title should be scaled by.animate(bool) \u2013 Whether or not to animate the addition.Returns:The scene with the title added to it.Return type:LinearTransformationScene\n\nAdds a title, after scaling it, adding a background rectangle,\nmoving it to the top and adding it to foreground_mobjects adding\nit as a local variable of self. Returns the Scene.\n\nParameters:\n\ntitle(str|MathTex|Tex) \u2013 What the title should be.scale_factor(float) \u2013 How much the title should be scaled by.animate(bool) \u2013 Whether or not to animate the addition.\n\ntitle(str|MathTex|Tex) \u2013 What the title should be.\n\ntitle(str|MathTex|Tex) \u2013 What the title should be.\n\nscale_factor(float) \u2013 How much the title should be scaled by.\n\nscale_factor(float) \u2013 How much the title should be scaled by.\n\nanimate(bool) \u2013 Whether or not to animate the addition.\n\nanimate(bool) \u2013 Whether or not to animate the addition.\n\nReturns:\n\nThe scene with the title added to it.\n\nThe scene with the title added to it.\n\nReturn type:\n\nLinearTransformationScene\n\nLinearTransformationScene\n\nadd_transformable_label(vector,label,transformation_name='L',new_label=None,**kwargs)[source]\u00b6\n\nMethod for creating, and animating the addition of\na transformable label for the vector.Parameters:vector(Vector) \u2013 The vector for which the label must be added.label(MathTex|str) \u2013 The MathTex/string of the label.transformation_name(str|MathTex) \u2013 The name to give the transformation as a label.new_label(str|MathTex|None) \u2013 What the label should display after a Linear Transformation**kwargs(Any) \u2013 Any valid keyword argument of get_vector_labelReturns:The MathTex of the label.Return type:MathTex\n\nMethod for creating, and animating the addition of\na transformable label for the vector.\n\nParameters:\n\nvector(Vector) \u2013 The vector for which the label must be added.label(MathTex|str) \u2013 The MathTex/string of the label.transformation_name(str|MathTex) \u2013 The name to give the transformation as a label.new_label(str|MathTex|None) \u2013 What the label should display after a Linear Transformation**kwargs(Any) \u2013 Any valid keyword argument of get_vector_label\n\nvector(Vector) \u2013 The vector for which the label must be added.\n\nvector(Vector) \u2013 The vector for which the label must be added.\n\nlabel(MathTex|str) \u2013 The MathTex/string of the label.\n\nlabel(MathTex|str) \u2013 The MathTex/string of the label.\n\ntransformation_name(str|MathTex) \u2013 The name to give the transformation as a label.\n\ntransformation_name(str|MathTex) \u2013 The name to give the transformation as a label.\n\nnew_label(str|MathTex|None) \u2013 What the label should display after a Linear Transformation\n\nnew_label(str|MathTex|None) \u2013 What the label should display after a Linear Transformation\n\n**kwargs(Any) \u2013 Any valid keyword argument of get_vector_label\n\n**kwargs(Any) \u2013 Any valid keyword argument of get_vector_label\n\nReturns:\n\nThe MathTex of the label.\n\nThe MathTex of the label.\n\nReturn type:\n\nMathTex\n\nMathTex\n\nadd_transformable_mobject(*mobjects)[source]\u00b6\n\nAdds the mobjects to the special list\nself.transformable_mobjects.Parameters:*mobjects(Mobject) \u2013 The mobjects to add to the list.Return type:None\n\nAdds the mobjects to the special list\nself.transformable_mobjects.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The mobjects to add to the list.\n\n*mobjects(Mobject) \u2013 The mobjects to add to the list.\n\nReturn type:\n\nNone\n\nNone\n\nadd_unit_square(animate=False,**kwargs)[source]\u00b6\n\nAdds a unit square to the scene via\nself.get_unit_square.Parameters:animate(bool) \u2013 Whether or not to animate the addition\nwith DrawBorderThenFill.**kwargs(Any) \u2013 Any valid keyword arguments of\nself.get_unit_square()Returns:The unit square.Return type:Square\n\nAdds a unit square to the scene via\nself.get_unit_square.\n\nParameters:\n\nanimate(bool) \u2013 Whether or not to animate the addition\nwith DrawBorderThenFill.**kwargs(Any) \u2013 Any valid keyword arguments of\nself.get_unit_square()\n\nanimate(bool) \u2013 Whether or not to animate the addition\nwith DrawBorderThenFill.\n\nanimate(bool) \u2013 Whether or not to animate the addition\nwith DrawBorderThenFill.\n\n**kwargs(Any) \u2013 Any valid keyword arguments of\nself.get_unit_square()\n\n**kwargs(Any) \u2013 Any valid keyword arguments of\nself.get_unit_square()\n\nReturns:\n\nThe unit square.\n\nThe unit square.\n\nReturn type:\n\nSquare\n\nSquare\n\nadd_vector(vector,color=ManimColor('#FFFF00'),animate=False,**kwargs)[source]\u00b6\n\nAdds a vector to the scene, and puts it in the special\nlist self.moving_vectors.Parameters:vector(Arrow|list|tuple|ndarray) \u2013 It can be a pre-made graphical vector, or the\ncoordinates of one.color(ParsableManimColor) \u2013 The string of the hex color of the vector.\nThis is only taken into consideration if\n\u2018vector\u2019 is not an Arrow. Defaults to YELLOW.**kwargs(Any) \u2013 Any valid keyword argument of VectorScene.add_vector.animate(bool)**kwargsReturns:The arrow representing the vector.Return type:Arrow\n\nAdds a vector to the scene, and puts it in the special\nlist self.moving_vectors.\n\nParameters:\n\nvector(Arrow|list|tuple|ndarray) \u2013 It can be a pre-made graphical vector, or the\ncoordinates of one.color(ParsableManimColor) \u2013 The string of the hex color of the vector.\nThis is only taken into consideration if\n\u2018vector\u2019 is not an Arrow. Defaults to YELLOW.**kwargs(Any) \u2013 Any valid keyword argument of VectorScene.add_vector.animate(bool)**kwargs\n\nvector(Arrow|list|tuple|ndarray) \u2013 It can be a pre-made graphical vector, or the\ncoordinates of one.\n\nvector(Arrow|list|tuple|ndarray) \u2013 It can be a pre-made graphical vector, or the\ncoordinates of one.\n\ncolor(ParsableManimColor) \u2013 The string of the hex color of the vector.\nThis is only taken into consideration if\n\u2018vector\u2019 is not an Arrow. Defaults to YELLOW.\n\ncolor(ParsableManimColor) \u2013 The string of the hex color of the vector.\nThis is only taken into consideration if\n\u2018vector\u2019 is not an Arrow. Defaults to YELLOW.\n\n**kwargs(Any) \u2013 Any valid keyword argument of VectorScene.add_vector.\n\n**kwargs(Any) \u2013 Any valid keyword argument of VectorScene.add_vector.\n\nanimate(bool)\n\nanimate(bool)\n\n**kwargs\n\n**kwargs\n\nReturns:\n\nThe arrow representing the vector.\n\nThe arrow representing the vector.\n\nReturn type:\n\nArrow\n\nArrow\n\napply_function(function,added_anims=[],**kwargs)[source]\u00b6\n\nApplies the given function to each of the mobjects in\nself.transformable_mobjects, and plays the animation showing\nthis.Parameters:function(MappingFunction) \u2013 The function that affects each point\nof each mobject in self.transformable_mobjects.added_anims(list[Animation]) \u2013 Any other animations that need to be played\nsimultaneously with this.**kwargs(Any) \u2013 Any valid keyword argument of a self.play() call.Return type:None\n\nApplies the given function to each of the mobjects in\nself.transformable_mobjects, and plays the animation showing\nthis.\n\nParameters:\n\nfunction(MappingFunction) \u2013 The function that affects each point\nof each mobject in self.transformable_mobjects.added_anims(list[Animation]) \u2013 Any other animations that need to be played\nsimultaneously with this.**kwargs(Any) \u2013 Any valid keyword argument of a self.play() call.\n\nfunction(MappingFunction) \u2013 The function that affects each point\nof each mobject in self.transformable_mobjects.\n\nfunction(MappingFunction) \u2013 The function that affects each point\nof each mobject in self.transformable_mobjects.\n\nadded_anims(list[Animation]) \u2013 Any other animations that need to be played\nsimultaneously with this.\n\nadded_anims(list[Animation]) \u2013 Any other animations that need to be played\nsimultaneously with this.\n\n**kwargs(Any) \u2013 Any valid keyword argument of a self.play() call.\n\n**kwargs(Any) \u2013 Any valid keyword argument of a self.play() call.\n\nReturn type:\n\nNone\n\nNone\n\napply_inverse(matrix,**kwargs)[source]\u00b6\n\nThis method applies the linear transformation\nrepresented by the inverse of the passed matrix\nto the number plane, and each vector/similar mobject on it.Parameters:matrix(ndarray|list|tuple) \u2013 The matrix whose inverse is to be applied.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_matrix()Return type:None\n\nThis method applies the linear transformation\nrepresented by the inverse of the passed matrix\nto the number plane, and each vector/similar mobject on it.\n\nParameters:\n\nmatrix(ndarray|list|tuple) \u2013 The matrix whose inverse is to be applied.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_matrix()\n\nmatrix(ndarray|list|tuple) \u2013 The matrix whose inverse is to be applied.\n\nmatrix(ndarray|list|tuple) \u2013 The matrix whose inverse is to be applied.\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_matrix()\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_matrix()\n\nReturn type:\n\nNone\n\nNone\n\napply_inverse_transpose(t_matrix,**kwargs)[source]\u00b6\n\nApplies the inverse of the transformation represented\nby the given transposed matrix to the number plane and each\nvector/similar mobject on it.Parameters:t_matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()Return type:None\n\nApplies the inverse of the transformation represented\nby the given transposed matrix to the number plane and each\nvector/similar mobject on it.\n\nParameters:\n\nt_matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()\n\nt_matrix(ndarray|list|tuple) \u2013 The matrix.\n\nt_matrix(ndarray|list|tuple) \u2013 The matrix.\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()\n\nReturn type:\n\nNone\n\nNone\n\napply_matrix(matrix,**kwargs)[source]\u00b6\n\nApplies the transformation represented by the\ngiven matrix to the number plane, and each vector/similar\nmobject on it.Parameters:matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()Return type:None\n\nApplies the transformation represented by the\ngiven matrix to the number plane, and each vector/similar\nmobject on it.\n\nParameters:\n\nmatrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()\n\nmatrix(ndarray|list|tuple) \u2013 The matrix.\n\nmatrix(ndarray|list|tuple) \u2013 The matrix.\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_transposed_matrix()\n\nReturn type:\n\nNone\n\nNone\n\napply_nonlinear_transformation(function,**kwargs)[source]\u00b6\n\nApplies the non-linear transformation represented\nby the given function to the number plane and each\nvector/similar mobject on it.Parameters:function(Callable[[ndarray],ndarray]) \u2013 The function.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()Return type:None\n\nApplies the non-linear transformation represented\nby the given function to the number plane and each\nvector/similar mobject on it.\n\nParameters:\n\nfunction(Callable[[ndarray],ndarray]) \u2013 The function.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()\n\nfunction(Callable[[ndarray],ndarray]) \u2013 The function.\n\nfunction(Callable[[ndarray],ndarray]) \u2013 The function.\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()\n\nReturn type:\n\nNone\n\nNone\n\napply_transposed_matrix(transposed_matrix,**kwargs)[source]\u00b6\n\nApplies the transformation represented by the\ngiven transposed matrix to the number plane,\nand each vector/similar mobject on it.Parameters:transposed_matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()Return type:None\n\nApplies the transformation represented by the\ngiven transposed matrix to the number plane,\nand each vector/similar mobject on it.\n\nParameters:\n\ntransposed_matrix(ndarray|list|tuple) \u2013 The matrix.**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()\n\ntransposed_matrix(ndarray|list|tuple) \u2013 The matrix.\n\ntransposed_matrix(ndarray|list|tuple) \u2013 The matrix.\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()\n\n**kwargs(Any) \u2013 Any valid keyword argument of self.apply_function()\n\nReturn type:\n\nNone\n\nNone\n\nget_ghost_vectors()[source]\u00b6\n\nReturns all ghost vectors ever added toself. Each element is aVGroupof\ntwo ghost vectors.Return type:VGroup\n\nReturns all ghost vectors ever added toself. Each element is aVGroupof\ntwo ghost vectors.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nget_matrix_transformation(matrix)[source]\u00b6\n\nReturns a function corresponding to the linear\ntransformation represented by the matrix passed.Parameters:matrix(ndarray|list|tuple) \u2013 The matrix.Return type:Callable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nReturns a function corresponding to the linear\ntransformation represented by the matrix passed.\n\nParameters:\n\nmatrix(ndarray|list|tuple) \u2013 The matrix.\n\nmatrix(ndarray|list|tuple) \u2013 The matrix.\n\nReturn type:\n\nCallable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nCallable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nget_moving_mobject_movement(func)[source]\u00b6\n\nThis method returns an animation that moves a mobject\nin \u201cself.moving_mobjects\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes.Parameters:func(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.Returns:The animation of the movement.Return type:Animation\n\nThis method returns an animation that moves a mobject\nin \u201cself.moving_mobjects\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes.\n\nParameters:\n\nfunc(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.\n\nfunc(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.\n\nReturns:\n\nThe animation of the movement.\n\nThe animation of the movement.\n\nReturn type:\n\nAnimation\n\nAnimation\n\nget_piece_movement(pieces)[source]\u00b6\n\nThis method returns an animation that moves an arbitrary\nmobject in \u201cpieces\u201d to its corresponding .target value.\nIf self.leave_ghost_vectors is True, ghosts of the original\npositions/mobjects are left on screenParameters:pieces(Iterable[Mobject]) \u2013 The pieces for which the movement must be shown.Returns:The animation of the movement.Return type:Animation\n\nThis method returns an animation that moves an arbitrary\nmobject in \u201cpieces\u201d to its corresponding .target value.\nIf self.leave_ghost_vectors is True, ghosts of the original\npositions/mobjects are left on screen\n\nParameters:\n\npieces(Iterable[Mobject]) \u2013 The pieces for which the movement must be shown.\n\npieces(Iterable[Mobject]) \u2013 The pieces for which the movement must be shown.\n\nReturns:\n\nThe animation of the movement.\n\nThe animation of the movement.\n\nReturn type:\n\nAnimation\n\nAnimation\n\nget_transformable_label_movement()[source]\u00b6\n\nThis method returns an animation that moves all labels\nin \u201cself.transformable_labels\u201d to its corresponding .target .Returns:The animation of the movement.Return type:Animation\n\nThis method returns an animation that moves all labels\nin \u201cself.transformable_labels\u201d to its corresponding .target .\n\nReturns:\n\nThe animation of the movement.\n\nThe animation of the movement.\n\nReturn type:\n\nAnimation\n\nAnimation\n\nget_transposed_matrix_transformation(transposed_matrix)[source]\u00b6\n\nReturns a function corresponding to the linear\ntransformation represented by the transposed\nmatrix passed.Parameters:transposed_matrix(ndarray|list|tuple) \u2013 The matrix.Return type:Callable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nReturns a function corresponding to the linear\ntransformation represented by the transposed\nmatrix passed.\n\nParameters:\n\ntransposed_matrix(ndarray|list|tuple) \u2013 The matrix.\n\ntransposed_matrix(ndarray|list|tuple) \u2013 The matrix.\n\nReturn type:\n\nCallable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nCallable[[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nget_unit_square(color=ManimColor('#FFFF00'),opacity=0.3,stroke_width=3)[source]\u00b6\n\nReturns a unit square for the current NumberPlane.Parameters:color(ParsableManimColor|Iterable[ParsableManimColor]) \u2013 The string of the hex color code of the color wanted.opacity(float) \u2013 The opacity of the squarestroke_width(float) \u2013 The stroke_width in pixels of the border of the squareReturn type:Square\n\nReturns a unit square for the current NumberPlane.\n\nParameters:\n\ncolor(ParsableManimColor|Iterable[ParsableManimColor]) \u2013 The string of the hex color code of the color wanted.opacity(float) \u2013 The opacity of the squarestroke_width(float) \u2013 The stroke_width in pixels of the border of the square\n\ncolor(ParsableManimColor|Iterable[ParsableManimColor]) \u2013 The string of the hex color code of the color wanted.\n\ncolor(ParsableManimColor|Iterable[ParsableManimColor]) \u2013 The string of the hex color code of the color wanted.\n\nopacity(float) \u2013 The opacity of the square\n\nopacity(float) \u2013 The opacity of the square\n\nstroke_width(float) \u2013 The stroke_width in pixels of the border of the square\n\nstroke_width(float) \u2013 The stroke_width in pixels of the border of the square\n\nReturn type:\n\nSquare\n\nSquare\n\nget_vector_movement(func)[source]\u00b6\n\nThis method returns an animation that moves a mobject\nin \u201cself.moving_vectors\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes.Parameters:func(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.Returns:The animation of the movement.Return type:Animation\n\nThis method returns an animation that moves a mobject\nin \u201cself.moving_vectors\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes.\n\nParameters:\n\nfunc(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.\n\nfunc(MappingFunction) \u2013 The function that determines where the .target of\nthe moving mobject goes.\n\nReturns:\n\nThe animation of the movement.\n\nThe animation of the movement.\n\nReturn type:\n\nAnimation\n\nAnimation\n\nsetup()[source]\u00b6\n\nThis is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called.Return type:None\n\nThis is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called.\n\nReturn type:\n\nNone\n\nNone\n\nwrite_vector_coordinates(vector,**kwargs)[source]\u00b6\n\nReturns a column matrix indicating the vector coordinates,\nafter writing them to the screen, and adding them to the\nspecial list self.foreground_mobjectsParameters:vector(Vector) \u2013 The arrow representing the vector.**kwargs(Any) \u2013 Any valid keyword arguments of VectorScene.write_vector_coordinatesReturns:The column matrix representing the vector.Return type:Matrix\n\nReturns a column matrix indicating the vector coordinates,\nafter writing them to the screen, and adding them to the\nspecial list self.foreground_mobjects\n\nParameters:\n\nvector(Vector) \u2013 The arrow representing the vector.**kwargs(Any) \u2013 Any valid keyword arguments of VectorScene.write_vector_coordinates\n\nvector(Vector) \u2013 The arrow representing the vector.\n\nvector(Vector) \u2013 The arrow representing the vector.\n\n**kwargs(Any) \u2013 Any valid keyword arguments of VectorScene.write_vector_coordinates\n\n**kwargs(Any) \u2013 Any valid keyword arguments of VectorScene.write_vector_coordinates\n\nReturns:\n\nThe column matrix representing the vector.\n\nThe column matrix representing the vector.\n\nReturn type:\n\nMatrix\n\nMatrix",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLinearTransformationSceneExample(LinearTransformationScene):def__init__(self,**kwargs):LinearTransformationScene.__init__(self,show_coordinates=True,leave_ghost_vectors=True,**kwargs)defconstruct(self):matrix=[[1,1],[0,1]]self.apply_matrix(matrix)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LinearTransformationSceneExample(LinearTransformationScene):\n    def __init__(self, **kwargs):\n        LinearTransformationScene.__init__(\n            self,\n            show_coordinates=True,\n            leave_ghost_vectors=True,\n            **kwargs\n        )\n\n    def construct(self):\n        matrix = [[1, 1], [0, 1]]\n        self.apply_matrix(matrix)\n        self.wait()",
+      "language": "python",
+      "context": "Example: LinearTransformationSceneExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LinearTransformationScene",
+      "class_name": null,
+      "parameters": [
+        "include_background_plane=True"
+      ],
+      "return_type": null,
+      "description": "Bases:VectorScene"
+    },
+    {
+      "name": "add_background_mobject",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Adds the mobjects to the special list\nself.background_mobjects."
+    },
+    {
+      "name": "add_foreground_mobject",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Adds the mobjects to the special list\nself.foreground_mobjects."
+    },
+    {
+      "name": "add_moving_mobject",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Adds the mobject to the special list\nself.moving_mobject, and adds a property\nto the mobject called mobject.target, which\nkeeps track of what the mobject will move to\nor become etc."
+    },
+    {
+      "name": "add_special_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mob_list"
+      ],
+      "return_type": null,
+      "description": "Adds mobjects to a separate list that can be tracked,\nif these mobjects have some extra importance."
+    },
+    {
+      "name": "add_title",
+      "class_name": null,
+      "parameters": [
+        "title"
+      ],
+      "return_type": null,
+      "description": "Adds a title, after scaling it, adding a background rectangle,\nmoving it to the top and adding it to foreground_mobjects adding\nit as a local variable of self. Returns the Scene."
+    },
+    {
+      "name": "add_transformable_label",
+      "class_name": null,
+      "parameters": [
+        "vector"
+      ],
+      "return_type": null,
+      "description": "Method for creating, and animating the addition of\na transformable label for the vector."
+    },
+    {
+      "name": "add_transformable_mobject",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Adds the mobjects to the special list\nself.transformable_mobjects."
+    },
+    {
+      "name": "add_unit_square",
+      "class_name": null,
+      "parameters": [
+        "animate=False"
+      ],
+      "return_type": null,
+      "description": "Adds a unit square to the scene via\nself.get_unit_square."
+    },
+    {
+      "name": "add_vector",
+      "class_name": null,
+      "parameters": [
+        "vector"
+      ],
+      "return_type": null,
+      "description": "Adds a vector to the scene, and puts it in the special\nlist self.moving_vectors."
+    },
+    {
+      "name": "apply_function",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Applies the given function to each of the mobjects in\nself.transformable_mobjects, and plays the animation showing\nthis."
+    },
+    {
+      "name": "apply_inverse",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "This method applies the linear transformation\nrepresented by the inverse of the passed matrix\nto the number plane, and each vector/similar mobject on it."
+    },
+    {
+      "name": "apply_inverse_transpose",
+      "class_name": null,
+      "parameters": [
+        "t_matrix"
+      ],
+      "return_type": null,
+      "description": "Applies the inverse of the transformation represented\nby the given transposed matrix to the number plane and each\nvector/similar mobject on it."
+    },
+    {
+      "name": "apply_matrix",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Applies the transformation represented by the\ngiven matrix to the number plane, and each vector/similar\nmobject on it."
+    },
+    {
+      "name": "apply_nonlinear_transformation",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Applies the non-linear transformation represented\nby the given function to the number plane and each\nvector/similar mobject on it."
+    },
+    {
+      "name": "apply_transposed_matrix",
+      "class_name": null,
+      "parameters": [
+        "transposed_matrix"
+      ],
+      "return_type": null,
+      "description": "Applies the transformation represented by the\ngiven transposed matrix to the number plane,\nand each vector/similar mobject on it."
+    },
+    {
+      "name": "get_ghost_vectors",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns all ghost vectors ever added toself. Each element is aVGroupof\ntwo ghost vectors."
+    },
+    {
+      "name": "get_matrix_transformation",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Returns a function corresponding to the linear\ntransformation represented by the matrix passed."
+    },
+    {
+      "name": "get_moving_mobject_movement",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "This method returns an animation that moves a mobject\nin \u201cself.moving_mobjects\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes."
+    },
+    {
+      "name": "get_piece_movement",
+      "class_name": null,
+      "parameters": [
+        "pieces"
+      ],
+      "return_type": null,
+      "description": "This method returns an animation that moves an arbitrary\nmobject in \u201cpieces\u201d to its corresponding .target value.\nIf self.leave_ghost_vectors is True, ghosts of the original\npositions/mobjects are left on screen"
+    },
+    {
+      "name": "get_transformable_label_movement",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This method returns an animation that moves all labels\nin \u201cself.transformable_labels\u201d to its corresponding .target ."
+    },
+    {
+      "name": "get_transposed_matrix_transformation",
+      "class_name": null,
+      "parameters": [
+        "transposed_matrix"
+      ],
+      "return_type": null,
+      "description": "Returns a function corresponding to the linear\ntransformation represented by the transposed\nmatrix passed."
+    },
+    {
+      "name": "get_unit_square",
+      "class_name": null,
+      "parameters": [
+        "color=ManimColor('#FFFF00')"
+      ],
+      "return_type": null,
+      "description": "Returns a unit square for the current NumberPlane."
+    },
+    {
+      "name": "get_vector_movement",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "This method returns an animation that moves a mobject\nin \u201cself.moving_vectors\u201d  to its corresponding .target value.\nfunc is a function that determines where the .target goes."
+    },
+    {
+      "name": "setup",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This is meant to be implemented by any scenes which\nare commonly subclassed, and have some common setup\ninvolved before the construct method is called."
+    },
+    {
+      "name": "write_vector_coordinates",
+      "class_name": null,
+      "parameters": [
+        "vector"
+      ],
+      "return_type": null,
+      "description": "Returns a column matrix indicating the vector coordinates,\nafter writing them to the screen, and adding them to the\nspecial list self.foreground_mobjects"
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VGroup",
+    "Tex",
+    "Transform",
+    "MathTex",
+    "Indicate",
+    "Arrow",
+    "NumberPlane",
+    "Scene",
+    "Matrix",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

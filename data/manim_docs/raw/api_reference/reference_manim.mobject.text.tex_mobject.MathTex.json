@@ -1,0 +1,82 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.tex_mobject.MathTex.html",
+  "title": "MathTex\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MathTex\u00b6\n\nQualified name:manim.mobject.text.tex\\_mobject.MathTex\n\nclassMathTex(*tex_strings,arg_separator='',substrings_to_isolate=None,tex_to_color_map=None,tex_environment='align*',**kwargs)[source]\u00b6\n\nBases:SingleStringMathTexA string compiled with LaTeX in math mode.ExamplesExample: Formula\u00b6frommanimimport*classFormula(Scene):defconstruct(self):t=MathTex(r\"\\int_a^b f'(x) dx = f(b)- f(a)\")self.add(t)class Formula(Scene):\n    def construct(self):\n        t = MathTex(r\"\\int_a^b f'(x) dx = f(b)- f(a)\")\n        self.add(t)TestsCheck that creating aMathTexworks:>>>MathTex('a^2 + b^2 = c^2')MathTex('a^2 + b^2 = c^2')Check that double brace group splitting works correctly:>>>t1=MathTex('{{ a }} + {{ b }} = {{ c }}')>>>len(t1.submobjects)5>>>t2=MathTex(r\"\\frac{1}{a+b\\sqrt{2}}\")>>>len(t2.submobjects)1Methodsget_part_by_texget_parts_by_texindex_of_partindex_of_part_by_texset_color_by_texset_color_by_tex_to_color_mapset_opacity_by_texSets the opacity of the tex specified.sort_alphabeticallyAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizeThe font size of the tex mobject.hash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:tex_strings(str)arg_separator(str)substrings_to_isolate(Iterable[str]|None)tex_to_color_map(dict[str,ParsableManimColor]|None)tex_environment(str|None)kwargs(Any)_break_up_by_substrings()[source]\u00b6Reorganize existing submobjects one layer\ndeeper based on the structure of tex_strings (as a list\nof tex_strings)Return type:Self_original__init__(*tex_strings,arg_separator='',substrings_to_isolate=None,tex_to_color_map=None,tex_environment='align*',**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:tex_strings(str)arg_separator(str)substrings_to_isolate(Iterable[str]|None)tex_to_color_map(dict[str,TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]|None)tex_environment(str|None)kwargs(Any)set_opacity_by_tex(tex,opacity=0.5,remaining_opacity=None,**kwargs)[source]\u00b6Sets the opacity of the tex specified. If \u2018remaining_opacity\u2019 is specified,\nthen the remaining tex will be set to that opacity.Parameters:tex(str) \u2013 The tex to set the opacity of.opacity(float) \u2013 Default 0.5. The opacity to set the tex toremaining_opacity(float|None) \u2013 Default None. The opacity to set the remaining tex to.\nIf None, then the remaining tex will not be changedkwargs(Any)Return type:Self\n\nBases:SingleStringMathTex\n\nA string compiled with LaTeX in math mode.\n\nExamples\n\nExample: Formula\u00b6\n\nTests\n\nCheck that creating aMathTexworks:\n\nCheck that double brace group splitting works correctly:\n\nMethods\n\nget_part_by_tex\n\nget_parts_by_tex\n\nindex_of_part\n\nindex_of_part_by_tex\n\nset_color_by_tex\n\nset_color_by_tex_to_color_map\n\nset_opacity_by_tex\n\nSets the opacity of the tex specified.\n\nsort_alphabetically\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nThe font size of the tex mobject.\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ntex_strings(str)arg_separator(str)substrings_to_isolate(Iterable[str]|None)tex_to_color_map(dict[str,ParsableManimColor]|None)tex_environment(str|None)kwargs(Any)\n\ntex_strings(str)\n\ntex_strings(str)\n\narg_separator(str)\n\narg_separator(str)\n\nsubstrings_to_isolate(Iterable[str]|None)\n\nsubstrings_to_isolate(Iterable[str]|None)\n\ntex_to_color_map(dict[str,ParsableManimColor]|None)\n\ntex_to_color_map(dict[str,ParsableManimColor]|None)\n\ntex_environment(str|None)\n\ntex_environment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_break_up_by_substrings()[source]\u00b6\n\nReorganize existing submobjects one layer\ndeeper based on the structure of tex_strings (as a list\nof tex_strings)Return type:Self\n\nReorganize existing submobjects one layer\ndeeper based on the structure of tex_strings (as a list\nof tex_strings)\n\nReturn type:\n\nSelf\n\nSelf\n\n_original__init__(*tex_strings,arg_separator='',substrings_to_isolate=None,tex_to_color_map=None,tex_environment='align*',**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:tex_strings(str)arg_separator(str)substrings_to_isolate(Iterable[str]|None)tex_to_color_map(dict[str,TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]|None)tex_environment(str|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntex_strings(str)arg_separator(str)substrings_to_isolate(Iterable[str]|None)tex_to_color_map(dict[str,TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]|None)tex_environment(str|None)kwargs(Any)\n\ntex_strings(str)\n\ntex_strings(str)\n\narg_separator(str)\n\narg_separator(str)\n\nsubstrings_to_isolate(Iterable[str]|None)\n\nsubstrings_to_isolate(Iterable[str]|None)\n\ntex_to_color_map(dict[str,TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]|None)\n\ntex_to_color_map(dict[str,TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]|None)\n\ntex_environment(str|None)\n\ntex_environment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\nset_opacity_by_tex(tex,opacity=0.5,remaining_opacity=None,**kwargs)[source]\u00b6\n\nSets the opacity of the tex specified. If \u2018remaining_opacity\u2019 is specified,\nthen the remaining tex will be set to that opacity.Parameters:tex(str) \u2013 The tex to set the opacity of.opacity(float) \u2013 Default 0.5. The opacity to set the tex toremaining_opacity(float|None) \u2013 Default None. The opacity to set the remaining tex to.\nIf None, then the remaining tex will not be changedkwargs(Any)Return type:Self\n\nSets the opacity of the tex specified. If \u2018remaining_opacity\u2019 is specified,\nthen the remaining tex will be set to that opacity.\n\nParameters:\n\ntex(str) \u2013 The tex to set the opacity of.opacity(float) \u2013 Default 0.5. The opacity to set the tex toremaining_opacity(float|None) \u2013 Default None. The opacity to set the remaining tex to.\nIf None, then the remaining tex will not be changedkwargs(Any)\n\ntex(str) \u2013 The tex to set the opacity of.\n\ntex(str) \u2013 The tex to set the opacity of.\n\nopacity(float) \u2013 Default 0.5. The opacity to set the tex to\n\nopacity(float) \u2013 Default 0.5. The opacity to set the tex to\n\nremaining_opacity(float|None) \u2013 Default None. The opacity to set the remaining tex to.\nIf None, then the remaining tex will not be changed\n\nremaining_opacity(float|None) \u2013 Default None. The opacity to set the remaining tex to.\nIf None, then the remaining tex will not be changed\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classFormula(Scene):defconstruct(self):t=MathTex(r\"\\int_a^b f'(x) dx = f(b)- f(a)\")self.add(t)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Formula(Scene):\n    def construct(self):\n        t = MathTex(r\"\\int_a^b f'(x) dx = f(b)- f(a)\")\n        self.add(t)",
+      "language": "python",
+      "context": "Example: Formula\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>MathTex('a^2 + b^2 = c^2')MathTex('a^2 + b^2 = c^2')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>t1=MathTex('{{ a }} + {{ b }} = {{ c }}')>>>len(t1.submobjects)5>>>t2=MathTex(r\"\\frac{1}{a+b\\sqrt{2}}\")>>>len(t2.submobjects)1",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MathTex",
+      "class_name": null,
+      "parameters": [
+        "*tex_strings"
+      ],
+      "return_type": null,
+      "description": "Bases:SingleStringMathTex"
+    },
+    {
+      "name": "_break_up_by_substrings",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Reorganize existing submobjects one layer\ndeeper based on the structure of tex_strings (as a list\nof tex_strings)"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*tex_strings"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "set_opacity_by_tex",
+      "class_name": null,
+      "parameters": [
+        "tex"
+      ],
+      "return_type": null,
+      "description": "Sets the opacity of the tex specified. If \u2018remaining_opacity\u2019 is specified,\nthen the remaining tex will be set to that opacity."
+    }
+  ],
+  "related_classes": [
+    "MathTex",
+    "Scene",
+    "Tex"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "math",
+    "animation"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.html",
+  "title": "transform\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "transform\u00b6\n\nAnimations transforming one mobject into another.\n\nClasses\n\nApplyComplexFunction\n\nApplyFunction\n\nApplyMatrix\n\nApplies a matrix transform to an mobject.\n\nApplyMethod\n\nAnimates a mobject by applying a method.\n\nApplyPointwiseFunction\n\nAnimation that applies a pointwise function to a mobject.\n\nApplyPointwiseFunctionToCenter\n\nClockwiseTransform\n\nTransforms the points of a mobject along a clockwise oriented arc.\n\nCounterclockwiseTransform\n\nTransforms the points of a mobject along a counterclockwise oriented arc.\n\nCyclicReplace\n\nAn animation moving mobjects cyclically.\n\nFadeToColor\n\nAnimation that changes color of a mobject.\n\nFadeTransform\n\nFades one mobject into another.\n\nFadeTransformPieces\n\nFades submobjects of one mobject into submobjects of another one.\n\nMoveToTarget\n\nTransforms a mobject to the mobject stored in itstargetattribute.\n\nReplacementTransform\n\nReplaces and morphs a mobject into a target mobject.\n\nRestore\n\nTransforms a mobject to its last saved state.\n\nScaleInPlace\n\nAnimation that scales a mobject by a certain factor.\n\nShrinkToCenter\n\nAnimation that makes a mobject shrink to center.\n\nSwap\n\nTransform\n\nA Transform transforms a Mobject into a target Mobject.\n\nTransformAnimations\n\nTransformFromCopy\n\nPerforms a reversed Transform",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "MoveTo",
+    "ScaleInPlace",
+    "Transform",
+    "ReplacementTransform",
+    "Matrix",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

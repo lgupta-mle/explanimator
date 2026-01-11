@@ -1,0 +1,11 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.specialized.html",
+  "title": "specialized\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "specialized\u00b6\n\nClasses\n\nBroadcast\n\nBroadcast a mobject starting from aninitial_width, up to the actual size of the mobject.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": []
+}

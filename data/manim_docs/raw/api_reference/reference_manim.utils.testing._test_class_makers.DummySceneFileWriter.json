@@ -1,0 +1,93 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.testing._test_class_makers.DummySceneFileWriter.html",
+  "title": "DummySceneFileWriter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DummySceneFileWriter\u00b6\n\nQualified name:manim.utils.testing.\\_test\\_class\\_makers.DummySceneFileWriter\n\nclassDummySceneFileWriter(renderer,scene_name,**kwargs)[source]\u00b6\n\nBases:SceneFileWriterDelegate of SceneFileWriter used to test the frames.Methodsadd_partial_movie_fileAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.begin_animationUsed internally by manim to stream the animation to FFMPEG for displaying or writing to a file.clean_cacheWill clean the cache by removing the oldest partial_movie_files.combine_to_movieUsed internally by Manim to combine the separate partial movie files that make up a Scene into a single video file for that Scene.combine_to_section_videosConcatenate partial movie files for each section.end_animationInternally used by Manim to stop streaming to FFMPEG gracefully.init_output_directoriesInitialise output directories.write_frameUsed internally by Manim to write a frame to the FFMPEG input buffer.Attributesforce_output_as_scene_nameParameters:renderer(CairoRenderer|OpenGLRenderer)scene_name(str)kwargs(Any)add_partial_movie_file(hash_animation)[source]\u00b6Adds a new partial movie file path toscene.partial_movie_filesand current section from a hash.This method will compute the path from the hash. In addition to that it\nadds the new animation to the current section.Parameters:hash_animation(str|None) \u2013 Hash of the animation.Return type:Nonebegin_animation(allow_write=True,file_path=None)[source]\u00b6Used internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.file_path(StrPath|None)Return type:Anyclean_cache()[source]\u00b6Will clean the cache by removing the oldest partial_movie_files.Return type:Nonecombine_to_movie()[source]\u00b6Used internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene.Return type:Nonecombine_to_section_videos()[source]\u00b6Concatenate partial movie files for each section.Return type:Noneend_animation(allow_write=False)[source]\u00b6Internally used by Manim to stop streaming to FFMPEG gracefully.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.Return type:Noneinit_output_directories(scene_name)[source]\u00b6Initialise output directories.NotesThe directories are read fromconfig, for exampleconfig['media_dir'].  If the target directories don\u2019t already\nexist, they will be created.Parameters:scene_name(str)Return type:Nonewrite_frame(frame_or_renderer,num_frames=1)[source]\u00b6Used internally by Manim to write a frame to the FFMPEG input buffer.Parameters:frame_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.num_frames(int) \u2013 The number of times to write frame.Return type:None\n\nBases:SceneFileWriter\n\nDelegate of SceneFileWriter used to test the frames.\n\nMethods\n\nadd_partial_movie_file\n\nAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.\n\nbegin_animation\n\nUsed internally by manim to stream the animation to FFMPEG for displaying or writing to a file.\n\nclean_cache\n\nWill clean the cache by removing the oldest partial_movie_files.\n\ncombine_to_movie\n\nUsed internally by Manim to combine the separate partial movie files that make up a Scene into a single video file for that Scene.\n\ncombine_to_section_videos\n\nConcatenate partial movie files for each section.\n\nend_animation\n\nInternally used by Manim to stop streaming to FFMPEG gracefully.\n\ninit_output_directories\n\nInitialise output directories.\n\nwrite_frame\n\nUsed internally by Manim to write a frame to the FFMPEG input buffer.\n\nAttributes\n\nforce_output_as_scene_name\n\nParameters:\n\nrenderer(CairoRenderer|OpenGLRenderer)scene_name(str)kwargs(Any)\n\nrenderer(CairoRenderer|OpenGLRenderer)\n\nrenderer(CairoRenderer|OpenGLRenderer)\n\nscene_name(str)\n\nscene_name(str)\n\nkwargs(Any)\n\nkwargs(Any)\n\nadd_partial_movie_file(hash_animation)[source]\u00b6\n\nAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.This method will compute the path from the hash. In addition to that it\nadds the new animation to the current section.Parameters:hash_animation(str|None) \u2013 Hash of the animation.Return type:None\n\nAdds a new partial movie file path toscene.partial_movie_filesand current section from a hash.\n\nThis method will compute the path from the hash. In addition to that it\nadds the new animation to the current section.\n\nParameters:\n\nhash_animation(str|None) \u2013 Hash of the animation.\n\nhash_animation(str|None) \u2013 Hash of the animation.\n\nReturn type:\n\nNone\n\nNone\n\nbegin_animation(allow_write=True,file_path=None)[source]\u00b6\n\nUsed internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.file_path(StrPath|None)Return type:Any\n\nUsed internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file.\n\nParameters:\n\nallow_write(bool) \u2013 Whether or not to write to a video file.file_path(StrPath|None)\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nfile_path(StrPath|None)\n\nfile_path(StrPath|None)\n\nReturn type:\n\nAny\n\nAny\n\nclean_cache()[source]\u00b6\n\nWill clean the cache by removing the oldest partial_movie_files.Return type:None\n\nWill clean the cache by removing the oldest partial_movie_files.\n\nReturn type:\n\nNone\n\nNone\n\ncombine_to_movie()[source]\u00b6\n\nUsed internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene.Return type:None\n\nUsed internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene.\n\nReturn type:\n\nNone\n\nNone\n\ncombine_to_section_videos()[source]\u00b6\n\nConcatenate partial movie files for each section.Return type:None\n\nConcatenate partial movie files for each section.\n\nReturn type:\n\nNone\n\nNone\n\nend_animation(allow_write=False)[source]\u00b6\n\nInternally used by Manim to stop streaming to FFMPEG gracefully.Parameters:allow_write(bool) \u2013 Whether or not to write to a video file.Return type:None\n\nInternally used by Manim to stop streaming to FFMPEG gracefully.\n\nParameters:\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nallow_write(bool) \u2013 Whether or not to write to a video file.\n\nReturn type:\n\nNone\n\nNone\n\ninit_output_directories(scene_name)[source]\u00b6\n\nInitialise output directories.NotesThe directories are read fromconfig, for exampleconfig['media_dir'].  If the target directories don\u2019t already\nexist, they will be created.Parameters:scene_name(str)Return type:None\n\nInitialise output directories.\n\nNotes\n\nThe directories are read fromconfig, for exampleconfig['media_dir'].  If the target directories don\u2019t already\nexist, they will be created.\n\nParameters:\n\nscene_name(str)\n\nscene_name(str)\n\nReturn type:\n\nNone\n\nNone\n\nwrite_frame(frame_or_renderer,num_frames=1)[source]\u00b6\n\nUsed internally by Manim to write a frame to the FFMPEG input buffer.Parameters:frame_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.num_frames(int) \u2013 The number of times to write frame.Return type:None\n\nUsed internally by Manim to write a frame to the FFMPEG input buffer.\n\nParameters:\n\nframe_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.num_frames(int) \u2013 The number of times to write frame.\n\nframe_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.\n\nframe_or_renderer(PixelArray|OpenGLRenderer) \u2013 Pixel array of the frame.\n\nnum_frames(int) \u2013 The number of times to write frame.\n\nnum_frames(int) \u2013 The number of times to write frame.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "DummySceneFileWriter",
+      "class_name": null,
+      "parameters": [
+        "renderer"
+      ],
+      "return_type": null,
+      "description": "Bases:SceneFileWriter"
+    },
+    {
+      "name": "add_partial_movie_file",
+      "class_name": null,
+      "parameters": [
+        "hash_animation"
+      ],
+      "return_type": null,
+      "description": "Adds a new partial movie file path toscene.partial_movie_filesand current section from a hash."
+    },
+    {
+      "name": "begin_animation",
+      "class_name": null,
+      "parameters": [
+        "allow_write=True"
+      ],
+      "return_type": null,
+      "description": "Used internally by manim to stream the animation to FFMPEG for\ndisplaying or writing to a file."
+    },
+    {
+      "name": "clean_cache",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Will clean the cache by removing the oldest partial_movie_files."
+    },
+    {
+      "name": "combine_to_movie",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Used internally by Manim to combine the separate\npartial movie files that make up a Scene into a single\nvideo file for that Scene."
+    },
+    {
+      "name": "combine_to_section_videos",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Concatenate partial movie files for each section."
+    },
+    {
+      "name": "end_animation",
+      "class_name": null,
+      "parameters": [
+        "allow_write=False"
+      ],
+      "return_type": null,
+      "description": "Internally used by Manim to stop streaming to FFMPEG gracefully."
+    },
+    {
+      "name": "init_output_directories",
+      "class_name": null,
+      "parameters": [
+        "scene_name"
+      ],
+      "return_type": null,
+      "description": "Initialise output directories."
+    },
+    {
+      "name": "write_frame",
+      "class_name": null,
+      "parameters": [
+        "frame_or_renderer"
+      ],
+      "return_type": null,
+      "description": "Used internally by Manim to write a frame to the FFMPEG input buffer."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Write"
+  ],
+  "tags": [
+    "animation",
+    "timing"
+  ]
+}

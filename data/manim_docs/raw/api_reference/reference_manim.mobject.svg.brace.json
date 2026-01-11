@@ -1,0 +1,18 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.brace.html",
+  "title": "brace\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "brace\u00b6\n\nMobject representing curly braces.\n\nClasses\n\nArcBrace\n\nCreates aBracethat wraps around anArc.\n\nBrace\n\nTakes a mobject and draws a brace adjacent to it.\n\nBraceBetweenPoints\n\nSimilar to Brace, but instead of taking a mobject it uses 2 points to place the brace.\n\nBraceLabel\n\nCreate a brace with a label attached.\n\nBraceText\n\nCreate a brace with a text label attached.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Create",
+    "Text",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "text"
+  ]
+}

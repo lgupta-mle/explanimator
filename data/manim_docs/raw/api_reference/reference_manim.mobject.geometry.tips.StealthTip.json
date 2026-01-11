@@ -1,0 +1,47 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.tips.StealthTip.html",
+  "title": "StealthTip\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "StealthTip\u00b6\n\nQualified name:manim.mobject.geometry.tips.StealthTip\n\nclassStealthTip(fill_opacity=1,stroke_width=3,length=0.175,start_angle=3.141592653589793,**kwargs)[source]\u00b6\n\nBases:ArrowTip\u2018Stealth\u2019 fighter / kite arrow shape.Naming is inspired by the correspondingTikZ arrow shape.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridesbaseThe base point of the arrow tip.colordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.lengthThe length of the arrow tip.n_points_per_curvesheen_factorstroke_colortip_angleThe angle of the arrow tip.tip_pointThe tip point of the arrow tip.vectorThe vector pointing from the base point to the tip point.widthThe width of the mobject.Parameters:fill_opacity(float)stroke_width(float)length(float)start_angle(float)kwargs(Any)_original__init__(fill_opacity=1,stroke_width=3,length=0.175,start_angle=3.141592653589793,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:fill_opacity(float)stroke_width(float)length(float)start_angle(float)kwargs(Any)propertylength:float\u00b6The length of the arrow tip.In this case, the length is computed as the height of\nthe triangle encompassing the stealth tip (otherwise,\nthe tip is scaled too large).\n\nBases:ArrowTip\n\n\u2018Stealth\u2019 fighter / kite arrow shape.\n\nNaming is inspired by the correspondingTikZ arrow shape.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\nbase\n\nThe base point of the arrow tip.\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nlength\n\nThe length of the arrow tip.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\ntip_angle\n\nThe angle of the arrow tip.\n\ntip_point\n\nThe tip point of the arrow tip.\n\nvector\n\nThe vector pointing from the base point to the tip point.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nfill_opacity(float)stroke_width(float)length(float)start_angle(float)kwargs(Any)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nlength(float)\n\nlength(float)\n\nstart_angle(float)\n\nstart_angle(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(fill_opacity=1,stroke_width=3,length=0.175,start_angle=3.141592653589793,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:fill_opacity(float)stroke_width(float)length(float)start_angle(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfill_opacity(float)stroke_width(float)length(float)start_angle(float)kwargs(Any)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nlength(float)\n\nlength(float)\n\nstart_angle(float)\n\nstart_angle(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\npropertylength:float\u00b6\n\nThe length of the arrow tip.In this case, the length is computed as the height of\nthe triangle encompassing the stealth tip (otherwise,\nthe tip is scaled too large).\n\nThe length of the arrow tip.\n\nIn this case, the length is computed as the height of\nthe triangle encompassing the stealth tip (otherwise,\nthe tip is scaled too large).",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "StealthTip",
+      "class_name": null,
+      "parameters": [
+        "fill_opacity=1"
+      ],
+      "return_type": null,
+      "description": "Bases:ArrowTip"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "fill_opacity=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "length",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The length of the arrow tip."
+    }
+  ],
+  "related_classes": [
+    "Arrow"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

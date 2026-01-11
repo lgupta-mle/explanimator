@@ -1,0 +1,193 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.svg_mobject.SVGMobject.html",
+  "title": "SVGMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SVGMobject\u00b6\n\nQualified name:manim.mobject.svg.svg\\_mobject.SVGMobject\n\nclassSVGMobject(file_name=None,should_center=True,height=2,width=None,color=None,opacity=None,fill_color=None,fill_opacity=None,stroke_color=None,stroke_opacity=None,stroke_width=None,svg_default=None,path_string_config=None,use_svg_cache=True,**kwargs)[source]\u00b6\n\nBases:VMobjectA vectorized mobject created from importing an SVG file.Parameters:file_name(str|os.PathLike|None) \u2013 The path to the SVG file.should_center(bool) \u2013 Whether or not the mobject should be centered after\nbeing imported.height(float|None) \u2013 The target height of the mobject, set to 2 Manim units by default.\nIf the height and width are both set toNone, the mobject\nis imported without being scaled.width(float|None) \u2013 The target width of the mobject, set toNoneby default. If\nthe height and the width are both set toNone, the mobject\nis imported without being scaled.color(ManimColor) \u2013 The color (both fill and stroke color) of the mobject. IfNone(the default), the colors set in the SVG file\nare used.opacity(float|None) \u2013 The opacity (both fill and stroke opacity) of the mobject.\nIfNone(the default), the opacity set in the SVG file\nis used.fill_color(ParsableManimColor|None) \u2013 The fill color of the mobject. IfNone(the default),\nthe fill colors set in the SVG file are used.fill_opacity(float|None) \u2013 The fill opacity of the mobject. IfNone(the default),\nthe fill opacities set in the SVG file are used.stroke_color(ParsableManimColor|None) \u2013 The stroke color of the mobject. IfNone(the default),\nthe stroke colors set in the SVG file are used.stroke_opacity(float|None) \u2013 The stroke opacity of the mobject. IfNone(the default),\nthe stroke opacities set in the SVG file are used.stroke_width(float|None) \u2013 The stroke width of the mobject. IfNone(the default),\nthe stroke width values set in the SVG file are used.svg_default(dict|None) \u2013 A dictionary in which fallback values for unspecified\nproperties of elements in the SVG file are defined. IfNone(the default),color,opacity,fill_colorfill_opacity,stroke_color, andstroke_opacityare set toNone, andstroke_widthis set to 0.path_string_config(dict|None) \u2013 A dictionary with keyword arguments passed toVMobjectFromSVGPathused for importing path elements.\nIfNone(the default), no additional arguments are passed.use_svg_cache(bool) \u2013 If True (default), the svg inputs (e.g. file_name, settings)\nwill be used as a key and a copy of the created mobject will\nbe saved using that key to be quickly retrieved if the same\ninputs need be processed later. For large SVGs which are used\nonly once, this can be omitted to improve performance.kwargs(Any) \u2013 Further arguments passed to the parent class.Methodsapply_style_to_mobjectApply SVG style information to the converted mobject.ellipse_to_mobjectConvert an ellipse or circle element to a vectorized mobject.generate_config_style_dictGenerate a dictionary holding the default style information.generate_mobjectParse the SVG and translate its elements to submobjects.get_file_pathSearch for an existing file based on the specified file name.get_mobjects_fromConvert the elements of the SVG to a list of mobjects.handle_transformApply SVG transformations to the converted mobject.init_svg_mobjectChecks whether the SVG has already been imported and generates it if not.line_to_mobjectConvert a line element to a vectorized mobject.modify_xml_treeModifies the SVG element tree to include default style information.move_into_positionScale and move the generated mobject into position.path_to_mobjectConvert a path element to a vectorized mobject.polygon_to_mobjectConvert a polygon element to a vectorized mobject.polyline_to_mobjectConvert a polyline element to a vectorized mobject.rect_to_mobjectConvert a rectangle element to a vectorized mobject.text_to_mobjectConvert a text element to a vectorized mobject.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onehash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(file_name=None,should_center=True,height=2,width=None,color=None,opacity=None,fill_color=None,fill_opacity=None,stroke_color=None,stroke_opacity=None,stroke_width=None,svg_default=None,path_string_config=None,use_svg_cache=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:file_name(str|os.PathLike|None)should_center(bool)height(float|None)width(float|None)color(ParsableManimColor|None)opacity(float|None)fill_color(ParsableManimColor|None)fill_opacity(float|None)stroke_color(ParsableManimColor|None)stroke_opacity(float|None)stroke_width(float|None)svg_default(dict|None)path_string_config(dict|None)use_svg_cache(bool)kwargs(Any)staticapply_style_to_mobject(mob,shape)[source]\u00b6Apply SVG style information to the converted mobject.Parameters:mob(VMobject) \u2013 The converted mobject.shape(GraphicObject) \u2013 The parsed SVG element.Return type:VMobjectstaticellipse_to_mobject(ellipse)[source]\u00b6Convert an ellipse or circle element to a vectorized mobject.Parameters:ellipse(Ellipse|Circle) \u2013 The parsed SVG ellipse or circle.Return type:Circlegenerate_config_style_dict()[source]\u00b6Generate a dictionary holding the default style information.Return type:dict[str, str]generate_mobject()[source]\u00b6Parse the SVG and translate its elements to submobjects.Return type:Noneget_file_path()[source]\u00b6Search for an existing file based on the specified file name.Return type:Pathget_mobjects_from(svg)[source]\u00b6Convert the elements of the SVG to a list of mobjects.Parameters:svg(SVG) \u2013 The parsed SVG file.Return type:list[VMobject]statichandle_transform(mob,matrix)[source]\u00b6Apply SVG transformations to the converted mobject.Parameters:mob(VMobject) \u2013 The converted mobject.matrix(Matrix) \u2013 The transformation matrix determined from the SVG\ntransformation.Return type:VMobjectpropertyhash_seed:tuple\u00b6A unique hash representing the result of the generated\nmobject points.Used as keys in theSVG_HASH_TO_MOB_MAPcaching dictionary.init_svg_mobject(use_svg_cache)[source]\u00b6Checks whether the SVG has already been imported and\ngenerates it if not.See alsoSVGMobject.generate_mobject()Parameters:use_svg_cache(bool)Return type:Nonestaticline_to_mobject(line)[source]\u00b6Convert a line element to a vectorized mobject.Parameters:line(Line) \u2013 The parsed SVG line.Return type:Linemodify_xml_tree(element_tree)[source]\u00b6Modifies the SVG element tree to include default\nstyle information.Parameters:element_tree(ElementTree) \u2013 The parsed element tree from the SVG file.Return type:ElementTreemove_into_position()[source]\u00b6Scale and move the generated mobject into position.Return type:Nonepath_to_mobject(path)[source]\u00b6Convert a path element to a vectorized mobject.Parameters:path(Path) \u2013 The parsed SVG path.Return type:VMobjectFromSVGPathstaticpolygon_to_mobject(polygon)[source]\u00b6Convert a polygon element to a vectorized mobject.Parameters:polygon(Polygon) \u2013 The parsed SVG polygon.Return type:Polygonpolyline_to_mobject(polyline)[source]\u00b6Convert a polyline element to a vectorized mobject.Parameters:polyline(Polyline) \u2013 The parsed SVG polyline.Return type:VMobjectstaticrect_to_mobject(rect)[source]\u00b6Convert a rectangle element to a vectorized mobject.Parameters:rect(Rect) \u2013 The parsed SVG rectangle.Return type:Rectanglestatictext_to_mobject(text)[source]\u00b6Convert a text element to a vectorized mobject.WarningNot yet implemented.Parameters:text(Text) \u2013 The parsed SVG text.Return type:VMobject\n\nBases:VMobject\n\nA vectorized mobject created from importing an SVG file.\n\nParameters:\n\nfile_name(str|os.PathLike|None) \u2013 The path to the SVG file.should_center(bool) \u2013 Whether or not the mobject should be centered after\nbeing imported.height(float|None) \u2013 The target height of the mobject, set to 2 Manim units by default.\nIf the height and width are both set toNone, the mobject\nis imported without being scaled.width(float|None) \u2013 The target width of the mobject, set toNoneby default. If\nthe height and the width are both set toNone, the mobject\nis imported without being scaled.color(ManimColor) \u2013 The color (both fill and stroke color) of the mobject. IfNone(the default), the colors set in the SVG file\nare used.opacity(float|None) \u2013 The opacity (both fill and stroke opacity) of the mobject.\nIfNone(the default), the opacity set in the SVG file\nis used.fill_color(ParsableManimColor|None) \u2013 The fill color of the mobject. IfNone(the default),\nthe fill colors set in the SVG file are used.fill_opacity(float|None) \u2013 The fill opacity of the mobject. IfNone(the default),\nthe fill opacities set in the SVG file are used.stroke_color(ParsableManimColor|None) \u2013 The stroke color of the mobject. IfNone(the default),\nthe stroke colors set in the SVG file are used.stroke_opacity(float|None) \u2013 The stroke opacity of the mobject. IfNone(the default),\nthe stroke opacities set in the SVG file are used.stroke_width(float|None) \u2013 The stroke width of the mobject. IfNone(the default),\nthe stroke width values set in the SVG file are used.svg_default(dict|None) \u2013 A dictionary in which fallback values for unspecified\nproperties of elements in the SVG file are defined. IfNone(the default),color,opacity,fill_colorfill_opacity,stroke_color, andstroke_opacityare set toNone, andstroke_widthis set to 0.path_string_config(dict|None) \u2013 A dictionary with keyword arguments passed toVMobjectFromSVGPathused for importing path elements.\nIfNone(the default), no additional arguments are passed.use_svg_cache(bool) \u2013 If True (default), the svg inputs (e.g. file_name, settings)\nwill be used as a key and a copy of the created mobject will\nbe saved using that key to be quickly retrieved if the same\ninputs need be processed later. For large SVGs which are used\nonly once, this can be omitted to improve performance.kwargs(Any) \u2013 Further arguments passed to the parent class.\n\nfile_name(str|os.PathLike|None) \u2013 The path to the SVG file.\n\nfile_name(str|os.PathLike|None) \u2013 The path to the SVG file.\n\nshould_center(bool) \u2013 Whether or not the mobject should be centered after\nbeing imported.\n\nshould_center(bool) \u2013 Whether or not the mobject should be centered after\nbeing imported.\n\nheight(float|None) \u2013 The target height of the mobject, set to 2 Manim units by default.\nIf the height and width are both set toNone, the mobject\nis imported without being scaled.\n\nheight(float|None) \u2013 The target height of the mobject, set to 2 Manim units by default.\nIf the height and width are both set toNone, the mobject\nis imported without being scaled.\n\nwidth(float|None) \u2013 The target width of the mobject, set toNoneby default. If\nthe height and the width are both set toNone, the mobject\nis imported without being scaled.\n\nwidth(float|None) \u2013 The target width of the mobject, set toNoneby default. If\nthe height and the width are both set toNone, the mobject\nis imported without being scaled.\n\ncolor(ManimColor) \u2013 The color (both fill and stroke color) of the mobject. IfNone(the default), the colors set in the SVG file\nare used.\n\ncolor(ManimColor) \u2013 The color (both fill and stroke color) of the mobject. IfNone(the default), the colors set in the SVG file\nare used.\n\nopacity(float|None) \u2013 The opacity (both fill and stroke opacity) of the mobject.\nIfNone(the default), the opacity set in the SVG file\nis used.\n\nopacity(float|None) \u2013 The opacity (both fill and stroke opacity) of the mobject.\nIfNone(the default), the opacity set in the SVG file\nis used.\n\nfill_color(ParsableManimColor|None) \u2013 The fill color of the mobject. IfNone(the default),\nthe fill colors set in the SVG file are used.\n\nfill_color(ParsableManimColor|None) \u2013 The fill color of the mobject. IfNone(the default),\nthe fill colors set in the SVG file are used.\n\nfill_opacity(float|None) \u2013 The fill opacity of the mobject. IfNone(the default),\nthe fill opacities set in the SVG file are used.\n\nfill_opacity(float|None) \u2013 The fill opacity of the mobject. IfNone(the default),\nthe fill opacities set in the SVG file are used.\n\nstroke_color(ParsableManimColor|None) \u2013 The stroke color of the mobject. IfNone(the default),\nthe stroke colors set in the SVG file are used.\n\nstroke_color(ParsableManimColor|None) \u2013 The stroke color of the mobject. IfNone(the default),\nthe stroke colors set in the SVG file are used.\n\nstroke_opacity(float|None) \u2013 The stroke opacity of the mobject. IfNone(the default),\nthe stroke opacities set in the SVG file are used.\n\nstroke_opacity(float|None) \u2013 The stroke opacity of the mobject. IfNone(the default),\nthe stroke opacities set in the SVG file are used.\n\nstroke_width(float|None) \u2013 The stroke width of the mobject. IfNone(the default),\nthe stroke width values set in the SVG file are used.\n\nstroke_width(float|None) \u2013 The stroke width of the mobject. IfNone(the default),\nthe stroke width values set in the SVG file are used.\n\nsvg_default(dict|None) \u2013 A dictionary in which fallback values for unspecified\nproperties of elements in the SVG file are defined. IfNone(the default),color,opacity,fill_colorfill_opacity,stroke_color, andstroke_opacityare set toNone, andstroke_widthis set to 0.\n\nsvg_default(dict|None) \u2013 A dictionary in which fallback values for unspecified\nproperties of elements in the SVG file are defined. IfNone(the default),color,opacity,fill_colorfill_opacity,stroke_color, andstroke_opacityare set toNone, andstroke_widthis set to 0.\n\npath_string_config(dict|None) \u2013 A dictionary with keyword arguments passed toVMobjectFromSVGPathused for importing path elements.\nIfNone(the default), no additional arguments are passed.\n\npath_string_config(dict|None) \u2013 A dictionary with keyword arguments passed toVMobjectFromSVGPathused for importing path elements.\nIfNone(the default), no additional arguments are passed.\n\nuse_svg_cache(bool) \u2013 If True (default), the svg inputs (e.g. file_name, settings)\nwill be used as a key and a copy of the created mobject will\nbe saved using that key to be quickly retrieved if the same\ninputs need be processed later. For large SVGs which are used\nonly once, this can be omitted to improve performance.\n\nuse_svg_cache(bool) \u2013 If True (default), the svg inputs (e.g. file_name, settings)\nwill be used as a key and a copy of the created mobject will\nbe saved using that key to be quickly retrieved if the same\ninputs need be processed later. For large SVGs which are used\nonly once, this can be omitted to improve performance.\n\nkwargs(Any) \u2013 Further arguments passed to the parent class.\n\nkwargs(Any) \u2013 Further arguments passed to the parent class.\n\nMethods\n\napply_style_to_mobject\n\nApply SVG style information to the converted mobject.\n\nellipse_to_mobject\n\nConvert an ellipse or circle element to a vectorized mobject.\n\ngenerate_config_style_dict\n\nGenerate a dictionary holding the default style information.\n\ngenerate_mobject\n\nParse the SVG and translate its elements to submobjects.\n\nget_file_path\n\nSearch for an existing file based on the specified file name.\n\nget_mobjects_from\n\nConvert the elements of the SVG to a list of mobjects.\n\nhandle_transform\n\nApply SVG transformations to the converted mobject.\n\ninit_svg_mobject\n\nChecks whether the SVG has already been imported and generates it if not.\n\nline_to_mobject\n\nConvert a line element to a vectorized mobject.\n\nmodify_xml_tree\n\nModifies the SVG element tree to include default style information.\n\nmove_into_position\n\nScale and move the generated mobject into position.\n\npath_to_mobject\n\nConvert a path element to a vectorized mobject.\n\npolygon_to_mobject\n\nConvert a polygon element to a vectorized mobject.\n\npolyline_to_mobject\n\nConvert a polyline element to a vectorized mobject.\n\nrect_to_mobject\n\nConvert a rectangle element to a vectorized mobject.\n\ntext_to_mobject\n\nConvert a text element to a vectorized mobject.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(file_name=None,should_center=True,height=2,width=None,color=None,opacity=None,fill_color=None,fill_opacity=None,stroke_color=None,stroke_opacity=None,stroke_width=None,svg_default=None,path_string_config=None,use_svg_cache=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:file_name(str|os.PathLike|None)should_center(bool)height(float|None)width(float|None)color(ParsableManimColor|None)opacity(float|None)fill_color(ParsableManimColor|None)fill_opacity(float|None)stroke_color(ParsableManimColor|None)stroke_opacity(float|None)stroke_width(float|None)svg_default(dict|None)path_string_config(dict|None)use_svg_cache(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfile_name(str|os.PathLike|None)should_center(bool)height(float|None)width(float|None)color(ParsableManimColor|None)opacity(float|None)fill_color(ParsableManimColor|None)fill_opacity(float|None)stroke_color(ParsableManimColor|None)stroke_opacity(float|None)stroke_width(float|None)svg_default(dict|None)path_string_config(dict|None)use_svg_cache(bool)kwargs(Any)\n\nfile_name(str|os.PathLike|None)\n\nfile_name(str|os.PathLike|None)\n\nshould_center(bool)\n\nshould_center(bool)\n\nheight(float|None)\n\nheight(float|None)\n\nwidth(float|None)\n\nwidth(float|None)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nopacity(float|None)\n\nopacity(float|None)\n\nfill_color(ParsableManimColor|None)\n\nfill_color(ParsableManimColor|None)\n\nfill_opacity(float|None)\n\nfill_opacity(float|None)\n\nstroke_color(ParsableManimColor|None)\n\nstroke_color(ParsableManimColor|None)\n\nstroke_opacity(float|None)\n\nstroke_opacity(float|None)\n\nstroke_width(float|None)\n\nstroke_width(float|None)\n\nsvg_default(dict|None)\n\nsvg_default(dict|None)\n\npath_string_config(dict|None)\n\npath_string_config(dict|None)\n\nuse_svg_cache(bool)\n\nuse_svg_cache(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nstaticapply_style_to_mobject(mob,shape)[source]\u00b6\n\nApply SVG style information to the converted mobject.Parameters:mob(VMobject) \u2013 The converted mobject.shape(GraphicObject) \u2013 The parsed SVG element.Return type:VMobject\n\nApply SVG style information to the converted mobject.\n\nParameters:\n\nmob(VMobject) \u2013 The converted mobject.shape(GraphicObject) \u2013 The parsed SVG element.\n\nmob(VMobject) \u2013 The converted mobject.\n\nmob(VMobject) \u2013 The converted mobject.\n\nshape(GraphicObject) \u2013 The parsed SVG element.\n\nshape(GraphicObject) \u2013 The parsed SVG element.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nstaticellipse_to_mobject(ellipse)[source]\u00b6\n\nConvert an ellipse or circle element to a vectorized mobject.Parameters:ellipse(Ellipse|Circle) \u2013 The parsed SVG ellipse or circle.Return type:Circle\n\nConvert an ellipse or circle element to a vectorized mobject.\n\nParameters:\n\nellipse(Ellipse|Circle) \u2013 The parsed SVG ellipse or circle.\n\nellipse(Ellipse|Circle) \u2013 The parsed SVG ellipse or circle.\n\nReturn type:\n\nCircle\n\nCircle\n\ngenerate_config_style_dict()[source]\u00b6\n\nGenerate a dictionary holding the default style information.Return type:dict[str, str]\n\nGenerate a dictionary holding the default style information.\n\nReturn type:\n\ndict[str, str]\n\ndict[str, str]\n\ngenerate_mobject()[source]\u00b6\n\nParse the SVG and translate its elements to submobjects.Return type:None\n\nParse the SVG and translate its elements to submobjects.\n\nReturn type:\n\nNone\n\nNone\n\nget_file_path()[source]\u00b6\n\nSearch for an existing file based on the specified file name.Return type:Path\n\nSearch for an existing file based on the specified file name.\n\nReturn type:\n\nPath\n\nPath\n\nget_mobjects_from(svg)[source]\u00b6\n\nConvert the elements of the SVG to a list of mobjects.Parameters:svg(SVG) \u2013 The parsed SVG file.Return type:list[VMobject]\n\nConvert the elements of the SVG to a list of mobjects.\n\nParameters:\n\nsvg(SVG) \u2013 The parsed SVG file.\n\nsvg(SVG) \u2013 The parsed SVG file.\n\nReturn type:\n\nlist[VMobject]\n\nlist[VMobject]\n\nstatichandle_transform(mob,matrix)[source]\u00b6\n\nApply SVG transformations to the converted mobject.Parameters:mob(VMobject) \u2013 The converted mobject.matrix(Matrix) \u2013 The transformation matrix determined from the SVG\ntransformation.Return type:VMobject\n\nApply SVG transformations to the converted mobject.\n\nParameters:\n\nmob(VMobject) \u2013 The converted mobject.matrix(Matrix) \u2013 The transformation matrix determined from the SVG\ntransformation.\n\nmob(VMobject) \u2013 The converted mobject.\n\nmob(VMobject) \u2013 The converted mobject.\n\nmatrix(Matrix) \u2013 The transformation matrix determined from the SVG\ntransformation.\n\nmatrix(Matrix) \u2013 The transformation matrix determined from the SVG\ntransformation.\n\nReturn type:\n\nVMobject\n\nVMobject\n\npropertyhash_seed:tuple\u00b6\n\nA unique hash representing the result of the generated\nmobject points.Used as keys in theSVG_HASH_TO_MOB_MAPcaching dictionary.\n\nA unique hash representing the result of the generated\nmobject points.\n\nUsed as keys in theSVG_HASH_TO_MOB_MAPcaching dictionary.\n\ninit_svg_mobject(use_svg_cache)[source]\u00b6\n\nChecks whether the SVG has already been imported and\ngenerates it if not.See alsoSVGMobject.generate_mobject()Parameters:use_svg_cache(bool)Return type:None\n\nChecks whether the SVG has already been imported and\ngenerates it if not.\n\nSee also\n\nSVGMobject.generate_mobject()\n\nParameters:\n\nuse_svg_cache(bool)\n\nuse_svg_cache(bool)\n\nReturn type:\n\nNone\n\nNone\n\nstaticline_to_mobject(line)[source]\u00b6\n\nConvert a line element to a vectorized mobject.Parameters:line(Line) \u2013 The parsed SVG line.Return type:Line\n\nConvert a line element to a vectorized mobject.\n\nParameters:\n\nline(Line) \u2013 The parsed SVG line.\n\nline(Line) \u2013 The parsed SVG line.\n\nReturn type:\n\nLine\n\nLine\n\nmodify_xml_tree(element_tree)[source]\u00b6\n\nModifies the SVG element tree to include default\nstyle information.Parameters:element_tree(ElementTree) \u2013 The parsed element tree from the SVG file.Return type:ElementTree\n\nModifies the SVG element tree to include default\nstyle information.\n\nParameters:\n\nelement_tree(ElementTree) \u2013 The parsed element tree from the SVG file.\n\nelement_tree(ElementTree) \u2013 The parsed element tree from the SVG file.\n\nReturn type:\n\nElementTree\n\nElementTree\n\nmove_into_position()[source]\u00b6\n\nScale and move the generated mobject into position.Return type:None\n\nScale and move the generated mobject into position.\n\nReturn type:\n\nNone\n\nNone\n\npath_to_mobject(path)[source]\u00b6\n\nConvert a path element to a vectorized mobject.Parameters:path(Path) \u2013 The parsed SVG path.Return type:VMobjectFromSVGPath\n\nConvert a path element to a vectorized mobject.\n\nParameters:\n\npath(Path) \u2013 The parsed SVG path.\n\npath(Path) \u2013 The parsed SVG path.\n\nReturn type:\n\nVMobjectFromSVGPath\n\nVMobjectFromSVGPath\n\nstaticpolygon_to_mobject(polygon)[source]\u00b6\n\nConvert a polygon element to a vectorized mobject.Parameters:polygon(Polygon) \u2013 The parsed SVG polygon.Return type:Polygon\n\nConvert a polygon element to a vectorized mobject.\n\nParameters:\n\npolygon(Polygon) \u2013 The parsed SVG polygon.\n\npolygon(Polygon) \u2013 The parsed SVG polygon.\n\nReturn type:\n\nPolygon\n\nPolygon\n\npolyline_to_mobject(polyline)[source]\u00b6\n\nConvert a polyline element to a vectorized mobject.Parameters:polyline(Polyline) \u2013 The parsed SVG polyline.Return type:VMobject\n\nConvert a polyline element to a vectorized mobject.\n\nParameters:\n\npolyline(Polyline) \u2013 The parsed SVG polyline.\n\npolyline(Polyline) \u2013 The parsed SVG polyline.\n\nReturn type:\n\nVMobject\n\nVMobject\n\nstaticrect_to_mobject(rect)[source]\u00b6\n\nConvert a rectangle element to a vectorized mobject.Parameters:rect(Rect) \u2013 The parsed SVG rectangle.Return type:Rectangle\n\nConvert a rectangle element to a vectorized mobject.\n\nParameters:\n\nrect(Rect) \u2013 The parsed SVG rectangle.\n\nrect(Rect) \u2013 The parsed SVG rectangle.\n\nReturn type:\n\nRectangle\n\nRectangle\n\nstatictext_to_mobject(text)[source]\u00b6\n\nConvert a text element to a vectorized mobject.WarningNot yet implemented.Parameters:text(Text) \u2013 The parsed SVG text.Return type:VMobject\n\nConvert a text element to a vectorized mobject.\n\nWarning\n\nNot yet implemented.\n\nParameters:\n\ntext(Text) \u2013 The parsed SVG text.\n\ntext(Text) \u2013 The parsed SVG text.\n\nReturn type:\n\nVMobject\n\nVMobject",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SVGMobject",
+      "class_name": null,
+      "parameters": [
+        "file_name=None"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "file_name=None"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "apply_style_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "mob"
+      ],
+      "return_type": null,
+      "description": "Apply SVG style information to the converted mobject."
+    },
+    {
+      "name": "ellipse_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "ellipse"
+      ],
+      "return_type": null,
+      "description": "Convert an ellipse or circle element to a vectorized mobject."
+    },
+    {
+      "name": "generate_config_style_dict",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Generate a dictionary holding the default style information."
+    },
+    {
+      "name": "generate_mobject",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Parse the SVG and translate its elements to submobjects."
+    },
+    {
+      "name": "get_file_path",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Search for an existing file based on the specified file name."
+    },
+    {
+      "name": "get_mobjects_from",
+      "class_name": null,
+      "parameters": [
+        "svg"
+      ],
+      "return_type": null,
+      "description": "Convert the elements of the SVG to a list of mobjects."
+    },
+    {
+      "name": "handle_transform",
+      "class_name": null,
+      "parameters": [
+        "mob"
+      ],
+      "return_type": null,
+      "description": "Apply SVG transformations to the converted mobject."
+    },
+    {
+      "name": "hash_seed",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A unique hash representing the result of the generated\nmobject points."
+    },
+    {
+      "name": "init_svg_mobject",
+      "class_name": null,
+      "parameters": [
+        "use_svg_cache"
+      ],
+      "return_type": null,
+      "description": "Checks whether the SVG has already been imported and\ngenerates it if not."
+    },
+    {
+      "name": "line_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "line"
+      ],
+      "return_type": null,
+      "description": "Convert a line element to a vectorized mobject."
+    },
+    {
+      "name": "modify_xml_tree",
+      "class_name": null,
+      "parameters": [
+        "element_tree"
+      ],
+      "return_type": null,
+      "description": "Modifies the SVG element tree to include default\nstyle information."
+    },
+    {
+      "name": "move_into_position",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Scale and move the generated mobject into position."
+    },
+    {
+      "name": "path_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "path"
+      ],
+      "return_type": null,
+      "description": "Convert a path element to a vectorized mobject."
+    },
+    {
+      "name": "polygon_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "polygon"
+      ],
+      "return_type": null,
+      "description": "Convert a polygon element to a vectorized mobject."
+    },
+    {
+      "name": "polyline_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "polyline"
+      ],
+      "return_type": null,
+      "description": "Convert a polyline element to a vectorized mobject."
+    },
+    {
+      "name": "rect_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "rect"
+      ],
+      "return_type": null,
+      "description": "Convert a rectangle element to a vectorized mobject."
+    },
+    {
+      "name": "text_to_mobject",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Convert a text element to a vectorized mobject."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Line",
+    "Graph",
+    "Tex",
+    "VMobject",
+    "Text",
+    "Matrix",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

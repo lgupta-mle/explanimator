@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.three_d_scene.html",
+  "title": "three_d_scene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "three_d_scene\u00b6\n\nA scene suitable for rendering three-dimensional objects and animations.\n\nClasses\n\nSpecialThreeDScene\n\nAn extension ofThreeDScenewith more settings.\n\nThreeDScene\n\nThis is a Scene, with special configurations and properties that make it suitable for Three Dimensional Scenes.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "ThreeDScene",
+    "Scene"
+  ],
+  "tags": [
+    "animation",
+    "3d"
+  ]
+}

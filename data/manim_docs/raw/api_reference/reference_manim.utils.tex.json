@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.tex.html",
+  "title": "tex\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "tex\u00b6\n\nUtilities for processing LaTeX templates.\n\nClasses\n\nTexTemplate\n\nTeX templates are used to createTexandMathTexobjects.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "MathTex",
+    "Tex"
+  ],
+  "tags": [
+    "text"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.moving_camera.MovingCamera.html",
+  "title": "MovingCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MovingCamera\u00b6\n\nQualified name:manim.camera.moving\\_camera.MovingCamera\n\nclassMovingCamera(frame=None,fixed_dimension=0,default_frame_stroke_color=ManimColor('#FFFFFF'),default_frame_stroke_width=0,**kwargs)[source]\u00b6\n\nBases:CameraA camera that follows and matches the size and position of its \u2018frame\u2019, a Rectangle (or similar Mobject).The frame defines the region of space the camera displays and can move or resize dynamically.See alsoMovingCameraSceneFrame is a Mobject, (should almost certainly be a rectangle)\ndetermining which region of space the camera displaysMethodsauto_zoomZooms on to a given array of mobjects (or a singular mobject) and automatically resizes to frame all the mobjects.cache_cairo_contextSince the frame can be moving around, the cairo context used for updating should be regenerated at each frame.capture_mobjectsCapture mobjects by printing them onpixel_array.get_cached_cairo_contextSince the frame can be moving around, the cairo context used for updating should be regenerated at each frame.get_mobjects_indicating_movementReturns all mobjects whose movement implies that the camera should think of all other mobjects on the screen as movingAttributesbackground_colorbackground_opacityframe_centerReturns the centerpoint of the frame in cartesian coordinates.frame_heightReturns the height of the frame.frame_widthReturns the width of the frameParameters:frame(Mobject|None)fixed_dimension(int)default_frame_stroke_color(ManimColor)default_frame_stroke_width(int)kwargs(Any)auto_zoom(mobjects,margin=0,only_mobjects_in_frame=False,animate=True)[source]\u00b6Zooms on to a given array of mobjects (or a singular mobject)\nand automatically resizes to frame all the mobjects.NoteThis method only works when 2D-objects in the XY-plane are considered, it\nwill not work correctly when the camera has been rotated.Parameters:mobjects(Iterable[Mobject]) \u2013 The mobject or array of mobjects that the camera will focus on.margin(float) \u2013 The width of the margin that is added to the frame (optional, 0 by default).only_mobjects_in_frame(bool) \u2013 If set toTrue, only allows focusing on mobjects that are already in frame.animate(bool) \u2013 If set toFalse, applies the changes instead of returning the corresponding animationReturns:_AnimationBuilder that zooms the camera view to a given list of mobjects\nor ScreenRectangle with position and size updated to zoomed position.Return type:Union[_AnimationBuilder,ScreenRectangle]cache_cairo_context(pixel_array,ctx)[source]\u00b6Since the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching.Parameters:pixel_array(PixelArray)ctx(Context)Return type:Nonecapture_mobjects(mobjects,**kwargs)[source]\u00b6Capture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().propertyframe_center:Point3D\u00b6Returns the centerpoint of the frame in cartesian coordinates.Returns:The cartesian coordinates of the center of the frame.Return type:np.arraypropertyframe_height:float\u00b6Returns the height of the frame.Returns:The height of the frame.Return type:floatpropertyframe_width:float\u00b6Returns the width of the frameReturns:The width of the frame.Return type:floatget_cached_cairo_context(pixel_array)[source]\u00b6Since the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching.Parameters:pixel_array(PixelArray)Return type:Noneget_mobjects_indicating_movement()[source]\u00b6Returns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as movingReturn type:list[Mobject]\n\nBases:Camera\n\nA camera that follows and matches the size and position of its \u2018frame\u2019, a Rectangle (or similar Mobject).\n\nThe frame defines the region of space the camera displays and can move or resize dynamically.\n\nSee also\n\nMovingCameraScene\n\nFrame is a Mobject, (should almost certainly be a rectangle)\ndetermining which region of space the camera displays\n\nMethods\n\nauto_zoom\n\nZooms on to a given array of mobjects (or a singular mobject) and automatically resizes to frame all the mobjects.\n\ncache_cairo_context\n\nSince the frame can be moving around, the cairo context used for updating should be regenerated at each frame.\n\ncapture_mobjects\n\nCapture mobjects by printing them onpixel_array.\n\nget_cached_cairo_context\n\nSince the frame can be moving around, the cairo context used for updating should be regenerated at each frame.\n\nget_mobjects_indicating_movement\n\nReturns all mobjects whose movement implies that the camera should think of all other mobjects on the screen as moving\n\nAttributes\n\nbackground_color\n\nbackground_opacity\n\nframe_center\n\nReturns the centerpoint of the frame in cartesian coordinates.\n\nframe_height\n\nReturns the height of the frame.\n\nframe_width\n\nReturns the width of the frame\n\nParameters:\n\nframe(Mobject|None)fixed_dimension(int)default_frame_stroke_color(ManimColor)default_frame_stroke_width(int)kwargs(Any)\n\nframe(Mobject|None)\n\nframe(Mobject|None)\n\nfixed_dimension(int)\n\nfixed_dimension(int)\n\ndefault_frame_stroke_color(ManimColor)\n\ndefault_frame_stroke_color(ManimColor)\n\ndefault_frame_stroke_width(int)\n\ndefault_frame_stroke_width(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\nauto_zoom(mobjects,margin=0,only_mobjects_in_frame=False,animate=True)[source]\u00b6\n\nZooms on to a given array of mobjects (or a singular mobject)\nand automatically resizes to frame all the mobjects.NoteThis method only works when 2D-objects in the XY-plane are considered, it\nwill not work correctly when the camera has been rotated.Parameters:mobjects(Iterable[Mobject]) \u2013 The mobject or array of mobjects that the camera will focus on.margin(float) \u2013 The width of the margin that is added to the frame (optional, 0 by default).only_mobjects_in_frame(bool) \u2013 If set toTrue, only allows focusing on mobjects that are already in frame.animate(bool) \u2013 If set toFalse, applies the changes instead of returning the corresponding animationReturns:_AnimationBuilder that zooms the camera view to a given list of mobjects\nor ScreenRectangle with position and size updated to zoomed position.Return type:Union[_AnimationBuilder,ScreenRectangle]\n\nZooms on to a given array of mobjects (or a singular mobject)\nand automatically resizes to frame all the mobjects.\n\nNote\n\nThis method only works when 2D-objects in the XY-plane are considered, it\nwill not work correctly when the camera has been rotated.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 The mobject or array of mobjects that the camera will focus on.margin(float) \u2013 The width of the margin that is added to the frame (optional, 0 by default).only_mobjects_in_frame(bool) \u2013 If set toTrue, only allows focusing on mobjects that are already in frame.animate(bool) \u2013 If set toFalse, applies the changes instead of returning the corresponding animation\n\nmobjects(Iterable[Mobject]) \u2013 The mobject or array of mobjects that the camera will focus on.\n\nmobjects(Iterable[Mobject]) \u2013 The mobject or array of mobjects that the camera will focus on.\n\nmargin(float) \u2013 The width of the margin that is added to the frame (optional, 0 by default).\n\nmargin(float) \u2013 The width of the margin that is added to the frame (optional, 0 by default).\n\nonly_mobjects_in_frame(bool) \u2013 If set toTrue, only allows focusing on mobjects that are already in frame.\n\nonly_mobjects_in_frame(bool) \u2013 If set toTrue, only allows focusing on mobjects that are already in frame.\n\nanimate(bool) \u2013 If set toFalse, applies the changes instead of returning the corresponding animation\n\nanimate(bool) \u2013 If set toFalse, applies the changes instead of returning the corresponding animation\n\nReturns:\n\n_AnimationBuilder that zooms the camera view to a given list of mobjects\nor ScreenRectangle with position and size updated to zoomed position.\n\n_AnimationBuilder that zooms the camera view to a given list of mobjects\nor ScreenRectangle with position and size updated to zoomed position.\n\nReturn type:\n\nUnion[_AnimationBuilder,ScreenRectangle]\n\nUnion[_AnimationBuilder,ScreenRectangle]\n\ncache_cairo_context(pixel_array,ctx)[source]\u00b6\n\nSince the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching.Parameters:pixel_array(PixelArray)ctx(Context)Return type:None\n\nSince the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching.\n\nParameters:\n\npixel_array(PixelArray)ctx(Context)\n\npixel_array(PixelArray)\n\npixel_array(PixelArray)\n\nctx(Context)\n\nctx(Context)\n\nReturn type:\n\nNone\n\nNone\n\ncapture_mobjects(mobjects,**kwargs)[source]\u00b6\n\nCapture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nCapture mobjects by printing them onpixel_array.\n\nThis is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nReturn type:\n\nNone\n\nNone\n\nNotes\n\nFor a list of classes that can currently be rendered, seedisplay_funcs().\n\npropertyframe_center:Point3D\u00b6\n\nReturns the centerpoint of the frame in cartesian coordinates.Returns:The cartesian coordinates of the center of the frame.Return type:np.array\n\nReturns the centerpoint of the frame in cartesian coordinates.\n\nReturns:\n\nThe cartesian coordinates of the center of the frame.\n\nThe cartesian coordinates of the center of the frame.\n\nReturn type:\n\nnp.array\n\nnp.array\n\npropertyframe_height:float\u00b6\n\nReturns the height of the frame.Returns:The height of the frame.Return type:float\n\nReturns the height of the frame.\n\nReturns:\n\nThe height of the frame.\n\nThe height of the frame.\n\nReturn type:\n\nfloat\n\nfloat\n\npropertyframe_width:float\u00b6\n\nReturns the width of the frameReturns:The width of the frame.Return type:float\n\nReturns the width of the frame\n\nReturns:\n\nThe width of the frame.\n\nThe width of the frame.\n\nReturn type:\n\nfloat\n\nfloat\n\nget_cached_cairo_context(pixel_array)[source]\u00b6\n\nSince the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching.Parameters:pixel_array(PixelArray)Return type:None\n\nSince the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching.\n\nParameters:\n\npixel_array(PixelArray)\n\npixel_array(PixelArray)\n\nReturn type:\n\nNone\n\nNone\n\nget_mobjects_indicating_movement()[source]\u00b6\n\nReturns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as movingReturn type:list[Mobject]\n\nReturns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as moving\n\nReturn type:\n\nlist[Mobject]\n\nlist[Mobject]",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "MovingCamera",
+      "class_name": null,
+      "parameters": [
+        "frame=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Camera"
+    },
+    {
+      "name": "auto_zoom",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Zooms on to a given array of mobjects (or a singular mobject)\nand automatically resizes to frame all the mobjects."
+    },
+    {
+      "name": "cache_cairo_context",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Since the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching."
+    },
+    {
+      "name": "capture_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects by printing them onpixel_array."
+    },
+    {
+      "name": "frame_center",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the centerpoint of the frame in cartesian coordinates."
+    },
+    {
+      "name": "frame_height",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the height of the frame."
+    },
+    {
+      "name": "frame_width",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the width of the frame"
+    },
+    {
+      "name": "get_cached_cairo_context",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Since the frame can be moving around, the cairo\ncontext used for updating should be regenerated\nat each frame.  So no caching."
+    },
+    {
+      "name": "get_mobjects_indicating_movement",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as moving"
+    }
+  ],
+  "related_classes": [
+    "MovingCamera",
+    "Camera",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

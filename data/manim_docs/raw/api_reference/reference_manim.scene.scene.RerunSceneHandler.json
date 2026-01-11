@@ -1,0 +1,32 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene.RerunSceneHandler.html",
+  "title": "RerunSceneHandler\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "RerunSceneHandler\u00b6\n\nQualified name:manim.scene.scene.RerunSceneHandler\n\nclassRerunSceneHandler(queue)[source]\u00b6\n\nBases:FileSystemEventHandlerA class to handle rerunning a Scene after the input file is modified.Methodson_modifiedCalled when a file or directory is modified.Parameters:queue(Queue[SceneInteractAction])on_modified(event)[source]\u00b6Called when a file or directory is modified.Parameters:event(DirModifiedEventorFileModifiedEvent) \u2013 Event representing file/directory modification.Return type:None\n\nBases:FileSystemEventHandler\n\nA class to handle rerunning a Scene after the input file is modified.\n\nMethods\n\non_modified\n\nCalled when a file or directory is modified.\n\nParameters:\n\nqueue(Queue[SceneInteractAction])\n\nqueue(Queue[SceneInteractAction])\n\non_modified(event)[source]\u00b6\n\nCalled when a file or directory is modified.Parameters:event(DirModifiedEventorFileModifiedEvent) \u2013 Event representing file/directory modification.Return type:None\n\nCalled when a file or directory is modified.\n\nParameters:\n\nevent(DirModifiedEventorFileModifiedEvent) \u2013 Event representing file/directory modification.\n\nevent(DirModifiedEventorFileModifiedEvent) \u2013 Event representing file/directory modification.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "RerunSceneHandler",
+      "class_name": null,
+      "parameters": [
+        "queue"
+      ],
+      "return_type": null,
+      "description": "Bases:FileSystemEventHandler"
+    },
+    {
+      "name": "on_modified",
+      "class_name": null,
+      "parameters": [
+        "event"
+      ],
+      "return_type": null,
+      "description": "Called when a file or directory is modified."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": []
+}

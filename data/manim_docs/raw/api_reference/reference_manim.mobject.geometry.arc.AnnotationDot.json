@@ -1,0 +1,37 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.AnnotationDot.html",
+  "title": "AnnotationDot\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AnnotationDot\u00b6\n\nQualified name:manim.mobject.geometry.arc.AnnotationDot\n\nclassAnnotationDot(radius=0.10400000000000001,stroke_width=5,stroke_color=ManimColor('#FFFFFF'),fill_color=ManimColor('#58C4DD'),**kwargs)[source]\u00b6\n\nBases:DotA dot with bigger radius and bold stroke to annotate scenes.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:radius(float)stroke_width(float)stroke_color(ParsableManimColor)fill_color(ParsableManimColor)kwargs(Any)_original__init__(radius=0.10400000000000001,stroke_width=5,stroke_color=ManimColor('#FFFFFF'),fill_color=ManimColor('#58C4DD'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:radius(float)stroke_width(float)stroke_color(ParsableManimColor)fill_color(ParsableManimColor)kwargs(Any)Return type:None\n\nBases:Dot\n\nA dot with bigger radius and bold stroke to annotate scenes.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nradius(float)stroke_width(float)stroke_color(ParsableManimColor)fill_color(ParsableManimColor)kwargs(Any)\n\nradius(float)\n\nradius(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nstroke_color(ParsableManimColor)\n\nstroke_color(ParsableManimColor)\n\nfill_color(ParsableManimColor)\n\nfill_color(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(radius=0.10400000000000001,stroke_width=5,stroke_color=ManimColor('#FFFFFF'),fill_color=ManimColor('#58C4DD'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:radius(float)stroke_width(float)stroke_color(ParsableManimColor)fill_color(ParsableManimColor)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nradius(float)stroke_width(float)stroke_color(ParsableManimColor)fill_color(ParsableManimColor)kwargs(Any)\n\nradius(float)\n\nradius(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nstroke_color(ParsableManimColor)\n\nstroke_color(ParsableManimColor)\n\nfill_color(ParsableManimColor)\n\nfill_color(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "AnnotationDot",
+      "class_name": null,
+      "parameters": [
+        "radius=0.10400000000000001"
+      ],
+      "return_type": null,
+      "description": "Bases:Dot"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "radius=0.10400000000000001"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Dot"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

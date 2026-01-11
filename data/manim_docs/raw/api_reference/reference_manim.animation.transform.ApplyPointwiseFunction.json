@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ApplyPointwiseFunction.html",
+  "title": "ApplyPointwiseFunction\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ApplyPointwiseFunction\u00b6\n\nQualified name:manim.animation.transform.ApplyPointwiseFunction\n\nclassApplyPointwiseFunction(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ApplyMethodAnimation that applies a pointwise function to a mobject.ExamplesExample: WarpSquare\u00b6frommanimimport*classWarpSquare(Scene):defconstruct(self):square=Square()self.play(ApplyPointwiseFunction(lambdapoint:complex_to_R3(np.exp(R3_to_complex(point))),square))self.wait()class WarpSquare(Scene):\n    def construct(self):\n        square = Square()\n        self.play(\n            ApplyPointwiseFunction(\n                lambda point: complex_to_R3(np.exp(R3_to_complex(point))), square\n            )\n        )\n        self.wait()MethodsAttributespath_arcpath_funcrun_timeParameters:function(types.MethodType)mobject(Mobject)run_time(float)_original__init__(function,mobject,run_time=3.0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:function(MethodType)mobject(Mobject)run_time(float)Return type:None\n\nBases:ApplyMethod\n\nAnimation that applies a pointwise function to a mobject.\n\nExamples\n\nExample: WarpSquare\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nfunction(types.MethodType)mobject(Mobject)run_time(float)\n\nfunction(types.MethodType)\n\nfunction(types.MethodType)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nrun_time(float)\n\nrun_time(float)\n\n_original__init__(function,mobject,run_time=3.0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:function(MethodType)mobject(Mobject)run_time(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfunction(MethodType)mobject(Mobject)run_time(float)\n\nfunction(MethodType)\n\nfunction(MethodType)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nrun_time(float)\n\nrun_time(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classWarpSquare(Scene):defconstruct(self):square=Square()self.play(ApplyPointwiseFunction(lambdapoint:complex_to_R3(np.exp(R3_to_complex(point))),square))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class WarpSquare(Scene):\n    def construct(self):\n        square = Square()\n        self.play(\n            ApplyPointwiseFunction(\n                lambda point: complex_to_R3(np.exp(R3_to_complex(point))), square\n            )\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: WarpSquare\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ApplyPointwiseFunction",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ApplyMethod"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "timing",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

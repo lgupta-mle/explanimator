@@ -1,0 +1,46 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.tex_mobject.Tex.html",
+  "title": "Tex\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Tex\u00b6\n\nQualified name:manim.mobject.text.tex\\_mobject.Tex\n\nclassTex(*tex_strings,arg_separator='',tex_environment='center',**kwargs)[source]\u00b6\n\nBases:MathTexA string compiled with LaTeX in normal mode.The color can be set using\nthecolorargument. Any parts of thetex_stringthat are colored by the\nTeX commands\\coloror\\textcolorwill retain their original color.TestsCheck whether writing a LaTeX string works:>>>Tex('The horse does not eat cucumber salad.')Tex('The horse does not eat cucumber salad.')MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizeThe font size of the tex mobject.hash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:tex_strings(str)arg_separator(str)tex_environment(str|None)kwargs(Any)_original__init__(*tex_strings,arg_separator='',tex_environment='center',**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:tex_strings(str)arg_separator(str)tex_environment(str|None)kwargs(Any)\n\nBases:MathTex\n\nA string compiled with LaTeX in normal mode.\n\nThe color can be set using\nthecolorargument. Any parts of thetex_stringthat are colored by the\nTeX commands\\coloror\\textcolorwill retain their original color.\n\nTests\n\nCheck whether writing a LaTeX string works:\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nThe font size of the tex mobject.\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ntex_strings(str)arg_separator(str)tex_environment(str|None)kwargs(Any)\n\ntex_strings(str)\n\ntex_strings(str)\n\narg_separator(str)\n\narg_separator(str)\n\ntex_environment(str|None)\n\ntex_environment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*tex_strings,arg_separator='',tex_environment='center',**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:tex_strings(str)arg_separator(str)tex_environment(str|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntex_strings(str)arg_separator(str)tex_environment(str|None)kwargs(Any)\n\ntex_strings(str)\n\ntex_strings(str)\n\narg_separator(str)\n\narg_separator(str)\n\ntex_environment(str|None)\n\ntex_environment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": ">>>Tex('The horse does not eat cucumber salad.')Tex('The horse does not eat cucumber salad.')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Tex",
+      "class_name": null,
+      "parameters": [
+        "*tex_strings"
+      ],
+      "return_type": null,
+      "description": "Bases:MathTex"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*tex_strings"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "MathTex",
+    "Tex"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "animation"
+  ]
+}

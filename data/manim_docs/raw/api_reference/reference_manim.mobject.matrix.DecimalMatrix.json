@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.matrix.DecimalMatrix.html",
+  "title": "DecimalMatrix\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "DecimalMatrix\u00b6\n\nQualified name:manim.mobject.matrix.DecimalMatrix\n\nclassDecimalMatrix(matrix,element_to_mobject=<class'manim.mobject.text.numbers.DecimalNumber'>,element_to_mobject_config={'num_decimal_places':1},**kwargs)[source]\u00b6\n\nBases:MatrixA mobject that displays a matrix with decimal entries on the screen.ExamplesExample: DecimalMatrixExample\u00b6frommanimimport*classDecimalMatrixExample(Scene):defconstruct(self):m0=DecimalMatrix([[3.456,2.122],[33.2244,12]],element_to_mobject_config={\"num_decimal_places\":2},left_bracket=\"\\\\{\",right_bracket=\"\\\\}\")self.add(m0)class DecimalMatrixExample(Scene):\n    def construct(self):\n        m0 = DecimalMatrix(\n            [[3.456, 2.122], [33.2244, 12]],\n            element_to_mobject_config={\"num_decimal_places\": 2},\n            left_bracket=\"\\\\{\",\n            right_bracket=\"\\\\}\")\n        self.add(m0)Will round/truncate the decimal places as per the provided config.Parameters:matrix(Iterable) \u2013 A numpy 2d array or list of listselement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumberelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}kwargs(Any)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(matrix,element_to_mobject=<class'manim.mobject.text.numbers.DecimalNumber'>,element_to_mobject_config={'num_decimal_places':1},**kwargs)\u00b6Will round/truncate the decimal places as per the provided config.Parameters:matrix(Iterable) \u2013 A numpy 2d array or list of listselement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumberelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}kwargs(Any)\n\nBases:Matrix\n\nA mobject that displays a matrix with decimal entries on the screen.\n\nExamples\n\nExample: DecimalMatrixExample\u00b6\n\nWill round/truncate the decimal places as per the provided config.\n\nParameters:\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of listselement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumberelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}kwargs(Any)\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists\n\nelement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumber\n\nelement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumber\n\nelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}\n\nelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}\n\nkwargs(Any)\n\nkwargs(Any)\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(matrix,element_to_mobject=<class'manim.mobject.text.numbers.DecimalNumber'>,element_to_mobject_config={'num_decimal_places':1},**kwargs)\u00b6\n\nWill round/truncate the decimal places as per the provided config.Parameters:matrix(Iterable) \u2013 A numpy 2d array or list of listselement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumberelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}kwargs(Any)\n\nWill round/truncate the decimal places as per the provided config.\n\nParameters:\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of listselement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumberelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}kwargs(Any)\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists\n\nelement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumber\n\nelement_to_mobject(type[Mobject]) \u2013 Mobject to use, by default DecimalNumber\n\nelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}\n\nelement_to_mobject_config(dict[str,Any]) \u2013 Config for the desired mobject, by default {\u201cnum_decimal_places\u201d: 1}\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classDecimalMatrixExample(Scene):defconstruct(self):m0=DecimalMatrix([[3.456,2.122],[33.2244,12]],element_to_mobject_config={\"num_decimal_places\":2},left_bracket=\"\\\\{\",right_bracket=\"\\\\}\")self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class DecimalMatrixExample(Scene):\n    def construct(self):\n        m0 = DecimalMatrix(\n            [[3.456, 2.122], [33.2244, 12]],\n            element_to_mobject_config={\"num_decimal_places\": 2},\n            left_bracket=\"\\\\{\",\n            right_bracket=\"\\\\}\")\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: DecimalMatrixExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "DecimalMatrix",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Bases:Matrix"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Will round/truncate the decimal places as per the provided config."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Matrix",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "3d",
+    "text",
+    "math",
+    "animation"
+  ]
+}

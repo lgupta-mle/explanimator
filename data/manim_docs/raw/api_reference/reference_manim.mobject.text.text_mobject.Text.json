@@ -1,0 +1,168 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.text_mobject.Text.html",
+  "title": "Text\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Text\u00b6\n\nQualified name:manim.mobject.text.text\\_mobject.Text\n\nclassText(text,fill_opacity=1.0,stroke_width=0,*,color=ManimColor('#FFFFFF'),font_size=48,line_spacing=-1,font='',slant='NORMAL',weight='NORMAL',t2c=None,t2f=None,t2g=None,t2s=None,t2w=None,gradient=None,tab_width=4,warn_missing_font=True,height=None,width=None,should_center=True,disable_ligatures=False,use_svg_cache=False,**kwargs)[source]\u00b6\n\nBases:SVGMobjectDisplay (non-LaTeX) text rendered usingPango.Text objects behave like aVGroup-like iterable of all characters\nin the given text. In particular, slicing is possible.Parameters:text(str) \u2013 The text that needs to be created as a mobject.font(str) \u2013 The font family to be used to render the text. This is either a system font or\none loaded withregister_font(). Note that font family names may be different\nacross operating systems.warn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)slant(str)weight(str)t2c(dict[str,str]|None)t2f(dict[str,str]|None)t2g(dict[str,Iterable[ParsableManimColor]]|None)t2s(dict[str,str]|None)t2w(dict[str,str]|None)gradient(Iterable[ParsableManimColor]|None)tab_width(int)height(float|None)width(float|None)should_center(bool)disable_ligatures(bool)use_svg_cache(bool)kwargs(Any)Returns:The mobject-likeVGroup.Return type:TextExamplesExample: Example1Text\u00b6frommanimimport*classExample1Text(Scene):defconstruct(self):text=Text('Hello world').scale(3)self.add(text)class Example1Text(Scene):\n    def construct(self):\n        text = Text('Hello world').scale(3)\n        self.add(text)Example: TextColorExample\u00b6frommanimimport*classTextColorExample(Scene):defconstruct(self):text1=Text('Hello world',color=BLUE).scale(3)text2=Text('Hello world',gradient=(BLUE,GREEN)).scale(3).next_to(text1,DOWN)self.add(text1,text2)class TextColorExample(Scene):\n    def construct(self):\n        text1 = Text('Hello world', color=BLUE).scale(3)\n        text2 = Text('Hello world', gradient=(BLUE, GREEN)).scale(3).next_to(text1, DOWN)\n        self.add(text1, text2)Example: TextItalicAndBoldExample\u00b6frommanimimport*classTextItalicAndBoldExample(Scene):defconstruct(self):text1=Text(\"Hello world\",slant=ITALIC)text2=Text(\"Hello world\",t2s={'world':ITALIC})text3=Text(\"Hello world\",weight=BOLD)text4=Text(\"Hello world\",t2w={'world':BOLD})text5=Text(\"Hello world\",t2c={'o':YELLOW},disable_ligatures=True)text6=Text(\"Visit us at docs.manim.community\",t2c={\"docs.manim.community\":YELLOW},disable_ligatures=True,)text6.scale(1.3).shift(DOWN)self.add(text1,text2,text3,text4,text5,text6)Group(*self.mobjects).arrange(DOWN,buff=.8).set(height=config.frame_height-LARGE_BUFF)class TextItalicAndBoldExample(Scene):\n    def construct(self):\n        text1 = Text(\"Hello world\", slant=ITALIC)\n        text2 = Text(\"Hello world\", t2s={'world':ITALIC})\n        text3 = Text(\"Hello world\", weight=BOLD)\n        text4 = Text(\"Hello world\", t2w={'world':BOLD})\n        text5 = Text(\"Hello world\", t2c={'o':YELLOW}, disable_ligatures=True)\n        text6 = Text(\n            \"Visit us at docs.manim.community\",\n            t2c={\"docs.manim.community\": YELLOW},\n            disable_ligatures=True,\n       )\n        text6.scale(1.3).shift(DOWN)\n        self.add(text1, text2, text3, text4, text5 , text6)\n        Group(*self.mobjects).arrange(DOWN, buff=.8).set(height=config.frame_height-LARGE_BUFF)Example: TextMoreCustomization\u00b6frommanimimport*classTextMoreCustomization(Scene):defconstruct(self):text1=Text('Google',t2c={'[:1]':'#3174f0','[1:2]':'#e53125','[2:3]':'#fbb003','[3:4]':'#3174f0','[4:5]':'#269a43','[5:]':'#e53125'},font_size=58).scale(3)self.add(text1)class TextMoreCustomization(Scene):\n    def construct(self):\n        text1 = Text(\n            'Google',\n            t2c={'[:1]': '#3174f0', '[1:2]': '#e53125',\n                 '[2:3]': '#fbb003', '[3:4]': '#3174f0',\n                 '[4:5]': '#269a43', '[5:]': '#e53125'}, font_size=58).scale(3)\n        self.add(text1)AsTextuses Pango to render text, rendering non-English\ncharacters is easily possible:Example: MultipleFonts\u00b6frommanimimport*classMultipleFonts(Scene):defconstruct(self):morning=Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\",font=\"sans-serif\")japanese=Text(\"\u65e5\u672c\u3078\u3088\u3046\u3053\u305d\",t2c={\"\u65e5\u672c\":BLUE})# works same as ``Text``.mess=Text(\"Multi-Language\",weight=BOLD)russ=Text(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \",font=\"sans-serif\")hin=Text(\"\u0928\u092e\u0938\u094d\u0924\u0947\",font=\"sans-serif\")arb=Text(\"\u0635\u0628\u0627\u062d \u0627\u0644\u062e\u064a\u0631\\n\u062a\u0634\u0631\u0641\u062a \u0628\u0645\u0642\u0627\u0628\u0644\u062a\u0643\",font=\"sans-serif\")# don't mix RTL and LTR languages nothing shows up then ;-)chinese=Text(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\",font=\"sans-serif\")self.add(morning,japanese,mess,russ,hin,arb,chinese)fori,mobjinenumerate(self.mobjects):mobj.shift(DOWN*(i-3))class MultipleFonts(Scene):\n    def construct(self):\n        morning = Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\", font=\"sans-serif\")\n        japanese = Text(\n            \"\u65e5\u672c\u3078\u3088\u3046\u3053\u305d\", t2c={\"\u65e5\u672c\": BLUE}\n        )  # works same as ``Text``.\n        mess = Text(\"Multi-Language\", weight=BOLD)\n        russ = Text(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \", font=\"sans-serif\")\n        hin = Text(\"\u0928\u092e\u0938\u094d\u0924\u0947\", font=\"sans-serif\")\n        arb = Text(\n            \"\u0635\u0628\u0627\u062d \u0627\u0644\u062e\u064a\u0631 \\n \u062a\u0634\u0631\u0641\u062a \u0628\u0645\u0642\u0627\u0628\u0644\u062a\u0643\", font=\"sans-serif\"\n        )  # don't mix RTL and LTR languages nothing shows up then ;-)\n        chinese = Text(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\", font=\"sans-serif\")\n        self.add(morning, japanese, mess, russ, hin, arb, chinese)\n        for i,mobj in enumerate(self.mobjects):\n            mobj.shift(DOWN*(i-3))Example: PangoRender\u00b6frommanimimport*classPangoRender(Scene):defconstruct(self):morning=Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\",font=\"sans-serif\")self.play(Write(morning))self.wait(2)class PangoRender(Scene):\n    def construct(self):\n        morning = Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\", font=\"sans-serif\")\n        self.play(Write(morning))\n        self.wait(2)TestsCheck that the creation ofTextworks:>>>Text('The horse does not eat cucumber salad.')Text('The horse does not eat cucumber salad.')Methodsfont_listinit_colorsInitializes the colors.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizehash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._find_indexes(word,text)[source]\u00b6Finds the indexes oftextinword.Parameters:word(str)text(str)Return type:list[tuple[int, int]]_original__init__(text,fill_opacity=1.0,stroke_width=0,color=None,font_size=48,line_spacing=-1,font='',slant='NORMAL',weight='NORMAL',t2c=None,t2f=None,t2g=None,t2s=None,t2w=None,gradient=None,tab_width=4,warn_missing_font=True,height=None,width=None,should_center=True,disable_ligatures=False,use_svg_cache=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text(str)fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)font(str)slant(str)weight(str)t2c(dict[str,str]|None)t2f(dict[str,str]|None)t2g(dict[str,Iterable[ParsableManimColor]]|None)t2s(dict[str,str]|None)t2w(dict[str,str]|None)gradient(Iterable[ParsableManimColor]|None)tab_width(int)warn_missing_font(bool)height(float|None)width(float|None)should_center(bool)disable_ligatures(bool)use_svg_cache(bool)kwargs(Any)_text2hash(color)[source]\u00b6Generatessha256hash for file name.Parameters:color(ParsableManimColor)Return type:str_text2settings(color)[source]\u00b6Converts the texts and styles to a setting for parsing.Parameters:color(ParsableManimColor)Return type:list[TextSetting]_text2svg(color)[source]\u00b6Convert the text to SVG using Pango.Parameters:color(ParsableManimColor)Return type:strinit_colors(propagate_colors=True)[source]\u00b6Initializes the colors.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Parameters:propagate_colors(bool)Return type:Self\n\nBases:SVGMobject\n\nDisplay (non-LaTeX) text rendered usingPango.\n\nText objects behave like aVGroup-like iterable of all characters\nin the given text. In particular, slicing is possible.\n\nParameters:\n\ntext(str) \u2013 The text that needs to be created as a mobject.font(str) \u2013 The font family to be used to render the text. This is either a system font or\none loaded withregister_font(). Note that font family names may be different\nacross operating systems.warn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)slant(str)weight(str)t2c(dict[str,str]|None)t2f(dict[str,str]|None)t2g(dict[str,Iterable[ParsableManimColor]]|None)t2s(dict[str,str]|None)t2w(dict[str,str]|None)gradient(Iterable[ParsableManimColor]|None)tab_width(int)height(float|None)width(float|None)should_center(bool)disable_ligatures(bool)use_svg_cache(bool)kwargs(Any)\n\ntext(str) \u2013 The text that needs to be created as a mobject.\n\ntext(str) \u2013 The text that needs to be created as a mobject.\n\nfont(str) \u2013 The font family to be used to render the text. This is either a system font or\none loaded withregister_font(). Note that font family names may be different\nacross operating systems.\n\nfont(str) \u2013 The font family to be used to render the text. This is either a system font or\none loaded withregister_font(). Note that font family names may be different\nacross operating systems.\n\nwarn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().\n\nwarn_missing_font(bool) \u2013 If True (default), Manim will issue a warning if the font does not exist in the\n(case-sensitive) list of fonts returned frommanimpango.list_fonts().\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nfont_size(float)\n\nfont_size(float)\n\nline_spacing(float)\n\nline_spacing(float)\n\nslant(str)\n\nslant(str)\n\nweight(str)\n\nweight(str)\n\nt2c(dict[str,str]|None)\n\nt2c(dict[str,str]|None)\n\nt2f(dict[str,str]|None)\n\nt2f(dict[str,str]|None)\n\nt2g(dict[str,Iterable[ParsableManimColor]]|None)\n\nt2g(dict[str,Iterable[ParsableManimColor]]|None)\n\nt2s(dict[str,str]|None)\n\nt2s(dict[str,str]|None)\n\nt2w(dict[str,str]|None)\n\nt2w(dict[str,str]|None)\n\ngradient(Iterable[ParsableManimColor]|None)\n\ngradient(Iterable[ParsableManimColor]|None)\n\ntab_width(int)\n\ntab_width(int)\n\nheight(float|None)\n\nheight(float|None)\n\nwidth(float|None)\n\nwidth(float|None)\n\nshould_center(bool)\n\nshould_center(bool)\n\ndisable_ligatures(bool)\n\ndisable_ligatures(bool)\n\nuse_svg_cache(bool)\n\nuse_svg_cache(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturns:\n\nThe mobject-likeVGroup.\n\nThe mobject-likeVGroup.\n\nReturn type:\n\nText\n\nText\n\nExamples\n\nExample: Example1Text\u00b6\n\nExample: TextColorExample\u00b6\n\nExample: TextItalicAndBoldExample\u00b6\n\nExample: TextMoreCustomization\u00b6\n\nAsTextuses Pango to render text, rendering non-English\ncharacters is easily possible:\n\nExample: MultipleFonts\u00b6\n\nExample: PangoRender\u00b6\n\nTests\n\nCheck that the creation ofTextworks:\n\nMethods\n\nfont_list\n\ninit_colors\n\nInitializes the colors.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_find_indexes(word,text)[source]\u00b6\n\nFinds the indexes oftextinword.Parameters:word(str)text(str)Return type:list[tuple[int, int]]\n\nFinds the indexes oftextinword.\n\nParameters:\n\nword(str)text(str)\n\nword(str)\n\nword(str)\n\ntext(str)\n\ntext(str)\n\nReturn type:\n\nlist[tuple[int, int]]\n\nlist[tuple[int, int]]\n\n_original__init__(text,fill_opacity=1.0,stroke_width=0,color=None,font_size=48,line_spacing=-1,font='',slant='NORMAL',weight='NORMAL',t2c=None,t2f=None,t2g=None,t2s=None,t2w=None,gradient=None,tab_width=4,warn_missing_font=True,height=None,width=None,should_center=True,disable_ligatures=False,use_svg_cache=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text(str)fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)font(str)slant(str)weight(str)t2c(dict[str,str]|None)t2f(dict[str,str]|None)t2g(dict[str,Iterable[ParsableManimColor]]|None)t2s(dict[str,str]|None)t2w(dict[str,str]|None)gradient(Iterable[ParsableManimColor]|None)tab_width(int)warn_missing_font(bool)height(float|None)width(float|None)should_center(bool)disable_ligatures(bool)use_svg_cache(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext(str)fill_opacity(float)stroke_width(float)color(ParsableManimColor|None)font_size(float)line_spacing(float)font(str)slant(str)weight(str)t2c(dict[str,str]|None)t2f(dict[str,str]|None)t2g(dict[str,Iterable[ParsableManimColor]]|None)t2s(dict[str,str]|None)t2w(dict[str,str]|None)gradient(Iterable[ParsableManimColor]|None)tab_width(int)warn_missing_font(bool)height(float|None)width(float|None)should_center(bool)disable_ligatures(bool)use_svg_cache(bool)kwargs(Any)\n\ntext(str)\n\ntext(str)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nfont_size(float)\n\nfont_size(float)\n\nline_spacing(float)\n\nline_spacing(float)\n\nfont(str)\n\nfont(str)\n\nslant(str)\n\nslant(str)\n\nweight(str)\n\nweight(str)\n\nt2c(dict[str,str]|None)\n\nt2c(dict[str,str]|None)\n\nt2f(dict[str,str]|None)\n\nt2f(dict[str,str]|None)\n\nt2g(dict[str,Iterable[ParsableManimColor]]|None)\n\nt2g(dict[str,Iterable[ParsableManimColor]]|None)\n\nt2s(dict[str,str]|None)\n\nt2s(dict[str,str]|None)\n\nt2w(dict[str,str]|None)\n\nt2w(dict[str,str]|None)\n\ngradient(Iterable[ParsableManimColor]|None)\n\ngradient(Iterable[ParsableManimColor]|None)\n\ntab_width(int)\n\ntab_width(int)\n\nwarn_missing_font(bool)\n\nwarn_missing_font(bool)\n\nheight(float|None)\n\nheight(float|None)\n\nwidth(float|None)\n\nwidth(float|None)\n\nshould_center(bool)\n\nshould_center(bool)\n\ndisable_ligatures(bool)\n\ndisable_ligatures(bool)\n\nuse_svg_cache(bool)\n\nuse_svg_cache(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_text2hash(color)[source]\u00b6\n\nGeneratessha256hash for file name.Parameters:color(ParsableManimColor)Return type:str\n\nGeneratessha256hash for file name.\n\nParameters:\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nReturn type:\n\nstr\n\nstr\n\n_text2settings(color)[source]\u00b6\n\nConverts the texts and styles to a setting for parsing.Parameters:color(ParsableManimColor)Return type:list[TextSetting]\n\nConverts the texts and styles to a setting for parsing.\n\nParameters:\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nReturn type:\n\nlist[TextSetting]\n\nlist[TextSetting]\n\n_text2svg(color)[source]\u00b6\n\nConvert the text to SVG using Pango.Parameters:color(ParsableManimColor)Return type:str\n\nConvert the text to SVG using Pango.\n\nParameters:\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nReturn type:\n\nstr\n\nstr\n\ninit_colors(propagate_colors=True)[source]\u00b6\n\nInitializes the colors.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Parameters:propagate_colors(bool)Return type:Self\n\nInitializes the colors.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nParameters:\n\npropagate_colors(bool)\n\npropagate_colors(bool)\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExample1Text(Scene):defconstruct(self):text=Text('Hello world').scale(3)self.add(text)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Example1Text(Scene):\n    def construct(self):\n        text = Text('Hello world').scale(3)\n        self.add(text)",
+      "language": "python",
+      "context": "Example: Example1Text\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classTextColorExample(Scene):defconstruct(self):text1=Text('Hello world',color=BLUE).scale(3)text2=Text('Hello world',gradient=(BLUE,GREEN)).scale(3).next_to(text1,DOWN)self.add(text1,text2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TextColorExample(Scene):\n    def construct(self):\n        text1 = Text('Hello world', color=BLUE).scale(3)\n        text2 = Text('Hello world', gradient=(BLUE, GREEN)).scale(3).next_to(text1, DOWN)\n        self.add(text1, text2)",
+      "language": "python",
+      "context": "Example: TextColorExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classTextItalicAndBoldExample(Scene):defconstruct(self):text1=Text(\"Hello world\",slant=ITALIC)text2=Text(\"Hello world\",t2s={'world':ITALIC})text3=Text(\"Hello world\",weight=BOLD)text4=Text(\"Hello world\",t2w={'world':BOLD})text5=Text(\"Hello world\",t2c={'o':YELLOW},disable_ligatures=True)text6=Text(\"Visit us at docs.manim.community\",t2c={\"docs.manim.community\":YELLOW},disable_ligatures=True,)text6.scale(1.3).shift(DOWN)self.add(text1,text2,text3,text4,text5,text6)Group(*self.mobjects).arrange(DOWN,buff=.8).set(height=config.frame_height-LARGE_BUFF)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TextItalicAndBoldExample(Scene):\n    def construct(self):\n        text1 = Text(\"Hello world\", slant=ITALIC)\n        text2 = Text(\"Hello world\", t2s={'world':ITALIC})\n        text3 = Text(\"Hello world\", weight=BOLD)\n        text4 = Text(\"Hello world\", t2w={'world':BOLD})\n        text5 = Text(\"Hello world\", t2c={'o':YELLOW}, disable_ligatures=True)\n        text6 = Text(\n            \"Visit us at docs.manim.community\",\n            t2c={\"docs.manim.community\": YELLOW},\n            disable_ligatures=True,\n       )\n        text6.scale(1.3).shift(DOWN)\n        self.add(text1, text2, text3, text4, text5 , text6)\n        Group(*self.mobjects).arrange(DOWN, buff=.8).set(height=config.frame_height-LARGE_BUFF)",
+      "language": "python",
+      "context": "Example: TextItalicAndBoldExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classTextMoreCustomization(Scene):defconstruct(self):text1=Text('Google',t2c={'[:1]':'#3174f0','[1:2]':'#e53125','[2:3]':'#fbb003','[3:4]':'#3174f0','[4:5]':'#269a43','[5:]':'#e53125'},font_size=58).scale(3)self.add(text1)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TextMoreCustomization(Scene):\n    def construct(self):\n        text1 = Text(\n            'Google',\n            t2c={'[:1]': '#3174f0', '[1:2]': '#e53125',\n                 '[2:3]': '#fbb003', '[3:4]': '#3174f0',\n                 '[4:5]': '#269a43', '[5:]': '#e53125'}, font_size=58).scale(3)\n        self.add(text1)",
+      "language": "python",
+      "context": "Example: TextMoreCustomization\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classMultipleFonts(Scene):defconstruct(self):morning=Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\",font=\"sans-serif\")japanese=Text(\"\u65e5\u672c\u3078\u3088\u3046\u3053\u305d\",t2c={\"\u65e5\u672c\":BLUE})# works same as ``Text``.mess=Text(\"Multi-Language\",weight=BOLD)russ=Text(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \",font=\"sans-serif\")hin=Text(\"\u0928\u092e\u0938\u094d\u0924\u0947\",font=\"sans-serif\")arb=Text(\"\u0635\u0628\u0627\u062d \u0627\u0644\u062e\u064a\u0631\\n\u062a\u0634\u0631\u0641\u062a \u0628\u0645\u0642\u0627\u0628\u0644\u062a\u0643\",font=\"sans-serif\")# don't mix RTL and LTR languages nothing shows up then ;-)chinese=Text(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\",font=\"sans-serif\")self.add(morning,japanese,mess,russ,hin,arb,chinese)fori,mobjinenumerate(self.mobjects):mobj.shift(DOWN*(i-3))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MultipleFonts(Scene):\n    def construct(self):\n        morning = Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\", font=\"sans-serif\")\n        japanese = Text(\n            \"\u65e5\u672c\u3078\u3088\u3046\u3053\u305d\", t2c={\"\u65e5\u672c\": BLUE}\n        )  # works same as ``Text``.\n        mess = Text(\"Multi-Language\", weight=BOLD)\n        russ = Text(\"\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435 \u092e\u0938 \u0928\u092e \u092e \", font=\"sans-serif\")\n        hin = Text(\"\u0928\u092e\u0938\u094d\u0924\u0947\", font=\"sans-serif\")\n        arb = Text(\n            \"\u0635\u0628\u0627\u062d \u0627\u0644\u062e\u064a\u0631 \\n \u062a\u0634\u0631\u0641\u062a \u0628\u0645\u0642\u0627\u0628\u0644\u062a\u0643\", font=\"sans-serif\"\n        )  # don't mix RTL and LTR languages nothing shows up then ;-)\n        chinese = Text(\"\u81c2\u733f\u300c\u9edb\u6bd4\u300d\u5e36\u8457\u5b69\u5b50\", font=\"sans-serif\")\n        self.add(morning, japanese, mess, russ, hin, arb, chinese)\n        for i,mobj in enumerate(self.mobjects):\n            mobj.shift(DOWN*(i-3))",
+      "language": "python",
+      "context": "Example: MultipleFonts\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPangoRender(Scene):defconstruct(self):morning=Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\",font=\"sans-serif\")self.play(Write(morning))self.wait(2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PangoRender(Scene):\n    def construct(self):\n        morning = Text(\"\u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd\", font=\"sans-serif\")\n        self.play(Write(morning))\n        self.wait(2)",
+      "language": "python",
+      "context": "Example: PangoRender\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>Text('The horse does not eat cucumber salad.')Text('The horse does not eat cucumber salad.')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Text",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Bases:SVGMobject"
+    },
+    {
+      "name": "_find_indexes",
+      "class_name": null,
+      "parameters": [
+        "word"
+      ],
+      "return_type": null,
+      "description": "Finds the indexes oftextinword."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_text2hash",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Generatessha256hash for file name."
+    },
+    {
+      "name": "_text2settings",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Converts the texts and styles to a setting for parsing."
+    },
+    {
+      "name": "_text2svg",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Convert the text to SVG using Pango."
+    },
+    {
+      "name": "init_colors",
+      "class_name": null,
+      "parameters": [
+        "propagate_colors=True"
+      ],
+      "return_type": null,
+      "description": "Initializes the colors."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "VGroup",
+    "Tex",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

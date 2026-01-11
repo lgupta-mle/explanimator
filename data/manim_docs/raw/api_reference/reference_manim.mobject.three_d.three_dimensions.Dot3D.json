@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Dot3D.html",
+  "title": "Dot3D\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Dot3D\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Dot3D\n\nclassDot3D(point=array([0.,0.,0.]),radius=0.08,color=ManimColor('#FFFFFF'),resolution=(8,8),**kwargs)[source]\u00b6\n\nBases:SphereA spherical dot.Parameters:point(list|np.ndarray) \u2013 The location of the dot.radius(float) \u2013 The radius of the dot.color(ManimColor) \u2013 The color of theDot3D.resolution(tuple[int,int]) \u2013 The number of samples taken of theDot3D. A tuple can be\nused to define different resolutions foruandvrespectively.ExamplesExample: Dot3DExample\u00b6frommanimimport*classDot3DExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=-45*DEGREES)axes=ThreeDAxes()dot_1=Dot3D(point=axes.coords_to_point(0,0,1),color=RED)dot_2=Dot3D(point=axes.coords_to_point(2,0,0),radius=0.1,color=BLUE)dot_3=Dot3D(point=[0,0,0],radius=0.1,color=ORANGE)self.add(axes,dot_1,dot_2,dot_3)class Dot3DExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75*DEGREES, theta=-45*DEGREES)\n\n        axes = ThreeDAxes()\n        dot_1 = Dot3D(point=axes.coords_to_point(0, 0, 1), color=RED)\n        dot_2 = Dot3D(point=axes.coords_to_point(2, 0, 0), radius=0.1, color=BLUE)\n        dot_3 = Dot3D(point=[0, 0, 0], radius=0.1, color=ORANGE)\n        self.add(axes, dot_1, dot_2,dot_3)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(point=array([0.,0.,0.]),radius=0.08,color=ManimColor('#FFFFFF'),resolution=(8,8),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:point(list|ndarray)radius(float)color(ParsableManimColor)resolution(tuple[int,int])Return type:None\n\nBases:Sphere\n\nA spherical dot.\n\nParameters:\n\npoint(list|np.ndarray) \u2013 The location of the dot.radius(float) \u2013 The radius of the dot.color(ManimColor) \u2013 The color of theDot3D.resolution(tuple[int,int]) \u2013 The number of samples taken of theDot3D. A tuple can be\nused to define different resolutions foruandvrespectively.\n\npoint(list|np.ndarray) \u2013 The location of the dot.\n\npoint(list|np.ndarray) \u2013 The location of the dot.\n\nradius(float) \u2013 The radius of the dot.\n\nradius(float) \u2013 The radius of the dot.\n\ncolor(ManimColor) \u2013 The color of theDot3D.\n\ncolor(ManimColor) \u2013 The color of theDot3D.\n\nresolution(tuple[int,int]) \u2013 The number of samples taken of theDot3D. A tuple can be\nused to define different resolutions foruandvrespectively.\n\nresolution(tuple[int,int]) \u2013 The number of samples taken of theDot3D. A tuple can be\nused to define different resolutions foruandvrespectively.\n\nExamples\n\nExample: Dot3DExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(point=array([0.,0.,0.]),radius=0.08,color=ManimColor('#FFFFFF'),resolution=(8,8),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:point(list|ndarray)radius(float)color(ParsableManimColor)resolution(tuple[int,int])Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npoint(list|ndarray)radius(float)color(ParsableManimColor)resolution(tuple[int,int])\n\npoint(list|ndarray)\n\npoint(list|ndarray)\n\nradius(float)\n\nradius(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nresolution(tuple[int,int])\n\nresolution(tuple[int,int])\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classDot3DExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=-45*DEGREES)axes=ThreeDAxes()dot_1=Dot3D(point=axes.coords_to_point(0,0,1),color=RED)dot_2=Dot3D(point=axes.coords_to_point(2,0,0),radius=0.1,color=BLUE)dot_3=Dot3D(point=[0,0,0],radius=0.1,color=ORANGE)self.add(axes,dot_1,dot_2,dot_3)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Dot3DExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75*DEGREES, theta=-45*DEGREES)\n\n        axes = ThreeDAxes()\n        dot_1 = Dot3D(point=axes.coords_to_point(0, 0, 1), color=RED)\n        dot_2 = Dot3D(point=axes.coords_to_point(2, 0, 0), radius=0.1, color=BLUE)\n        dot_3 = Dot3D(point=[0, 0, 0], radius=0.1, color=ORANGE)\n        self.add(axes, dot_1, dot_2,dot_3)",
+      "language": "python",
+      "context": "Example: Dot3DExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Dot3D",
+      "class_name": null,
+      "parameters": [
+        "point=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:Sphere"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "point=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "Axes",
+    "ThreeDScene",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

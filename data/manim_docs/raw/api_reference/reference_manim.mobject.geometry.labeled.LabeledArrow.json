@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.labeled.LabeledArrow.html",
+  "title": "LabeledArrow\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LabeledArrow\u00b6\n\nQualified name:manim.mobject.geometry.labeled.LabeledArrow\n\nclassLabeledArrow(*args,**kwargs)[source]\u00b6\n\nBases:LabeledLine,ArrowConstructs an arrow containing a label box somewhere along its length.\nThis class inherits its label properties fromLabeledLine, so the main parameters controlling it are the same.Parameters:label\u2013 Label that will be displayed on the Arrow.label_position\u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.label_config\u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.box_config\u2013 A dictionary containing the configuration for the background box.frame_config\u2013A dictionary containing the configuration for the frame.See alsoLabeledLineargs(Any)kwargs(Any)ExamplesExample: LabeledArrowExample\u00b6frommanimimport*classLabeledArrowExample(Scene):defconstruct(self):l_arrow=LabeledArrow(\"0.5\",start=LEFT*3,end=RIGHT*3+UP*2,label_position=0.5)self.add(l_arrow)class LabeledArrowExample(Scene):\n    def construct(self):\n        l_arrow = LabeledArrow(\"0.5\", start=LEFT*3, end=RIGHT*3 + UP*2, label_position=0.5)\n\n        self.add(l_arrow)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*args,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)kwargs(Any)Return type:None\n\nBases:LabeledLine,Arrow\n\nConstructs an arrow containing a label box somewhere along its length.\nThis class inherits its label properties fromLabeledLine, so the main parameters controlling it are the same.\n\nParameters:\n\nlabel\u2013 Label that will be displayed on the Arrow.label_position\u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.label_config\u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.box_config\u2013 A dictionary containing the configuration for the background box.frame_config\u2013A dictionary containing the configuration for the frame.See alsoLabeledLineargs(Any)kwargs(Any)\n\nlabel\u2013 Label that will be displayed on the Arrow.\n\nlabel\u2013 Label that will be displayed on the Arrow.\n\nlabel_position\u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.\n\nlabel_position\u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.\n\nlabel_config\u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.\n\nlabel_config\u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.\n\nbox_config\u2013 A dictionary containing the configuration for the background box.\n\nbox_config\u2013 A dictionary containing the configuration for the background box.\n\nframe_config\u2013A dictionary containing the configuration for the frame.See alsoLabeledLine\n\nframe_config\u2013A dictionary containing the configuration for the frame.See alsoLabeledLine\n\nA dictionary containing the configuration for the frame.\n\nSee also\n\nLabeledLine\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: LabeledArrowExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*args,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nargs(Any)kwargs(Any)\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLabeledArrowExample(Scene):defconstruct(self):l_arrow=LabeledArrow(\"0.5\",start=LEFT*3,end=RIGHT*3+UP*2,label_position=0.5)self.add(l_arrow)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LabeledArrowExample(Scene):\n    def construct(self):\n        l_arrow = LabeledArrow(\"0.5\", start=LEFT*3, end=RIGHT*3 + UP*2, label_position=0.5)\n\n        self.add(l_arrow)",
+      "language": "python",
+      "context": "Example: LabeledArrowExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LabeledArrow",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:LabeledLine,Arrow"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Scene",
+    "Arrow"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

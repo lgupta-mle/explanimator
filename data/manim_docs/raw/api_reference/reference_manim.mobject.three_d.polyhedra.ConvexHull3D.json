@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.polyhedra.ConvexHull3D.html",
+  "title": "ConvexHull3D\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ConvexHull3D\u00b6\n\nQualified name:manim.mobject.three\\_d.polyhedra.ConvexHull3D\n\nclassConvexHull3D(*points,tolerance=1e-05,**kwargs)[source]\u00b6\n\nBases:PolyhedronA convex hull for a set of pointsParameters:points(Point3D) \u2013 The points to consider.tolerance(float) \u2013 The tolerance used for quickhull.kwargs(Any) \u2013 Forwarded to the parent constructor.ExamplesExample: ConvexHull3DExample\u00b6frommanimimport*classConvexHull3DExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)points=[[1.93192757,0.44134585,-1.52407061],[-0.93302521,1.23206983,0.64117067],[-0.44350918,-0.61043677,0.21723705],[-0.42640268,-1.05260843,1.61266094],[-1.84449637,0.91238739,-1.85172623],[1.72068132,-0.11880457,0.51881751],[0.41904805,0.44938012,-1.86440686],[0.83864666,1.66653337,1.88960123],[0.22240514,-0.80986286,1.34249326],[-1.29585759,1.01516189,0.46187522],[1.7776499,-1.59550796,-1.70240747],[0.80065226,-0.12530398,1.70063977],[1.28960948,-1.44158255,1.39938582],[-0.93538943,1.33617705,-0.24852643],[-1.54868271,1.7444399,-0.46170734]]hull=ConvexHull3D(*points,faces_config={\"stroke_opacity\":0},graph_config={\"vertex_type\":Dot3D,\"edge_config\":{\"stroke_color\":BLUE,\"stroke_width\":2,\"stroke_opacity\":0.05,}})dots=VGroup(*[Dot3D(point)forpointinpoints])self.add(hull)self.add(dots)class ConvexHull3DExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        points = [\n            [ 1.93192757,  0.44134585, -1.52407061],\n            [-0.93302521,  1.23206983,  0.64117067],\n            [-0.44350918, -0.61043677,  0.21723705],\n            [-0.42640268, -1.05260843,  1.61266094],\n            [-1.84449637,  0.91238739, -1.85172623],\n            [ 1.72068132, -0.11880457,  0.51881751],\n            [ 0.41904805,  0.44938012, -1.86440686],\n            [ 0.83864666,  1.66653337,  1.88960123],\n            [ 0.22240514, -0.80986286,  1.34249326],\n            [-1.29585759,  1.01516189,  0.46187522],\n            [ 1.7776499,  -1.59550796, -1.70240747],\n            [ 0.80065226, -0.12530398,  1.70063977],\n            [ 1.28960948, -1.44158255,  1.39938582],\n            [-0.93538943,  1.33617705, -0.24852643],\n            [-1.54868271,  1.7444399,  -0.46170734]\n        ]\n        hull = ConvexHull3D(\n            *points,\n            faces_config = {\"stroke_opacity\": 0},\n            graph_config = {\n                \"vertex_type\": Dot3D,\n                \"edge_config\": {\n                    \"stroke_color\": BLUE,\n                    \"stroke_width\": 2,\n                    \"stroke_opacity\": 0.05,\n                }\n            }\n        )\n        dots = VGroup(*[Dot3D(point) for point in points])\n        self.add(hull)\n        self.add(dots)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*points,tolerance=1e-05,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:points(Point3D)tolerance(float)kwargs(Any)\n\nBases:Polyhedron\n\nA convex hull for a set of points\n\nParameters:\n\npoints(Point3D) \u2013 The points to consider.tolerance(float) \u2013 The tolerance used for quickhull.kwargs(Any) \u2013 Forwarded to the parent constructor.\n\npoints(Point3D) \u2013 The points to consider.\n\npoints(Point3D) \u2013 The points to consider.\n\ntolerance(float) \u2013 The tolerance used for quickhull.\n\ntolerance(float) \u2013 The tolerance used for quickhull.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nExamples\n\nExample: ConvexHull3DExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*points,tolerance=1e-05,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:points(Point3D)tolerance(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npoints(Point3D)tolerance(float)kwargs(Any)\n\npoints(Point3D)\n\npoints(Point3D)\n\ntolerance(float)\n\ntolerance(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classConvexHull3DExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)points=[[1.93192757,0.44134585,-1.52407061],[-0.93302521,1.23206983,0.64117067],[-0.44350918,-0.61043677,0.21723705],[-0.42640268,-1.05260843,1.61266094],[-1.84449637,0.91238739,-1.85172623],[1.72068132,-0.11880457,0.51881751],[0.41904805,0.44938012,-1.86440686],[0.83864666,1.66653337,1.88960123],[0.22240514,-0.80986286,1.34249326],[-1.29585759,1.01516189,0.46187522],[1.7776499,-1.59550796,-1.70240747],[0.80065226,-0.12530398,1.70063977],[1.28960948,-1.44158255,1.39938582],[-0.93538943,1.33617705,-0.24852643],[-1.54868271,1.7444399,-0.46170734]]hull=ConvexHull3D(*points,faces_config={\"stroke_opacity\":0},graph_config={\"vertex_type\":Dot3D,\"edge_config\":{\"stroke_color\":BLUE,\"stroke_width\":2,\"stroke_opacity\":0.05,}})dots=VGroup(*[Dot3D(point)forpointinpoints])self.add(hull)self.add(dots)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ConvexHull3DExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        points = [\n            [ 1.93192757,  0.44134585, -1.52407061],\n            [-0.93302521,  1.23206983,  0.64117067],\n            [-0.44350918, -0.61043677,  0.21723705],\n            [-0.42640268, -1.05260843,  1.61266094],\n            [-1.84449637,  0.91238739, -1.85172623],\n            [ 1.72068132, -0.11880457,  0.51881751],\n            [ 0.41904805,  0.44938012, -1.86440686],\n            [ 0.83864666,  1.66653337,  1.88960123],\n            [ 0.22240514, -0.80986286,  1.34249326],\n            [-1.29585759,  1.01516189,  0.46187522],\n            [ 1.7776499,  -1.59550796, -1.70240747],\n            [ 0.80065226, -0.12530398,  1.70063977],\n            [ 1.28960948, -1.44158255,  1.39938582],\n            [-0.93538943,  1.33617705, -0.24852643],\n            [-1.54868271,  1.7444399,  -0.46170734]\n        ]\n        hull = ConvexHull3D(\n            *points,\n            faces_config = {\"stroke_opacity\": 0},\n            graph_config = {\n                \"vertex_type\": Dot3D,\n                \"edge_config\": {\n                    \"stroke_color\": BLUE,\n                    \"stroke_width\": 2,\n                    \"stroke_opacity\": 0.05,\n                }\n            }\n        )\n        dots = VGroup(*[Dot3D(point) for point in points])\n        self.add(hull)\n        self.add(dots)",
+      "language": "python",
+      "context": "Example: ConvexHull3DExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ConvexHull3D",
+      "class_name": null,
+      "parameters": [
+        "*points"
+      ],
+      "return_type": null,
+      "description": "Bases:Polyhedron"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*points"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "VGroup",
+    "ThreeDScene",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "animation",
+    "graph"
+  ]
+}

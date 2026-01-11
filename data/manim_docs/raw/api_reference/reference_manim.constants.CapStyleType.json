@@ -1,0 +1,43 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.constants.CapStyleType.html",
+  "title": "CapStyleType\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "CapStyleType\u00b6\n\nQualified name:manim.constants.CapStyleType\n\nclassCapStyleType(*values)[source]\u00b6\n\nBases:EnumCollection of available cap styles.See the example below for a visual illustration of the different\ncap styles.ExamplesExample: CapStyleVariants\u00b6frommanimimport*classCapStyleVariants(Scene):defconstruct(self):arcs=VGroup(*[Arc(radius=1,start_angle=0,angle=TAU/4,stroke_width=20,color=GREEN,cap_style=cap_style,)forcap_styleinCapStyleType])arcs.arrange(RIGHT,buff=1)self.add(arcs)forarcinarcs:label=Text(arc.cap_style.name,font_size=24).next_to(arc,DOWN)self.add(label)class CapStyleVariants(Scene):\n    def construct(self):\n        arcs = VGroup(*[\n            Arc(\n                radius=1,\n                start_angle=0,\n                angle=TAU / 4,\n                stroke_width=20,\n                color=GREEN,\n                cap_style=cap_style,\n            )\n            for cap_style in CapStyleType\n        ])\n        arcs.arrange(RIGHT, buff=1)\n        self.add(arcs)\n        for arc in arcs:\n            label = Text(arc.cap_style.name, font_size=24).next_to(arc, DOWN)\n            self.add(label)AttributesAUTOROUNDBUTTSQUARE\n\nBases:Enum\n\nCollection of available cap styles.\n\nSee the example below for a visual illustration of the different\ncap styles.\n\nExamples\n\nExample: CapStyleVariants\u00b6\n\nAttributes\n\nAUTO\n\nROUND\n\nBUTT\n\nSQUARE",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCapStyleVariants(Scene):defconstruct(self):arcs=VGroup(*[Arc(radius=1,start_angle=0,angle=TAU/4,stroke_width=20,color=GREEN,cap_style=cap_style,)forcap_styleinCapStyleType])arcs.arrange(RIGHT,buff=1)self.add(arcs)forarcinarcs:label=Text(arc.cap_style.name,font_size=24).next_to(arc,DOWN)self.add(label)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CapStyleVariants(Scene):\n    def construct(self):\n        arcs = VGroup(*[\n            Arc(\n                radius=1,\n                start_angle=0,\n                angle=TAU / 4,\n                stroke_width=20,\n                color=GREEN,\n                cap_style=cap_style,\n            )\n            for cap_style in CapStyleType\n        ])\n        arcs.arrange(RIGHT, buff=1)\n        self.add(arcs)\n        for arc in arcs:\n            label = Text(arc.cap_style.name, font_size=24).next_to(arc, DOWN)\n            self.add(label)",
+      "language": "python",
+      "context": "Example: CapStyleVariants\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "CapStyleType",
+      "class_name": null,
+      "parameters": [
+        "*values"
+      ],
+      "return_type": null,
+      "description": "Bases:Enum"
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Scene",
+    "Tex",
+    "Text"
+  ],
+  "tags": [
+    "geometry",
+    "color",
+    "text"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.frame.html",
+  "title": "frame\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "frame\u00b6\n\nSpecial rectangles.\n\nClasses\n\nFullScreenRectangle\n\nScreenRectangle",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Rectangle"
+  ],
+  "tags": [
+    "geometry"
+  ]
+}

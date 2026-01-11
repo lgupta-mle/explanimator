@@ -1,0 +1,13 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.polyhedra.html",
+  "title": "polyhedra\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "polyhedra\u00b6\n\nGeneral polyhedral class and platonic solids.\n\nClasses\n\nConvexHull3D\n\nA convex hull for a set of points\n\nDodecahedron\n\nA dodecahedron, one of the five platonic solids.\n\nIcosahedron\n\nAn icosahedron, one of the five platonic solids.\n\nOctahedron\n\nAn octahedron, one of the five platonic solids.\n\nPolyhedron\n\nAn abstract polyhedra class.\n\nTetrahedron\n\nA tetrahedron, one of the five platonic solids.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "3d"
+  ]
+}

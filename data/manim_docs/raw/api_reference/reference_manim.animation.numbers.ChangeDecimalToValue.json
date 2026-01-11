@@ -1,0 +1,48 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.numbers.ChangeDecimalToValue.html",
+  "title": "ChangeDecimalToValue\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ChangeDecimalToValue\u00b6\n\nQualified name:manim.animation.numbers.ChangeDecimalToValue\n\nclassChangeDecimalToValue(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ChangingDecimalAnimate aDecimalNumberto a target value using linear interpolation.Parameters:decimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.target_number(int) \u2013 The target value to transition to.kwargs(Any)ExamplesExample: ChangeDecimalToValueExample\u00b6frommanimimport*classChangeDecimalToValueExample(Scene):defconstruct(self):number=DecimalNumber(0)self.add(number)self.play(ChangeDecimalToValue(number,10,run_time=3))self.wait()class ChangeDecimalToValueExample(Scene):\n    def construct(self):\n        number = DecimalNumber(0)\n        self.add(number)\n        self.play(ChangeDecimalToValue(number, 10, run_time=3))\n        self.wait()MethodsAttributesrun_time_original__init__(decimal_mob,target_number,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:decimal_mob(DecimalNumber)target_number(int)kwargs(Any)Return type:None\n\nBases:ChangingDecimal\n\nAnimate aDecimalNumberto a target value using linear interpolation.\n\nParameters:\n\ndecimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.target_number(int) \u2013 The target value to transition to.kwargs(Any)\n\ndecimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.\n\ndecimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.\n\ntarget_number(int) \u2013 The target value to transition to.\n\ntarget_number(int) \u2013 The target value to transition to.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: ChangeDecimalToValueExample\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(decimal_mob,target_number,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:decimal_mob(DecimalNumber)target_number(int)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ndecimal_mob(DecimalNumber)target_number(int)kwargs(Any)\n\ndecimal_mob(DecimalNumber)\n\ndecimal_mob(DecimalNumber)\n\ntarget_number(int)\n\ntarget_number(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classChangeDecimalToValueExample(Scene):defconstruct(self):number=DecimalNumber(0)self.add(number)self.play(ChangeDecimalToValue(number,10,run_time=3))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ChangeDecimalToValueExample(Scene):\n    def construct(self):\n        number = DecimalNumber(0)\n        self.add(number)\n        self.play(ChangeDecimalToValue(number, 10, run_time=3))\n        self.wait()",
+      "language": "python",
+      "context": "Example: ChangeDecimalToValueExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ChangeDecimalToValue",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ChangingDecimal"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "decimal_mob"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation",
+    "timing"
+  ]
+}

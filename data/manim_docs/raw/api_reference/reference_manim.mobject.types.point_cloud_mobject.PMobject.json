@@ -1,0 +1,138 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.point_cloud_mobject.PMobject.html",
+  "title": "PMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "PMobject\u00b6\n\nQualified name:manim.mobject.types.point\\_cloud\\_mobject.PMobject\n\nclassPMobject(stroke_width=4,**kwargs)[source]\u00b6\n\nBases:MobjectA disc made of a cloud of DotsExamplesExample: PMobjectExample\u00b6frommanimimport*classPMobjectExample(Scene):defconstruct(self):pG=PGroup()# This is just a collection of PMobject's# As the scale factor increases, the number of points# removed increases.forsfinrange(1,9+1):p=PointCloudDot(density=20,radius=1).thin_out(sf)# PointCloudDot is a type of PMobject# and can therefore be added to a PGrouppG.add(p)# This organizes all the shapes in a grid.pG.arrange_in_grid()self.add(pG)class PMobjectExample(Scene):\n    def construct(self):\n\n        pG = PGroup()  # This is just a collection of PMobject's\n\n        # As the scale factor increases, the number of points\n        # removed increases.\n        for sf in range(1, 9 + 1):\n            p = PointCloudDot(density=20, radius=1).thin_out(sf)\n            # PointCloudDot is a type of PMobject\n            # and can therefore be added to a PGroup\n            pG.add(p)\n\n        # This organizes all the shapes in a grid.\n        pG.arrange_in_grid()\n\n        self.add(pG)Methodsadd_pointsAdd points.align_points_with_largerfade_tofilter_outget_all_rgbasget_array_attrsget_colorReturns the color of theMobjectget_mobject_type_classReturn the base class of this mobject type.get_point_mobjectThe simplestMobjectto be transformed to or from self.get_stroke_widthingest_submobjectsinterpolate_colormatch_colorspoint_from_proportionpointwise_become_partialreset_pointsSetspointsto be an empty array.set_colorCondition is function which takes in one arguments, (x, y, z).set_color_by_gradientset_colors_by_radial_gradientset_stroke_widthsort_pointsFunction is any map from R^3 to Rthin_outRemoves all but every nth point for n = factorAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:stroke_width(int)kwargs(Any)_original__init__(stroke_width=4,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:stroke_width(int)kwargs(Any)Return type:Noneadd_points(points,rgbas=None,color=None,alpha=1.0)[source]\u00b6Add points.Points must be a Nx3 numpy array.\nRgbas must be a Nx4 numpy array if it is not None.Parameters:points(Point3DLike_Array)rgbas(FloatRGBALike_Array|None)color(ParsableManimColor|None)alpha(float)Return type:Selfget_color()[source]\u00b6Returns the color of theMobjectExamples>>>frommanimimportSquare,RED>>>Square(color=RED).get_color()==REDTrueReturn type:ManimColorstaticget_mobject_type_class()[source]\u00b6Return the base class of this mobject type.Return type:type[PMobject]get_point_mobject(center=None)[source]\u00b6The simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate typeParameters:center(Point3DLike|None)Return type:Pointreset_points()[source]\u00b6Setspointsto be an empty array.Return type:Selfset_color(color=ManimColor('#FFFF00'),family=True)[source]\u00b6Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof colorParameters:color(ParsableManimColor)family(bool)Return type:Selfset_color_by_gradient(*colors)[source]\u00b6Parameters:colors(ParsableManimColor) \u2013 The colors to use for the gradient. Use likeset_color_by_gradient(RED, BLUE, GREEN).ManimColor.parse(color)(self.color =)self(return)Return type:Selfsort_points(function=<functionPMobject.<lambda>>)[source]\u00b6Function is any map from R^3 to RParameters:function(Callable[[npt.NDArray[ManimFloat]],float])Return type:Selfthin_out(factor=5)[source]\u00b6Removes all but every nth point for n = factorParameters:factor(int)Return type:Self\n\nBases:Mobject\n\nA disc made of a cloud of Dots\n\nExamples\n\nExample: PMobjectExample\u00b6\n\nMethods\n\nadd_points\n\nAdd points.\n\nalign_points_with_larger\n\nfade_to\n\nfilter_out\n\nget_all_rgbas\n\nget_array_attrs\n\nget_color\n\nReturns the color of theMobject\n\nget_mobject_type_class\n\nReturn the base class of this mobject type.\n\nget_point_mobject\n\nThe simplestMobjectto be transformed to or from self.\n\nget_stroke_width\n\ningest_submobjects\n\ninterpolate_color\n\nmatch_colors\n\npoint_from_proportion\n\npointwise_become_partial\n\nreset_points\n\nSetspointsto be an empty array.\n\nset_color\n\nCondition is function which takes in one arguments, (x, y, z).\n\nset_color_by_gradient\n\nset_colors_by_radial_gradient\n\nset_stroke_width\n\nsort_points\n\nFunction is any map from R^3 to R\n\nthin_out\n\nRemoves all but every nth point for n = factor\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nstroke_width(int)kwargs(Any)\n\nstroke_width(int)\n\nstroke_width(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(stroke_width=4,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:stroke_width(int)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstroke_width(int)kwargs(Any)\n\nstroke_width(int)\n\nstroke_width(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nadd_points(points,rgbas=None,color=None,alpha=1.0)[source]\u00b6\n\nAdd points.Points must be a Nx3 numpy array.\nRgbas must be a Nx4 numpy array if it is not None.Parameters:points(Point3DLike_Array)rgbas(FloatRGBALike_Array|None)color(ParsableManimColor|None)alpha(float)Return type:Self\n\nAdd points.\n\nPoints must be a Nx3 numpy array.\nRgbas must be a Nx4 numpy array if it is not None.\n\nParameters:\n\npoints(Point3DLike_Array)rgbas(FloatRGBALike_Array|None)color(ParsableManimColor|None)alpha(float)\n\npoints(Point3DLike_Array)\n\npoints(Point3DLike_Array)\n\nrgbas(FloatRGBALike_Array|None)\n\nrgbas(FloatRGBALike_Array|None)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nalpha(float)\n\nalpha(float)\n\nReturn type:\n\nSelf\n\nSelf\n\nget_color()[source]\u00b6\n\nReturns the color of theMobjectExamples>>>frommanimimportSquare,RED>>>Square(color=RED).get_color()==REDTrueReturn type:ManimColor\n\nReturns the color of theMobject\n\nExamples\n\nReturn type:\n\nManimColor\n\nManimColor\n\nstaticget_mobject_type_class()[source]\u00b6\n\nReturn the base class of this mobject type.Return type:type[PMobject]\n\nReturn the base class of this mobject type.\n\nReturn type:\n\ntype[PMobject]\n\ntype[PMobject]\n\nget_point_mobject(center=None)[source]\u00b6\n\nThe simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate typeParameters:center(Point3DLike|None)Return type:Point\n\nThe simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate type\n\nParameters:\n\ncenter(Point3DLike|None)\n\ncenter(Point3DLike|None)\n\nReturn type:\n\nPoint\n\nPoint\n\nreset_points()[source]\u00b6\n\nSetspointsto be an empty array.Return type:Self\n\nSetspointsto be an empty array.\n\nReturn type:\n\nSelf\n\nSelf\n\nset_color(color=ManimColor('#FFFF00'),family=True)[source]\u00b6\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof colorParameters:color(ParsableManimColor)family(bool)Return type:Self\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color\n\nParameters:\n\ncolor(ParsableManimColor)family(bool)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nfamily(bool)\n\nfamily(bool)\n\nReturn type:\n\nSelf\n\nSelf\n\nset_color_by_gradient(*colors)[source]\u00b6\n\nParameters:colors(ParsableManimColor) \u2013 The colors to use for the gradient. Use likeset_color_by_gradient(RED, BLUE, GREEN).ManimColor.parse(color)(self.color =)self(return)Return type:Self\n\nParameters:\n\ncolors(ParsableManimColor) \u2013 The colors to use for the gradient. Use likeset_color_by_gradient(RED, BLUE, GREEN).ManimColor.parse(color)(self.color =)self(return)\n\ncolors(ParsableManimColor) \u2013 The colors to use for the gradient. Use likeset_color_by_gradient(RED, BLUE, GREEN).\n\ncolors(ParsableManimColor) \u2013 The colors to use for the gradient. Use likeset_color_by_gradient(RED, BLUE, GREEN).\n\nManimColor.parse(color)(self.color =)\n\nManimColor.parse(color)(self.color =)\n\nself(return)\n\nself(return)\n\nReturn type:\n\nSelf\n\nSelf\n\nsort_points(function=<functionPMobject.<lambda>>)[source]\u00b6\n\nFunction is any map from R^3 to RParameters:function(Callable[[npt.NDArray[ManimFloat]],float])Return type:Self\n\nFunction is any map from R^3 to R\n\nParameters:\n\nfunction(Callable[[npt.NDArray[ManimFloat]],float])\n\nfunction(Callable[[npt.NDArray[ManimFloat]],float])\n\nReturn type:\n\nSelf\n\nSelf\n\nthin_out(factor=5)[source]\u00b6\n\nRemoves all but every nth point for n = factorParameters:factor(int)Return type:Self\n\nRemoves all but every nth point for n = factor\n\nParameters:\n\nfactor(int)\n\nfactor(int)\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classPMobjectExample(Scene):defconstruct(self):pG=PGroup()# This is just a collection of PMobject's# As the scale factor increases, the number of points# removed increases.forsfinrange(1,9+1):p=PointCloudDot(density=20,radius=1).thin_out(sf)# PointCloudDot is a type of PMobject# and can therefore be added to a PGrouppG.add(p)# This organizes all the shapes in a grid.pG.arrange_in_grid()self.add(pG)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PMobjectExample(Scene):\n    def construct(self):\n\n        pG = PGroup()  # This is just a collection of PMobject's\n\n        # As the scale factor increases, the number of points\n        # removed increases.\n        for sf in range(1, 9 + 1):\n            p = PointCloudDot(density=20, radius=1).thin_out(sf)\n            # PointCloudDot is a type of PMobject\n            # and can therefore be added to a PGroup\n            pG.add(p)\n\n        # This organizes all the shapes in a grid.\n        pG.arrange_in_grid()\n\n        self.add(pG)",
+      "language": "python",
+      "context": "Example: PMobjectExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportSquare,RED>>>Square(color=RED).get_color()==REDTrue",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "PMobject",
+      "class_name": null,
+      "parameters": [
+        "stroke_width=4"
+      ],
+      "return_type": null,
+      "description": "Bases:Mobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "stroke_width=4"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add_points",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Add points."
+    },
+    {
+      "name": "get_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the color of theMobject"
+    },
+    {
+      "name": "get_mobject_type_class",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the base class of this mobject type."
+    },
+    {
+      "name": "get_point_mobject",
+      "class_name": null,
+      "parameters": [
+        "center=None"
+      ],
+      "return_type": null,
+      "description": "The simplestMobjectto be transformed to or from self.\nShould by a point of the appropriate type"
+    },
+    {
+      "name": "reset_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Setspointsto be an empty array."
+    },
+    {
+      "name": "set_color",
+      "class_name": null,
+      "parameters": [
+        "color=ManimColor('#FFFF00')"
+      ],
+      "return_type": null,
+      "description": "Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color"
+    },
+    {
+      "name": "set_color_by_gradient",
+      "class_name": null,
+      "parameters": [
+        "*colors"
+      ],
+      "return_type": null,
+      "description": "colors(ParsableManimColor) \u2013 The colors to use for the gradient. Use likeset_color_by_gradient(RED, BLUE, GREEN)."
+    },
+    {
+      "name": "sort_points",
+      "class_name": null,
+      "parameters": [
+        "function=<function PMobject.<lambda>>"
+      ],
+      "return_type": null,
+      "description": "Function is any map from R^3 to R"
+    },
+    {
+      "name": "thin_out",
+      "class_name": null,
+      "parameters": [
+        "factor=5"
+      ],
+      "return_type": null,
+      "description": "Removes all but every nth point for n = factor"
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

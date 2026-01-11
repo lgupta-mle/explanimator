@@ -1,0 +1,37 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ApplyComplexFunction.html",
+  "title": "ApplyComplexFunction\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ApplyComplexFunction\u00b6\n\nQualified name:manim.animation.transform.ApplyComplexFunction\n\nclassApplyComplexFunction(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ApplyMethodMethodsAttributespath_arcpath_funcrun_timeParameters:function(types.MethodType)mobject(Mobject)_original__init__(function,mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:function(MethodType)mobject(Mobject)Return type:None\n\nBases:ApplyMethod\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nfunction(types.MethodType)mobject(Mobject)\n\nfunction(types.MethodType)\n\nfunction(types.MethodType)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\n_original__init__(function,mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:function(MethodType)mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfunction(MethodType)mobject(Mobject)\n\nfunction(MethodType)\n\nfunction(MethodType)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ApplyComplexFunction",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ApplyMethod"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "transformation",
+    "timing",
+    "graph"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.point_cloud_mobject.Point.html",
+  "title": "Point\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Point\u00b6\n\nQualified name:manim.mobject.types.point\\_cloud\\_mobject.Point\n\nclassPoint(location=array([0.,0.,0.]),color=ManimColor('#000000'),**kwargs)[source]\u00b6\n\nBases:PMobjectA mobject representing a point.ExamplesExample: ExamplePoint\u00b6frommanimimport*classExamplePoint(Scene):defconstruct(self):colorList=[RED,GREEN,BLUE,YELLOW]foriinrange(200):point=Point(location=[0.63*np.random.randint(-4,4),0.37*np.random.randint(-4,4),0],color=np.random.choice(colorList))self.add(point)foriinrange(200):point=Point(location=[0.37*np.random.randint(-4,4),0.63*np.random.randint(-4,4),0],color=np.random.choice(colorList))self.add(point)self.add(point)class ExamplePoint(Scene):\n    def construct(self):\n        colorList = [RED, GREEN, BLUE, YELLOW]\n        for i in range(200):\n            point = Point(location=[0.63 * np.random.randint(-4, 4), 0.37 * np.random.randint(-4, 4), 0], color=np.random.choice(colorList))\n            self.add(point)\n        for i in range(200):\n            point = Point(location=[0.37 * np.random.randint(-4, 4), 0.63 * np.random.randint(-4, 4), 0], color=np.random.choice(colorList))\n            self.add(point)\n        self.add(point)Methodsgenerate_pointsInitializespointsand therefore the shape.init_pointsAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:location(Point3DLike)color(ManimColor)kwargs(Any)_original__init__(location=array([0.,0.,0.]),color=ManimColor('#000000'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:location(Point3DLike)color(ManimColor)kwargs(Any)Return type:Nonegenerate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nBases:PMobject\n\nA mobject representing a point.\n\nExamples\n\nExample: ExamplePoint\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\ninit_points\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nlocation(Point3DLike)color(ManimColor)kwargs(Any)\n\nlocation(Point3DLike)\n\nlocation(Point3DLike)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(location=array([0.,0.,0.]),color=ManimColor('#000000'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:location(Point3DLike)color(ManimColor)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nlocation(Point3DLike)color(ManimColor)kwargs(Any)\n\nlocation(Point3DLike)\n\nlocation(Point3DLike)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExamplePoint(Scene):defconstruct(self):colorList=[RED,GREEN,BLUE,YELLOW]foriinrange(200):point=Point(location=[0.63*np.random.randint(-4,4),0.37*np.random.randint(-4,4),0],color=np.random.choice(colorList))self.add(point)foriinrange(200):point=Point(location=[0.37*np.random.randint(-4,4),0.63*np.random.randint(-4,4),0],color=np.random.choice(colorList))self.add(point)self.add(point)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExamplePoint(Scene):\n    def construct(self):\n        colorList = [RED, GREEN, BLUE, YELLOW]\n        for i in range(200):\n            point = Point(location=[0.63 * np.random.randint(-4, 4), 0.37 * np.random.randint(-4, 4), 0], color=np.random.choice(colorList))\n            self.add(point)\n        for i in range(200):\n            point = Point(location=[0.37 * np.random.randint(-4, 4), 0.63 * np.random.randint(-4, 4), 0], color=np.random.choice(colorList))\n            self.add(point)\n        self.add(point)",
+      "language": "python",
+      "context": "Example: ExamplePoint\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Point",
+      "class_name": null,
+      "parameters": [
+        "location=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:PMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "location=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

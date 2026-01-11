@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.multi_camera.html",
+  "title": "multi_camera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "multi_camera\u00b6\n\nA camera supporting multiple perspectives.\n\nClasses\n\nMultiCamera\n\nCamera Object that allows for multiple perspectives.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Camera"
+  ],
+  "tags": [
+    "3d"
+  ]
+}

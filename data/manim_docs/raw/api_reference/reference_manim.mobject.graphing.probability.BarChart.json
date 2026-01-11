@@ -1,0 +1,126 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.probability.BarChart.html",
+  "title": "BarChart\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BarChart\u00b6\n\nQualified name:manim.mobject.graphing.probability.BarChart\n\nclassBarChart(values,bar_names=None,y_range=None,x_length=None,y_length=None,bar_colors=['#003f5c','#58508d','#bc5090','#ff6361','#ffa600'],bar_width=0.6,bar_fill_opacity=0.7,bar_stroke_width=3,**kwargs)[source]\u00b6\n\nBases:AxesCreates a bar chart. Inherits fromAxes, so it shares its methods\nand attributes. Each axis inherits fromNumberLine, so pass inx_axis_config/y_axis_configto control their attributes.Parameters:values(MutableSequence[float]) \u2013 A sequence of values that determines the height of each bar. Accepts negative values.bar_names(Sequence[str]|None) \u2013 A sequence of names for each bar. Does not have to match the length ofvalues.y_range(Sequence[float]|None) \u2013 The y_axis range of values. IfNone, the range will be calculated based on the\nmin/max ofvaluesand the step will be calculated based ony_length.x_length(float|None) \u2013 The length of the x-axis. IfNone, it is automatically calculated based on\nthe number of values and the width of the screen.y_length(float|None) \u2013 The length of the y-axis.bar_colors(Iterable[str]) \u2013 The color for the bars. Accepts a sequence of colors (can contain just one item).\nIf the length of``bar_colors`` does not match that ofvalues,\nintermediate colors will be automatically determined.bar_width(float) \u2013 The length of a bar. Must be between 0 and 1.bar_fill_opacity(float) \u2013 The fill opacity of the bars.bar_stroke_width(float) \u2013 The stroke width of the bars.kwargs(Any)ExamplesExample: BarChartExample\u00b6frommanimimport*classBarChartExample(Scene):defconstruct(self):chart=BarChart(values=[-5,40,-10,20,-3],bar_names=[\"one\",\"two\",\"three\",\"four\",\"five\"],y_range=[-20,50,10],y_length=6,x_length=10,x_axis_config={\"font_size\":36},)c_bar_lbls=chart.get_bar_labels(font_size=48)self.add(chart,c_bar_lbls)class BarChartExample(Scene):\n    def construct(self):\n        chart = BarChart(\n            values=[-5, 40, -10, 20, -3],\n            bar_names=[\"one\", \"two\", \"three\", \"four\", \"five\"],\n            y_range=[-20, 50, 10],\n            y_length=6,\n            x_length=10,\n            x_axis_config={\"font_size\": 36},\n        )\n\n        c_bar_lbls = chart.get_bar_labels(font_size=48)\n\n        self.add(chart, c_bar_lbls)Methodschange_bar_valuesUpdates the height of the bars of the chart.get_bar_labelsAnnotates each bar with its corresponding value.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._add_x_axis_labels()[source]\u00b6Essentially :meth`:~.NumberLine.add_labels`, but differs in that\nthe direction of the label with respect to the x_axis changes to UP or DOWN\ndepending on the value.UP for negative values and DOWN for positive values.Return type:None_create_bar(bar_number,value)[source]\u00b6Creates a positioned bar on the chart.Parameters:bar_number(int) \u2013 Determines the x-position of the bar.value(float) \u2013 The value that determines the height of the bar.Returns:A positioned rectangle representing a bar on the chart.Return type:Rectangle_original__init__(values,bar_names=None,y_range=None,x_length=None,y_length=None,bar_colors=['#003f5c','#58508d','#bc5090','#ff6361','#ffa600'],bar_width=0.6,bar_fill_opacity=0.7,bar_stroke_width=3,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:values(MutableSequence[float])bar_names(Sequence[str]|None)y_range(Sequence[float]|None)x_length(float|None)y_length(float|None)bar_colors(Iterable[str])bar_width(float)bar_fill_opacity(float)bar_stroke_width(float)kwargs(Any)_update_colors()[source]\u00b6Initialize the colors of the bars of the chart.Sets the color ofself.barsviaself.bar_colors.Primarily used when the bars are initialized withself._add_barsor updated viaself.change_bar_values.Return type:Nonechange_bar_values(values,update_colors=True)[source]\u00b6Updates the height of the bars of the chart.Parameters:values(Iterable[float]) \u2013 The values that will be used to update the height of the bars.\nDoes not have to match the number of bars.update_colors(bool) \u2013 Whether to re-initalize the colors of the bars based onself.bar_colors.Return type:NoneExamplesExample: ChangeBarValuesExample\u00b6frommanimimport*classChangeBarValuesExample(Scene):defconstruct(self):values=[-10,-8,-6,-4,-2,0,2,4,6,8,10]chart=BarChart(values,y_range=[-10,10,2],y_axis_config={\"font_size\":24},)self.add(chart)chart.change_bar_values(list(reversed(values)))self.add(chart.get_bar_labels(font_size=24))class ChangeBarValuesExample(Scene):\n    def construct(self):\n        values=[-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10]\n\n        chart = BarChart(\n            values,\n            y_range=[-10, 10, 2],\n            y_axis_config={\"font_size\": 24},\n        )\n        self.add(chart)\n\n        chart.change_bar_values(list(reversed(values)))\n        self.add(chart.get_bar_labels(font_size=24))get_bar_labels(color=None,font_size=24,buff=0.25,label_constructor=<class'manim.mobject.text.tex_mobject.Tex'>)[source]\u00b6Annotates each bar with its corresponding value. Useself.bar_labelsto access the\nlabels after creation.Parameters:color(ParsableManimColor|None) \u2013 The color of each label. By defaultNoneand is based on the parent\u2019s bar color.font_size(float) \u2013 The font size of each label.buff(float) \u2013 The distance from each label to its bar. By default 0.4.label_constructor(type[MathTex]) \u2013 The Mobject class to construct the labels, by defaultTex.Return type:VGroupExamplesExample: GetBarLabelsExample\u00b6frommanimimport*classGetBarLabelsExample(Scene):defconstruct(self):chart=BarChart(values=[10,9,8,7,6,5,4,3,2,1],y_range=[0,10,1])c_bar_lbls=chart.get_bar_labels(color=WHITE,label_constructor=MathTex,font_size=36)self.add(chart,c_bar_lbls)class GetBarLabelsExample(Scene):\n    def construct(self):\n        chart = BarChart(values=[10, 9, 8, 7, 6, 5, 4, 3, 2, 1], y_range=[0, 10, 1])\n\n        c_bar_lbls = chart.get_bar_labels(\n            color=WHITE, label_constructor=MathTex, font_size=36\n        )\n\n        self.add(chart, c_bar_lbls)\n\nBases:Axes\n\nCreates a bar chart. Inherits fromAxes, so it shares its methods\nand attributes. Each axis inherits fromNumberLine, so pass inx_axis_config/y_axis_configto control their attributes.\n\nParameters:\n\nvalues(MutableSequence[float]) \u2013 A sequence of values that determines the height of each bar. Accepts negative values.bar_names(Sequence[str]|None) \u2013 A sequence of names for each bar. Does not have to match the length ofvalues.y_range(Sequence[float]|None) \u2013 The y_axis range of values. IfNone, the range will be calculated based on the\nmin/max ofvaluesand the step will be calculated based ony_length.x_length(float|None) \u2013 The length of the x-axis. IfNone, it is automatically calculated based on\nthe number of values and the width of the screen.y_length(float|None) \u2013 The length of the y-axis.bar_colors(Iterable[str]) \u2013 The color for the bars. Accepts a sequence of colors (can contain just one item).\nIf the length of``bar_colors`` does not match that ofvalues,\nintermediate colors will be automatically determined.bar_width(float) \u2013 The length of a bar. Must be between 0 and 1.bar_fill_opacity(float) \u2013 The fill opacity of the bars.bar_stroke_width(float) \u2013 The stroke width of the bars.kwargs(Any)\n\nvalues(MutableSequence[float]) \u2013 A sequence of values that determines the height of each bar. Accepts negative values.\n\nvalues(MutableSequence[float]) \u2013 A sequence of values that determines the height of each bar. Accepts negative values.\n\nbar_names(Sequence[str]|None) \u2013 A sequence of names for each bar. Does not have to match the length ofvalues.\n\nbar_names(Sequence[str]|None) \u2013 A sequence of names for each bar. Does not have to match the length ofvalues.\n\ny_range(Sequence[float]|None) \u2013 The y_axis range of values. IfNone, the range will be calculated based on the\nmin/max ofvaluesand the step will be calculated based ony_length.\n\ny_range(Sequence[float]|None) \u2013 The y_axis range of values. IfNone, the range will be calculated based on the\nmin/max ofvaluesand the step will be calculated based ony_length.\n\nx_length(float|None) \u2013 The length of the x-axis. IfNone, it is automatically calculated based on\nthe number of values and the width of the screen.\n\nx_length(float|None) \u2013 The length of the x-axis. IfNone, it is automatically calculated based on\nthe number of values and the width of the screen.\n\ny_length(float|None) \u2013 The length of the y-axis.\n\ny_length(float|None) \u2013 The length of the y-axis.\n\nbar_colors(Iterable[str]) \u2013 The color for the bars. Accepts a sequence of colors (can contain just one item).\nIf the length of``bar_colors`` does not match that ofvalues,\nintermediate colors will be automatically determined.\n\nbar_colors(Iterable[str]) \u2013 The color for the bars. Accepts a sequence of colors (can contain just one item).\nIf the length of``bar_colors`` does not match that ofvalues,\nintermediate colors will be automatically determined.\n\nbar_width(float) \u2013 The length of a bar. Must be between 0 and 1.\n\nbar_width(float) \u2013 The length of a bar. Must be between 0 and 1.\n\nbar_fill_opacity(float) \u2013 The fill opacity of the bars.\n\nbar_fill_opacity(float) \u2013 The fill opacity of the bars.\n\nbar_stroke_width(float) \u2013 The stroke width of the bars.\n\nbar_stroke_width(float) \u2013 The stroke width of the bars.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: BarChartExample\u00b6\n\nMethods\n\nchange_bar_values\n\nUpdates the height of the bars of the chart.\n\nget_bar_labels\n\nAnnotates each bar with its corresponding value.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_add_x_axis_labels()[source]\u00b6\n\nEssentially :meth`:~.NumberLine.add_labels`, but differs in that\nthe direction of the label with respect to the x_axis changes to UP or DOWN\ndepending on the value.UP for negative values and DOWN for positive values.Return type:None\n\nEssentially :meth`:~.NumberLine.add_labels`, but differs in that\nthe direction of the label with respect to the x_axis changes to UP or DOWN\ndepending on the value.\n\nUP for negative values and DOWN for positive values.\n\nReturn type:\n\nNone\n\nNone\n\n_create_bar(bar_number,value)[source]\u00b6\n\nCreates a positioned bar on the chart.Parameters:bar_number(int) \u2013 Determines the x-position of the bar.value(float) \u2013 The value that determines the height of the bar.Returns:A positioned rectangle representing a bar on the chart.Return type:Rectangle\n\nCreates a positioned bar on the chart.\n\nParameters:\n\nbar_number(int) \u2013 Determines the x-position of the bar.value(float) \u2013 The value that determines the height of the bar.\n\nbar_number(int) \u2013 Determines the x-position of the bar.\n\nbar_number(int) \u2013 Determines the x-position of the bar.\n\nvalue(float) \u2013 The value that determines the height of the bar.\n\nvalue(float) \u2013 The value that determines the height of the bar.\n\nReturns:\n\nA positioned rectangle representing a bar on the chart.\n\nA positioned rectangle representing a bar on the chart.\n\nReturn type:\n\nRectangle\n\nRectangle\n\n_original__init__(values,bar_names=None,y_range=None,x_length=None,y_length=None,bar_colors=['#003f5c','#58508d','#bc5090','#ff6361','#ffa600'],bar_width=0.6,bar_fill_opacity=0.7,bar_stroke_width=3,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:values(MutableSequence[float])bar_names(Sequence[str]|None)y_range(Sequence[float]|None)x_length(float|None)y_length(float|None)bar_colors(Iterable[str])bar_width(float)bar_fill_opacity(float)bar_stroke_width(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvalues(MutableSequence[float])bar_names(Sequence[str]|None)y_range(Sequence[float]|None)x_length(float|None)y_length(float|None)bar_colors(Iterable[str])bar_width(float)bar_fill_opacity(float)bar_stroke_width(float)kwargs(Any)\n\nvalues(MutableSequence[float])\n\nvalues(MutableSequence[float])\n\nbar_names(Sequence[str]|None)\n\nbar_names(Sequence[str]|None)\n\ny_range(Sequence[float]|None)\n\ny_range(Sequence[float]|None)\n\nx_length(float|None)\n\nx_length(float|None)\n\ny_length(float|None)\n\ny_length(float|None)\n\nbar_colors(Iterable[str])\n\nbar_colors(Iterable[str])\n\nbar_width(float)\n\nbar_width(float)\n\nbar_fill_opacity(float)\n\nbar_fill_opacity(float)\n\nbar_stroke_width(float)\n\nbar_stroke_width(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_update_colors()[source]\u00b6\n\nInitialize the colors of the bars of the chart.Sets the color ofself.barsviaself.bar_colors.Primarily used when the bars are initialized withself._add_barsor updated viaself.change_bar_values.Return type:None\n\nInitialize the colors of the bars of the chart.\n\nSets the color ofself.barsviaself.bar_colors.\n\nPrimarily used when the bars are initialized withself._add_barsor updated viaself.change_bar_values.\n\nReturn type:\n\nNone\n\nNone\n\nchange_bar_values(values,update_colors=True)[source]\u00b6\n\nUpdates the height of the bars of the chart.Parameters:values(Iterable[float]) \u2013 The values that will be used to update the height of the bars.\nDoes not have to match the number of bars.update_colors(bool) \u2013 Whether to re-initalize the colors of the bars based onself.bar_colors.Return type:NoneExamplesExample: ChangeBarValuesExample\u00b6frommanimimport*classChangeBarValuesExample(Scene):defconstruct(self):values=[-10,-8,-6,-4,-2,0,2,4,6,8,10]chart=BarChart(values,y_range=[-10,10,2],y_axis_config={\"font_size\":24},)self.add(chart)chart.change_bar_values(list(reversed(values)))self.add(chart.get_bar_labels(font_size=24))class ChangeBarValuesExample(Scene):\n    def construct(self):\n        values=[-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10]\n\n        chart = BarChart(\n            values,\n            y_range=[-10, 10, 2],\n            y_axis_config={\"font_size\": 24},\n        )\n        self.add(chart)\n\n        chart.change_bar_values(list(reversed(values)))\n        self.add(chart.get_bar_labels(font_size=24))\n\nUpdates the height of the bars of the chart.\n\nParameters:\n\nvalues(Iterable[float]) \u2013 The values that will be used to update the height of the bars.\nDoes not have to match the number of bars.update_colors(bool) \u2013 Whether to re-initalize the colors of the bars based onself.bar_colors.\n\nvalues(Iterable[float]) \u2013 The values that will be used to update the height of the bars.\nDoes not have to match the number of bars.\n\nvalues(Iterable[float]) \u2013 The values that will be used to update the height of the bars.\nDoes not have to match the number of bars.\n\nupdate_colors(bool) \u2013 Whether to re-initalize the colors of the bars based onself.bar_colors.\n\nupdate_colors(bool) \u2013 Whether to re-initalize the colors of the bars based onself.bar_colors.\n\nReturn type:\n\nNone\n\nNone\n\nExamples\n\nExample: ChangeBarValuesExample\u00b6\n\nget_bar_labels(color=None,font_size=24,buff=0.25,label_constructor=<class'manim.mobject.text.tex_mobject.Tex'>)[source]\u00b6\n\nAnnotates each bar with its corresponding value. Useself.bar_labelsto access the\nlabels after creation.Parameters:color(ParsableManimColor|None) \u2013 The color of each label. By defaultNoneand is based on the parent\u2019s bar color.font_size(float) \u2013 The font size of each label.buff(float) \u2013 The distance from each label to its bar. By default 0.4.label_constructor(type[MathTex]) \u2013 The Mobject class to construct the labels, by defaultTex.Return type:VGroupExamplesExample: GetBarLabelsExample\u00b6frommanimimport*classGetBarLabelsExample(Scene):defconstruct(self):chart=BarChart(values=[10,9,8,7,6,5,4,3,2,1],y_range=[0,10,1])c_bar_lbls=chart.get_bar_labels(color=WHITE,label_constructor=MathTex,font_size=36)self.add(chart,c_bar_lbls)class GetBarLabelsExample(Scene):\n    def construct(self):\n        chart = BarChart(values=[10, 9, 8, 7, 6, 5, 4, 3, 2, 1], y_range=[0, 10, 1])\n\n        c_bar_lbls = chart.get_bar_labels(\n            color=WHITE, label_constructor=MathTex, font_size=36\n        )\n\n        self.add(chart, c_bar_lbls)\n\nAnnotates each bar with its corresponding value. Useself.bar_labelsto access the\nlabels after creation.\n\nParameters:\n\ncolor(ParsableManimColor|None) \u2013 The color of each label. By defaultNoneand is based on the parent\u2019s bar color.font_size(float) \u2013 The font size of each label.buff(float) \u2013 The distance from each label to its bar. By default 0.4.label_constructor(type[MathTex]) \u2013 The Mobject class to construct the labels, by defaultTex.\n\ncolor(ParsableManimColor|None) \u2013 The color of each label. By defaultNoneand is based on the parent\u2019s bar color.\n\ncolor(ParsableManimColor|None) \u2013 The color of each label. By defaultNoneand is based on the parent\u2019s bar color.\n\nfont_size(float) \u2013 The font size of each label.\n\nfont_size(float) \u2013 The font size of each label.\n\nbuff(float) \u2013 The distance from each label to its bar. By default 0.4.\n\nbuff(float) \u2013 The distance from each label to its bar. By default 0.4.\n\nlabel_constructor(type[MathTex]) \u2013 The Mobject class to construct the labels, by defaultTex.\n\nlabel_constructor(type[MathTex]) \u2013 The Mobject class to construct the labels, by defaultTex.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nExamples\n\nExample: GetBarLabelsExample\u00b6",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBarChartExample(Scene):defconstruct(self):chart=BarChart(values=[-5,40,-10,20,-3],bar_names=[\"one\",\"two\",\"three\",\"four\",\"five\"],y_range=[-20,50,10],y_length=6,x_length=10,x_axis_config={\"font_size\":36},)c_bar_lbls=chart.get_bar_labels(font_size=48)self.add(chart,c_bar_lbls)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BarChartExample(Scene):\n    def construct(self):\n        chart = BarChart(\n            values=[-5, 40, -10, 20, -3],\n            bar_names=[\"one\", \"two\", \"three\", \"four\", \"five\"],\n            y_range=[-20, 50, 10],\n            y_length=6,\n            x_length=10,\n            x_axis_config={\"font_size\": 36},\n        )\n\n        c_bar_lbls = chart.get_bar_labels(font_size=48)\n\n        self.add(chart, c_bar_lbls)",
+      "language": "python",
+      "context": "Example: BarChartExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classChangeBarValuesExample(Scene):defconstruct(self):values=[-10,-8,-6,-4,-2,0,2,4,6,8,10]chart=BarChart(values,y_range=[-10,10,2],y_axis_config={\"font_size\":24},)self.add(chart)chart.change_bar_values(list(reversed(values)))self.add(chart.get_bar_labels(font_size=24))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ChangeBarValuesExample(Scene):\n    def construct(self):\n        values=[-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10]\n\n        chart = BarChart(\n            values,\n            y_range=[-10, 10, 2],\n            y_axis_config={\"font_size\": 24},\n        )\n        self.add(chart)\n\n        chart.change_bar_values(list(reversed(values)))\n        self.add(chart.get_bar_labels(font_size=24))",
+      "language": "python",
+      "context": "Example: ChangeBarValuesExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classGetBarLabelsExample(Scene):defconstruct(self):chart=BarChart(values=[10,9,8,7,6,5,4,3,2,1],y_range=[0,10,1])c_bar_lbls=chart.get_bar_labels(color=WHITE,label_constructor=MathTex,font_size=36)self.add(chart,c_bar_lbls)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GetBarLabelsExample(Scene):\n    def construct(self):\n        chart = BarChart(values=[10, 9, 8, 7, 6, 5, 4, 3, 2, 1], y_range=[0, 10, 1])\n\n        c_bar_lbls = chart.get_bar_labels(\n            color=WHITE, label_constructor=MathTex, font_size=36\n        )\n\n        self.add(chart, c_bar_lbls)",
+      "language": "python",
+      "context": "Example: GetBarLabelsExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "BarChart",
+      "class_name": null,
+      "parameters": [
+        "values"
+      ],
+      "return_type": null,
+      "description": "Bases:Axes"
+    },
+    {
+      "name": "_add_x_axis_labels",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Essentially :meth`:~.NumberLine.add_labels`, but differs in that\nthe direction of the label with respect to the x_axis changes to UP or DOWN\ndepending on the value."
+    },
+    {
+      "name": "_create_bar",
+      "class_name": null,
+      "parameters": [
+        "bar_number"
+      ],
+      "return_type": null,
+      "description": "Creates a positioned bar on the chart."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "values"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_update_colors",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initialize the colors of the bars of the chart."
+    },
+    {
+      "name": "change_bar_values",
+      "class_name": null,
+      "parameters": [
+        "values"
+      ],
+      "return_type": null,
+      "description": "Updates the height of the bars of the chart."
+    },
+    {
+      "name": "get_bar_labels",
+      "class_name": null,
+      "parameters": [
+        "color=None"
+      ],
+      "return_type": null,
+      "description": "Annotates each bar with its corresponding value. Useself.bar_labelsto access the\nlabels after creation."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Create",
+    "VGroup",
+    "Tex",
+    "MathTex",
+    "Axes",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

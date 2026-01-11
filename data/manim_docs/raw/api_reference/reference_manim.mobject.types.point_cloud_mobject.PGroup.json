@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.point_cloud_mobject.PGroup.html",
+  "title": "PGroup\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "PGroup\u00b6\n\nQualified name:manim.mobject.types.point\\_cloud\\_mobject.PGroup\n\nclassPGroup(*pmobs,**kwargs)[source]\u00b6\n\nBases:PMobjectA group for several point mobjects.ExamplesExample: PgroupExample\u00b6frommanimimport*classPgroupExample(Scene):defconstruct(self):p1=PointCloudDot(radius=1,density=20,color=BLUE)p1.move_to(4.5*LEFT)p2=PointCloudDot()p3=PointCloudDot(radius=1.5,stroke_width=2.5,color=PINK)p3.move_to(4.5*RIGHT)pList=PGroup(p1,p2,p3)self.add(pList)class PgroupExample(Scene):\n    def construct(self):\n\n        p1 = PointCloudDot(radius=1, density=20, color=BLUE)\n        p1.move_to(4.5 * LEFT)\n        p2 = PointCloudDot()\n        p3 = PointCloudDot(radius=1.5, stroke_width=2.5, color=PINK)\n        p3.move_to(4.5 * RIGHT)\n        pList = PGroup(p1, p2, p3)\n\n        self.add(pList)Methodsfade_toAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject.Parameters:pmobs(Any)kwargs(Any)_original__init__(*pmobs,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:pmobs(Any)kwargs(Any)Return type:None\n\nBases:PMobject\n\nA group for several point mobjects.\n\nExamples\n\nExample: PgroupExample\u00b6\n\nMethods\n\nfade_to\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\npmobs(Any)kwargs(Any)\n\npmobs(Any)\n\npmobs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*pmobs,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:pmobs(Any)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npmobs(Any)kwargs(Any)\n\npmobs(Any)\n\npmobs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classPgroupExample(Scene):defconstruct(self):p1=PointCloudDot(radius=1,density=20,color=BLUE)p1.move_to(4.5*LEFT)p2=PointCloudDot()p3=PointCloudDot(radius=1.5,stroke_width=2.5,color=PINK)p3.move_to(4.5*RIGHT)pList=PGroup(p1,p2,p3)self.add(pList)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PgroupExample(Scene):\n    def construct(self):\n\n        p1 = PointCloudDot(radius=1, density=20, color=BLUE)\n        p1.move_to(4.5 * LEFT)\n        p2 = PointCloudDot()\n        p3 = PointCloudDot(radius=1.5, stroke_width=2.5, color=PINK)\n        p3.move_to(4.5 * RIGHT)\n        pList = PGroup(p1, p2, p3)\n\n        self.add(pList)",
+      "language": "python",
+      "context": "Example: PgroupExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "PGroup",
+      "class_name": null,
+      "parameters": [
+        "*pmobs"
+      ],
+      "return_type": null,
+      "description": "Bases:PMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*pmobs"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

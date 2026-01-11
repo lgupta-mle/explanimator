@@ -1,0 +1,36 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ApplyMethod.html",
+  "title": "ApplyMethod\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ApplyMethod\u00b6\n\nQualified name:manim.animation.transform.ApplyMethod\n\nclassApplyMethod(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformAnimates a mobject by applying a method.Note that only the method needs to be passed to this animation,\nit is not required to pass the corresponding mobject. Furthermore,\nthis animation class only works if the method returns the modified\nmobject.Parameters:method(Callable) \u2013 The method that will be applied in the animation.args\u2013 Any positional arguments to be passed when applying the method.kwargs\u2013 Any keyword arguments passed toTransform.Methodscheck_validity_of_inputcreate_targetAttributespath_arcpath_funcrun_time_original__init__(method,*args,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:method(Callable)Return type:None\n\nBases:Transform\n\nAnimates a mobject by applying a method.\n\nNote that only the method needs to be passed to this animation,\nit is not required to pass the corresponding mobject. Furthermore,\nthis animation class only works if the method returns the modified\nmobject.\n\nParameters:\n\nmethod(Callable) \u2013 The method that will be applied in the animation.args\u2013 Any positional arguments to be passed when applying the method.kwargs\u2013 Any keyword arguments passed toTransform.\n\nmethod(Callable) \u2013 The method that will be applied in the animation.\n\nmethod(Callable) \u2013 The method that will be applied in the animation.\n\nargs\u2013 Any positional arguments to be passed when applying the method.\n\nargs\u2013 Any positional arguments to be passed when applying the method.\n\nkwargs\u2013 Any keyword arguments passed toTransform.\n\nkwargs\u2013 Any keyword arguments passed toTransform.\n\nMethods\n\ncheck_validity_of_input\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(method,*args,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:method(Callable)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmethod(Callable)\n\nmethod(Callable)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ApplyMethod",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "method"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Transform"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

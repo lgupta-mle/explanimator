@@ -1,0 +1,68 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.vectorized_mobject.CurvesAsSubmobjects.html",
+  "title": "CurvesAsSubmobjects\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "CurvesAsSubmobjects\u00b6\n\nQualified name:manim.mobject.types.vectorized\\_mobject.CurvesAsSubmobjects\n\nclassCurvesAsSubmobjects(vmobject,**kwargs)[source]\u00b6\n\nBases:VGroupConvert a curve\u2019s elements to submobjects.ExamplesExample: LineGradientExample\u00b6frommanimimport*classLineGradientExample(Scene):defconstruct(self):curve=ParametricFunction(lambdat:[t,np.sin(t),0],t_range=[-PI,PI,0.01],stroke_width=10)new_curve=CurvesAsSubmobjects(curve)new_curve.set_color_by_gradient(BLUE,RED)self.add(new_curve.shift(UP),curve)class LineGradientExample(Scene):\n    def construct(self):\n        curve = ParametricFunction(lambda t: [t, np.sin(t), 0], t_range=[-PI, PI, 0.01], stroke_width=10)\n        new_curve = CurvesAsSubmobjects(curve)\n        new_curve.set_color_by_gradient(BLUE, RED)\n        self.add(new_curve.shift(UP), curve)Methodspoint_from_proportionGets the point at a proportion along the path of theCurvesAsSubmobjects.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:vmobject(VMobject)_original__init__(vmobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)Return type:Nonepoint_from_proportion(alpha)[source]\u00b6Gets the point at a proportion along the path of theCurvesAsSubmobjects.Parameters:alpha(float) \u2013 The proportion along the the path of theCurvesAsSubmobjects.Returns:The point on theCurvesAsSubmobjects.Return type:numpy.ndarrayRaises:ValueError\u2013 Ifalphais not between 0 and 1.Exception\u2013 If theCurvesAsSubmobjectshas no submobjects, or no submobject has points.\n\nBases:VGroup\n\nConvert a curve\u2019s elements to submobjects.\n\nExamples\n\nExample: LineGradientExample\u00b6\n\nMethods\n\npoint_from_proportion\n\nGets the point at a proportion along the path of theCurvesAsSubmobjects.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\n_original__init__(vmobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\nReturn type:\n\nNone\n\nNone\n\npoint_from_proportion(alpha)[source]\u00b6\n\nGets the point at a proportion along the path of theCurvesAsSubmobjects.Parameters:alpha(float) \u2013 The proportion along the the path of theCurvesAsSubmobjects.Returns:The point on theCurvesAsSubmobjects.Return type:numpy.ndarrayRaises:ValueError\u2013 Ifalphais not between 0 and 1.Exception\u2013 If theCurvesAsSubmobjectshas no submobjects, or no submobject has points.\n\nGets the point at a proportion along the path of theCurvesAsSubmobjects.\n\nParameters:\n\nalpha(float) \u2013 The proportion along the the path of theCurvesAsSubmobjects.\n\nalpha(float) \u2013 The proportion along the the path of theCurvesAsSubmobjects.\n\nReturns:\n\nThe point on theCurvesAsSubmobjects.\n\nThe point on theCurvesAsSubmobjects.\n\nReturn type:\n\nnumpy.ndarray\n\nnumpy.ndarray\n\nRaises:\n\nValueError\u2013 Ifalphais not between 0 and 1.Exception\u2013 If theCurvesAsSubmobjectshas no submobjects, or no submobject has points.\n\nValueError\u2013 Ifalphais not between 0 and 1.\n\nValueError\u2013 Ifalphais not between 0 and 1.\n\nException\u2013 If theCurvesAsSubmobjectshas no submobjects, or no submobject has points.\n\nException\u2013 If theCurvesAsSubmobjectshas no submobjects, or no submobject has points.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLineGradientExample(Scene):defconstruct(self):curve=ParametricFunction(lambdat:[t,np.sin(t),0],t_range=[-PI,PI,0.01],stroke_width=10)new_curve=CurvesAsSubmobjects(curve)new_curve.set_color_by_gradient(BLUE,RED)self.add(new_curve.shift(UP),curve)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LineGradientExample(Scene):\n    def construct(self):\n        curve = ParametricFunction(lambda t: [t, np.sin(t), 0], t_range=[-PI, PI, 0.01], stroke_width=10)\n        new_curve = CurvesAsSubmobjects(curve)\n        new_curve.set_color_by_gradient(BLUE, RED)\n        self.add(new_curve.shift(UP), curve)",
+      "language": "python",
+      "context": "Example: LineGradientExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "CurvesAsSubmobjects",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Bases:VGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "point_from_proportion",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Gets the point at a proportion along the path of theCurvesAsSubmobjects."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VGroup",
+    "VMobject",
+    "ParametricFunction",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

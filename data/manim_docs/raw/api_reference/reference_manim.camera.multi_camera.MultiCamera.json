@@ -1,0 +1,71 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.multi_camera.MultiCamera.html",
+  "title": "MultiCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MultiCamera\u00b6\n\nQualified name:manim.camera.multi\\_camera.MultiCamera\n\nclassMultiCamera(image_mobjects_from_cameras=None,allow_cameras_to_capture_their_own_display=False,**kwargs)[source]\u00b6\n\nBases:MovingCameraCamera Object that allows for multiple perspectives.Initialises the MultiCameraParameters:image_mobjects_from_cameras(Iterable[ImageMobjectFromCamera]|None)kwargs(Any) \u2013 Any valid keyword arguments of MovingCamera.allow_cameras_to_capture_their_own_display(bool)Methodsadd_image_mobject_from_cameraAdds an ImageMobject that's been obtained from the camera into the listself.image_mobject_from_camerascapture_mobjectsCapture mobjects by printing them onpixel_array.get_mobjects_indicating_movementReturns all mobjects whose movement implies that the camera should think of all other mobjects on the screen as movingresetResets the MultiCamera.update_sub_camerasReshape sub_camera pixel_arraysAttributesbackground_colorbackground_opacityframe_centerReturns the centerpoint of the frame in cartesian coordinates.frame_heightReturns the height of the frame.frame_widthReturns the width of the frameadd_image_mobject_from_camera(image_mobject_from_camera)[source]\u00b6Adds an ImageMobject that\u2019s been obtained from the camera\ninto the listself.image_mobject_from_camerasParameters:image_mobject_from_camera(ImageMobjectFromCamera) \u2013 The ImageMobject to add to self.image_mobject_from_camerasReturn type:Nonecapture_mobjects(mobjects,**kwargs)[source]\u00b6Capture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().get_mobjects_indicating_movement()[source]\u00b6Returns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as movingReturn type:listreset()[source]\u00b6Resets the MultiCamera.Returns:The reset MultiCameraReturn type:MultiCameraupdate_sub_cameras()[source]\u00b6Reshape sub_camera pixel_arraysReturn type:None\n\nBases:MovingCamera\n\nCamera Object that allows for multiple perspectives.\n\nInitialises the MultiCamera\n\nParameters:\n\nimage_mobjects_from_cameras(Iterable[ImageMobjectFromCamera]|None)kwargs(Any) \u2013 Any valid keyword arguments of MovingCamera.allow_cameras_to_capture_their_own_display(bool)\n\nimage_mobjects_from_cameras(Iterable[ImageMobjectFromCamera]|None)\n\nimage_mobjects_from_cameras(Iterable[ImageMobjectFromCamera]|None)\n\nkwargs(Any) \u2013 Any valid keyword arguments of MovingCamera.\n\nkwargs(Any) \u2013 Any valid keyword arguments of MovingCamera.\n\nallow_cameras_to_capture_their_own_display(bool)\n\nallow_cameras_to_capture_their_own_display(bool)\n\nMethods\n\nadd_image_mobject_from_camera\n\nAdds an ImageMobject that's been obtained from the camera into the listself.image_mobject_from_cameras\n\ncapture_mobjects\n\nCapture mobjects by printing them onpixel_array.\n\nget_mobjects_indicating_movement\n\nReturns all mobjects whose movement implies that the camera should think of all other mobjects on the screen as moving\n\nreset\n\nResets the MultiCamera.\n\nupdate_sub_cameras\n\nReshape sub_camera pixel_arrays\n\nAttributes\n\nbackground_color\n\nbackground_opacity\n\nframe_center\n\nReturns the centerpoint of the frame in cartesian coordinates.\n\nframe_height\n\nReturns the height of the frame.\n\nframe_width\n\nReturns the width of the frame\n\nadd_image_mobject_from_camera(image_mobject_from_camera)[source]\u00b6\n\nAdds an ImageMobject that\u2019s been obtained from the camera\ninto the listself.image_mobject_from_camerasParameters:image_mobject_from_camera(ImageMobjectFromCamera) \u2013 The ImageMobject to add to self.image_mobject_from_camerasReturn type:None\n\nAdds an ImageMobject that\u2019s been obtained from the camera\ninto the listself.image_mobject_from_cameras\n\nParameters:\n\nimage_mobject_from_camera(ImageMobjectFromCamera) \u2013 The ImageMobject to add to self.image_mobject_from_cameras\n\nimage_mobject_from_camera(ImageMobjectFromCamera) \u2013 The ImageMobject to add to self.image_mobject_from_cameras\n\nReturn type:\n\nNone\n\nNone\n\ncapture_mobjects(mobjects,**kwargs)[source]\u00b6\n\nCapture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().Return type:NoneNotesFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nCapture mobjects by printing them onpixel_array.\n\nThis is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.\n\nParameters:\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.kwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nmobjects(Iterable[Mobject]) \u2013 Mobjects to capture.\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nkwargs(Any) \u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nReturn type:\n\nNone\n\nNone\n\nNotes\n\nFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nget_mobjects_indicating_movement()[source]\u00b6\n\nReturns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as movingReturn type:list\n\nReturns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as moving\n\nReturn type:\n\nlist\n\nlist\n\nreset()[source]\u00b6\n\nResets the MultiCamera.Returns:The reset MultiCameraReturn type:MultiCamera\n\nResets the MultiCamera.\n\nReturns:\n\nThe reset MultiCamera\n\nThe reset MultiCamera\n\nReturn type:\n\nMultiCamera\n\nMultiCamera\n\nupdate_sub_cameras()[source]\u00b6\n\nReshape sub_camera pixel_arraysReturn type:None\n\nReshape sub_camera pixel_arrays\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "MultiCamera",
+      "class_name": null,
+      "parameters": [
+        "image_mobjects_from_cameras=None"
+      ],
+      "return_type": null,
+      "description": "Bases:MovingCamera"
+    },
+    {
+      "name": "add_image_mobject_from_camera",
+      "class_name": null,
+      "parameters": [
+        "image_mobject_from_camera"
+      ],
+      "return_type": null,
+      "description": "Adds an ImageMobject that\u2019s been obtained from the camera\ninto the listself.image_mobject_from_cameras"
+    },
+    {
+      "name": "capture_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects by printing them onpixel_array."
+    },
+    {
+      "name": "get_mobjects_indicating_movement",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns all mobjects whose movement implies that the camera\nshould think of all other mobjects on the screen as moving"
+    },
+    {
+      "name": "reset",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Resets the MultiCamera."
+    },
+    {
+      "name": "update_sub_cameras",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Reshape sub_camera pixel_arrays"
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "MovingCamera",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "3d",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.deprecation.html",
+  "title": "deprecation\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "deprecation\u00b6\n\nDecorators for deprecating classes, functions and function parameters.\n\nTypeVar\u2019s\n\nclassT\u00b6\n\nTypeVar('T')\n\nFunctions\n\ndeprecated(func:Callable[[...],T],since:str|None=None,until:str|None=None,replacement:str|None=None,message:str|None='')\u2192Callable[[...],T][source]\u00b6\n\ndeprecated(func:None=None,since:str|None=None,until:str|None=None,replacement:str|None=None,message:str|None='')\u2192Callable[[Callable[[...],T]],Callable[[...],T]]\n\nDecorator to mark a callable as deprecated.The decorated callable will cause a warning when used. The docstring of the\ndeprecated callable is adjusted to indicate that this callable is deprecated.Parameters:func\u2013 The function to be decorated. Should not be set by the user.since\u2013 The version or date since deprecation.until\u2013 The version or date until removal of the deprecated callable.replacement\u2013 The identifier of the callable replacing the deprecated one.message\u2013 The reason for why the callable has been deprecated.Returns:The decorated callable.Return type:CallableExamplesBasic usage:frommanim.utils.deprecationimportdeprecated@deprecateddeffoo(**kwargs):pass@deprecatedclassBar:def__init__(self):pass@deprecateddefbaz(self):passfoo()# WARNING  The function foo has been deprecated and may be removed in a later version.a=Bar()# WARNING  The class Bar has been deprecated and may be removed in a later version.a.baz()# WARNING  The method Bar.baz has been deprecated and may be removed in a later version.You can specify additional information for a more precise warning:frommanim.utils.deprecationimportdeprecated@deprecated(since=\"v0.2\",until=\"v0.4\",replacement=\"bar\",message=\"It is cooler.\")deffoo():passfoo()# WARNING  The function foo has been deprecated since v0.2 and is expected to be removed after v0.4. Use bar instead. It is cooler.You may also use dates instead of versions:frommanim.utils.deprecationimportdeprecated@deprecated(since=\"05/01/2021\",until=\"06/01/2021\")deffoo():passfoo()# WARNING  The function foo has been deprecated since 05/01/2021 and is expected to be removed after 06/01/2021.\n\nDecorator to mark a callable as deprecated.\n\nThe decorated callable will cause a warning when used. The docstring of the\ndeprecated callable is adjusted to indicate that this callable is deprecated.\n\nParameters:\n\nfunc\u2013 The function to be decorated. Should not be set by the user.since\u2013 The version or date since deprecation.until\u2013 The version or date until removal of the deprecated callable.replacement\u2013 The identifier of the callable replacing the deprecated one.message\u2013 The reason for why the callable has been deprecated.\n\nfunc\u2013 The function to be decorated. Should not be set by the user.\n\nfunc\u2013 The function to be decorated. Should not be set by the user.\n\nsince\u2013 The version or date since deprecation.\n\nsince\u2013 The version or date since deprecation.\n\nuntil\u2013 The version or date until removal of the deprecated callable.\n\nuntil\u2013 The version or date until removal of the deprecated callable.\n\nreplacement\u2013 The identifier of the callable replacing the deprecated one.\n\nreplacement\u2013 The identifier of the callable replacing the deprecated one.\n\nmessage\u2013 The reason for why the callable has been deprecated.\n\nmessage\u2013 The reason for why the callable has been deprecated.\n\nReturns:\n\nThe decorated callable.\n\nThe decorated callable.\n\nReturn type:\n\nCallable\n\nCallable\n\nExamples\n\nBasic usage:\n\nYou can specify additional information for a more precise warning:\n\nYou may also use dates instead of versions:\n\ndeprecated_params(params=None,since=None,until=None,message='',redirections=None)[source]\u00b6\n\nDecorator to mark parameters of a callable as deprecated.It can also be used to automatically redirect deprecated parameter values to their\nreplacements.Parameters:params(str|Iterable[str]|None) \u2013The parameters to be deprecated. Can consist of:An iterable of strings, with each element representing a parameter to deprecateA single string, with parameter names separated by commas or spaces.since(str|None) \u2013 The version or date since deprecation.until(str|None) \u2013 The version or date until removal of the deprecated callable.message(str) \u2013 The reason for why the callable has been deprecated.redirections(None|Iterable[tuple[str,str]|Callable[[...],dict[str,Any]]]) \u2013A list of parameter redirections. Each redirection can be one of the following:A tuple of two strings. The first string defines the name of the deprecated\nparameter; the second string defines the name of the parameter to redirect to,\nwhen attempting to use the first string.A function performing the mapping operation. The parameter names of the\nfunction determine which parameters are used as input. The function must\nreturn a dictionary which contains the redirected arguments.Redirected parameters are also implicitly deprecated.Returns:The decorated callable.Return type:CallableRaises:ValueError\u2013 If no parameters are defined (neither explicitly nor implicitly).ValueError\u2013 If defined parameters are invalid python identifiers.ExamplesBasic usage:frommanim.utils.deprecationimportdeprecated_params@deprecated_params(params=\"a, b, c\")deffoo(**kwargs):passfoo(x=2,y=3,z=4)# No warningfoo(a=2,b=3,z=4)# WARNING  The parameters a and b of method foo have been deprecated and may be removed in a later version.You can also specify additional information for a more precise warning:frommanim.utils.deprecationimportdeprecated_params@deprecated_params(params=\"a, b, c\",since=\"v0.2\",until=\"v0.4\",message=\"The letters x, y, z are cooler.\",)deffoo(**kwargs):passfoo(a=2)# WARNING  The parameter a of method foo has been deprecated since v0.2 and is expected to be removed after v0.4. The letters x, y, z are cooler.Basic parameter redirection:frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[# Two ways to redirect one parameter to another:(\"old_param\",\"new_param\"),lambdaold_param2:{\"new_param22\":old_param2},])deffoo(**kwargs):returnkwargsfoo(x=1,old_param=2)# WARNING  The parameter old_param of method foo has been deprecated and may be removed in a later version.# returns {\"x\": 1, \"new_param\": 2}Redirecting using a calculated value:frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[lambdaruntime_in_ms:{\"run_time\":runtime_in_ms/1000}])deffoo(**kwargs):returnkwargsfoo(runtime_in_ms=500)# WARNING  The parameter runtime_in_ms of method foo has been deprecated and may be removed in a later version.# returns {\"run_time\": 0.5}Redirecting multiple parameter values to one:frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[lambdabuff_x=1,buff_y=1:{\"buff\":(buff_x,buff_y)}])deffoo(**kwargs):returnkwargsfoo(buff_x=2)# WARNING  The parameter buff_x of method foo has been deprecated and may be removed in a later version.# returns {\"buff\": (2, 1)}Redirect one parameter to multiple:frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[lambdabuff=1:{\"buff_x\":buff[0],\"buff_y\":buff[1]}ifisinstance(buff,tuple)else{\"buff_x\":buff,\"buff_y\":buff}])deffoo(**kwargs):returnkwargsfoo(buff=0)# WARNING  The parameter buff of method foo has been deprecated and may be removed in a later version.# returns {\"buff_x\": 0, buff_y: 0}foo(buff=(1,2))# WARNING  The parameter buff of method foo has been deprecated and may be removed in a later version.# returns {\"buff_x\": 1, buff_y: 2}\n\nDecorator to mark parameters of a callable as deprecated.\n\nIt can also be used to automatically redirect deprecated parameter values to their\nreplacements.\n\nParameters:\n\nparams(str|Iterable[str]|None) \u2013The parameters to be deprecated. Can consist of:An iterable of strings, with each element representing a parameter to deprecateA single string, with parameter names separated by commas or spaces.since(str|None) \u2013 The version or date since deprecation.until(str|None) \u2013 The version or date until removal of the deprecated callable.message(str) \u2013 The reason for why the callable has been deprecated.redirections(None|Iterable[tuple[str,str]|Callable[[...],dict[str,Any]]]) \u2013A list of parameter redirections. Each redirection can be one of the following:A tuple of two strings. The first string defines the name of the deprecated\nparameter; the second string defines the name of the parameter to redirect to,\nwhen attempting to use the first string.A function performing the mapping operation. The parameter names of the\nfunction determine which parameters are used as input. The function must\nreturn a dictionary which contains the redirected arguments.Redirected parameters are also implicitly deprecated.\n\nparams(str|Iterable[str]|None) \u2013The parameters to be deprecated. Can consist of:An iterable of strings, with each element representing a parameter to deprecateA single string, with parameter names separated by commas or spaces.\n\nparams(str|Iterable[str]|None) \u2013The parameters to be deprecated. Can consist of:An iterable of strings, with each element representing a parameter to deprecateA single string, with parameter names separated by commas or spaces.\n\nThe parameters to be deprecated. Can consist of:\n\nAn iterable of strings, with each element representing a parameter to deprecate\n\nAn iterable of strings, with each element representing a parameter to deprecate\n\nA single string, with parameter names separated by commas or spaces.\n\nA single string, with parameter names separated by commas or spaces.\n\nsince(str|None) \u2013 The version or date since deprecation.\n\nsince(str|None) \u2013 The version or date since deprecation.\n\nuntil(str|None) \u2013 The version or date until removal of the deprecated callable.\n\nuntil(str|None) \u2013 The version or date until removal of the deprecated callable.\n\nmessage(str) \u2013 The reason for why the callable has been deprecated.\n\nmessage(str) \u2013 The reason for why the callable has been deprecated.\n\nredirections(None|Iterable[tuple[str,str]|Callable[[...],dict[str,Any]]]) \u2013A list of parameter redirections. Each redirection can be one of the following:A tuple of two strings. The first string defines the name of the deprecated\nparameter; the second string defines the name of the parameter to redirect to,\nwhen attempting to use the first string.A function performing the mapping operation. The parameter names of the\nfunction determine which parameters are used as input. The function must\nreturn a dictionary which contains the redirected arguments.Redirected parameters are also implicitly deprecated.\n\nredirections(None|Iterable[tuple[str,str]|Callable[[...],dict[str,Any]]]) \u2013A list of parameter redirections. Each redirection can be one of the following:A tuple of two strings. The first string defines the name of the deprecated\nparameter; the second string defines the name of the parameter to redirect to,\nwhen attempting to use the first string.A function performing the mapping operation. The parameter names of the\nfunction determine which parameters are used as input. The function must\nreturn a dictionary which contains the redirected arguments.Redirected parameters are also implicitly deprecated.\n\nA list of parameter redirections. Each redirection can be one of the following:\n\nA tuple of two strings. The first string defines the name of the deprecated\nparameter; the second string defines the name of the parameter to redirect to,\nwhen attempting to use the first string.\n\nA tuple of two strings. The first string defines the name of the deprecated\nparameter; the second string defines the name of the parameter to redirect to,\nwhen attempting to use the first string.\n\nA function performing the mapping operation. The parameter names of the\nfunction determine which parameters are used as input. The function must\nreturn a dictionary which contains the redirected arguments.\n\nA function performing the mapping operation. The parameter names of the\nfunction determine which parameters are used as input. The function must\nreturn a dictionary which contains the redirected arguments.\n\nRedirected parameters are also implicitly deprecated.\n\nReturns:\n\nThe decorated callable.\n\nThe decorated callable.\n\nReturn type:\n\nCallable\n\nCallable\n\nRaises:\n\nValueError\u2013 If no parameters are defined (neither explicitly nor implicitly).ValueError\u2013 If defined parameters are invalid python identifiers.\n\nValueError\u2013 If no parameters are defined (neither explicitly nor implicitly).\n\nValueError\u2013 If no parameters are defined (neither explicitly nor implicitly).\n\nValueError\u2013 If defined parameters are invalid python identifiers.\n\nValueError\u2013 If defined parameters are invalid python identifiers.\n\nExamples\n\nBasic usage:\n\nYou can also specify additional information for a more precise warning:\n\nBasic parameter redirection:\n\nRedirecting using a calculated value:\n\nRedirecting multiple parameter values to one:\n\nRedirect one parameter to multiple:",
+  "code_examples": [
+    {
+      "code": "TypeVar('T')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated@deprecateddeffoo(**kwargs):pass@deprecatedclassBar:def__init__(self):pass@deprecateddefbaz(self):passfoo()# WARNING  The function foo has been deprecated and may be removed in a later version.a=Bar()# WARNING  The class Bar has been deprecated and may be removed in a later version.a.baz()# WARNING  The method Bar.baz has been deprecated and may be removed in a later version.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated@deprecated(since=\"v0.2\",until=\"v0.4\",replacement=\"bar\",message=\"It is cooler.\")deffoo():passfoo()# WARNING  The function foo has been deprecated since v0.2 and is expected to be removed after v0.4. Use bar instead. It is cooler.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated@deprecated(since=\"05/01/2021\",until=\"06/01/2021\")deffoo():passfoo()# WARNING  The function foo has been deprecated since 05/01/2021 and is expected to be removed after 06/01/2021.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated_params@deprecated_params(params=\"a, b, c\")deffoo(**kwargs):passfoo(x=2,y=3,z=4)# No warningfoo(a=2,b=3,z=4)# WARNING  The parameters a and b of method foo have been deprecated and may be removed in a later version.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated_params@deprecated_params(params=\"a, b, c\",since=\"v0.2\",until=\"v0.4\",message=\"The letters x, y, z are cooler.\",)deffoo(**kwargs):passfoo(a=2)# WARNING  The parameter a of method foo has been deprecated since v0.2 and is expected to be removed after v0.4. The letters x, y, z are cooler.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[# Two ways to redirect one parameter to another:(\"old_param\",\"new_param\"),lambdaold_param2:{\"new_param22\":old_param2},])deffoo(**kwargs):returnkwargsfoo(x=1,old_param=2)# WARNING  The parameter old_param of method foo has been deprecated and may be removed in a later version.# returns {\"x\": 1, \"new_param\": 2}",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[lambdaruntime_in_ms:{\"run_time\":runtime_in_ms/1000}])deffoo(**kwargs):returnkwargsfoo(runtime_in_ms=500)# WARNING  The parameter runtime_in_ms of method foo has been deprecated and may be removed in a later version.# returns {\"run_time\": 0.5}",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[lambdabuff_x=1,buff_y=1:{\"buff\":(buff_x,buff_y)}])deffoo(**kwargs):returnkwargsfoo(buff_x=2)# WARNING  The parameter buff_x of method foo has been deprecated and may be removed in a later version.# returns {\"buff\": (2, 1)}",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanim.utils.deprecationimportdeprecated_params@deprecated_params(redirections=[lambdabuff=1:{\"buff_x\":buff[0],\"buff_y\":buff[1]}ifisinstance(buff,tuple)else{\"buff_x\":buff,\"buff_y\":buff}])deffoo(**kwargs):returnkwargsfoo(buff=0)# WARNING  The parameter buff of method foo has been deprecated and may be removed in a later version.# returns {\"buff_x\": 0, buff_y: 0}foo(buff=(1,2))# WARNING  The parameter buff of method foo has been deprecated and may be removed in a later version.# returns {\"buff_x\": 1, buff_y: 2}",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "T",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "deprecated",
+      "class_name": null,
+      "parameters": [
+        "func: Callable[[...]",
+        "T]"
+      ],
+      "return_type": "\u2192Callable[[...],T]",
+      "description": "Decorator to mark a callable as deprecated."
+    },
+    {
+      "name": "deprecated",
+      "class_name": null,
+      "parameters": [
+        "func: None = None"
+      ],
+      "return_type": "\u2192Callable[[Callable[[...],T]],Callable[[...],T]]",
+      "description": "Decorator to mark a callable as deprecated."
+    },
+    {
+      "name": "deprecated_params",
+      "class_name": null,
+      "parameters": [
+        "params=None"
+      ],
+      "return_type": null,
+      "description": "Decorator to mark parameters of a callable as deprecated."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

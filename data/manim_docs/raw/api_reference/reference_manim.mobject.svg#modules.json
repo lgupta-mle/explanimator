@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.html#modules",
+  "title": "svg\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "svg\u00b6\n\nMobjects related to SVG images.\n\nModules\u00b6\n\nbrace\n\nMobject representing curly braces.\n\nsvg_mobject\n\nMobjects generated from an SVG file.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "timing"
+  ]
+}

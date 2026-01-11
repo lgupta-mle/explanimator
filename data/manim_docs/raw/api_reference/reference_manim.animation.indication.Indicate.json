@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.Indicate.html",
+  "title": "Indicate\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Indicate\u00b6\n\nQualified name:manim.animation.indication.Indicate\n\nclassIndicate(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformIndicate a Mobject by temporarily resizing and recoloring it.Parameters:mobject(Mobject) \u2013 The mobject to indicate.scale_factor(float) \u2013 The factor by which the mobject will be temporally scaledcolor(ParsableManimColor) \u2013 The color the mobject temporally takes.rate_func(RateFunction) \u2013 The function defining the animation progress at every point in time.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructorExamplesExample: UsingIndicate\u00b6frommanimimport*classUsingIndicate(Scene):defconstruct(self):tex=Tex(\"Indicate\").scale(3)self.play(Indicate(tex))self.wait()class UsingIndicate(Scene):\n    def construct(self):\n        tex = Tex(\"Indicate\").scale(3)\n        self.play(Indicate(tex))\n        self.wait()Methodscreate_targetAttributespath_arcpath_funcrun_time_original__init__(mobject,scale_factor=1.2,color=ManimColor('#FFFF00'),rate_func=<functionthere_and_back>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)scale_factor(float)color(ParsableManimColor)rate_func(RateFunction)kwargs(Any)\n\nBases:Transform\n\nIndicate a Mobject by temporarily resizing and recoloring it.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to indicate.scale_factor(float) \u2013 The factor by which the mobject will be temporally scaledcolor(ParsableManimColor) \u2013 The color the mobject temporally takes.rate_func(RateFunction) \u2013 The function defining the animation progress at every point in time.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nmobject(Mobject) \u2013 The mobject to indicate.\n\nmobject(Mobject) \u2013 The mobject to indicate.\n\nscale_factor(float) \u2013 The factor by which the mobject will be temporally scaled\n\nscale_factor(float) \u2013 The factor by which the mobject will be temporally scaled\n\ncolor(ParsableManimColor) \u2013 The color the mobject temporally takes.\n\ncolor(ParsableManimColor) \u2013 The color the mobject temporally takes.\n\nrate_func(RateFunction) \u2013 The function defining the animation progress at every point in time.\n\nrate_func(RateFunction) \u2013 The function defining the animation progress at every point in time.\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nExamples\n\nExample: UsingIndicate\u00b6\n\nMethods\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,scale_factor=1.2,color=ManimColor('#FFFF00'),rate_func=<functionthere_and_back>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)scale_factor(float)color(ParsableManimColor)rate_func(RateFunction)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)scale_factor(float)color(ParsableManimColor)rate_func(RateFunction)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nscale_factor(float)\n\nscale_factor(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nrate_func(RateFunction)\n\nrate_func(RateFunction)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUsingIndicate(Scene):defconstruct(self):tex=Tex(\"Indicate\").scale(3)self.play(Indicate(tex))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UsingIndicate(Scene):\n    def construct(self):\n        tex = Tex(\"Indicate\").scale(3)\n        self.play(Indicate(tex))\n        self.wait()",
+      "language": "python",
+      "context": "Example: UsingIndicate\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Indicate",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "Transform",
+    "Indicate",
+    "Succession",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

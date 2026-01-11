@@ -1,0 +1,14 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.testing._test_class_makers.html",
+  "title": "_test_class_makers\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "_test_class_makers\u00b6\n\nClasses\n\nDummySceneFileWriter\n\nDelegate of SceneFileWriter used to test the frames.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Scene",
+    "Write"
+  ],
+  "tags": []
+}

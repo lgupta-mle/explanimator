@@ -1,0 +1,44 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.scale.LinearBase.html",
+  "title": "LinearBase\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LinearBase\u00b6\n\nQualified name:manim.mobject.graphing.scale.LinearBase\n\nclassLinearBase(scale_factor=1.0)[source]\u00b6\n\nBases:_ScaleBaseThe default scaling class.Parameters:scale_factor(float) \u2013 The slope of the linear function, by default 1.0MethodsfunctionMultiplies the value by the scale factor.inverse_functionInverse of function.function(value)[source]\u00b6Multiplies the value by the scale factor.Parameters:value(float) \u2013 Value to be multiplied by the scale factor.Return type:floatinverse_function(value)[source]\u00b6Inverse of function. Divides the value by the scale factor.Parameters:value(float) \u2013 value to be divided by the scale factor.Return type:float\n\nBases:_ScaleBase\n\nThe default scaling class.\n\nParameters:\n\nscale_factor(float) \u2013 The slope of the linear function, by default 1.0\n\nscale_factor(float) \u2013 The slope of the linear function, by default 1.0\n\nMethods\n\nfunction\n\nMultiplies the value by the scale factor.\n\ninverse_function\n\nInverse of function.\n\nfunction(value)[source]\u00b6\n\nMultiplies the value by the scale factor.Parameters:value(float) \u2013 Value to be multiplied by the scale factor.Return type:float\n\nMultiplies the value by the scale factor.\n\nParameters:\n\nvalue(float) \u2013 Value to be multiplied by the scale factor.\n\nvalue(float) \u2013 Value to be multiplied by the scale factor.\n\nReturn type:\n\nfloat\n\nfloat\n\ninverse_function(value)[source]\u00b6\n\nInverse of function. Divides the value by the scale factor.Parameters:value(float) \u2013 value to be divided by the scale factor.Return type:float\n\nInverse of function. Divides the value by the scale factor.\n\nParameters:\n\nvalue(float) \u2013 value to be divided by the scale factor.\n\nvalue(float) \u2013 value to be divided by the scale factor.\n\nReturn type:\n\nfloat\n\nfloat",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "LinearBase",
+      "class_name": null,
+      "parameters": [
+        "scale_factor=1.0"
+      ],
+      "return_type": null,
+      "description": "Bases:_ScaleBase"
+    },
+    {
+      "name": "function",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Multiplies the value by the scale factor."
+    },
+    {
+      "name": "inverse_function",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "Inverse of function. Divides the value by the scale factor."
+    }
+  ],
+  "related_classes": [
+    "Line"
+  ],
+  "tags": [
+    "transformation",
+    "graph"
+  ]
+}

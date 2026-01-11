@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.ArcBetweenPoints.html",
+  "title": "ArcBetweenPoints\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArcBetweenPoints\u00b6\n\nQualified name:manim.mobject.geometry.arc.ArcBetweenPoints\n\nclassArcBetweenPoints(start,end,angle=1.5707963267948966,radius=None,**kwargs)[source]\u00b6\n\nBases:ArcInherits from Arc and additionally takes 2 points between which the arc is spanned.ExampleExample: ArcBetweenPointsExample\u00b6frommanimimport*classArcBetweenPointsExample(Scene):defconstruct(self):circle=Circle(radius=2,stroke_color=GREY)dot_1=Dot(color=GREEN).move_to([2,0,0]).scale(0.5)dot_1_text=Tex(\"(2,0)\").scale(0.5).next_to(dot_1,RIGHT).set_color(BLUE)dot_2=Dot(color=GREEN).move_to([0,2,0]).scale(0.5)dot_2_text=Tex(\"(0,2)\").scale(0.5).next_to(dot_2,UP).set_color(BLUE)arc=ArcBetweenPoints(start=2*RIGHT,end=2*UP,stroke_color=YELLOW)self.add(circle,dot_1,dot_2,dot_1_text,dot_2_text)self.play(Create(arc))class ArcBetweenPointsExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2, stroke_color=GREY)\n        dot_1 = Dot(color=GREEN).move_to([2, 0, 0]).scale(0.5)\n        dot_1_text = Tex(\"(2,0)\").scale(0.5).next_to(dot_1, RIGHT).set_color(BLUE)\n        dot_2 = Dot(color=GREEN).move_to([0, 2, 0]).scale(0.5)\n        dot_2_text = Tex(\"(0,2)\").scale(0.5).next_to(dot_2, UP).set_color(BLUE)\n        arc= ArcBetweenPoints(start=2 * RIGHT, end=2 * UP, stroke_color=YELLOW)\n        self.add(circle, dot_1, dot_2, dot_1_text, dot_2_text)\n        self.play(Create(arc))MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:start(Point3DLike)end(Point3DLike)angle(float)radius(float|None)kwargs(Any)_original__init__(start,end,angle=1.5707963267948966,radius=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:start(Point3DLike)end(Point3DLike)angle(float)radius(float|None)kwargs(Any)Return type:None\n\nBases:Arc\n\nInherits from Arc and additionally takes 2 points between which the arc is spanned.\n\nExample\n\nExample: ArcBetweenPointsExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nstart(Point3DLike)end(Point3DLike)angle(float)radius(float|None)kwargs(Any)\n\nstart(Point3DLike)\n\nstart(Point3DLike)\n\nend(Point3DLike)\n\nend(Point3DLike)\n\nangle(float)\n\nangle(float)\n\nradius(float|None)\n\nradius(float|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(start,end,angle=1.5707963267948966,radius=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:start(Point3DLike)end(Point3DLike)angle(float)radius(float|None)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstart(Point3DLike)end(Point3DLike)angle(float)radius(float|None)kwargs(Any)\n\nstart(Point3DLike)\n\nstart(Point3DLike)\n\nend(Point3DLike)\n\nend(Point3DLike)\n\nangle(float)\n\nangle(float)\n\nradius(float|None)\n\nradius(float|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classArcBetweenPointsExample(Scene):defconstruct(self):circle=Circle(radius=2,stroke_color=GREY)dot_1=Dot(color=GREEN).move_to([2,0,0]).scale(0.5)dot_1_text=Tex(\"(2,0)\").scale(0.5).next_to(dot_1,RIGHT).set_color(BLUE)dot_2=Dot(color=GREEN).move_to([0,2,0]).scale(0.5)dot_2_text=Tex(\"(0,2)\").scale(0.5).next_to(dot_2,UP).set_color(BLUE)arc=ArcBetweenPoints(start=2*RIGHT,end=2*UP,stroke_color=YELLOW)self.add(circle,dot_1,dot_2,dot_1_text,dot_2_text)self.play(Create(arc))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArcBetweenPointsExample(Scene):\n    def construct(self):\n        circle = Circle(radius=2, stroke_color=GREY)\n        dot_1 = Dot(color=GREEN).move_to([2, 0, 0]).scale(0.5)\n        dot_1_text = Tex(\"(2,0)\").scale(0.5).next_to(dot_1, RIGHT).set_color(BLUE)\n        dot_2 = Dot(color=GREEN).move_to([0, 2, 0]).scale(0.5)\n        dot_2_text = Tex(\"(0,2)\").scale(0.5).next_to(dot_2, UP).set_color(BLUE)\n        arc= ArcBetweenPoints(start=2 * RIGHT, end=2 * UP, stroke_color=YELLOW)\n        self.add(circle, dot_1, dot_2, dot_1_text, dot_2_text)\n        self.play(Create(arc))",
+      "language": "python",
+      "context": "Example: ArcBetweenPointsExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ArcBetweenPoints",
+      "class_name": null,
+      "parameters": [
+        "start"
+      ],
+      "return_type": null,
+      "description": "Bases:Arc"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "start"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Create",
+    "Tex",
+    "Dot",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

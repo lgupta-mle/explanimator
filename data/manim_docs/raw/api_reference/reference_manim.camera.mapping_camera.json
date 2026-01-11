@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.mapping_camera.html",
+  "title": "mapping_camera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "mapping_camera\u00b6\n\nA camera module that supports spatial mapping between objects for distortion effects.\n\nClasses\n\nMappingCamera\n\nOldMultiCamera\n\nSplitScreenCamera\n\nInitializes a split screen camera setup with two side-by-side cameras.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Camera"
+  ],
+  "tags": [
+    "3d"
+  ]
+}

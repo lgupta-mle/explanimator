@@ -1,0 +1,31 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim._config.html",
+  "title": "_config\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "_config\u00b6\n\nSet the global config and logger.\n\nFunctions\n\ntempconfig(temp)[source]\u00b6\n\nTemporarily modifies the globalconfigobject using a context manager.Inside thewithstatement, the modified config will be used.  After\ncontext manager exits, the config will be restored to its original state.Parameters:temp(ManimConfig|dict[str,Any]) \u2013 Object whose keys will be used to temporarily update the globalconfig.Return type:Generator[None, None, None]ExamplesUsewithtempconfig({...})to temporarily change the default values of\ncertain config options.>>>config[\"frame_height\"]8.0>>>withtempconfig({\"frame_height\":100.0}):...print(config[\"frame_height\"])100.0>>>config[\"frame_height\"]8.0\n\nTemporarily modifies the globalconfigobject using a context manager.\n\nInside thewithstatement, the modified config will be used.  After\ncontext manager exits, the config will be restored to its original state.\n\nParameters:\n\ntemp(ManimConfig|dict[str,Any]) \u2013 Object whose keys will be used to temporarily update the globalconfig.\n\ntemp(ManimConfig|dict[str,Any]) \u2013 Object whose keys will be used to temporarily update the globalconfig.\n\nReturn type:\n\nGenerator[None, None, None]\n\nGenerator[None, None, None]\n\nExamples\n\nUsewithtempconfig({...})to temporarily change the default values of\ncertain config options.",
+  "code_examples": [
+    {
+      "code": ">>>config[\"frame_height\"]8.0>>>withtempconfig({\"frame_height\":100.0}):...print(config[\"frame_height\"])100.0>>>config[\"frame_height\"]8.0",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "tempconfig",
+      "class_name": null,
+      "parameters": [
+        "temp"
+      ],
+      "return_type": null,
+      "description": "Temporarily modifies the globalconfigobject using a context manager."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "text",
+    "graph"
+  ]
+}

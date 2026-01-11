@@ -1,0 +1,69 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.Arc.html",
+  "title": "Arc\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Arc\u00b6\n\nQualified name:manim.mobject.geometry.arc.Arc\n\nclassArc(radius=1.0,start_angle=0,angle=1.5707963267948966,num_components=9,arc_center=array([0.,0.,0.]),**kwargs)[source]\u00b6\n\nBases:TipableVMobjectA circular arc.ExamplesA simple arc of angle Pi.Example: ArcExample\u00b6frommanimimport*classArcExample(Scene):defconstruct(self):self.add(Arc(angle=PI))class ArcExample(Scene):\n    def construct(self):\n        self.add(Arc(angle=PI))Methodsgenerate_pointsInitializespointsand therefore the shape.get_arc_centerLooks at the normals to the first two anchors, and finds their intersection pointsinit_pointsmove_arc_center_tostop_angleAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:radius(float|None)start_angle(float)angle(float)num_components(int)arc_center(Point3DLike)kwargs(Any)_original__init__(radius=1.0,start_angle=0,angle=1.5707963267948966,num_components=9,arc_center=array([0.,0.,0.]),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:radius(float|None)start_angle(float)angle(float)num_components(int)arc_center(Point3DLike)kwargs(Any)generate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:Noneget_arc_center(warning=True)[source]\u00b6Looks at the normals to the first two\nanchors, and finds their intersection pointsParameters:warning(bool)Return type:Point3D\n\nBases:TipableVMobject\n\nA circular arc.\n\nExamples\n\nA simple arc of angle Pi.\n\nExample: ArcExample\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\nget_arc_center\n\nLooks at the normals to the first two anchors, and finds their intersection points\n\ninit_points\n\nmove_arc_center_to\n\nstop_angle\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nradius(float|None)start_angle(float)angle(float)num_components(int)arc_center(Point3DLike)kwargs(Any)\n\nradius(float|None)\n\nradius(float|None)\n\nstart_angle(float)\n\nstart_angle(float)\n\nangle(float)\n\nangle(float)\n\nnum_components(int)\n\nnum_components(int)\n\narc_center(Point3DLike)\n\narc_center(Point3DLike)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(radius=1.0,start_angle=0,angle=1.5707963267948966,num_components=9,arc_center=array([0.,0.,0.]),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:radius(float|None)start_angle(float)angle(float)num_components(int)arc_center(Point3DLike)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nradius(float|None)start_angle(float)angle(float)num_components(int)arc_center(Point3DLike)kwargs(Any)\n\nradius(float|None)\n\nradius(float|None)\n\nstart_angle(float)\n\nstart_angle(float)\n\nangle(float)\n\nangle(float)\n\nnum_components(int)\n\nnum_components(int)\n\narc_center(Point3DLike)\n\narc_center(Point3DLike)\n\nkwargs(Any)\n\nkwargs(Any)\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone\n\nget_arc_center(warning=True)[source]\u00b6\n\nLooks at the normals to the first two\nanchors, and finds their intersection pointsParameters:warning(bool)Return type:Point3D\n\nLooks at the normals to the first two\nanchors, and finds their intersection points\n\nParameters:\n\nwarning(bool)\n\nwarning(bool)\n\nReturn type:\n\nPoint3D\n\nPoint3D",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classArcExample(Scene):defconstruct(self):self.add(Arc(angle=PI))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArcExample(Scene):\n    def construct(self):\n        self.add(Arc(angle=PI))",
+      "language": "python",
+      "context": "Example: ArcExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Arc",
+      "class_name": null,
+      "parameters": [
+        "radius=1.0"
+      ],
+      "return_type": null,
+      "description": "Bases:TipableVMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "radius=1.0"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    },
+    {
+      "name": "get_arc_center",
+      "class_name": null,
+      "parameters": [
+        "warning=True"
+      ],
+      "return_type": null,
+      "description": "Looks at the normals to the first two\nanchors, and finds their intersection points"
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

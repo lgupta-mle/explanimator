@@ -1,0 +1,11 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.value_tracker.html",
+  "title": "value_tracker\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "value_tracker\u00b6\n\nSimple mobjects that can be used for storing (and updating) a value.\n\nClasses\n\nComplexValueTracker\n\nTracks a complex-valued parameter.\n\nValueTracker\n\nA mobject that can be used for tracking (real-valued) parameters.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": []
+}

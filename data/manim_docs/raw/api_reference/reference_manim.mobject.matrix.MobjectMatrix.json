@@ -1,0 +1,61 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.matrix.MobjectMatrix.html",
+  "title": "MobjectMatrix\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MobjectMatrix\u00b6\n\nQualified name:manim.mobject.matrix.MobjectMatrix\n\nclassMobjectMatrix(matrix,element_to_mobject=<functionMobjectMatrix.<lambda>>,**kwargs)[source]\u00b6\n\nBases:MatrixA mobject that displays a matrix of mobject entries on the screen.ExamplesExample: MobjectMatrixExample\u00b6frommanimimport*classMobjectMatrixExample(Scene):defconstruct(self):a=Circle().scale(0.3)b=Square().scale(0.3)c=MathTex(\"\\\\pi\").scale(2)d=Star().scale(0.3)m0=MobjectMatrix([[a,b],[c,d]])self.add(m0)class MobjectMatrixExample(Scene):\n    def construct(self):\n        a = Circle().scale(0.3)\n        b = Square().scale(0.3)\n        c = MathTex(\"\\\\pi\").scale(2)\n        d = Star().scale(0.3)\n        m0 = MobjectMatrix([[a, b], [c, d]])\n        self.add(m0)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:matrix(Iterable)element_to_mobject(type[Mobject]|Callable[...,Mobject])kwargs(Any)_original__init__(matrix,element_to_mobject=<functionMobjectMatrix.<lambda>>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:matrix(Iterable)element_to_mobject(type[Mobject]|Callable[[...],Mobject])kwargs(Any)\n\nBases:Matrix\n\nA mobject that displays a matrix of mobject entries on the screen.\n\nExamples\n\nExample: MobjectMatrixExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nmatrix(Iterable)element_to_mobject(type[Mobject]|Callable[...,Mobject])kwargs(Any)\n\nmatrix(Iterable)\n\nmatrix(Iterable)\n\nelement_to_mobject(type[Mobject]|Callable[...,Mobject])\n\nelement_to_mobject(type[Mobject]|Callable[...,Mobject])\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(matrix,element_to_mobject=<functionMobjectMatrix.<lambda>>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:matrix(Iterable)element_to_mobject(type[Mobject]|Callable[[...],Mobject])kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmatrix(Iterable)element_to_mobject(type[Mobject]|Callable[[...],Mobject])kwargs(Any)\n\nmatrix(Iterable)\n\nmatrix(Iterable)\n\nelement_to_mobject(type[Mobject]|Callable[[...],Mobject])\n\nelement_to_mobject(type[Mobject]|Callable[[...],Mobject])\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMobjectMatrixExample(Scene):defconstruct(self):a=Circle().scale(0.3)b=Square().scale(0.3)c=MathTex(\"\\\\pi\").scale(2)d=Star().scale(0.3)m0=MobjectMatrix([[a,b],[c,d]])self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MobjectMatrixExample(Scene):\n    def construct(self):\n        a = Circle().scale(0.3)\n        b = Square().scale(0.3)\n        c = MathTex(\"\\\\pi\").scale(2)\n        d = Star().scale(0.3)\n        m0 = MobjectMatrix([[a, b], [c, d]])\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: MobjectMatrixExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MobjectMatrix",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Bases:Matrix"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Tex",
+    "MathTex",
+    "Scene",
+    "Matrix",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

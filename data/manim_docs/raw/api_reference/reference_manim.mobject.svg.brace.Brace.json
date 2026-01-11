@@ -1,0 +1,101 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.brace.Brace.html",
+  "title": "Brace\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Brace\u00b6\n\nQualified name:manim.mobject.svg.brace.Brace\n\nclassBrace(mobject,direction=array([0.,-1.,0.]),buff=0.2,sharpness=2,stroke_width=0,fill_opacity=1.0,background_stroke_width=0,background_stroke_color=ManimColor('#000000'),**kwargs)[source]\u00b6\n\nBases:VMobjectFromSVGPathTakes a mobject and draws a brace adjacent to it.Passing a direction vector determines the direction from which the\nbrace is drawn. By default it is drawn from below.Parameters:mobject(Mobject) \u2013 The mobject adjacent to which the brace is placed.direction(Vector3DLike) \u2013 The direction from which the brace faces the mobject.buff(float)sharpness(float)stroke_width(float)fill_opacity(float)background_stroke_width(float)background_stroke_color(ParsableManimColor)kwargs(Any)See alsoBraceBetweenPointsExamplesExample: BraceExample\u00b6frommanimimport*classBraceExample(Scene):defconstruct(self):s=Square()self.add(s)foriinnp.linspace(0.1,1.0,4):br=Brace(s,sharpness=i)t=Text(f\"sharpness={i}\").next_to(br,RIGHT)self.add(t)self.add(br)VGroup(*self.mobjects).arrange(DOWN,buff=0.2)class BraceExample(Scene):\n    def construct(self):\n        s = Square()\n        self.add(s)\n        for i in np.linspace(0.1,1.0,4):\n            br = Brace(s, sharpness=i)\n            t = Text(f\"sharpness= {i}\").next_to(br, RIGHT)\n            self.add(t)\n            self.add(br)\n        VGroup(*self.mobjects).arrange(DOWN, buff=0.2)Methodsget_directionReturns the direction from the center to the brace tip.get_texPlaces the tex at the brace tip.get_textPlaces the text at the brace tip.get_tipReturns the point at the brace tip.put_at_tipPuts the given mobject at the brace tip.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(mobject,direction=array([0.,-1.,0.]),buff=0.2,sharpness=2,stroke_width=0,fill_opacity=1.0,background_stroke_width=0,background_stroke_color=ManimColor('#000000'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)direction(Vector3DLike)buff(float)sharpness(float)stroke_width(float)fill_opacity(float)background_stroke_width(float)background_stroke_color(ParsableManimColor)kwargs(Any)get_direction()[source]\u00b6Returns the direction from the center to the brace tip.Return type:Vector3Dget_tex(*tex,**kwargs)[source]\u00b6Places the tex at the brace tip.Parameters:tex(str) \u2013 The tex to be placed at the brace tip.kwargs(Any) \u2013 Any further keyword arguments are passed toput_at_tip()which\nis used to position the tex at the brace tip.Return type:MathTexget_text(*text,**kwargs)[source]\u00b6Places the text at the brace tip.Parameters:text(str) \u2013 The text to be placed at the brace tip.kwargs(Any) \u2013 Any additional keyword arguments are passed toput_at_tip()which\nis used to position the text at the brace tip.Return type:Texget_tip()[source]\u00b6Returns the point at the brace tip.Return type:Point3Dput_at_tip(mob,use_next_to=True,**kwargs)[source]\u00b6Puts the given mobject at the brace tip.Parameters:mob(Mobject) \u2013 The mobject to be placed at the tip.use_next_to(bool) \u2013 If true, thennext_to()is used to place the mobject at the\ntip.kwargs(Any) \u2013 Any additional keyword arguments are passed tonext_to()which\nis used to put the mobject next to the brace tip.Return type:Self\n\nBases:VMobjectFromSVGPath\n\nTakes a mobject and draws a brace adjacent to it.\n\nPassing a direction vector determines the direction from which the\nbrace is drawn. By default it is drawn from below.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject adjacent to which the brace is placed.direction(Vector3DLike) \u2013 The direction from which the brace faces the mobject.buff(float)sharpness(float)stroke_width(float)fill_opacity(float)background_stroke_width(float)background_stroke_color(ParsableManimColor)kwargs(Any)\n\nmobject(Mobject) \u2013 The mobject adjacent to which the brace is placed.\n\nmobject(Mobject) \u2013 The mobject adjacent to which the brace is placed.\n\ndirection(Vector3DLike) \u2013 The direction from which the brace faces the mobject.\n\ndirection(Vector3DLike) \u2013 The direction from which the brace faces the mobject.\n\nbuff(float)\n\nbuff(float)\n\nsharpness(float)\n\nsharpness(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nbackground_stroke_width(float)\n\nbackground_stroke_width(float)\n\nbackground_stroke_color(ParsableManimColor)\n\nbackground_stroke_color(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nSee also\n\nBraceBetweenPoints\n\nExamples\n\nExample: BraceExample\u00b6\n\nMethods\n\nget_direction\n\nReturns the direction from the center to the brace tip.\n\nget_tex\n\nPlaces the tex at the brace tip.\n\nget_text\n\nPlaces the text at the brace tip.\n\nget_tip\n\nReturns the point at the brace tip.\n\nput_at_tip\n\nPuts the given mobject at the brace tip.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(mobject,direction=array([0.,-1.,0.]),buff=0.2,sharpness=2,stroke_width=0,fill_opacity=1.0,background_stroke_width=0,background_stroke_color=ManimColor('#000000'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)direction(Vector3DLike)buff(float)sharpness(float)stroke_width(float)fill_opacity(float)background_stroke_width(float)background_stroke_color(ParsableManimColor)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)direction(Vector3DLike)buff(float)sharpness(float)stroke_width(float)fill_opacity(float)background_stroke_width(float)background_stroke_color(ParsableManimColor)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ndirection(Vector3DLike)\n\ndirection(Vector3DLike)\n\nbuff(float)\n\nbuff(float)\n\nsharpness(float)\n\nsharpness(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nfill_opacity(float)\n\nfill_opacity(float)\n\nbackground_stroke_width(float)\n\nbackground_stroke_width(float)\n\nbackground_stroke_color(ParsableManimColor)\n\nbackground_stroke_color(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nget_direction()[source]\u00b6\n\nReturns the direction from the center to the brace tip.Return type:Vector3D\n\nReturns the direction from the center to the brace tip.\n\nReturn type:\n\nVector3D\n\nVector3D\n\nget_tex(*tex,**kwargs)[source]\u00b6\n\nPlaces the tex at the brace tip.Parameters:tex(str) \u2013 The tex to be placed at the brace tip.kwargs(Any) \u2013 Any further keyword arguments are passed toput_at_tip()which\nis used to position the tex at the brace tip.Return type:MathTex\n\nPlaces the tex at the brace tip.\n\nParameters:\n\ntex(str) \u2013 The tex to be placed at the brace tip.kwargs(Any) \u2013 Any further keyword arguments are passed toput_at_tip()which\nis used to position the tex at the brace tip.\n\ntex(str) \u2013 The tex to be placed at the brace tip.\n\ntex(str) \u2013 The tex to be placed at the brace tip.\n\nkwargs(Any) \u2013 Any further keyword arguments are passed toput_at_tip()which\nis used to position the tex at the brace tip.\n\nkwargs(Any) \u2013 Any further keyword arguments are passed toput_at_tip()which\nis used to position the tex at the brace tip.\n\nReturn type:\n\nMathTex\n\nMathTex\n\nget_text(*text,**kwargs)[source]\u00b6\n\nPlaces the text at the brace tip.Parameters:text(str) \u2013 The text to be placed at the brace tip.kwargs(Any) \u2013 Any additional keyword arguments are passed toput_at_tip()which\nis used to position the text at the brace tip.Return type:Tex\n\nPlaces the text at the brace tip.\n\nParameters:\n\ntext(str) \u2013 The text to be placed at the brace tip.kwargs(Any) \u2013 Any additional keyword arguments are passed toput_at_tip()which\nis used to position the text at the brace tip.\n\ntext(str) \u2013 The text to be placed at the brace tip.\n\ntext(str) \u2013 The text to be placed at the brace tip.\n\nkwargs(Any) \u2013 Any additional keyword arguments are passed toput_at_tip()which\nis used to position the text at the brace tip.\n\nkwargs(Any) \u2013 Any additional keyword arguments are passed toput_at_tip()which\nis used to position the text at the brace tip.\n\nReturn type:\n\nTex\n\nTex\n\nget_tip()[source]\u00b6\n\nReturns the point at the brace tip.Return type:Point3D\n\nReturns the point at the brace tip.\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\nput_at_tip(mob,use_next_to=True,**kwargs)[source]\u00b6\n\nPuts the given mobject at the brace tip.Parameters:mob(Mobject) \u2013 The mobject to be placed at the tip.use_next_to(bool) \u2013 If true, thennext_to()is used to place the mobject at the\ntip.kwargs(Any) \u2013 Any additional keyword arguments are passed tonext_to()which\nis used to put the mobject next to the brace tip.Return type:Self\n\nPuts the given mobject at the brace tip.\n\nParameters:\n\nmob(Mobject) \u2013 The mobject to be placed at the tip.use_next_to(bool) \u2013 If true, thennext_to()is used to place the mobject at the\ntip.kwargs(Any) \u2013 Any additional keyword arguments are passed tonext_to()which\nis used to put the mobject next to the brace tip.\n\nmob(Mobject) \u2013 The mobject to be placed at the tip.\n\nmob(Mobject) \u2013 The mobject to be placed at the tip.\n\nuse_next_to(bool) \u2013 If true, thennext_to()is used to place the mobject at the\ntip.\n\nuse_next_to(bool) \u2013 If true, thennext_to()is used to place the mobject at the\ntip.\n\nkwargs(Any) \u2013 Any additional keyword arguments are passed tonext_to()which\nis used to put the mobject next to the brace tip.\n\nkwargs(Any) \u2013 Any additional keyword arguments are passed tonext_to()which\nis used to put the mobject next to the brace tip.\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBraceExample(Scene):defconstruct(self):s=Square()self.add(s)foriinnp.linspace(0.1,1.0,4):br=Brace(s,sharpness=i)t=Text(f\"sharpness={i}\").next_to(br,RIGHT)self.add(t)self.add(br)VGroup(*self.mobjects).arrange(DOWN,buff=0.2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BraceExample(Scene):\n    def construct(self):\n        s = Square()\n        self.add(s)\n        for i in np.linspace(0.1,1.0,4):\n            br = Brace(s, sharpness=i)\n            t = Text(f\"sharpness= {i}\").next_to(br, RIGHT)\n            self.add(t)\n            self.add(br)\n        VGroup(*self.mobjects).arrange(DOWN, buff=0.2)",
+      "language": "python",
+      "context": "Example: BraceExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Brace",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobjectFromSVGPath"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_direction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the direction from the center to the brace tip."
+    },
+    {
+      "name": "get_tex",
+      "class_name": null,
+      "parameters": [
+        "*tex"
+      ],
+      "return_type": null,
+      "description": "Places the tex at the brace tip."
+    },
+    {
+      "name": "get_text",
+      "class_name": null,
+      "parameters": [
+        "*text"
+      ],
+      "return_type": null,
+      "description": "Places the text at the brace tip."
+    },
+    {
+      "name": "get_tip",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the point at the brace tip."
+    },
+    {
+      "name": "put_at_tip",
+      "class_name": null,
+      "parameters": [
+        "mob"
+      ],
+      "return_type": null,
+      "description": "Puts the given mobject at the brace tip."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Text",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.vectorized_mobject.VGroup.html",
+  "title": "VGroup\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "VGroup\u00b6\n\nQualified name:manim.mobject.types.vectorized\\_mobject.VGroup\n\nclassVGroup(*vmobjects,**kwargs)[source]\u00b6\n\nBases:VMobjectA group of vectorized mobjects.This can be used to group multipleVMobjectinstances together\nin order to scale, move, \u2026 them together.NotesWhen adding the same mobject more than once, repetitions are ignored.\nUseMobject.copy()to create a separate copy which can then\nbe added to the group.ExamplesTo addVGroup, you can either use theadd()method, or use the+and+=operators. Similarly, you\ncan subtract elements of a VGroup viaremove()method, or-and-=operators:>>>frommanimimportTriangle,Square,VGroup>>>vg=VGroup()>>>triangle,square=Triangle(),Square()>>>vg.add(triangle)VGroup(Triangle)>>>vg+square# a new VGroup is constructedVGroup(Triangle, Square)>>>vg# not modifiedVGroup(Triangle)>>>vg+=square>>>vg# modifies vgVGroup(Triangle, Square)>>>vg.remove(triangle)VGroup(Square)>>>vg-square# a new VGroup is constructedVGroup()>>>vg# not modifiedVGroup(Square)>>>vg-=square>>>vg# modifies vgVGroup()Example: ArcShapeIris\u00b6frommanimimport*classArcShapeIris(Scene):defconstruct(self):colors=[DARK_BROWN,BLUE_E,BLUE_D,BLUE_A,TEAL_B,GREEN_B,YELLOW_E]radius=[1+rad*0.1forradinrange(len(colors))]circles_group=VGroup()# zip(radius, color) makes the iterator [(radius[i], color[i]) for i in range(radius)]circles_group.add(*[Circle(radius=rad,stroke_width=10,color=col)forrad,colinzip(radius,colors)])self.add(circles_group)class ArcShapeIris(Scene):\n    def construct(self):\n        colors = [DARK_BROWN, BLUE_E, BLUE_D, BLUE_A, TEAL_B, GREEN_B, YELLOW_E]\n        radius = [1 + rad * 0.1 for rad in range(len(colors))]\n\n        circles_group = VGroup()\n\n        # zip(radius, color) makes the iterator [(radius[i], color[i]) for i in range(radius)]\n        circles_group.add(*[Circle(radius=rad, stroke_width=10, color=col)\n                            for rad, col in zip(radius, colors)])\n        self.add(circles_group)MethodsaddChecks if all passed elements are an instance, or iterables of VMobject and then adds them to submobjectsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:vmobjects(VMobject|Iterable[VMobject])kwargs(Any)_original__init__(*vmobjects,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobjects(VMobject|Iterable[VMobject])kwargs(Any)Return type:Noneadd(*vmobjects)[source]\u00b6Checks if all passed elements are an instance, or iterables of VMobject and then adds them to submobjectsParameters:vmobjects(VMobject|Iterable[VMobject]) \u2013 List or iterable of VMobjects to addReturn type:VGroupRaises:TypeError\u2013 If one element of the list, or iterable is not an instance of VMobjectExamplesThe following example shows how to add individual or multipleVMobjectinstances through theVGroupconstructor and its.add()method.Example: AddToVGroup\u00b6frommanimimport*classAddToVGroup(Scene):defconstruct(self):circle_red=Circle(color=RED)circle_green=Circle(color=GREEN)circle_blue=Circle(color=BLUE)circle_red.shift(LEFT)circle_blue.shift(RIGHT)gr=VGroup(circle_red,circle_green)gr2=VGroup(circle_blue)# Constructor uses add directlyself.add(gr,gr2)self.wait()gr+=gr2# Add group to anotherself.play(gr.animate.shift(DOWN),)gr-=gr2# Remove groupself.play(# Animate groups separatelygr.animate.shift(LEFT),gr2.animate.shift(UP),)self.play(#Animate groups without modification(gr+gr2).animate.shift(RIGHT))self.play(# Animate group without component(gr-circle_red).animate.shift(RIGHT))class AddToVGroup(Scene):\n    def construct(self):\n        circle_red = Circle(color=RED)\n        circle_green = Circle(color=GREEN)\n        circle_blue = Circle(color=BLUE)\n        circle_red.shift(LEFT)\n        circle_blue.shift(RIGHT)\n        gr = VGroup(circle_red, circle_green)\n        gr2 = VGroup(circle_blue) # Constructor uses add directly\n        self.add(gr,gr2)\n        self.wait()\n        gr += gr2 # Add group to another\n        self.play(\n            gr.animate.shift(DOWN),\n        )\n        gr -= gr2 # Remove group\n        self.play( # Animate groups separately\n            gr.animate.shift(LEFT),\n            gr2.animate.shift(UP),\n        )\n        self.play( #Animate groups without modification\n            (gr+gr2).animate.shift(RIGHT)\n        )\n        self.play( # Animate group without component\n            (gr-circle_red).animate.shift(RIGHT)\n        )AVGroupcan be created using iterables as well. Keep in mind that all generated values from an\niterable must be an instance ofVMobject. This is demonstrated below:Example: AddIterableToVGroupExample\u00b6frommanimimport*classAddIterableToVGroupExample(Scene):defconstruct(self):v=VGroup(Square(),# Singular VMobject instance[Circle(),Triangle()],# List of VMobject instancesDot(),(Dot()for_inrange(2)),# Iterable that generates VMobjects)v.arrange()self.add(v)class AddIterableToVGroupExample(Scene):\n    def construct(self):\n        v = VGroup(\n            Square(),               # Singular VMobject instance\n            [Circle(), Triangle()], # List of VMobject instances\n            Dot(),\n            (Dot() for _ in range(2)), # Iterable that generates VMobjects\n        )\n        v.arrange()\n        self.add(v)To facilitate this, the iterable is unpacked before its individual instances are added to theVGroup.\nAs a result, when you index aVGroup, you will never get back an iterable.\nInstead, you will always receiveVMobjectinstances, including those\nthat were part of the iterable/s that you originally added to theVGroup.\n\nBases:VMobject\n\nA group of vectorized mobjects.\n\nThis can be used to group multipleVMobjectinstances together\nin order to scale, move, \u2026 them together.\n\nNotes\n\nWhen adding the same mobject more than once, repetitions are ignored.\nUseMobject.copy()to create a separate copy which can then\nbe added to the group.\n\nExamples\n\nTo addVGroup, you can either use theadd()method, or use the+and+=operators. Similarly, you\ncan subtract elements of a VGroup viaremove()method, or-and-=operators:\n\nExample: ArcShapeIris\u00b6\n\nMethods\n\nadd\n\nChecks if all passed elements are an instance, or iterables of VMobject and then adds them to submobjects\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nvmobjects(VMobject|Iterable[VMobject])kwargs(Any)\n\nvmobjects(VMobject|Iterable[VMobject])\n\nvmobjects(VMobject|Iterable[VMobject])\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*vmobjects,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobjects(VMobject|Iterable[VMobject])kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobjects(VMobject|Iterable[VMobject])kwargs(Any)\n\nvmobjects(VMobject|Iterable[VMobject])\n\nvmobjects(VMobject|Iterable[VMobject])\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nadd(*vmobjects)[source]\u00b6\n\nChecks if all passed elements are an instance, or iterables of VMobject and then adds them to submobjectsParameters:vmobjects(VMobject|Iterable[VMobject]) \u2013 List or iterable of VMobjects to addReturn type:VGroupRaises:TypeError\u2013 If one element of the list, or iterable is not an instance of VMobjectExamplesThe following example shows how to add individual or multipleVMobjectinstances through theVGroupconstructor and its.add()method.Example: AddToVGroup\u00b6frommanimimport*classAddToVGroup(Scene):defconstruct(self):circle_red=Circle(color=RED)circle_green=Circle(color=GREEN)circle_blue=Circle(color=BLUE)circle_red.shift(LEFT)circle_blue.shift(RIGHT)gr=VGroup(circle_red,circle_green)gr2=VGroup(circle_blue)# Constructor uses add directlyself.add(gr,gr2)self.wait()gr+=gr2# Add group to anotherself.play(gr.animate.shift(DOWN),)gr-=gr2# Remove groupself.play(# Animate groups separatelygr.animate.shift(LEFT),gr2.animate.shift(UP),)self.play(#Animate groups without modification(gr+gr2).animate.shift(RIGHT))self.play(# Animate group without component(gr-circle_red).animate.shift(RIGHT))class AddToVGroup(Scene):\n    def construct(self):\n        circle_red = Circle(color=RED)\n        circle_green = Circle(color=GREEN)\n        circle_blue = Circle(color=BLUE)\n        circle_red.shift(LEFT)\n        circle_blue.shift(RIGHT)\n        gr = VGroup(circle_red, circle_green)\n        gr2 = VGroup(circle_blue) # Constructor uses add directly\n        self.add(gr,gr2)\n        self.wait()\n        gr += gr2 # Add group to another\n        self.play(\n            gr.animate.shift(DOWN),\n        )\n        gr -= gr2 # Remove group\n        self.play( # Animate groups separately\n            gr.animate.shift(LEFT),\n            gr2.animate.shift(UP),\n        )\n        self.play( #Animate groups without modification\n            (gr+gr2).animate.shift(RIGHT)\n        )\n        self.play( # Animate group without component\n            (gr-circle_red).animate.shift(RIGHT)\n        )AVGroupcan be created using iterables as well. Keep in mind that all generated values from an\niterable must be an instance ofVMobject. This is demonstrated below:Example: AddIterableToVGroupExample\u00b6frommanimimport*classAddIterableToVGroupExample(Scene):defconstruct(self):v=VGroup(Square(),# Singular VMobject instance[Circle(),Triangle()],# List of VMobject instancesDot(),(Dot()for_inrange(2)),# Iterable that generates VMobjects)v.arrange()self.add(v)class AddIterableToVGroupExample(Scene):\n    def construct(self):\n        v = VGroup(\n            Square(),               # Singular VMobject instance\n            [Circle(), Triangle()], # List of VMobject instances\n            Dot(),\n            (Dot() for _ in range(2)), # Iterable that generates VMobjects\n        )\n        v.arrange()\n        self.add(v)To facilitate this, the iterable is unpacked before its individual instances are added to theVGroup.\nAs a result, when you index aVGroup, you will never get back an iterable.\nInstead, you will always receiveVMobjectinstances, including those\nthat were part of the iterable/s that you originally added to theVGroup.\n\nChecks if all passed elements are an instance, or iterables of VMobject and then adds them to submobjects\n\nParameters:\n\nvmobjects(VMobject|Iterable[VMobject]) \u2013 List or iterable of VMobjects to add\n\nvmobjects(VMobject|Iterable[VMobject]) \u2013 List or iterable of VMobjects to add\n\nReturn type:\n\nVGroup\n\nVGroup\n\nRaises:\n\nTypeError\u2013 If one element of the list, or iterable is not an instance of VMobject\n\nTypeError\u2013 If one element of the list, or iterable is not an instance of VMobject\n\nExamples\n\nThe following example shows how to add individual or multipleVMobjectinstances through theVGroupconstructor and its.add()method.\n\nExample: AddToVGroup\u00b6\n\nAVGroupcan be created using iterables as well. Keep in mind that all generated values from an\niterable must be an instance ofVMobject. This is demonstrated below:\n\nExample: AddIterableToVGroupExample\u00b6\n\nTo facilitate this, the iterable is unpacked before its individual instances are added to theVGroup.\nAs a result, when you index aVGroup, you will never get back an iterable.\nInstead, you will always receiveVMobjectinstances, including those\nthat were part of the iterable/s that you originally added to theVGroup.",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportTriangle,Square,VGroup>>>vg=VGroup()>>>triangle,square=Triangle(),Square()>>>vg.add(triangle)VGroup(Triangle)>>>vg+square# a new VGroup is constructedVGroup(Triangle, Square)>>>vg# not modifiedVGroup(Triangle)>>>vg+=square>>>vg# modifies vgVGroup(Triangle, Square)>>>vg.remove(triangle)VGroup(Square)>>>vg-square# a new VGroup is constructedVGroup()>>>vg# not modifiedVGroup(Square)>>>vg-=square>>>vg# modifies vgVGroup()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classArcShapeIris(Scene):defconstruct(self):colors=[DARK_BROWN,BLUE_E,BLUE_D,BLUE_A,TEAL_B,GREEN_B,YELLOW_E]radius=[1+rad*0.1forradinrange(len(colors))]circles_group=VGroup()# zip(radius, color) makes the iterator [(radius[i], color[i]) for i in range(radius)]circles_group.add(*[Circle(radius=rad,stroke_width=10,color=col)forrad,colinzip(radius,colors)])self.add(circles_group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArcShapeIris(Scene):\n    def construct(self):\n        colors = [DARK_BROWN, BLUE_E, BLUE_D, BLUE_A, TEAL_B, GREEN_B, YELLOW_E]\n        radius = [1 + rad * 0.1 for rad in range(len(colors))]\n\n        circles_group = VGroup()\n\n        # zip(radius, color) makes the iterator [(radius[i], color[i]) for i in range(radius)]\n        circles_group.add(*[Circle(radius=rad, stroke_width=10, color=col)\n                            for rad, col in zip(radius, colors)])\n        self.add(circles_group)",
+      "language": "python",
+      "context": "Example: ArcShapeIris\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classAddToVGroup(Scene):defconstruct(self):circle_red=Circle(color=RED)circle_green=Circle(color=GREEN)circle_blue=Circle(color=BLUE)circle_red.shift(LEFT)circle_blue.shift(RIGHT)gr=VGroup(circle_red,circle_green)gr2=VGroup(circle_blue)# Constructor uses add directlyself.add(gr,gr2)self.wait()gr+=gr2# Add group to anotherself.play(gr.animate.shift(DOWN),)gr-=gr2# Remove groupself.play(# Animate groups separatelygr.animate.shift(LEFT),gr2.animate.shift(UP),)self.play(#Animate groups without modification(gr+gr2).animate.shift(RIGHT))self.play(# Animate group without component(gr-circle_red).animate.shift(RIGHT))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class AddToVGroup(Scene):\n    def construct(self):\n        circle_red = Circle(color=RED)\n        circle_green = Circle(color=GREEN)\n        circle_blue = Circle(color=BLUE)\n        circle_red.shift(LEFT)\n        circle_blue.shift(RIGHT)\n        gr = VGroup(circle_red, circle_green)\n        gr2 = VGroup(circle_blue) # Constructor uses add directly\n        self.add(gr,gr2)\n        self.wait()\n        gr += gr2 # Add group to another\n        self.play(\n            gr.animate.shift(DOWN),\n        )\n        gr -= gr2 # Remove group\n        self.play( # Animate groups separately\n            gr.animate.shift(LEFT),\n            gr2.animate.shift(UP),\n        )\n        self.play( #Animate groups without modification\n            (gr+gr2).animate.shift(RIGHT)\n        )\n        self.play( # Animate group without component\n            (gr-circle_red).animate.shift(RIGHT)\n        )",
+      "language": "python",
+      "context": "Example: AddToVGroup\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classAddIterableToVGroupExample(Scene):defconstruct(self):v=VGroup(Square(),# Singular VMobject instance[Circle(),Triangle()],# List of VMobject instancesDot(),(Dot()for_inrange(2)),# Iterable that generates VMobjects)v.arrange()self.add(v)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class AddIterableToVGroupExample(Scene):\n    def construct(self):\n        v = VGroup(\n            Square(),               # Singular VMobject instance\n            [Circle(), Triangle()], # List of VMobject instances\n            Dot(),\n            (Dot() for _ in range(2)), # Iterable that generates VMobjects\n        )\n        v.arrange()\n        self.add(v)",
+      "language": "python",
+      "context": "Example: AddIterableToVGroupExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "VGroup",
+      "class_name": null,
+      "parameters": [
+        "*vmobjects"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*vmobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add",
+      "class_name": null,
+      "parameters": [
+        "*vmobjects"
+      ],
+      "return_type": null,
+      "description": "Checks if all passed elements are an instance, or iterables of VMobject and then adds them to submobjects"
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "VGroup",
+    "VMobject",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

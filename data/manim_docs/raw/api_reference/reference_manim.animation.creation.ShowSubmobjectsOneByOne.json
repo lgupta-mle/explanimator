@@ -1,0 +1,35 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.ShowSubmobjectsOneByOne.html",
+  "title": "ShowSubmobjectsOneByOne\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ShowSubmobjectsOneByOne\u00b6\n\nQualified name:manim.animation.creation.ShowSubmobjectsOneByOne\n\nclassShowSubmobjectsOneByOne(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ShowIncreasingSubsetsShow one submobject at a time, removing all previously displayed ones from screen.Methodsupdate_submobject_listAttributesrun_timeParameters:group(Iterable[Mobject])int_func(Callable[[np.ndarray],np.ndarray])_original__init__(group,int_func=<ufunc'ceil'>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:group(Iterable[Mobject])int_func(Callable[[ndarray],ndarray])Return type:None\n\nBases:ShowIncreasingSubsets\n\nShow one submobject at a time, removing all previously displayed ones from screen.\n\nMethods\n\nupdate_submobject_list\n\nAttributes\n\nrun_time\n\nParameters:\n\ngroup(Iterable[Mobject])int_func(Callable[[np.ndarray],np.ndarray])\n\ngroup(Iterable[Mobject])\n\ngroup(Iterable[Mobject])\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\n_original__init__(group,int_func=<ufunc'ceil'>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:group(Iterable[Mobject])int_func(Callable[[ndarray],ndarray])Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ngroup(Iterable[Mobject])int_func(Callable[[ndarray],ndarray])\n\ngroup(Iterable[Mobject])\n\ngroup(Iterable[Mobject])\n\nint_func(Callable[[ndarray],ndarray])\n\nint_func(Callable[[ndarray],ndarray])\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ShowSubmobjectsOneByOne",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ShowIncreasingSubsets"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "group"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing"
+  ]
+}

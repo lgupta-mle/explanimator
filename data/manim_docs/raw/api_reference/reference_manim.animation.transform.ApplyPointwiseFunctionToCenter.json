@@ -1,0 +1,44 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ApplyPointwiseFunctionToCenter.html",
+  "title": "ApplyPointwiseFunctionToCenter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ApplyPointwiseFunctionToCenter\u00b6\n\nQualified name:manim.animation.transform.ApplyPointwiseFunctionToCenter\n\nclassApplyPointwiseFunctionToCenter(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ApplyPointwiseFunctionMethodsbeginBegin the animation.Attributespath_arcpath_funcrun_timeParameters:function(types.MethodType)mobject(Mobject)_original__init__(function,mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:function(MethodType)mobject(Mobject)Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBases:ApplyPointwiseFunction\n\nMethods\n\nbegin\n\nBegin the animation.\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nfunction(types.MethodType)mobject(Mobject)\n\nfunction(types.MethodType)\n\nfunction(types.MethodType)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\n_original__init__(function,mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:function(MethodType)mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfunction(MethodType)mobject(Mobject)\n\nfunction(MethodType)\n\nfunction(MethodType)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ApplyPointwiseFunctionToCenter",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ApplyPointwiseFunction"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "transformation",
+    "timing",
+    "graph"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.section.html",
+  "title": "section\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "section\u00b6\n\nbuilding blocks of segmented video API\n\nClasses\n\nDefaultSectionType\n\nThe type of a section can be used for third party applications.\n\nSection\n\nAScenecan be segmented into multiple Sections.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": []
+}

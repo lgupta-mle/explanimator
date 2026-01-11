@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.svg.brace.BraceBetweenPoints.html",
+  "title": "BraceBetweenPoints\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BraceBetweenPoints\u00b6\n\nQualified name:manim.mobject.svg.brace.BraceBetweenPoints\n\nclassBraceBetweenPoints(point_1,point_2,direction=array([0.,0.,0.]),**kwargs)[source]\u00b6\n\nBases:BraceSimilar to Brace, but instead of taking a mobject it uses 2\npoints to place the brace.A fitting direction for the brace is\ncomputed, but it still can be manually overridden.\nIf the points go from left to right, the brace is drawn from below.\nSwapping the points places the brace on the opposite side.Parameters:point_1(Point3DLike) \u2013 The first point.point_2(Point3DLike) \u2013 The second point.direction(Vector3DLike) \u2013 The direction from which the brace faces towards the points.kwargs(Any)ExamplesExample: BraceBPExample\u00b6frommanimimport*classBraceBPExample(Scene):defconstruct(self):p1=[0,0,0]p2=[1,2,0]brace=BraceBetweenPoints(p1,p2)self.play(Create(NumberPlane()))self.play(Create(brace))self.wait(2)class BraceBPExample(Scene):\n    def construct(self):\n        p1 = [0,0,0]\n        p2 = [1,2,0]\n        brace = BraceBetweenPoints(p1,p2)\n        self.play(Create(NumberPlane()))\n        self.play(Create(brace))\n        self.wait(2)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(point_1,point_2,direction=array([0.,0.,0.]),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:point_1(Point3DLike)point_2(Point3DLike)direction(Vector3DLike)kwargs(Any)\n\nBases:Brace\n\nSimilar to Brace, but instead of taking a mobject it uses 2\npoints to place the brace.\n\nA fitting direction for the brace is\ncomputed, but it still can be manually overridden.\nIf the points go from left to right, the brace is drawn from below.\nSwapping the points places the brace on the opposite side.\n\nParameters:\n\npoint_1(Point3DLike) \u2013 The first point.point_2(Point3DLike) \u2013 The second point.direction(Vector3DLike) \u2013 The direction from which the brace faces towards the points.kwargs(Any)\n\npoint_1(Point3DLike) \u2013 The first point.\n\npoint_1(Point3DLike) \u2013 The first point.\n\npoint_2(Point3DLike) \u2013 The second point.\n\npoint_2(Point3DLike) \u2013 The second point.\n\ndirection(Vector3DLike) \u2013 The direction from which the brace faces towards the points.\n\ndirection(Vector3DLike) \u2013 The direction from which the brace faces towards the points.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: BraceBPExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(point_1,point_2,direction=array([0.,0.,0.]),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:point_1(Point3DLike)point_2(Point3DLike)direction(Vector3DLike)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npoint_1(Point3DLike)point_2(Point3DLike)direction(Vector3DLike)kwargs(Any)\n\npoint_1(Point3DLike)\n\npoint_1(Point3DLike)\n\npoint_2(Point3DLike)\n\npoint_2(Point3DLike)\n\ndirection(Vector3DLike)\n\ndirection(Vector3DLike)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBraceBPExample(Scene):defconstruct(self):p1=[0,0,0]p2=[1,2,0]brace=BraceBetweenPoints(p1,p2)self.play(Create(NumberPlane()))self.play(Create(brace))self.wait(2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BraceBPExample(Scene):\n    def construct(self):\n        p1 = [0,0,0]\n        p2 = [1,2,0]\n        brace = BraceBetweenPoints(p1,p2)\n        self.play(Create(NumberPlane()))\n        self.play(Create(brace))\n        self.wait(2)",
+      "language": "python",
+      "context": "Example: BraceBPExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "BraceBetweenPoints",
+      "class_name": null,
+      "parameters": [
+        "point_1"
+      ],
+      "return_type": null,
+      "description": "Bases:Brace"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "point_1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Create",
+    "NumberPlane"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "math",
+    "animation"
+  ]
+}

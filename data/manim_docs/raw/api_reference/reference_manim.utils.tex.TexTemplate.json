@@ -1,0 +1,143 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.tex.TexTemplate.html",
+  "title": "TexTemplate\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TexTemplate\u00b6\n\nQualified name:manim.utils.tex.TexTemplate\n\nclassTexTemplate(tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}',placeholder_text='YourTextHere',post_doc_commands='')[source]\u00b6\n\nBases:objectTeX templates are used to createTexandMathTexobjects.Methodsadd_to_documentAdds text to the TeX template just after begin{document}, e.g.\\boldmath.add_to_preambleAdds text to the TeX template's preamble (e.g. definitions, packages).copyCreate a deep copy of the TeX template instance.from_fileCreate an instance by reading the content of a file.get_texcode_for_expressionInserts expression verbatim into TeX template.get_texcode_for_expression_in_envInserts expression into TeX template wrapped in\\begin{environment}and\\end{environment}.AttributesbodyThe entire TeX template.descriptionA description of the templatedocumentclassThe command defining the documentclass, e.g.\\documentclass[preview]{standalone}.output_formatThe output format resulting from compilation, e.g..dvior.pdf.placeholder_textText in the document that will be replaced by the expression to be rendered.post_doc_commandsText (definitions, commands) to be inserted at right after\\begin{document}, e.g.\\boldmath.preambleThe document's preamble, i.e. the part between\\documentclassand\\begin{document}.tex_compilerThe TeX compiler to be used, e.g.latex,pdflatexorlualatex.Parameters:tex_compiler(str)description(str)output_format(str)documentclass(str)preamble(str)placeholder_text(str)post_doc_commands(str)_body:str=''\u00b6A custom body, can be set from a file.add_to_document(txt)[source]\u00b6Adds text to the TeX template just after begin{document}, e.g.\\boldmath.Parameters:txt(str) \u2013 String containing the text to be added.Return type:Selfadd_to_preamble(txt,prepend=False)[source]\u00b6Adds text to the TeX template\u2019s preamble (e.g. definitions, packages). Text can be inserted at the beginning or at the end of the preamble.Parameters:txt(str) \u2013 String containing the text to be added, e.g.\\usepackage{hyperref}.prepend(bool) \u2013 Whether the text should be added at the beginning of the preamble, i.e. right after\\documentclass.\nDefault is to add it at the end of the preamble, i.e. right before\\begin{document}.Return type:Selfpropertybody:str\u00b6The entire TeX template.copy()[source]\u00b6Create a deep copy of the TeX template instance.Return type:Selfdescription:str=''\u00b6A description of the templatedocumentclass:str='\\\\documentclass[preview]{standalone}'\u00b6The command defining the documentclass, e.g.\\documentclass[preview]{standalone}.classmethodfrom_file(file='tex_template.tex',**kwargs)[source]\u00b6Create an instance by reading the content of a file.Using theadd_to_preambleandadd_to_documentmethods on this instance\nwill have no effect, as the body is read from the file.Parameters:file(StrPath)kwargs(Any)Return type:Selfget_texcode_for_expression(expression)[source]\u00b6Inserts expression verbatim into TeX template.Parameters:expression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$Returns:LaTeX code based on current template, containing the givenexpressionand ready for typesettingReturn type:strget_texcode_for_expression_in_env(expression,environment)[source]\u00b6Inserts expression into TeX template wrapped in\\begin{environment}and\\end{environment}.Parameters:expression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$.environment(str) \u2013 The string containing the environment in which the expression should be typeset, e.g.align*.Returns:LaTeX code based on template, containing the given expression inside its environment, ready for typesettingReturn type:stroutput_format:str='.dvi'\u00b6The output format resulting from compilation, e.g..dvior.pdf.placeholder_text:str='YourTextHere'\u00b6Text in the document that will be replaced by the expression to be rendered.post_doc_commands:str=''\u00b6Text (definitions, commands) to be inserted at right after\\begin{document}, e.g.\\boldmath.preamble:str='\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}'\u00b6The document\u2019s preamble, i.e. the part between\\documentclassand\\begin{document}.tex_compiler:str='latex'\u00b6The TeX compiler to be used, e.g.latex,pdflatexorlualatex.\n\nBases:object\n\nTeX templates are used to createTexandMathTexobjects.\n\nMethods\n\nadd_to_document\n\nAdds text to the TeX template just after begin{document}, e.g.\\boldmath.\n\nadd_to_preamble\n\nAdds text to the TeX template's preamble (e.g. definitions, packages).\n\ncopy\n\nCreate a deep copy of the TeX template instance.\n\nfrom_file\n\nCreate an instance by reading the content of a file.\n\nget_texcode_for_expression\n\nInserts expression verbatim into TeX template.\n\nget_texcode_for_expression_in_env\n\nInserts expression into TeX template wrapped in\\begin{environment}and\\end{environment}.\n\nAttributes\n\nbody\n\nThe entire TeX template.\n\ndescription\n\nA description of the template\n\ndocumentclass\n\nThe command defining the documentclass, e.g.\\documentclass[preview]{standalone}.\n\noutput_format\n\nThe output format resulting from compilation, e.g..dvior.pdf.\n\nplaceholder_text\n\nText in the document that will be replaced by the expression to be rendered.\n\npost_doc_commands\n\nText (definitions, commands) to be inserted at right after\\begin{document}, e.g.\\boldmath.\n\npreamble\n\nThe document's preamble, i.e. the part between\\documentclassand\\begin{document}.\n\ntex_compiler\n\nThe TeX compiler to be used, e.g.latex,pdflatexorlualatex.\n\nParameters:\n\ntex_compiler(str)description(str)output_format(str)documentclass(str)preamble(str)placeholder_text(str)post_doc_commands(str)\n\ntex_compiler(str)\n\ntex_compiler(str)\n\ndescription(str)\n\ndescription(str)\n\noutput_format(str)\n\noutput_format(str)\n\ndocumentclass(str)\n\ndocumentclass(str)\n\npreamble(str)\n\npreamble(str)\n\nplaceholder_text(str)\n\nplaceholder_text(str)\n\npost_doc_commands(str)\n\npost_doc_commands(str)\n\n_body:str=''\u00b6\n\nA custom body, can be set from a file.\n\nA custom body, can be set from a file.\n\nadd_to_document(txt)[source]\u00b6\n\nAdds text to the TeX template just after begin{document}, e.g.\\boldmath.Parameters:txt(str) \u2013 String containing the text to be added.Return type:Self\n\nAdds text to the TeX template just after begin{document}, e.g.\\boldmath.\n\nParameters:\n\ntxt(str) \u2013 String containing the text to be added.\n\ntxt(str) \u2013 String containing the text to be added.\n\nReturn type:\n\nSelf\n\nSelf\n\nadd_to_preamble(txt,prepend=False)[source]\u00b6\n\nAdds text to the TeX template\u2019s preamble (e.g. definitions, packages). Text can be inserted at the beginning or at the end of the preamble.Parameters:txt(str) \u2013 String containing the text to be added, e.g.\\usepackage{hyperref}.prepend(bool) \u2013 Whether the text should be added at the beginning of the preamble, i.e. right after\\documentclass.\nDefault is to add it at the end of the preamble, i.e. right before\\begin{document}.Return type:Self\n\nAdds text to the TeX template\u2019s preamble (e.g. definitions, packages). Text can be inserted at the beginning or at the end of the preamble.\n\nParameters:\n\ntxt(str) \u2013 String containing the text to be added, e.g.\\usepackage{hyperref}.prepend(bool) \u2013 Whether the text should be added at the beginning of the preamble, i.e. right after\\documentclass.\nDefault is to add it at the end of the preamble, i.e. right before\\begin{document}.\n\ntxt(str) \u2013 String containing the text to be added, e.g.\\usepackage{hyperref}.\n\ntxt(str) \u2013 String containing the text to be added, e.g.\\usepackage{hyperref}.\n\nprepend(bool) \u2013 Whether the text should be added at the beginning of the preamble, i.e. right after\\documentclass.\nDefault is to add it at the end of the preamble, i.e. right before\\begin{document}.\n\nprepend(bool) \u2013 Whether the text should be added at the beginning of the preamble, i.e. right after\\documentclass.\nDefault is to add it at the end of the preamble, i.e. right before\\begin{document}.\n\nReturn type:\n\nSelf\n\nSelf\n\npropertybody:str\u00b6\n\nThe entire TeX template.\n\nThe entire TeX template.\n\ncopy()[source]\u00b6\n\nCreate a deep copy of the TeX template instance.Return type:Self\n\nCreate a deep copy of the TeX template instance.\n\nReturn type:\n\nSelf\n\nSelf\n\ndescription:str=''\u00b6\n\nA description of the template\n\nA description of the template\n\ndocumentclass:str='\\\\documentclass[preview]{standalone}'\u00b6\n\nThe command defining the documentclass, e.g.\\documentclass[preview]{standalone}.\n\nThe command defining the documentclass, e.g.\\documentclass[preview]{standalone}.\n\nclassmethodfrom_file(file='tex_template.tex',**kwargs)[source]\u00b6\n\nCreate an instance by reading the content of a file.Using theadd_to_preambleandadd_to_documentmethods on this instance\nwill have no effect, as the body is read from the file.Parameters:file(StrPath)kwargs(Any)Return type:Self\n\nCreate an instance by reading the content of a file.\n\nUsing theadd_to_preambleandadd_to_documentmethods on this instance\nwill have no effect, as the body is read from the file.\n\nParameters:\n\nfile(StrPath)kwargs(Any)\n\nfile(StrPath)\n\nfile(StrPath)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nSelf\n\nSelf\n\nget_texcode_for_expression(expression)[source]\u00b6\n\nInserts expression verbatim into TeX template.Parameters:expression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$Returns:LaTeX code based on current template, containing the givenexpressionand ready for typesettingReturn type:str\n\nInserts expression verbatim into TeX template.\n\nParameters:\n\nexpression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$\n\nexpression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$\n\nReturns:\n\nLaTeX code based on current template, containing the givenexpressionand ready for typesetting\n\nLaTeX code based on current template, containing the givenexpressionand ready for typesetting\n\nReturn type:\n\nstr\n\nstr\n\nget_texcode_for_expression_in_env(expression,environment)[source]\u00b6\n\nInserts expression into TeX template wrapped in\\begin{environment}and\\end{environment}.Parameters:expression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$.environment(str) \u2013 The string containing the environment in which the expression should be typeset, e.g.align*.Returns:LaTeX code based on template, containing the given expression inside its environment, ready for typesettingReturn type:str\n\nInserts expression into TeX template wrapped in\\begin{environment}and\\end{environment}.\n\nParameters:\n\nexpression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$.environment(str) \u2013 The string containing the environment in which the expression should be typeset, e.g.align*.\n\nexpression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$.\n\nexpression(str) \u2013 The string containing the expression to be typeset, e.g.$\\sqrt{2}$.\n\nenvironment(str) \u2013 The string containing the environment in which the expression should be typeset, e.g.align*.\n\nenvironment(str) \u2013 The string containing the environment in which the expression should be typeset, e.g.align*.\n\nReturns:\n\nLaTeX code based on template, containing the given expression inside its environment, ready for typesetting\n\nLaTeX code based on template, containing the given expression inside its environment, ready for typesetting\n\nReturn type:\n\nstr\n\nstr\n\noutput_format:str='.dvi'\u00b6\n\nThe output format resulting from compilation, e.g..dvior.pdf.\n\nThe output format resulting from compilation, e.g..dvior.pdf.\n\nplaceholder_text:str='YourTextHere'\u00b6\n\nText in the document that will be replaced by the expression to be rendered.\n\nText in the document that will be replaced by the expression to be rendered.\n\npost_doc_commands:str=''\u00b6\n\nText (definitions, commands) to be inserted at right after\\begin{document}, e.g.\\boldmath.\n\nText (definitions, commands) to be inserted at right after\\begin{document}, e.g.\\boldmath.\n\npreamble:str='\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}'\u00b6\n\nThe document\u2019s preamble, i.e. the part between\\documentclassand\\begin{document}.\n\nThe document\u2019s preamble, i.e. the part between\\documentclassand\\begin{document}.\n\ntex_compiler:str='latex'\u00b6\n\nThe TeX compiler to be used, e.g.latex,pdflatexorlualatex.\n\nThe TeX compiler to be used, e.g.latex,pdflatexorlualatex.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "TexTemplate",
+      "class_name": null,
+      "parameters": [
+        "tex_compiler='latex'"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "_body",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A custom body, can be set from a file."
+    },
+    {
+      "name": "add_to_document",
+      "class_name": null,
+      "parameters": [
+        "txt"
+      ],
+      "return_type": null,
+      "description": "Adds text to the TeX template just after begin{document}, e.g.\\boldmath."
+    },
+    {
+      "name": "add_to_preamble",
+      "class_name": null,
+      "parameters": [
+        "txt"
+      ],
+      "return_type": null,
+      "description": "Adds text to the TeX template\u2019s preamble (e.g. definitions, packages). Text can be inserted at the beginning or at the end of the preamble."
+    },
+    {
+      "name": "body",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The entire TeX template."
+    },
+    {
+      "name": "copy",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Create a deep copy of the TeX template instance."
+    },
+    {
+      "name": "description",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A description of the template"
+    },
+    {
+      "name": "documentclass",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The command defining the documentclass, e.g.\\documentclass[preview]{standalone}."
+    },
+    {
+      "name": "from_file",
+      "class_name": null,
+      "parameters": [
+        "file='tex_template.tex'"
+      ],
+      "return_type": null,
+      "description": "Create an instance by reading the content of a file."
+    },
+    {
+      "name": "get_texcode_for_expression",
+      "class_name": null,
+      "parameters": [
+        "expression"
+      ],
+      "return_type": null,
+      "description": "Inserts expression verbatim into TeX template."
+    },
+    {
+      "name": "get_texcode_for_expression_in_env",
+      "class_name": null,
+      "parameters": [
+        "expression"
+      ],
+      "return_type": null,
+      "description": "Inserts expression into TeX template wrapped in\\begin{environment}and\\end{environment}."
+    },
+    {
+      "name": "output_format",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The output format resulting from compilation, e.g..dvior.pdf."
+    },
+    {
+      "name": "placeholder_text",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Text in the document that will be replaced by the expression to be rendered."
+    },
+    {
+      "name": "post_doc_commands",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Text (definitions, commands) to be inserted at right after\\begin{document}, e.g.\\boldmath."
+    },
+    {
+      "name": "preamble",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The document\u2019s preamble, i.e. the part between\\documentclassand\\begin{document}."
+    },
+    {
+      "name": "tex_compiler",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The TeX compiler to be used, e.g.latex,pdflatexorlualatex."
+    }
+  ],
+  "related_classes": [
+    "MathTex",
+    "Create",
+    "Text",
+    "Tex"
+  ],
+  "tags": [
+    "text"
+  ]
+}

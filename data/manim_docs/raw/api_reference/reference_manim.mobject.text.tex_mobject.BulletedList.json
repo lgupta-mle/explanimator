@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.tex_mobject.BulletedList.html",
+  "title": "BulletedList\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BulletedList\u00b6\n\nQualified name:manim.mobject.text.tex\\_mobject.BulletedList\n\nclassBulletedList(*items,buff=0.5,dot_scale_factor=2,tex_environment=None,**kwargs)[source]\u00b6\n\nBases:TexA bulleted list.ExamplesExample: BulletedListExample\u00b6frommanimimport*classBulletedListExample(Scene):defconstruct(self):blist=BulletedList(\"Item 1\",\"Item 2\",\"Item 3\",height=2,width=2)blist.set_color_by_tex(\"Item 1\",RED)blist.set_color_by_tex(\"Item 2\",GREEN)blist.set_color_by_tex(\"Item 3\",BLUE)self.add(blist)class BulletedListExample(Scene):\n    def construct(self):\n        blist = BulletedList(\"Item 1\", \"Item 2\", \"Item 3\", height=2, width=2)\n        blist.set_color_by_tex(\"Item 1\", RED)\n        blist.set_color_by_tex(\"Item 2\", GREEN)\n        blist.set_color_by_tex(\"Item 3\", BLUE)\n        self.add(blist)Methodsfade_all_butAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizeThe font size of the tex mobject.hash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:items(str)buff(float)dot_scale_factor(float)tex_environment(str|None)kwargs(Any)_original__init__(*items,buff=0.5,dot_scale_factor=2,tex_environment=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:items(str)buff(float)dot_scale_factor(float)tex_environment(str|None)kwargs(Any)\n\nBases:Tex\n\nA bulleted list.\n\nExamples\n\nExample: BulletedListExample\u00b6\n\nMethods\n\nfade_all_but\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nThe font size of the tex mobject.\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nitems(str)buff(float)dot_scale_factor(float)tex_environment(str|None)kwargs(Any)\n\nitems(str)\n\nitems(str)\n\nbuff(float)\n\nbuff(float)\n\ndot_scale_factor(float)\n\ndot_scale_factor(float)\n\ntex_environment(str|None)\n\ntex_environment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*items,buff=0.5,dot_scale_factor=2,tex_environment=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:items(str)buff(float)dot_scale_factor(float)tex_environment(str|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nitems(str)buff(float)dot_scale_factor(float)tex_environment(str|None)kwargs(Any)\n\nitems(str)\n\nitems(str)\n\nbuff(float)\n\nbuff(float)\n\ndot_scale_factor(float)\n\ndot_scale_factor(float)\n\ntex_environment(str|None)\n\ntex_environment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBulletedListExample(Scene):defconstruct(self):blist=BulletedList(\"Item 1\",\"Item 2\",\"Item 3\",height=2,width=2)blist.set_color_by_tex(\"Item 1\",RED)blist.set_color_by_tex(\"Item 2\",GREEN)blist.set_color_by_tex(\"Item 3\",BLUE)self.add(blist)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BulletedListExample(Scene):\n    def construct(self):\n        blist = BulletedList(\"Item 1\", \"Item 2\", \"Item 3\", height=2, width=2)\n        blist.set_color_by_tex(\"Item 1\", RED)\n        blist.set_color_by_tex(\"Item 2\", GREEN)\n        blist.set_color_by_tex(\"Item 3\", BLUE)\n        self.add(blist)",
+      "language": "python",
+      "context": "Example: BulletedListExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "BulletedList",
+      "class_name": null,
+      "parameters": [
+        "*items"
+      ],
+      "return_type": null,
+      "description": "Bases:Tex"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*items"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Tex"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

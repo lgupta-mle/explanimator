@@ -1,0 +1,13 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.code_mobject.html",
+  "title": "code_mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "code_mobject\u00b6\n\nMobject representing highlighted source code listings.\n\nClasses\n\nCode\n\nA highlighted source code listing.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": []
+}

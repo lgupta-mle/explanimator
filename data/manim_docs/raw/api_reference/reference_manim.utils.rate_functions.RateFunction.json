@@ -1,0 +1,24 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.rate_functions.RateFunction.html",
+  "title": "RateFunction\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "RateFunction\u00b6\n\nQualified name:manim.utils.rate\\_functions.RateFunction\n\nclassRateFunction(*args,**kwargs)[source]\u00b6\n\nBases:ProtocolMethods\n\nBases:Protocol\n\nMethods",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "RateFunction",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:Protocol"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "timing",
+    "graph"
+  ]
+}

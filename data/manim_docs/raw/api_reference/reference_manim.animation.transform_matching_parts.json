@@ -1,0 +1,20 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform_matching_parts.html",
+  "title": "transform_matching_parts\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "transform_matching_parts\u00b6\n\nAnimations that try to transform Mobjects while keeping track of identical parts.\n\nClasses\n\nTransformMatchingAbstractBase\n\nAbstract base class for transformations that keep track of matching parts.\n\nTransformMatchingShapes\n\nAn animation trying to transform groups by matching the shape of their submobjects.\n\nTransformMatchingTex\n\nA transformation trying to transform rendered LaTeX strings.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Transform",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "text",
+    "transformation"
+  ]
+}

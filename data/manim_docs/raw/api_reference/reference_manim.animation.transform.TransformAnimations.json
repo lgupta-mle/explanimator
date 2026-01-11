@@ -1,0 +1,46 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.TransformAnimations.html",
+  "title": "TransformAnimations\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TransformAnimations\u00b6\n\nQualified name:manim.animation.transform.TransformAnimations\n\nclassTransformAnimations(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformMethodsinterpolateSet the animation progress.Attributespath_arcpath_funcrun_timeParameters:start_anim(Animation)end_anim(Animation)rate_func(Callable)_original__init__(start_anim,end_anim,rate_func=<functionsquish_rate_func.<locals>.result>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:start_anim(Animation)end_anim(Animation)rate_func(Callable)Return type:Noneinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nBases:Transform\n\nMethods\n\ninterpolate\n\nSet the animation progress.\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nstart_anim(Animation)end_anim(Animation)rate_func(Callable)\n\nstart_anim(Animation)\n\nstart_anim(Animation)\n\nend_anim(Animation)\n\nend_anim(Animation)\n\nrate_func(Callable)\n\nrate_func(Callable)\n\n_original__init__(start_anim,end_anim,rate_func=<functionsquish_rate_func.<locals>.result>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:start_anim(Animation)end_anim(Animation)rate_func(Callable)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstart_anim(Animation)end_anim(Animation)rate_func(Callable)\n\nstart_anim(Animation)\n\nstart_anim(Animation)\n\nend_anim(Animation)\n\nend_anim(Animation)\n\nrate_func(Callable)\n\nrate_func(Callable)\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "TransformAnimations",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "start_anim"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    }
+  ],
+  "related_classes": [
+    "Transform"
+  ],
+  "tags": [
+    "animation",
+    "transformation",
+    "timing",
+    "graph"
+  ]
+}

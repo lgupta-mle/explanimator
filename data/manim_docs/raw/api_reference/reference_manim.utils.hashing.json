@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.hashing.html",
+  "title": "hashing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "hashing\u00b6\n\nUtilities for scene caching.\n\nFunctions\n\nget_hash_from_play_call(scene_object,camera_object,animations_list,current_mobjects_list)[source]\u00b6\n\nTake the list of animations and a list of mobjects and output their hashes. This is meant to be used forscene.playfunction.Parameters:scene_object(Scene) \u2013 The scene object.camera_object(Camera|OpenGLCamera) \u2013 The camera object used in the scene.animations_list(Iterable[Animation]) \u2013 The list of animations.current_mobjects_list(Iterable[Mobject]) \u2013 The list of mobjects.Returns:A string concatenation of the respective hashes ofcamera_object,animations_listandcurrent_mobjects_list, separated by_.Return type:str\n\nTake the list of animations and a list of mobjects and output their hashes. This is meant to be used forscene.playfunction.\n\nParameters:\n\nscene_object(Scene) \u2013 The scene object.camera_object(Camera|OpenGLCamera) \u2013 The camera object used in the scene.animations_list(Iterable[Animation]) \u2013 The list of animations.current_mobjects_list(Iterable[Mobject]) \u2013 The list of mobjects.\n\nscene_object(Scene) \u2013 The scene object.\n\nscene_object(Scene) \u2013 The scene object.\n\ncamera_object(Camera|OpenGLCamera) \u2013 The camera object used in the scene.\n\ncamera_object(Camera|OpenGLCamera) \u2013 The camera object used in the scene.\n\nanimations_list(Iterable[Animation]) \u2013 The list of animations.\n\nanimations_list(Iterable[Animation]) \u2013 The list of animations.\n\ncurrent_mobjects_list(Iterable[Mobject]) \u2013 The list of mobjects.\n\ncurrent_mobjects_list(Iterable[Mobject]) \u2013 The list of mobjects.\n\nReturns:\n\nA string concatenation of the respective hashes ofcamera_object,animations_listandcurrent_mobjects_list, separated by_.\n\nA string concatenation of the respective hashes ofcamera_object,animations_listandcurrent_mobjects_list, separated by_.\n\nReturn type:\n\nstr\n\nstr\n\nget_json(obj)[source]\u00b6\n\nRecursively serializeobjectto JSON using theCustomEncoderclass.Parameters:obj(Any) \u2013 The dict to flattenReturns:The flattened objectReturn type:str\n\nRecursively serializeobjectto JSON using theCustomEncoderclass.\n\nParameters:\n\nobj(Any) \u2013 The dict to flatten\n\nobj(Any) \u2013 The dict to flatten\n\nReturns:\n\nThe flattened object\n\nThe flattened object\n\nReturn type:\n\nstr\n\nstr",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "get_hash_from_play_call",
+      "class_name": null,
+      "parameters": [
+        "scene_object"
+      ],
+      "return_type": null,
+      "description": "Take the list of animations and a list of mobjects and output their hashes. This is meant to be used forscene.playfunction."
+    },
+    {
+      "name": "get_json",
+      "class_name": null,
+      "parameters": [
+        "obj"
+      ],
+      "return_type": null,
+      "description": "Recursively serializeobjectto JSON using theCustomEncoderclass."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "3d",
+    "timing",
+    "graph"
+  ]
+}

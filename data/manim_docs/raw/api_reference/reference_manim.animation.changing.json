@@ -1,0 +1,18 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.changing.html",
+  "title": "changing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "changing\u00b6\n\nAnimation of a mobject boundary and tracing of points.\n\nClasses\n\nAnimatedBoundary\n\nBoundary of aVMobjectwith animated color change.\n\nTracedPath\n\nTraces the path of a point returned by a function call.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "graph"
+  ]
+}

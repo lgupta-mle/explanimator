@@ -1,0 +1,72 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.FadeTransformPieces.html",
+  "title": "FadeTransformPieces\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "FadeTransformPieces\u00b6\n\nQualified name:manim.animation.transform.FadeTransformPieces\n\nclassFadeTransformPieces(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:FadeTransformFades submobjects of one mobject into submobjects of another one.See alsoFadeTransformExamplesExample: FadeTransformSubmobjects\u00b6frommanimimport*classFadeTransformSubmobjects(Scene):defconstruct(self):src=VGroup(Square(),Circle().shift(LEFT+UP))src.shift(3*LEFT+2*UP)src_copy=src.copy().shift(4*DOWN)target=VGroup(Circle(),Triangle().shift(RIGHT+DOWN))target.shift(3*RIGHT+2*UP)target_copy=target.copy().shift(4*DOWN)self.play(FadeIn(src),FadeIn(src_copy))self.play(FadeTransform(src,target),FadeTransformPieces(src_copy,target_copy))self.play(*[FadeOut(mobj)formobjinself.mobjects])class FadeTransformSubmobjects(Scene):\n    def construct(self):\n        src = VGroup(Square(), Circle().shift(LEFT + UP))\n        src.shift(3*LEFT + 2*UP)\n        src_copy = src.copy().shift(4*DOWN)\n\n        target = VGroup(Circle(), Triangle().shift(RIGHT + DOWN))\n        target.shift(3*RIGHT + 2*UP)\n        target_copy = target.copy().shift(4*DOWN)\n\n        self.play(FadeIn(src), FadeIn(src_copy))\n        self.play(\n            FadeTransform(src, target),\n            FadeTransformPieces(src_copy, target_copy)\n        )\n        self.play(*[FadeOut(mobj) for mobj in self.mobjects])MethodsbeginInitial setup for the animation.ghost_toReplaces the source submobjects by the target submobjects and sets the opacity to 0.Attributespath_arcpath_funcrun_time_original__init__(mobject,target_mobject,stretch=True,dim_to_match=1,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.begin()[source]\u00b6Initial setup for the animation.The mobject to which this animation is bound is a group consisting of\nboth the starting and the ending mobject. At the start, the ending\nmobject replaces the starting mobject (and is completely faded). In the\nend, it is set to be the other way around.ghost_to(source,target)[source]\u00b6Replaces the source submobjects by the target submobjects and sets\nthe opacity to 0.\n\nBases:FadeTransform\n\nFades submobjects of one mobject into submobjects of another one.\n\nSee also\n\nFadeTransform\n\nExamples\n\nExample: FadeTransformSubmobjects\u00b6\n\nMethods\n\nbegin\n\nInitial setup for the animation.\n\nghost_to\n\nReplaces the source submobjects by the target submobjects and sets the opacity to 0.\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,target_mobject,stretch=True,dim_to_match=1,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nbegin()[source]\u00b6\n\nInitial setup for the animation.The mobject to which this animation is bound is a group consisting of\nboth the starting and the ending mobject. At the start, the ending\nmobject replaces the starting mobject (and is completely faded). In the\nend, it is set to be the other way around.\n\nInitial setup for the animation.\n\nThe mobject to which this animation is bound is a group consisting of\nboth the starting and the ending mobject. At the start, the ending\nmobject replaces the starting mobject (and is completely faded). In the\nend, it is set to be the other way around.\n\nghost_to(source,target)[source]\u00b6\n\nReplaces the source submobjects by the target submobjects and sets\nthe opacity to 0.\n\nReplaces the source submobjects by the target submobjects and sets\nthe opacity to 0.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classFadeTransformSubmobjects(Scene):defconstruct(self):src=VGroup(Square(),Circle().shift(LEFT+UP))src.shift(3*LEFT+2*UP)src_copy=src.copy().shift(4*DOWN)target=VGroup(Circle(),Triangle().shift(RIGHT+DOWN))target.shift(3*RIGHT+2*UP)target_copy=target.copy().shift(4*DOWN)self.play(FadeIn(src),FadeIn(src_copy))self.play(FadeTransform(src,target),FadeTransformPieces(src_copy,target_copy))self.play(*[FadeOut(mobj)formobjinself.mobjects])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class FadeTransformSubmobjects(Scene):\n    def construct(self):\n        src = VGroup(Square(), Circle().shift(LEFT + UP))\n        src.shift(3*LEFT + 2*UP)\n        src_copy = src.copy().shift(4*DOWN)\n\n        target = VGroup(Circle(), Triangle().shift(RIGHT + DOWN))\n        target.shift(3*RIGHT + 2*UP)\n        target_copy = target.copy().shift(4*DOWN)\n\n        self.play(FadeIn(src), FadeIn(src_copy))\n        self.play(\n            FadeTransform(src, target),\n            FadeTransformPieces(src_copy, target_copy)\n        )\n        self.play(*[FadeOut(mobj) for mobj in self.mobjects])",
+      "language": "python",
+      "context": "Example: FadeTransformSubmobjects\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "FadeTransformPieces",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:FadeTransform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initial setup for the animation."
+    },
+    {
+      "name": "ghost_to",
+      "class_name": null,
+      "parameters": [
+        "source"
+      ],
+      "return_type": null,
+      "description": "Replaces the source submobjects by the target submobjects and sets\nthe opacity to 0."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "FadeIn",
+    "VGroup",
+    "Transform",
+    "FadeOut",
+    "Scene",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

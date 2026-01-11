@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.MoveToTarget.html",
+  "title": "MoveToTarget\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MoveToTarget\u00b6\n\nQualified name:manim.animation.transform.MoveToTarget\n\nclassMoveToTarget(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformTransforms a mobject to the mobject stored in itstargetattribute.After calling thegenerate_target()method, thetargetattribute of the mobject is populated with a copy of it. After modifying the attribute,\nplaying theMoveToTargetanimation transforms the original mobject\ninto the modified one stored in thetargetattribute.ExamplesExample: MoveToTargetExample\u00b6frommanimimport*classMoveToTargetExample(Scene):defconstruct(self):c=Circle()c.generate_target()c.target.set_fill(color=GREEN,opacity=0.5)c.target.shift(2*RIGHT+UP).scale(0.5)self.add(c)self.play(MoveToTarget(c))class MoveToTargetExample(Scene):\n    def construct(self):\n        c = Circle()\n\n        c.generate_target()\n        c.target.set_fill(color=GREEN, opacity=0.5)\n        c.target.shift(2*RIGHT + UP).scale(0.5)\n\n        self.add(c)\n        self.play(MoveToTarget(c))Methodscheck_validity_of_inputAttributespath_arcpath_funcrun_timeParameters:mobject(Mobject)_original__init__(mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)Return type:None\n\nBases:Transform\n\nTransforms a mobject to the mobject stored in itstargetattribute.\n\nAfter calling thegenerate_target()method, thetargetattribute of the mobject is populated with a copy of it. After modifying the attribute,\nplaying theMoveToTargetanimation transforms the original mobject\ninto the modified one stored in thetargetattribute.\n\nExamples\n\nExample: MoveToTargetExample\u00b6\n\nMethods\n\ncheck_validity_of_input\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)\n\n_original__init__(mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMoveToTargetExample(Scene):defconstruct(self):c=Circle()c.generate_target()c.target.set_fill(color=GREEN,opacity=0.5)c.target.shift(2*RIGHT+UP).scale(0.5)self.add(c)self.play(MoveToTarget(c))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MoveToTargetExample(Scene):\n    def construct(self):\n        c = Circle()\n\n        c.generate_target()\n        c.target.set_fill(color=GREEN, opacity=0.5)\n        c.target.shift(2*RIGHT + UP).scale(0.5)\n\n        self.add(c)\n        self.play(MoveToTarget(c))",
+      "language": "python",
+      "context": "Example: MoveToTargetExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MoveToTarget",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "MoveTo",
+    "Transform",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

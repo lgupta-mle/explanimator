@@ -1,0 +1,165 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graph.LayoutFunction.html",
+  "title": "LayoutFunction\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LayoutFunction\u00b6\n\nQualified name:manim.mobject.graph.LayoutFunction\n\nclassLayoutFunction(*args,**kwargs)[source]\u00b6\n\nBases:ProtocolA protocol for automatic layout functions that compute a layout for a graph to be used inchange_layout().NoteThe layout function must be a pure function, i.e., it must not modify the graph passed to it.ExamplesHere is an example that arranges nodes in an n x m grid in sorted order.Example: CustomLayoutExample\u00b6frommanimimport*classCustomLayoutExample(Scene):defconstruct(self):importnumpyasnpimportnetworkxasnx# create custom layoutdefcustom_layout(graph:nx.Graph,scale:float|tuple[float,float,float]=2,n:int|None=None,*args:Any,**kwargs:Any,):nodes=sorted(list(graph))height=len(nodes)//nreturn{node:(scale*np.array([(i%n)-(n-1)/2,-(i//n)+height/2,0]))fori,nodeinenumerate(graph)}# draw graphn=4graph=Graph([iforiinrange(4*2-1)],[(0,1),(0,4),(1,2),(1,5),(2,3),(2,6),(4,5),(5,6)],labels=True,layout=custom_layout,layout_config={'n':n})self.add(graph)class CustomLayoutExample(Scene):\n    def construct(self):\n        import numpy as np\n        import networkx as nx\n\n        # create custom layout\n        def custom_layout(\n            graph: nx.Graph,\n            scale: float | tuple[float, float, float] = 2,\n            n: int | None = None,\n            *args: Any,\n            **kwargs: Any,\n        ):\n            nodes = sorted(list(graph))\n            height = len(nodes) // n\n            return {\n                node: (scale * np.array([\n                    (i % n) - (n-1)/2,\n                    -(i // n) + height/2,\n                    0\n                ])) for i, node in enumerate(graph)\n            }\n\n        # draw graph\n        n = 4\n        graph = Graph(\n            [i for i in range(4 * 2 - 1)],\n            [(0, 1), (0, 4), (1, 2), (1, 5), (2, 3), (2, 6), (4, 5), (5, 6)],\n            labels=True,\n            layout=custom_layout,\n            layout_config={'n': n}\n        )\n        self.add(graph)Several automatic layouts are provided by manim, and can be used by passing their name as thelayoutparameter tochange_layout().\nAlternatively, a custom layout function can be passed tochange_layout()as thelayoutparameter. Such a function must adhere to theLayoutFunctionprotocol.TheLayoutFunctions provided by manim are illustrated below:Circular Layout: places the vertices on a circleExample: CircularLayout\u00b6frommanimimport*classCircularLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"circular\",labels=True)self.add(graph)class CircularLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"circular\",\n            labels=True\n        )\n        self.add(graph)Kamada Kawai Layout: tries to place the vertices such that the given distances between them are respectedExample: KamadaKawaiLayout\u00b6frommanimimport*classKamadaKawaiLayout(Scene):defconstruct(self):fromcollectionsimportdefaultdictdistances:dict[int,dict[int,float]]=defaultdict(dict)# set desired distancesdistances[1][2]=1# distance between vertices 1 and 2 is 1distances[2][3]=1# distance between vertices 2 and 3 is 1distances[3][4]=2# etcdistances[4][5]=3distances[5][6]=5distances[6][1]=8graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1)],layout=\"kamada_kawai\",layout_config={\"dist\":distances},layout_scale=4,labels=True)self.add(graph)class KamadaKawaiLayout(Scene):\n    def construct(self):\n        from collections import defaultdict\n        distances: dict[int, dict[int, float]] = defaultdict(dict)\n\n        # set desired distances\n        distances[1][2] = 1  # distance between vertices 1 and 2 is 1\n        distances[2][3] = 1  # distance between vertices 2 and 3 is 1\n        distances[3][4] = 2  # etc\n        distances[4][5] = 3\n        distances[5][6] = 5\n        distances[6][1] = 8\n\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1)],\n            layout=\"kamada_kawai\",\n            layout_config={\"dist\": distances},\n            layout_scale=4,\n            labels=True\n        )\n        self.add(graph)Partite Layout: places vertices into distinct partitionsExample: PartiteLayout\u00b6frommanimimport*classPartiteLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"partite\",layout_config={\"partitions\":[[1,2],[3,4],[5,6]]},labels=True)self.add(graph)class PartiteLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"partite\",\n            layout_config={\"partitions\": [[1,2],[3,4],[5,6]]},\n            labels=True\n        )\n        self.add(graph)Planar Layout: places vertices such that edges do not crossExample: PlanarLayout\u00b6frommanimimport*classPlanarLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"planar\",layout_scale=4,labels=True)self.add(graph)class PlanarLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"planar\",\n            layout_scale=4,\n            labels=True\n        )\n        self.add(graph)Random Layout: randomly places verticesExample: RandomLayout\u00b6frommanimimport*classRandomLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"random\",labels=True)self.add(graph)class RandomLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"random\",\n            labels=True\n        )\n        self.add(graph)Shell Layout: places vertices in concentric circlesExample: ShellLayout\u00b6frommanimimport*classShellLayout(Scene):defconstruct(self):nlist=[[1,2,3],[4,5,6,7,8,9]]graph=Graph([1,2,3,4,5,6,7,8,9],[(1,2),(2,3),(3,1),(4,1),(4,2),(5,2),(6,2),(6,3),(7,3),(8,3),(8,1),(9,1)],layout=\"shell\",layout_config={\"nlist\":nlist},labels=True)self.add(graph)class ShellLayout(Scene):\n    def construct(self):\n        nlist = [[1, 2, 3], [4, 5, 6, 7, 8, 9]]\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6, 7, 8, 9],\n            [(1, 2), (2, 3), (3, 1), (4, 1), (4, 2), (5, 2), (6, 2), (6, 3), (7, 3), (8, 3), (8, 1), (9, 1)],\n            layout=\"shell\",\n            layout_config={\"nlist\": nlist},\n            labels=True\n        )\n        self.add(graph)Spectral Layout: places vertices using the eigenvectors of the graph Laplacian (clusters nodes which are an approximation of the ratio cut)Example: SpectralLayout\u00b6frommanimimport*classSpectralLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"spectral\",labels=True)self.add(graph)class SpectralLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"spectral\",\n            labels=True\n        )\n        self.add(graph)Sprial Layout: places vertices in a spiraling patternExample: SpiralLayout\u00b6frommanimimport*classSpiralLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"spiral\",labels=True)self.add(graph)class SpiralLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"spiral\",\n            labels=True\n        )\n        self.add(graph)Spring Layout: places nodes according to the Fruchterman-Reingold force-directed algorithm (attempts to minimize edge length while maximizing node separation)Example: SpringLayout\u00b6frommanimimport*classSpringLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"spring\",labels=True)self.add(graph)class SpringLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"spring\",\n            labels=True\n        )\n        self.add(graph)Tree Layout: places vertices into a tree with a root node and branches (can only be used with legal trees)Example: TreeLayout\u00b6frommanimimport*classTreeLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,4),(2,5),(3,6),(3,7)],layout=\"tree\",layout_config={\"root_vertex\":1},labels=True)self.add(graph)class TreeLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6, 7],\n            [(1, 2), (1, 3), (2, 4), (2, 5), (3, 6), (3, 7)],\n            layout=\"tree\",\n            layout_config={\"root_vertex\": 1},\n            labels=True\n        )\n        self.add(graph)Methods\n\nBases:Protocol\n\nA protocol for automatic layout functions that compute a layout for a graph to be used inchange_layout().\n\nNote\n\nThe layout function must be a pure function, i.e., it must not modify the graph passed to it.\n\nExamples\n\nHere is an example that arranges nodes in an n x m grid in sorted order.\n\nExample: CustomLayoutExample\u00b6\n\nSeveral automatic layouts are provided by manim, and can be used by passing their name as thelayoutparameter tochange_layout().\nAlternatively, a custom layout function can be passed tochange_layout()as thelayoutparameter. Such a function must adhere to theLayoutFunctionprotocol.\n\nTheLayoutFunctions provided by manim are illustrated below:\n\nCircular Layout: places the vertices on a circle\n\nCircular Layout: places the vertices on a circle\n\nExample: CircularLayout\u00b6\n\nKamada Kawai Layout: tries to place the vertices such that the given distances between them are respected\n\nKamada Kawai Layout: tries to place the vertices such that the given distances between them are respected\n\nExample: KamadaKawaiLayout\u00b6\n\nPartite Layout: places vertices into distinct partitions\n\nPartite Layout: places vertices into distinct partitions\n\nExample: PartiteLayout\u00b6\n\nPlanar Layout: places vertices such that edges do not cross\n\nPlanar Layout: places vertices such that edges do not cross\n\nExample: PlanarLayout\u00b6\n\nRandom Layout: randomly places vertices\n\nRandom Layout: randomly places vertices\n\nExample: RandomLayout\u00b6\n\nShell Layout: places vertices in concentric circles\n\nShell Layout: places vertices in concentric circles\n\nExample: ShellLayout\u00b6\n\nSpectral Layout: places vertices using the eigenvectors of the graph Laplacian (clusters nodes which are an approximation of the ratio cut)\n\nSpectral Layout: places vertices using the eigenvectors of the graph Laplacian (clusters nodes which are an approximation of the ratio cut)\n\nExample: SpectralLayout\u00b6\n\nSprial Layout: places vertices in a spiraling pattern\n\nSprial Layout: places vertices in a spiraling pattern\n\nExample: SpiralLayout\u00b6\n\nSpring Layout: places nodes according to the Fruchterman-Reingold force-directed algorithm (attempts to minimize edge length while maximizing node separation)\n\nSpring Layout: places nodes according to the Fruchterman-Reingold force-directed algorithm (attempts to minimize edge length while maximizing node separation)\n\nExample: SpringLayout\u00b6\n\nTree Layout: places vertices into a tree with a root node and branches (can only be used with legal trees)\n\nTree Layout: places vertices into a tree with a root node and branches (can only be used with legal trees)\n\nExample: TreeLayout\u00b6\n\nMethods",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCustomLayoutExample(Scene):defconstruct(self):importnumpyasnpimportnetworkxasnx# create custom layoutdefcustom_layout(graph:nx.Graph,scale:float|tuple[float,float,float]=2,n:int|None=None,*args:Any,**kwargs:Any,):nodes=sorted(list(graph))height=len(nodes)//nreturn{node:(scale*np.array([(i%n)-(n-1)/2,-(i//n)+height/2,0]))fori,nodeinenumerate(graph)}# draw graphn=4graph=Graph([iforiinrange(4*2-1)],[(0,1),(0,4),(1,2),(1,5),(2,3),(2,6),(4,5),(5,6)],labels=True,layout=custom_layout,layout_config={'n':n})self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CustomLayoutExample(Scene):\n    def construct(self):\n        import numpy as np\n        import networkx as nx\n\n        # create custom layout\n        def custom_layout(\n            graph: nx.Graph,\n            scale: float | tuple[float, float, float] = 2,\n            n: int | None = None,\n            *args: Any,\n            **kwargs: Any,\n        ):\n            nodes = sorted(list(graph))\n            height = len(nodes) // n\n            return {\n                node: (scale * np.array([\n                    (i % n) - (n-1)/2,\n                    -(i // n) + height/2,\n                    0\n                ])) for i, node in enumerate(graph)\n            }\n\n        # draw graph\n        n = 4\n        graph = Graph(\n            [i for i in range(4 * 2 - 1)],\n            [(0, 1), (0, 4), (1, 2), (1, 5), (2, 3), (2, 6), (4, 5), (5, 6)],\n            labels=True,\n            layout=custom_layout,\n            layout_config={'n': n}\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: CustomLayoutExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classCircularLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"circular\",labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CircularLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"circular\",\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: CircularLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classKamadaKawaiLayout(Scene):defconstruct(self):fromcollectionsimportdefaultdictdistances:dict[int,dict[int,float]]=defaultdict(dict)# set desired distancesdistances[1][2]=1# distance between vertices 1 and 2 is 1distances[2][3]=1# distance between vertices 2 and 3 is 1distances[3][4]=2# etcdistances[4][5]=3distances[5][6]=5distances[6][1]=8graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1)],layout=\"kamada_kawai\",layout_config={\"dist\":distances},layout_scale=4,labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class KamadaKawaiLayout(Scene):\n    def construct(self):\n        from collections import defaultdict\n        distances: dict[int, dict[int, float]] = defaultdict(dict)\n\n        # set desired distances\n        distances[1][2] = 1  # distance between vertices 1 and 2 is 1\n        distances[2][3] = 1  # distance between vertices 2 and 3 is 1\n        distances[3][4] = 2  # etc\n        distances[4][5] = 3\n        distances[5][6] = 5\n        distances[6][1] = 8\n\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1)],\n            layout=\"kamada_kawai\",\n            layout_config={\"dist\": distances},\n            layout_scale=4,\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: KamadaKawaiLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPartiteLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"partite\",layout_config={\"partitions\":[[1,2],[3,4],[5,6]]},labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PartiteLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"partite\",\n            layout_config={\"partitions\": [[1,2],[3,4],[5,6]]},\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: PartiteLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPlanarLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"planar\",layout_scale=4,labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PlanarLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"planar\",\n            layout_scale=4,\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: PlanarLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classRandomLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"random\",labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RandomLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"random\",\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: RandomLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classShellLayout(Scene):defconstruct(self):nlist=[[1,2,3],[4,5,6,7,8,9]]graph=Graph([1,2,3,4,5,6,7,8,9],[(1,2),(2,3),(3,1),(4,1),(4,2),(5,2),(6,2),(6,3),(7,3),(8,3),(8,1),(9,1)],layout=\"shell\",layout_config={\"nlist\":nlist},labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShellLayout(Scene):\n    def construct(self):\n        nlist = [[1, 2, 3], [4, 5, 6, 7, 8, 9]]\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6, 7, 8, 9],\n            [(1, 2), (2, 3), (3, 1), (4, 1), (4, 2), (5, 2), (6, 2), (6, 3), (7, 3), (8, 3), (8, 1), (9, 1)],\n            layout=\"shell\",\n            layout_config={\"nlist\": nlist},\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: ShellLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSpectralLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"spectral\",labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpectralLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"spectral\",\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: SpectralLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSpiralLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"spiral\",labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpiralLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"spiral\",\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: SpiralLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSpringLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6],[(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(5,1),(1,3),(3,5)],layout=\"spring\",labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpringLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6],\n            [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 1), (5, 1), (1, 3), (3, 5)],\n            layout=\"spring\",\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: SpringLayout\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classTreeLayout(Scene):defconstruct(self):graph=Graph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,4),(2,5),(3,6),(3,7)],layout=\"tree\",layout_config={\"root_vertex\":1},labels=True)self.add(graph)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TreeLayout(Scene):\n    def construct(self):\n        graph = Graph(\n            [1, 2, 3, 4, 5, 6, 7],\n            [(1, 2), (1, 3), (2, 4), (2, 5), (3, 6), (3, 7)],\n            layout=\"tree\",\n            layout_config={\"root_vertex\": 1},\n            labels=True\n        )\n        self.add(graph)",
+      "language": "python",
+      "context": "Example: TreeLayout\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LayoutFunction",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:Protocol"
+    }
+  ],
+  "related_classes": [
+    "Graph",
+    "Scene"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "graph"
+  ]
+}

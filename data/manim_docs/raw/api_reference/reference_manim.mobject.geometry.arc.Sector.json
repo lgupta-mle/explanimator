@@ -1,0 +1,51 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.Sector.html",
+  "title": "Sector\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Sector\u00b6\n\nQualified name:manim.mobject.geometry.arc.Sector\n\nclassSector(radius=1,**kwargs)[source]\u00b6\n\nBases:AnnularSectorA sector of a circle.ExamplesExample: ExampleSector\u00b6frommanimimport*classExampleSector(Scene):defconstruct(self):sector=Sector(radius=2)sector2=Sector(radius=2.5,angle=60*DEGREES).move_to([-3,0,0])sector.set_color(RED)sector2.set_color(PINK)self.add(sector,sector2)class ExampleSector(Scene):\n    def construct(self):\n        sector = Sector(radius=2)\n        sector2 = Sector(radius=2.5, angle=60*DEGREES).move_to([-3, 0, 0])\n        sector.set_color(RED)\n        sector2.set_color(PINK)\n        self.add(sector, sector2)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:radius(float)kwargs(Any)_original__init__(radius=1,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:radius(float)kwargs(Any)Return type:None\n\nBases:AnnularSector\n\nA sector of a circle.\n\nExamples\n\nExample: ExampleSector\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nradius(float)kwargs(Any)\n\nradius(float)\n\nradius(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(radius=1,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:radius(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nradius(float)kwargs(Any)\n\nradius(float)\n\nradius(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleSector(Scene):defconstruct(self):sector=Sector(radius=2)sector2=Sector(radius=2.5,angle=60*DEGREES).move_to([-3,0,0])sector.set_color(RED)sector2.set_color(PINK)self.add(sector,sector2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleSector(Scene):\n    def construct(self):\n        sector = Sector(radius=2)\n        sector2 = Sector(radius=2.5, angle=60*DEGREES).move_to([-3, 0, 0])\n        sector.set_color(RED)\n        sector2.set_color(PINK)\n        self.add(sector, sector2)",
+      "language": "python",
+      "context": "Example: ExampleSector\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Sector",
+      "class_name": null,
+      "parameters": [
+        "radius=1"
+      ],
+      "return_type": null,
+      "description": "Bases:AnnularSector"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "radius=1"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

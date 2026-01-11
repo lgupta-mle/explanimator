@@ -1,0 +1,400 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.tex_templates.TexFontTemplates.html",
+  "title": "TexFontTemplates\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TexFontTemplates\u00b6\n\nQualified name:manim.utils.tex\\_templates.TexFontTemplates\n\nclassTexFontTemplates[source]\u00b6\n\nBases:objectA collection of TeX templates for the fonts described athttp://jf.burnol.free.fr/showcase.htmlThese templates are specifically designed to allow you to typeset formulae and mathematics using\ndifferent fonts. They are based on the mathastext LaTeX package.ExamplesNormal usage as a value for the keyword argument tex_template of Tex() and MathTex() mobjects:``Tex(\"My TeX code\", tex_template=TexFontTemplates.comic_sans)``NotesMany of these templates require that specific fonts\nare installed on your local machine.\nFor example, choosing the template TexFontTemplates.comic_sans will\nnot compile if the Comic Sans Microsoft font is not installed.To experiment, try to render the TexFontTemplateLibrary example scene:manimpath/to/manim/example_scenes/advanced_tex_fonts.pyTexFontTemplateLibrary-p-qlMethodsAttributesamerican_typewriterAmerican TypewriterantykwaAntykwa P\u00f3\u0142tawskiego (TX Fonts for Greek and math symbols)apple_chanceryApple Chanceryauriocus_kalligraphicusAuriocus Kalligraphicus (Symbol Greek)baskervald_adf_fourierBaskervald ADF with Fourierbaskerville_itBaskerville (Italic)biolinumBiolinumbrushscriptxBrushScriptX-Italic (PX math and Greek)chalkboard_seChalkboard SEchalkdusterChalkdustercomfortaaComfortaacomic_sansComic Sans MSdroid_sansDroid Sansdroid_sans_itDroid Sans (Italic)droid_serifDroid Serifdroid_serif_px_itDroid Serif (PX math symbols) (Italic)ecf_augieECF Augie (Euler Greek)ecf_jdECF JD (with TX fonts)ecf_skeetchECF Skeetch (CM Greek)ecf_tall_paulECF Tall Paul (with Symbol font)ecf_websterECF Webster (with TX fonts)electrum_adfElectrum ADF (CM Greek)epigraficaEpigraficafourier_utopiaFourier Utopia (Fourier upright Greek)french_cursiveFrench Cursive (Euler Greek)gfs_bodoniGFS Bodonigfs_didotGFS Didot (Italic)gfs_neoHellenicGFS NeoHellenicgnu_freesans_txGNU FreeSerif (and TX fonts symbols)gnu_freeserif_freesansGNU FreeSerif and FreeSanshelvetica_fourier_itHelvetica with Fourier (Italic)latin_modern_twLatin Modern Typewriter Proportionallatin_modern_tw_itLatin Modern Typewriter Proportional (CM Greek) (Italic)libertineLibertinelibris_adf_fourierLibris ADF with Fourierminion_pro_myriad_proMinion Pro and Myriad Pro (and TX fonts symbols)minion_pro_txMinion Pro (and TX fonts symbols)new_century_schoolbookNew Century Schoolbook (Symbol Greek)new_century_schoolbook_pxNew Century Schoolbook (Symbol Greek, PX math symbols)noteworthy_lightNoteworthy LightpalatinoPalatino (Symbol Greek)papyrusPapyrusromande_adf_fourier_itRomande ADF with Fourier (Italic)slitexSliTeX (Euler Greek)times_fourier_itTimes with Fourier (Italic)urw_avant_gardeURW Avant Garde (Symbol Greek)urw_zapf_chanceryURW Zapf Chancery (CM Greek)venturis_adf_fourier_itVenturis ADF with Fourier (Italic)verdana_itVerdana (Italic)vollkornVollkorn (TX fonts for Greek and math symbols)vollkorn_fourier_itVollkorn with Fourier (Italic)zapf_chanceryZapf Chanceryamerican_typewriter=TexTemplate(_body='',tex_compiler='xelatex',description='AmericanTypewriter',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{AmericanTypewriter}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6American Typewriterantykwa=TexTemplate(_body='',tex_compiler='latex',description='AntykwaP\u00f3\u0142tawskiego(TXFontsforGreekandmathsymbols)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[OT4,OT1]{fontenc}\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\usepackage{antpolt}\\n\\\\usepackage[defaultmathsizes,nolessnomore]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Antykwa P\u00f3\u0142tawskiego (TX Fonts for Greek and math symbols)apple_chancery=TexTemplate(_body='',tex_compiler='xelatex',description='AppleChancery',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{AppleChancery}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Apple Chanceryauriocus_kalligraphicus=TexTemplate(_body='',tex_compiler='latex',description='AuriocusKalligraphicus(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{aurical}\\n\\\\renewcommand{\\\\rmdefault}{AuriocusKalligraphicus}\\n\\\\usepackage[symbolgreek]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Auriocus Kalligraphicus (Symbol Greek)baskervald_adf_fourier=TexTemplate(_body='',tex_compiler='latex',description='BaskervaldADFwithFourier',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[upright]{fourier}\\n\\\\usepackage{baskervald}\\n\\\\usepackage[defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Baskervald ADF with Fourierbaskerville_it=TexTemplate(_body='',tex_compiler='xelatex',description='Baskerville(Italic)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Baskerville}\\n\\\\usepackage[defaultmathsizes,italic]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Baskerville (Italic)biolinum=TexTemplate(_body='',tex_compiler='latex',description='Biolinum',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{libertine}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\usepackage[greek=n,biolinum]{libgreek}\\n\\\\usepackage[noasterisk,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Biolinumbrushscriptx=TexTemplate(_body='',tex_compiler='xelatex',description='BrushScriptX-Italic(PXmathandGreek)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{pxfonts}\\n%\\\\usepackage{pbsi}\\n\\\\renewcommand{\\\\rmdefault}{pbsi}\\n\\\\renewcommand{\\\\mddefault}{xl}\\n\\\\renewcommand{\\\\bfdefault}{xl}\\n\\\\usepackage[defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='\\\\boldmath\\n')\u00b6BrushScriptX-Italic (PX math and Greek)chalkboard_se=TexTemplate(_body='',tex_compiler='xelatex',description='ChalkboardSE',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{ChalkboardSE}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Chalkboard SEchalkduster=TexTemplate(_body='',tex_compiler='lualatex',description='Chalkduster',output_format='.pdf',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Chalkduster}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Chalkdustercomfortaa=TexTemplate(_body='',tex_compiler='latex',description='Comfortaa',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[default]{comfortaa}\\n\\\\usepackage[LGRgreek,defaultmathsizes,noasterisk]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Comfortaacomic_sans=TexTemplate(_body='',tex_compiler='xelatex',description='ComicSansMS',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{ComicSansMS}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Comic Sans MSdroid_sans=TexTemplate(_body='',tex_compiler='latex',description='DroidSans',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{droidsans}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varepsilon\\\\epsilon\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Droid Sansdroid_sans_it=TexTemplate(_body='',tex_compiler='latex',description='DroidSans(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{droidsans}\\n\\\\usepackage[LGRgreek,defaultmathsizes,italic]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Droid Sans (Italic)droid_serif=TexTemplate(_body='',tex_compiler='latex',description='DroidSerif',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{droidserif}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varepsilon\\\\epsilon\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Droid Serifdroid_serif_px_it=TexTemplate(_body='',tex_compiler='latex',description='DroidSerif(PXmathsymbols)(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{pxfonts}\\n\\\\usepackage[default]{droidserif}\\n\\\\usepackage[LGRgreek,defaultmathsizes,italic,basic]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Droid Serif (PX math symbols) (Italic)ecf_augie=TexTemplate(_body='',tex_compiler='latex',description='ECFAugie(EulerGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\renewcommand\\\\familydefault{fau}%emeraldpackage\\n\\\\usepackage[defaultmathsizes,eulergreek]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6ECF Augie (Euler Greek)ecf_jd=TexTemplate(_body='',tex_compiler='latex',description='ECFJD(withTXfonts)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\renewcommand\\\\familydefault{fjd}%emeraldpackage\\n\\\\usepackage{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='\\\\mathversion{bold}\\n')\u00b6ECF JD (with TX fonts)ecf_skeetch=TexTemplate(_body='',tex_compiler='latex',description='ECFSkeetch(CMGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\DeclareFontFamily{T1}{fsk}{}\\n\\\\DeclareFontShape{T1}{fsk}{m}{n}{<->s*[1.315]fskmw8t}{}\\n\\\\renewcommand\\\\rmdefault{fsk}\\n\\\\usepackage[noendash,defaultmathsizes,nohbar,defaultimath]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6ECF Skeetch (CM Greek)ecf_tall_paul=TexTemplate(_body='',tex_compiler='latex',description='ECFTallPaul(withSymbolfont)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\DeclareFontFamily{T1}{ftp}{}\\n\\\\DeclareFontShape{T1}{ftp}{m}{n}{\\n<->s*[1.4]ftpmw8t\\n}{}%increasesizebyfactor1.4\\n\\\\renewcommand\\\\familydefault{ftp}%emeraldpackage\\n\\\\usepackage[symbol]{mathastext}\\n\\\\let\\\\infty\\\\inftypsy\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6ECF Tall Paul (with Symbol font)ecf_webster=TexTemplate(_body='',tex_compiler='latex',description='ECFWebster(withTXfonts)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\renewcommand\\\\familydefault{fwb}%emeraldpackage\\n\\\\usepackage{mathastext}\\n\\\\renewcommand{\\\\int}{\\\\intop\\\\limits}\\n\\\\linespread{1.5}\\n',placeholder_text='YourTextHere',post_doc_commands='\\n\\\\mathversion{bold}\\n')\u00b6ECF Webster (with TX fonts)electrum_adf=TexTemplate(_body='',tex_compiler='latex',description='ElectrumADF(CMGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[LGRgreek,basic,defaultmathsizes]{mathastext}\\n\\\\usepackage[lf]{electrum}\\n\\\\Mathastext\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Electrum ADF (CM Greek)epigrafica=TexTemplate(_body='',tex_compiler='latex',description='Epigrafica',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[LGR,OT1]{fontenc}\\n\\\\usepackage{epigrafica}\\n\\\\usepackage[basic,LGRgreek,defaultmathsizes]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.2}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Epigraficafourier_utopia=TexTemplate(_body='',tex_compiler='latex',description='FourierUtopia(FourieruprightGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[upright]{fourier}\\n\\\\usepackage{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Fourier Utopia (Fourier upright Greek)french_cursive=TexTemplate(_body='',tex_compiler='latex',description='FrenchCursive(EulerGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{frcursive}\\n\\\\usepackage[eulergreek,noplusnominus,noequal,nohbar,%\\nnolessnomore,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6French Cursive (Euler Greek)gfs_bodoni=TexTemplate(_body='',tex_compiler='latex',description='GFSBodoni',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\renewcommand{\\\\rmdefault}{bodoni}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6GFS Bodonigfs_didot=TexTemplate(_body='',tex_compiler='latex',description='GFSDidot(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\renewcommand\\\\rmdefault{udidot}\\n\\\\usepackage[LGRgreek,defaultmathsizes,italic]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6GFS Didot (Italic)gfs_neoHellenic=TexTemplate(_body='',tex_compiler='latex',description='GFSNeoHellenic',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\renewcommand{\\\\rmdefault}{neohellenic}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6GFS NeoHellenicgnu_freesans_tx=TexTemplate(_body='',tex_compiler='xelatex',description='GNUFreeSerif(andTXfontssymbols)',output_format='.pdf',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\usepackage{txfonts}%\\\\let\\\\mathbb=\\\\varmathbb\\n\\\\setmainfont[ExternalLocation,\\nMapping=tex-text,\\nBoldFont=FreeSerifBold,\\nItalicFont=FreeSerifItalic,\\nBoldItalicFont=FreeSerifBoldItalic]{FreeSerif}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6GNU FreeSerif (and TX fonts symbols)gnu_freeserif_freesans=TexTemplate(_body='',tex_compiler='xelatex',description='GNUFreeSerifandFreeSans',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble=\"\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[ExternalLocation,\\nMapping=tex-text,\\nBoldFont=FreeSerifBold,\\nItalicFont=FreeSerifItalic,\\nBoldItalicFont=FreeSerifBoldItalic]{FreeSerif}\\n\\\\setsansfont[ExternalLocation,\\nMapping=tex-text,\\nBoldFont=FreeSansBold,\\nItalicFont=FreeSansOblique,\\nBoldItalicFont=FreeSansBoldOblique,\\nScale=MatchLowercase]{FreeSans}\\n\\\\renewcommand{\\\\familydefault}{lmss}\\n\\\\usepackage[LGRgreek,defaultmathsizes,noasterisk]{mathastext}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\Mathastext\\n\\\\let\\\\varphi\\\\phi%no`var'phiinLGRencoding\\n\\\\renewcommand{\\\\familydefault}{\\\\rmdefault}\\n\",placeholder_text='YourTextHere',post_doc_commands='')\u00b6GNU FreeSerif and FreeSanshelvetica_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='HelveticawithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[scaled]{helvet}\\n\\\\usepackage{fourier}\\n\\\\renewcommand{\\\\rmdefault}{phv}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Helvetica with Fourier (Italic)latin_modern_tw=TexTemplate(_body='',tex_compiler='latex',description='LatinModernTypewriterProportional',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[variablett]{lmodern}\\n\\\\renewcommand{\\\\rmdefault}{\\\\ttdefault}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\MTgreekfont{lmtt}%nolgrlmvtt,souselgrlmtt\\n\\\\Mathastext\\n\\\\let\\\\varepsilon\\\\epsilon%only\\\\varsigmainLGR\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Latin Modern Typewriter Proportionallatin_modern_tw_it=TexTemplate(_body='',tex_compiler='latex',description='LatinModernTypewriterProportional(CMGreek)(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[variablett,nomath]{lmodern}\\n\\\\renewcommand{\\\\familydefault}{\\\\ttdefault}\\n\\\\usepackage[frenchmath]{mathastext}\\n\\\\linespread{1.08}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Latin Modern Typewriter Proportional (CM Greek) (Italic)libertine=TexTemplate(_body='',tex_compiler='latex',description='Libertine',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{libertine}\\n\\\\usepackage[greek=n]{libgreek}\\n\\\\usepackage[noasterisk,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Libertinelibris_adf_fourier=TexTemplate(_body='',tex_compiler='latex',description='LibrisADFwithFourier',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[upright]{fourier}\\n\\\\usepackage{libris}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\usepackage[noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Libris ADF with Fourierminion_pro_myriad_pro=TexTemplate(_body='',tex_compiler='xelatex',description='MinionProandMyriadPro(andTXfontssymbols)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{MinionPro}\\n\\\\setsansfont[Mapping=tex-text,Scale=MatchUppercase]{MyriadPro}\\n\\\\renewcommand\\\\familydefault\\\\sfdefault\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n\\\\renewcommand\\\\familydefault\\\\rmdefault\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Minion Pro and Myriad Pro (and TX fonts symbols)minion_pro_tx=TexTemplate(_body='',tex_compiler='xelatex',description='MinionPro(andTXfontssymbols)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{MinionPro}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Minion Pro (and TX fonts symbols)new_century_schoolbook=TexTemplate(_body='',tex_compiler='latex',description='NewCenturySchoolbook(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{newcent}\\n\\\\usepackage[symbolgreek]{mathastext}\\n\\\\linespread{1.1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6New Century Schoolbook (Symbol Greek)new_century_schoolbook_px=TexTemplate(_body='',tex_compiler='latex',description='NewCenturySchoolbook(SymbolGreek,PXmathsymbols)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{pxfonts}\\n\\\\usepackage{newcent}\\n\\\\usepackage[symbolgreek,defaultmathsizes]{mathastext}\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6New Century Schoolbook (Symbol Greek, PX math symbols)noteworthy_light=TexTemplate(_body='',tex_compiler='latex',description='NoteworthyLight',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{NoteworthyLight}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Noteworthy Lightpalatino=TexTemplate(_body='',tex_compiler='latex',description='Palatino(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{palatino}\\n\\\\usepackage[symbolmax,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Palatino (Symbol Greek)papyrus=TexTemplate(_body='',tex_compiler='xelatex',description='Papyrus',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Papyrus}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Papyrusromande_adf_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='RomandeADFwithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{fourier}\\n\\\\usepackage{romande}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n\\\\renewcommand{\\\\itshape}{\\\\swashstyle}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Romande ADF with Fourier (Italic)slitex=TexTemplate(_body='',tex_compiler='latex',description='SliTeX(EulerGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{tpslifonts}\\n\\\\usepackage[eulergreek,defaultmathsizes]{mathastext}\\n\\\\MTEulerScale{1.06}\\n\\\\linespread{1.2}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6SliTeX (Euler Greek)times_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='TimeswithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{fourier}\\n\\\\renewcommand{\\\\rmdefault}{ptm}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Times with Fourier (Italic)urw_avant_garde=TexTemplate(_body='',tex_compiler='latex',description='URWAvantGarde(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{avant}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\usepackage[symbolgreek,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6URW Avant Garde (Symbol Greek)urw_zapf_chancery=TexTemplate(_body='',tex_compiler='latex',description='URWZapfChancery(CMGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\DeclareFontFamily{T1}{pzc}{}\\n\\\\DeclareFontShape{T1}{pzc}{mb}{it}{<->s*[1.2]pzcmi8t}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{it}{<->ssub*pzc/mb/it}{}\\n\\\\DeclareFontShape{T1}{pzc}{mb}{sl}{<->ssub*pzc/mb/it}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{sl}{<->ssub*pzc/mb/sl}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{n}{<->ssub*pzc/mb/it}{}\\n\\\\usepackage{chancery}\\n\\\\usepackage{mathastext}\\n\\\\linespread{1.05}',placeholder_text='YourTextHere',post_doc_commands='\\n\\\\boldmath\\n')\u00b6URW Zapf Chancery (CM Greek)venturis_adf_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='VenturisADFwithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{fourier}\\n\\\\usepackage[lf]{venturis}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Venturis ADF with Fourier (Italic)verdana_it=TexTemplate(_body='',tex_compiler='xelatex',description='Verdana(Italic)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Verdana}\\n\\\\usepackage[defaultmathsizes,italic]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Verdana (Italic)vollkorn=TexTemplate(_body='',tex_compiler='latex',description='Vollkorn(TXfontsforGreekandmathsymbols)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\usepackage{vollkorn}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Vollkorn (TX fonts for Greek and math symbols)vollkorn_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='VollkornwithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{fourier}\\n\\\\usepackage{vollkorn}\\n\\\\usepackage[italic,nohbar]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Vollkorn with Fourier (Italic)zapf_chancery=TexTemplate(_body='',tex_compiler='latex',description='ZapfChancery',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\DeclareFontFamily{T1}{pzc}{}\\n\\\\DeclareFontShape{T1}{pzc}{mb}{it}{<->s*[1.2]pzcmi8t}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{it}{<->ssub*pzc/mb/it}{}\\n\\\\usepackage{chancery}%=\\\\renewcommand{\\\\rmdefault}{pzc}\\n\\\\renewcommand\\\\shapedefault\\\\itdefault\\n\\\\renewcommand\\\\bfdefault\\\\mddefault\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n\\\\linespread{1.05}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6Zapf Chancery\n\nBases:object\n\nA collection of TeX templates for the fonts described athttp://jf.burnol.free.fr/showcase.html\n\nThese templates are specifically designed to allow you to typeset formulae and mathematics using\ndifferent fonts. They are based on the mathastext LaTeX package.\n\nExamples\n\nNormal usage as a value for the keyword argument tex_template of Tex() and MathTex() mobjects:\n\nNotes\n\nMany of these templates require that specific fonts\nare installed on your local machine.\nFor example, choosing the template TexFontTemplates.comic_sans will\nnot compile if the Comic Sans Microsoft font is not installed.\n\nTo experiment, try to render the TexFontTemplateLibrary example scene:\n\nmanimpath/to/manim/example_scenes/advanced_tex_fonts.pyTexFontTemplateLibrary-p-ql\n\nmanimpath/to/manim/example_scenes/advanced_tex_fonts.pyTexFontTemplateLibrary-p-ql\n\nMethods\n\nAttributes\n\namerican_typewriter\n\nAmerican Typewriter\n\nantykwa\n\nAntykwa P\u00f3\u0142tawskiego (TX Fonts for Greek and math symbols)\n\napple_chancery\n\nApple Chancery\n\nauriocus_kalligraphicus\n\nAuriocus Kalligraphicus (Symbol Greek)\n\nbaskervald_adf_fourier\n\nBaskervald ADF with Fourier\n\nbaskerville_it\n\nBaskerville (Italic)\n\nbiolinum\n\nBiolinum\n\nbrushscriptx\n\nBrushScriptX-Italic (PX math and Greek)\n\nchalkboard_se\n\nChalkboard SE\n\nchalkduster\n\nChalkduster\n\ncomfortaa\n\nComfortaa\n\ncomic_sans\n\nComic Sans MS\n\ndroid_sans\n\nDroid Sans\n\ndroid_sans_it\n\nDroid Sans (Italic)\n\ndroid_serif\n\nDroid Serif\n\ndroid_serif_px_it\n\nDroid Serif (PX math symbols) (Italic)\n\necf_augie\n\nECF Augie (Euler Greek)\n\necf_jd\n\nECF JD (with TX fonts)\n\necf_skeetch\n\nECF Skeetch (CM Greek)\n\necf_tall_paul\n\nECF Tall Paul (with Symbol font)\n\necf_webster\n\nECF Webster (with TX fonts)\n\nelectrum_adf\n\nElectrum ADF (CM Greek)\n\nepigrafica\n\nEpigrafica\n\nfourier_utopia\n\nFourier Utopia (Fourier upright Greek)\n\nfrench_cursive\n\nFrench Cursive (Euler Greek)\n\ngfs_bodoni\n\nGFS Bodoni\n\ngfs_didot\n\nGFS Didot (Italic)\n\ngfs_neoHellenic\n\nGFS NeoHellenic\n\ngnu_freesans_tx\n\nGNU FreeSerif (and TX fonts symbols)\n\ngnu_freeserif_freesans\n\nGNU FreeSerif and FreeSans\n\nhelvetica_fourier_it\n\nHelvetica with Fourier (Italic)\n\nlatin_modern_tw\n\nLatin Modern Typewriter Proportional\n\nlatin_modern_tw_it\n\nLatin Modern Typewriter Proportional (CM Greek) (Italic)\n\nlibertine\n\nLibertine\n\nlibris_adf_fourier\n\nLibris ADF with Fourier\n\nminion_pro_myriad_pro\n\nMinion Pro and Myriad Pro (and TX fonts symbols)\n\nminion_pro_tx\n\nMinion Pro (and TX fonts symbols)\n\nnew_century_schoolbook\n\nNew Century Schoolbook (Symbol Greek)\n\nnew_century_schoolbook_px\n\nNew Century Schoolbook (Symbol Greek, PX math symbols)\n\nnoteworthy_light\n\nNoteworthy Light\n\npalatino\n\nPalatino (Symbol Greek)\n\npapyrus\n\nPapyrus\n\nromande_adf_fourier_it\n\nRomande ADF with Fourier (Italic)\n\nslitex\n\nSliTeX (Euler Greek)\n\ntimes_fourier_it\n\nTimes with Fourier (Italic)\n\nurw_avant_garde\n\nURW Avant Garde (Symbol Greek)\n\nurw_zapf_chancery\n\nURW Zapf Chancery (CM Greek)\n\nventuris_adf_fourier_it\n\nVenturis ADF with Fourier (Italic)\n\nverdana_it\n\nVerdana (Italic)\n\nvollkorn\n\nVollkorn (TX fonts for Greek and math symbols)\n\nvollkorn_fourier_it\n\nVollkorn with Fourier (Italic)\n\nzapf_chancery\n\nZapf Chancery\n\namerican_typewriter=TexTemplate(_body='',tex_compiler='xelatex',description='AmericanTypewriter',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{AmericanTypewriter}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAmerican Typewriter\n\nAmerican Typewriter\n\nantykwa=TexTemplate(_body='',tex_compiler='latex',description='AntykwaP\u00f3\u0142tawskiego(TXFontsforGreekandmathsymbols)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[OT4,OT1]{fontenc}\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\usepackage{antpolt}\\n\\\\usepackage[defaultmathsizes,nolessnomore]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAntykwa P\u00f3\u0142tawskiego (TX Fonts for Greek and math symbols)\n\nAntykwa P\u00f3\u0142tawskiego (TX Fonts for Greek and math symbols)\n\napple_chancery=TexTemplate(_body='',tex_compiler='xelatex',description='AppleChancery',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{AppleChancery}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nApple Chancery\n\nApple Chancery\n\nauriocus_kalligraphicus=TexTemplate(_body='',tex_compiler='latex',description='AuriocusKalligraphicus(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{aurical}\\n\\\\renewcommand{\\\\rmdefault}{AuriocusKalligraphicus}\\n\\\\usepackage[symbolgreek]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAuriocus Kalligraphicus (Symbol Greek)\n\nAuriocus Kalligraphicus (Symbol Greek)\n\nbaskervald_adf_fourier=TexTemplate(_body='',tex_compiler='latex',description='BaskervaldADFwithFourier',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[upright]{fourier}\\n\\\\usepackage{baskervald}\\n\\\\usepackage[defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nBaskervald ADF with Fourier\n\nBaskervald ADF with Fourier\n\nbaskerville_it=TexTemplate(_body='',tex_compiler='xelatex',description='Baskerville(Italic)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Baskerville}\\n\\\\usepackage[defaultmathsizes,italic]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nBaskerville (Italic)\n\nBaskerville (Italic)\n\nbiolinum=TexTemplate(_body='',tex_compiler='latex',description='Biolinum',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{libertine}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\usepackage[greek=n,biolinum]{libgreek}\\n\\\\usepackage[noasterisk,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nBiolinum\n\nBiolinum\n\nbrushscriptx=TexTemplate(_body='',tex_compiler='xelatex',description='BrushScriptX-Italic(PXmathandGreek)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{pxfonts}\\n%\\\\usepackage{pbsi}\\n\\\\renewcommand{\\\\rmdefault}{pbsi}\\n\\\\renewcommand{\\\\mddefault}{xl}\\n\\\\renewcommand{\\\\bfdefault}{xl}\\n\\\\usepackage[defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='\\\\boldmath\\n')\u00b6\n\nBrushScriptX-Italic (PX math and Greek)\n\nBrushScriptX-Italic (PX math and Greek)\n\nchalkboard_se=TexTemplate(_body='',tex_compiler='xelatex',description='ChalkboardSE',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{ChalkboardSE}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nChalkboard SE\n\nChalkboard SE\n\nchalkduster=TexTemplate(_body='',tex_compiler='lualatex',description='Chalkduster',output_format='.pdf',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Chalkduster}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nChalkduster\n\nChalkduster\n\ncomfortaa=TexTemplate(_body='',tex_compiler='latex',description='Comfortaa',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[default]{comfortaa}\\n\\\\usepackage[LGRgreek,defaultmathsizes,noasterisk]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nComfortaa\n\nComfortaa\n\ncomic_sans=TexTemplate(_body='',tex_compiler='xelatex',description='ComicSansMS',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{ComicSansMS}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nComic Sans MS\n\nComic Sans MS\n\ndroid_sans=TexTemplate(_body='',tex_compiler='latex',description='DroidSans',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{droidsans}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varepsilon\\\\epsilon\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nDroid Sans\n\nDroid Sans\n\ndroid_sans_it=TexTemplate(_body='',tex_compiler='latex',description='DroidSans(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{droidsans}\\n\\\\usepackage[LGRgreek,defaultmathsizes,italic]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nDroid Sans (Italic)\n\nDroid Sans (Italic)\n\ndroid_serif=TexTemplate(_body='',tex_compiler='latex',description='DroidSerif',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{droidserif}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varepsilon\\\\epsilon\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nDroid Serif\n\nDroid Serif\n\ndroid_serif_px_it=TexTemplate(_body='',tex_compiler='latex',description='DroidSerif(PXmathsymbols)(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{pxfonts}\\n\\\\usepackage[default]{droidserif}\\n\\\\usepackage[LGRgreek,defaultmathsizes,italic,basic]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nDroid Serif (PX math symbols) (Italic)\n\nDroid Serif (PX math symbols) (Italic)\n\necf_augie=TexTemplate(_body='',tex_compiler='latex',description='ECFAugie(EulerGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\renewcommand\\\\familydefault{fau}%emeraldpackage\\n\\\\usepackage[defaultmathsizes,eulergreek]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nECF Augie (Euler Greek)\n\nECF Augie (Euler Greek)\n\necf_jd=TexTemplate(_body='',tex_compiler='latex',description='ECFJD(withTXfonts)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\renewcommand\\\\familydefault{fjd}%emeraldpackage\\n\\\\usepackage{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='\\\\mathversion{bold}\\n')\u00b6\n\nECF JD (with TX fonts)\n\nECF JD (with TX fonts)\n\necf_skeetch=TexTemplate(_body='',tex_compiler='latex',description='ECFSkeetch(CMGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\DeclareFontFamily{T1}{fsk}{}\\n\\\\DeclareFontShape{T1}{fsk}{m}{n}{<->s*[1.315]fskmw8t}{}\\n\\\\renewcommand\\\\rmdefault{fsk}\\n\\\\usepackage[noendash,defaultmathsizes,nohbar,defaultimath]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nECF Skeetch (CM Greek)\n\nECF Skeetch (CM Greek)\n\necf_tall_paul=TexTemplate(_body='',tex_compiler='latex',description='ECFTallPaul(withSymbolfont)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\DeclareFontFamily{T1}{ftp}{}\\n\\\\DeclareFontShape{T1}{ftp}{m}{n}{\\n<->s*[1.4]ftpmw8t\\n}{}%increasesizebyfactor1.4\\n\\\\renewcommand\\\\familydefault{ftp}%emeraldpackage\\n\\\\usepackage[symbol]{mathastext}\\n\\\\let\\\\infty\\\\inftypsy\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nECF Tall Paul (with Symbol font)\n\nECF Tall Paul (with Symbol font)\n\necf_webster=TexTemplate(_body='',tex_compiler='latex',description='ECFWebster(withTXfonts)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\renewcommand\\\\familydefault{fwb}%emeraldpackage\\n\\\\usepackage{mathastext}\\n\\\\renewcommand{\\\\int}{\\\\intop\\\\limits}\\n\\\\linespread{1.5}\\n',placeholder_text='YourTextHere',post_doc_commands='\\n\\\\mathversion{bold}\\n')\u00b6\n\nECF Webster (with TX fonts)\n\nECF Webster (with TX fonts)\n\nelectrum_adf=TexTemplate(_body='',tex_compiler='latex',description='ElectrumADF(CMGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[LGRgreek,basic,defaultmathsizes]{mathastext}\\n\\\\usepackage[lf]{electrum}\\n\\\\Mathastext\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nElectrum ADF (CM Greek)\n\nElectrum ADF (CM Greek)\n\nepigrafica=TexTemplate(_body='',tex_compiler='latex',description='Epigrafica',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[LGR,OT1]{fontenc}\\n\\\\usepackage{epigrafica}\\n\\\\usepackage[basic,LGRgreek,defaultmathsizes]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.2}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nEpigrafica\n\nEpigrafica\n\nfourier_utopia=TexTemplate(_body='',tex_compiler='latex',description='FourierUtopia(FourieruprightGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[upright]{fourier}\\n\\\\usepackage{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nFourier Utopia (Fourier upright Greek)\n\nFourier Utopia (Fourier upright Greek)\n\nfrench_cursive=TexTemplate(_body='',tex_compiler='latex',description='FrenchCursive(EulerGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[default]{frcursive}\\n\\\\usepackage[eulergreek,noplusnominus,noequal,nohbar,%\\nnolessnomore,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nFrench Cursive (Euler Greek)\n\nFrench Cursive (Euler Greek)\n\ngfs_bodoni=TexTemplate(_body='',tex_compiler='latex',description='GFSBodoni',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\renewcommand{\\\\rmdefault}{bodoni}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nGFS Bodoni\n\nGFS Bodoni\n\ngfs_didot=TexTemplate(_body='',tex_compiler='latex',description='GFSDidot(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\renewcommand\\\\rmdefault{udidot}\\n\\\\usepackage[LGRgreek,defaultmathsizes,italic]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nGFS Didot (Italic)\n\nGFS Didot (Italic)\n\ngfs_neoHellenic=TexTemplate(_body='',tex_compiler='latex',description='GFSNeoHellenic',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\renewcommand{\\\\rmdefault}{neohellenic}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\let\\\\varphi\\\\phi\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nGFS NeoHellenic\n\nGFS NeoHellenic\n\ngnu_freesans_tx=TexTemplate(_body='',tex_compiler='xelatex',description='GNUFreeSerif(andTXfontssymbols)',output_format='.pdf',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\usepackage{txfonts}%\\\\let\\\\mathbb=\\\\varmathbb\\n\\\\setmainfont[ExternalLocation,\\nMapping=tex-text,\\nBoldFont=FreeSerifBold,\\nItalicFont=FreeSerifItalic,\\nBoldItalicFont=FreeSerifBoldItalic]{FreeSerif}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nGNU FreeSerif (and TX fonts symbols)\n\nGNU FreeSerif (and TX fonts symbols)\n\ngnu_freeserif_freesans=TexTemplate(_body='',tex_compiler='xelatex',description='GNUFreeSerifandFreeSans',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble=\"\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[ExternalLocation,\\nMapping=tex-text,\\nBoldFont=FreeSerifBold,\\nItalicFont=FreeSerifItalic,\\nBoldItalicFont=FreeSerifBoldItalic]{FreeSerif}\\n\\\\setsansfont[ExternalLocation,\\nMapping=tex-text,\\nBoldFont=FreeSansBold,\\nItalicFont=FreeSansOblique,\\nBoldItalicFont=FreeSansBoldOblique,\\nScale=MatchLowercase]{FreeSans}\\n\\\\renewcommand{\\\\familydefault}{lmss}\\n\\\\usepackage[LGRgreek,defaultmathsizes,noasterisk]{mathastext}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\Mathastext\\n\\\\let\\\\varphi\\\\phi%no`var'phiinLGRencoding\\n\\\\renewcommand{\\\\familydefault}{\\\\rmdefault}\\n\",placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nGNU FreeSerif and FreeSans\n\nGNU FreeSerif and FreeSans\n\nhelvetica_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='HelveticawithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[scaled]{helvet}\\n\\\\usepackage{fourier}\\n\\\\renewcommand{\\\\rmdefault}{phv}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nHelvetica with Fourier (Italic)\n\nHelvetica with Fourier (Italic)\n\nlatin_modern_tw=TexTemplate(_body='',tex_compiler='latex',description='LatinModernTypewriterProportional',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[variablett]{lmodern}\\n\\\\renewcommand{\\\\rmdefault}{\\\\ttdefault}\\n\\\\usepackage[LGRgreek]{mathastext}\\n\\\\MTgreekfont{lmtt}%nolgrlmvtt,souselgrlmtt\\n\\\\Mathastext\\n\\\\let\\\\varepsilon\\\\epsilon%only\\\\varsigmainLGR\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nLatin Modern Typewriter Proportional\n\nLatin Modern Typewriter Proportional\n\nlatin_modern_tw_it=TexTemplate(_body='',tex_compiler='latex',description='LatinModernTypewriterProportional(CMGreek)(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[variablett,nomath]{lmodern}\\n\\\\renewcommand{\\\\familydefault}{\\\\ttdefault}\\n\\\\usepackage[frenchmath]{mathastext}\\n\\\\linespread{1.08}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nLatin Modern Typewriter Proportional (CM Greek) (Italic)\n\nLatin Modern Typewriter Proportional (CM Greek) (Italic)\n\nlibertine=TexTemplate(_body='',tex_compiler='latex',description='Libertine',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{libertine}\\n\\\\usepackage[greek=n]{libgreek}\\n\\\\usepackage[noasterisk,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nLibertine\n\nLibertine\n\nlibris_adf_fourier=TexTemplate(_body='',tex_compiler='latex',description='LibrisADFwithFourier',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage[upright]{fourier}\\n\\\\usepackage{libris}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\usepackage[noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nLibris ADF with Fourier\n\nLibris ADF with Fourier\n\nminion_pro_myriad_pro=TexTemplate(_body='',tex_compiler='xelatex',description='MinionProandMyriadPro(andTXfontssymbols)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{MinionPro}\\n\\\\setsansfont[Mapping=tex-text,Scale=MatchUppercase]{MyriadPro}\\n\\\\renewcommand\\\\familydefault\\\\sfdefault\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n\\\\renewcommand\\\\familydefault\\\\rmdefault\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nMinion Pro and Myriad Pro (and TX fonts symbols)\n\nMinion Pro and Myriad Pro (and TX fonts symbols)\n\nminion_pro_tx=TexTemplate(_body='',tex_compiler='xelatex',description='MinionPro(andTXfontssymbols)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{txfonts}\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{MinionPro}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nMinion Pro (and TX fonts symbols)\n\nMinion Pro (and TX fonts symbols)\n\nnew_century_schoolbook=TexTemplate(_body='',tex_compiler='latex',description='NewCenturySchoolbook(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{newcent}\\n\\\\usepackage[symbolgreek]{mathastext}\\n\\\\linespread{1.1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nNew Century Schoolbook (Symbol Greek)\n\nNew Century Schoolbook (Symbol Greek)\n\nnew_century_schoolbook_px=TexTemplate(_body='',tex_compiler='latex',description='NewCenturySchoolbook(SymbolGreek,PXmathsymbols)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{pxfonts}\\n\\\\usepackage{newcent}\\n\\\\usepackage[symbolgreek,defaultmathsizes]{mathastext}\\n\\\\linespread{1.06}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nNew Century Schoolbook (Symbol Greek, PX math symbols)\n\nNew Century Schoolbook (Symbol Greek, PX math symbols)\n\nnoteworthy_light=TexTemplate(_body='',tex_compiler='latex',description='NoteworthyLight',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{NoteworthyLight}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nNoteworthy Light\n\nNoteworthy Light\n\npalatino=TexTemplate(_body='',tex_compiler='latex',description='Palatino(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{palatino}\\n\\\\usepackage[symbolmax,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nPalatino (Symbol Greek)\n\nPalatino (Symbol Greek)\n\npapyrus=TexTemplate(_body='',tex_compiler='xelatex',description='Papyrus',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Papyrus}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nPapyrus\n\nPapyrus\n\nromande_adf_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='RomandeADFwithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{fourier}\\n\\\\usepackage{romande}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n\\\\renewcommand{\\\\itshape}{\\\\swashstyle}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nRomande ADF with Fourier (Italic)\n\nRomande ADF with Fourier (Italic)\n\nslitex=TexTemplate(_body='',tex_compiler='latex',description='SliTeX(EulerGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{tpslifonts}\\n\\\\usepackage[eulergreek,defaultmathsizes]{mathastext}\\n\\\\MTEulerScale{1.06}\\n\\\\linespread{1.2}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nSliTeX (Euler Greek)\n\nSliTeX (Euler Greek)\n\ntimes_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='TimeswithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{fourier}\\n\\\\renewcommand{\\\\rmdefault}{ptm}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nTimes with Fourier (Italic)\n\nTimes with Fourier (Italic)\n\nurw_avant_garde=TexTemplate(_body='',tex_compiler='latex',description='URWAvantGarde(SymbolGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{avant}\\n\\\\renewcommand{\\\\familydefault}{\\\\sfdefault}\\n\\\\usepackage[symbolgreek,defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nURW Avant Garde (Symbol Greek)\n\nURW Avant Garde (Symbol Greek)\n\nurw_zapf_chancery=TexTemplate(_body='',tex_compiler='latex',description='URWZapfChancery(CMGreek)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\DeclareFontFamily{T1}{pzc}{}\\n\\\\DeclareFontShape{T1}{pzc}{mb}{it}{<->s*[1.2]pzcmi8t}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{it}{<->ssub*pzc/mb/it}{}\\n\\\\DeclareFontShape{T1}{pzc}{mb}{sl}{<->ssub*pzc/mb/it}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{sl}{<->ssub*pzc/mb/sl}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{n}{<->ssub*pzc/mb/it}{}\\n\\\\usepackage{chancery}\\n\\\\usepackage{mathastext}\\n\\\\linespread{1.05}',placeholder_text='YourTextHere',post_doc_commands='\\n\\\\boldmath\\n')\u00b6\n\nURW Zapf Chancery (CM Greek)\n\nURW Zapf Chancery (CM Greek)\n\nventuris_adf_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='VenturisADFwithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{fourier}\\n\\\\usepackage[lf]{venturis}\\n\\\\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nVenturis ADF with Fourier (Italic)\n\nVenturis ADF with Fourier (Italic)\n\nverdana_it=TexTemplate(_body='',tex_compiler='xelatex',description='Verdana(Italic)',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[no-math]{fontspec}\\n\\\\setmainfont[Mapping=tex-text]{Verdana}\\n\\\\usepackage[defaultmathsizes,italic]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nVerdana (Italic)\n\nVerdana (Italic)\n\nvollkorn=TexTemplate(_body='',tex_compiler='latex',description='Vollkorn(TXfontsforGreekandmathsymbols)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{txfonts}\\n\\\\usepackage[upright]{txgreeks}\\n\\\\usepackage{vollkorn}\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nVollkorn (TX fonts for Greek and math symbols)\n\nVollkorn (TX fonts for Greek and math symbols)\n\nvollkorn_fourier_it=TexTemplate(_body='',tex_compiler='latex',description='VollkornwithFourier(Italic)',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\usepackage{fourier}\\n\\\\usepackage{vollkorn}\\n\\\\usepackage[italic,nohbar]{mathastext}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nVollkorn with Fourier (Italic)\n\nVollkorn with Fourier (Italic)\n\nzapf_chancery=TexTemplate(_body='',tex_compiler='latex',description='ZapfChancery',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\n\\n\\\\DeclareFontFamily{T1}{pzc}{}\\n\\\\DeclareFontShape{T1}{pzc}{mb}{it}{<->s*[1.2]pzcmi8t}{}\\n\\\\DeclareFontShape{T1}{pzc}{m}{it}{<->ssub*pzc/mb/it}{}\\n\\\\usepackage{chancery}%=\\\\renewcommand{\\\\rmdefault}{pzc}\\n\\\\renewcommand\\\\shapedefault\\\\itdefault\\n\\\\renewcommand\\\\bfdefault\\\\mddefault\\n\\\\usepackage[defaultmathsizes]{mathastext}\\n\\\\linespread{1.05}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nZapf Chancery\n\nZapf Chancery",
+  "code_examples": [
+    {
+      "code": "``Tex(\"My TeX code\", tex_template=TexFontTemplates.comic_sans)``",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TexFontTemplates",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "american_typewriter",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "American Typewriter"
+    },
+    {
+      "name": "antykwa",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Antykwa P\u00f3\u0142tawskiego (TX Fonts for Greek and math symbols)"
+    },
+    {
+      "name": "apple_chancery",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Apple Chancery"
+    },
+    {
+      "name": "auriocus_kalligraphicus",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Auriocus Kalligraphicus (Symbol Greek)"
+    },
+    {
+      "name": "baskervald_adf_fourier",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Baskervald ADF with Fourier"
+    },
+    {
+      "name": "baskerville_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Baskerville (Italic)"
+    },
+    {
+      "name": "biolinum",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Biolinum"
+    },
+    {
+      "name": "brushscriptx",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "BrushScriptX-Italic (PX math and Greek)"
+    },
+    {
+      "name": "chalkboard_se",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Chalkboard SE"
+    },
+    {
+      "name": "chalkduster",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Chalkduster"
+    },
+    {
+      "name": "comfortaa",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Comfortaa"
+    },
+    {
+      "name": "comic_sans",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Comic Sans MS"
+    },
+    {
+      "name": "droid_sans",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Droid Sans"
+    },
+    {
+      "name": "droid_sans_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Droid Sans (Italic)"
+    },
+    {
+      "name": "droid_serif",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Droid Serif"
+    },
+    {
+      "name": "droid_serif_px_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Droid Serif (PX math symbols) (Italic)"
+    },
+    {
+      "name": "ecf_augie",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "ECF Augie (Euler Greek)"
+    },
+    {
+      "name": "ecf_jd",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "ECF JD (with TX fonts)"
+    },
+    {
+      "name": "ecf_skeetch",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "ECF Skeetch (CM Greek)"
+    },
+    {
+      "name": "ecf_tall_paul",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "ECF Tall Paul (with Symbol font)"
+    },
+    {
+      "name": "ecf_webster",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "ECF Webster (with TX fonts)"
+    },
+    {
+      "name": "electrum_adf",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Electrum ADF (CM Greek)"
+    },
+    {
+      "name": "epigrafica",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Epigrafica"
+    },
+    {
+      "name": "fourier_utopia",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Fourier Utopia (Fourier upright Greek)"
+    },
+    {
+      "name": "french_cursive",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "French Cursive (Euler Greek)"
+    },
+    {
+      "name": "gfs_bodoni",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "GFS Bodoni"
+    },
+    {
+      "name": "gfs_didot",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "GFS Didot (Italic)"
+    },
+    {
+      "name": "gfs_neoHellenic",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "GFS NeoHellenic"
+    },
+    {
+      "name": "gnu_freesans_tx",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "GNU FreeSerif (and TX fonts symbols)"
+    },
+    {
+      "name": "gnu_freeserif_freesans",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "GNU FreeSerif and FreeSans"
+    },
+    {
+      "name": "helvetica_fourier_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Helvetica with Fourier (Italic)"
+    },
+    {
+      "name": "latin_modern_tw",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Latin Modern Typewriter Proportional"
+    },
+    {
+      "name": "latin_modern_tw_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Latin Modern Typewriter Proportional (CM Greek) (Italic)"
+    },
+    {
+      "name": "libertine",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Libertine"
+    },
+    {
+      "name": "libris_adf_fourier",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Libris ADF with Fourier"
+    },
+    {
+      "name": "minion_pro_myriad_pro",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Minion Pro and Myriad Pro (and TX fonts symbols)"
+    },
+    {
+      "name": "minion_pro_tx",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Minion Pro (and TX fonts symbols)"
+    },
+    {
+      "name": "new_century_schoolbook",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "New Century Schoolbook (Symbol Greek)"
+    },
+    {
+      "name": "new_century_schoolbook_px",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "New Century Schoolbook (Symbol Greek, PX math symbols)"
+    },
+    {
+      "name": "noteworthy_light",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Noteworthy Light"
+    },
+    {
+      "name": "palatino",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Palatino (Symbol Greek)"
+    },
+    {
+      "name": "papyrus",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Papyrus"
+    },
+    {
+      "name": "romande_adf_fourier_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Romande ADF with Fourier (Italic)"
+    },
+    {
+      "name": "slitex",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "SliTeX (Euler Greek)"
+    },
+    {
+      "name": "times_fourier_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Times with Fourier (Italic)"
+    },
+    {
+      "name": "urw_avant_garde",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "URW Avant Garde (Symbol Greek)"
+    },
+    {
+      "name": "urw_zapf_chancery",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "URW Zapf Chancery (CM Greek)"
+    },
+    {
+      "name": "venturis_adf_fourier_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Venturis ADF with Fourier (Italic)"
+    },
+    {
+      "name": "verdana_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Verdana (Italic)"
+    },
+    {
+      "name": "vollkorn",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Vollkorn (TX fonts for Greek and math symbols)"
+    },
+    {
+      "name": "vollkorn_fourier_it",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Vollkorn with Fourier (Italic)"
+    },
+    {
+      "name": "zapf_chancery",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Zapf Chancery"
+    }
+  ],
+  "related_classes": [
+    "MathTex",
+    "Text",
+    "Tex"
+  ],
+  "tags": [
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "graph"
+  ]
+}

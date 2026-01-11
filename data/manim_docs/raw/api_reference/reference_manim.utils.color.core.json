@@ -1,0 +1,185 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.core.html",
+  "title": "core\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "core\u00b6\n\nManim\u2019s (internal) color data structure and some utilities for color conversion.\n\nThis module contains the implementation ofManimColor, the data structure\ninternally used to represent colors.\n\nThe preferred way of using these colors is by importing their constants from Manim:\n\nNote that this way uses the name of the colors in UPPERCASE.\n\nNote\n\nThe colors with a_Csuffix have an alias equal to the colorname without a\nletter. For example,GREEN=GREEN_C.\n\nCustom Color Spaces\u00b6\n\nHello, dear visitor. You seem to be interested in implementing a custom color class for\na color space we don\u2019t currently support.\n\nThe current system is using a few indirections for ensuring a consistent behavior with\nall other color types in Manim.\n\nTo implement a custom color space, you must subclassManimColorand implement\nthree important methods:\n\n_internal_value: a@propertyimplemented onManimColorwith the goal of keeping a consistent internal representation\nwhich can be referenced by other functions inManimColor. This property acts\nas a proxy to whatever representation you need in your class.The getter should always return a NumPy array in the format[r,g,b,a], in\naccordance with the typeManimColorInternal.The setter should always accept a value in the format[r,g,b,a]which can be\nconverted to whatever attributes you need.\n\n_internal_value: a@propertyimplemented onManimColorwith the goal of keeping a consistent internal representation\nwhich can be referenced by other functions inManimColor. This property acts\nas a proxy to whatever representation you need in your class.\n\nThe getter should always return a NumPy array in the format[r,g,b,a], in\naccordance with the typeManimColorInternal.\n\nThe getter should always return a NumPy array in the format[r,g,b,a], in\naccordance with the typeManimColorInternal.\n\nThe setter should always accept a value in the format[r,g,b,a]which can be\nconverted to whatever attributes you need.\n\nThe setter should always accept a value in the format[r,g,b,a]which can be\nconverted to whatever attributes you need.\n\n_internal_space: a read-only@propertyimplemented onManimColorwith the goal of providing a useful representation which can be\nused by operators, interpolation and color transform functions.The only constraints on this value are:It must be a NumPy array.The last value must be the opacity in a range0.0to1.0.Additionally, your__init__must support this format as an initialization value\nwithout additional parameters to ensure correct functionality of all other methods inManimColor.\n\n_internal_space: a read-only@propertyimplemented onManimColorwith the goal of providing a useful representation which can be\nused by operators, interpolation and color transform functions.\n\nThe only constraints on this value are:\n\nIt must be a NumPy array.\n\nIt must be a NumPy array.\n\nThe last value must be the opacity in a range0.0to1.0.\n\nThe last value must be the opacity in a range0.0to1.0.\n\nAdditionally, your__init__must support this format as an initialization value\nwithout additional parameters to ensure correct functionality of all other methods inManimColor.\n\n_from_internal(): a@classmethodwhich converts an[r,g,b,a]value into suitable parameters for your__init__method and calls\ntheclsparameter.\n\n_from_internal(): a@classmethodwhich converts an[r,g,b,a]value into suitable parameters for your__init__method and calls\ntheclsparameter.\n\nType Aliases\n\nclassParsableManimColor\u00b6\n\nManimColor | int | str |IntRGBLike|FloatRGBLike|IntRGBALike|FloatRGBALikeParsableManimColorrepresents all the types which can be parsed\nto aManimColorin Manim.\n\nParsableManimColorrepresents all the types which can be parsed\nto aManimColorin Manim.\n\nTypeVar\u2019s\n\nclassManimColorT\u00b6\n\nTypeVar('ManimColorT',bound=ManimColor)\n\nClasses\n\nHSV\n\nHSV Color Space\n\nManimColor\n\nInternal representation of a color.\n\nRGBA\n\nRGBA Color Space\n\nRandomColorGenerator\n\nFunctions\n\naverage_color(*colors)[source]\u00b6\n\nDetermine the average color between the given parameters.NoteThis operation does not consider the alphas (opacities) of the colors. The\ngenerated color has an alpha or opacity of 1.0.Returns:The average color of the input.Return type:ManimColorParameters:colors(ParsableManimColor)\n\nDetermine the average color between the given parameters.\n\nNote\n\nThis operation does not consider the alphas (opacities) of the colors. The\ngenerated color has an alpha or opacity of 1.0.\n\nReturns:\n\nThe average color of the input.\n\nThe average color of the input.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nParameters:\n\ncolors(ParsableManimColor)\n\ncolors(ParsableManimColor)\n\ncolor_gradient(reference_colors,length_of_output)[source]\u00b6\n\nCreate a list of colors interpolated between the input array of colors with a\nspecific number of colors.Parameters:reference_colors(Iterable[TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]) \u2013 The colors to be interpolated between or spread apart.length_of_output(int) \u2013 The number of colors that the output should have, ideally more than the input.Returns:A list of interpolatedManimColor\u2019s.Return type:list[ManimColor]\n\nCreate a list of colors interpolated between the input array of colors with a\nspecific number of colors.\n\nParameters:\n\nreference_colors(Iterable[TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]) \u2013 The colors to be interpolated between or spread apart.length_of_output(int) \u2013 The number of colors that the output should have, ideally more than the input.\n\nreference_colors(Iterable[TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]) \u2013 The colors to be interpolated between or spread apart.\n\nreference_colors(Iterable[TypeAliasForwardRef('~manim.utils.color.core.ParsableManimColor')]) \u2013 The colors to be interpolated between or spread apart.\n\nlength_of_output(int) \u2013 The number of colors that the output should have, ideally more than the input.\n\nlength_of_output(int) \u2013 The number of colors that the output should have, ideally more than the input.\n\nReturns:\n\nA list of interpolatedManimColor\u2019s.\n\nA list of interpolatedManimColor\u2019s.\n\nReturn type:\n\nlist[ManimColor]\n\nlist[ManimColor]\n\ncolor_to_int_rgb(color)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.to_int_rgb().Parameters:color(ParsableManimColor) \u2013 A color to convert to an RGB integer array.Returns:The corresponding RGB integer array.Return type:RGB_Array_Int\n\nHelper function for use in functional style programming. Refer toManimColor.to_int_rgb().\n\nParameters:\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGB integer array.\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGB integer array.\n\nReturns:\n\nThe corresponding RGB integer array.\n\nThe corresponding RGB integer array.\n\nReturn type:\n\nRGB_Array_Int\n\nRGB_Array_Int\n\ncolor_to_int_rgba(color,alpha=1.0)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.to_int_rgba_with_alpha().Parameters:color(ParsableManimColor) \u2013 A color to convert to an RGBA integer array.alpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.Returns:The corresponding RGBA integer array.Return type:RGBA_Array_Int\n\nHelper function for use in functional style programming. Refer toManimColor.to_int_rgba_with_alpha().\n\nParameters:\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGBA integer array.alpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGBA integer array.\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGBA integer array.\n\nalpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.\n\nalpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.\n\nReturns:\n\nThe corresponding RGBA integer array.\n\nThe corresponding RGBA integer array.\n\nReturn type:\n\nRGBA_Array_Int\n\nRGBA_Array_Int\n\ncolor_to_rgb(color)[source]\u00b6\n\nHelper function for use in functional style programming.\nRefer toManimColor.to_rgb().Parameters:color(ParsableManimColor) \u2013 A color to convert to an RGB float array.Returns:The corresponding RGB float array.Return type:RGB_Array_Float\n\nHelper function for use in functional style programming.\nRefer toManimColor.to_rgb().\n\nParameters:\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGB float array.\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGB float array.\n\nReturns:\n\nThe corresponding RGB float array.\n\nThe corresponding RGB float array.\n\nReturn type:\n\nRGB_Array_Float\n\nRGB_Array_Float\n\ncolor_to_rgba(color,alpha=1.0)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.to_rgba_with_alpha().Parameters:color(ParsableManimColor) \u2013 A color to convert to an RGBA float array.alpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.Returns:The corresponding RGBA float array.Return type:RGBA_Array_Float\n\nHelper function for use in functional style programming. Refer toManimColor.to_rgba_with_alpha().\n\nParameters:\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGBA float array.alpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGBA float array.\n\ncolor(ParsableManimColor) \u2013 A color to convert to an RGBA float array.\n\nalpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.\n\nalpha(float) \u2013 An alpha value between 0.0 and 1.0 to be used as opacity in the color. Default is\n1.0.\n\nReturns:\n\nThe corresponding RGBA float array.\n\nThe corresponding RGBA float array.\n\nReturn type:\n\nRGBA_Array_Float\n\nRGBA_Array_Float\n\nget_shaded_rgb(rgb,point,unit_normal_vect,light_source)[source]\u00b6\n\nAdd light or shadow to thergbcolor of some surface which is located at a\ngivenpointin space and facing in the direction ofunit_normal_vect,\ndepending on whether the surface is facing alight_sourceor away from it.Parameters:rgb(FloatRGB) \u2013 An RGB array of floats.point(Point3D) \u2013 The location of the colored surface.unit_normal_vect(Vector3D) \u2013 The direction in which the colored surface is facing.light_source(Point3D) \u2013 The location of a light source which might illuminate the surface.Returns:The color with added light or shadow, depending on the direction of the colored\nsurface.Return type:RGB_Array_Float\n\nAdd light or shadow to thergbcolor of some surface which is located at a\ngivenpointin space and facing in the direction ofunit_normal_vect,\ndepending on whether the surface is facing alight_sourceor away from it.\n\nParameters:\n\nrgb(FloatRGB) \u2013 An RGB array of floats.point(Point3D) \u2013 The location of the colored surface.unit_normal_vect(Vector3D) \u2013 The direction in which the colored surface is facing.light_source(Point3D) \u2013 The location of a light source which might illuminate the surface.\n\nrgb(FloatRGB) \u2013 An RGB array of floats.\n\nrgb(FloatRGB) \u2013 An RGB array of floats.\n\npoint(Point3D) \u2013 The location of the colored surface.\n\npoint(Point3D) \u2013 The location of the colored surface.\n\nunit_normal_vect(Vector3D) \u2013 The direction in which the colored surface is facing.\n\nunit_normal_vect(Vector3D) \u2013 The direction in which the colored surface is facing.\n\nlight_source(Point3D) \u2013 The location of a light source which might illuminate the surface.\n\nlight_source(Point3D) \u2013 The location of a light source which might illuminate the surface.\n\nReturns:\n\nThe color with added light or shadow, depending on the direction of the colored\nsurface.\n\nThe color with added light or shadow, depending on the direction of the colored\nsurface.\n\nReturn type:\n\nRGB_Array_Float\n\nRGB_Array_Float\n\nhex_to_rgb(hex_code)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.to_rgb().Parameters:hex_code(str) \u2013 A hex string representing a color.Returns:An RGB array representing the color.Return type:RGB_Array_Float\n\nHelper function for use in functional style programming. Refer toManimColor.to_rgb().\n\nParameters:\n\nhex_code(str) \u2013 A hex string representing a color.\n\nhex_code(str) \u2013 A hex string representing a color.\n\nReturns:\n\nAn RGB array representing the color.\n\nAn RGB array representing the color.\n\nReturn type:\n\nRGB_Array_Float\n\nRGB_Array_Float\n\ninterpolate_color(color1,color2,alpha)[source]\u00b6\n\nStandalone function to interpolate two ManimColors and get the result. Refer toManimColor.interpolate().Parameters:color1(ManimColorT) \u2013 The firstManimColor.color2(ManimColorT) \u2013 The secondManimColor.alpha(float) \u2013 The alpha value determining the point of interpolation between the colors.Returns:The interpolated ManimColor.Return type:ManimColor\n\nStandalone function to interpolate two ManimColors and get the result. Refer toManimColor.interpolate().\n\nParameters:\n\ncolor1(ManimColorT) \u2013 The firstManimColor.color2(ManimColorT) \u2013 The secondManimColor.alpha(float) \u2013 The alpha value determining the point of interpolation between the colors.\n\ncolor1(ManimColorT) \u2013 The firstManimColor.\n\ncolor1(ManimColorT) \u2013 The firstManimColor.\n\ncolor2(ManimColorT) \u2013 The secondManimColor.\n\ncolor2(ManimColorT) \u2013 The secondManimColor.\n\nalpha(float) \u2013 The alpha value determining the point of interpolation between the colors.\n\nalpha(float) \u2013 The alpha value determining the point of interpolation between the colors.\n\nReturns:\n\nThe interpolated ManimColor.\n\nThe interpolated ManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\ninvert_color(color)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.invert()Parameters:color(ManimColorT) \u2013 TheManimColorto invert.Returns:The linearly invertedManimColor.Return type:ManimColor\n\nHelper function for use in functional style programming. Refer toManimColor.invert()\n\nParameters:\n\ncolor(ManimColorT) \u2013 TheManimColorto invert.\n\ncolor(ManimColorT) \u2013 TheManimColorto invert.\n\nReturns:\n\nThe linearly invertedManimColor.\n\nThe linearly invertedManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nrandom_bright_color()[source]\u00b6\n\nReturn a random bright color: a random color averaged withWHITE.WarningThis operation is very expensive. Please keep in mind the performance loss.Returns:A random brightManimColor.Return type:ManimColor\n\nReturn a random bright color: a random color averaged withWHITE.\n\nWarning\n\nThis operation is very expensive. Please keep in mind the performance loss.\n\nReturns:\n\nA random brightManimColor.\n\nA random brightManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nrandom_color()[source]\u00b6\n\nReturn a randomManimColor.Returns:A randomManimColor.Return type:ManimColor\n\nReturn a randomManimColor.\n\nReturns:\n\nA randomManimColor.\n\nA randomManimColor.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nrgb_to_color(rgb)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.from_rgb().Parameters:rgb(FloatRGBLike|IntRGBLike) \u2013 A 3 element iterable.Returns:A ManimColor with the corresponding value.Return type:ManimColor\n\nHelper function for use in functional style programming. Refer toManimColor.from_rgb().\n\nParameters:\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 A 3 element iterable.\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 A 3 element iterable.\n\nReturns:\n\nA ManimColor with the corresponding value.\n\nA ManimColor with the corresponding value.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nrgb_to_hex(rgb)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.from_rgb()andManimColor.to_hex().Parameters:rgb(FloatRGBLike|IntRGBLike) \u2013 A 3 element iterable.Returns:A hex representation of the color.Return type:str\n\nHelper function for use in functional style programming. Refer toManimColor.from_rgb()andManimColor.to_hex().\n\nParameters:\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 A 3 element iterable.\n\nrgb(FloatRGBLike|IntRGBLike) \u2013 A 3 element iterable.\n\nReturns:\n\nA hex representation of the color.\n\nA hex representation of the color.\n\nReturn type:\n\nstr\n\nstr\n\nrgba_to_color(rgba)[source]\u00b6\n\nHelper function for use in functional style programming. Refer toManimColor.from_rgba().Parameters:rgba(FloatRGBALike|IntRGBALike) \u2013 A 4 element iterable.Returns:A ManimColor with the corresponding valueReturn type:ManimColor\n\nHelper function for use in functional style programming. Refer toManimColor.from_rgba().\n\nParameters:\n\nrgba(FloatRGBALike|IntRGBALike) \u2013 A 4 element iterable.\n\nrgba(FloatRGBALike|IntRGBALike) \u2013 A 4 element iterable.\n\nReturns:\n\nA ManimColor with the corresponding value\n\nA ManimColor with the corresponding value\n\nReturn type:\n\nManimColor\n\nManimColor",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportRED,GREEN,BLUE>>>print(RED)#FC6255",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "IntRGBLike",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "TypeVar('ManimColorT',bound=ManimColor)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ParsableManimColor",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "ParsableManimColorrepresents all the types which can be parsed\nto aManimColorin Manim."
+    },
+    {
+      "name": "ManimColorT",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "average_color",
+      "class_name": null,
+      "parameters": [
+        "*colors"
+      ],
+      "return_type": null,
+      "description": "Determine the average color between the given parameters."
+    },
+    {
+      "name": "color_gradient",
+      "class_name": null,
+      "parameters": [
+        "reference_colors"
+      ],
+      "return_type": null,
+      "description": "Create a list of colors interpolated between the input array of colors with a\nspecific number of colors."
+    },
+    {
+      "name": "color_to_int_rgb",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.to_int_rgb()."
+    },
+    {
+      "name": "color_to_int_rgba",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.to_int_rgba_with_alpha()."
+    },
+    {
+      "name": "color_to_rgb",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming.\nRefer toManimColor.to_rgb()."
+    },
+    {
+      "name": "color_to_rgba",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.to_rgba_with_alpha()."
+    },
+    {
+      "name": "get_shaded_rgb",
+      "class_name": null,
+      "parameters": [
+        "rgb"
+      ],
+      "return_type": null,
+      "description": "Add light or shadow to thergbcolor of some surface which is located at a\ngivenpointin space and facing in the direction ofunit_normal_vect,\ndepending on whether the surface is facing alight_sourceor away from it."
+    },
+    {
+      "name": "hex_to_rgb",
+      "class_name": null,
+      "parameters": [
+        "hex_code"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.to_rgb()."
+    },
+    {
+      "name": "interpolate_color",
+      "class_name": null,
+      "parameters": [
+        "color1"
+      ],
+      "return_type": null,
+      "description": "Standalone function to interpolate two ManimColors and get the result. Refer toManimColor.interpolate()."
+    },
+    {
+      "name": "invert_color",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.invert()"
+    },
+    {
+      "name": "random_bright_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return a random bright color: a random color averaged withWHITE."
+    },
+    {
+      "name": "random_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return a randomManimColor."
+    },
+    {
+      "name": "rgb_to_color",
+      "class_name": null,
+      "parameters": [
+        "rgb"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.from_rgb()."
+    },
+    {
+      "name": "rgb_to_hex",
+      "class_name": null,
+      "parameters": [
+        "rgb"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.from_rgb()andManimColor.to_hex()."
+    },
+    {
+      "name": "rgba_to_color",
+      "class_name": null,
+      "parameters": [
+        "rgba"
+      ],
+      "return_type": null,
+      "description": "Helper function for use in functional style programming. Refer toManimColor.from_rgba()."
+    }
+  ],
+  "related_classes": [
+    "Create"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "math",
+    "graph"
+  ]
+}

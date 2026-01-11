@@ -1,0 +1,84 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.section.Section.html",
+  "title": "Section\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Section\u00b6\n\nQualified name:manim.scene.section.Section\n\nclassSection(type_,video,name,skip_animations)[source]\u00b6\n\nBases:objectAScenecan be segmented into multiple Sections.\nRefer tothe documentationfor more info.\nIt consists of multiple animations.Parameters:type_(str)video(str|None)name(str)skip_animations(bool)type\\_Can be used by a third party applications to classify different types of sections.video\u00b6Path to video file with animations belonging to section relative to sections directory.\nIfNone, then the section will not be saved.name\u00b6Human readable, non-unique name for this section.skip_animations\u00b6Skip rendering the animations in this section whenTrue.partial_movie_files\u00b6Animations belonging to this section.See alsoDefaultSectionType,CairoRenderer.update_skipping_status(),OpenGLRenderer.update_skipping_status()Methodsget_clean_partial_movie_filesReturn all partial movie files that are notNone.get_dictGet dictionary representation with metadata of output video.is_emptyCheck whether this section is empty.get_clean_partial_movie_files()[source]\u00b6Return all partial movie files that are notNone.Return type:list[str]get_dict(sections_dir)[source]\u00b6Get dictionary representation with metadata of output video.The output from this function is used from every section to build the sections index file.\nThe output video must have been created in thesections_dirbefore executing this method.\nThis is the main part of the Segmented Video API.Parameters:sections_dir(Path)Return type:dict[str,Any]is_empty()[source]\u00b6Check whether this section is empty.Note that animations represented byNoneare also counted.Return type:bool\n\nBases:object\n\nAScenecan be segmented into multiple Sections.\nRefer tothe documentationfor more info.\nIt consists of multiple animations.\n\nParameters:\n\ntype_(str)video(str|None)name(str)skip_animations(bool)\n\ntype_(str)\n\ntype_(str)\n\nvideo(str|None)\n\nvideo(str|None)\n\nname(str)\n\nname(str)\n\nskip_animations(bool)\n\nskip_animations(bool)\n\ntype\\_\n\nCan be used by a third party applications to classify different types of sections.\n\nCan be used by a third party applications to classify different types of sections.\n\nvideo\u00b6\n\nPath to video file with animations belonging to section relative to sections directory.\nIfNone, then the section will not be saved.\n\nPath to video file with animations belonging to section relative to sections directory.\nIfNone, then the section will not be saved.\n\nname\u00b6\n\nHuman readable, non-unique name for this section.\n\nHuman readable, non-unique name for this section.\n\nskip_animations\u00b6\n\nSkip rendering the animations in this section whenTrue.\n\nSkip rendering the animations in this section whenTrue.\n\npartial_movie_files\u00b6\n\nAnimations belonging to this section.\n\nAnimations belonging to this section.\n\nSee also\n\nDefaultSectionType,CairoRenderer.update_skipping_status(),OpenGLRenderer.update_skipping_status()\n\nMethods\n\nget_clean_partial_movie_files\n\nReturn all partial movie files that are notNone.\n\nget_dict\n\nGet dictionary representation with metadata of output video.\n\nis_empty\n\nCheck whether this section is empty.\n\nget_clean_partial_movie_files()[source]\u00b6\n\nReturn all partial movie files that are notNone.Return type:list[str]\n\nReturn all partial movie files that are notNone.\n\nReturn type:\n\nlist[str]\n\nlist[str]\n\nget_dict(sections_dir)[source]\u00b6\n\nGet dictionary representation with metadata of output video.The output from this function is used from every section to build the sections index file.\nThe output video must have been created in thesections_dirbefore executing this method.\nThis is the main part of the Segmented Video API.Parameters:sections_dir(Path)Return type:dict[str,Any]\n\nGet dictionary representation with metadata of output video.\n\nThe output from this function is used from every section to build the sections index file.\nThe output video must have been created in thesections_dirbefore executing this method.\nThis is the main part of the Segmented Video API.\n\nParameters:\n\nsections_dir(Path)\n\nsections_dir(Path)\n\nReturn type:\n\ndict[str,Any]\n\ndict[str,Any]\n\nis_empty()[source]\u00b6\n\nCheck whether this section is empty.Note that animations represented byNoneare also counted.Return type:bool\n\nCheck whether this section is empty.\n\nNote that animations represented byNoneare also counted.\n\nReturn type:\n\nbool\n\nbool",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Section",
+      "class_name": null,
+      "parameters": [
+        "type_"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "type\\_",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Can be used by a third party applications to classify different types of sections."
+    },
+    {
+      "name": "video",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Path to video file with animations belonging to section relative to sections directory.\nIfNone, then the section will not be saved."
+    },
+    {
+      "name": "name",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Human readable, non-unique name for this section."
+    },
+    {
+      "name": "skip_animations",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Skip rendering the animations in this section whenTrue."
+    },
+    {
+      "name": "partial_movie_files",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Animations belonging to this section."
+    },
+    {
+      "name": "get_clean_partial_movie_files",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return all partial movie files that are notNone."
+    },
+    {
+      "name": "get_dict",
+      "class_name": null,
+      "parameters": [
+        "sections_dir"
+      ],
+      "return_type": null,
+      "description": "Get dictionary representation with metadata of output video."
+    },
+    {
+      "name": "is_empty",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Check whether this section is empty."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation",
+    "graph"
+  ]
+}

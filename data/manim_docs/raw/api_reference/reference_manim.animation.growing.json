@@ -1,0 +1,30 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.growing.html",
+  "title": "growing\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "growing\u00b6\n\nAnimations that introduce mobjects to scene by growing them from points.\n\nExample: Growing\u00b6\n\nClasses\n\nGrowArrow\n\nIntroduce anArrowby growing it from its start toward its tip.\n\nGrowFromCenter\n\nIntroduce anMobjectby growing it from its center.\n\nGrowFromEdge\n\nIntroduce anMobjectby growing it from one of its bounding box edges.\n\nGrowFromPoint\n\nIntroduce anMobjectby growing it from a point.\n\nSpinInFromNothing\n\nIntroduce anMobjectspinning and growing it from its center.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classGrowing(Scene):defconstruct(self):square=Square()circle=Circle()triangle=Triangle()arrow=Arrow(LEFT,RIGHT)star=Star()VGroup(square,circle,triangle).set_x(0).arrange(buff=1.5).set_y(2)VGroup(arrow,star).move_to(DOWN).set_x(0).arrange(buff=1.5).set_y(-2)self.play(GrowFromPoint(square,ORIGIN))self.play(GrowFromCenter(circle))self.play(GrowFromEdge(triangle,DOWN))self.play(GrowArrow(arrow))self.play(SpinInFromNothing(star))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Growing(Scene):\n    def construct(self):\n        square = Square()\n        circle = Circle()\n        triangle = Triangle()\n        arrow = Arrow(LEFT, RIGHT)\n        star = Star()\n\n        VGroup(square, circle, triangle).set_x(0).arrange(buff=1.5).set_y(2)\n        VGroup(arrow, star).move_to(DOWN).set_x(0).arrange(buff=1.5).set_y(-2)\n\n        self.play(GrowFromPoint(square, ORIGIN))\n        self.play(GrowFromCenter(circle))\n        self.play(GrowFromEdge(triangle, DOWN))\n        self.play(GrowArrow(arrow))\n        self.play(SpinInFromNothing(star))",
+      "language": "python",
+      "context": "Example: Growing\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [
+    "GrowFromCenter",
+    "Arrow",
+    "Mobject"
+  ],
+  "tags": [
+    "animation"
+  ]
+}

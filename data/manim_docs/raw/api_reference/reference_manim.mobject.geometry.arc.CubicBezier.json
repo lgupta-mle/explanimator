@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.CubicBezier.html",
+  "title": "CubicBezier\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "CubicBezier\u00b6\n\nQualified name:manim.mobject.geometry.arc.CubicBezier\n\nclassCubicBezier(start_anchor,start_handle,end_handle,end_anchor,**kwargs)[source]\u00b6\n\nBases:VMobjectA cubic B\u00e9zier curve.ExampleExample: BezierSplineExample\u00b6frommanimimport*classBezierSplineExample(Scene):defconstruct(self):p1=np.array([-3,1,0])p1b=p1+[1,0,0]d1=Dot(point=p1).set_color(BLUE)l1=Line(p1,p1b)p2=np.array([3,-1,0])p2b=p2-[1,0,0]d2=Dot(point=p2).set_color(RED)l2=Line(p2,p2b)bezier=CubicBezier(p1b,p1b+3*RIGHT,p2b-3*RIGHT,p2b)self.add(l1,d1,l2,d2,bezier)class BezierSplineExample(Scene):\n    def construct(self):\n        p1 = np.array([-3, 1, 0])\n        p1b = p1 + [1, 0, 0]\n        d1 = Dot(point=p1).set_color(BLUE)\n        l1 = Line(p1, p1b)\n        p2 = np.array([3, -1, 0])\n        p2b = p2 - [1, 0, 0]\n        d2 = Dot(point=p2).set_color(RED)\n        l2 = Line(p2, p2b)\n        bezier = CubicBezier(p1b, p1b + 3 * RIGHT, p2b - 3 * RIGHT, p2b)\n        self.add(l1, d1, l2, d2, bezier)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:start_anchor(Point3DLike)start_handle(Point3DLike)end_handle(Point3DLike)end_anchor(Point3DLike)kwargs(Any)_original__init__(start_anchor,start_handle,end_handle,end_anchor,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:start_anchor(Point3DLike)start_handle(Point3DLike)end_handle(Point3DLike)end_anchor(Point3DLike)kwargs(Any)Return type:None\n\nBases:VMobject\n\nA cubic B\u00e9zier curve.\n\nExample\n\nExample: BezierSplineExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nstart_anchor(Point3DLike)start_handle(Point3DLike)end_handle(Point3DLike)end_anchor(Point3DLike)kwargs(Any)\n\nstart_anchor(Point3DLike)\n\nstart_anchor(Point3DLike)\n\nstart_handle(Point3DLike)\n\nstart_handle(Point3DLike)\n\nend_handle(Point3DLike)\n\nend_handle(Point3DLike)\n\nend_anchor(Point3DLike)\n\nend_anchor(Point3DLike)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(start_anchor,start_handle,end_handle,end_anchor,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:start_anchor(Point3DLike)start_handle(Point3DLike)end_handle(Point3DLike)end_anchor(Point3DLike)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstart_anchor(Point3DLike)start_handle(Point3DLike)end_handle(Point3DLike)end_anchor(Point3DLike)kwargs(Any)\n\nstart_anchor(Point3DLike)\n\nstart_anchor(Point3DLike)\n\nstart_handle(Point3DLike)\n\nstart_handle(Point3DLike)\n\nend_handle(Point3DLike)\n\nend_handle(Point3DLike)\n\nend_anchor(Point3DLike)\n\nend_anchor(Point3DLike)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBezierSplineExample(Scene):defconstruct(self):p1=np.array([-3,1,0])p1b=p1+[1,0,0]d1=Dot(point=p1).set_color(BLUE)l1=Line(p1,p1b)p2=np.array([3,-1,0])p2b=p2-[1,0,0]d2=Dot(point=p2).set_color(RED)l2=Line(p2,p2b)bezier=CubicBezier(p1b,p1b+3*RIGHT,p2b-3*RIGHT,p2b)self.add(l1,d1,l2,d2,bezier)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BezierSplineExample(Scene):\n    def construct(self):\n        p1 = np.array([-3, 1, 0])\n        p1b = p1 + [1, 0, 0]\n        d1 = Dot(point=p1).set_color(BLUE)\n        l1 = Line(p1, p1b)\n        p2 = np.array([3, -1, 0])\n        p2b = p2 - [1, 0, 0]\n        d2 = Dot(point=p2).set_color(RED)\n        l2 = Line(p2, p2b)\n        bezier = CubicBezier(p1b, p1b + 3 * RIGHT, p2b - 3 * RIGHT, p2b)\n        self.add(l1, d1, l2, d2, bezier)",
+      "language": "python",
+      "context": "Example: BezierSplineExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "CubicBezier",
+      "class_name": null,
+      "parameters": [
+        "start_anchor"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "start_anchor"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VMobject",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.vector_field.html",
+  "title": "vector_field\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "vector_field\u00b6\n\nMobjects representing vector fields.\n\nClasses\n\nArrowVectorField\n\nAVectorFieldrepresented by a set of change vectors.\n\nStreamLines\n\nStreamLines represent the flow of aVectorFieldusing the trace of moving agents.\n\nVectorField\n\nA vector field.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Line",
+    "Arrow",
+    "Mobject"
+  ],
+  "tags": [
+    "math"
+  ]
+}

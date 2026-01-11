@@ -1,0 +1,73 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.animation.html#manim.animation.animation.prepare_animation",
+  "title": "animation\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "animation\u00b6\n\nAnimate mobjects.\n\nClasses\n\nAdd\n\nAdd Mobjects to a scene, without animating them in any other way.\n\nAnimation\n\nAn animation.\n\nWait\n\nA \"no operation\" animation.\n\nFunctions\n\noverride_animation(animation_class)[source]\u00b6\n\nDecorator used to mark methods as overrides for specificAnimationtypes.Should only be used to decorate methods of classes derived fromMobject.Animationoverrides get inherited to subclasses of theMobjectwho defined\nthem. They don\u2019t override subclasses of theAnimationthey override.See alsoadd_animation_override()Parameters:animation_class(type[Animation]) \u2013 The animation to be overridden.Returns:The actual decorator. This marks the method as overriding an animation.Return type:Callable[[Callable], Callable]ExamplesExample: OverrideAnimationExample\u00b6frommanimimport*classMySquare(Square):@override_animation(FadeIn)def_fade_in_override(self,**kwargs):returnCreate(self,**kwargs)classOverrideAnimationExample(Scene):defconstruct(self):self.play(FadeIn(MySquare()))class MySquare(Square):\n    @override_animation(FadeIn)\n    def _fade_in_override(self, **kwargs):\n        return Create(self, **kwargs)\n\nclass OverrideAnimationExample(Scene):\n    def construct(self):\n        self.play(FadeIn(MySquare()))\n\nDecorator used to mark methods as overrides for specificAnimationtypes.\n\nShould only be used to decorate methods of classes derived fromMobject.Animationoverrides get inherited to subclasses of theMobjectwho defined\nthem. They don\u2019t override subclasses of theAnimationthey override.\n\nSee also\n\nadd_animation_override()\n\nParameters:\n\nanimation_class(type[Animation]) \u2013 The animation to be overridden.\n\nanimation_class(type[Animation]) \u2013 The animation to be overridden.\n\nReturns:\n\nThe actual decorator. This marks the method as overriding an animation.\n\nThe actual decorator. This marks the method as overriding an animation.\n\nReturn type:\n\nCallable[[Callable], Callable]\n\nCallable[[Callable], Callable]\n\nExamples\n\nExample: OverrideAnimationExample\u00b6\n\nprepare_animation(anim)[source]\u00b6\n\nReturns either an unchanged animation, or the animation built\nfrom a passed animation factory.Examples>>>frommanimimportSquare,FadeIn>>>s=Square()>>>prepare_animation(FadeIn(s))FadeIn(Square)>>>prepare_animation(s.animate.scale(2).rotate(42))_MethodAnimation(Square)>>>prepare_animation(42)Traceback (most recent call last):...TypeError:Object 42 cannot be converted to an animationParameters:anim(Animation|_AnimationBuilder|_AnimationBuilder)Return type:Animation\n\nReturns either an unchanged animation, or the animation built\nfrom a passed animation factory.\n\nExamples\n\nParameters:\n\nanim(Animation|_AnimationBuilder|_AnimationBuilder)\n\nanim(Animation|_AnimationBuilder|_AnimationBuilder)\n\nReturn type:\n\nAnimation\n\nAnimation",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMySquare(Square):@override_animation(FadeIn)def_fade_in_override(self,**kwargs):returnCreate(self,**kwargs)classOverrideAnimationExample(Scene):defconstruct(self):self.play(FadeIn(MySquare()))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MySquare(Square):\n    @override_animation(FadeIn)\n    def _fade_in_override(self, **kwargs):\n        return Create(self, **kwargs)\n\nclass OverrideAnimationExample(Scene):\n    def construct(self):\n        self.play(FadeIn(MySquare()))",
+      "language": "python",
+      "context": "Example: OverrideAnimationExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportSquare,FadeIn>>>s=Square()>>>prepare_animation(FadeIn(s))FadeIn(Square)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>prepare_animation(s.animate.scale(2).rotate(42))_MethodAnimation(Square)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>prepare_animation(42)Traceback (most recent call last):...TypeError:Object 42 cannot be converted to an animation",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "override_animation",
+      "class_name": null,
+      "parameters": [
+        "animation_class"
+      ],
+      "return_type": null,
+      "description": "Decorator used to mark methods as overrides for specificAnimationtypes."
+    },
+    {
+      "name": "prepare_animation",
+      "class_name": null,
+      "parameters": [
+        "anim"
+      ],
+      "return_type": null,
+      "description": "Returns either an unchanged animation, or the animation built\nfrom a passed animation factory."
+    }
+  ],
+  "related_classes": [
+    "FadeIn",
+    "Create",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "timing",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

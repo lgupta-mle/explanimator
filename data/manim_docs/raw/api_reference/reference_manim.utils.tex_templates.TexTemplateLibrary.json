@@ -1,0 +1,63 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.tex_templates.TexTemplateLibrary.html",
+  "title": "TexTemplateLibrary\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TexTemplateLibrary\u00b6\n\nQualified name:manim.utils.tex\\_templates.TexTemplateLibrary\n\nclassTexTemplateLibrary[source]\u00b6\n\nBases:objectA collection of basic TeX template objectsExamplesNormal usage as a value for the keyword argument tex_template of Tex() and MathTex() mobjects:``Tex(\"My TeX code\", tex_template=TexTemplateLibrary.ctex)``MethodsAttributesctexAn instance of the TeX template used by 3b1b when using the use_ctex flagdefaultAn instance of the default TeX template in manimsimpleAn instance of a simple TeX template with only basic AMS packages loadedthreeb1bAn instance of the default TeX template used by 3b1bctex=TexTemplate(_body='',tex_compiler='xelatex',description='',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage[utf8]{inputenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{lmodern}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\\\usepackage{dsfont}\\n\\\\usepackage{setspace}\\n\\\\usepackage{tipa}\\n\\\\usepackage{relsize}\\n\\\\usepackage{textcomp}\\n\\\\usepackage{mathrsfs}\\n\\\\usepackage{calligra}\\n\\\\usepackage{wasysym}\\n\\\\usepackage{ragged2e}\\n\\\\usepackage{physics}\\n\\\\usepackage{xcolor}\\n\\\\usepackage{microtype}\\n\\\\usepackage[UTF8]{ctex}\\n\\\\linespread{1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6An instance of the TeX template used by 3b1b when using the use_ctex flagdefault=TexTemplate(_body='',tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage[utf8]{inputenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{lmodern}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\\\usepackage{dsfont}\\n\\\\usepackage{setspace}\\n\\\\usepackage{tipa}\\n\\\\usepackage{relsize}\\n\\\\usepackage{textcomp}\\n\\\\usepackage{mathrsfs}\\n\\\\usepackage{calligra}\\n\\\\usepackage{wasysym}\\n\\\\usepackage{ragged2e}\\n\\\\usepackage{physics}\\n\\\\usepackage{xcolor}\\n\\\\usepackage{microtype}\\n\\\\DisableLigatures{encoding=*,family=*}\\n\\\\linespread{1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6An instance of the default TeX template in manimsimple=TexTemplate(_body='',tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6An instance of a simple TeX template with only basic AMS packages loadedthreeb1b=TexTemplate(_body='',tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage[utf8]{inputenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{lmodern}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\\\usepackage{dsfont}\\n\\\\usepackage{setspace}\\n\\\\usepackage{tipa}\\n\\\\usepackage{relsize}\\n\\\\usepackage{textcomp}\\n\\\\usepackage{mathrsfs}\\n\\\\usepackage{calligra}\\n\\\\usepackage{wasysym}\\n\\\\usepackage{ragged2e}\\n\\\\usepackage{physics}\\n\\\\usepackage{xcolor}\\n\\\\usepackage{microtype}\\n\\\\DisableLigatures{encoding=*,family=*}\\n\\\\linespread{1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6An instance of the default TeX template used by 3b1b\n\nBases:object\n\nA collection of basic TeX template objects\n\nExamples\n\nNormal usage as a value for the keyword argument tex_template of Tex() and MathTex() mobjects:\n\nMethods\n\nAttributes\n\nctex\n\nAn instance of the TeX template used by 3b1b when using the use_ctex flag\n\ndefault\n\nAn instance of the default TeX template in manim\n\nsimple\n\nAn instance of a simple TeX template with only basic AMS packages loaded\n\nthreeb1b\n\nAn instance of the default TeX template used by 3b1b\n\nctex=TexTemplate(_body='',tex_compiler='xelatex',description='',output_format='.xdv',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage[utf8]{inputenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{lmodern}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\\\usepackage{dsfont}\\n\\\\usepackage{setspace}\\n\\\\usepackage{tipa}\\n\\\\usepackage{relsize}\\n\\\\usepackage{textcomp}\\n\\\\usepackage{mathrsfs}\\n\\\\usepackage{calligra}\\n\\\\usepackage{wasysym}\\n\\\\usepackage{ragged2e}\\n\\\\usepackage{physics}\\n\\\\usepackage{xcolor}\\n\\\\usepackage{microtype}\\n\\\\usepackage[UTF8]{ctex}\\n\\\\linespread{1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAn instance of the TeX template used by 3b1b when using the use_ctex flag\n\nAn instance of the TeX template used by 3b1b when using the use_ctex flag\n\ndefault=TexTemplate(_body='',tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage[utf8]{inputenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{lmodern}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\\\usepackage{dsfont}\\n\\\\usepackage{setspace}\\n\\\\usepackage{tipa}\\n\\\\usepackage{relsize}\\n\\\\usepackage{textcomp}\\n\\\\usepackage{mathrsfs}\\n\\\\usepackage{calligra}\\n\\\\usepackage{wasysym}\\n\\\\usepackage{ragged2e}\\n\\\\usepackage{physics}\\n\\\\usepackage{xcolor}\\n\\\\usepackage{microtype}\\n\\\\DisableLigatures{encoding=*,family=*}\\n\\\\linespread{1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAn instance of the default TeX template in manim\n\nAn instance of the default TeX template in manim\n\nsimple=TexTemplate(_body='',tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAn instance of a simple TeX template with only basic AMS packages loaded\n\nAn instance of a simple TeX template with only basic AMS packages loaded\n\nthreeb1b=TexTemplate(_body='',tex_compiler='latex',description='',output_format='.dvi',documentclass='\\\\documentclass[preview]{standalone}',preamble='\\n\\\\usepackage[english]{babel}\\n\\\\usepackage[utf8]{inputenc}\\n\\\\usepackage[T1]{fontenc}\\n\\\\usepackage{lmodern}\\n\\\\usepackage{amsmath}\\n\\\\usepackage{amssymb}\\n\\\\usepackage{dsfont}\\n\\\\usepackage{setspace}\\n\\\\usepackage{tipa}\\n\\\\usepackage{relsize}\\n\\\\usepackage{textcomp}\\n\\\\usepackage{mathrsfs}\\n\\\\usepackage{calligra}\\n\\\\usepackage{wasysym}\\n\\\\usepackage{ragged2e}\\n\\\\usepackage{physics}\\n\\\\usepackage{xcolor}\\n\\\\usepackage{microtype}\\n\\\\DisableLigatures{encoding=*,family=*}\\n\\\\linespread{1}\\n',placeholder_text='YourTextHere',post_doc_commands='')\u00b6\n\nAn instance of the default TeX template used by 3b1b\n\nAn instance of the default TeX template used by 3b1b",
+  "code_examples": [
+    {
+      "code": "``Tex(\"My TeX code\", tex_template=TexTemplateLibrary.ctex)``",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TexTemplateLibrary",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "ctex",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "An instance of the TeX template used by 3b1b when using the use_ctex flag"
+    },
+    {
+      "name": "default",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "An instance of the default TeX template in manim"
+    },
+    {
+      "name": "simple",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "An instance of a simple TeX template with only basic AMS packages loaded"
+    },
+    {
+      "name": "threeb1b",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "An instance of the default TeX template used by 3b1b"
+    }
+  ],
+  "related_classes": [
+    "MathTex",
+    "Text",
+    "Tex"
+  ],
+  "tags": [
+    "color",
+    "3d",
+    "timing",
+    "text"
+  ]
+}

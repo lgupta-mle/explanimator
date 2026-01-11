@@ -1,0 +1,61 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.images.html",
+  "title": "images\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "images\u00b6\n\nImage manipulation utilities.\n\nFunctions\n\nchange_to_rgba_array(image,dtype='uint8')[source]\u00b6\n\nConverts an RGB array into RGBA with the alpha value opacity maxed.Parameters:image(RGBPixelArray)dtype(str)Return type:RGBAPixelArray\n\nConverts an RGB array into RGBA with the alpha value opacity maxed.\n\nParameters:\n\nimage(RGBPixelArray)dtype(str)\n\nimage(RGBPixelArray)\n\nimage(RGBPixelArray)\n\ndtype(str)\n\ndtype(str)\n\nReturn type:\n\nRGBAPixelArray\n\nRGBAPixelArray\n\ndrag_pixels(frames)[source]\u00b6\n\nParameters:frames(Sequence[PixelArray])Return type:list[np.ndarray]\n\nParameters:\n\nframes(Sequence[PixelArray])\n\nframes(Sequence[PixelArray])\n\nReturn type:\n\nlist[np.ndarray]\n\nlist[np.ndarray]\n\nget_full_raster_image_path(image_file_name)[source]\u00b6\n\nParameters:image_file_name(str|PurePath)Return type:Path\n\nParameters:\n\nimage_file_name(str|PurePath)\n\nimage_file_name(str|PurePath)\n\nReturn type:\n\nPath\n\nPath\n\nget_full_vector_image_path(image_file_name)[source]\u00b6\n\nParameters:image_file_name(str|PurePath)Return type:Path\n\nParameters:\n\nimage_file_name(str|PurePath)\n\nimage_file_name(str|PurePath)\n\nReturn type:\n\nPath\n\nPath\n\ninvert_image(image)[source]\u00b6\n\nParameters:image(PixelArray)Return type:<module \u2018PIL.Image\u2019 from \u2018/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py\u2019>\n\nParameters:\n\nimage(PixelArray)\n\nimage(PixelArray)\n\nReturn type:\n\n<module \u2018PIL.Image\u2019 from \u2018/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py\u2019>\n\n<module \u2018PIL.Image\u2019 from \u2018/home/docs/checkouts/readthedocs.org/user_builds/manimce/envs/stable/lib/python3.13/site-packages/PIL/Image.py\u2019>",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "change_to_rgba_array",
+      "class_name": null,
+      "parameters": [
+        "image"
+      ],
+      "return_type": null,
+      "description": "Converts an RGB array into RGBA with the alpha value opacity maxed."
+    },
+    {
+      "name": "drag_pixels",
+      "class_name": null,
+      "parameters": [
+        "frames"
+      ],
+      "return_type": null,
+      "description": "frames(Sequence[PixelArray])"
+    },
+    {
+      "name": "get_full_raster_image_path",
+      "class_name": null,
+      "parameters": [
+        "image_file_name"
+      ],
+      "return_type": null,
+      "description": "image_file_name(str|PurePath)"
+    },
+    {
+      "name": "get_full_vector_image_path",
+      "class_name": null,
+      "parameters": [
+        "image_file_name"
+      ],
+      "return_type": null,
+      "description": "image_file_name(str|PurePath)"
+    },
+    {
+      "name": "invert_image",
+      "class_name": null,
+      "parameters": [
+        "image"
+      ],
+      "return_type": null,
+      "description": "image(PixelArray)"
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "graph",
+    "math"
+  ]
+}

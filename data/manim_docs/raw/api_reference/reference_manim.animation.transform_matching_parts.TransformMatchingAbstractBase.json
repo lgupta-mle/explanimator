@@ -1,0 +1,49 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform_matching_parts.TransformMatchingAbstractBase.html",
+  "title": "TransformMatchingAbstractBase\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TransformMatchingAbstractBase\u00b6\n\nQualified name:manim.animation.transform\\_matching\\_parts.TransformMatchingAbstractBase\n\nclassTransformMatchingAbstractBase(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationGroupAbstract base class for transformations that keep track of matching parts.Subclasses have to implement the two static methodsget_mobject_parts()andget_mobject_key().Basically, this transformation first maps all submobjects returned\nby theget_mobject_partsmethod to certain keys by applying theget_mobject_keymethod. Then, submobjects with matching keys\nare transformed into each other.Parameters:mobject(Mobject) \u2013 The startingMobject.target_mobject(Mobject) \u2013 The targetMobject.transform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingTransform. Default:False.fade_transform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingFadeTransform. Default:False.key_map(dict|None) \u2013 Optional. A dictionary mapping keys belonging to some of the starting mobject\u2019s\nsubmobjects (i.e., the return values of theget_mobject_keymethod)\nto some keys belonging to the target mobject\u2019s submobjects that should\nbe transformed although the keys don\u2019t match.kwargs\u2013 All further keyword arguments are passed to the submobject transformations.NoteIf neithertransform_mismatchesnorfade_transform_mismatchesare set toTrue, submobjects without matching keys in the starting\nmobject are faded out in the direction of the unmatched submobjects in\nthe target mobject, and unmatched submobjects in the target mobject\nare faded in from the direction of the unmatched submobjects in the\nstart mobject.Methodsclean_up_from_sceneClean up theSceneafter finishing the animation.get_mobject_keyget_mobject_partsget_shape_mapAttributesrun_time_original__init__(mobject,target_mobject,transform_mismatches=False,fade_transform_mismatches=False,key_map=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)clean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nBases:AnimationGroup\n\nAbstract base class for transformations that keep track of matching parts.\n\nSubclasses have to implement the two static methodsget_mobject_parts()andget_mobject_key().\n\nBasically, this transformation first maps all submobjects returned\nby theget_mobject_partsmethod to certain keys by applying theget_mobject_keymethod. Then, submobjects with matching keys\nare transformed into each other.\n\nParameters:\n\nmobject(Mobject) \u2013 The startingMobject.target_mobject(Mobject) \u2013 The targetMobject.transform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingTransform. Default:False.fade_transform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingFadeTransform. Default:False.key_map(dict|None) \u2013 Optional. A dictionary mapping keys belonging to some of the starting mobject\u2019s\nsubmobjects (i.e., the return values of theget_mobject_keymethod)\nto some keys belonging to the target mobject\u2019s submobjects that should\nbe transformed although the keys don\u2019t match.kwargs\u2013 All further keyword arguments are passed to the submobject transformations.\n\nmobject(Mobject) \u2013 The startingMobject.\n\nmobject(Mobject) \u2013 The startingMobject.\n\ntarget_mobject(Mobject) \u2013 The targetMobject.\n\ntarget_mobject(Mobject) \u2013 The targetMobject.\n\ntransform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingTransform. Default:False.\n\ntransform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingTransform. Default:False.\n\nfade_transform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingFadeTransform. Default:False.\n\nfade_transform_mismatches(bool) \u2013 Controls whether submobjects without a matching key are transformed\ninto each other by usingFadeTransform. Default:False.\n\nkey_map(dict|None) \u2013 Optional. A dictionary mapping keys belonging to some of the starting mobject\u2019s\nsubmobjects (i.e., the return values of theget_mobject_keymethod)\nto some keys belonging to the target mobject\u2019s submobjects that should\nbe transformed although the keys don\u2019t match.\n\nkey_map(dict|None) \u2013 Optional. A dictionary mapping keys belonging to some of the starting mobject\u2019s\nsubmobjects (i.e., the return values of theget_mobject_keymethod)\nto some keys belonging to the target mobject\u2019s submobjects that should\nbe transformed although the keys don\u2019t match.\n\nkwargs\u2013 All further keyword arguments are passed to the submobject transformations.\n\nkwargs\u2013 All further keyword arguments are passed to the submobject transformations.\n\nNote\n\nIf neithertransform_mismatchesnorfade_transform_mismatchesare set toTrue, submobjects without matching keys in the starting\nmobject are faded out in the direction of the unmatched submobjects in\nthe target mobject, and unmatched submobjects in the target mobject\nare faded in from the direction of the unmatched submobjects in the\nstart mobject.\n\nMethods\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nget_mobject_key\n\nget_mobject_parts\n\nget_shape_map\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,target_mobject,transform_mismatches=False,fade_transform_mismatches=False,key_map=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntransform_mismatches(bool)\n\ntransform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nkey_map(dict|None)\n\nkey_map(dict|None)\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "TransformMatchingAbstractBase",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:AnimationGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    }
+  ],
+  "related_classes": [
+    "Transform",
+    "Scene",
+    "AnimationGroup",
+    "Mobject"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

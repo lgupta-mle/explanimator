@@ -1,0 +1,18 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.tex_mobject.html",
+  "title": "tex_mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "tex_mobject\u00b6\n\nMobjects representing text rendered using LaTeX.\n\nImportant\n\nSee the corresponding tutorialText With LaTeX\n\nNote\n\nJust as you can useText(from the moduletext_mobject) to add text to your videos, you can useTexandMathTexto insert LaTeX.\n\nClasses\n\nBulletedList\n\nA bulleted list.\n\nMathTex\n\nA string compiled with LaTeX in math mode.\n\nSingleStringMathTex\n\nElementary building block for rendering text with LaTeX.\n\nTex\n\nA string compiled with LaTeX in normal mode.\n\nTitle\n\nA mobject representing an underlined title.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "MathTex",
+    "Text",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "text"
+  ]
+}

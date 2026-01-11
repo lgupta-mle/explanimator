@@ -1,0 +1,96 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.numbers.Variable.html",
+  "title": "Variable\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Variable\u00b6\n\nQualified name:manim.mobject.text.numbers.Variable\n\nclassVariable(var,label,var_type=<class'manim.mobject.text.numbers.DecimalNumber'>,num_decimal_places=2,**kwargs)[source]\u00b6\n\nBases:VMobjectA class for displaying text that shows \u201clabel = value\u201d with\nthe value continuously updated from aValueTracker.Parameters:var(float) \u2013 The initial value you need to keep track of and display.label(str|Tex|MathTex|Text|SingleStringMathTex) \u2013 The label for your variable. Raw strings are convertex toMathTexobjects.var_type(type[DecimalNumber|Integer]) \u2013 The class used for displaying the number. Defaults toDecimalNumber.num_decimal_places(int) \u2013 The number of decimal places to display in your variable. Defaults to 2.\nIfvar_typeis anInteger, this parameter is ignored.kwargs(Any) \u2013 Other arguments to be passed to~.Mobject.label\u00b6The label for your variable, for examplex=....Type:Union[str,Tex,MathTex,Text,SingleStringMathTex]tracker\u00b6Useful in updating the value of your variable on-screen.Type:ValueTrackervalue\u00b6The tex for the value of your variable.Type:Union[DecimalNumber,Integer]ExamplesNormal usage:# DecimalNumber typevar=0.5on_screen_var=Variable(var,Text(\"var\"),num_decimal_places=3)# Integer typeint_var=0on_screen_int_var=Variable(int_var,Text(\"int_var\"),var_type=Integer)# Using math mode for the labelon_screen_int_var=Variable(int_var,\"{a}_{i}\",var_type=Integer)Example: VariablesWithValueTracker\u00b6frommanimimport*classVariablesWithValueTracker(Scene):defconstruct(self):var=0.5on_screen_var=Variable(var,Text(\"var\"),num_decimal_places=3)# You can also change the colours for the label and valueon_screen_var.label.set_color(RED)on_screen_var.value.set_color(GREEN)self.play(Write(on_screen_var))# The above line will just display the variable with# its initial value on the screen. If you also wish to# update it, you can do so by accessing the `tracker` attributeself.wait()var_tracker=on_screen_var.trackervar=10.5self.play(var_tracker.animate.set_value(var))self.wait()int_var=0on_screen_int_var=Variable(int_var,Text(\"int_var\"),var_type=Integer).next_to(on_screen_var,DOWN)on_screen_int_var.label.set_color(RED)on_screen_int_var.value.set_color(GREEN)self.play(Write(on_screen_int_var))self.wait()var_tracker=on_screen_int_var.trackervar=10.5self.play(var_tracker.animate.set_value(var))self.wait()# If you wish to have a somewhat more complicated label for your# variable with subscripts, superscripts, etc. the default class# for the label is MathTexsubscript_label_var=10on_screen_subscript_var=Variable(subscript_label_var,\"{a}_{i}\").next_to(on_screen_int_var,DOWN)self.play(Write(on_screen_subscript_var))self.wait()class VariablesWithValueTracker(Scene):\n    def construct(self):\n        var = 0.5\n        on_screen_var = Variable(var, Text(\"var\"), num_decimal_places=3)\n\n        # You can also change the colours for the label and value\n        on_screen_var.label.set_color(RED)\n        on_screen_var.value.set_color(GREEN)\n\n        self.play(Write(on_screen_var))\n        # The above line will just display the variable with\n        # its initial value on the screen. If you also wish to\n        # update it, you can do so by accessing the `tracker` attribute\n        self.wait()\n        var_tracker = on_screen_var.tracker\n        var = 10.5\n        self.play(var_tracker.animate.set_value(var))\n        self.wait()\n\n        int_var = 0\n        on_screen_int_var = Variable(\n            int_var, Text(\"int_var\"), var_type=Integer\n        ).next_to(on_screen_var, DOWN)\n        on_screen_int_var.label.set_color(RED)\n        on_screen_int_var.value.set_color(GREEN)\n\n        self.play(Write(on_screen_int_var))\n        self.wait()\n        var_tracker = on_screen_int_var.tracker\n        var = 10.5\n        self.play(var_tracker.animate.set_value(var))\n        self.wait()\n\n        # If you wish to have a somewhat more complicated label for your\n        # variable with subscripts, superscripts, etc. the default class\n        # for the label is MathTex\n        subscript_label_var = 10\n        on_screen_subscript_var = Variable(subscript_label_var, \"{a}_{i}\").next_to(\n            on_screen_int_var, DOWN\n        )\n        self.play(Write(on_screen_subscript_var))\n        self.wait()Example: VariableExample\u00b6frommanimimport*classVariableExample(Scene):defconstruct(self):start=2.0x_var=Variable(start,'x',num_decimal_places=3)sqr_var=Variable(start**2,'x^2',num_decimal_places=3)Group(x_var,sqr_var).arrange(DOWN)sqr_var.add_updater(lambdav:v.tracker.set_value(x_var.tracker.get_value()**2))self.add(x_var,sqr_var)self.play(x_var.tracker.animate.set_value(5),run_time=2,rate_func=linear)self.wait(0.1)class VariableExample(Scene):\n    def construct(self):\n        start = 2.0\n\n        x_var = Variable(start, 'x', num_decimal_places=3)\n        sqr_var = Variable(start**2, 'x^2', num_decimal_places=3)\n        Group(x_var, sqr_var).arrange(DOWN)\n\n        sqr_var.add_updater(lambda v: v.tracker.set_value(x_var.tracker.get_value()**2))\n\n        self.add(x_var, sqr_var)\n        self.play(x_var.tracker.animate.set_value(5), run_time=2, rate_func=linear)\n        self.wait(0.1)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(var,label,var_type=<class'manim.mobject.text.numbers.DecimalNumber'>,num_decimal_places=2,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:var(float)label(str|Tex|MathTex|Text|SingleStringMathTex)var_type(type[DecimalNumber|Integer])num_decimal_places(int)kwargs(Any)\n\nBases:VMobject\n\nA class for displaying text that shows \u201clabel = value\u201d with\nthe value continuously updated from aValueTracker.\n\nParameters:\n\nvar(float) \u2013 The initial value you need to keep track of and display.label(str|Tex|MathTex|Text|SingleStringMathTex) \u2013 The label for your variable. Raw strings are convertex toMathTexobjects.var_type(type[DecimalNumber|Integer]) \u2013 The class used for displaying the number. Defaults toDecimalNumber.num_decimal_places(int) \u2013 The number of decimal places to display in your variable. Defaults to 2.\nIfvar_typeis anInteger, this parameter is ignored.kwargs(Any) \u2013 Other arguments to be passed to~.Mobject.\n\nvar(float) \u2013 The initial value you need to keep track of and display.\n\nvar(float) \u2013 The initial value you need to keep track of and display.\n\nlabel(str|Tex|MathTex|Text|SingleStringMathTex) \u2013 The label for your variable. Raw strings are convertex toMathTexobjects.\n\nlabel(str|Tex|MathTex|Text|SingleStringMathTex) \u2013 The label for your variable. Raw strings are convertex toMathTexobjects.\n\nvar_type(type[DecimalNumber|Integer]) \u2013 The class used for displaying the number. Defaults toDecimalNumber.\n\nvar_type(type[DecimalNumber|Integer]) \u2013 The class used for displaying the number. Defaults toDecimalNumber.\n\nnum_decimal_places(int) \u2013 The number of decimal places to display in your variable. Defaults to 2.\nIfvar_typeis anInteger, this parameter is ignored.\n\nnum_decimal_places(int) \u2013 The number of decimal places to display in your variable. Defaults to 2.\nIfvar_typeis anInteger, this parameter is ignored.\n\nkwargs(Any) \u2013 Other arguments to be passed to~.Mobject.\n\nkwargs(Any) \u2013 Other arguments to be passed to~.Mobject.\n\nlabel\u00b6\n\nThe label for your variable, for examplex=....Type:Union[str,Tex,MathTex,Text,SingleStringMathTex]\n\nThe label for your variable, for examplex=....\n\nType:\n\nUnion[str,Tex,MathTex,Text,SingleStringMathTex]\n\nUnion[str,Tex,MathTex,Text,SingleStringMathTex]\n\ntracker\u00b6\n\nUseful in updating the value of your variable on-screen.Type:ValueTracker\n\nUseful in updating the value of your variable on-screen.\n\nType:\n\nValueTracker\n\nValueTracker\n\nvalue\u00b6\n\nThe tex for the value of your variable.Type:Union[DecimalNumber,Integer]\n\nThe tex for the value of your variable.\n\nType:\n\nUnion[DecimalNumber,Integer]\n\nUnion[DecimalNumber,Integer]\n\nExamples\n\nNormal usage:\n\nExample: VariablesWithValueTracker\u00b6\n\nExample: VariableExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(var,label,var_type=<class'manim.mobject.text.numbers.DecimalNumber'>,num_decimal_places=2,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:var(float)label(str|Tex|MathTex|Text|SingleStringMathTex)var_type(type[DecimalNumber|Integer])num_decimal_places(int)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvar(float)label(str|Tex|MathTex|Text|SingleStringMathTex)var_type(type[DecimalNumber|Integer])num_decimal_places(int)kwargs(Any)\n\nvar(float)\n\nvar(float)\n\nlabel(str|Tex|MathTex|Text|SingleStringMathTex)\n\nlabel(str|Tex|MathTex|Text|SingleStringMathTex)\n\nvar_type(type[DecimalNumber|Integer])\n\nvar_type(type[DecimalNumber|Integer])\n\nnum_decimal_places(int)\n\nnum_decimal_places(int)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "# DecimalNumber typevar=0.5on_screen_var=Variable(var,Text(\"var\"),num_decimal_places=3)# Integer typeint_var=0on_screen_int_var=Variable(int_var,Text(\"int_var\"),var_type=Integer)# Using math mode for the labelon_screen_int_var=Variable(int_var,\"{a}_{i}\",var_type=Integer)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classVariablesWithValueTracker(Scene):defconstruct(self):var=0.5on_screen_var=Variable(var,Text(\"var\"),num_decimal_places=3)# You can also change the colours for the label and valueon_screen_var.label.set_color(RED)on_screen_var.value.set_color(GREEN)self.play(Write(on_screen_var))# The above line will just display the variable with# its initial value on the screen. If you also wish to# update it, you can do so by accessing the `tracker` attributeself.wait()var_tracker=on_screen_var.trackervar=10.5self.play(var_tracker.animate.set_value(var))self.wait()int_var=0on_screen_int_var=Variable(int_var,Text(\"int_var\"),var_type=Integer).next_to(on_screen_var,DOWN)on_screen_int_var.label.set_color(RED)on_screen_int_var.value.set_color(GREEN)self.play(Write(on_screen_int_var))self.wait()var_tracker=on_screen_int_var.trackervar=10.5self.play(var_tracker.animate.set_value(var))self.wait()# If you wish to have a somewhat more complicated label for your# variable with subscripts, superscripts, etc. the default class# for the label is MathTexsubscript_label_var=10on_screen_subscript_var=Variable(subscript_label_var,\"{a}_{i}\").next_to(on_screen_int_var,DOWN)self.play(Write(on_screen_subscript_var))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class VariablesWithValueTracker(Scene):\n    def construct(self):\n        var = 0.5\n        on_screen_var = Variable(var, Text(\"var\"), num_decimal_places=3)\n\n        # You can also change the colours for the label and value\n        on_screen_var.label.set_color(RED)\n        on_screen_var.value.set_color(GREEN)\n\n        self.play(Write(on_screen_var))\n        # The above line will just display the variable with\n        # its initial value on the screen. If you also wish to\n        # update it, you can do so by accessing the `tracker` attribute\n        self.wait()\n        var_tracker = on_screen_var.tracker\n        var = 10.5\n        self.play(var_tracker.animate.set_value(var))\n        self.wait()\n\n        int_var = 0\n        on_screen_int_var = Variable(\n            int_var, Text(\"int_var\"), var_type=Integer\n        ).next_to(on_screen_var, DOWN)\n        on_screen_int_var.label.set_color(RED)\n        on_screen_int_var.value.set_color(GREEN)\n\n        self.play(Write(on_screen_int_var))\n        self.wait()\n        var_tracker = on_screen_int_var.tracker\n        var = 10.5\n        self.play(var_tracker.animate.set_value(var))\n        self.wait()\n\n        # If you wish to have a somewhat more complicated label for your\n        # variable with subscripts, superscripts, etc. the default class\n        # for the label is MathTex\n        subscript_label_var = 10\n        on_screen_subscript_var = Variable(subscript_label_var, \"{a}_{i}\").next_to(\n            on_screen_int_var, DOWN\n        )\n        self.play(Write(on_screen_subscript_var))\n        self.wait()",
+      "language": "python",
+      "context": "Example: VariablesWithValueTracker\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classVariableExample(Scene):defconstruct(self):start=2.0x_var=Variable(start,'x',num_decimal_places=3)sqr_var=Variable(start**2,'x^2',num_decimal_places=3)Group(x_var,sqr_var).arrange(DOWN)sqr_var.add_updater(lambdav:v.tracker.set_value(x_var.tracker.get_value()**2))self.add(x_var,sqr_var)self.play(x_var.tracker.animate.set_value(5),run_time=2,rate_func=linear)self.wait(0.1)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class VariableExample(Scene):\n    def construct(self):\n        start = 2.0\n\n        x_var = Variable(start, 'x', num_decimal_places=3)\n        sqr_var = Variable(start**2, 'x^2', num_decimal_places=3)\n        Group(x_var, sqr_var).arrange(DOWN)\n\n        sqr_var.add_updater(lambda v: v.tracker.set_value(x_var.tracker.get_value()**2))\n\n        self.add(x_var, sqr_var)\n        self.play(x_var.tracker.animate.set_value(5), run_time=2, rate_func=linear)\n        self.wait(0.1)",
+      "language": "python",
+      "context": "Example: VariableExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Variable",
+      "class_name": null,
+      "parameters": [
+        "var"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "label",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The label for your variable, for examplex=...."
+    },
+    {
+      "name": "tracker",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Useful in updating the value of your variable on-screen."
+    },
+    {
+      "name": "value",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The tex for the value of your variable."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "var"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "animation"
+  ]
+}

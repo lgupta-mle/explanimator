@@ -1,0 +1,45 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.frame.ScreenRectangle.html",
+  "title": "ScreenRectangle\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ScreenRectangle\u00b6\n\nQualified name:manim.mobject.frame.ScreenRectangle\n\nclassScreenRectangle(aspect_ratio=1.7777777777777777,height=4,**kwargs)[source]\u00b6\n\nBases:RectangleMethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridesaspect_ratioThe aspect ratio.colordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:aspect_ratio(float)height(float)kwargs(Any)_original__init__(aspect_ratio=1.7777777777777777,height=4,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:aspect_ratio(float)height(float)kwargs(Any)Return type:Nonepropertyaspect_ratio:float\u00b6The aspect ratio.When set, the width is stretched to accommodate\nthe new aspect ratio.\n\nBases:Rectangle\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\naspect_ratio\n\nThe aspect ratio.\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\naspect_ratio(float)height(float)kwargs(Any)\n\naspect_ratio(float)\n\naspect_ratio(float)\n\nheight(float)\n\nheight(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(aspect_ratio=1.7777777777777777,height=4,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:aspect_ratio(float)height(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\naspect_ratio(float)height(float)kwargs(Any)\n\naspect_ratio(float)\n\naspect_ratio(float)\n\nheight(float)\n\nheight(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\npropertyaspect_ratio:float\u00b6\n\nThe aspect ratio.When set, the width is stretched to accommodate\nthe new aspect ratio.\n\nThe aspect ratio.\n\nWhen set, the width is stretched to accommodate\nthe new aspect ratio.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ScreenRectangle",
+      "class_name": null,
+      "parameters": [
+        "aspect_ratio=1.7777777777777777"
+      ],
+      "return_type": null,
+      "description": "Bases:Rectangle"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "aspect_ratio=1.7777777777777777"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "aspect_ratio",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The aspect ratio."
+    }
+  ],
+  "related_classes": [
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

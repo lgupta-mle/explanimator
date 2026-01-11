@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene.SceneInteractRerun.html",
+  "title": "SceneInteractRerun\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SceneInteractRerun\u00b6\n\nQualified name:manim.scene.scene.SceneInteractRerun\n\nclassSceneInteractRerun(sender,**kwargs)[source]\u00b6\n\nBases:objectObject which, when encountered inScene.interact(), triggers\nthe rerun of the scene. This object can be queued inScene.queuefor later use inScene.interact().Parameters:sender(str)kwargs(Any)sender\u00b6The name of the entity which issued the rerun of the scene, such as\"gui\",\"keyboard\",\"play\"or\"file\".Type:strkwargs\u00b6Additional keyword arguments when rerunning the scene. Currently,\nonly\"from_animation_number\"is being used, which determines the\nanimation from which to start rerunning the scene.Type:dict[str, Any]MethodsAttributessenderkwargs\n\nBases:object\n\nObject which, when encountered inScene.interact(), triggers\nthe rerun of the scene. This object can be queued inScene.queuefor later use inScene.interact().\n\nParameters:\n\nsender(str)kwargs(Any)\n\nsender(str)\n\nsender(str)\n\nkwargs(Any)\n\nkwargs(Any)\n\nsender\u00b6\n\nThe name of the entity which issued the rerun of the scene, such as\"gui\",\"keyboard\",\"play\"or\"file\".Type:str\n\nThe name of the entity which issued the rerun of the scene, such as\"gui\",\"keyboard\",\"play\"or\"file\".\n\nType:\n\nstr\n\nstr\n\nkwargs\u00b6\n\nAdditional keyword arguments when rerunning the scene. Currently,\nonly\"from_animation_number\"is being used, which determines the\nanimation from which to start rerunning the scene.Type:dict[str, Any]\n\nAdditional keyword arguments when rerunning the scene. Currently,\nonly\"from_animation_number\"is being used, which determines the\nanimation from which to start rerunning the scene.\n\nType:\n\ndict[str, Any]\n\ndict[str, Any]\n\nMethods\n\nAttributes\n\nsender\n\nkwargs",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SceneInteractRerun",
+      "class_name": null,
+      "parameters": [
+        "sender"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "sender",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The name of the entity which issued the rerun of the scene, such as\"gui\",\"keyboard\",\"play\"or\"file\"."
+    },
+    {
+      "name": "kwargs",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Additional keyword arguments when rerunning the scene. Currently,\nonly\"from_animation_number\"is being used, which determines the\nanimation from which to start rerunning the scene."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation"
+  ]
+}

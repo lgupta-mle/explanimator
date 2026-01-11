@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.labeled.LabeledLine.html",
+  "title": "LabeledLine\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "LabeledLine\u00b6\n\nQualified name:manim.mobject.geometry.labeled.LabeledLine\n\nclassLabeledLine(label,label_position=0.5,label_config=None,box_config=None,frame_config=None,*args,**kwargs)[source]\u00b6\n\nBases:LineConstructs a line containing a label box somewhere along its length.Parameters:label(str|Tex|MathTex|Text) \u2013 Label that will be displayed on the line.label_position(float) \u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.label_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.box_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the background box.frame_config(dict[str,Any]|None) \u2013A dictionary containing the configuration for the frame.See alsoLabeledArrowargs(Any)kwargs(Any)ExamplesExample: LabeledLineExample\u00b6frommanimimport*classLabeledLineExample(Scene):defconstruct(self):line=LabeledLine(label='0.5',label_position=0.8,label_config={\"font_size\":20},start=LEFT+DOWN,end=RIGHT+UP)line.set_length(line.get_length()*2)self.add(line)class LabeledLineExample(Scene):\n    def construct(self):\n        line = LabeledLine(\n            label          = '0.5',\n            label_position = 0.8,\n            label_config = {\n                \"font_size\" : 20\n            },\n            start=LEFT+DOWN,\n            end=RIGHT+UP)\n\n        line.set_length(line.get_length() * 2)\n        self.add(line)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(label,label_position=0.5,label_config=None,box_config=None,frame_config=None,*args,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:label(str|Tex|MathTex|Text)label_position(float)label_config(dict[str,Any]|None)box_config(dict[str,Any]|None)frame_config(dict[str,Any]|None)args(Any)kwargs(Any)Return type:None\n\nBases:Line\n\nConstructs a line containing a label box somewhere along its length.\n\nParameters:\n\nlabel(str|Tex|MathTex|Text) \u2013 Label that will be displayed on the line.label_position(float) \u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.label_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.box_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the background box.frame_config(dict[str,Any]|None) \u2013A dictionary containing the configuration for the frame.See alsoLabeledArrowargs(Any)kwargs(Any)\n\nlabel(str|Tex|MathTex|Text) \u2013 Label that will be displayed on the line.\n\nlabel(str|Tex|MathTex|Text) \u2013 Label that will be displayed on the line.\n\nlabel_position(float) \u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.\n\nlabel_position(float) \u2013 A ratio in the range [0-1] to indicate the position of the label with respect to the length of the line. Default value is 0.5.\n\nlabel_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.\n\nlabel_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the label.\nThis is only applied iflabelis of typestr.\n\nbox_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the background box.\n\nbox_config(dict[str,Any]|None) \u2013 A dictionary containing the configuration for the background box.\n\nframe_config(dict[str,Any]|None) \u2013A dictionary containing the configuration for the frame.See alsoLabeledArrow\n\nframe_config(dict[str,Any]|None) \u2013A dictionary containing the configuration for the frame.See alsoLabeledArrow\n\nA dictionary containing the configuration for the frame.\n\nSee also\n\nLabeledArrow\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: LabeledLineExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(label,label_position=0.5,label_config=None,box_config=None,frame_config=None,*args,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:label(str|Tex|MathTex|Text)label_position(float)label_config(dict[str,Any]|None)box_config(dict[str,Any]|None)frame_config(dict[str,Any]|None)args(Any)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nlabel(str|Tex|MathTex|Text)label_position(float)label_config(dict[str,Any]|None)box_config(dict[str,Any]|None)frame_config(dict[str,Any]|None)args(Any)kwargs(Any)\n\nlabel(str|Tex|MathTex|Text)\n\nlabel(str|Tex|MathTex|Text)\n\nlabel_position(float)\n\nlabel_position(float)\n\nlabel_config(dict[str,Any]|None)\n\nlabel_config(dict[str,Any]|None)\n\nbox_config(dict[str,Any]|None)\n\nbox_config(dict[str,Any]|None)\n\nframe_config(dict[str,Any]|None)\n\nframe_config(dict[str,Any]|None)\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLabeledLineExample(Scene):defconstruct(self):line=LabeledLine(label='0.5',label_position=0.8,label_config={\"font_size\":20},start=LEFT+DOWN,end=RIGHT+UP)line.set_length(line.get_length()*2)self.add(line)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LabeledLineExample(Scene):\n    def construct(self):\n        line = LabeledLine(\n            label          = '0.5',\n            label_position = 0.8,\n            label_config = {\n                \"font_size\" : 20\n            },\n            start=LEFT+DOWN,\n            end=RIGHT+UP)\n\n        line.set_length(line.get_length() * 2)\n        self.add(line)",
+      "language": "python",
+      "context": "Example: LabeledLineExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "LabeledLine",
+      "class_name": null,
+      "parameters": [
+        "label"
+      ],
+      "return_type": null,
+      "description": "Bases:Line"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "label"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Tex",
+    "MathTex",
+    "Text",
+    "Arrow",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "animation"
+  ]
+}

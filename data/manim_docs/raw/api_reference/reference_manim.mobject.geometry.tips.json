@@ -1,0 +1,20 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.tips.html",
+  "title": "tips\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "tips\u00b6\n\nA collection of tip mobjects for use withTipableVMobject.\n\nClasses\n\nArrowCircleFilledTip\n\nCircular arrow tip with filled tip.\n\nArrowCircleTip\n\nCircular arrow tip.\n\nArrowSquareFilledTip\n\nSquare arrow tip with filled tip.\n\nArrowSquareTip\n\nSquare arrow tip.\n\nArrowTip\n\nBase class for arrow tips.\n\nArrowTriangleFilledTip\n\nTriangular arrow tip with filled tip.\n\nArrowTriangleTip\n\nTriangular arrow tip.\n\nStealthTip\n\n'Stealth' fighter / kite arrow shape.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Circle",
+    "VMobject",
+    "Arrow",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "color"
+  ]
+}

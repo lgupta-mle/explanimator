@@ -1,0 +1,106 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.logo.ManimBanner.html",
+  "title": "ManimBanner\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimBanner\u00b6\n\nQualified name:manim.mobject.logo.ManimBanner\n\nclassManimBanner(dark_theme=True)[source]\u00b6\n\nBases:VGroupConvenience class representing Manim\u2019s banner.Can be animated using custom methods.Parameters:dark_theme(bool) \u2013 IfTrue(the default), the dark theme version of the logo\n(with light text font) will be rendered. Otherwise, ifFalse,\nthe light theme version (with dark text font) is used.ExamplesExample: DarkThemeBanner\u00b6frommanimimport*classDarkThemeBanner(Scene):defconstruct(self):banner=ManimBanner()self.play(banner.create())self.play(banner.expand())self.wait()self.play(Unwrite(banner))class DarkThemeBanner(Scene):\n    def construct(self):\n        banner = ManimBanner()\n        self.play(banner.create())\n        self.play(banner.expand())\n        self.wait()\n        self.play(Unwrite(banner))Example: LightThemeBanner\u00b6frommanimimport*classLightThemeBanner(Scene):defconstruct(self):self.camera.background_color=\"#ece6e2\"banner=ManimBanner(dark_theme=False)self.play(banner.create())self.play(banner.expand())self.wait()self.play(Unwrite(banner))class LightThemeBanner(Scene):\n    def construct(self):\n        self.camera.background_color = \"#ece6e2\"\n        banner = ManimBanner(dark_theme=False)\n        self.play(banner.create())\n        self.play(banner.expand())\n        self.wait()\n        self.play(Unwrite(banner))MethodscreateThe creation animation for Manim's logo.expandAn animation that expands Manim's logo into its banner.scaleScale the banner by the specified scale factor.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(dark_theme=True)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:dark_theme(bool)create(run_time=2)[source]\u00b6The creation animation for Manim\u2019s logo.Parameters:run_time(float) \u2013 The run time of the animation.Returns:An animation to be used in aScene.play()call.Return type:AnimationGroupexpand(run_time=1.5,direction='center')[source]\u00b6An animation that expands Manim\u2019s logo into its banner.The returned animation transforms the banner from its initial\nstate (representing Manim\u2019s logo with just the icons) to its\nexpanded state (showing the full name together with the icons).See the class documentation for how to use this.NoteBefore calling this method, the text \u201canim\u201d is not a\nsubmobject of the banner object. After the expansion,\nit is added as a submobject so subsequent animations\nto the banner object apply to the text \u201canim\u201d as well.Parameters:run_time(float) \u2013 The run time of the animation.direction(str) \u2013 The direction in which the logo is expanded.Returns:An animation to be used in aScene.play()call.Return type:SuccessionExamplesExample: ExpandDirections\u00b6frommanimimport*classExpandDirections(Scene):defconstruct(self):banners=[ManimBanner().scale(0.5).shift(UP*x)forxin[-2,0,2]]self.play(banners[0].expand(direction=\"right\"),banners[1].expand(direction=\"center\"),banners[2].expand(direction=\"left\"),)class ExpandDirections(Scene):\n    def construct(self):\n        banners = [ManimBanner().scale(0.5).shift(UP*x) for x in [-2, 0, 2]]\n        self.play(\n            banners[0].expand(direction=\"right\"),\n            banners[1].expand(direction=\"center\"),\n            banners[2].expand(direction=\"left\"),\n        )scale(scale_factor,**kwargs)[source]\u00b6Scale the banner by the specified scale factor.Parameters:scale_factor(float) \u2013 The factor used for scaling the banner.kwargs(Any)Returns:The scaled banner.Return type:ManimBanner\n\nBases:VGroup\n\nConvenience class representing Manim\u2019s banner.\n\nCan be animated using custom methods.\n\nParameters:\n\ndark_theme(bool) \u2013 IfTrue(the default), the dark theme version of the logo\n(with light text font) will be rendered. Otherwise, ifFalse,\nthe light theme version (with dark text font) is used.\n\ndark_theme(bool) \u2013 IfTrue(the default), the dark theme version of the logo\n(with light text font) will be rendered. Otherwise, ifFalse,\nthe light theme version (with dark text font) is used.\n\nExamples\n\nExample: DarkThemeBanner\u00b6\n\nExample: LightThemeBanner\u00b6\n\nMethods\n\ncreate\n\nThe creation animation for Manim's logo.\n\nexpand\n\nAn animation that expands Manim's logo into its banner.\n\nscale\n\nScale the banner by the specified scale factor.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(dark_theme=True)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:dark_theme(bool)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ndark_theme(bool)\n\ndark_theme(bool)\n\ncreate(run_time=2)[source]\u00b6\n\nThe creation animation for Manim\u2019s logo.Parameters:run_time(float) \u2013 The run time of the animation.Returns:An animation to be used in aScene.play()call.Return type:AnimationGroup\n\nThe creation animation for Manim\u2019s logo.\n\nParameters:\n\nrun_time(float) \u2013 The run time of the animation.\n\nrun_time(float) \u2013 The run time of the animation.\n\nReturns:\n\nAn animation to be used in aScene.play()call.\n\nAn animation to be used in aScene.play()call.\n\nReturn type:\n\nAnimationGroup\n\nAnimationGroup\n\nexpand(run_time=1.5,direction='center')[source]\u00b6\n\nAn animation that expands Manim\u2019s logo into its banner.The returned animation transforms the banner from its initial\nstate (representing Manim\u2019s logo with just the icons) to its\nexpanded state (showing the full name together with the icons).See the class documentation for how to use this.NoteBefore calling this method, the text \u201canim\u201d is not a\nsubmobject of the banner object. After the expansion,\nit is added as a submobject so subsequent animations\nto the banner object apply to the text \u201canim\u201d as well.Parameters:run_time(float) \u2013 The run time of the animation.direction(str) \u2013 The direction in which the logo is expanded.Returns:An animation to be used in aScene.play()call.Return type:SuccessionExamplesExample: ExpandDirections\u00b6frommanimimport*classExpandDirections(Scene):defconstruct(self):banners=[ManimBanner().scale(0.5).shift(UP*x)forxin[-2,0,2]]self.play(banners[0].expand(direction=\"right\"),banners[1].expand(direction=\"center\"),banners[2].expand(direction=\"left\"),)class ExpandDirections(Scene):\n    def construct(self):\n        banners = [ManimBanner().scale(0.5).shift(UP*x) for x in [-2, 0, 2]]\n        self.play(\n            banners[0].expand(direction=\"right\"),\n            banners[1].expand(direction=\"center\"),\n            banners[2].expand(direction=\"left\"),\n        )\n\nAn animation that expands Manim\u2019s logo into its banner.\n\nThe returned animation transforms the banner from its initial\nstate (representing Manim\u2019s logo with just the icons) to its\nexpanded state (showing the full name together with the icons).\n\nSee the class documentation for how to use this.\n\nNote\n\nBefore calling this method, the text \u201canim\u201d is not a\nsubmobject of the banner object. After the expansion,\nit is added as a submobject so subsequent animations\nto the banner object apply to the text \u201canim\u201d as well.\n\nParameters:\n\nrun_time(float) \u2013 The run time of the animation.direction(str) \u2013 The direction in which the logo is expanded.\n\nrun_time(float) \u2013 The run time of the animation.\n\nrun_time(float) \u2013 The run time of the animation.\n\ndirection(str) \u2013 The direction in which the logo is expanded.\n\ndirection(str) \u2013 The direction in which the logo is expanded.\n\nReturns:\n\nAn animation to be used in aScene.play()call.\n\nAn animation to be used in aScene.play()call.\n\nReturn type:\n\nSuccession\n\nSuccession\n\nExamples\n\nExample: ExpandDirections\u00b6\n\nscale(scale_factor,**kwargs)[source]\u00b6\n\nScale the banner by the specified scale factor.Parameters:scale_factor(float) \u2013 The factor used for scaling the banner.kwargs(Any)Returns:The scaled banner.Return type:ManimBanner\n\nScale the banner by the specified scale factor.\n\nParameters:\n\nscale_factor(float) \u2013 The factor used for scaling the banner.kwargs(Any)\n\nscale_factor(float) \u2013 The factor used for scaling the banner.\n\nscale_factor(float) \u2013 The factor used for scaling the banner.\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturns:\n\nThe scaled banner.\n\nThe scaled banner.\n\nReturn type:\n\nManimBanner\n\nManimBanner",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classDarkThemeBanner(Scene):defconstruct(self):banner=ManimBanner()self.play(banner.create())self.play(banner.expand())self.wait()self.play(Unwrite(banner))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class DarkThemeBanner(Scene):\n    def construct(self):\n        banner = ManimBanner()\n        self.play(banner.create())\n        self.play(banner.expand())\n        self.wait()\n        self.play(Unwrite(banner))",
+      "language": "python",
+      "context": "Example: DarkThemeBanner\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classLightThemeBanner(Scene):defconstruct(self):self.camera.background_color=\"#ece6e2\"banner=ManimBanner(dark_theme=False)self.play(banner.create())self.play(banner.expand())self.wait()self.play(Unwrite(banner))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LightThemeBanner(Scene):\n    def construct(self):\n        self.camera.background_color = \"#ece6e2\"\n        banner = ManimBanner(dark_theme=False)\n        self.play(banner.create())\n        self.play(banner.expand())\n        self.wait()\n        self.play(Unwrite(banner))",
+      "language": "python",
+      "context": "Example: LightThemeBanner\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classExpandDirections(Scene):defconstruct(self):banners=[ManimBanner().scale(0.5).shift(UP*x)forxin[-2,0,2]]self.play(banners[0].expand(direction=\"right\"),banners[1].expand(direction=\"center\"),banners[2].expand(direction=\"left\"),)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExpandDirections(Scene):\n    def construct(self):\n        banners = [ManimBanner().scale(0.5).shift(UP*x) for x in [-2, 0, 2]]\n        self.play(\n            banners[0].expand(direction=\"right\"),\n            banners[1].expand(direction=\"center\"),\n            banners[2].expand(direction=\"left\"),\n        )",
+      "language": "python",
+      "context": "Example: ExpandDirections\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ManimBanner",
+      "class_name": null,
+      "parameters": [
+        "dark_theme=True"
+      ],
+      "return_type": null,
+      "description": "Bases:VGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "dark_theme=True"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "create",
+      "class_name": null,
+      "parameters": [
+        "run_time=2"
+      ],
+      "return_type": null,
+      "description": "The creation animation for Manim\u2019s logo."
+    },
+    {
+      "name": "expand",
+      "class_name": null,
+      "parameters": [
+        "run_time=1.5"
+      ],
+      "return_type": null,
+      "description": "An animation that expands Manim\u2019s logo into its banner."
+    },
+    {
+      "name": "scale",
+      "class_name": null,
+      "parameters": [
+        "scale_factor"
+      ],
+      "return_type": null,
+      "description": "Scale the banner by the specified scale factor."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Succession",
+    "Scene",
+    "AnimationGroup"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

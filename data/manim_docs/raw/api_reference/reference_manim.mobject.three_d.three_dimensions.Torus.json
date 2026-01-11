@@ -1,0 +1,62 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Torus.html",
+  "title": "Torus\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Torus\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Torus\n\nclassTorus(major_radius=3,minor_radius=1,u_range=(0,6.283185307179586),v_range=(0,6.283185307179586),resolution=None,**kwargs)[source]\u00b6\n\nBases:SurfaceA torus.Parameters:major_radius(float) \u2013 Distance from the center of the tube to the center of the torus.minor_radius(float) \u2013 Radius of the tube.u_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).v_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).resolution(tuple[int,int]|None) \u2013 The number of samples taken of theTorus. A tuple can be\nused to define different resolutions foruandvrespectively.ExamplesExample: ExampleTorus\u00b6frommanimimport*classExampleTorus(ThreeDScene):defconstruct(self):axes=ThreeDAxes()torus=Torus()self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,torus)class ExampleTorus(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        torus = Torus()\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, torus)MethodsfuncThe z values defining theTorusbeing plotted.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(major_radius=3,minor_radius=1,u_range=(0,6.283185307179586),v_range=(0,6.283185307179586),resolution=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:major_radius(float)minor_radius(float)u_range(Sequence[float])v_range(Sequence[float])resolution(tuple[int,int]|None)Return type:Nonefunc(u,v)[source]\u00b6The z values defining theTorusbeing plotted.Returns:The z values defining theTorus.Return type:numpy.ndarrayParameters:u(float)v(float)\n\nBases:Surface\n\nA torus.\n\nParameters:\n\nmajor_radius(float) \u2013 Distance from the center of the tube to the center of the torus.minor_radius(float) \u2013 Radius of the tube.u_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).v_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).resolution(tuple[int,int]|None) \u2013 The number of samples taken of theTorus. A tuple can be\nused to define different resolutions foruandvrespectively.\n\nmajor_radius(float) \u2013 Distance from the center of the tube to the center of the torus.\n\nmajor_radius(float) \u2013 Distance from the center of the tube to the center of the torus.\n\nminor_radius(float) \u2013 Radius of the tube.\n\nminor_radius(float) \u2013 Radius of the tube.\n\nu_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).\n\nu_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).\n\nv_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).\n\nv_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).\n\nresolution(tuple[int,int]|None) \u2013 The number of samples taken of theTorus. A tuple can be\nused to define different resolutions foruandvrespectively.\n\nresolution(tuple[int,int]|None) \u2013 The number of samples taken of theTorus. A tuple can be\nused to define different resolutions foruandvrespectively.\n\nExamples\n\nExample: ExampleTorus\u00b6\n\nMethods\n\nfunc\n\nThe z values defining theTorusbeing plotted.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(major_radius=3,minor_radius=1,u_range=(0,6.283185307179586),v_range=(0,6.283185307179586),resolution=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:major_radius(float)minor_radius(float)u_range(Sequence[float])v_range(Sequence[float])resolution(tuple[int,int]|None)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmajor_radius(float)minor_radius(float)u_range(Sequence[float])v_range(Sequence[float])resolution(tuple[int,int]|None)\n\nmajor_radius(float)\n\nmajor_radius(float)\n\nminor_radius(float)\n\nminor_radius(float)\n\nu_range(Sequence[float])\n\nu_range(Sequence[float])\n\nv_range(Sequence[float])\n\nv_range(Sequence[float])\n\nresolution(tuple[int,int]|None)\n\nresolution(tuple[int,int]|None)\n\nReturn type:\n\nNone\n\nNone\n\nfunc(u,v)[source]\u00b6\n\nThe z values defining theTorusbeing plotted.Returns:The z values defining theTorus.Return type:numpy.ndarrayParameters:u(float)v(float)\n\nThe z values defining theTorusbeing plotted.\n\nReturns:\n\nThe z values defining theTorus.\n\nThe z values defining theTorus.\n\nReturn type:\n\nnumpy.ndarray\n\nnumpy.ndarray\n\nParameters:\n\nu(float)v(float)\n\nu(float)\n\nu(float)\n\nv(float)\n\nv(float)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleTorus(ThreeDScene):defconstruct(self):axes=ThreeDAxes()torus=Torus()self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,torus)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleTorus(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        torus = Torus()\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, torus)",
+      "language": "python",
+      "context": "Example: ExampleTorus\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Torus",
+      "class_name": null,
+      "parameters": [
+        "major_radius=3"
+      ],
+      "return_type": null,
+      "description": "Bases:Surface"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "major_radius=3"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "func",
+      "class_name": null,
+      "parameters": [
+        "u"
+      ],
+      "return_type": null,
+      "description": "The z values defining theTorusbeing plotted."
+    }
+  ],
+  "related_classes": [
+    "Axes",
+    "ThreeDScene",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.core.RandomColorGenerator.html",
+  "title": "RandomColorGenerator\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "RandomColorGenerator\u00b6\n\nQualified name:manim.utils.color.core.RandomColorGenerator\n\nclassRandomColorGenerator(seed=None,sample_colors=None)[source]\u00b6\n\nBases:objectMethodsnextReturns the next color from the configured color list.Parameters:seed(int|None)sample_colors(list[ManimColor]|None)classmethod_random_color()[source]\u00b6Internal method to generate a random color using the singleton instance ofRandomColorGenerator.\nIt will be used by proxy methodrandom_colorpublicly available\nand makes it backwards compatible.Returns:A randomly selected color from the configured color list of\nthe singleton instance.Return type:ManimColor_singleton:RandomColorGenerator|None=<manim.utils.color.core.RandomColorGeneratorobject>\u00b6A generator for producing random colors from a given list of Manim colors,\noptionally in a reproducible sequence using a seed value.When initialized with a specific seed, this class produces a deterministic\nsequence ofManimColorinstances. If no seed is provided, the selection is\nnon-deterministic using Python\u2019s global random state.Parameters:seed\u2013 A seed value to initialize the internal random number generator.\nIfNone(the default), colors are chosen using the global random state.sample_colors\u2013 A custom list of Manim colors to sample from. Defaults to the full Manim\ncolor palette.ExamplesWithout a seed (non-deterministic):>>>frommanimimportRandomColorGenerator,ManimColor,RED,GREEN,BLUE>>>rnd=RandomColorGenerator()>>>isinstance(rnd.next(),ManimColor)TrueWith a seed (deterministic sequence):>>>rnd=RandomColorGenerator(42)>>>rnd.next()ManimColor('#ECE7E2')>>>rnd.next()ManimColor('#BBBBBB')>>>rnd.next()ManimColor('#BBBBBB')Re-initializing with the same seed gives the same sequence:>>>rnd2=RandomColorGenerator(42)>>>rnd2.next()ManimColor('#ECE7E2')>>>rnd2.next()ManimColor('#BBBBBB')>>>rnd2.next()ManimColor('#BBBBBB')Using a custom color list:>>>custom_palette=[RED,GREEN,BLUE]>>>rnd_custom=RandomColorGenerator(1,sample_colors=custom_palette)>>>rnd_custom.next()incustom_paletteTrue>>>rnd_custom.next()incustom_paletteTrueWithout a seed and custom palette (non-deterministic):>>>rnd_nodet=RandomColorGenerator(sample_colors=[RED])>>>rnd_nodet.next()ManimColor('#FC6255')next()[source]\u00b6Returns the next color from the configured color list.Returns:A randomly selected color from the specified color list.Return type:ManimColorExamplesUsage:>>>frommanimimportRandomColorGenerator,RED>>>rnd=RandomColorGenerator(sample_colors=[RED])>>>rnd.next()ManimColor('#FC6255')\n\nBases:object\n\nMethods\n\nnext\n\nReturns the next color from the configured color list.\n\nParameters:\n\nseed(int|None)sample_colors(list[ManimColor]|None)\n\nseed(int|None)\n\nseed(int|None)\n\nsample_colors(list[ManimColor]|None)\n\nsample_colors(list[ManimColor]|None)\n\nclassmethod_random_color()[source]\u00b6\n\nInternal method to generate a random color using the singleton instance ofRandomColorGenerator.\nIt will be used by proxy methodrandom_colorpublicly available\nand makes it backwards compatible.Returns:A randomly selected color from the configured color list of\nthe singleton instance.Return type:ManimColor\n\nInternal method to generate a random color using the singleton instance ofRandomColorGenerator.\nIt will be used by proxy methodrandom_colorpublicly available\nand makes it backwards compatible.\n\nReturns:\n\nA randomly selected color from the configured color list of\nthe singleton instance.\n\nA randomly selected color from the configured color list of\nthe singleton instance.\n\nReturn type:\n\nManimColor\n\nManimColor\n\n_singleton:RandomColorGenerator|None=<manim.utils.color.core.RandomColorGeneratorobject>\u00b6\n\nA generator for producing random colors from a given list of Manim colors,\noptionally in a reproducible sequence using a seed value.When initialized with a specific seed, this class produces a deterministic\nsequence ofManimColorinstances. If no seed is provided, the selection is\nnon-deterministic using Python\u2019s global random state.Parameters:seed\u2013 A seed value to initialize the internal random number generator.\nIfNone(the default), colors are chosen using the global random state.sample_colors\u2013 A custom list of Manim colors to sample from. Defaults to the full Manim\ncolor palette.ExamplesWithout a seed (non-deterministic):>>>frommanimimportRandomColorGenerator,ManimColor,RED,GREEN,BLUE>>>rnd=RandomColorGenerator()>>>isinstance(rnd.next(),ManimColor)TrueWith a seed (deterministic sequence):>>>rnd=RandomColorGenerator(42)>>>rnd.next()ManimColor('#ECE7E2')>>>rnd.next()ManimColor('#BBBBBB')>>>rnd.next()ManimColor('#BBBBBB')Re-initializing with the same seed gives the same sequence:>>>rnd2=RandomColorGenerator(42)>>>rnd2.next()ManimColor('#ECE7E2')>>>rnd2.next()ManimColor('#BBBBBB')>>>rnd2.next()ManimColor('#BBBBBB')Using a custom color list:>>>custom_palette=[RED,GREEN,BLUE]>>>rnd_custom=RandomColorGenerator(1,sample_colors=custom_palette)>>>rnd_custom.next()incustom_paletteTrue>>>rnd_custom.next()incustom_paletteTrueWithout a seed and custom palette (non-deterministic):>>>rnd_nodet=RandomColorGenerator(sample_colors=[RED])>>>rnd_nodet.next()ManimColor('#FC6255')\n\nA generator for producing random colors from a given list of Manim colors,\noptionally in a reproducible sequence using a seed value.\n\nWhen initialized with a specific seed, this class produces a deterministic\nsequence ofManimColorinstances. If no seed is provided, the selection is\nnon-deterministic using Python\u2019s global random state.\n\nParameters:\n\nseed\u2013 A seed value to initialize the internal random number generator.\nIfNone(the default), colors are chosen using the global random state.sample_colors\u2013 A custom list of Manim colors to sample from. Defaults to the full Manim\ncolor palette.\n\nseed\u2013 A seed value to initialize the internal random number generator.\nIfNone(the default), colors are chosen using the global random state.\n\nseed\u2013 A seed value to initialize the internal random number generator.\nIfNone(the default), colors are chosen using the global random state.\n\nsample_colors\u2013 A custom list of Manim colors to sample from. Defaults to the full Manim\ncolor palette.\n\nsample_colors\u2013 A custom list of Manim colors to sample from. Defaults to the full Manim\ncolor palette.\n\nExamples\n\nWithout a seed (non-deterministic):\n\nWith a seed (deterministic sequence):\n\nRe-initializing with the same seed gives the same sequence:\n\nUsing a custom color list:\n\nWithout a seed and custom palette (non-deterministic):\n\nnext()[source]\u00b6\n\nReturns the next color from the configured color list.Returns:A randomly selected color from the specified color list.Return type:ManimColorExamplesUsage:>>>frommanimimportRandomColorGenerator,RED>>>rnd=RandomColorGenerator(sample_colors=[RED])>>>rnd.next()ManimColor('#FC6255')\n\nReturns the next color from the configured color list.\n\nReturns:\n\nA randomly selected color from the specified color list.\n\nA randomly selected color from the specified color list.\n\nReturn type:\n\nManimColor\n\nManimColor\n\nExamples\n\nUsage:",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportRandomColorGenerator,ManimColor,RED,GREEN,BLUE>>>rnd=RandomColorGenerator()>>>isinstance(rnd.next(),ManimColor)True",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>rnd=RandomColorGenerator(42)>>>rnd.next()ManimColor('#ECE7E2')>>>rnd.next()ManimColor('#BBBBBB')>>>rnd.next()ManimColor('#BBBBBB')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>rnd2=RandomColorGenerator(42)>>>rnd2.next()ManimColor('#ECE7E2')>>>rnd2.next()ManimColor('#BBBBBB')>>>rnd2.next()ManimColor('#BBBBBB')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>custom_palette=[RED,GREEN,BLUE]>>>rnd_custom=RandomColorGenerator(1,sample_colors=custom_palette)>>>rnd_custom.next()incustom_paletteTrue>>>rnd_custom.next()incustom_paletteTrue",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>rnd_nodet=RandomColorGenerator(sample_colors=[RED])>>>rnd_nodet.next()ManimColor('#FC6255')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportRandomColorGenerator,RED>>>rnd=RandomColorGenerator(sample_colors=[RED])>>>rnd.next()ManimColor('#FC6255')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "RandomColorGenerator",
+      "class_name": null,
+      "parameters": [
+        "seed=None"
+      ],
+      "return_type": null,
+      "description": "Bases:object"
+    },
+    {
+      "name": "_random_color",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Internal method to generate a random color using the singleton instance ofRandomColorGenerator.\nIt will be used by proxy methodrandom_colorpublicly available\nand makes it backwards compatible."
+    },
+    {
+      "name": "_singleton",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "A generator for producing random colors from a given list of Manim colors,\noptionally in a reproducible sequence using a seed value."
+    },
+    {
+      "name": "next",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the next color from the configured color list."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "timing"
+  ]
+}

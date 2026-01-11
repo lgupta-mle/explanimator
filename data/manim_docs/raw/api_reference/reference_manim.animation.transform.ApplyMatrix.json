@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ApplyMatrix.html",
+  "title": "ApplyMatrix\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ApplyMatrix\u00b6\n\nQualified name:manim.animation.transform.ApplyMatrix\n\nclassApplyMatrix(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ApplyPointwiseFunctionApplies a matrix transform to an mobject.Parameters:matrix(np.ndarray) \u2013 The transformation matrix.mobject(Mobject) \u2013 TheMobject.about_point(np.ndarray) \u2013 The origin point for the transform. Defaults toORIGIN.kwargs\u2013 Further keyword arguments that are passed toApplyPointwiseFunction.ExamplesExample: ApplyMatrixExample\u00b6frommanimimport*classApplyMatrixExample(Scene):defconstruct(self):matrix=[[1,1],[0,2/3]]self.play(ApplyMatrix(matrix,Text(\"Hello World!\")),ApplyMatrix(matrix,NumberPlane()))class ApplyMatrixExample(Scene):\n    def construct(self):\n        matrix = [[1, 1], [0, 2/3]]\n        self.play(ApplyMatrix(matrix, Text(\"Hello World!\")), ApplyMatrix(matrix, NumberPlane()))Methodsinitialize_matrixAttributespath_arcpath_funcrun_time_original__init__(matrix,mobject,about_point=array([0.,0.,0.]),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:matrix(ndarray)mobject(Mobject)about_point(ndarray)Return type:None\n\nBases:ApplyPointwiseFunction\n\nApplies a matrix transform to an mobject.\n\nParameters:\n\nmatrix(np.ndarray) \u2013 The transformation matrix.mobject(Mobject) \u2013 TheMobject.about_point(np.ndarray) \u2013 The origin point for the transform. Defaults toORIGIN.kwargs\u2013 Further keyword arguments that are passed toApplyPointwiseFunction.\n\nmatrix(np.ndarray) \u2013 The transformation matrix.\n\nmatrix(np.ndarray) \u2013 The transformation matrix.\n\nmobject(Mobject) \u2013 TheMobject.\n\nmobject(Mobject) \u2013 TheMobject.\n\nabout_point(np.ndarray) \u2013 The origin point for the transform. Defaults toORIGIN.\n\nabout_point(np.ndarray) \u2013 The origin point for the transform. Defaults toORIGIN.\n\nkwargs\u2013 Further keyword arguments that are passed toApplyPointwiseFunction.\n\nkwargs\u2013 Further keyword arguments that are passed toApplyPointwiseFunction.\n\nExamples\n\nExample: ApplyMatrixExample\u00b6\n\nMethods\n\ninitialize_matrix\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(matrix,mobject,about_point=array([0.,0.,0.]),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:matrix(ndarray)mobject(Mobject)about_point(ndarray)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmatrix(ndarray)mobject(Mobject)about_point(ndarray)\n\nmatrix(ndarray)\n\nmatrix(ndarray)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nabout_point(ndarray)\n\nabout_point(ndarray)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classApplyMatrixExample(Scene):defconstruct(self):matrix=[[1,1],[0,2/3]]self.play(ApplyMatrix(matrix,Text(\"Hello World!\")),ApplyMatrix(matrix,NumberPlane()))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ApplyMatrixExample(Scene):\n    def construct(self):\n        matrix = [[1, 1], [0, 2/3]]\n        self.play(ApplyMatrix(matrix, Text(\"Hello World!\")), ApplyMatrix(matrix, NumberPlane()))",
+      "language": "python",
+      "context": "Example: ApplyMatrixExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ApplyMatrix",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ApplyPointwiseFunction"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "Text",
+    "NumberPlane",
+    "Scene",
+    "Matrix",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

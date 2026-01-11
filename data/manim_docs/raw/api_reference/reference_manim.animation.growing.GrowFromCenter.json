@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.growing.GrowFromCenter.html",
+  "title": "GrowFromCenter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "GrowFromCenter\u00b6\n\nQualified name:manim.animation.growing.GrowFromCenter\n\nclassGrowFromCenter(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:GrowFromPointIntroduce anMobjectby growing it from its center.Parameters:mobject(Mobject) \u2013 The mobjects to be introduced.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)ExamplesExample: GrowFromCenterExample\u00b6frommanimimport*classGrowFromCenterExample(Scene):defconstruct(self):squares=[Square()for_inrange(2)]VGroup(*squares).set_x(0).arrange(buff=2)self.play(GrowFromCenter(squares[0]))self.play(GrowFromCenter(squares[1],point_color=RED))class GrowFromCenterExample(Scene):\n    def construct(self):\n        squares = [Square() for _ in range(2)]\n        VGroup(*squares).set_x(0).arrange(buff=2)\n        self.play(GrowFromCenter(squares[0]))\n        self.play(GrowFromCenter(squares[1], point_color=RED))MethodsAttributespath_arcpath_funcrun_time_original__init__(mobject,point_color=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)point_color(ParsableManimColor|None)kwargs(Any)\n\nBases:GrowFromPoint\n\nIntroduce anMobjectby growing it from its center.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobjects to be introduced.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: GrowFromCenterExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,point_color=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)point_color(ParsableManimColor|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)point_color(ParsableManimColor|None)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\npoint_color(ParsableManimColor|None)\n\npoint_color(ParsableManimColor|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classGrowFromCenterExample(Scene):defconstruct(self):squares=[Square()for_inrange(2)]VGroup(*squares).set_x(0).arrange(buff=2)self.play(GrowFromCenter(squares[0]))self.play(GrowFromCenter(squares[1],point_color=RED))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GrowFromCenterExample(Scene):\n    def construct(self):\n        squares = [Square() for _ in range(2)]\n        VGroup(*squares).set_x(0).arrange(buff=2)\n        self.play(GrowFromCenter(squares[0]))\n        self.play(GrowFromCenter(squares[1], point_color=RED))",
+      "language": "python",
+      "context": "Example: GrowFromCenterExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "GrowFromCenter",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:GrowFromPoint"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "GrowFromCenter",
+    "VGroup",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "color",
+    "timing"
+  ]
+}

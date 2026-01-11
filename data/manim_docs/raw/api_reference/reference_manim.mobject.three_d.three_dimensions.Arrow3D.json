@@ -1,0 +1,66 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Arrow3D.html",
+  "title": "Arrow3D\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Arrow3D\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Arrow3D\n\nclassArrow3D(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),thickness=0.02,height=0.3,base_radius=0.08,color=ManimColor('#FFFFFF'),resolution=24,**kwargs)[source]\u00b6\n\nBases:Line3DAn arrow made out of a cylindrical line and a conical tip.Parameters:start(np.ndarray) \u2013 The start position of the arrow.end(np.ndarray) \u2013 The end position of the arrow.thickness(float) \u2013 The thickness of the arrow.height(float) \u2013 The height of the conical tip.base_radius(float) \u2013 The base radius of the conical tip.color(ManimColor) \u2013 The color of the arrow.resolution(int|Sequence[int]) \u2013 The resolution of the arrow line.ExamplesExample: ExampleArrow3D\u00b6frommanimimport*classExampleArrow3D(ThreeDScene):defconstruct(self):axes=ThreeDAxes()arrow=Arrow3D(start=np.array([0,0,0]),end=np.array([2,2,2]),resolution=8)self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,arrow)class ExampleArrow3D(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        arrow = Arrow3D(\n            start=np.array([0, 0, 0]),\n            end=np.array([2, 2, 2]),\n            resolution=8\n        )\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, arrow)Methodsget_endReturns the ending point of theLine3D.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),thickness=0.02,height=0.3,base_radius=0.08,color=ManimColor('#FFFFFF'),resolution=24,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:start(ndarray)end(ndarray)thickness(float)height(float)base_radius(float)color(ParsableManimColor)resolution(int|Sequence[int])Return type:Noneget_end()[source]\u00b6Returns the ending point of theLine3D.Returns:end\u2013 Ending point of theLine3D.Return type:numpy.array\n\nBases:Line3D\n\nAn arrow made out of a cylindrical line and a conical tip.\n\nParameters:\n\nstart(np.ndarray) \u2013 The start position of the arrow.end(np.ndarray) \u2013 The end position of the arrow.thickness(float) \u2013 The thickness of the arrow.height(float) \u2013 The height of the conical tip.base_radius(float) \u2013 The base radius of the conical tip.color(ManimColor) \u2013 The color of the arrow.resolution(int|Sequence[int]) \u2013 The resolution of the arrow line.\n\nstart(np.ndarray) \u2013 The start position of the arrow.\n\nstart(np.ndarray) \u2013 The start position of the arrow.\n\nend(np.ndarray) \u2013 The end position of the arrow.\n\nend(np.ndarray) \u2013 The end position of the arrow.\n\nthickness(float) \u2013 The thickness of the arrow.\n\nthickness(float) \u2013 The thickness of the arrow.\n\nheight(float) \u2013 The height of the conical tip.\n\nheight(float) \u2013 The height of the conical tip.\n\nbase_radius(float) \u2013 The base radius of the conical tip.\n\nbase_radius(float) \u2013 The base radius of the conical tip.\n\ncolor(ManimColor) \u2013 The color of the arrow.\n\ncolor(ManimColor) \u2013 The color of the arrow.\n\nresolution(int|Sequence[int]) \u2013 The resolution of the arrow line.\n\nresolution(int|Sequence[int]) \u2013 The resolution of the arrow line.\n\nExamples\n\nExample: ExampleArrow3D\u00b6\n\nMethods\n\nget_end\n\nReturns the ending point of theLine3D.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),thickness=0.02,height=0.3,base_radius=0.08,color=ManimColor('#FFFFFF'),resolution=24,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:start(ndarray)end(ndarray)thickness(float)height(float)base_radius(float)color(ParsableManimColor)resolution(int|Sequence[int])Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstart(ndarray)end(ndarray)thickness(float)height(float)base_radius(float)color(ParsableManimColor)resolution(int|Sequence[int])\n\nstart(ndarray)\n\nstart(ndarray)\n\nend(ndarray)\n\nend(ndarray)\n\nthickness(float)\n\nthickness(float)\n\nheight(float)\n\nheight(float)\n\nbase_radius(float)\n\nbase_radius(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nresolution(int|Sequence[int])\n\nresolution(int|Sequence[int])\n\nReturn type:\n\nNone\n\nNone\n\nget_end()[source]\u00b6\n\nReturns the ending point of theLine3D.Returns:end\u2013 Ending point of theLine3D.Return type:numpy.array\n\nReturns the ending point of theLine3D.\n\nReturns:\n\nend\u2013 Ending point of theLine3D.\n\nend\u2013 Ending point of theLine3D.\n\nReturn type:\n\nnumpy.array\n\nnumpy.array",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleArrow3D(ThreeDScene):defconstruct(self):axes=ThreeDAxes()arrow=Arrow3D(start=np.array([0,0,0]),end=np.array([2,2,2]),resolution=8)self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,arrow)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleArrow3D(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        arrow = Arrow3D(\n            start=np.array([0, 0, 0]),\n            end=np.array([2, 2, 2]),\n            resolution=8\n        )\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, arrow)",
+      "language": "python",
+      "context": "Example: ExampleArrow3D\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Arrow3D",
+      "class_name": null,
+      "parameters": [
+        "start=array([-1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:Line3D"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "start=array([-1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_end",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the ending point of theLine3D."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "ThreeDScene",
+    "Arrow",
+    "Axes",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

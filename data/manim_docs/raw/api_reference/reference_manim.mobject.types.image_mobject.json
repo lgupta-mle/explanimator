@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.image_mobject.html",
+  "title": "image_mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "image_mobject\u00b6\n\nMobjects representing raster images.\n\nClasses\n\nAbstractImageMobject\n\nAutomatically filters out black pixels\n\nImageMobject\n\nDisplays an Image from a numpy array or a file.\n\nImageMobjectFromCamera",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Camera",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "3d"
+  ]
+}

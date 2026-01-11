@@ -1,0 +1,35 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.html",
+  "title": "line\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "line\u00b6\n\nMobjects that are lines or variations of them.\n\nType Aliases\n\nclassAngleQuadrant\u00b6\n\ntuple[Literal[-1,1],Literal[-1,1]]\n\nClasses\n\nAngle\n\nA circular arc or elbow-type mobject representing an angle of two lines.\n\nArrow\n\nAn arrow.\n\nDashedLine\n\nA dashedLine.\n\nDoubleArrow\n\nAn arrow with tips on both ends.\n\nElbow\n\nTwo lines that create a right angle about each other: L-shape.\n\nLine\n\nA straight or curved line segment between two points or mobjects.\n\nRightAngle\n\nAn elbow-type mobject representing a right angle between two lines.\n\nTangentLine\n\nConstructs a line tangent to aVMobjectat a specific point.\n\nVector\n\nA vector specialized for use in graphs.",
+  "code_examples": [
+    {
+      "code": "tuple[Literal[-1,1],Literal[-1,1]]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "AngleQuadrant",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Line",
+    "Arrow",
+    "Mobject"
+  ],
+  "tags": [
+    "geometry",
+    "graph",
+    "math"
+  ]
+}

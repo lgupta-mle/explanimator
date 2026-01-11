@@ -1,0 +1,73 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.Flash.html",
+  "title": "Flash\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Flash\u00b6\n\nQualified name:manim.animation.indication.Flash\n\nclassFlash(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationGroupSend out lines in all directions.Parameters:point(Point3DLike|Mobject) \u2013 The center of the flash lines. If it is aMobjectits center will be used.line_length(float) \u2013 The length of the flash lines.num_lines(int) \u2013 The number of flash lines.flash_radius(float) \u2013 The distance frompointat which the flash lines start.line_stroke_width(int) \u2013 The stroke width of the flash lines.color(ParsableManimColor) \u2013 The color of the flash lines.time_width(float) \u2013 The time width used for the flash lines. SeeShowPassingFlashfor more details.run_time(float) \u2013 The duration of the animation.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructorExamplesExample: UsingFlash\u00b6frommanimimport*classUsingFlash(Scene):defconstruct(self):dot=Dot(color=YELLOW).shift(DOWN)self.add(Tex(\"Flash the dot below:\"),dot)self.play(Flash(dot))self.wait()class UsingFlash(Scene):\n    def construct(self):\n        dot = Dot(color=YELLOW).shift(DOWN)\n        self.add(Tex(\"Flash the dot below:\"), dot)\n        self.play(Flash(dot))\n        self.wait()Example: FlashOnCircle\u00b6frommanimimport*classFlashOnCircle(Scene):defconstruct(self):radius=2circle=Circle(radius)self.add(circle)self.play(Flash(circle,line_length=1,num_lines=30,color=RED,flash_radius=radius+SMALL_BUFF,time_width=0.3,run_time=2,rate_func=rush_from))class FlashOnCircle(Scene):\n    def construct(self):\n        radius = 2\n        circle = Circle(radius)\n        self.add(circle)\n        self.play(Flash(\n            circle, line_length=1,\n            num_lines=30, color=RED,\n            flash_radius=radius+SMALL_BUFF,\n            time_width=0.3, run_time=2,\n            rate_func = rush_from\n        ))Methodscreate_line_animscreate_linesAttributesrun_time_original__init__(point,line_length=0.2,num_lines=12,flash_radius=0.1,line_stroke_width=3,color=ManimColor('#FFFF00'),time_width=1,run_time=1.0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:point(Point3DLike|Mobject)line_length(float)num_lines(int)flash_radius(float)line_stroke_width(int)color(ParsableManimColor)time_width(float)run_time(float)kwargs(Any)\n\nBases:AnimationGroup\n\nSend out lines in all directions.\n\nParameters:\n\npoint(Point3DLike|Mobject) \u2013 The center of the flash lines. If it is aMobjectits center will be used.line_length(float) \u2013 The length of the flash lines.num_lines(int) \u2013 The number of flash lines.flash_radius(float) \u2013 The distance frompointat which the flash lines start.line_stroke_width(int) \u2013 The stroke width of the flash lines.color(ParsableManimColor) \u2013 The color of the flash lines.time_width(float) \u2013 The time width used for the flash lines. SeeShowPassingFlashfor more details.run_time(float) \u2013 The duration of the animation.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\npoint(Point3DLike|Mobject) \u2013 The center of the flash lines. If it is aMobjectits center will be used.\n\npoint(Point3DLike|Mobject) \u2013 The center of the flash lines. If it is aMobjectits center will be used.\n\nline_length(float) \u2013 The length of the flash lines.\n\nline_length(float) \u2013 The length of the flash lines.\n\nnum_lines(int) \u2013 The number of flash lines.\n\nnum_lines(int) \u2013 The number of flash lines.\n\nflash_radius(float) \u2013 The distance frompointat which the flash lines start.\n\nflash_radius(float) \u2013 The distance frompointat which the flash lines start.\n\nline_stroke_width(int) \u2013 The stroke width of the flash lines.\n\nline_stroke_width(int) \u2013 The stroke width of the flash lines.\n\ncolor(ParsableManimColor) \u2013 The color of the flash lines.\n\ncolor(ParsableManimColor) \u2013 The color of the flash lines.\n\ntime_width(float) \u2013 The time width used for the flash lines. SeeShowPassingFlashfor more details.\n\ntime_width(float) \u2013 The time width used for the flash lines. SeeShowPassingFlashfor more details.\n\nrun_time(float) \u2013 The duration of the animation.\n\nrun_time(float) \u2013 The duration of the animation.\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nExamples\n\nExample: UsingFlash\u00b6\n\nExample: FlashOnCircle\u00b6\n\nMethods\n\ncreate_line_anims\n\ncreate_lines\n\nAttributes\n\nrun_time\n\n_original__init__(point,line_length=0.2,num_lines=12,flash_radius=0.1,line_stroke_width=3,color=ManimColor('#FFFF00'),time_width=1,run_time=1.0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:point(Point3DLike|Mobject)line_length(float)num_lines(int)flash_radius(float)line_stroke_width(int)color(ParsableManimColor)time_width(float)run_time(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npoint(Point3DLike|Mobject)line_length(float)num_lines(int)flash_radius(float)line_stroke_width(int)color(ParsableManimColor)time_width(float)run_time(float)kwargs(Any)\n\npoint(Point3DLike|Mobject)\n\npoint(Point3DLike|Mobject)\n\nline_length(float)\n\nline_length(float)\n\nnum_lines(int)\n\nnum_lines(int)\n\nflash_radius(float)\n\nflash_radius(float)\n\nline_stroke_width(int)\n\nline_stroke_width(int)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\ntime_width(float)\n\ntime_width(float)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUsingFlash(Scene):defconstruct(self):dot=Dot(color=YELLOW).shift(DOWN)self.add(Tex(\"Flash the dot below:\"),dot)self.play(Flash(dot))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UsingFlash(Scene):\n    def construct(self):\n        dot = Dot(color=YELLOW).shift(DOWN)\n        self.add(Tex(\"Flash the dot below:\"), dot)\n        self.play(Flash(dot))\n        self.wait()",
+      "language": "python",
+      "context": "Example: UsingFlash\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classFlashOnCircle(Scene):defconstruct(self):radius=2circle=Circle(radius)self.add(circle)self.play(Flash(circle,line_length=1,num_lines=30,color=RED,flash_radius=radius+SMALL_BUFF,time_width=0.3,run_time=2,rate_func=rush_from))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class FlashOnCircle(Scene):\n    def construct(self):\n        radius = 2\n        circle = Circle(radius)\n        self.add(circle)\n        self.play(Flash(\n            circle, line_length=1,\n            num_lines=30, color=RED,\n            flash_radius=radius+SMALL_BUFF,\n            time_width=0.3, run_time=2,\n            rate_func = rush_from\n        ))",
+      "language": "python",
+      "context": "Example: FlashOnCircle\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Flash",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:AnimationGroup"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "ShowPassingFlash",
+    "Tex",
+    "AnimationGroup",
+    "Flash",
+    "Dot",
+    "Succession",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.movement.PhaseFlow.html",
+  "title": "PhaseFlow\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "PhaseFlow\u00b6\n\nQualified name:manim.animation.movement.PhaseFlow\n\nclassPhaseFlow(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationMethodsinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.Attributesrun_timeParameters:function(Callable[[np.ndarray],np.ndarray])mobject(Mobject)virtual_time(float)suspend_mobject_updating(bool)rate_func(RateFunction)kwargs(Any)_original__init__(function,mobject,virtual_time=1,suspend_mobject_updating=False,rate_func=<functionlinear>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:function(Callable[[np.ndarray],np.ndarray])mobject(Mobject)virtual_time(float)suspend_mobject_updating(bool)rate_func(RateFunction)kwargs(Any)interpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:Animation\n\nMethods\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nAttributes\n\nrun_time\n\nParameters:\n\nfunction(Callable[[np.ndarray],np.ndarray])mobject(Mobject)virtual_time(float)suspend_mobject_updating(bool)rate_func(RateFunction)kwargs(Any)\n\nfunction(Callable[[np.ndarray],np.ndarray])\n\nfunction(Callable[[np.ndarray],np.ndarray])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nvirtual_time(float)\n\nvirtual_time(float)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nrate_func(RateFunction)\n\nrate_func(RateFunction)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(function,mobject,virtual_time=1,suspend_mobject_updating=False,rate_func=<functionlinear>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:function(Callable[[np.ndarray],np.ndarray])mobject(Mobject)virtual_time(float)suspend_mobject_updating(bool)rate_func(RateFunction)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfunction(Callable[[np.ndarray],np.ndarray])mobject(Mobject)virtual_time(float)suspend_mobject_updating(bool)rate_func(RateFunction)kwargs(Any)\n\nfunction(Callable[[np.ndarray],np.ndarray])\n\nfunction(Callable[[np.ndarray],np.ndarray])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nvirtual_time(float)\n\nvirtual_time(float)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nrate_func(RateFunction)\n\nrate_func(RateFunction)\n\nkwargs(Any)\n\nkwargs(Any)\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "PhaseFlow",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

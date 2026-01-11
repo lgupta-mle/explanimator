@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.Ellipse.html",
+  "title": "Ellipse\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Ellipse\u00b6\n\nQualified name:manim.mobject.geometry.arc.Ellipse\n\nclassEllipse(width=2,height=1,**kwargs)[source]\u00b6\n\nBases:CircleA circular shape; oval, circle.Parameters:width(float) \u2013 The horizontal width of the ellipse.height(float) \u2013 The vertical height of the ellipse.kwargs(Any) \u2013 Additional arguments to be passed toCircle.ExamplesExample: EllipseExample\u00b6frommanimimport*classEllipseExample(Scene):defconstruct(self):ellipse_1=Ellipse(width=2.0,height=4.0,color=BLUE_B)ellipse_2=Ellipse(width=4.0,height=1.0,color=BLUE_D)ellipse_group=Group(ellipse_1,ellipse_2).arrange(buff=1)self.add(ellipse_group)class EllipseExample(Scene):\n    def construct(self):\n        ellipse_1 = Ellipse(width=2.0, height=4.0, color=BLUE_B)\n        ellipse_2 = Ellipse(width=4.0, height=1.0, color=BLUE_D)\n        ellipse_group = Group(ellipse_1,ellipse_2).arrange(buff=1)\n        self.add(ellipse_group)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(width=2,height=1,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:width(float)height(float)kwargs(Any)Return type:None\n\nBases:Circle\n\nA circular shape; oval, circle.\n\nParameters:\n\nwidth(float) \u2013 The horizontal width of the ellipse.height(float) \u2013 The vertical height of the ellipse.kwargs(Any) \u2013 Additional arguments to be passed toCircle.\n\nwidth(float) \u2013 The horizontal width of the ellipse.\n\nwidth(float) \u2013 The horizontal width of the ellipse.\n\nheight(float) \u2013 The vertical height of the ellipse.\n\nheight(float) \u2013 The vertical height of the ellipse.\n\nkwargs(Any) \u2013 Additional arguments to be passed toCircle.\n\nkwargs(Any) \u2013 Additional arguments to be passed toCircle.\n\nExamples\n\nExample: EllipseExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(width=2,height=1,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:width(float)height(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nwidth(float)height(float)kwargs(Any)\n\nwidth(float)\n\nwidth(float)\n\nheight(float)\n\nheight(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classEllipseExample(Scene):defconstruct(self):ellipse_1=Ellipse(width=2.0,height=4.0,color=BLUE_B)ellipse_2=Ellipse(width=4.0,height=1.0,color=BLUE_D)ellipse_group=Group(ellipse_1,ellipse_2).arrange(buff=1)self.add(ellipse_group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class EllipseExample(Scene):\n    def construct(self):\n        ellipse_1 = Ellipse(width=2.0, height=4.0, color=BLUE_B)\n        ellipse_2 = Ellipse(width=4.0, height=1.0, color=BLUE_D)\n        ellipse_group = Group(ellipse_1,ellipse_2).arrange(buff=1)\n        self.add(ellipse_group)",
+      "language": "python",
+      "context": "Example: EllipseExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Ellipse",
+      "class_name": null,
+      "parameters": [
+        "width=2"
+      ],
+      "return_type": null,
+      "description": "Bases:Circle"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "width=2"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

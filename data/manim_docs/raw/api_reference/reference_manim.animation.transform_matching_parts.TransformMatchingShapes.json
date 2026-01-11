@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform_matching_parts.TransformMatchingShapes.html",
+  "title": "TransformMatchingShapes\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TransformMatchingShapes\u00b6\n\nQualified name:manim.animation.transform\\_matching\\_parts.TransformMatchingShapes\n\nclassTransformMatchingShapes(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformMatchingAbstractBaseAn animation trying to transform groups by matching the shape\nof their submobjects.Two submobjects match if the hash of their point coordinates after\nnormalization (i.e., after translation to the origin, fixing the submobject\nheight at 1 unit, and rounding the coordinates to three decimal places)\nmatches.See alsoTransformMatchingAbstractBaseExamplesExample: Anagram\u00b6frommanimimport*classAnagram(Scene):defconstruct(self):src=Text(\"the morse code\")tar=Text(\"here come dots\")self.play(Write(src))self.wait(0.5)self.play(TransformMatchingShapes(src,tar,path_arc=PI/2))self.wait(0.5)class Anagram(Scene):\n    def construct(self):\n        src = Text(\"the morse code\")\n        tar = Text(\"here come dots\")\n        self.play(Write(src))\n        self.wait(0.5)\n        self.play(TransformMatchingShapes(src, tar, path_arc=PI/2))\n        self.wait(0.5)Methodsget_mobject_keyget_mobject_partsAttributesrun_timeParameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)_original__init__(mobject,target_mobject,transform_mismatches=False,fade_transform_mismatches=False,key_map=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nBases:TransformMatchingAbstractBase\n\nAn animation trying to transform groups by matching the shape\nof their submobjects.\n\nTwo submobjects match if the hash of their point coordinates after\nnormalization (i.e., after translation to the origin, fixing the submobject\nheight at 1 unit, and rounding the coordinates to three decimal places)\nmatches.\n\nSee also\n\nTransformMatchingAbstractBase\n\nExamples\n\nExample: Anagram\u00b6\n\nMethods\n\nget_mobject_key\n\nget_mobject_parts\n\nAttributes\n\nrun_time\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntransform_mismatches(bool)\n\ntransform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nkey_map(dict|None)\n\nkey_map(dict|None)\n\n_original__init__(mobject,target_mobject,transform_mismatches=False,fade_transform_mismatches=False,key_map=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)transform_mismatches(bool)fade_transform_mismatches(bool)key_map(dict|None)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntransform_mismatches(bool)\n\ntransform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nfade_transform_mismatches(bool)\n\nkey_map(dict|None)\n\nkey_map(dict|None)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classAnagram(Scene):defconstruct(self):src=Text(\"the morse code\")tar=Text(\"here come dots\")self.play(Write(src))self.wait(0.5)self.play(TransformMatchingShapes(src,tar,path_arc=PI/2))self.wait(0.5)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Anagram(Scene):\n    def construct(self):\n        src = Text(\"the morse code\")\n        tar = Text(\"here come dots\")\n        self.play(Write(src))\n        self.wait(0.5)\n        self.play(TransformMatchingShapes(src, tar, path_arc=PI/2))\n        self.wait(0.5)",
+      "language": "python",
+      "context": "Example: Anagram\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TransformMatchingShapes",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:TransformMatchingAbstractBase"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "Tex",
+    "Transform",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

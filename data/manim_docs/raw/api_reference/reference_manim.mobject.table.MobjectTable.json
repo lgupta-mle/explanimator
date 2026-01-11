@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.table.MobjectTable.html",
+  "title": "MobjectTable\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MobjectTable\u00b6\n\nQualified name:manim.mobject.table.MobjectTable\n\nclassMobjectTable(table,element_to_mobject=<functionMobjectTable.<lambda>>,**kwargs)[source]\u00b6\n\nBases:TableA specializedTablemobject for use withMobject.ExamplesExample: MobjectTableExample\u00b6frommanimimport*classMobjectTableExample(Scene):defconstruct(self):cross=VGroup(Line(UP+LEFT,DOWN+RIGHT),Line(UP+RIGHT,DOWN+LEFT),)a=Circle().set_color(RED).scale(0.5)b=cross.set_color(BLUE).scale(0.5)t0=MobjectTable([[a.copy(),b.copy(),a.copy()],[b.copy(),a.copy(),a.copy()],[a.copy(),b.copy(),b.copy()]])line=Line(t0.get_corner(DL),t0.get_corner(UR)).set_color(RED)self.add(t0,line)class MobjectTableExample(Scene):\n    def construct(self):\n        cross = VGroup(\n            Line(UP + LEFT, DOWN + RIGHT),\n            Line(UP + RIGHT, DOWN + LEFT),\n        )\n        a = Circle().set_color(RED).scale(0.5)\n        b = cross.set_color(BLUE).scale(0.5)\n        t0 = MobjectTable(\n            [[a.copy(),b.copy(),a.copy()],\n            [b.copy(),a.copy(),a.copy()],\n            [a.copy(),b.copy(),b.copy()]]\n        )\n        line = Line(\n            t0.get_corner(DL), t0.get_corner(UR)\n        ).set_color(RED)\n        self.add(t0, line)Special case ofTablewithelement_to_mobjectset to an identity function.\nHere, every item intablemust already be of typeMobject.Parameters:table(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.element_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.kwargs\u2013 Additional arguments to be passed toTable.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(table,element_to_mobject=<functionMobjectTable.<lambda>>,**kwargs)\u00b6Special case ofTablewithelement_to_mobjectset to an identity function.\nHere, every item intablemust already be of typeMobject.Parameters:table(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.element_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.kwargs\u2013 Additional arguments to be passed toTable.\n\nBases:Table\n\nA specializedTablemobject for use withMobject.\n\nExamples\n\nExample: MobjectTableExample\u00b6\n\nSpecial case ofTablewithelement_to_mobjectset to an identity function.\nHere, every item intablemust already be of typeMobject.\n\nParameters:\n\ntable(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.element_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.kwargs\u2013 Additional arguments to be passed toTable.\n\ntable(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.\n\ntable(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.\n\nelement_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.\n\nelement_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(table,element_to_mobject=<functionMobjectTable.<lambda>>,**kwargs)\u00b6\n\nSpecial case ofTablewithelement_to_mobjectset to an identity function.\nHere, every item intablemust already be of typeMobject.Parameters:table(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.element_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.kwargs\u2013 Additional arguments to be passed toTable.\n\nSpecial case ofTablewithelement_to_mobjectset to an identity function.\nHere, every item intablemust already be of typeMobject.\n\nParameters:\n\ntable(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.element_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.kwargs\u2013 Additional arguments to be passed toTable.\n\ntable(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.\n\ntable(Iterable[Iterable[VMobject]]) \u2013 A 2D array or list of lists. Content of the table must be of typeMobject.\n\nelement_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.\n\nelement_to_mobject(Callable[[VMobject],VMobject]) \u2013 TheMobjectclass applied to the table entries. Set aslambdam:mto return itself.\n\nkwargs\u2013 Additional arguments to be passed toTable.\n\nkwargs\u2013 Additional arguments to be passed toTable.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMobjectTableExample(Scene):defconstruct(self):cross=VGroup(Line(UP+LEFT,DOWN+RIGHT),Line(UP+RIGHT,DOWN+LEFT),)a=Circle().set_color(RED).scale(0.5)b=cross.set_color(BLUE).scale(0.5)t0=MobjectTable([[a.copy(),b.copy(),a.copy()],[b.copy(),a.copy(),a.copy()],[a.copy(),b.copy(),b.copy()]])line=Line(t0.get_corner(DL),t0.get_corner(UR)).set_color(RED)self.add(t0,line)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MobjectTableExample(Scene):\n    def construct(self):\n        cross = VGroup(\n            Line(UP + LEFT, DOWN + RIGHT),\n            Line(UP + RIGHT, DOWN + LEFT),\n        )\n        a = Circle().set_color(RED).scale(0.5)\n        b = cross.set_color(BLUE).scale(0.5)\n        t0 = MobjectTable(\n            [[a.copy(),b.copy(),a.copy()],\n            [b.copy(),a.copy(),a.copy()],\n            [a.copy(),b.copy(),b.copy()]]\n        )\n        line = Line(\n            t0.get_corner(DL), t0.get_corner(UR)\n        ).set_color(RED)\n        self.add(t0, line)",
+      "language": "python",
+      "context": "Example: MobjectTableExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "MobjectTable",
+      "class_name": null,
+      "parameters": [
+        "table"
+      ],
+      "return_type": null,
+      "description": "Bases:Table"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "table"
+      ],
+      "return_type": null,
+      "description": "Special case ofTablewithelement_to_mobjectset to an identity function.\nHere, every item intablemust already be of typeMobject."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Line",
+    "VGroup",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

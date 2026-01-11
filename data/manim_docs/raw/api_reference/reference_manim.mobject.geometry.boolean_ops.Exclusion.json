@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.boolean_ops.Exclusion.html",
+  "title": "Exclusion\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Exclusion\u00b6\n\nQualified name:manim.mobject.geometry.boolean\\_ops.Exclusion\n\nclassExclusion(subject,clip,**kwargs)[source]\u00b6\n\nBases:_BooleanOpsFind the XOR between twoVMobject.\nThis creates a newVMobjectconsisting of the region\ncovered by exactly one of them.Parameters:subject(VMobject) \u2013 The 1stVMobject.clip(VMobject) \u2013 The 2ndVMobjectkwargs(Any)ExampleExample: IntersectionExample\u00b6frommanimimport*classIntersectionExample(Scene):defconstruct(self):sq=Square(color=RED,fill_opacity=1)sq.move_to([-2,0,0])cr=Circle(color=BLUE,fill_opacity=1)cr.move_to([-1.3,0.7,0])un=Exclusion(sq,cr,color=GREEN,fill_opacity=1)un.move_to([1.5,0.4,0])self.add(sq,cr,un)class IntersectionExample(Scene):\n    def construct(self):\n        sq = Square(color=RED, fill_opacity=1)\n        sq.move_to([-2, 0, 0])\n        cr = Circle(color=BLUE, fill_opacity=1)\n        cr.move_to([-1.3, 0.7, 0])\n        un = Exclusion(sq, cr, color=GREEN, fill_opacity=1)\n        un.move_to([1.5, 0.4, 0])\n        self.add(sq, cr, un)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(subject,clip,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:subject(VMobject)clip(VMobject)kwargs(Any)Return type:None\n\nBases:_BooleanOps\n\nFind the XOR between twoVMobject.\nThis creates a newVMobjectconsisting of the region\ncovered by exactly one of them.\n\nParameters:\n\nsubject(VMobject) \u2013 The 1stVMobject.clip(VMobject) \u2013 The 2ndVMobjectkwargs(Any)\n\nsubject(VMobject) \u2013 The 1stVMobject.\n\nsubject(VMobject) \u2013 The 1stVMobject.\n\nclip(VMobject) \u2013 The 2ndVMobject\n\nclip(VMobject) \u2013 The 2ndVMobject\n\nkwargs(Any)\n\nkwargs(Any)\n\nExample\n\nExample: IntersectionExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(subject,clip,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:subject(VMobject)clip(VMobject)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nsubject(VMobject)clip(VMobject)kwargs(Any)\n\nsubject(VMobject)\n\nsubject(VMobject)\n\nclip(VMobject)\n\nclip(VMobject)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classIntersectionExample(Scene):defconstruct(self):sq=Square(color=RED,fill_opacity=1)sq.move_to([-2,0,0])cr=Circle(color=BLUE,fill_opacity=1)cr.move_to([-1.3,0.7,0])un=Exclusion(sq,cr,color=GREEN,fill_opacity=1)un.move_to([1.5,0.4,0])self.add(sq,cr,un)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class IntersectionExample(Scene):\n    def construct(self):\n        sq = Square(color=RED, fill_opacity=1)\n        sq.move_to([-2, 0, 0])\n        cr = Circle(color=BLUE, fill_opacity=1)\n        cr.move_to([-1.3, 0.7, 0])\n        un = Exclusion(sq, cr, color=GREEN, fill_opacity=1)\n        un.move_to([1.5, 0.4, 0])\n        self.add(sq, cr, un)",
+      "language": "python",
+      "context": "Example: IntersectionExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Exclusion",
+      "class_name": null,
+      "parameters": [
+        "subject"
+      ],
+      "return_type": null,
+      "description": "Bases:_BooleanOps"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "subject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

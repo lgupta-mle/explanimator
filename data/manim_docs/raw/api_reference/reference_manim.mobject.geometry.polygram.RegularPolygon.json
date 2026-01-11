@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.RegularPolygon.html",
+  "title": "RegularPolygon\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "RegularPolygon\u00b6\n\nQualified name:manim.mobject.geometry.polygram.RegularPolygon\n\nclassRegularPolygon(n=6,**kwargs)[source]\u00b6\n\nBases:RegularPolygramAn n-sided regularPolygon.Parameters:n(int) \u2013 The number of sides of theRegularPolygon.kwargs(Any) \u2013 Forwarded to the parent constructor.ExamplesExample: RegularPolygonExample\u00b6frommanimimport*classRegularPolygonExample(Scene):defconstruct(self):poly_1=RegularPolygon(n=6)poly_2=RegularPolygon(n=6,start_angle=30*DEGREES,color=GREEN)poly_3=RegularPolygon(n=10,color=RED)poly_group=Group(poly_1,poly_2,poly_3).scale(1.5).arrange(buff=1)self.add(poly_group)class RegularPolygonExample(Scene):\n    def construct(self):\n        poly_1 = RegularPolygon(n=6)\n        poly_2 = RegularPolygon(n=6, start_angle=30*DEGREES, color=GREEN)\n        poly_3 = RegularPolygon(n=10, color=RED)\n\n        poly_group = Group(poly_1, poly_2, poly_3).scale(1.5).arrange(buff=1)\n        self.add(poly_group)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(n=6,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:n(int)kwargs(Any)Return type:None\n\nBases:RegularPolygram\n\nAn n-sided regularPolygon.\n\nParameters:\n\nn(int) \u2013 The number of sides of theRegularPolygon.kwargs(Any) \u2013 Forwarded to the parent constructor.\n\nn(int) \u2013 The number of sides of theRegularPolygon.\n\nn(int) \u2013 The number of sides of theRegularPolygon.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nExamples\n\nExample: RegularPolygonExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(n=6,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:n(int)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nn(int)kwargs(Any)\n\nn(int)\n\nn(int)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classRegularPolygonExample(Scene):defconstruct(self):poly_1=RegularPolygon(n=6)poly_2=RegularPolygon(n=6,start_angle=30*DEGREES,color=GREEN)poly_3=RegularPolygon(n=10,color=RED)poly_group=Group(poly_1,poly_2,poly_3).scale(1.5).arrange(buff=1)self.add(poly_group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RegularPolygonExample(Scene):\n    def construct(self):\n        poly_1 = RegularPolygon(n=6)\n        poly_2 = RegularPolygon(n=6, start_angle=30*DEGREES, color=GREEN)\n        poly_3 = RegularPolygon(n=10, color=RED)\n\n        poly_group = Group(poly_1, poly_2, poly_3).scale(1.5).arrange(buff=1)\n        self.add(poly_group)",
+      "language": "python",
+      "context": "Example: RegularPolygonExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "RegularPolygon",
+      "class_name": null,
+      "parameters": [
+        "n=6"
+      ],
+      "return_type": null,
+      "description": "Bases:RegularPolygram"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "n=6"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

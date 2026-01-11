@@ -1,0 +1,35 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.movement.ComplexHomotopy.html",
+  "title": "ComplexHomotopy\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ComplexHomotopy\u00b6\n\nQualified name:manim.animation.movement.ComplexHomotopy\n\nclassComplexHomotopy(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:HomotopyComplex Homotopy a function Cx[0, 1] to CMethodsAttributesrun_timeParameters:complex_homotopy(Callable[[complex,float],float])mobject(Mobject)kwargs(Any)_original__init__(complex_homotopy,mobject,**kwargs)\u00b6Complex Homotopy a function Cx[0, 1] to CParameters:complex_homotopy(Callable[[complex,float],float])mobject(Mobject)kwargs(Any)\n\nBases:Homotopy\n\nComplex Homotopy a function Cx[0, 1] to C\n\nMethods\n\nAttributes\n\nrun_time\n\nParameters:\n\ncomplex_homotopy(Callable[[complex,float],float])mobject(Mobject)kwargs(Any)\n\ncomplex_homotopy(Callable[[complex,float],float])\n\ncomplex_homotopy(Callable[[complex,float],float])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(complex_homotopy,mobject,**kwargs)\u00b6\n\nComplex Homotopy a function Cx[0, 1] to CParameters:complex_homotopy(Callable[[complex,float],float])mobject(Mobject)kwargs(Any)\n\nComplex Homotopy a function Cx[0, 1] to C\n\nParameters:\n\ncomplex_homotopy(Callable[[complex,float],float])mobject(Mobject)kwargs(Any)\n\ncomplex_homotopy(Callable[[complex,float],float])\n\ncomplex_homotopy(Callable[[complex,float],float])\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ComplexHomotopy",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Homotopy"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "complex_homotopy"
+      ],
+      "return_type": null,
+      "description": "Complex Homotopy a function Cx[0, 1] to C"
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "graph"
+  ]
+}

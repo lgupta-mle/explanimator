@@ -1,0 +1,123 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.vector_field.ArrowVectorField.html",
+  "title": "ArrowVectorField\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArrowVectorField\u00b6\n\nQualified name:manim.mobject.vector\\_field.ArrowVectorField\n\nclassArrowVectorField(func,color=None,color_scheme=None,min_color_scheme_value=0,max_color_scheme_value=2,colors=[ManimColor('#236B8E'),ManimColor('#83C167'),ManimColor('#FFFF00'),ManimColor('#FC6255')],x_range=None,y_range=None,z_range=None,three_dimensions=False,length_func=<functionArrowVectorField.<lambda>>,opacity=1.0,vector_config=None,**kwargs)[source]\u00b6\n\nBases:VectorFieldAVectorFieldrepresented by a set of change vectors.Vector fields are always based on a function defining theVectorat every position.\nThe values of this functions is displayed as a grid of vectors.\nBy default the color of each vector is determined by it\u2019s magnitude.\nOther color schemes can be used however.Parameters:func(Callable[[np.ndarray],np.ndarray]) \u2013 The function defining the rate of change at every position of the vector field.color(ParsableManimColor|None) \u2013 The color of the vector field. If set, position-specific coloring is disabled.color_scheme(Callable[[np.ndarray],float]|None) \u2013 A function mapping a vector to a single value. This value gives the position in the color gradient defined usingmin_color_scheme_value,max_color_scheme_valueandcolors.min_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the first color incolors. Lower values also result in the first color of the gradient.max_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the last color incolors. Higher values also result in the last color of the gradient.colors(Sequence[ParsableManimColor]) \u2013 The colors defining the color gradient of the vector field.x_range(Sequence[float]) \u2013 A sequence of x_min, x_max, delta_xy_range(Sequence[float]) \u2013 A sequence of y_min, y_max, delta_yz_range(Sequence[float]) \u2013 A sequence of z_min, z_max, delta_zthree_dimensions(bool) \u2013 Enables three_dimensions. Default set to False, automatically turns True if\nz_range is not None.length_func(Callable[[float],float]) \u2013 The function determining the displayed size of the vectors. The actual size\nof the vector is passed, the returned value will be used as display size for the\nvector. By default this is used to cap the displayed size of vectors to reduce the clutter.opacity(float) \u2013 The opacity of the arrows.vector_config(dict|None) \u2013 Additional arguments to be passed to theVectorconstructorkwargs\u2013 Additional arguments to be passed to theVGroupconstructorExamplesExample: BasicUsage\u00b6frommanimimport*classBasicUsage(Scene):defconstruct(self):func=lambdapos:((pos[0]*UR+pos[1]*LEFT)-pos)/3self.add(ArrowVectorField(func))class BasicUsage(Scene):\n    def construct(self):\n        func = lambda pos: ((pos[0] * UR + pos[1] * LEFT) - pos) / 3\n        self.add(ArrowVectorField(func))Example: SizingAndSpacing\u00b6frommanimimport*classSizingAndSpacing(Scene):defconstruct(self):func=lambdapos:np.sin(pos[0]/2)*UR+np.cos(pos[1]/2)*LEFTvf=ArrowVectorField(func,x_range=[-7,7,1])self.add(vf)self.wait()length_func=lambdax:x/3vf2=ArrowVectorField(func,x_range=[-7,7,1],length_func=length_func)self.play(vf.animate.become(vf2))self.wait()class SizingAndSpacing(Scene):\n    def construct(self):\n        func = lambda pos: np.sin(pos[0] / 2) * UR + np.cos(pos[1] / 2) * LEFT\n        vf = ArrowVectorField(func, x_range=[-7, 7, 1])\n        self.add(vf)\n        self.wait()\n\n        length_func = lambda x: x / 3\n        vf2 = ArrowVectorField(func, x_range=[-7, 7, 1], length_func=length_func)\n        self.play(vf.animate.become(vf2))\n        self.wait()Example: Coloring\u00b6frommanimimport*classColoring(Scene):defconstruct(self):func=lambdapos:pos-LEFT*5colors=[RED,YELLOW,BLUE,DARK_GRAY]min_radius=Circle(radius=2,color=colors[0]).shift(LEFT*5)max_radius=Circle(radius=10,color=colors[-1]).shift(LEFT*5)vf=ArrowVectorField(func,min_color_scheme_value=2,max_color_scheme_value=10,colors=colors)self.add(vf,min_radius,max_radius)class Coloring(Scene):\n    def construct(self):\n        func = lambda pos: pos - LEFT * 5\n        colors = [RED, YELLOW, BLUE, DARK_GRAY]\n        min_radius = Circle(radius=2, color=colors[0]).shift(LEFT * 5)\n        max_radius = Circle(radius=10, color=colors[-1]).shift(LEFT * 5)\n        vf = ArrowVectorField(\n            func, min_color_scheme_value=2, max_color_scheme_value=10, colors=colors\n        )\n        self.add(vf, min_radius, max_radius)Methodsget_vectorCreates a vector in the vector field.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(func,color=None,color_scheme=None,min_color_scheme_value=0,max_color_scheme_value=2,colors=[ManimColor('#236B8E'),ManimColor('#83C167'),ManimColor('#FFFF00'),ManimColor('#FC6255')],x_range=None,y_range=None,z_range=None,three_dimensions=False,length_func=<functionArrowVectorField.<lambda>>,opacity=1.0,vector_config=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:func(Callable[[np.ndarray],np.ndarray])color(ParsableManimColor|None)color_scheme(Callable[[np.ndarray],float]|None)min_color_scheme_value(float)max_color_scheme_value(float)colors(Sequence[ParsableManimColor])x_range(Sequence[float])y_range(Sequence[float])z_range(Sequence[float])three_dimensions(bool)length_func(Callable[[float],float])opacity(float)vector_config(dict|None)get_vector(point)[source]\u00b6Creates a vector in the vector field.The created vector is based on the function of the vector field and is\nrooted in the given point. Color and length fit the specifications of\nthis vector field.Parameters:point(ndarray) \u2013 The root point of the vector.\n\nBases:VectorField\n\nAVectorFieldrepresented by a set of change vectors.\n\nVector fields are always based on a function defining theVectorat every position.\nThe values of this functions is displayed as a grid of vectors.\nBy default the color of each vector is determined by it\u2019s magnitude.\nOther color schemes can be used however.\n\nParameters:\n\nfunc(Callable[[np.ndarray],np.ndarray]) \u2013 The function defining the rate of change at every position of the vector field.color(ParsableManimColor|None) \u2013 The color of the vector field. If set, position-specific coloring is disabled.color_scheme(Callable[[np.ndarray],float]|None) \u2013 A function mapping a vector to a single value. This value gives the position in the color gradient defined usingmin_color_scheme_value,max_color_scheme_valueandcolors.min_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the first color incolors. Lower values also result in the first color of the gradient.max_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the last color incolors. Higher values also result in the last color of the gradient.colors(Sequence[ParsableManimColor]) \u2013 The colors defining the color gradient of the vector field.x_range(Sequence[float]) \u2013 A sequence of x_min, x_max, delta_xy_range(Sequence[float]) \u2013 A sequence of y_min, y_max, delta_yz_range(Sequence[float]) \u2013 A sequence of z_min, z_max, delta_zthree_dimensions(bool) \u2013 Enables three_dimensions. Default set to False, automatically turns True if\nz_range is not None.length_func(Callable[[float],float]) \u2013 The function determining the displayed size of the vectors. The actual size\nof the vector is passed, the returned value will be used as display size for the\nvector. By default this is used to cap the displayed size of vectors to reduce the clutter.opacity(float) \u2013 The opacity of the arrows.vector_config(dict|None) \u2013 Additional arguments to be passed to theVectorconstructorkwargs\u2013 Additional arguments to be passed to theVGroupconstructor\n\nfunc(Callable[[np.ndarray],np.ndarray]) \u2013 The function defining the rate of change at every position of the vector field.\n\nfunc(Callable[[np.ndarray],np.ndarray]) \u2013 The function defining the rate of change at every position of the vector field.\n\ncolor(ParsableManimColor|None) \u2013 The color of the vector field. If set, position-specific coloring is disabled.\n\ncolor(ParsableManimColor|None) \u2013 The color of the vector field. If set, position-specific coloring is disabled.\n\ncolor_scheme(Callable[[np.ndarray],float]|None) \u2013 A function mapping a vector to a single value. This value gives the position in the color gradient defined usingmin_color_scheme_value,max_color_scheme_valueandcolors.\n\ncolor_scheme(Callable[[np.ndarray],float]|None) \u2013 A function mapping a vector to a single value. This value gives the position in the color gradient defined usingmin_color_scheme_value,max_color_scheme_valueandcolors.\n\nmin_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the first color incolors. Lower values also result in the first color of the gradient.\n\nmin_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the first color incolors. Lower values also result in the first color of the gradient.\n\nmax_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the last color incolors. Higher values also result in the last color of the gradient.\n\nmax_color_scheme_value(float) \u2013 The value of the color_scheme function to be mapped to the last color incolors. Higher values also result in the last color of the gradient.\n\ncolors(Sequence[ParsableManimColor]) \u2013 The colors defining the color gradient of the vector field.\n\ncolors(Sequence[ParsableManimColor]) \u2013 The colors defining the color gradient of the vector field.\n\nx_range(Sequence[float]) \u2013 A sequence of x_min, x_max, delta_x\n\nx_range(Sequence[float]) \u2013 A sequence of x_min, x_max, delta_x\n\ny_range(Sequence[float]) \u2013 A sequence of y_min, y_max, delta_y\n\ny_range(Sequence[float]) \u2013 A sequence of y_min, y_max, delta_y\n\nz_range(Sequence[float]) \u2013 A sequence of z_min, z_max, delta_z\n\nz_range(Sequence[float]) \u2013 A sequence of z_min, z_max, delta_z\n\nthree_dimensions(bool) \u2013 Enables three_dimensions. Default set to False, automatically turns True if\nz_range is not None.\n\nthree_dimensions(bool) \u2013 Enables three_dimensions. Default set to False, automatically turns True if\nz_range is not None.\n\nlength_func(Callable[[float],float]) \u2013 The function determining the displayed size of the vectors. The actual size\nof the vector is passed, the returned value will be used as display size for the\nvector. By default this is used to cap the displayed size of vectors to reduce the clutter.\n\nlength_func(Callable[[float],float]) \u2013 The function determining the displayed size of the vectors. The actual size\nof the vector is passed, the returned value will be used as display size for the\nvector. By default this is used to cap the displayed size of vectors to reduce the clutter.\n\nopacity(float) \u2013 The opacity of the arrows.\n\nopacity(float) \u2013 The opacity of the arrows.\n\nvector_config(dict|None) \u2013 Additional arguments to be passed to theVectorconstructor\n\nvector_config(dict|None) \u2013 Additional arguments to be passed to theVectorconstructor\n\nkwargs\u2013 Additional arguments to be passed to theVGroupconstructor\n\nkwargs\u2013 Additional arguments to be passed to theVGroupconstructor\n\nExamples\n\nExample: BasicUsage\u00b6\n\nExample: SizingAndSpacing\u00b6\n\nExample: Coloring\u00b6\n\nMethods\n\nget_vector\n\nCreates a vector in the vector field.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(func,color=None,color_scheme=None,min_color_scheme_value=0,max_color_scheme_value=2,colors=[ManimColor('#236B8E'),ManimColor('#83C167'),ManimColor('#FFFF00'),ManimColor('#FC6255')],x_range=None,y_range=None,z_range=None,three_dimensions=False,length_func=<functionArrowVectorField.<lambda>>,opacity=1.0,vector_config=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:func(Callable[[np.ndarray],np.ndarray])color(ParsableManimColor|None)color_scheme(Callable[[np.ndarray],float]|None)min_color_scheme_value(float)max_color_scheme_value(float)colors(Sequence[ParsableManimColor])x_range(Sequence[float])y_range(Sequence[float])z_range(Sequence[float])three_dimensions(bool)length_func(Callable[[float],float])opacity(float)vector_config(dict|None)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfunc(Callable[[np.ndarray],np.ndarray])color(ParsableManimColor|None)color_scheme(Callable[[np.ndarray],float]|None)min_color_scheme_value(float)max_color_scheme_value(float)colors(Sequence[ParsableManimColor])x_range(Sequence[float])y_range(Sequence[float])z_range(Sequence[float])three_dimensions(bool)length_func(Callable[[float],float])opacity(float)vector_config(dict|None)\n\nfunc(Callable[[np.ndarray],np.ndarray])\n\nfunc(Callable[[np.ndarray],np.ndarray])\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\ncolor_scheme(Callable[[np.ndarray],float]|None)\n\ncolor_scheme(Callable[[np.ndarray],float]|None)\n\nmin_color_scheme_value(float)\n\nmin_color_scheme_value(float)\n\nmax_color_scheme_value(float)\n\nmax_color_scheme_value(float)\n\ncolors(Sequence[ParsableManimColor])\n\ncolors(Sequence[ParsableManimColor])\n\nx_range(Sequence[float])\n\nx_range(Sequence[float])\n\ny_range(Sequence[float])\n\ny_range(Sequence[float])\n\nz_range(Sequence[float])\n\nz_range(Sequence[float])\n\nthree_dimensions(bool)\n\nthree_dimensions(bool)\n\nlength_func(Callable[[float],float])\n\nlength_func(Callable[[float],float])\n\nopacity(float)\n\nopacity(float)\n\nvector_config(dict|None)\n\nvector_config(dict|None)\n\nget_vector(point)[source]\u00b6\n\nCreates a vector in the vector field.The created vector is based on the function of the vector field and is\nrooted in the given point. Color and length fit the specifications of\nthis vector field.Parameters:point(ndarray) \u2013 The root point of the vector.\n\nCreates a vector in the vector field.\n\nThe created vector is based on the function of the vector field and is\nrooted in the given point. Color and length fit the specifications of\nthis vector field.\n\nParameters:\n\npoint(ndarray) \u2013 The root point of the vector.\n\npoint(ndarray) \u2013 The root point of the vector.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classBasicUsage(Scene):defconstruct(self):func=lambdapos:((pos[0]*UR+pos[1]*LEFT)-pos)/3self.add(ArrowVectorField(func))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BasicUsage(Scene):\n    def construct(self):\n        func = lambda pos: ((pos[0] * UR + pos[1] * LEFT) - pos) / 3\n        self.add(ArrowVectorField(func))",
+      "language": "python",
+      "context": "Example: BasicUsage\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSizingAndSpacing(Scene):defconstruct(self):func=lambdapos:np.sin(pos[0]/2)*UR+np.cos(pos[1]/2)*LEFTvf=ArrowVectorField(func,x_range=[-7,7,1])self.add(vf)self.wait()length_func=lambdax:x/3vf2=ArrowVectorField(func,x_range=[-7,7,1],length_func=length_func)self.play(vf.animate.become(vf2))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SizingAndSpacing(Scene):\n    def construct(self):\n        func = lambda pos: np.sin(pos[0] / 2) * UR + np.cos(pos[1] / 2) * LEFT\n        vf = ArrowVectorField(func, x_range=[-7, 7, 1])\n        self.add(vf)\n        self.wait()\n\n        length_func = lambda x: x / 3\n        vf2 = ArrowVectorField(func, x_range=[-7, 7, 1], length_func=length_func)\n        self.play(vf.animate.become(vf2))\n        self.wait()",
+      "language": "python",
+      "context": "Example: SizingAndSpacing\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classColoring(Scene):defconstruct(self):func=lambdapos:pos-LEFT*5colors=[RED,YELLOW,BLUE,DARK_GRAY]min_radius=Circle(radius=2,color=colors[0]).shift(LEFT*5)max_radius=Circle(radius=10,color=colors[-1]).shift(LEFT*5)vf=ArrowVectorField(func,min_color_scheme_value=2,max_color_scheme_value=10,colors=colors)self.add(vf,min_radius,max_radius)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Coloring(Scene):\n    def construct(self):\n        func = lambda pos: pos - LEFT * 5\n        colors = [RED, YELLOW, BLUE, DARK_GRAY]\n        min_radius = Circle(radius=2, color=colors[0]).shift(LEFT * 5)\n        max_radius = Circle(radius=10, color=colors[-1]).shift(LEFT * 5)\n        vf = ArrowVectorField(\n            func, min_color_scheme_value=2, max_color_scheme_value=10, colors=colors\n        )\n        self.add(vf, min_radius, max_radius)",
+      "language": "python",
+      "context": "Example: Coloring\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ArrowVectorField",
+      "class_name": null,
+      "parameters": [
+        "func",
+        "color=None",
+        "color_scheme=None",
+        "min_color_scheme_value=0",
+        "max_color_scheme_value=2",
+        "colors=[ManimColor('#236B8E')",
+        "ManimColor('#83C167')",
+        "ManimColor('#FFFF00')",
+        "ManimColor('#FC6255')]",
+        "x_range=None",
+        "y_range=None",
+        "z_range=None",
+        "three_dimensions=False",
+        "length_func=<function ArrowVectorField.<lambda>>",
+        "opacity=1.0",
+        "vector_config=None",
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Bases:VectorField"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "func",
+        "color=None",
+        "color_scheme=None",
+        "min_color_scheme_value=0",
+        "max_color_scheme_value=2",
+        "colors=[ManimColor('#236B8E')",
+        "ManimColor('#83C167')",
+        "ManimColor('#FFFF00')",
+        "ManimColor('#FC6255')]",
+        "x_range=None",
+        "y_range=None",
+        "z_range=None",
+        "three_dimensions=False",
+        "length_func=<function ArrowVectorField.<lambda>>",
+        "opacity=1.0",
+        "vector_config=None",
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_vector",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Creates a vector in the vector field."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Create",
+    "VGroup",
+    "Arrow",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

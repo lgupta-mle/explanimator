@@ -1,0 +1,360 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.space_ops.html",
+  "title": "space_ops\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "space_ops\u00b6\n\nUtility functions for two- and three-dimensional vectors.\n\nFunctions\n\nR3_to_complex(point)[source]\u00b6\n\nParameters:point(Sequence[float])Return type:ndarray\n\nParameters:\n\npoint(Sequence[float])\n\npoint(Sequence[float])\n\nReturn type:\n\nndarray\n\nndarray\n\nangle_axis_from_quaternion(quaternion)[source]\u00b6\n\nGets angle and axis from a quaternion.Parameters:quaternion(Sequence[float]) \u2013 The quaternion from which we get the angle and axis.Returns:Gives the angle and axisReturn type:Sequence[float]\n\nGets angle and axis from a quaternion.\n\nParameters:\n\nquaternion(Sequence[float]) \u2013 The quaternion from which we get the angle and axis.\n\nquaternion(Sequence[float]) \u2013 The quaternion from which we get the angle and axis.\n\nReturns:\n\nGives the angle and axis\n\nGives the angle and axis\n\nReturn type:\n\nSequence[float]\n\nSequence[float]\n\nangle_between_vectors(v1,v2)[source]\u00b6\n\nReturns the angle between two vectors.\nThis angle will always be between 0 and piParameters:v1(ndarray) \u2013 The first vector.v2(ndarray) \u2013 The second vector.Returns:The angle between the vectors.Return type:float\n\nReturns the angle between two vectors.\nThis angle will always be between 0 and pi\n\nParameters:\n\nv1(ndarray) \u2013 The first vector.v2(ndarray) \u2013 The second vector.\n\nv1(ndarray) \u2013 The first vector.\n\nv1(ndarray) \u2013 The first vector.\n\nv2(ndarray) \u2013 The second vector.\n\nv2(ndarray) \u2013 The second vector.\n\nReturns:\n\nThe angle between the vectors.\n\nThe angle between the vectors.\n\nReturn type:\n\nfloat\n\nfloat\n\nangle_of_vector(vector)[source]\u00b6\n\nReturns polar coordinate theta when vector is projected on xy plane.Parameters:vector(Sequence[float]|ndarray) \u2013 The vector to find the angle for.Returns:The angle of the vector projected.Return type:float\n\nReturns polar coordinate theta when vector is projected on xy plane.\n\nParameters:\n\nvector(Sequence[float]|ndarray) \u2013 The vector to find the angle for.\n\nvector(Sequence[float]|ndarray) \u2013 The vector to find the angle for.\n\nReturns:\n\nThe angle of the vector projected.\n\nThe angle of the vector projected.\n\nReturn type:\n\nfloat\n\nfloat\n\ncartesian_to_spherical(vec)[source]\u00b6\n\nReturns an array of numbers corresponding to each\npolar coordinate value (distance, phi, theta).Parameters:vec(Vector3DLike) \u2013 A numpy array or a sequence of floats[x,y,z].Return type:ndarray\n\nReturns an array of numbers corresponding to each\npolar coordinate value (distance, phi, theta).\n\nParameters:\n\nvec(Vector3DLike) \u2013 A numpy array or a sequence of floats[x,y,z].\n\nvec(Vector3DLike) \u2013 A numpy array or a sequence of floats[x,y,z].\n\nReturn type:\n\nndarray\n\nndarray\n\ncenter_of_mass(points)[source]\u00b6\n\nGets the center of mass of the points in space.Parameters:points(PointNDLike_Array) \u2013 The points to find the center of mass from.Returns:The center of mass of the points.Return type:np.ndarray\n\nGets the center of mass of the points in space.\n\nParameters:\n\npoints(PointNDLike_Array) \u2013 The points to find the center of mass from.\n\npoints(PointNDLike_Array) \u2013 The points to find the center of mass from.\n\nReturns:\n\nThe center of mass of the points.\n\nThe center of mass of the points.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\ncompass_directions(n=4,start_vect=array([1.,0.,0.]))[source]\u00b6\n\nFinds the cardinal directions using tau.Parameters:n(int) \u2013 The amount to be rotated, by default 4start_vect(ndarray) \u2013 The direction for the angle to start with, by default RIGHTReturns:The angle which has been rotated.Return type:np.ndarray\n\nFinds the cardinal directions using tau.\n\nParameters:\n\nn(int) \u2013 The amount to be rotated, by default 4start_vect(ndarray) \u2013 The direction for the angle to start with, by default RIGHT\n\nn(int) \u2013 The amount to be rotated, by default 4\n\nn(int) \u2013 The amount to be rotated, by default 4\n\nstart_vect(ndarray) \u2013 The direction for the angle to start with, by default RIGHT\n\nstart_vect(ndarray) \u2013 The direction for the angle to start with, by default RIGHT\n\nReturns:\n\nThe angle which has been rotated.\n\nThe angle which has been rotated.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\ncomplex_func_to_R3_func(complex_func)[source]\u00b6\n\nParameters:complex_func(Callable[[complex],complex])Return type:Callable[[TypeAliasForwardRef(\u2018~manim.typing.Point3DLike\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nParameters:\n\ncomplex_func(Callable[[complex],complex])\n\ncomplex_func(Callable[[complex],complex])\n\nReturn type:\n\nCallable[[TypeAliasForwardRef(\u2018~manim.typing.Point3DLike\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nCallable[[TypeAliasForwardRef(\u2018~manim.typing.Point3DLike\u2019)], TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\ncomplex_to_R3(complex_num)[source]\u00b6\n\nParameters:complex_num(complex)Return type:ndarray\n\nParameters:\n\ncomplex_num(complex)\n\ncomplex_num(complex)\n\nReturn type:\n\nndarray\n\nndarray\n\ncross(v1,v2)[source]\u00b6\n\nParameters:v1(Vector3DLike)v2(Vector3DLike)Return type:Vector3D\n\nParameters:\n\nv1(Vector3DLike)v2(Vector3DLike)\n\nv1(Vector3DLike)\n\nv1(Vector3DLike)\n\nv2(Vector3DLike)\n\nv2(Vector3DLike)\n\nReturn type:\n\nVector3D\n\nVector3D\n\ncross2d(a,b)[source]\u00b6\n\nCompute the determinant(s) of the passed\nvector (sequences).Parameters:a(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.b(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.Returns:The determinant or sequence of determinants\nof the first two components of the specified\nvectors.Return type:Sequence[float] | floatExamples>>>cross2d(np.array([1,2]),np.array([3,4]))np.int64(-2)>>>cross2d(...np.array([[1,2,0],[1,0,0]]),...np.array([[3,4,0],[0,1,0]]),...)array([-2,  1])\n\nCompute the determinant(s) of the passed\nvector (sequences).\n\nParameters:\n\na(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.b(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.\n\na(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.\n\na(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.\n\nb(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.\n\nb(Vector2D|Vector2D_Array) \u2013 A vector or a sequence of vectors.\n\nReturns:\n\nThe determinant or sequence of determinants\nof the first two components of the specified\nvectors.\n\nThe determinant or sequence of determinants\nof the first two components of the specified\nvectors.\n\nReturn type:\n\nSequence[float] | float\n\nSequence[float] | float\n\nExamples\n\nearclip_triangulation(verts,ring_ends)[source]\u00b6\n\nReturns a list of indices giving a triangulation\nof a polygon, potentially with holes.Parameters:verts(ndarray) \u2013 verts is a numpy array of points.ring_ends(list) \u2013 ring_ends is a list of indices indicating where\nthe ends of new paths are.Returns:A list of indices giving a triangulation of a polygon.Return type:list\n\nReturns a list of indices giving a triangulation\nof a polygon, potentially with holes.\n\nParameters:\n\nverts(ndarray) \u2013 verts is a numpy array of points.ring_ends(list) \u2013 ring_ends is a list of indices indicating where\nthe ends of new paths are.\n\nverts(ndarray) \u2013 verts is a numpy array of points.\n\nverts(ndarray) \u2013 verts is a numpy array of points.\n\nring_ends(list) \u2013 ring_ends is a list of indices indicating where\nthe ends of new paths are.\n\nring_ends(list) \u2013 ring_ends is a list of indices indicating where\nthe ends of new paths are.\n\nReturns:\n\nA list of indices giving a triangulation of a polygon.\n\nA list of indices giving a triangulation of a polygon.\n\nReturn type:\n\nlist\n\nlist\n\nfind_intersection(p0s,v0s,p1s,v1s,threshold=1e-05)[source]\u00b6\n\nReturn the intersection of a line passing through p0 in direction v0\nwith one passing through p1 in direction v1 (or array of intersections\nfrom arrays of such points/directions).\nFor 3d values, it returns the point on the ray p0 + v0 * t closest to the\nray p1 + v1 * tParameters:p0s(Point3DLike_Array)v0s(Vector3DLike_Array)p1s(Point3DLike_Array)v1s(Vector3DLike_Array)threshold(float)Return type:list[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nReturn the intersection of a line passing through p0 in direction v0\nwith one passing through p1 in direction v1 (or array of intersections\nfrom arrays of such points/directions).\nFor 3d values, it returns the point on the ray p0 + v0 * t closest to the\nray p1 + v1 * t\n\nParameters:\n\np0s(Point3DLike_Array)v0s(Vector3DLike_Array)p1s(Point3DLike_Array)v1s(Vector3DLike_Array)threshold(float)\n\np0s(Point3DLike_Array)\n\np0s(Point3DLike_Array)\n\nv0s(Vector3DLike_Array)\n\nv0s(Vector3DLike_Array)\n\np1s(Point3DLike_Array)\n\np1s(Point3DLike_Array)\n\nv1s(Vector3DLike_Array)\n\nv1s(Vector3DLike_Array)\n\nthreshold(float)\n\nthreshold(float)\n\nReturn type:\n\nlist[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nlist[TypeAliasForwardRef(\u2018~manim.typing.Point3D\u2019)]\n\nget_unit_normal(v1,v2,tol=1e-06)[source]\u00b6\n\nGets the unit normal of the vectors.Parameters:v1(Vector3DLike) \u2013 The first vector.v2(Vector3DLike) \u2013 The second vectortol(float) \u2013 [description], by default 1e-6Returns:The normal of the two vectors.Return type:np.ndarray\n\nGets the unit normal of the vectors.\n\nParameters:\n\nv1(Vector3DLike) \u2013 The first vector.v2(Vector3DLike) \u2013 The second vectortol(float) \u2013 [description], by default 1e-6\n\nv1(Vector3DLike) \u2013 The first vector.\n\nv1(Vector3DLike) \u2013 The first vector.\n\nv2(Vector3DLike) \u2013 The second vector\n\nv2(Vector3DLike) \u2013 The second vector\n\ntol(float) \u2013 [description], by default 1e-6\n\ntol(float) \u2013 [description], by default 1e-6\n\nReturns:\n\nThe normal of the two vectors.\n\nThe normal of the two vectors.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nget_winding_number(points)[source]\u00b6\n\nDetermine the number of times a polygon winds around the origin.The orientation is measured mathematically positively, i.e.,\ncounterclockwise.Parameters:points(Sequence[ndarray]) \u2013 The vertices of the polygon being queried.Return type:floatExamples>>>frommanimimportSquare,get_winding_number>>>polygon=Square()>>>get_winding_number(polygon.get_vertices())np.float64(1.0)>>>polygon.shift(2*UP)Square>>>get_winding_number(polygon.get_vertices())np.float64(0.0)\n\nDetermine the number of times a polygon winds around the origin.\n\nThe orientation is measured mathematically positively, i.e.,\ncounterclockwise.\n\nParameters:\n\npoints(Sequence[ndarray]) \u2013 The vertices of the polygon being queried.\n\npoints(Sequence[ndarray]) \u2013 The vertices of the polygon being queried.\n\nReturn type:\n\nfloat\n\nfloat\n\nExamples\n\nline_intersection(line1,line2)[source]\u00b6\n\nReturns the intersection point of two lines, each defined by\na pair of distinct points lying on the line.Parameters:line1(Sequence[ndarray]) \u2013 A list of two points that determine the first line.line2(Sequence[ndarray]) \u2013 A list of two points that determine the second line.Returns:The intersection points of the two lines which are intersecting.Return type:np.ndarrayRaises:ValueError\u2013 Error is produced if the two lines don\u2019t intersect with each other\n    or if the coordinates don\u2019t lie on the xy-plane.\n\nReturns the intersection point of two lines, each defined by\na pair of distinct points lying on the line.\n\nParameters:\n\nline1(Sequence[ndarray]) \u2013 A list of two points that determine the first line.line2(Sequence[ndarray]) \u2013 A list of two points that determine the second line.\n\nline1(Sequence[ndarray]) \u2013 A list of two points that determine the first line.\n\nline1(Sequence[ndarray]) \u2013 A list of two points that determine the first line.\n\nline2(Sequence[ndarray]) \u2013 A list of two points that determine the second line.\n\nline2(Sequence[ndarray]) \u2013 A list of two points that determine the second line.\n\nReturns:\n\nThe intersection points of the two lines which are intersecting.\n\nThe intersection points of the two lines which are intersecting.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nRaises:\n\nValueError\u2013 Error is produced if the two lines don\u2019t intersect with each other\n    or if the coordinates don\u2019t lie on the xy-plane.\n\nValueError\u2013 Error is produced if the two lines don\u2019t intersect with each other\n    or if the coordinates don\u2019t lie on the xy-plane.\n\nmidpoint(point1,point2)[source]\u00b6\n\nGets the midpoint of two points.Parameters:point1(Sequence[float]) \u2013 The first point.point2(Sequence[float]) \u2013 The second point.Returns:The midpoint of the pointsReturn type:Union[float, np.ndarray]\n\nGets the midpoint of two points.\n\nParameters:\n\npoint1(Sequence[float]) \u2013 The first point.point2(Sequence[float]) \u2013 The second point.\n\npoint1(Sequence[float]) \u2013 The first point.\n\npoint1(Sequence[float]) \u2013 The first point.\n\npoint2(Sequence[float]) \u2013 The second point.\n\npoint2(Sequence[float]) \u2013 The second point.\n\nReturns:\n\nThe midpoint of the points\n\nThe midpoint of the points\n\nReturn type:\n\nUnion[float, np.ndarray]\n\nUnion[float, np.ndarray]\n\nnorm_squared(v)[source]\u00b6\n\nParameters:v(float)Return type:float\n\nParameters:\n\nv(float)\n\nv(float)\n\nReturn type:\n\nfloat\n\nfloat\n\nnormalize(vect,fall_back=None)[source]\u00b6\n\nParameters:vect(ndarray|tuple[float])fall_back(ndarray|None)Return type:ndarray\n\nParameters:\n\nvect(ndarray|tuple[float])fall_back(ndarray|None)\n\nvect(ndarray|tuple[float])\n\nvect(ndarray|tuple[float])\n\nfall_back(ndarray|None)\n\nfall_back(ndarray|None)\n\nReturn type:\n\nndarray\n\nndarray\n\nnormalize_along_axis(array,axis)[source]\u00b6\n\nNormalizes an array with the provided axis.Parameters:array(ndarray) \u2013 The array which has to be normalized.axis(ndarray) \u2013 The axis to be normalized to.Returns:Array which has been normalized according to the axis.Return type:np.ndarray\n\nNormalizes an array with the provided axis.\n\nParameters:\n\narray(ndarray) \u2013 The array which has to be normalized.axis(ndarray) \u2013 The axis to be normalized to.\n\narray(ndarray) \u2013 The array which has to be normalized.\n\narray(ndarray) \u2013 The array which has to be normalized.\n\naxis(ndarray) \u2013 The axis to be normalized to.\n\naxis(ndarray) \u2013 The axis to be normalized to.\n\nReturns:\n\nArray which has been normalized according to the axis.\n\nArray which has been normalized according to the axis.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nperpendicular_bisector(line,norm_vector=array([0.,0.,1.]))[source]\u00b6\n\nReturns a list of two points that correspond\nto the ends of the perpendicular bisector of the\ntwo points given.Parameters:line(Sequence[ndarray]) \u2013 a list of two numpy array points (corresponding\nto the ends of a line).norm_vector(Vector3D) \u2013 the vector perpendicular to both the line given\nand the perpendicular bisector.Returns:A list of two numpy array points that correspond\nto the ends of the perpendicular bisectorReturn type:list\n\nReturns a list of two points that correspond\nto the ends of the perpendicular bisector of the\ntwo points given.\n\nParameters:\n\nline(Sequence[ndarray]) \u2013 a list of two numpy array points (corresponding\nto the ends of a line).norm_vector(Vector3D) \u2013 the vector perpendicular to both the line given\nand the perpendicular bisector.\n\nline(Sequence[ndarray]) \u2013 a list of two numpy array points (corresponding\nto the ends of a line).\n\nline(Sequence[ndarray]) \u2013 a list of two numpy array points (corresponding\nto the ends of a line).\n\nnorm_vector(Vector3D) \u2013 the vector perpendicular to both the line given\nand the perpendicular bisector.\n\nnorm_vector(Vector3D) \u2013 the vector perpendicular to both the line given\nand the perpendicular bisector.\n\nReturns:\n\nA list of two numpy array points that correspond\nto the ends of the perpendicular bisector\n\nA list of two numpy array points that correspond\nto the ends of the perpendicular bisector\n\nReturn type:\n\nlist\n\nlist\n\nquaternion_conjugate(quaternion)[source]\u00b6\n\nUsed for finding the conjugate of the quaternionParameters:quaternion(Sequence[float]) \u2013 The quaternion for which you want to find the conjugate for.Returns:The conjugate of the quaternion.Return type:np.ndarray\n\nUsed for finding the conjugate of the quaternion\n\nParameters:\n\nquaternion(Sequence[float]) \u2013 The quaternion for which you want to find the conjugate for.\n\nquaternion(Sequence[float]) \u2013 The quaternion for which you want to find the conjugate for.\n\nReturns:\n\nThe conjugate of the quaternion.\n\nThe conjugate of the quaternion.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nquaternion_from_angle_axis(angle,axis,axis_normalized=False)[source]\u00b6\n\nGets a quaternion from an angle and an axis.\nFor more information, checkthis Wikipedia page.Parameters:angle(float) \u2013 The angle for the quaternion.axis(ndarray) \u2013 The axis for the quaternionaxis_normalized(bool) \u2013 Checks whether the axis is normalized, by default FalseReturns:Gives back a quaternion from the angle and axisReturn type:list[float]\n\nGets a quaternion from an angle and an axis.\nFor more information, checkthis Wikipedia page.\n\nParameters:\n\nangle(float) \u2013 The angle for the quaternion.axis(ndarray) \u2013 The axis for the quaternionaxis_normalized(bool) \u2013 Checks whether the axis is normalized, by default False\n\nangle(float) \u2013 The angle for the quaternion.\n\nangle(float) \u2013 The angle for the quaternion.\n\naxis(ndarray) \u2013 The axis for the quaternion\n\naxis(ndarray) \u2013 The axis for the quaternion\n\naxis_normalized(bool) \u2013 Checks whether the axis is normalized, by default False\n\naxis_normalized(bool) \u2013 Checks whether the axis is normalized, by default False\n\nReturns:\n\nGives back a quaternion from the angle and axis\n\nGives back a quaternion from the angle and axis\n\nReturn type:\n\nlist[float]\n\nlist[float]\n\nquaternion_mult(*quats)[source]\u00b6\n\nGets the Hamilton product of the quaternions provided.\nFor more information, checkthis Wikipedia page.Returns:Returns a list of product of two quaternions.Return type:Union[np.ndarray, List[Union[float, np.ndarray]]]Parameters:quats(Sequence[float])\n\nGets the Hamilton product of the quaternions provided.\nFor more information, checkthis Wikipedia page.\n\nReturns:\n\nReturns a list of product of two quaternions.\n\nReturns a list of product of two quaternions.\n\nReturn type:\n\nUnion[np.ndarray, List[Union[float, np.ndarray]]]\n\nUnion[np.ndarray, List[Union[float, np.ndarray]]]\n\nParameters:\n\nquats(Sequence[float])\n\nquats(Sequence[float])\n\nregular_vertices(n,*,radius=1,start_angle=None)[source]\u00b6\n\nGenerates regularly spaced vertices around a circle centered at the origin.Parameters:n(int) \u2013 The number of verticesradius(float) \u2013 The radius of the circle that the vertices are placed on.start_angle(float|None) \u2013The angle the vertices start at.If unspecified, for evennvalues,0will be used.\nFor oddnvalues, 90 degrees is used.Returns:vertices(numpy.ndarray) \u2013 The regularly spaced vertices.start_angle(float) \u2013 The angle the vertices start at.Return type:tuple[ndarray, float]\n\nGenerates regularly spaced vertices around a circle centered at the origin.\n\nParameters:\n\nn(int) \u2013 The number of verticesradius(float) \u2013 The radius of the circle that the vertices are placed on.start_angle(float|None) \u2013The angle the vertices start at.If unspecified, for evennvalues,0will be used.\nFor oddnvalues, 90 degrees is used.\n\nn(int) \u2013 The number of vertices\n\nn(int) \u2013 The number of vertices\n\nradius(float) \u2013 The radius of the circle that the vertices are placed on.\n\nradius(float) \u2013 The radius of the circle that the vertices are placed on.\n\nstart_angle(float|None) \u2013The angle the vertices start at.If unspecified, for evennvalues,0will be used.\nFor oddnvalues, 90 degrees is used.\n\nstart_angle(float|None) \u2013The angle the vertices start at.If unspecified, for evennvalues,0will be used.\nFor oddnvalues, 90 degrees is used.\n\nThe angle the vertices start at.\n\nIf unspecified, for evennvalues,0will be used.\nFor oddnvalues, 90 degrees is used.\n\nReturns:\n\nvertices(numpy.ndarray) \u2013 The regularly spaced vertices.start_angle(float) \u2013 The angle the vertices start at.\n\nvertices(numpy.ndarray) \u2013 The regularly spaced vertices.start_angle(float) \u2013 The angle the vertices start at.\n\nvertices(numpy.ndarray) \u2013 The regularly spaced vertices.\n\nvertices(numpy.ndarray) \u2013 The regularly spaced vertices.\n\nstart_angle(float) \u2013 The angle the vertices start at.\n\nstart_angle(float) \u2013 The angle the vertices start at.\n\nReturn type:\n\ntuple[ndarray, float]\n\ntuple[ndarray, float]\n\nrotate_vector(vector,angle,axis=array([0.,0.,1.]))[source]\u00b6\n\nFunction for rotating a vector.Parameters:vector(Vector3DLike) \u2013 The vector to be rotated.angle(float) \u2013 The angle to be rotated by.axis(Vector3DLike) \u2013 The axis to be rotated, by default OUTReturns:The rotated vector with provided angle and axis.Return type:np.ndarrayRaises:ValueError\u2013 If vector is not of dimension 2 or 3.\n\nFunction for rotating a vector.\n\nParameters:\n\nvector(Vector3DLike) \u2013 The vector to be rotated.angle(float) \u2013 The angle to be rotated by.axis(Vector3DLike) \u2013 The axis to be rotated, by default OUT\n\nvector(Vector3DLike) \u2013 The vector to be rotated.\n\nvector(Vector3DLike) \u2013 The vector to be rotated.\n\nangle(float) \u2013 The angle to be rotated by.\n\nangle(float) \u2013 The angle to be rotated by.\n\naxis(Vector3DLike) \u2013 The axis to be rotated, by default OUT\n\naxis(Vector3DLike) \u2013 The axis to be rotated, by default OUT\n\nReturns:\n\nThe rotated vector with provided angle and axis.\n\nThe rotated vector with provided angle and axis.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nRaises:\n\nValueError\u2013 If vector is not of dimension 2 or 3.\n\nValueError\u2013 If vector is not of dimension 2 or 3.\n\nrotation_about_z(angle)[source]\u00b6\n\nReturns a rotation matrix for a given angle.Parameters:angle(float) \u2013 Angle for the rotation matrix.Returns:Gives back the rotated matrix.Return type:np.ndarray\n\nReturns a rotation matrix for a given angle.\n\nParameters:\n\nangle(float) \u2013 Angle for the rotation matrix.\n\nangle(float) \u2013 Angle for the rotation matrix.\n\nReturns:\n\nGives back the rotated matrix.\n\nGives back the rotated matrix.\n\nReturn type:\n\nnp.ndarray\n\nnp.ndarray\n\nrotation_matrix(angle,axis,homogeneous=False)[source]\u00b6\n\nRotation in R^3 about a specified axis of rotation.Parameters:angle(float)axis(Vector3DLike)homogeneous(bool)Return type:ndarray\n\nRotation in R^3 about a specified axis of rotation.\n\nParameters:\n\nangle(float)axis(Vector3DLike)homogeneous(bool)\n\nangle(float)\n\nangle(float)\n\naxis(Vector3DLike)\n\naxis(Vector3DLike)\n\nhomogeneous(bool)\n\nhomogeneous(bool)\n\nReturn type:\n\nndarray\n\nndarray\n\nrotation_matrix_from_quaternion(quat)[source]\u00b6\n\nParameters:quat(ndarray)Return type:ndarray\n\nParameters:\n\nquat(ndarray)\n\nquat(ndarray)\n\nReturn type:\n\nndarray\n\nndarray\n\nrotation_matrix_transpose(angle,axis)[source]\u00b6\n\nParameters:angle(float)axis(Vector3DLike)Return type:ndarray\n\nParameters:\n\nangle(float)axis(Vector3DLike)\n\nangle(float)\n\nangle(float)\n\naxis(Vector3DLike)\n\naxis(Vector3DLike)\n\nReturn type:\n\nndarray\n\nndarray\n\nrotation_matrix_transpose_from_quaternion(quat)[source]\u00b6\n\nConverts the quaternion, quat, to an equivalent rotation matrix representation.\nFor more information, checkthis page.Parameters:quat(ndarray) \u2013 The quaternion which is to be converted.Returns:Gives back the Rotation matrix representation, returned as a 3-by-3\nmatrix or 3-by-3-by-N multidimensional array.Return type:List[np.ndarray]\n\nConverts the quaternion, quat, to an equivalent rotation matrix representation.\nFor more information, checkthis page.\n\nParameters:\n\nquat(ndarray) \u2013 The quaternion which is to be converted.\n\nquat(ndarray) \u2013 The quaternion which is to be converted.\n\nReturns:\n\nGives back the Rotation matrix representation, returned as a 3-by-3\nmatrix or 3-by-3-by-N multidimensional array.\n\nGives back the Rotation matrix representation, returned as a 3-by-3\nmatrix or 3-by-3-by-N multidimensional array.\n\nReturn type:\n\nList[np.ndarray]\n\nList[np.ndarray]\n\nshoelace(x_y)[source]\u00b6\n\n2D implementation of the shoelace formula.Returns:Returns signed area.Return type:floatParameters:x_y(Point2D_Array)\n\n2D implementation of the shoelace formula.\n\nReturns:\n\nReturns signed area.\n\nReturns signed area.\n\nReturn type:\n\nfloat\n\nfloat\n\nParameters:\n\nx_y(Point2D_Array)\n\nx_y(Point2D_Array)\n\nshoelace_direction(x_y)[source]\u00b6\n\nUses the area determined by the shoelace method to determine whether\nthe input set of points is directed clockwise or counterclockwise.Returns:Either\"CW\"or\"CCW\".Return type:strParameters:x_y(Point2D_Array)\n\nUses the area determined by the shoelace method to determine whether\nthe input set of points is directed clockwise or counterclockwise.\n\nReturns:\n\nEither\"CW\"or\"CCW\".\n\nEither\"CW\"or\"CCW\".\n\nReturn type:\n\nstr\n\nstr\n\nParameters:\n\nx_y(Point2D_Array)\n\nx_y(Point2D_Array)\n\nspherical_to_cartesian(spherical)[source]\u00b6\n\nReturns a numpy array[x,y,z]based on the spherical\ncoordinates given.Parameters:spherical(Sequence[float]) \u2013A list of three floats that correspond to the following:r - The distance between the point and the origin.theta - The azimuthal angle of the point to the positive x-axis.phi - The vertical angle of the point to the positive z-axis.Return type:ndarray\n\nReturns a numpy array[x,y,z]based on the spherical\ncoordinates given.\n\nParameters:\n\nspherical(Sequence[float]) \u2013A list of three floats that correspond to the following:r - The distance between the point and the origin.theta - The azimuthal angle of the point to the positive x-axis.phi - The vertical angle of the point to the positive z-axis.\n\nspherical(Sequence[float]) \u2013A list of three floats that correspond to the following:r - The distance between the point and the origin.theta - The azimuthal angle of the point to the positive x-axis.phi - The vertical angle of the point to the positive z-axis.\n\nA list of three floats that correspond to the following:\n\nr - The distance between the point and the origin.\n\ntheta - The azimuthal angle of the point to the positive x-axis.\n\nphi - The vertical angle of the point to the positive z-axis.\n\nReturn type:\n\nndarray\n\nndarray\n\nthick_diagonal(dim,thickness=2)[source]\u00b6\n\nParameters:dim(int)thickness(int)Return type:MatrixMN\n\nParameters:\n\ndim(int)thickness(int)\n\ndim(int)\n\ndim(int)\n\nthickness(int)\n\nthickness(int)\n\nReturn type:\n\nMatrixMN\n\nMatrixMN\n\nz_to_vector(vector)[source]\u00b6\n\nReturns some matrix in SO(3) which takes the z-axis to the\n(normalized) vector provided as an argumentParameters:vector(ndarray)Return type:ndarray\n\nReturns some matrix in SO(3) which takes the z-axis to the\n(normalized) vector provided as an argument\n\nParameters:\n\nvector(ndarray)\n\nvector(ndarray)\n\nReturn type:\n\nndarray\n\nndarray",
+  "code_examples": [
+    {
+      "code": ">>>cross2d(np.array([1,2]),np.array([3,4]))np.int64(-2)>>>cross2d(...np.array([[1,2,0],[1,0,0]]),...np.array([[3,4,0],[0,1,0]]),...)array([-2,  1])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportSquare,get_winding_number>>>polygon=Square()>>>get_winding_number(polygon.get_vertices())np.float64(1.0)>>>polygon.shift(2*UP)Square>>>get_winding_number(polygon.get_vertices())np.float64(0.0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "R3_to_complex",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "point(Sequence[float])"
+    },
+    {
+      "name": "angle_axis_from_quaternion",
+      "class_name": null,
+      "parameters": [
+        "quaternion"
+      ],
+      "return_type": null,
+      "description": "Gets angle and axis from a quaternion."
+    },
+    {
+      "name": "angle_between_vectors",
+      "class_name": null,
+      "parameters": [
+        "v1"
+      ],
+      "return_type": null,
+      "description": "Returns the angle between two vectors.\nThis angle will always be between 0 and pi"
+    },
+    {
+      "name": "angle_of_vector",
+      "class_name": null,
+      "parameters": [
+        "vector"
+      ],
+      "return_type": null,
+      "description": "Returns polar coordinate theta when vector is projected on xy plane."
+    },
+    {
+      "name": "cartesian_to_spherical",
+      "class_name": null,
+      "parameters": [
+        "vec"
+      ],
+      "return_type": null,
+      "description": "Returns an array of numbers corresponding to each\npolar coordinate value (distance, phi, theta)."
+    },
+    {
+      "name": "center_of_mass",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Gets the center of mass of the points in space."
+    },
+    {
+      "name": "compass_directions",
+      "class_name": null,
+      "parameters": [
+        "n=4"
+      ],
+      "return_type": null,
+      "description": "Finds the cardinal directions using tau."
+    },
+    {
+      "name": "complex_func_to_R3_func",
+      "class_name": null,
+      "parameters": [
+        "complex_func"
+      ],
+      "return_type": null,
+      "description": "complex_func(Callable[[complex],complex])"
+    },
+    {
+      "name": "complex_to_R3",
+      "class_name": null,
+      "parameters": [
+        "complex_num"
+      ],
+      "return_type": null,
+      "description": "complex_num(complex)"
+    },
+    {
+      "name": "cross",
+      "class_name": null,
+      "parameters": [
+        "v1"
+      ],
+      "return_type": null,
+      "description": "v1(Vector3DLike)"
+    },
+    {
+      "name": "cross2d",
+      "class_name": null,
+      "parameters": [
+        "a"
+      ],
+      "return_type": null,
+      "description": "Compute the determinant(s) of the passed\nvector (sequences)."
+    },
+    {
+      "name": "earclip_triangulation",
+      "class_name": null,
+      "parameters": [
+        "verts"
+      ],
+      "return_type": null,
+      "description": "Returns a list of indices giving a triangulation\nof a polygon, potentially with holes."
+    },
+    {
+      "name": "find_intersection",
+      "class_name": null,
+      "parameters": [
+        "p0s"
+      ],
+      "return_type": null,
+      "description": "Return the intersection of a line passing through p0 in direction v0\nwith one passing through p1 in direction v1 (or array of intersections\nfrom arrays of such points/directions).\nFor 3d values, it returns the point on the ray p0 + v0 * t closest to the\nray p1 + v1 * t"
+    },
+    {
+      "name": "get_unit_normal",
+      "class_name": null,
+      "parameters": [
+        "v1"
+      ],
+      "return_type": null,
+      "description": "Gets the unit normal of the vectors."
+    },
+    {
+      "name": "get_winding_number",
+      "class_name": null,
+      "parameters": [
+        "points"
+      ],
+      "return_type": null,
+      "description": "Determine the number of times a polygon winds around the origin."
+    },
+    {
+      "name": "line_intersection",
+      "class_name": null,
+      "parameters": [
+        "line1"
+      ],
+      "return_type": null,
+      "description": "Returns the intersection point of two lines, each defined by\na pair of distinct points lying on the line."
+    },
+    {
+      "name": "midpoint",
+      "class_name": null,
+      "parameters": [
+        "point1"
+      ],
+      "return_type": null,
+      "description": "Gets the midpoint of two points."
+    },
+    {
+      "name": "norm_squared",
+      "class_name": null,
+      "parameters": [
+        "v"
+      ],
+      "return_type": null,
+      "description": "v(float)"
+    },
+    {
+      "name": "normalize",
+      "class_name": null,
+      "parameters": [
+        "vect"
+      ],
+      "return_type": null,
+      "description": "vect(ndarray|tuple[float])"
+    },
+    {
+      "name": "normalize_along_axis",
+      "class_name": null,
+      "parameters": [
+        "array"
+      ],
+      "return_type": null,
+      "description": "Normalizes an array with the provided axis."
+    },
+    {
+      "name": "perpendicular_bisector",
+      "class_name": null,
+      "parameters": [
+        "line"
+      ],
+      "return_type": null,
+      "description": "Returns a list of two points that correspond\nto the ends of the perpendicular bisector of the\ntwo points given."
+    },
+    {
+      "name": "quaternion_conjugate",
+      "class_name": null,
+      "parameters": [
+        "quaternion"
+      ],
+      "return_type": null,
+      "description": "Used for finding the conjugate of the quaternion"
+    },
+    {
+      "name": "quaternion_from_angle_axis",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "Gets a quaternion from an angle and an axis.\nFor more information, checkthis Wikipedia page."
+    },
+    {
+      "name": "quaternion_mult",
+      "class_name": null,
+      "parameters": [
+        "*quats"
+      ],
+      "return_type": null,
+      "description": "Gets the Hamilton product of the quaternions provided.\nFor more information, checkthis Wikipedia page."
+    },
+    {
+      "name": "regular_vertices",
+      "class_name": null,
+      "parameters": [
+        "n"
+      ],
+      "return_type": null,
+      "description": "Generates regularly spaced vertices around a circle centered at the origin."
+    },
+    {
+      "name": "rotate_vector",
+      "class_name": null,
+      "parameters": [
+        "vector"
+      ],
+      "return_type": null,
+      "description": "Function for rotating a vector."
+    },
+    {
+      "name": "rotation_about_z",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "Returns a rotation matrix for a given angle."
+    },
+    {
+      "name": "rotation_matrix",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "Rotation in R^3 about a specified axis of rotation."
+    },
+    {
+      "name": "rotation_matrix_from_quaternion",
+      "class_name": null,
+      "parameters": [
+        "quat"
+      ],
+      "return_type": null,
+      "description": "quat(ndarray)"
+    },
+    {
+      "name": "rotation_matrix_transpose",
+      "class_name": null,
+      "parameters": [
+        "angle"
+      ],
+      "return_type": null,
+      "description": "angle(float)"
+    },
+    {
+      "name": "rotation_matrix_transpose_from_quaternion",
+      "class_name": null,
+      "parameters": [
+        "quat"
+      ],
+      "return_type": null,
+      "description": "Converts the quaternion, quat, to an equivalent rotation matrix representation.\nFor more information, checkthis page."
+    },
+    {
+      "name": "shoelace",
+      "class_name": null,
+      "parameters": [
+        "x_y"
+      ],
+      "return_type": null,
+      "description": "2D implementation of the shoelace formula."
+    },
+    {
+      "name": "shoelace_direction",
+      "class_name": null,
+      "parameters": [
+        "x_y"
+      ],
+      "return_type": null,
+      "description": "Uses the area determined by the shoelace method to determine whether\nthe input set of points is directed clockwise or counterclockwise."
+    },
+    {
+      "name": "spherical_to_cartesian",
+      "class_name": null,
+      "parameters": [
+        "spherical"
+      ],
+      "return_type": null,
+      "description": "Returns a numpy array[x,y,z]based on the spherical\ncoordinates given."
+    },
+    {
+      "name": "thick_diagonal",
+      "class_name": null,
+      "parameters": [
+        "dim"
+      ],
+      "return_type": null,
+      "description": "dim(int)"
+    },
+    {
+      "name": "z_to_vector",
+      "class_name": null,
+      "parameters": [
+        "vector"
+      ],
+      "return_type": null,
+      "description": "Returns some matrix in SO(3) which takes the z-axis to the\n(normalized) vector provided as an argument"
+    }
+  ],
+  "related_classes": [
+    "Matrix",
+    "Square"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "graph"
+  ]
+}

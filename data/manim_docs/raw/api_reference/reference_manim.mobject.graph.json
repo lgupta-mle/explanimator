@@ -1,0 +1,32 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graph.html",
+  "title": "graph\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "graph\u00b6\n\nMobjects used to represent mathematical graphs (think graph theory, not plotting).\n\nType Aliases\n\nclassNxGraph\u00b6\n\nnx.classes.graph.Graph|nx.classes.digraph.DiGraph\n\nClasses\n\nDiGraph\n\nA directed graph.\n\nGenericGraph\n\nAbstract base class for graphs (that is, a collection of vertices connected with edges).\n\nGraph\n\nAn undirected graph (vertices connected with edges).\n\nLayoutFunction\n\nA protocol for automatic layout functions that compute a layout for a graph to be used inchange_layout().",
+  "code_examples": [
+    {
+      "code": "nx.classes.graph.Graph|nx.classes.digraph.DiGraph",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "NxGraph",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    }
+  ],
+  "related_classes": [
+    "Graph",
+    "Mobject"
+  ],
+  "tags": [
+    "graph",
+    "math"
+  ]
+}

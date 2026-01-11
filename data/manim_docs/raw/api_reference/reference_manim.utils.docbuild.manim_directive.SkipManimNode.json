@@ -1,0 +1,27 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.manim_directive.SkipManimNode.html",
+  "title": "SkipManimNode\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SkipManimNode\u00b6\n\nQualified name:manim.utils.docbuild.manim\\_directive.SkipManimNode\n\nclassSkipManimNode(rawsource='',*children,**attributes)[source]\u00b6\n\nBases:Admonition,ElementAuxiliary node class that is used when theskip-manimtag is present\nor.potfiles are being built.Skips rendering the manim directive and outputs a placeholder instead.MethodsAttributesbasic_attributesTuple of attributes which are defined for every Element-derived class instance and can be safely transferred to a different node.child_text_separatorSeparator for child nodes, used byastext()method.documentReturn thedocumentroot node of the tree containing this Node.known_attributesTuple of attributes that are known to the Element base class.lineThe line number (1-based) of the beginning of this Node insource.list_attributesTuple of attributes that are automatically initialized to empty lists for all nodes.local_attributesTuple of class-specific attributes that should not be copied with the standard attributes when replacing a node.parentBack-reference to the Node immediately containing this Node.sourcePath or description of the input source which generated this Node.tagnameThe element generic identifier.rawsourceThe raw text from which this element was constructed.childrenList of child nodes (elements and/orText).attributesvalue}.\n\nBases:Admonition,Element\n\nAuxiliary node class that is used when theskip-manimtag is present\nor.potfiles are being built.\n\nSkips rendering the manim directive and outputs a placeholder instead.\n\nMethods\n\nAttributes\n\nbasic_attributes\n\nTuple of attributes which are defined for every Element-derived class instance and can be safely transferred to a different node.\n\nchild_text_separator\n\nSeparator for child nodes, used byastext()method.\n\ndocument\n\nReturn thedocumentroot node of the tree containing this Node.\n\nknown_attributes\n\nTuple of attributes that are known to the Element base class.\n\nline\n\nThe line number (1-based) of the beginning of this Node insource.\n\nlist_attributes\n\nTuple of attributes that are automatically initialized to empty lists for all nodes.\n\nlocal_attributes\n\nTuple of class-specific attributes that should not be copied with the standard attributes when replacing a node.\n\nparent\n\nBack-reference to the Node immediately containing this Node.\n\nsource\n\nPath or description of the input source which generated this Node.\n\ntagname\n\nThe element generic identifier.\n\nrawsource\n\nThe raw text from which this element was constructed.\n\nchildren\n\nList of child nodes (elements and/orText).\n\nattributes\n\nvalue}.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SkipManimNode",
+      "class_name": null,
+      "parameters": [
+        "rawsource=''"
+      ],
+      "return_type": null,
+      "description": "Bases:Admonition,Element"
+    }
+  ],
+  "related_classes": [
+    "Text",
+    "Tex"
+  ],
+  "tags": [
+    "timing",
+    "text"
+  ]
+}

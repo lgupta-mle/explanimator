@@ -1,0 +1,51 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.Polygon.html",
+  "title": "Polygon\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Polygon\u00b6\n\nQualified name:manim.mobject.geometry.polygram.Polygon\n\nclassPolygon(*vertices,**kwargs)[source]\u00b6\n\nBases:PolygramA shape consisting of one closed loop of vertices.Parameters:vertices(Point3DLike) \u2013 The vertices of thePolygon.kwargs(Any) \u2013 Forwarded to the parent constructor.ExamplesExample: PolygonExample\u00b6frommanimimport*classPolygonExample(Scene):defconstruct(self):isosceles=Polygon([-5,1.5,0],[-2,1.5,0],[-3.5,-2,0])position_list=[[4,1,0],# middle right[4,-2.5,0],# bottom right[0,-2.5,0],# bottom left[0,3,0],# top left[2,1,0],# middle[4,3,0],# top right]square_and_triangles=Polygon(*position_list,color=PURPLE_B)self.add(isosceles,square_and_triangles)class PolygonExample(Scene):\n    def construct(self):\n        isosceles = Polygon([-5, 1.5, 0], [-2, 1.5, 0], [-3.5, -2, 0])\n        position_list = [\n            [4, 1, 0],  # middle right\n            [4, -2.5, 0],  # bottom right\n            [0, -2.5, 0],  # bottom left\n            [0, 3, 0],  # top left\n            [2, 1, 0],  # middle\n            [4, 3, 0],  # top right\n        ]\n        square_and_triangles = Polygon(*position_list, color=PURPLE_B)\n        self.add(isosceles, square_and_triangles)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*vertices,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vertices(Point3DLike)kwargs(Any)Return type:None\n\nBases:Polygram\n\nA shape consisting of one closed loop of vertices.\n\nParameters:\n\nvertices(Point3DLike) \u2013 The vertices of thePolygon.kwargs(Any) \u2013 Forwarded to the parent constructor.\n\nvertices(Point3DLike) \u2013 The vertices of thePolygon.\n\nvertices(Point3DLike) \u2013 The vertices of thePolygon.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nExamples\n\nExample: PolygonExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*vertices,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vertices(Point3DLike)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvertices(Point3DLike)kwargs(Any)\n\nvertices(Point3DLike)\n\nvertices(Point3DLike)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classPolygonExample(Scene):defconstruct(self):isosceles=Polygon([-5,1.5,0],[-2,1.5,0],[-3.5,-2,0])position_list=[[4,1,0],# middle right[4,-2.5,0],# bottom right[0,-2.5,0],# bottom left[0,3,0],# top left[2,1,0],# middle[4,3,0],# top right]square_and_triangles=Polygon(*position_list,color=PURPLE_B)self.add(isosceles,square_and_triangles)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PolygonExample(Scene):\n    def construct(self):\n        isosceles = Polygon([-5, 1.5, 0], [-2, 1.5, 0], [-3.5, -2, 0])\n        position_list = [\n            [4, 1, 0],  # middle right\n            [4, -2.5, 0],  # bottom right\n            [0, -2.5, 0],  # bottom left\n            [0, 3, 0],  # top left\n            [2, 1, 0],  # middle\n            [4, 3, 0],  # top right\n        ]\n        square_and_triangles = Polygon(*position_list, color=PURPLE_B)\n        self.add(isosceles, square_and_triangles)",
+      "language": "python",
+      "context": "Example: PolygonExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Polygon",
+      "class_name": null,
+      "parameters": [
+        "*vertices"
+      ],
+      "return_type": null,
+      "description": "Bases:Polygram"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*vertices"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

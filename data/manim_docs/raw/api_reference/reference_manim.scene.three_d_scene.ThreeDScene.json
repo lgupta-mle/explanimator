@@ -1,0 +1,139 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.three_d_scene.ThreeDScene.html",
+  "title": "ThreeDScene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ThreeDScene\u00b6\n\nQualified name:manim.scene.three\\_d\\_scene.ThreeDScene\n\nclassThreeDScene(camera_class=<class'manim.camera.three_d_camera.ThreeDCamera'>,ambient_camera_rotation=None,default_angled_camera_orientation_kwargs=None,**kwargs)[source]\u00b6\n\nBases:SceneThis is a Scene, with special configurations and properties that\nmake it suitable for Three Dimensional Scenes.Methodsadd_fixed_in_frame_mobjectsThis method is used to prevent the rotation and movement of mobjects as the camera moves around.add_fixed_orientation_mobjectsThis method is used to prevent the rotation and tilting of mobjects as the camera moves around.begin_3dillusion_camera_rotationThis method creates a 3D camera rotation illusion around the current camera orientation.begin_ambient_camera_rotationThis method begins an ambient rotation of the camera about the Z_AXIS, in the anticlockwise directionget_moving_mobjectsThis method returns a list of all of the Mobjects in the Scene that are moving, that are also in the animations passed.move_cameraThis method animates the movement of the camera to the given spherical coordinates.remove_fixed_in_frame_mobjectsThis method undoes what add_fixed_in_frame_mobjects does.remove_fixed_orientation_mobjectsThis method \"unfixes\" the orientation of the mobjects passed, meaning they will no longer be at the same angle relative to the camera.set_camera_orientationThis method sets the orientation of the camera in the scene.set_to_default_angled_camera_orientationThis method sets the default_angled_camera_orientation to the keyword arguments passed, and sets the camera to that orientation.stop_3dillusion_camera_rotationThis method stops all illusion camera rotations.stop_ambient_camera_rotationThis method stops all ambient camera rotation.AttributescameratimeThe time since the start of the scene.add_fixed_in_frame_mobjects(*mobjects)[source]\u00b6This method is used to prevent the rotation and movement\nof mobjects as the camera moves around. The mobject is\nessentially overlaid, and is not impacted by the camera\u2019s\nmovement in any way.Parameters:*mobjects(Mobject) \u2013 The Mobjects whose orientation must be fixed.add_fixed_orientation_mobjects(*mobjects,**kwargs)[source]\u00b6This method is used to prevent the rotation and tilting\nof mobjects as the camera moves around. The mobject can\nstill move in the x,y,z directions, but will always be\nat the angle (relative to the camera) that it was at\nwhen it was passed through this method.)Parameters:*mobjects(Mobject) \u2013 The Mobject(s) whose orientation must be fixed.**kwargs\u2013Some valid kwargs areuse_static_center_func : bool\ncenter_func : functionbegin_3dillusion_camera_rotation(rate=1,origin_phi=None,origin_theta=None)[source]\u00b6This method creates a 3D camera rotation illusion around\nthe current camera orientation.Parameters:rate(float) \u2013 The rate at which the camera rotation illusion should operate.origin_phi(float|None) \u2013 The polar angle the camera should move around. Defaults\nto the current phi angle.origin_theta(float|None) \u2013 The azimutal angle the camera should move around. Defaults\nto the current theta angle.begin_ambient_camera_rotation(rate=0.02,about='theta')[source]\u00b6This method begins an ambient rotation of the camera about the Z_AXIS,\nin the anticlockwise directionParameters:rate(float) \u2013 The rate at which the camera should rotate about the Z_AXIS.\nNegative rate means clockwise rotation.about(str) \u2013 one of 3 options: [\u201ctheta\u201d, \u201cphi\u201d, \u201cgamma\u201d]. defaults to theta.get_moving_mobjects(*animations)[source]\u00b6This method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed.Parameters:*animations(Animation) \u2013 The animations whose mobjects will be checked.move_camera(phi=None,theta=None,gamma=None,zoom=None,focal_distance=None,frame_center=None,added_anims=[],**kwargs)[source]\u00b6This method animates the movement of the camera\nto the given spherical coordinates.Parameters:phi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.theta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.focal_distance(float|None) \u2013 The radial focal_distance between ORIGIN and Camera.gamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.zoom(float|None) \u2013 The zoom factor of the camera.frame_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.added_anims(Iterable[Animation]) \u2013 Any other animations to be played at the same time.remove_fixed_in_frame_mobjects(*mobjects)[source]\u00b6This method undoes what add_fixed_in_frame_mobjects does.\nIt allows the mobject to be affected by the movement of\nthe camera.Parameters:*mobjects(Mobject) \u2013 The Mobjects whose position and orientation must be unfixed.remove_fixed_orientation_mobjects(*mobjects)[source]\u00b6This method \u201cunfixes\u201d the orientation of the mobjects\npassed, meaning they will no longer be at the same angle\nrelative to the camera. This only makes sense if the\nmobject was passed through add_fixed_orientation_mobjects first.Parameters:*mobjects(Mobject) \u2013 The Mobjects whose orientation must be unfixed.set_camera_orientation(phi=None,theta=None,gamma=None,zoom=None,focal_distance=None,frame_center=None,**kwargs)[source]\u00b6This method sets the orientation of the camera in the scene.Parameters:phi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.theta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.focal_distance(float|None) \u2013 The focal_distance of the Camera.gamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.zoom(float|None) \u2013 The zoom factor of the scene.frame_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.set_to_default_angled_camera_orientation(**kwargs)[source]\u00b6This method sets the default_angled_camera_orientation to the\nkeyword arguments passed, and sets the camera to that orientation.Parameters:**kwargs\u2013 Some recognised kwargs are phi, theta, focal_distance, gamma,\nwhich have the same meaning as the parameters in set_camera_orientation.stop_3dillusion_camera_rotation()[source]\u00b6This method stops all illusion camera rotations.stop_ambient_camera_rotation(about='theta')[source]\u00b6This method stops all ambient camera rotation.\n\nBases:Scene\n\nThis is a Scene, with special configurations and properties that\nmake it suitable for Three Dimensional Scenes.\n\nMethods\n\nadd_fixed_in_frame_mobjects\n\nThis method is used to prevent the rotation and movement of mobjects as the camera moves around.\n\nadd_fixed_orientation_mobjects\n\nThis method is used to prevent the rotation and tilting of mobjects as the camera moves around.\n\nbegin_3dillusion_camera_rotation\n\nThis method creates a 3D camera rotation illusion around the current camera orientation.\n\nbegin_ambient_camera_rotation\n\nThis method begins an ambient rotation of the camera about the Z_AXIS, in the anticlockwise direction\n\nget_moving_mobjects\n\nThis method returns a list of all of the Mobjects in the Scene that are moving, that are also in the animations passed.\n\nmove_camera\n\nThis method animates the movement of the camera to the given spherical coordinates.\n\nremove_fixed_in_frame_mobjects\n\nThis method undoes what add_fixed_in_frame_mobjects does.\n\nremove_fixed_orientation_mobjects\n\nThis method \"unfixes\" the orientation of the mobjects passed, meaning they will no longer be at the same angle relative to the camera.\n\nset_camera_orientation\n\nThis method sets the orientation of the camera in the scene.\n\nset_to_default_angled_camera_orientation\n\nThis method sets the default_angled_camera_orientation to the keyword arguments passed, and sets the camera to that orientation.\n\nstop_3dillusion_camera_rotation\n\nThis method stops all illusion camera rotations.\n\nstop_ambient_camera_rotation\n\nThis method stops all ambient camera rotation.\n\nAttributes\n\ncamera\n\ntime\n\nThe time since the start of the scene.\n\nadd_fixed_in_frame_mobjects(*mobjects)[source]\u00b6\n\nThis method is used to prevent the rotation and movement\nof mobjects as the camera moves around. The mobject is\nessentially overlaid, and is not impacted by the camera\u2019s\nmovement in any way.Parameters:*mobjects(Mobject) \u2013 The Mobjects whose orientation must be fixed.\n\nThis method is used to prevent the rotation and movement\nof mobjects as the camera moves around. The mobject is\nessentially overlaid, and is not impacted by the camera\u2019s\nmovement in any way.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The Mobjects whose orientation must be fixed.\n\n*mobjects(Mobject) \u2013 The Mobjects whose orientation must be fixed.\n\nadd_fixed_orientation_mobjects(*mobjects,**kwargs)[source]\u00b6\n\nThis method is used to prevent the rotation and tilting\nof mobjects as the camera moves around. The mobject can\nstill move in the x,y,z directions, but will always be\nat the angle (relative to the camera) that it was at\nwhen it was passed through this method.)Parameters:*mobjects(Mobject) \u2013 The Mobject(s) whose orientation must be fixed.**kwargs\u2013Some valid kwargs areuse_static_center_func : bool\ncenter_func : function\n\nThis method is used to prevent the rotation and tilting\nof mobjects as the camera moves around. The mobject can\nstill move in the x,y,z directions, but will always be\nat the angle (relative to the camera) that it was at\nwhen it was passed through this method.)\n\nParameters:\n\n*mobjects(Mobject) \u2013 The Mobject(s) whose orientation must be fixed.**kwargs\u2013Some valid kwargs areuse_static_center_func : bool\ncenter_func : function\n\n*mobjects(Mobject) \u2013 The Mobject(s) whose orientation must be fixed.\n\n*mobjects(Mobject) \u2013 The Mobject(s) whose orientation must be fixed.\n\n**kwargs\u2013Some valid kwargs areuse_static_center_func : bool\ncenter_func : function\n\n**kwargs\u2013Some valid kwargs areuse_static_center_func : bool\ncenter_func : function\n\nSome valid kwargs are\n\nuse_static_center_func : bool\ncenter_func : function\n\nuse_static_center_func : bool\ncenter_func : function\n\nbegin_3dillusion_camera_rotation(rate=1,origin_phi=None,origin_theta=None)[source]\u00b6\n\nThis method creates a 3D camera rotation illusion around\nthe current camera orientation.Parameters:rate(float) \u2013 The rate at which the camera rotation illusion should operate.origin_phi(float|None) \u2013 The polar angle the camera should move around. Defaults\nto the current phi angle.origin_theta(float|None) \u2013 The azimutal angle the camera should move around. Defaults\nto the current theta angle.\n\nThis method creates a 3D camera rotation illusion around\nthe current camera orientation.\n\nParameters:\n\nrate(float) \u2013 The rate at which the camera rotation illusion should operate.origin_phi(float|None) \u2013 The polar angle the camera should move around. Defaults\nto the current phi angle.origin_theta(float|None) \u2013 The azimutal angle the camera should move around. Defaults\nto the current theta angle.\n\nrate(float) \u2013 The rate at which the camera rotation illusion should operate.\n\nrate(float) \u2013 The rate at which the camera rotation illusion should operate.\n\norigin_phi(float|None) \u2013 The polar angle the camera should move around. Defaults\nto the current phi angle.\n\norigin_phi(float|None) \u2013 The polar angle the camera should move around. Defaults\nto the current phi angle.\n\norigin_theta(float|None) \u2013 The azimutal angle the camera should move around. Defaults\nto the current theta angle.\n\norigin_theta(float|None) \u2013 The azimutal angle the camera should move around. Defaults\nto the current theta angle.\n\nbegin_ambient_camera_rotation(rate=0.02,about='theta')[source]\u00b6\n\nThis method begins an ambient rotation of the camera about the Z_AXIS,\nin the anticlockwise directionParameters:rate(float) \u2013 The rate at which the camera should rotate about the Z_AXIS.\nNegative rate means clockwise rotation.about(str) \u2013 one of 3 options: [\u201ctheta\u201d, \u201cphi\u201d, \u201cgamma\u201d]. defaults to theta.\n\nThis method begins an ambient rotation of the camera about the Z_AXIS,\nin the anticlockwise direction\n\nParameters:\n\nrate(float) \u2013 The rate at which the camera should rotate about the Z_AXIS.\nNegative rate means clockwise rotation.about(str) \u2013 one of 3 options: [\u201ctheta\u201d, \u201cphi\u201d, \u201cgamma\u201d]. defaults to theta.\n\nrate(float) \u2013 The rate at which the camera should rotate about the Z_AXIS.\nNegative rate means clockwise rotation.\n\nrate(float) \u2013 The rate at which the camera should rotate about the Z_AXIS.\nNegative rate means clockwise rotation.\n\nabout(str) \u2013 one of 3 options: [\u201ctheta\u201d, \u201cphi\u201d, \u201cgamma\u201d]. defaults to theta.\n\nabout(str) \u2013 one of 3 options: [\u201ctheta\u201d, \u201cphi\u201d, \u201cgamma\u201d]. defaults to theta.\n\nget_moving_mobjects(*animations)[source]\u00b6\n\nThis method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed.Parameters:*animations(Animation) \u2013 The animations whose mobjects will be checked.\n\nThis method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed.\n\nParameters:\n\n*animations(Animation) \u2013 The animations whose mobjects will be checked.\n\n*animations(Animation) \u2013 The animations whose mobjects will be checked.\n\nmove_camera(phi=None,theta=None,gamma=None,zoom=None,focal_distance=None,frame_center=None,added_anims=[],**kwargs)[source]\u00b6\n\nThis method animates the movement of the camera\nto the given spherical coordinates.Parameters:phi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.theta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.focal_distance(float|None) \u2013 The radial focal_distance between ORIGIN and Camera.gamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.zoom(float|None) \u2013 The zoom factor of the camera.frame_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.added_anims(Iterable[Animation]) \u2013 Any other animations to be played at the same time.\n\nThis method animates the movement of the camera\nto the given spherical coordinates.\n\nParameters:\n\nphi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.theta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.focal_distance(float|None) \u2013 The radial focal_distance between ORIGIN and Camera.gamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.zoom(float|None) \u2013 The zoom factor of the camera.frame_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.added_anims(Iterable[Animation]) \u2013 Any other animations to be played at the same time.\n\nphi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.\n\nphi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.\n\ntheta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.\n\ntheta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.\n\nfocal_distance(float|None) \u2013 The radial focal_distance between ORIGIN and Camera.\n\nfocal_distance(float|None) \u2013 The radial focal_distance between ORIGIN and Camera.\n\ngamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.\n\ngamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.\n\nzoom(float|None) \u2013 The zoom factor of the camera.\n\nzoom(float|None) \u2013 The zoom factor of the camera.\n\nframe_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.\n\nframe_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.\n\nadded_anims(Iterable[Animation]) \u2013 Any other animations to be played at the same time.\n\nadded_anims(Iterable[Animation]) \u2013 Any other animations to be played at the same time.\n\nremove_fixed_in_frame_mobjects(*mobjects)[source]\u00b6\n\nThis method undoes what add_fixed_in_frame_mobjects does.\nIt allows the mobject to be affected by the movement of\nthe camera.Parameters:*mobjects(Mobject) \u2013 The Mobjects whose position and orientation must be unfixed.\n\nThis method undoes what add_fixed_in_frame_mobjects does.\nIt allows the mobject to be affected by the movement of\nthe camera.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The Mobjects whose position and orientation must be unfixed.\n\n*mobjects(Mobject) \u2013 The Mobjects whose position and orientation must be unfixed.\n\nremove_fixed_orientation_mobjects(*mobjects)[source]\u00b6\n\nThis method \u201cunfixes\u201d the orientation of the mobjects\npassed, meaning they will no longer be at the same angle\nrelative to the camera. This only makes sense if the\nmobject was passed through add_fixed_orientation_mobjects first.Parameters:*mobjects(Mobject) \u2013 The Mobjects whose orientation must be unfixed.\n\nThis method \u201cunfixes\u201d the orientation of the mobjects\npassed, meaning they will no longer be at the same angle\nrelative to the camera. This only makes sense if the\nmobject was passed through add_fixed_orientation_mobjects first.\n\nParameters:\n\n*mobjects(Mobject) \u2013 The Mobjects whose orientation must be unfixed.\n\n*mobjects(Mobject) \u2013 The Mobjects whose orientation must be unfixed.\n\nset_camera_orientation(phi=None,theta=None,gamma=None,zoom=None,focal_distance=None,frame_center=None,**kwargs)[source]\u00b6\n\nThis method sets the orientation of the camera in the scene.Parameters:phi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.theta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.focal_distance(float|None) \u2013 The focal_distance of the Camera.gamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.zoom(float|None) \u2013 The zoom factor of the scene.frame_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.\n\nThis method sets the orientation of the camera in the scene.\n\nParameters:\n\nphi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.theta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.focal_distance(float|None) \u2013 The focal_distance of the Camera.gamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.zoom(float|None) \u2013 The zoom factor of the scene.frame_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.\n\nphi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.\n\nphi(float|None) \u2013 The polar angle i.e the angle between Z_AXIS and Camera through ORIGIN in radians.\n\ntheta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.\n\ntheta(float|None) \u2013 The azimuthal angle i.e the angle that spins the camera around the Z_AXIS.\n\nfocal_distance(float|None) \u2013 The focal_distance of the Camera.\n\nfocal_distance(float|None) \u2013 The focal_distance of the Camera.\n\ngamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.\n\ngamma(float|None) \u2013 The rotation of the camera about the vector from the ORIGIN to the Camera.\n\nzoom(float|None) \u2013 The zoom factor of the scene.\n\nzoom(float|None) \u2013 The zoom factor of the scene.\n\nframe_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.\n\nframe_center(Mobject|Sequence[float]|None) \u2013 The new center of the camera frame in cartesian coordinates.\n\nset_to_default_angled_camera_orientation(**kwargs)[source]\u00b6\n\nThis method sets the default_angled_camera_orientation to the\nkeyword arguments passed, and sets the camera to that orientation.Parameters:**kwargs\u2013 Some recognised kwargs are phi, theta, focal_distance, gamma,\nwhich have the same meaning as the parameters in set_camera_orientation.\n\nThis method sets the default_angled_camera_orientation to the\nkeyword arguments passed, and sets the camera to that orientation.\n\nParameters:\n\n**kwargs\u2013 Some recognised kwargs are phi, theta, focal_distance, gamma,\nwhich have the same meaning as the parameters in set_camera_orientation.\n\n**kwargs\u2013 Some recognised kwargs are phi, theta, focal_distance, gamma,\nwhich have the same meaning as the parameters in set_camera_orientation.\n\nstop_3dillusion_camera_rotation()[source]\u00b6\n\nThis method stops all illusion camera rotations.\n\nThis method stops all illusion camera rotations.\n\nstop_ambient_camera_rotation(about='theta')[source]\u00b6\n\nThis method stops all ambient camera rotation.\n\nThis method stops all ambient camera rotation.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ThreeDScene",
+      "class_name": null,
+      "parameters": [
+        "camera_class=<class 'manim.camera.three_d_camera.ThreeDCamera'>"
+      ],
+      "return_type": null,
+      "description": "Bases:Scene"
+    },
+    {
+      "name": "add_fixed_in_frame_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "This method is used to prevent the rotation and movement\nof mobjects as the camera moves around. The mobject is\nessentially overlaid, and is not impacted by the camera\u2019s\nmovement in any way."
+    },
+    {
+      "name": "add_fixed_orientation_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "This method is used to prevent the rotation and tilting\nof mobjects as the camera moves around. The mobject can\nstill move in the x,y,z directions, but will always be\nat the angle (relative to the camera) that it was at\nwhen it was passed through this method.)"
+    },
+    {
+      "name": "begin_3dillusion_camera_rotation",
+      "class_name": null,
+      "parameters": [
+        "rate=1"
+      ],
+      "return_type": null,
+      "description": "This method creates a 3D camera rotation illusion around\nthe current camera orientation."
+    },
+    {
+      "name": "begin_ambient_camera_rotation",
+      "class_name": null,
+      "parameters": [
+        "rate=0.02"
+      ],
+      "return_type": null,
+      "description": "This method begins an ambient rotation of the camera about the Z_AXIS,\nin the anticlockwise direction"
+    },
+    {
+      "name": "get_moving_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*animations"
+      ],
+      "return_type": null,
+      "description": "This method returns a list of all of the Mobjects in the Scene that\nare moving, that are also in the animations passed."
+    },
+    {
+      "name": "move_camera",
+      "class_name": null,
+      "parameters": [
+        "phi=None"
+      ],
+      "return_type": null,
+      "description": "This method animates the movement of the camera\nto the given spherical coordinates."
+    },
+    {
+      "name": "remove_fixed_in_frame_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "This method undoes what add_fixed_in_frame_mobjects does.\nIt allows the mobject to be affected by the movement of\nthe camera."
+    },
+    {
+      "name": "remove_fixed_orientation_mobjects",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "This method \u201cunfixes\u201d the orientation of the mobjects\npassed, meaning they will no longer be at the same angle\nrelative to the camera. This only makes sense if the\nmobject was passed through add_fixed_orientation_mobjects first."
+    },
+    {
+      "name": "set_camera_orientation",
+      "class_name": null,
+      "parameters": [
+        "phi=None"
+      ],
+      "return_type": null,
+      "description": "This method sets the orientation of the camera in the scene."
+    },
+    {
+      "name": "set_to_default_angled_camera_orientation",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "This method sets the default_angled_camera_orientation to the\nkeyword arguments passed, and sets the camera to that orientation."
+    },
+    {
+      "name": "stop_3dillusion_camera_rotation",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This method stops all illusion camera rotations."
+    },
+    {
+      "name": "stop_ambient_camera_rotation",
+      "class_name": null,
+      "parameters": [
+        "about='theta'"
+      ],
+      "return_type": null,
+      "description": "This method stops all ambient camera rotation."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "ThreeDScene",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "transformation",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

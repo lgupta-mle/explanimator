@@ -1,0 +1,20 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.XKCD.html",
+  "title": "XKCD\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "XKCD\u00b6\n\nColors from the XKCD Color Name Survey\n\nXKCD is a popularweb comiccreated by Randall Munroe.\nHis \u201cColor Name Survey\u201d (with\n200000 participants) resulted in a list of nearly 1000 color names.\n\nWhile theXKCDmodule is exposed to Manim\u2019s global name space, the colors included\nin it are not. This means that in order to use the colors, access them via the module name:\n\nList of Color Constants\u00b6\n\nThese hex values are non official approximate values intended to simulate the colors in HTML,\ntaken fromhttps://www.w3schools.com/colors/colors_xkcd.asp.\n\nColor Name\n\nRGB Hex Code\n\nColor Name\n\nRGB Hex Code",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportXKCD>>>XKCD.MANGOManimColor('#FFA62B')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color"
+  ]
+}

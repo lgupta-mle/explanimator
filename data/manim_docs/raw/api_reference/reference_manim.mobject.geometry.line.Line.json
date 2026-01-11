@@ -1,0 +1,120 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.Line.html",
+  "title": "Line\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Line\u00b6\n\nQualified name:manim.mobject.geometry.line.Line\n\nclassLine(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),buff=0,path_arc=0,**kwargs)[source]\u00b6\n\nBases:TipableVMobjectA straight or curved line segment between two points or mobjects.Parameters:start(Point3DLike|Mobject) \u2013 The starting point or Mobject of the line.end(Point3DLike|Mobject) \u2013 The ending point or Mobject of the line.buff(float) \u2013 The distance to shorten the line from both ends.path_arc(float) \u2013 If nonzero, the line will be curved into an arc with this angle (in radians).kwargs(Any) \u2013 Additional arguments to be passed toTipableVMobjectExamplesExample: LineExample\u00b6frommanimimport*classLineExample(Scene):defconstruct(self):line1=Line(LEFT*2,RIGHT*2)line2=Line(LEFT*2,RIGHT*2,buff=0.5)line3=Line(LEFT*2,RIGHT*2,path_arc=PI/2)grp=VGroup(line1,line2,line3).arrange(DOWN,buff=2)self.add(grp)class LineExample(Scene):\n    def construct(self):\n        line1 = Line(LEFT*2, RIGHT*2)\n        line2 = Line(LEFT*2, RIGHT*2, buff=0.5)\n        line3 = Line(LEFT*2, RIGHT*2, path_arc=PI/2)\n        grp = VGroup(line1,line2,line3).arrange(DOWN, buff=2)\n        self.add(grp)Methodsgenerate_pointsInitializespointsand therefore the shape.get_angleget_projectionReturns the projection of a point onto a line.get_slopeget_unit_vectorget_vectorinit_pointsput_start_and_end_onSets starts and end coordinates of a line.set_angleset_lengthset_path_arcset_points_by_endsSets the points of the line based on its start and end points.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),buff=0,path_arc=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:start(Point3DLike|Mobject)end(Point3DLike|Mobject)buff(float)path_arc(float)kwargs(Any)Return type:None_pointify(mob_or_point,direction=None)[source]\u00b6Transforms a mobject into its corresponding point. Does nothing if a point is passed.directiondetermines the location of the point along its bounding box in that direction.Parameters:mob_or_point(Mobject|Point3DLike) \u2013 The mobject or point.direction(Vector3DLike|None) \u2013 The direction.Return type:Point3Dgenerate_points()[source]\u00b6Initializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:Noneget_projection(point)[source]\u00b6Returns the projection of a point onto a line.Parameters:point(Point3DLike) \u2013 The point to which the line is projected.Return type:Point3Dput_start_and_end_on(start,end)[source]\u00b6Sets starts and end coordinates of a line.ExamplesExample: LineExample\u00b6frommanimimport*classLineExample(Scene):defconstruct(self):d=VGroup()foriinrange(0,10):d.add(Dot())d.arrange_in_grid(buff=1)self.add(d)l=Line(d[0],d[1])self.add(l)self.wait()l.put_start_and_end_on(d[1].get_center(),d[2].get_center())self.wait()l.put_start_and_end_on(d[4].get_center(),d[7].get_center())self.wait()class LineExample(Scene):\n    def construct(self):\n        d = VGroup()\n        for i in range(0,10):\n            d.add(Dot())\n        d.arrange_in_grid(buff=1)\n        self.add(d)\n        l= Line(d[0], d[1])\n        self.add(l)\n        self.wait()\n        l.put_start_and_end_on(d[1].get_center(), d[2].get_center())\n        self.wait()\n        l.put_start_and_end_on(d[4].get_center(), d[7].get_center())\n        self.wait()Parameters:start(Point3DLike)end(Point3DLike)Return type:Selfset_points_by_ends(start,end,buff=0,path_arc=0)[source]\u00b6Sets the points of the line based on its start and end points.\nUnlikeput_start_and_end_on(), this method respectsself.buffand\nMobject bounding boxes.Parameters:start(Point3DLike|Mobject) \u2013 The start point or Mobject of the line.end(Point3DLike|Mobject) \u2013 The end point or Mobject of the line.buff(float) \u2013 The empty space between the start and end of the line, by default 0.path_arc(float) \u2013 The angle of a circle spanned by this arc, by default 0 which is a straight line.Return type:None\n\nBases:TipableVMobject\n\nA straight or curved line segment between two points or mobjects.\n\nParameters:\n\nstart(Point3DLike|Mobject) \u2013 The starting point or Mobject of the line.end(Point3DLike|Mobject) \u2013 The ending point or Mobject of the line.buff(float) \u2013 The distance to shorten the line from both ends.path_arc(float) \u2013 If nonzero, the line will be curved into an arc with this angle (in radians).kwargs(Any) \u2013 Additional arguments to be passed toTipableVMobject\n\nstart(Point3DLike|Mobject) \u2013 The starting point or Mobject of the line.\n\nstart(Point3DLike|Mobject) \u2013 The starting point or Mobject of the line.\n\nend(Point3DLike|Mobject) \u2013 The ending point or Mobject of the line.\n\nend(Point3DLike|Mobject) \u2013 The ending point or Mobject of the line.\n\nbuff(float) \u2013 The distance to shorten the line from both ends.\n\nbuff(float) \u2013 The distance to shorten the line from both ends.\n\npath_arc(float) \u2013 If nonzero, the line will be curved into an arc with this angle (in radians).\n\npath_arc(float) \u2013 If nonzero, the line will be curved into an arc with this angle (in radians).\n\nkwargs(Any) \u2013 Additional arguments to be passed toTipableVMobject\n\nkwargs(Any) \u2013 Additional arguments to be passed toTipableVMobject\n\nExamples\n\nExample: LineExample\u00b6\n\nMethods\n\ngenerate_points\n\nInitializespointsand therefore the shape.\n\nget_angle\n\nget_projection\n\nReturns the projection of a point onto a line.\n\nget_slope\n\nget_unit_vector\n\nget_vector\n\ninit_points\n\nput_start_and_end_on\n\nSets starts and end coordinates of a line.\n\nset_angle\n\nset_length\n\nset_path_arc\n\nset_points_by_ends\n\nSets the points of the line based on its start and end points.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),buff=0,path_arc=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:start(Point3DLike|Mobject)end(Point3DLike|Mobject)buff(float)path_arc(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstart(Point3DLike|Mobject)end(Point3DLike|Mobject)buff(float)path_arc(float)kwargs(Any)\n\nstart(Point3DLike|Mobject)\n\nstart(Point3DLike|Mobject)\n\nend(Point3DLike|Mobject)\n\nend(Point3DLike|Mobject)\n\nbuff(float)\n\nbuff(float)\n\npath_arc(float)\n\npath_arc(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\n_pointify(mob_or_point,direction=None)[source]\u00b6\n\nTransforms a mobject into its corresponding point. Does nothing if a point is passed.directiondetermines the location of the point along its bounding box in that direction.Parameters:mob_or_point(Mobject|Point3DLike) \u2013 The mobject or point.direction(Vector3DLike|None) \u2013 The direction.Return type:Point3D\n\nTransforms a mobject into its corresponding point. Does nothing if a point is passed.\n\ndirectiondetermines the location of the point along its bounding box in that direction.\n\nParameters:\n\nmob_or_point(Mobject|Point3DLike) \u2013 The mobject or point.direction(Vector3DLike|None) \u2013 The direction.\n\nmob_or_point(Mobject|Point3DLike) \u2013 The mobject or point.\n\nmob_or_point(Mobject|Point3DLike) \u2013 The mobject or point.\n\ndirection(Vector3DLike|None) \u2013 The direction.\n\ndirection(Vector3DLike|None) \u2013 The direction.\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\ngenerate_points()[source]\u00b6\n\nInitializespointsand therefore the shape.Gets called upon creation. This is an empty method that can be implemented by\nsubclasses.Return type:None\n\nInitializespointsand therefore the shape.\n\nGets called upon creation. This is an empty method that can be implemented by\nsubclasses.\n\nReturn type:\n\nNone\n\nNone\n\nget_projection(point)[source]\u00b6\n\nReturns the projection of a point onto a line.Parameters:point(Point3DLike) \u2013 The point to which the line is projected.Return type:Point3D\n\nReturns the projection of a point onto a line.\n\nParameters:\n\npoint(Point3DLike) \u2013 The point to which the line is projected.\n\npoint(Point3DLike) \u2013 The point to which the line is projected.\n\nReturn type:\n\nPoint3D\n\nPoint3D\n\nput_start_and_end_on(start,end)[source]\u00b6\n\nSets starts and end coordinates of a line.ExamplesExample: LineExample\u00b6frommanimimport*classLineExample(Scene):defconstruct(self):d=VGroup()foriinrange(0,10):d.add(Dot())d.arrange_in_grid(buff=1)self.add(d)l=Line(d[0],d[1])self.add(l)self.wait()l.put_start_and_end_on(d[1].get_center(),d[2].get_center())self.wait()l.put_start_and_end_on(d[4].get_center(),d[7].get_center())self.wait()class LineExample(Scene):\n    def construct(self):\n        d = VGroup()\n        for i in range(0,10):\n            d.add(Dot())\n        d.arrange_in_grid(buff=1)\n        self.add(d)\n        l= Line(d[0], d[1])\n        self.add(l)\n        self.wait()\n        l.put_start_and_end_on(d[1].get_center(), d[2].get_center())\n        self.wait()\n        l.put_start_and_end_on(d[4].get_center(), d[7].get_center())\n        self.wait()Parameters:start(Point3DLike)end(Point3DLike)Return type:Self\n\nSets starts and end coordinates of a line.\n\nExamples\n\nExample: LineExample\u00b6\n\nParameters:\n\nstart(Point3DLike)end(Point3DLike)\n\nstart(Point3DLike)\n\nstart(Point3DLike)\n\nend(Point3DLike)\n\nend(Point3DLike)\n\nReturn type:\n\nSelf\n\nSelf\n\nset_points_by_ends(start,end,buff=0,path_arc=0)[source]\u00b6\n\nSets the points of the line based on its start and end points.\nUnlikeput_start_and_end_on(), this method respectsself.buffand\nMobject bounding boxes.Parameters:start(Point3DLike|Mobject) \u2013 The start point or Mobject of the line.end(Point3DLike|Mobject) \u2013 The end point or Mobject of the line.buff(float) \u2013 The empty space between the start and end of the line, by default 0.path_arc(float) \u2013 The angle of a circle spanned by this arc, by default 0 which is a straight line.Return type:None\n\nSets the points of the line based on its start and end points.\nUnlikeput_start_and_end_on(), this method respectsself.buffand\nMobject bounding boxes.\n\nParameters:\n\nstart(Point3DLike|Mobject) \u2013 The start point or Mobject of the line.end(Point3DLike|Mobject) \u2013 The end point or Mobject of the line.buff(float) \u2013 The empty space between the start and end of the line, by default 0.path_arc(float) \u2013 The angle of a circle spanned by this arc, by default 0 which is a straight line.\n\nstart(Point3DLike|Mobject) \u2013 The start point or Mobject of the line.\n\nstart(Point3DLike|Mobject) \u2013 The start point or Mobject of the line.\n\nend(Point3DLike|Mobject) \u2013 The end point or Mobject of the line.\n\nend(Point3DLike|Mobject) \u2013 The end point or Mobject of the line.\n\nbuff(float) \u2013 The empty space between the start and end of the line, by default 0.\n\nbuff(float) \u2013 The empty space between the start and end of the line, by default 0.\n\npath_arc(float) \u2013 The angle of a circle spanned by this arc, by default 0 which is a straight line.\n\npath_arc(float) \u2013 The angle of a circle spanned by this arc, by default 0 which is a straight line.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classLineExample(Scene):defconstruct(self):line1=Line(LEFT*2,RIGHT*2)line2=Line(LEFT*2,RIGHT*2,buff=0.5)line3=Line(LEFT*2,RIGHT*2,path_arc=PI/2)grp=VGroup(line1,line2,line3).arrange(DOWN,buff=2)self.add(grp)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LineExample(Scene):\n    def construct(self):\n        line1 = Line(LEFT*2, RIGHT*2)\n        line2 = Line(LEFT*2, RIGHT*2, buff=0.5)\n        line3 = Line(LEFT*2, RIGHT*2, path_arc=PI/2)\n        grp = VGroup(line1,line2,line3).arrange(DOWN, buff=2)\n        self.add(grp)",
+      "language": "python",
+      "context": "Example: LineExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classLineExample(Scene):defconstruct(self):d=VGroup()foriinrange(0,10):d.add(Dot())d.arrange_in_grid(buff=1)self.add(d)l=Line(d[0],d[1])self.add(l)self.wait()l.put_start_and_end_on(d[1].get_center(),d[2].get_center())self.wait()l.put_start_and_end_on(d[4].get_center(),d[7].get_center())self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class LineExample(Scene):\n    def construct(self):\n        d = VGroup()\n        for i in range(0,10):\n            d.add(Dot())\n        d.arrange_in_grid(buff=1)\n        self.add(d)\n        l= Line(d[0], d[1])\n        self.add(l)\n        self.wait()\n        l.put_start_and_end_on(d[1].get_center(), d[2].get_center())\n        self.wait()\n        l.put_start_and_end_on(d[4].get_center(), d[7].get_center())\n        self.wait()",
+      "language": "python",
+      "context": "Example: LineExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Line",
+      "class_name": null,
+      "parameters": [
+        "start=array([-1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:TipableVMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "start=array([-1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_pointify",
+      "class_name": null,
+      "parameters": [
+        "mob_or_point"
+      ],
+      "return_type": null,
+      "description": "Transforms a mobject into its corresponding point. Does nothing if a point is passed."
+    },
+    {
+      "name": "generate_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initializespointsand therefore the shape."
+    },
+    {
+      "name": "get_projection",
+      "class_name": null,
+      "parameters": [
+        "point"
+      ],
+      "return_type": null,
+      "description": "Returns the projection of a point onto a line."
+    },
+    {
+      "name": "put_start_and_end_on",
+      "class_name": null,
+      "parameters": [
+        "start"
+      ],
+      "return_type": null,
+      "description": "Sets starts and end coordinates of a line."
+    },
+    {
+      "name": "set_points_by_ends",
+      "class_name": null,
+      "parameters": [
+        "start"
+      ],
+      "return_type": null,
+      "description": "Sets the points of the line based on its start and end points.\nUnlikeput_start_and_end_on(), this method respectsself.buffand\nMobject bounding boxes."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "VGroup",
+    "Transform",
+    "VMobject",
+    "Dot",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

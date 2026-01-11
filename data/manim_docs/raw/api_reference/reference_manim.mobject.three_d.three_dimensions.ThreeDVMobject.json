@@ -1,0 +1,38 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.ThreeDVMobject.html",
+  "title": "ThreeDVMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ThreeDVMobject\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.ThreeDVMobject\n\nclassThreeDVMobject(shade_in_3d=True,**kwargs)[source]\u00b6\n\nBases:VMobjectMethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:shade_in_3d(bool)_original__init__(shade_in_3d=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:shade_in_3d(bool)\n\nBases:VMobject\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nshade_in_3d(bool)\n\nshade_in_3d(bool)\n\n_original__init__(shade_in_3d=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:shade_in_3d(bool)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nshade_in_3d(bool)\n\nshade_in_3d(bool)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ThreeDVMobject",
+      "class_name": null,
+      "parameters": [
+        "shade_in_3d=True"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "shade_in_3d=True"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

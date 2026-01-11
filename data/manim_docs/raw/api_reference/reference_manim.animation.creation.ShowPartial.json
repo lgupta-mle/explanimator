@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.ShowPartial.html",
+  "title": "ShowPartial\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ShowPartial\u00b6\n\nQualified name:manim.animation.creation.ShowPartial\n\nclassShowPartial(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationAbstract class for Animations that show the VMobject partially.Raises:TypeError\u2013 Ifmobjectis not an instance ofVMobject.Parameters:mobject(VMobject|OpenGLVMobject|OpenGLSurface|None)See alsoCreate,ShowPassingFlashMethodsinterpolate_submobjectAttributesrun_time_original__init__(mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject|OpenGLVMobject|OpenGLSurface|None)\n\nBases:Animation\n\nAbstract class for Animations that show the VMobject partially.\n\nRaises:\n\nTypeError\u2013 Ifmobjectis not an instance ofVMobject.\n\nTypeError\u2013 Ifmobjectis not an instance ofVMobject.\n\nParameters:\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface|None)\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface|None)\n\nSee also\n\nCreate,ShowPassingFlash\n\nMethods\n\ninterpolate_submobject\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject|OpenGLVMobject|OpenGLSurface|None)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface|None)\n\nmobject(VMobject|OpenGLVMobject|OpenGLSurface|None)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ShowPartial",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "Flash",
+    "VMobject",
+    "ShowPassingFlash",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing"
+  ]
+}

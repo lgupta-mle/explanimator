@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.growing.GrowFromEdge.html",
+  "title": "GrowFromEdge\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "GrowFromEdge\u00b6\n\nQualified name:manim.animation.growing.GrowFromEdge\n\nclassGrowFromEdge(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:GrowFromPointIntroduce anMobjectby growing it from one of its bounding box edges.Parameters:mobject(Mobject) \u2013 The mobjects to be introduced.edge(Vector3DLike) \u2013 The direction to seek bounding box edge of mobject.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)ExamplesExample: GrowFromEdgeExample\u00b6frommanimimport*classGrowFromEdgeExample(Scene):defconstruct(self):squares=[Square()for_inrange(4)]VGroup(*squares).set_x(0).arrange(buff=1)self.play(GrowFromEdge(squares[0],DOWN))self.play(GrowFromEdge(squares[1],RIGHT))self.play(GrowFromEdge(squares[2],UR))self.play(GrowFromEdge(squares[3],UP,point_color=RED))class GrowFromEdgeExample(Scene):\n    def construct(self):\n        squares = [Square() for _ in range(4)]\n        VGroup(*squares).set_x(0).arrange(buff=1)\n        self.play(GrowFromEdge(squares[0], DOWN))\n        self.play(GrowFromEdge(squares[1], RIGHT))\n        self.play(GrowFromEdge(squares[2], UR))\n        self.play(GrowFromEdge(squares[3], UP, point_color=RED))MethodsAttributespath_arcpath_funcrun_time_original__init__(mobject,edge,point_color=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)edge(Vector3DLike)point_color(ParsableManimColor|None)kwargs(Any)\n\nBases:GrowFromPoint\n\nIntroduce anMobjectby growing it from one of its bounding box edges.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobjects to be introduced.edge(Vector3DLike) \u2013 The direction to seek bounding box edge of mobject.point_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.kwargs(Any)\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\nmobject(Mobject) \u2013 The mobjects to be introduced.\n\nedge(Vector3DLike) \u2013 The direction to seek bounding box edge of mobject.\n\nedge(Vector3DLike) \u2013 The direction to seek bounding box edge of mobject.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\npoint_color(ParsableManimColor|None) \u2013 Initial color of the mobject before growing to its full size. Leave empty to match mobject\u2019s color.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: GrowFromEdgeExample\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,edge,point_color=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)edge(Vector3DLike)point_color(ParsableManimColor|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)edge(Vector3DLike)point_color(ParsableManimColor|None)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nedge(Vector3DLike)\n\nedge(Vector3DLike)\n\npoint_color(ParsableManimColor|None)\n\npoint_color(ParsableManimColor|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classGrowFromEdgeExample(Scene):defconstruct(self):squares=[Square()for_inrange(4)]VGroup(*squares).set_x(0).arrange(buff=1)self.play(GrowFromEdge(squares[0],DOWN))self.play(GrowFromEdge(squares[1],RIGHT))self.play(GrowFromEdge(squares[2],UR))self.play(GrowFromEdge(squares[3],UP,point_color=RED))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GrowFromEdgeExample(Scene):\n    def construct(self):\n        squares = [Square() for _ in range(4)]\n        VGroup(*squares).set_x(0).arrange(buff=1)\n        self.play(GrowFromEdge(squares[0], DOWN))\n        self.play(GrowFromEdge(squares[1], RIGHT))\n        self.play(GrowFromEdge(squares[2], UR))\n        self.play(GrowFromEdge(squares[3], UP, point_color=RED))",
+      "language": "python",
+      "context": "Example: GrowFromEdgeExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "GrowFromEdge",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:GrowFromPoint"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

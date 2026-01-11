@@ -1,0 +1,30 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim._config.logger_utils.JSONFormatter.html",
+  "title": "JSONFormatter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "JSONFormatter\u00b6\n\nQualified name:manim.\\_config.logger\\_utils.JSONFormatter\n\nclassJSONFormatter(fmt=None,datefmt=None,style='%',validate=True,*,defaults=None)[source]\u00b6\n\nBases:FormatterA formatter that outputs logs in a custom JSON format.This class is used internally for testing purposes.Initialize the formatter with specified format strings.Initialize the formatter either with the specified format string, or a\ndefault as described above. Allow for specialized date formatting with\nthe optional datefmt argument. If datefmt is omitted, you get an\nISO8601-like (or RFC 3339-like) format.Use a style parameter of \u2018%\u2019, \u2018{\u2019 or \u2018$\u2019 to specify that you want to\nuse one of %-formatting,str.format()({}) formatting orstring.Templateformatting in your format string.Changed in version 3.2:Added thestyleparameter.MethodsformatFormat the record in a custom JSON format.Attributesdefault_msec_formatdefault_time_formatformat(record)[source]\u00b6Format the record in a custom JSON format.Parameters:record(LogRecord)Return type:str\n\nBases:Formatter\n\nA formatter that outputs logs in a custom JSON format.\n\nThis class is used internally for testing purposes.\n\nInitialize the formatter with specified format strings.\n\nInitialize the formatter either with the specified format string, or a\ndefault as described above. Allow for specialized date formatting with\nthe optional datefmt argument. If datefmt is omitted, you get an\nISO8601-like (or RFC 3339-like) format.\n\nUse a style parameter of \u2018%\u2019, \u2018{\u2019 or \u2018$\u2019 to specify that you want to\nuse one of %-formatting,str.format()({}) formatting orstring.Templateformatting in your format string.\n\nChanged in version 3.2:Added thestyleparameter.\n\nMethods\n\nformat\n\nFormat the record in a custom JSON format.\n\nAttributes\n\ndefault_msec_format\n\ndefault_time_format\n\nformat(record)[source]\u00b6\n\nFormat the record in a custom JSON format.Parameters:record(LogRecord)Return type:str\n\nFormat the record in a custom JSON format.\n\nParameters:\n\nrecord(LogRecord)\n\nrecord(LogRecord)\n\nReturn type:\n\nstr\n\nstr",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "JSONFormatter",
+      "class_name": null,
+      "parameters": [
+        "fmt=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Formatter"
+    },
+    {
+      "name": "format",
+      "class_name": null,
+      "parameters": [
+        "record"
+      ],
+      "return_type": null,
+      "description": "Format the record in a custom JSON format."
+    }
+  ],
+  "related_classes": [],
+  "tags": []
+}

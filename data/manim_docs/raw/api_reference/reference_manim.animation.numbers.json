@@ -1,0 +1,14 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.numbers.html",
+  "title": "numbers\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "numbers\u00b6\n\nAnimations for changing numbers.\n\nClasses\n\nChangeDecimalToValue\n\nAnimate aDecimalNumberto a target value using linear interpolation.\n\nChangingDecimal\n\nAnimate aDecimalNumberto values specified by a user-supplied function.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.matrix.Matrix.html",
+  "title": "Matrix\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Matrix\u00b6\n\nQualified name:manim.mobject.matrix.Matrix\n\nclassMatrix(matrix,v_buff=0.8,h_buff=1.3,bracket_h_buff=0.25,bracket_v_buff=0.25,add_background_rectangles_to_entries=False,include_background_rectangle=False,element_to_mobject=<class'manim.mobject.text.tex_mobject.MathTex'>,element_to_mobject_config={},element_alignment_corner=array([1.,-1.,0.]),left_bracket='[',right_bracket=']',stretch_brackets=True,bracket_config={},**kwargs)[source]\u00b6\n\nBases:VMobjectA mobject that displays a matrix on the screen.Parameters:matrix(Iterable) \u2013 A numpy 2d array or list of lists.v_buff(float) \u2013 Vertical distance between elements, by default 0.8.h_buff(float) \u2013 Horizontal distance between elements, by default 1.3.bracket_h_buff(float) \u2013 Distance of the brackets from the matrix, by defaultMED_SMALL_BUFF.bracket_v_buff(float) \u2013 Height of the brackets, by defaultMED_SMALL_BUFF.add_background_rectangles_to_entries(bool) \u2013Trueif should add backgraound rectangles to entries, by defaultFalse.include_background_rectangle(bool) \u2013Trueif should include background rectangle, by defaultFalse.element_to_mobject(type[Mobject]|Callable[...,Mobject]) \u2013 The mobject class used to construct the elements, by defaultMathTex.element_to_mobject_config(dict) \u2013 Additional arguments to be passed to the constructor inelement_to_mobject,\nby default{}.element_alignment_corner(Sequence[float]) \u2013 The corner to which elements are aligned, by defaultDR.left_bracket(str) \u2013 The left bracket type, by default\"[\".right_bracket(str) \u2013 The right bracket type, by default\"]\".stretch_brackets(bool) \u2013Trueif should stretch the brackets to fit the height of matrix contents, by defaultTrue.bracket_config(dict) \u2013 Additional arguments to be passed toMathTexwhen constructing\nthe brackets.kwargs(Any)ExamplesThe first example shows a variety of uses of this module while the second example\nexlpains the use of the optionsadd_background_rectangles_to_entriesandinclude_background_rectangle.Example: MatrixExamples\u00b6frommanimimport*classMatrixExamples(Scene):defconstruct(self):m0=Matrix([[2,r\"\\pi\"],[-1,1]])m1=Matrix([[2,0,4],[-1,1,5]],v_buff=1.3,h_buff=0.8,bracket_h_buff=SMALL_BUFF,bracket_v_buff=SMALL_BUFF,left_bracket=r\"\\{\",right_bracket=r\"\\}\")m1.add(SurroundingRectangle(m1.get_columns()[1]))m2=Matrix([[2,1],[-1,3]],element_alignment_corner=UL,left_bracket=\"(\",right_bracket=\")\")m3=Matrix([[2,1],[-1,3]],left_bracket=r\"\\langle\",right_bracket=r\"\\rangle\")m4=Matrix([[2,1],[-1,3]],).set_column_colors(RED,GREEN)m5=Matrix([[2,1],[-1,3]],).set_row_colors(RED,GREEN)g=Group(m0,m1,m2,m3,m4,m5).arrange_in_grid(buff=2)self.add(g)class MatrixExamples(Scene):\n    def construct(self):\n        m0 = Matrix([[2, r\"\\pi\"], [-1, 1]])\n        m1 = Matrix([[2, 0, 4], [-1, 1, 5]],\n            v_buff=1.3,\n            h_buff=0.8,\n            bracket_h_buff=SMALL_BUFF,\n            bracket_v_buff=SMALL_BUFF,\n            left_bracket=r\"\\{\",\n            right_bracket=r\"\\}\")\n        m1.add(SurroundingRectangle(m1.get_columns()[1]))\n        m2 = Matrix([[2, 1], [-1, 3]],\n            element_alignment_corner=UL,\n            left_bracket=\"(\",\n            right_bracket=\")\")\n        m3 = Matrix([[2, 1], [-1, 3]],\n            left_bracket=r\"\\langle\",\n            right_bracket=r\"\\rangle\")\n        m4 = Matrix([[2, 1], [-1, 3]],\n        ).set_column_colors(RED, GREEN)\n        m5 = Matrix([[2, 1], [-1, 3]],\n        ).set_row_colors(RED, GREEN)\n        g = Group(\n            m0,m1,m2,m3,m4,m5\n        ).arrange_in_grid(buff=2)\n        self.add(g)Example: BackgroundRectanglesExample\u00b6frommanimimport*classBackgroundRectanglesExample(Scene):defconstruct(self):background=Rectangle().scale(3.2)background.set_fill(opacity=.5)background.set_color([TEAL,RED,YELLOW])self.add(background)m0=Matrix([[12,-30],[-1,15]],add_background_rectangles_to_entries=True)m1=Matrix([[2,0],[-1,1]],include_background_rectangle=True)m2=Matrix([[12,-30],[-1,15]])g=Group(m0,m1,m2).arrange(buff=2)self.add(g)class BackgroundRectanglesExample(Scene):\n    def construct(self):\n        background= Rectangle().scale(3.2)\n        background.set_fill(opacity=.5)\n        background.set_color([TEAL, RED, YELLOW])\n        self.add(background)\n        m0 = Matrix([[12, -30], [-1, 15]],\n            add_background_rectangles_to_entries=True)\n        m1 = Matrix([[2, 0], [-1, 1]],\n            include_background_rectangle=True)\n        m2 = Matrix([[12, -30], [-1, 15]])\n        g = Group(m0, m1, m2).arrange(buff=2)\n        self.add(g)Methodsadd_background_to_entriesAdd a black background rectangle to the matrix, see above for an example.get_bracketsReturn the bracket mobjects.get_columnsReturn columns of the matrix as VGroups.get_entriesReturn the individual entries of the matrix.get_mob_matrixReturn the underlying mob matrix mobjects.get_rowsReturn rows of the matrix as VGroups.set_column_colorsSet individual colors for each columns of the matrix.set_row_colorsSet individual colors for each row of the matrix.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._add_brackets(left='[',right=']',**kwargs)[source]\u00b6Adds the brackets to the Matrix mobject.See Latex document for various bracket types.Parameters:left(str) \u2013 the left bracket, by default \u201c[\u201dright(str) \u2013 the right bracket, by default \u201c]\u201dkwargs(Any)Returns:The current matrix object (self).Return type:Matrix_original__init__(matrix,v_buff=0.8,h_buff=1.3,bracket_h_buff=0.25,bracket_v_buff=0.25,add_background_rectangles_to_entries=False,include_background_rectangle=False,element_to_mobject=<class'manim.mobject.text.tex_mobject.MathTex'>,element_to_mobject_config={},element_alignment_corner=array([1.,-1.,0.]),left_bracket='[',right_bracket=']',stretch_brackets=True,bracket_config={},**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:matrix(Iterable)v_buff(float)h_buff(float)bracket_h_buff(float)bracket_v_buff(float)add_background_rectangles_to_entries(bool)include_background_rectangle(bool)element_to_mobject(type[Mobject]|Callable[[...],Mobject])element_to_mobject_config(dict)element_alignment_corner(Sequence[float])left_bracket(str)right_bracket(str)stretch_brackets(bool)bracket_config(dict)kwargs(Any)add_background_to_entries()[source]\u00b6Add a black background rectangle to the matrix,\nsee above for an example.Returns:The current matrix object (self).Return type:Matrixget_brackets()[source]\u00b6Return the bracket mobjects.Returns:A VGroup containing the left and right bracket.Return type:VGroupExamplesExample: GetBracketsExample\u00b6frommanimimport*classGetBracketsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",3],[1,5]])bra=m0.get_brackets()colors=[BLUE,GREEN]forkinrange(len(colors)):bra[k].set_color(colors[k])self.add(m0)class GetBracketsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 3], [1, 5]])\n        bra = m0.get_brackets()\n        colors = [BLUE, GREEN]\n        for k in range(len(colors)):\n            bra[k].set_color(colors[k])\n        self.add(m0)get_columns()[source]\u00b6Return columns of the matrix as VGroups.Returns:The VGroup contains a nested VGroup for each column of the matrix.Return type:VGroupExamplesExample: GetColumnsExample\u00b6frommanimimport*classGetColumnsExample(Scene):defconstruct(self):m0=Matrix([[r\"\\pi\",3],[1,5]])m0.add(SurroundingRectangle(m0.get_columns()[1]))self.add(m0)class GetColumnsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[r\"\\pi\", 3], [1, 5]])\n        m0.add(SurroundingRectangle(m0.get_columns()[1]))\n        self.add(m0)get_entries()[source]\u00b6Return the individual entries of the matrix.Returns:VGroup containing entries of the matrix.Return type:VGroupExamplesExample: GetEntriesExample\u00b6frommanimimport*classGetEntriesExample(Scene):defconstruct(self):m0=Matrix([[2,3],[1,5]])ent=m0.get_entries()colors=[BLUE,GREEN,YELLOW,RED]forkinrange(len(colors)):ent[k].set_color(colors[k])self.add(m0)class GetEntriesExample(Scene):\n    def construct(self):\n        m0 = Matrix([[2, 3], [1, 5]])\n        ent = m0.get_entries()\n        colors = [BLUE, GREEN, YELLOW, RED]\n        for k in range(len(colors)):\n            ent[k].set_color(colors[k])\n        self.add(m0)get_mob_matrix()[source]\u00b6Return the underlying mob matrix mobjects.Returns:Each VGroup contains a row of the matrix.Return type:List[VGroup]get_rows()[source]\u00b6Return rows of the matrix as VGroups.Returns:The VGroup contains a nested VGroup for each row of the matrix.Return type:VGroupExamplesExample: GetRowsExample\u00b6frommanimimport*classGetRowsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",3],[1,5]])m0.add(SurroundingRectangle(m0.get_rows()[1]))self.add(m0)class GetRowsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 3], [1, 5]])\n        m0.add(SurroundingRectangle(m0.get_rows()[1]))\n        self.add(m0)set_column_colors(*colors)[source]\u00b6Set individual colors for each columns of the matrix.Parameters:colors(str) \u2013 The list of colors; each color specified corresponds to a column.Returns:The current matrix object (self).Return type:MatrixExamplesExample: SetColumnColorsExample\u00b6frommanimimport*classSetColumnColorsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",1],[-1,3]],).set_column_colors([RED,BLUE],GREEN)self.add(m0)class SetColumnColorsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 1], [-1, 3]],\n        ).set_column_colors([RED,BLUE], GREEN)\n        self.add(m0)set_row_colors(*colors)[source]\u00b6Set individual colors for each row of the matrix.Parameters:colors(str) \u2013 The list of colors; each color specified corresponds to a row.Returns:The current matrix object (self).Return type:MatrixExamplesExample: SetRowColorsExample\u00b6frommanimimport*classSetRowColorsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",1],[-1,3]],).set_row_colors([RED,BLUE],GREEN)self.add(m0)class SetRowColorsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 1], [-1, 3]],\n        ).set_row_colors([RED,BLUE], GREEN)\n        self.add(m0)\n\nBases:VMobject\n\nA mobject that displays a matrix on the screen.\n\nParameters:\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists.v_buff(float) \u2013 Vertical distance between elements, by default 0.8.h_buff(float) \u2013 Horizontal distance between elements, by default 1.3.bracket_h_buff(float) \u2013 Distance of the brackets from the matrix, by defaultMED_SMALL_BUFF.bracket_v_buff(float) \u2013 Height of the brackets, by defaultMED_SMALL_BUFF.add_background_rectangles_to_entries(bool) \u2013Trueif should add backgraound rectangles to entries, by defaultFalse.include_background_rectangle(bool) \u2013Trueif should include background rectangle, by defaultFalse.element_to_mobject(type[Mobject]|Callable[...,Mobject]) \u2013 The mobject class used to construct the elements, by defaultMathTex.element_to_mobject_config(dict) \u2013 Additional arguments to be passed to the constructor inelement_to_mobject,\nby default{}.element_alignment_corner(Sequence[float]) \u2013 The corner to which elements are aligned, by defaultDR.left_bracket(str) \u2013 The left bracket type, by default\"[\".right_bracket(str) \u2013 The right bracket type, by default\"]\".stretch_brackets(bool) \u2013Trueif should stretch the brackets to fit the height of matrix contents, by defaultTrue.bracket_config(dict) \u2013 Additional arguments to be passed toMathTexwhen constructing\nthe brackets.kwargs(Any)\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists.\n\nmatrix(Iterable) \u2013 A numpy 2d array or list of lists.\n\nv_buff(float) \u2013 Vertical distance between elements, by default 0.8.\n\nv_buff(float) \u2013 Vertical distance between elements, by default 0.8.\n\nh_buff(float) \u2013 Horizontal distance between elements, by default 1.3.\n\nh_buff(float) \u2013 Horizontal distance between elements, by default 1.3.\n\nbracket_h_buff(float) \u2013 Distance of the brackets from the matrix, by defaultMED_SMALL_BUFF.\n\nbracket_h_buff(float) \u2013 Distance of the brackets from the matrix, by defaultMED_SMALL_BUFF.\n\nbracket_v_buff(float) \u2013 Height of the brackets, by defaultMED_SMALL_BUFF.\n\nbracket_v_buff(float) \u2013 Height of the brackets, by defaultMED_SMALL_BUFF.\n\nadd_background_rectangles_to_entries(bool) \u2013Trueif should add backgraound rectangles to entries, by defaultFalse.\n\nadd_background_rectangles_to_entries(bool) \u2013Trueif should add backgraound rectangles to entries, by defaultFalse.\n\ninclude_background_rectangle(bool) \u2013Trueif should include background rectangle, by defaultFalse.\n\ninclude_background_rectangle(bool) \u2013Trueif should include background rectangle, by defaultFalse.\n\nelement_to_mobject(type[Mobject]|Callable[...,Mobject]) \u2013 The mobject class used to construct the elements, by defaultMathTex.\n\nelement_to_mobject(type[Mobject]|Callable[...,Mobject]) \u2013 The mobject class used to construct the elements, by defaultMathTex.\n\nelement_to_mobject_config(dict) \u2013 Additional arguments to be passed to the constructor inelement_to_mobject,\nby default{}.\n\nelement_to_mobject_config(dict) \u2013 Additional arguments to be passed to the constructor inelement_to_mobject,\nby default{}.\n\nelement_alignment_corner(Sequence[float]) \u2013 The corner to which elements are aligned, by defaultDR.\n\nelement_alignment_corner(Sequence[float]) \u2013 The corner to which elements are aligned, by defaultDR.\n\nleft_bracket(str) \u2013 The left bracket type, by default\"[\".\n\nleft_bracket(str) \u2013 The left bracket type, by default\"[\".\n\nright_bracket(str) \u2013 The right bracket type, by default\"]\".\n\nright_bracket(str) \u2013 The right bracket type, by default\"]\".\n\nstretch_brackets(bool) \u2013Trueif should stretch the brackets to fit the height of matrix contents, by defaultTrue.\n\nstretch_brackets(bool) \u2013Trueif should stretch the brackets to fit the height of matrix contents, by defaultTrue.\n\nbracket_config(dict) \u2013 Additional arguments to be passed toMathTexwhen constructing\nthe brackets.\n\nbracket_config(dict) \u2013 Additional arguments to be passed toMathTexwhen constructing\nthe brackets.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nThe first example shows a variety of uses of this module while the second example\nexlpains the use of the optionsadd_background_rectangles_to_entriesandinclude_background_rectangle.\n\nExample: MatrixExamples\u00b6\n\nExample: BackgroundRectanglesExample\u00b6\n\nMethods\n\nadd_background_to_entries\n\nAdd a black background rectangle to the matrix, see above for an example.\n\nget_brackets\n\nReturn the bracket mobjects.\n\nget_columns\n\nReturn columns of the matrix as VGroups.\n\nget_entries\n\nReturn the individual entries of the matrix.\n\nget_mob_matrix\n\nReturn the underlying mob matrix mobjects.\n\nget_rows\n\nReturn rows of the matrix as VGroups.\n\nset_column_colors\n\nSet individual colors for each columns of the matrix.\n\nset_row_colors\n\nSet individual colors for each row of the matrix.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_add_brackets(left='[',right=']',**kwargs)[source]\u00b6\n\nAdds the brackets to the Matrix mobject.See Latex document for various bracket types.Parameters:left(str) \u2013 the left bracket, by default \u201c[\u201dright(str) \u2013 the right bracket, by default \u201c]\u201dkwargs(Any)Returns:The current matrix object (self).Return type:Matrix\n\nAdds the brackets to the Matrix mobject.\n\nSee Latex document for various bracket types.\n\nParameters:\n\nleft(str) \u2013 the left bracket, by default \u201c[\u201dright(str) \u2013 the right bracket, by default \u201c]\u201dkwargs(Any)\n\nleft(str) \u2013 the left bracket, by default \u201c[\u201d\n\nleft(str) \u2013 the left bracket, by default \u201c[\u201d\n\nright(str) \u2013 the right bracket, by default \u201c]\u201d\n\nright(str) \u2013 the right bracket, by default \u201c]\u201d\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturns:\n\nThe current matrix object (self).\n\nThe current matrix object (self).\n\nReturn type:\n\nMatrix\n\nMatrix\n\n_original__init__(matrix,v_buff=0.8,h_buff=1.3,bracket_h_buff=0.25,bracket_v_buff=0.25,add_background_rectangles_to_entries=False,include_background_rectangle=False,element_to_mobject=<class'manim.mobject.text.tex_mobject.MathTex'>,element_to_mobject_config={},element_alignment_corner=array([1.,-1.,0.]),left_bracket='[',right_bracket=']',stretch_brackets=True,bracket_config={},**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:matrix(Iterable)v_buff(float)h_buff(float)bracket_h_buff(float)bracket_v_buff(float)add_background_rectangles_to_entries(bool)include_background_rectangle(bool)element_to_mobject(type[Mobject]|Callable[[...],Mobject])element_to_mobject_config(dict)element_alignment_corner(Sequence[float])left_bracket(str)right_bracket(str)stretch_brackets(bool)bracket_config(dict)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmatrix(Iterable)v_buff(float)h_buff(float)bracket_h_buff(float)bracket_v_buff(float)add_background_rectangles_to_entries(bool)include_background_rectangle(bool)element_to_mobject(type[Mobject]|Callable[[...],Mobject])element_to_mobject_config(dict)element_alignment_corner(Sequence[float])left_bracket(str)right_bracket(str)stretch_brackets(bool)bracket_config(dict)kwargs(Any)\n\nmatrix(Iterable)\n\nmatrix(Iterable)\n\nv_buff(float)\n\nv_buff(float)\n\nh_buff(float)\n\nh_buff(float)\n\nbracket_h_buff(float)\n\nbracket_h_buff(float)\n\nbracket_v_buff(float)\n\nbracket_v_buff(float)\n\nadd_background_rectangles_to_entries(bool)\n\nadd_background_rectangles_to_entries(bool)\n\ninclude_background_rectangle(bool)\n\ninclude_background_rectangle(bool)\n\nelement_to_mobject(type[Mobject]|Callable[[...],Mobject])\n\nelement_to_mobject(type[Mobject]|Callable[[...],Mobject])\n\nelement_to_mobject_config(dict)\n\nelement_to_mobject_config(dict)\n\nelement_alignment_corner(Sequence[float])\n\nelement_alignment_corner(Sequence[float])\n\nleft_bracket(str)\n\nleft_bracket(str)\n\nright_bracket(str)\n\nright_bracket(str)\n\nstretch_brackets(bool)\n\nstretch_brackets(bool)\n\nbracket_config(dict)\n\nbracket_config(dict)\n\nkwargs(Any)\n\nkwargs(Any)\n\nadd_background_to_entries()[source]\u00b6\n\nAdd a black background rectangle to the matrix,\nsee above for an example.Returns:The current matrix object (self).Return type:Matrix\n\nAdd a black background rectangle to the matrix,\nsee above for an example.\n\nReturns:\n\nThe current matrix object (self).\n\nThe current matrix object (self).\n\nReturn type:\n\nMatrix\n\nMatrix\n\nget_brackets()[source]\u00b6\n\nReturn the bracket mobjects.Returns:A VGroup containing the left and right bracket.Return type:VGroupExamplesExample: GetBracketsExample\u00b6frommanimimport*classGetBracketsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",3],[1,5]])bra=m0.get_brackets()colors=[BLUE,GREEN]forkinrange(len(colors)):bra[k].set_color(colors[k])self.add(m0)class GetBracketsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 3], [1, 5]])\n        bra = m0.get_brackets()\n        colors = [BLUE, GREEN]\n        for k in range(len(colors)):\n            bra[k].set_color(colors[k])\n        self.add(m0)\n\nReturn the bracket mobjects.\n\nReturns:\n\nA VGroup containing the left and right bracket.\n\nA VGroup containing the left and right bracket.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nExamples\n\nExample: GetBracketsExample\u00b6\n\nget_columns()[source]\u00b6\n\nReturn columns of the matrix as VGroups.Returns:The VGroup contains a nested VGroup for each column of the matrix.Return type:VGroupExamplesExample: GetColumnsExample\u00b6frommanimimport*classGetColumnsExample(Scene):defconstruct(self):m0=Matrix([[r\"\\pi\",3],[1,5]])m0.add(SurroundingRectangle(m0.get_columns()[1]))self.add(m0)class GetColumnsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[r\"\\pi\", 3], [1, 5]])\n        m0.add(SurroundingRectangle(m0.get_columns()[1]))\n        self.add(m0)\n\nReturn columns of the matrix as VGroups.\n\nReturns:\n\nThe VGroup contains a nested VGroup for each column of the matrix.\n\nThe VGroup contains a nested VGroup for each column of the matrix.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nExamples\n\nExample: GetColumnsExample\u00b6\n\nget_entries()[source]\u00b6\n\nReturn the individual entries of the matrix.Returns:VGroup containing entries of the matrix.Return type:VGroupExamplesExample: GetEntriesExample\u00b6frommanimimport*classGetEntriesExample(Scene):defconstruct(self):m0=Matrix([[2,3],[1,5]])ent=m0.get_entries()colors=[BLUE,GREEN,YELLOW,RED]forkinrange(len(colors)):ent[k].set_color(colors[k])self.add(m0)class GetEntriesExample(Scene):\n    def construct(self):\n        m0 = Matrix([[2, 3], [1, 5]])\n        ent = m0.get_entries()\n        colors = [BLUE, GREEN, YELLOW, RED]\n        for k in range(len(colors)):\n            ent[k].set_color(colors[k])\n        self.add(m0)\n\nReturn the individual entries of the matrix.\n\nReturns:\n\nVGroup containing entries of the matrix.\n\nVGroup containing entries of the matrix.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nExamples\n\nExample: GetEntriesExample\u00b6\n\nget_mob_matrix()[source]\u00b6\n\nReturn the underlying mob matrix mobjects.Returns:Each VGroup contains a row of the matrix.Return type:List[VGroup]\n\nReturn the underlying mob matrix mobjects.\n\nReturns:\n\nEach VGroup contains a row of the matrix.\n\nEach VGroup contains a row of the matrix.\n\nReturn type:\n\nList[VGroup]\n\nList[VGroup]\n\nget_rows()[source]\u00b6\n\nReturn rows of the matrix as VGroups.Returns:The VGroup contains a nested VGroup for each row of the matrix.Return type:VGroupExamplesExample: GetRowsExample\u00b6frommanimimport*classGetRowsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",3],[1,5]])m0.add(SurroundingRectangle(m0.get_rows()[1]))self.add(m0)class GetRowsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 3], [1, 5]])\n        m0.add(SurroundingRectangle(m0.get_rows()[1]))\n        self.add(m0)\n\nReturn rows of the matrix as VGroups.\n\nReturns:\n\nThe VGroup contains a nested VGroup for each row of the matrix.\n\nThe VGroup contains a nested VGroup for each row of the matrix.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nExamples\n\nExample: GetRowsExample\u00b6\n\nset_column_colors(*colors)[source]\u00b6\n\nSet individual colors for each columns of the matrix.Parameters:colors(str) \u2013 The list of colors; each color specified corresponds to a column.Returns:The current matrix object (self).Return type:MatrixExamplesExample: SetColumnColorsExample\u00b6frommanimimport*classSetColumnColorsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",1],[-1,3]],).set_column_colors([RED,BLUE],GREEN)self.add(m0)class SetColumnColorsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 1], [-1, 3]],\n        ).set_column_colors([RED,BLUE], GREEN)\n        self.add(m0)\n\nSet individual colors for each columns of the matrix.\n\nParameters:\n\ncolors(str) \u2013 The list of colors; each color specified corresponds to a column.\n\ncolors(str) \u2013 The list of colors; each color specified corresponds to a column.\n\nReturns:\n\nThe current matrix object (self).\n\nThe current matrix object (self).\n\nReturn type:\n\nMatrix\n\nMatrix\n\nExamples\n\nExample: SetColumnColorsExample\u00b6\n\nset_row_colors(*colors)[source]\u00b6\n\nSet individual colors for each row of the matrix.Parameters:colors(str) \u2013 The list of colors; each color specified corresponds to a row.Returns:The current matrix object (self).Return type:MatrixExamplesExample: SetRowColorsExample\u00b6frommanimimport*classSetRowColorsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",1],[-1,3]],).set_row_colors([RED,BLUE],GREEN)self.add(m0)class SetRowColorsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 1], [-1, 3]],\n        ).set_row_colors([RED,BLUE], GREEN)\n        self.add(m0)\n\nSet individual colors for each row of the matrix.\n\nParameters:\n\ncolors(str) \u2013 The list of colors; each color specified corresponds to a row.\n\ncolors(str) \u2013 The list of colors; each color specified corresponds to a row.\n\nReturns:\n\nThe current matrix object (self).\n\nThe current matrix object (self).\n\nReturn type:\n\nMatrix\n\nMatrix\n\nExamples\n\nExample: SetRowColorsExample\u00b6",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classMatrixExamples(Scene):defconstruct(self):m0=Matrix([[2,r\"\\pi\"],[-1,1]])m1=Matrix([[2,0,4],[-1,1,5]],v_buff=1.3,h_buff=0.8,bracket_h_buff=SMALL_BUFF,bracket_v_buff=SMALL_BUFF,left_bracket=r\"\\{\",right_bracket=r\"\\}\")m1.add(SurroundingRectangle(m1.get_columns()[1]))m2=Matrix([[2,1],[-1,3]],element_alignment_corner=UL,left_bracket=\"(\",right_bracket=\")\")m3=Matrix([[2,1],[-1,3]],left_bracket=r\"\\langle\",right_bracket=r\"\\rangle\")m4=Matrix([[2,1],[-1,3]],).set_column_colors(RED,GREEN)m5=Matrix([[2,1],[-1,3]],).set_row_colors(RED,GREEN)g=Group(m0,m1,m2,m3,m4,m5).arrange_in_grid(buff=2)self.add(g)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class MatrixExamples(Scene):\n    def construct(self):\n        m0 = Matrix([[2, r\"\\pi\"], [-1, 1]])\n        m1 = Matrix([[2, 0, 4], [-1, 1, 5]],\n            v_buff=1.3,\n            h_buff=0.8,\n            bracket_h_buff=SMALL_BUFF,\n            bracket_v_buff=SMALL_BUFF,\n            left_bracket=r\"\\{\",\n            right_bracket=r\"\\}\")\n        m1.add(SurroundingRectangle(m1.get_columns()[1]))\n        m2 = Matrix([[2, 1], [-1, 3]],\n            element_alignment_corner=UL,\n            left_bracket=\"(\",\n            right_bracket=\")\")\n        m3 = Matrix([[2, 1], [-1, 3]],\n            left_bracket=r\"\\langle\",\n            right_bracket=r\"\\rangle\")\n        m4 = Matrix([[2, 1], [-1, 3]],\n        ).set_column_colors(RED, GREEN)\n        m5 = Matrix([[2, 1], [-1, 3]],\n        ).set_row_colors(RED, GREEN)\n        g = Group(\n            m0,m1,m2,m3,m4,m5\n        ).arrange_in_grid(buff=2)\n        self.add(g)",
+      "language": "python",
+      "context": "Example: MatrixExamples\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classBackgroundRectanglesExample(Scene):defconstruct(self):background=Rectangle().scale(3.2)background.set_fill(opacity=.5)background.set_color([TEAL,RED,YELLOW])self.add(background)m0=Matrix([[12,-30],[-1,15]],add_background_rectangles_to_entries=True)m1=Matrix([[2,0],[-1,1]],include_background_rectangle=True)m2=Matrix([[12,-30],[-1,15]])g=Group(m0,m1,m2).arrange(buff=2)self.add(g)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class BackgroundRectanglesExample(Scene):\n    def construct(self):\n        background= Rectangle().scale(3.2)\n        background.set_fill(opacity=.5)\n        background.set_color([TEAL, RED, YELLOW])\n        self.add(background)\n        m0 = Matrix([[12, -30], [-1, 15]],\n            add_background_rectangles_to_entries=True)\n        m1 = Matrix([[2, 0], [-1, 1]],\n            include_background_rectangle=True)\n        m2 = Matrix([[12, -30], [-1, 15]])\n        g = Group(m0, m1, m2).arrange(buff=2)\n        self.add(g)",
+      "language": "python",
+      "context": "Example: BackgroundRectanglesExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classGetBracketsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",3],[1,5]])bra=m0.get_brackets()colors=[BLUE,GREEN]forkinrange(len(colors)):bra[k].set_color(colors[k])self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GetBracketsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 3], [1, 5]])\n        bra = m0.get_brackets()\n        colors = [BLUE, GREEN]\n        for k in range(len(colors)):\n            bra[k].set_color(colors[k])\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: GetBracketsExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classGetColumnsExample(Scene):defconstruct(self):m0=Matrix([[r\"\\pi\",3],[1,5]])m0.add(SurroundingRectangle(m0.get_columns()[1]))self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GetColumnsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[r\"\\pi\", 3], [1, 5]])\n        m0.add(SurroundingRectangle(m0.get_columns()[1]))\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: GetColumnsExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classGetEntriesExample(Scene):defconstruct(self):m0=Matrix([[2,3],[1,5]])ent=m0.get_entries()colors=[BLUE,GREEN,YELLOW,RED]forkinrange(len(colors)):ent[k].set_color(colors[k])self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GetEntriesExample(Scene):\n    def construct(self):\n        m0 = Matrix([[2, 3], [1, 5]])\n        ent = m0.get_entries()\n        colors = [BLUE, GREEN, YELLOW, RED]\n        for k in range(len(colors)):\n            ent[k].set_color(colors[k])\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: GetEntriesExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classGetRowsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",3],[1,5]])m0.add(SurroundingRectangle(m0.get_rows()[1]))self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class GetRowsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 3], [1, 5]])\n        m0.add(SurroundingRectangle(m0.get_rows()[1]))\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: GetRowsExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSetColumnColorsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",1],[-1,3]],).set_column_colors([RED,BLUE],GREEN)self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SetColumnColorsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 1], [-1, 3]],\n        ).set_column_colors([RED,BLUE], GREEN)\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: SetColumnColorsExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSetRowColorsExample(Scene):defconstruct(self):m0=Matrix([[\"\\\\pi\",1],[-1,3]],).set_row_colors([RED,BLUE],GREEN)self.add(m0)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SetRowColorsExample(Scene):\n    def construct(self):\n        m0 = Matrix([[\"\\\\pi\", 1], [-1, 3]],\n        ).set_row_colors([RED,BLUE], GREEN)\n        self.add(m0)",
+      "language": "python",
+      "context": "Example: SetRowColorsExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Matrix",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_add_brackets",
+      "class_name": null,
+      "parameters": [
+        "left='['"
+      ],
+      "return_type": null,
+      "description": "Adds the brackets to the Matrix mobject."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "matrix"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add_background_to_entries",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Add a black background rectangle to the matrix,\nsee above for an example."
+    },
+    {
+      "name": "get_brackets",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the bracket mobjects."
+    },
+    {
+      "name": "get_columns",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return columns of the matrix as VGroups."
+    },
+    {
+      "name": "get_entries",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the individual entries of the matrix."
+    },
+    {
+      "name": "get_mob_matrix",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the underlying mob matrix mobjects."
+    },
+    {
+      "name": "get_rows",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return rows of the matrix as VGroups."
+    },
+    {
+      "name": "set_column_colors",
+      "class_name": null,
+      "parameters": [
+        "*colors"
+      ],
+      "return_type": null,
+      "description": "Set individual colors for each columns of the matrix."
+    },
+    {
+      "name": "set_row_colors",
+      "class_name": null,
+      "parameters": [
+        "*colors"
+      ],
+      "return_type": null,
+      "description": "Set individual colors for each row of the matrix."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "MathTex",
+    "VMobject",
+    "Scene",
+    "Matrix",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.ArcPolygon.html",
+  "title": "ArcPolygon\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArcPolygon\u00b6\n\nQualified name:manim.mobject.geometry.arc.ArcPolygon\n\nclassArcPolygon(*vertices,angle=0.7853981633974483,radius=None,arc_config=None,**kwargs)[source]\u00b6\n\nBases:VMobjectA generalized polygon allowing for points to be connected with arcs.This version tries to stick close to the wayPolygonis used. Points\ncan be passed to it directly which are used to generate the according arcs\n(usingArcBetweenPoints). An angle or radius can be passed to it to\nuse across all arcs, but to configure arcs individually anarc_configlist\nhas to be passed with the syntax explained below.Parameters:vertices(Point3DLike) \u2013 A list of vertices, start and end points for the arc segments.angle(float) \u2013 The angle used for constructing the arcs. If no other parameters\nare set, this angle is used to construct all arcs.radius(float|None) \u2013 The circle radius used to construct the arcs. If specified,\noverrides the specifiedangle.arc_config(list[dict]|None) \u2013 When passing adict, its content will be passed as keyword\narguments toArcBetweenPoints. Otherwise, a list\nof dictionaries containing values that are passed as keyword\narguments for every individual arc can be passed.kwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.arcs\u00b6The arcs created from the input parameters:>>>frommanimimportArcPolygon>>>ap=ArcPolygon([0,0,0],[2,0,0],[0,2,0])>>>ap.arcs[ArcBetweenPoints, ArcBetweenPoints, ArcBetweenPoints]Type:listTipTwo instances ofArcPolygoncan be transformed properly into one\nanother as well. Be advised that any arc initialized withangle=0will actually be a straight line, so if a straight section should seamlessly\ntransform into an arced section or vice versa, initialize the straight section\nwith a negligible angle instead (such asangle=0.0001).NoteThere is an alternative version (ArcPolygonFromArcs) that is instantiated\nwith pre-defined arcs.See alsoArcPolygonFromArcsExamplesExample: SeveralArcPolygons\u00b6frommanimimport*classSeveralArcPolygons(Scene):defconstruct(self):a=[0,0,0]b=[2,0,0]c=[0,2,0]ap1=ArcPolygon(a,b,c,radius=2)ap2=ArcPolygon(a,b,c,angle=45*DEGREES)ap3=ArcPolygon(a,b,c,arc_config={'radius':1.7,'color':RED})ap4=ArcPolygon(a,b,c,color=RED,fill_opacity=1,arc_config=[{'radius':1.7,'color':RED},{'angle':20*DEGREES,'color':BLUE},{'radius':1}])ap_group=VGroup(ap1,ap2,ap3,ap4).arrange()self.play(*[Create(ap)forapin[ap1,ap2,ap3,ap4]])self.wait()class SeveralArcPolygons(Scene):\n    def construct(self):\n        a = [0, 0, 0]\n        b = [2, 0, 0]\n        c = [0, 2, 0]\n        ap1 = ArcPolygon(a, b, c, radius=2)\n        ap2 = ArcPolygon(a, b, c, angle=45*DEGREES)\n        ap3 = ArcPolygon(a, b, c, arc_config={'radius': 1.7, 'color': RED})\n        ap4 = ArcPolygon(a, b, c, color=RED, fill_opacity=1,\n                                    arc_config=[{'radius': 1.7, 'color': RED},\n                                    {'angle': 20*DEGREES, 'color': BLUE},\n                                    {'radius': 1}])\n        ap_group = VGroup(ap1, ap2, ap3, ap4).arrange()\n        self.play(*[Create(ap) for ap in [ap1, ap2, ap3, ap4]])\n        self.wait()For further examples seeArcPolygonFromArcs.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*vertices,angle=0.7853981633974483,radius=None,arc_config=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vertices(Point3DLike)angle(float)radius(float|None)arc_config(list[dict]|None)kwargs(Any)Return type:None\n\nBases:VMobject\n\nA generalized polygon allowing for points to be connected with arcs.\n\nThis version tries to stick close to the wayPolygonis used. Points\ncan be passed to it directly which are used to generate the according arcs\n(usingArcBetweenPoints). An angle or radius can be passed to it to\nuse across all arcs, but to configure arcs individually anarc_configlist\nhas to be passed with the syntax explained below.\n\nParameters:\n\nvertices(Point3DLike) \u2013 A list of vertices, start and end points for the arc segments.angle(float) \u2013 The angle used for constructing the arcs. If no other parameters\nare set, this angle is used to construct all arcs.radius(float|None) \u2013 The circle radius used to construct the arcs. If specified,\noverrides the specifiedangle.arc_config(list[dict]|None) \u2013 When passing adict, its content will be passed as keyword\narguments toArcBetweenPoints. Otherwise, a list\nof dictionaries containing values that are passed as keyword\narguments for every individual arc can be passed.kwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.\n\nvertices(Point3DLike) \u2013 A list of vertices, start and end points for the arc segments.\n\nvertices(Point3DLike) \u2013 A list of vertices, start and end points for the arc segments.\n\nangle(float) \u2013 The angle used for constructing the arcs. If no other parameters\nare set, this angle is used to construct all arcs.\n\nangle(float) \u2013 The angle used for constructing the arcs. If no other parameters\nare set, this angle is used to construct all arcs.\n\nradius(float|None) \u2013 The circle radius used to construct the arcs. If specified,\noverrides the specifiedangle.\n\nradius(float|None) \u2013 The circle radius used to construct the arcs. If specified,\noverrides the specifiedangle.\n\narc_config(list[dict]|None) \u2013 When passing adict, its content will be passed as keyword\narguments toArcBetweenPoints. Otherwise, a list\nof dictionaries containing values that are passed as keyword\narguments for every individual arc can be passed.\n\narc_config(list[dict]|None) \u2013 When passing adict, its content will be passed as keyword\narguments toArcBetweenPoints. Otherwise, a list\nof dictionaries containing values that are passed as keyword\narguments for every individual arc can be passed.\n\nkwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.\n\nkwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.\n\narcs\u00b6\n\nThe arcs created from the input parameters:>>>frommanimimportArcPolygon>>>ap=ArcPolygon([0,0,0],[2,0,0],[0,2,0])>>>ap.arcs[ArcBetweenPoints, ArcBetweenPoints, ArcBetweenPoints]Type:list\n\nThe arcs created from the input parameters:\n\nType:\n\nlist\n\nlist\n\nTip\n\nTwo instances ofArcPolygoncan be transformed properly into one\nanother as well. Be advised that any arc initialized withangle=0will actually be a straight line, so if a straight section should seamlessly\ntransform into an arced section or vice versa, initialize the straight section\nwith a negligible angle instead (such asangle=0.0001).\n\nNote\n\nThere is an alternative version (ArcPolygonFromArcs) that is instantiated\nwith pre-defined arcs.\n\nSee also\n\nArcPolygonFromArcs\n\nExamples\n\nExample: SeveralArcPolygons\u00b6\n\nFor further examples seeArcPolygonFromArcs.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*vertices,angle=0.7853981633974483,radius=None,arc_config=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vertices(Point3DLike)angle(float)radius(float|None)arc_config(list[dict]|None)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvertices(Point3DLike)angle(float)radius(float|None)arc_config(list[dict]|None)kwargs(Any)\n\nvertices(Point3DLike)\n\nvertices(Point3DLike)\n\nangle(float)\n\nangle(float)\n\nradius(float|None)\n\nradius(float|None)\n\narc_config(list[dict]|None)\n\narc_config(list[dict]|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportArcPolygon>>>ap=ArcPolygon([0,0,0],[2,0,0],[0,2,0])>>>ap.arcs[ArcBetweenPoints, ArcBetweenPoints, ArcBetweenPoints]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSeveralArcPolygons(Scene):defconstruct(self):a=[0,0,0]b=[2,0,0]c=[0,2,0]ap1=ArcPolygon(a,b,c,radius=2)ap2=ArcPolygon(a,b,c,angle=45*DEGREES)ap3=ArcPolygon(a,b,c,arc_config={'radius':1.7,'color':RED})ap4=ArcPolygon(a,b,c,color=RED,fill_opacity=1,arc_config=[{'radius':1.7,'color':RED},{'angle':20*DEGREES,'color':BLUE},{'radius':1}])ap_group=VGroup(ap1,ap2,ap3,ap4).arrange()self.play(*[Create(ap)forapin[ap1,ap2,ap3,ap4]])self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SeveralArcPolygons(Scene):\n    def construct(self):\n        a = [0, 0, 0]\n        b = [2, 0, 0]\n        c = [0, 2, 0]\n        ap1 = ArcPolygon(a, b, c, radius=2)\n        ap2 = ArcPolygon(a, b, c, angle=45*DEGREES)\n        ap3 = ArcPolygon(a, b, c, arc_config={'radius': 1.7, 'color': RED})\n        ap4 = ArcPolygon(a, b, c, color=RED, fill_opacity=1,\n                                    arc_config=[{'radius': 1.7, 'color': RED},\n                                    {'angle': 20*DEGREES, 'color': BLUE},\n                                    {'radius': 1}])\n        ap_group = VGroup(ap1, ap2, ap3, ap4).arrange()\n        self.play(*[Create(ap) for ap in [ap1, ap2, ap3, ap4]])\n        self.wait()",
+      "language": "python",
+      "context": "Example: SeveralArcPolygons\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ArcPolygon",
+      "class_name": null,
+      "parameters": [
+        "*vertices"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "arcs",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The arcs created from the input parameters:"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*vertices"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "VGroup",
+    "VMobject",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

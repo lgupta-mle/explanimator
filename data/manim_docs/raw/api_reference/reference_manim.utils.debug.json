@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.debug.html",
+  "title": "debug\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "debug\u00b6\n\nDebugging utilities.\n\nFunctions\n\nindex_labels(mobject,label_height=0.15,background_stroke_width=5,background_stroke_color=ManimColor('#000000'),**kwargs)[source]\u00b6\n\nReturns aVGroupofIntegermobjects\nthat shows the index of each submobject.Useful for working with parts of complicated mobjects.Parameters:mobject(Mobject) \u2013 The mobject that will have its submobjects labelled.label_height(float) \u2013 The height of the labels, by default 0.15.background_stroke_width(float) \u2013 The stroke width of the outline of the labels, by default 5.background_stroke_color(ManimColor) \u2013 The stroke color of the outline of labels.kwargs(Any) \u2013 Additional parameters to be passed into the :class`~.Integer`\nmobjects used to construct the labels.Return type:VGroupExamplesExample: IndexLabelsExample\u00b6frommanimimport*classIndexLabelsExample(Scene):defconstruct(self):text=MathTex(\"\\\\frac{d}{dx}f(x)g(x)=\",\"f(x)\\\\frac{d}{dx}g(x)\",\"+\",\"g(x)\\\\frac{d}{dx}f(x)\",)#index the fist term in the MathTex mobindices=index_labels(text[0])text[0][1].set_color(PURPLE_B)text[0][8:12].set_color(DARK_BLUE)self.add(text,indices)class IndexLabelsExample(Scene):\n    def construct(self):\n        text = MathTex(\n            \"\\\\frac{d}{dx}f(x)g(x)=\",\n            \"f(x)\\\\frac{d}{dx}g(x)\",\n            \"+\",\n            \"g(x)\\\\frac{d}{dx}f(x)\",\n        )\n\n        #index the fist term in the MathTex mob\n        indices = index_labels(text[0])\n\n        text[0][1].set_color(PURPLE_B)\n        text[0][8:12].set_color(DARK_BLUE)\n\n        self.add(text, indices)\n\nReturns aVGroupofIntegermobjects\nthat shows the index of each submobject.\n\nUseful for working with parts of complicated mobjects.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject that will have its submobjects labelled.label_height(float) \u2013 The height of the labels, by default 0.15.background_stroke_width(float) \u2013 The stroke width of the outline of the labels, by default 5.background_stroke_color(ManimColor) \u2013 The stroke color of the outline of labels.kwargs(Any) \u2013 Additional parameters to be passed into the :class`~.Integer`\nmobjects used to construct the labels.\n\nmobject(Mobject) \u2013 The mobject that will have its submobjects labelled.\n\nmobject(Mobject) \u2013 The mobject that will have its submobjects labelled.\n\nlabel_height(float) \u2013 The height of the labels, by default 0.15.\n\nlabel_height(float) \u2013 The height of the labels, by default 0.15.\n\nbackground_stroke_width(float) \u2013 The stroke width of the outline of the labels, by default 5.\n\nbackground_stroke_width(float) \u2013 The stroke width of the outline of the labels, by default 5.\n\nbackground_stroke_color(ManimColor) \u2013 The stroke color of the outline of labels.\n\nbackground_stroke_color(ManimColor) \u2013 The stroke color of the outline of labels.\n\nkwargs(Any) \u2013 Additional parameters to be passed into the :class`~.Integer`\nmobjects used to construct the labels.\n\nkwargs(Any) \u2013 Additional parameters to be passed into the :class`~.Integer`\nmobjects used to construct the labels.\n\nReturn type:\n\nVGroup\n\nVGroup\n\nExamples\n\nExample: IndexLabelsExample\u00b6\n\nprint_family(mobject,n_tabs=0)[source]\u00b6\n\nFor debugging purposesParameters:mobject(Mobject)n_tabs(int)Return type:None\n\nFor debugging purposes\n\nParameters:\n\nmobject(Mobject)n_tabs(int)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nn_tabs(int)\n\nn_tabs(int)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classIndexLabelsExample(Scene):defconstruct(self):text=MathTex(\"\\\\frac{d}{dx}f(x)g(x)=\",\"f(x)\\\\frac{d}{dx}g(x)\",\"+\",\"g(x)\\\\frac{d}{dx}f(x)\",)#index the fist term in the MathTex mobindices=index_labels(text[0])text[0][1].set_color(PURPLE_B)text[0][8:12].set_color(DARK_BLUE)self.add(text,indices)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class IndexLabelsExample(Scene):\n    def construct(self):\n        text = MathTex(\n            \"\\\\frac{d}{dx}f(x)g(x)=\",\n            \"f(x)\\\\frac{d}{dx}g(x)\",\n            \"+\",\n            \"g(x)\\\\frac{d}{dx}f(x)\",\n        )\n\n        #index the fist term in the MathTex mob\n        indices = index_labels(text[0])\n\n        text[0][1].set_color(PURPLE_B)\n        text[0][8:12].set_color(DARK_BLUE)\n\n        self.add(text, indices)",
+      "language": "python",
+      "context": "Example: IndexLabelsExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "index_labels",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Returns aVGroupofIntegermobjects\nthat shows the index of each submobject."
+    },
+    {
+      "name": "print_family",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "For debugging purposes"
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "MathTex",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "text",
+    "graph"
+  ]
+}

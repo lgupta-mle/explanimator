@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.numbers.ChangingDecimal.html",
+  "title": "ChangingDecimal\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ChangingDecimal\u00b6\n\nQualified name:manim.animation.numbers.ChangingDecimal\n\nclassChangingDecimal(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationAnimate aDecimalNumberto values specified by a user-supplied function.Parameters:decimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.number_update_func(Callable[[float],float]) \u2013 A function that returns the number to display at each point in the animation.suspend_mobject_updating(bool) \u2013 IfTrue, the mobject is not updated outside this animation.kwargs(Any)Raises:TypeError\u2013 Ifdecimal_mobis not an instance ofDecimalNumber.ExamplesExample: ChangingDecimalExample\u00b6frommanimimport*classChangingDecimalExample(Scene):defconstruct(self):number=DecimalNumber(0)self.add(number)self.play(ChangingDecimal(number,lambdaa:5*a,run_time=3))self.wait()class ChangingDecimalExample(Scene):\n    def construct(self):\n        number = DecimalNumber(0)\n        self.add(number)\n        self.play(\n            ChangingDecimal(\n                number,\n                lambda a: 5 * a,\n                run_time=3\n            )\n        )\n        self.wait()Methodscheck_validity_of_inputinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.Attributesrun_time_original__init__(decimal_mob,number_update_func,suspend_mobject_updating=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:decimal_mob(DecimalNumber)number_update_func(Callable[[float],float])suspend_mobject_updating(bool)kwargs(Any)Return type:Noneinterpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:Animation\n\nAnimate aDecimalNumberto values specified by a user-supplied function.\n\nParameters:\n\ndecimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.number_update_func(Callable[[float],float]) \u2013 A function that returns the number to display at each point in the animation.suspend_mobject_updating(bool) \u2013 IfTrue, the mobject is not updated outside this animation.kwargs(Any)\n\ndecimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.\n\ndecimal_mob(DecimalNumber) \u2013 TheDecimalNumberinstance to animate.\n\nnumber_update_func(Callable[[float],float]) \u2013 A function that returns the number to display at each point in the animation.\n\nnumber_update_func(Callable[[float],float]) \u2013 A function that returns the number to display at each point in the animation.\n\nsuspend_mobject_updating(bool) \u2013 IfTrue, the mobject is not updated outside this animation.\n\nsuspend_mobject_updating(bool) \u2013 IfTrue, the mobject is not updated outside this animation.\n\nkwargs(Any)\n\nkwargs(Any)\n\nRaises:\n\nTypeError\u2013 Ifdecimal_mobis not an instance ofDecimalNumber.\n\nTypeError\u2013 Ifdecimal_mobis not an instance ofDecimalNumber.\n\nExamples\n\nExample: ChangingDecimalExample\u00b6\n\nMethods\n\ncheck_validity_of_input\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nAttributes\n\nrun_time\n\n_original__init__(decimal_mob,number_update_func,suspend_mobject_updating=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:decimal_mob(DecimalNumber)number_update_func(Callable[[float],float])suspend_mobject_updating(bool)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ndecimal_mob(DecimalNumber)number_update_func(Callable[[float],float])suspend_mobject_updating(bool)kwargs(Any)\n\ndecimal_mob(DecimalNumber)\n\ndecimal_mob(DecimalNumber)\n\nnumber_update_func(Callable[[float],float])\n\nnumber_update_func(Callable[[float],float])\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classChangingDecimalExample(Scene):defconstruct(self):number=DecimalNumber(0)self.add(number)self.play(ChangingDecimal(number,lambdaa:5*a,run_time=3))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ChangingDecimalExample(Scene):\n    def construct(self):\n        number = DecimalNumber(0)\n        self.add(number)\n        self.play(\n            ChangingDecimal(\n                number,\n                lambda a: 5 * a,\n                run_time=3\n            )\n        )\n        self.wait()",
+      "language": "python",
+      "context": "Example: ChangingDecimalExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ChangingDecimal",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "decimal_mob"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

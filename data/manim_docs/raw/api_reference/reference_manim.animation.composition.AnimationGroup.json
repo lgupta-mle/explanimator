@@ -1,0 +1,115 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.composition.AnimationGroup.html",
+  "title": "AnimationGroup\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AnimationGroup\u00b6\n\nQualified name:manim.animation.composition.AnimationGroup\n\nclassAnimationGroup(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationPlays a group or series ofAnimation.Parameters:animations(Animation|Iterable[Animation]) \u2013 Sequence ofAnimationobjects to be played.group(Group|VGroup|OpenGLGroup|OpenGLVGroup|None) \u2013 A group of multipleMobject.run_time(float|None) \u2013 The duration of the animation in seconds.rate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .lag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.0, meaning that all animations will be played together.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.kwargs(Any)MethodsbeginBegin the animation.build_animations_with_timingsCreates a list of triplets of the form (anim, start_time, end_time).clean_up_from_sceneClean up theSceneafter finishing the animation.finishFinish the animation.get_all_mobjectsGet all mobjects involved in the animation.init_run_timeCalculates the run time of the animation, if different fromrun_time.interpolateSet the animation progress.update_mobjectsUpdates things like starting_mobject, and (for Transforms) target_mobject.Attributesrun_time_original__init__(*animations,group=None,run_time=None,rate_func=<functionlinear>,lag_ratio=0,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:animations(Animation|Iterable[Animation])group(Group|VGroup|OpenGLGroup|OpenGLVGroup|None)run_time(float|None)rate_func(Callable[[float],float])lag_ratio(float)kwargs(Any)_setup_scene(scene)[source]\u00b6Setup up theScenebefore starting the animation.This includes toadd()the Animation\u2019sMobjectif the animation is an introducer.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Nonebuild_animations_with_timings()[source]\u00b6Creates a list of triplets of the form (anim, start_time, end_time).Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonefinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:Noneget_all_mobjects()[source]\u00b6Get all mobjects involved in the animation.Ordering must match the ordering of arguments to interpolate_submobjectReturns:The sequence of mobjects.Return type:Sequence[Mobject]init_run_time(run_time)[source]\u00b6Calculates the run time of the animation, if different fromrun_time.Parameters:run_time(float|None) \u2013 The duration of the animation in seconds.Returns:The duration of the animation in seconds.Return type:run_timeinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:Noneupdate_mobjects(dt)[source]\u00b6Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nBases:Animation\n\nPlays a group or series ofAnimation.\n\nParameters:\n\nanimations(Animation|Iterable[Animation]) \u2013 Sequence ofAnimationobjects to be played.group(Group|VGroup|OpenGLGroup|OpenGLVGroup|None) \u2013 A group of multipleMobject.run_time(float|None) \u2013 The duration of the animation in seconds.rate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .lag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.0, meaning that all animations will be played together.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.kwargs(Any)\n\nanimations(Animation|Iterable[Animation]) \u2013 Sequence ofAnimationobjects to be played.\n\nanimations(Animation|Iterable[Animation]) \u2013 Sequence ofAnimationobjects to be played.\n\ngroup(Group|VGroup|OpenGLGroup|OpenGLVGroup|None) \u2013 A group of multipleMobject.\n\ngroup(Group|VGroup|OpenGLGroup|OpenGLVGroup|None) \u2013 A group of multipleMobject.\n\nrun_time(float|None) \u2013 The duration of the animation in seconds.\n\nrun_time(float|None) \u2013 The duration of the animation in seconds.\n\nrate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .\n\nrate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .\n\nlag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.0, meaning that all animations will be played together.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.\n\nlag_ratio(float) \u2013Defines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.0, meaning that all animations will be played together.This does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.\n\nDefines the delay after which the animation is applied to submobjects. A lag_ratio ofn.nnmeans the next animation will play whennnn%of the current animation has played.\nDefaults to 0.0, meaning that all animations will be played together.\n\nThis does not influence the total runtime of the animation. Instead the runtime\nof individual animations is adjusted so that the complete animation has the defined\nrun time.\n\nkwargs(Any)\n\nkwargs(Any)\n\nMethods\n\nbegin\n\nBegin the animation.\n\nbuild_animations_with_timings\n\nCreates a list of triplets of the form (anim, start_time, end_time).\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nfinish\n\nFinish the animation.\n\nget_all_mobjects\n\nGet all mobjects involved in the animation.\n\ninit_run_time\n\nCalculates the run time of the animation, if different fromrun_time.\n\ninterpolate\n\nSet the animation progress.\n\nupdate_mobjects\n\nUpdates things like starting_mobject, and (for Transforms) target_mobject.\n\nAttributes\n\nrun_time\n\n_original__init__(*animations,group=None,run_time=None,rate_func=<functionlinear>,lag_ratio=0,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:animations(Animation|Iterable[Animation])group(Group|VGroup|OpenGLGroup|OpenGLVGroup|None)run_time(float|None)rate_func(Callable[[float],float])lag_ratio(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nanimations(Animation|Iterable[Animation])group(Group|VGroup|OpenGLGroup|OpenGLVGroup|None)run_time(float|None)rate_func(Callable[[float],float])lag_ratio(float)kwargs(Any)\n\nanimations(Animation|Iterable[Animation])\n\nanimations(Animation|Iterable[Animation])\n\ngroup(Group|VGroup|OpenGLGroup|OpenGLVGroup|None)\n\ngroup(Group|VGroup|OpenGLGroup|OpenGLVGroup|None)\n\nrun_time(float|None)\n\nrun_time(float|None)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nlag_ratio(float)\n\nlag_ratio(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_setup_scene(scene)[source]\u00b6\n\nSetup up theScenebefore starting the animation.This includes toadd()the Animation\u2019sMobjectif the animation is an introducer.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nSetup up theScenebefore starting the animation.\n\nThis includes toadd()the Animation\u2019sMobjectif the animation is an introducer.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nbuild_animations_with_timings()[source]\u00b6\n\nCreates a list of triplets of the form (anim, start_time, end_time).Return type:None\n\nCreates a list of triplets of the form (anim, start_time, end_time).\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone\n\nget_all_mobjects()[source]\u00b6\n\nGet all mobjects involved in the animation.Ordering must match the ordering of arguments to interpolate_submobjectReturns:The sequence of mobjects.Return type:Sequence[Mobject]\n\nGet all mobjects involved in the animation.\n\nOrdering must match the ordering of arguments to interpolate_submobject\n\nReturns:\n\nThe sequence of mobjects.\n\nThe sequence of mobjects.\n\nReturn type:\n\nSequence[Mobject]\n\nSequence[Mobject]\n\ninit_run_time(run_time)[source]\u00b6\n\nCalculates the run time of the animation, if different fromrun_time.Parameters:run_time(float|None) \u2013 The duration of the animation in seconds.Returns:The duration of the animation in seconds.Return type:run_time\n\nCalculates the run time of the animation, if different fromrun_time.\n\nParameters:\n\nrun_time(float|None) \u2013 The duration of the animation in seconds.\n\nrun_time(float|None) \u2013 The duration of the animation in seconds.\n\nReturns:\n\nThe duration of the animation in seconds.\n\nThe duration of the animation in seconds.\n\nReturn type:\n\nrun_time\n\nrun_time\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone\n\nupdate_mobjects(dt)[source]\u00b6\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.Parameters:dt(float)Return type:None\n\nUpdates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject.\n\nParameters:\n\ndt(float)\n\ndt(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "AnimationGroup",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*animations"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_setup_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Setup up theScenebefore starting the animation."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "build_animations_with_timings",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Creates a list of triplets of the form (anim, start_time, end_time)."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    },
+    {
+      "name": "get_all_mobjects",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get all mobjects involved in the animation."
+    },
+    {
+      "name": "init_run_time",
+      "class_name": null,
+      "parameters": [
+        "run_time"
+      ],
+      "return_type": null,
+      "description": "Calculates the run time of the animation, if different fromrun_time."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    },
+    {
+      "name": "update_mobjects",
+      "class_name": null,
+      "parameters": [
+        "dt"
+      ],
+      "return_type": null,
+      "description": "Updates things like starting_mobject, and (for\nTransforms) target_mobject.  Note, since typically\n(always?) self.mobject will have its updating\nsuspended during the animation, this will do\nnothing to self.mobject."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "VGroup",
+    "AnimationGroup",
+    "Transform",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "transformation",
+    "timing",
+    "graph"
+  ]
+}

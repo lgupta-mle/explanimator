@@ -1,0 +1,45 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.updaters.update.UpdateFromAlphaFunc.html",
+  "title": "UpdateFromAlphaFunc\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "UpdateFromAlphaFunc\u00b6\n\nQualified name:manim.animation.updaters.update.UpdateFromAlphaFunc\n\nclassUpdateFromAlphaFunc(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:UpdateFromFuncMethodsinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.Attributesrun_timeParameters:mobject(Mobject)update_function(Callable[[Mobject],Any])suspend_mobject_updating(bool)kwargs(Any)_original__init__(mobject,update_function,suspend_mobject_updating=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)update_function(Callable[[Mobject],Any])suspend_mobject_updating(bool)kwargs(Any)Return type:Noneinterpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:UpdateFromFunc\n\nMethods\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nAttributes\n\nrun_time\n\nParameters:\n\nmobject(Mobject)update_function(Callable[[Mobject],Any])suspend_mobject_updating(bool)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nupdate_function(Callable[[Mobject],Any])\n\nupdate_function(Callable[[Mobject],Any])\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(mobject,update_function,suspend_mobject_updating=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)update_function(Callable[[Mobject],Any])suspend_mobject_updating(bool)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)update_function(Callable[[Mobject],Any])suspend_mobject_updating(bool)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nupdate_function(Callable[[Mobject],Any])\n\nupdate_function(Callable[[Mobject],Any])\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "UpdateFromAlphaFunc",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:UpdateFromFunc"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

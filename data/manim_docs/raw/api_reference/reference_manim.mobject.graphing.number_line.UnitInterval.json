@@ -1,0 +1,38 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.number_line.UnitInterval.html",
+  "title": "UnitInterval\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "UnitInterval\u00b6\n\nQualified name:manim.mobject.graphing.number\\_line.UnitInterval\n\nclassUnitInterval(unit_size=10,numbers_with_elongated_ticks=None,decimal_number_config=None,**kwargs)[source]\u00b6\n\nBases:NumberLineMethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:unit_size(float)numbers_with_elongated_ticks(list[float]|None)decimal_number_config(dict[str,Any]|None)kwargs(Any)_original__init__(unit_size=10,numbers_with_elongated_ticks=None,decimal_number_config=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:unit_size(float)numbers_with_elongated_ticks(list[float]|None)decimal_number_config(dict[str,Any]|None)kwargs(Any)\n\nBases:NumberLine\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nunit_size(float)numbers_with_elongated_ticks(list[float]|None)decimal_number_config(dict[str,Any]|None)kwargs(Any)\n\nunit_size(float)\n\nunit_size(float)\n\nnumbers_with_elongated_ticks(list[float]|None)\n\nnumbers_with_elongated_ticks(list[float]|None)\n\ndecimal_number_config(dict[str,Any]|None)\n\ndecimal_number_config(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(unit_size=10,numbers_with_elongated_ticks=None,decimal_number_config=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:unit_size(float)numbers_with_elongated_ticks(list[float]|None)decimal_number_config(dict[str,Any]|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nunit_size(float)numbers_with_elongated_ticks(list[float]|None)decimal_number_config(dict[str,Any]|None)kwargs(Any)\n\nunit_size(float)\n\nunit_size(float)\n\nnumbers_with_elongated_ticks(list[float]|None)\n\nnumbers_with_elongated_ticks(list[float]|None)\n\ndecimal_number_config(dict[str,Any]|None)\n\ndecimal_number_config(dict[str,Any]|None)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "UnitInterval",
+      "class_name": null,
+      "parameters": [
+        "unit_size=10"
+      ],
+      "return_type": null,
+      "description": "Bases:NumberLine"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "unit_size=10"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

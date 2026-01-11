@@ -1,0 +1,11 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.cli.html",
+  "title": "cli\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "cli\u00b6\n\nThe Manim CLI, and the available commands formanim.\n\nThis page is a work in progress. Please runmanimormanim--helpin\nyour terminal to find more information on the following commands.\n\nAvailable commands\u00b6\n\ncfg\n\ncheckhealth\n\ninit\n\nplugins\n\nrender",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": []
+}

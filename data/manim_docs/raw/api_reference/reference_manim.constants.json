@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.constants.html",
+  "title": "constants\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "constants\u00b6\n\nConstant definitions.\n\nModule Attributes\n\nORIGIN\n\nThe center of the coordinate system.\n\nUP\n\nOne unit step in the positive Y direction.\n\nDOWN\n\nOne unit step in the negative Y direction.\n\nRIGHT\n\nOne unit step in the positive X direction.\n\nLEFT\n\nOne unit step in the negative X direction.\n\nIN\n\nOne unit step in the negative Z direction.\n\nOUT\n\nOne unit step in the positive Z direction.\n\nUL\n\nOne step up plus one step left.\n\nUR\n\nOne step up plus one step right.\n\nDL\n\nOne step down plus one step left.\n\nDR\n\nOne step down plus one step right.\n\nClasses\n\nCapStyleType\n\nCollection of available cap styles.\n\nLineJointType\n\nCollection of available line joint types.\n\nQualityDict\n\nRendererType\n\nAn enumeration of all renderer types that can be assigned to theconfig.rendererattribute.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Line"
+  ],
+  "tags": [
+    "graph"
+  ]
+}

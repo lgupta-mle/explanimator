@@ -1,0 +1,61 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.config_ops.html",
+  "title": "config_ops\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "config_ops\u00b6\n\nUtilities that might be useful for configuration dictionaries.\n\nTypeVar\u2019s\n\nclass_Data_T\u00b6\n\nTypeVar('_Data_T', bound='npt.NDArray[Any]', default='npt.NDArray[Any]')\n\nclass_Uniforms_T\u00b6\n\nTypeVar('_Uniforms_T', bound='float | tuple[float, ...]', default=float)\n\nClasses\n\nDictAsObject\n\nFunctions\n\nmerge_dicts_recursively(*dicts)[source]\u00b6\n\nCreates a dict whose keyset is the union of all the\ninput dictionaries.  The value for each key is based\non the first dict in the list with that key.dicts later in the list have higher priorityWhen values are dictionaries, it is applied recursivelyParameters:dicts(dict[Any,Any])Return type:dict[Any,Any]\n\nCreates a dict whose keyset is the union of all the\ninput dictionaries.  The value for each key is based\non the first dict in the list with that key.\n\ndicts later in the list have higher priority\n\nWhen values are dictionaries, it is applied recursively\n\nParameters:\n\ndicts(dict[Any,Any])\n\ndicts(dict[Any,Any])\n\nReturn type:\n\ndict[Any,Any]\n\ndict[Any,Any]\n\nupdate_dict_recursively(current_dict,*others)[source]\u00b6\n\nParameters:current_dict(dict[Any,Any])others(dict[Any,Any])Return type:None\n\nParameters:\n\ncurrent_dict(dict[Any,Any])others(dict[Any,Any])\n\ncurrent_dict(dict[Any,Any])\n\ncurrent_dict(dict[Any,Any])\n\nothers(dict[Any,Any])\n\nothers(dict[Any,Any])\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "TypeVar('_Data_T', bound='npt.NDArray[Any]', default='npt.NDArray[Any]')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "TypeVar('_Uniforms_T', bound='float | tuple[float, ...]', default=float)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "_Data_T",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "_Uniforms_T",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "merge_dicts_recursively",
+      "class_name": null,
+      "parameters": [
+        "*dicts"
+      ],
+      "return_type": null,
+      "description": "Creates a dict whose keyset is the union of all the\ninput dictionaries.  The value for each key is based\non the first dict in the list with that key."
+    },
+    {
+      "name": "update_dict_recursively",
+      "class_name": null,
+      "parameters": [
+        "current_dict"
+      ],
+      "return_type": null,
+      "description": "current_dict(dict[Any,Any])"
+    }
+  ],
+  "related_classes": [
+    "Create"
+  ],
+  "tags": [
+    "graph"
+  ]
+}

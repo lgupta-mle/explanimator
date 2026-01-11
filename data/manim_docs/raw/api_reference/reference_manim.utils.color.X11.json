@@ -1,0 +1,21 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.X11.html",
+  "title": "X11\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "X11\u00b6\n\nX11 Colors\n\nThese color and their names (taken fromhttps://www.w3schools.com/colors/colors_x11.asp) were developed at the\nMassachusetts Intitute of Technology (MIT) during\nthe development of color based computer display system.\n\nTo use the colors from this list, access them directly from the module (which\nis exposed to Manim\u2019s global name space):\n\nList of Color Constants\u00b6\n\nColor Name\n\nRGB Hex Code\n\nColor Name\n\nRGB Hex Code",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportX11>>>X11.BEIGEManimColor('#F5F5DC')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "animation"
+  ]
+}

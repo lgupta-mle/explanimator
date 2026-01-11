@@ -1,0 +1,64 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.image_mobject.AbstractImageMobject.html",
+  "title": "AbstractImageMobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AbstractImageMobject\u00b6\n\nQualified name:manim.mobject.types.image\\_mobject.AbstractImageMobject\n\nclassAbstractImageMobject(scale_to_resolution,pixel_array_dtype='uint8',resampling_algorithm=Resampling.BICUBIC,**kwargs)[source]\u00b6\n\nBases:MobjectAutomatically filters out black pixelsParameters:scale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.pixel_array_dtype(str)resampling_algorithm(Resampling)kwargs(Any)Methodsget_pixel_arrayreset_pointsSetspointsto be the four image corners.set_colorCondition is function which takes in one arguments, (x, y, z).set_resampling_algorithmSets the interpolation method for upscaling the image.AttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject._original__init__(scale_to_resolution,pixel_array_dtype='uint8',resampling_algorithm=Resampling.BICUBIC,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:scale_to_resolution(int)pixel_array_dtype(str)resampling_algorithm(Resampling)kwargs(Any)Return type:Nonereset_points()[source]\u00b6Setspointsto be the four image corners.Return type:Noneset_color(color,alpha=None,family=True)[source]\u00b6Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof colorset_resampling_algorithm(resampling_algorithm)[source]\u00b6Sets the interpolation method for upscaling the image. By default the image is\ninterpolated using bicubic algorithm. This method lets you change it.\nInterpolation is done internally using Pillow, and the function besides the\nstring constants describing the algorithm accepts the Pillow integer constants.Parameters:resampling_algorithm(int) \u2013An integer constant described in the Pillow library,\nor one from the RESAMPLING_ALGORITHMS global dictionary,\nunder the following keys:\u2019bicubic\u2019 or \u2018cubic\u2019\u2019nearest\u2019 or \u2018none\u2019\u2019box\u2019\u2019bilinear\u2019 or \u2018linear\u2019\u2019hamming\u2019\u2019lanczos\u2019 or \u2018antialias\u2019Return type:Self\n\nBases:Mobject\n\nAutomatically filters out black pixels\n\nParameters:\n\nscale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.pixel_array_dtype(str)resampling_algorithm(Resampling)kwargs(Any)\n\nscale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.\n\nscale_to_resolution(int) \u2013 At this resolution the image is placed pixel by pixel onto the screen, so it\nwill look the sharpest and best.\nThis is a custom parameter of ImageMobject so that rendering a scene with\ne.g. the--qualitylowor--qualitymediumflag for faster rendering\nwon\u2019t effect the position of the image on the screen.\n\npixel_array_dtype(str)\n\npixel_array_dtype(str)\n\nresampling_algorithm(Resampling)\n\nresampling_algorithm(Resampling)\n\nkwargs(Any)\n\nkwargs(Any)\n\nMethods\n\nget_pixel_array\n\nreset_points\n\nSetspointsto be the four image corners.\n\nset_color\n\nCondition is function which takes in one arguments, (x, y, z).\n\nset_resampling_algorithm\n\nSets the interpolation method for upscaling the image.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(scale_to_resolution,pixel_array_dtype='uint8',resampling_algorithm=Resampling.BICUBIC,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:scale_to_resolution(int)pixel_array_dtype(str)resampling_algorithm(Resampling)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nscale_to_resolution(int)pixel_array_dtype(str)resampling_algorithm(Resampling)kwargs(Any)\n\nscale_to_resolution(int)\n\nscale_to_resolution(int)\n\npixel_array_dtype(str)\n\npixel_array_dtype(str)\n\nresampling_algorithm(Resampling)\n\nresampling_algorithm(Resampling)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\nreset_points()[source]\u00b6\n\nSetspointsto be the four image corners.Return type:None\n\nSetspointsto be the four image corners.\n\nReturn type:\n\nNone\n\nNone\n\nset_color(color,alpha=None,family=True)[source]\u00b6\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color\n\nCondition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color\n\nset_resampling_algorithm(resampling_algorithm)[source]\u00b6\n\nSets the interpolation method for upscaling the image. By default the image is\ninterpolated using bicubic algorithm. This method lets you change it.\nInterpolation is done internally using Pillow, and the function besides the\nstring constants describing the algorithm accepts the Pillow integer constants.Parameters:resampling_algorithm(int) \u2013An integer constant described in the Pillow library,\nor one from the RESAMPLING_ALGORITHMS global dictionary,\nunder the following keys:\u2019bicubic\u2019 or \u2018cubic\u2019\u2019nearest\u2019 or \u2018none\u2019\u2019box\u2019\u2019bilinear\u2019 or \u2018linear\u2019\u2019hamming\u2019\u2019lanczos\u2019 or \u2018antialias\u2019Return type:Self\n\nSets the interpolation method for upscaling the image. By default the image is\ninterpolated using bicubic algorithm. This method lets you change it.\nInterpolation is done internally using Pillow, and the function besides the\nstring constants describing the algorithm accepts the Pillow integer constants.\n\nParameters:\n\nresampling_algorithm(int) \u2013An integer constant described in the Pillow library,\nor one from the RESAMPLING_ALGORITHMS global dictionary,\nunder the following keys:\u2019bicubic\u2019 or \u2018cubic\u2019\u2019nearest\u2019 or \u2018none\u2019\u2019box\u2019\u2019bilinear\u2019 or \u2018linear\u2019\u2019hamming\u2019\u2019lanczos\u2019 or \u2018antialias\u2019\n\nresampling_algorithm(int) \u2013An integer constant described in the Pillow library,\nor one from the RESAMPLING_ALGORITHMS global dictionary,\nunder the following keys:\u2019bicubic\u2019 or \u2018cubic\u2019\u2019nearest\u2019 or \u2018none\u2019\u2019box\u2019\u2019bilinear\u2019 or \u2018linear\u2019\u2019hamming\u2019\u2019lanczos\u2019 or \u2018antialias\u2019\n\nAn integer constant described in the Pillow library,\nor one from the RESAMPLING_ALGORITHMS global dictionary,\nunder the following keys:\n\n\u2019bicubic\u2019 or \u2018cubic\u2019\n\n\u2019bicubic\u2019 or \u2018cubic\u2019\n\n\u2019nearest\u2019 or \u2018none\u2019\n\n\u2019nearest\u2019 or \u2018none\u2019\n\n\u2019box\u2019\n\n\u2019box\u2019\n\n\u2019bilinear\u2019 or \u2018linear\u2019\n\n\u2019bilinear\u2019 or \u2018linear\u2019\n\n\u2019hamming\u2019\n\n\u2019hamming\u2019\n\n\u2019lanczos\u2019 or \u2018antialias\u2019\n\n\u2019lanczos\u2019 or \u2018antialias\u2019\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "AbstractImageMobject",
+      "class_name": null,
+      "parameters": [
+        "scale_to_resolution"
+      ],
+      "return_type": null,
+      "description": "Bases:Mobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "scale_to_resolution"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "reset_points",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Setspointsto be the four image corners."
+    },
+    {
+      "name": "set_color",
+      "class_name": null,
+      "parameters": [
+        "color"
+      ],
+      "return_type": null,
+      "description": "Condition is function which takes in one arguments, (x, y, z).\nHere it just recurses to submobjects, but in subclasses this\nshould be further implemented based on the the inner workings\nof color"
+    },
+    {
+      "name": "set_resampling_algorithm",
+      "class_name": null,
+      "parameters": [
+        "resampling_algorithm"
+      ],
+      "return_type": null,
+      "description": "Sets the interpolation method for upscaling the image. By default the image is\ninterpolated using bicubic algorithm. This method lets you change it.\nInterpolation is done internally using Pillow, and the function besides the\nstring constants describing the algorithm accepts the Pillow integer constants."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

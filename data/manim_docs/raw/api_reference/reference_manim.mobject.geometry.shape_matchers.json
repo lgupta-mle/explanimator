@@ -1,0 +1,17 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.shape_matchers.html",
+  "title": "shape_matchers\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "shape_matchers\u00b6\n\nMobjects used to mark and annotate other mobjects.\n\nClasses\n\nBackgroundRectangle\n\nA background rectangle.\n\nCross\n\nCreates a cross.\n\nSurroundingRectangle\n\nA rectangle surrounding aMobject\n\nUnderline\n\nCreates an underline.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Create",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "geometry"
+  ]
+}

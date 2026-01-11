@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.Uncreate.html",
+  "title": "Uncreate\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Uncreate\u00b6\n\nQualified name:manim.animation.creation.Uncreate\n\nclassUncreate(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:CreateLikeCreatebut in reverse.ExamplesExample: ShowUncreate\u00b6frommanimimport*classShowUncreate(Scene):defconstruct(self):self.play(Uncreate(Square()))class ShowUncreate(Scene):\n    def construct(self):\n        self.play(Uncreate(Square()))See alsoCreateMethodsAttributesrun_timeParameters:mobject(VMobject|OpenGLVMobject)reverse_rate_function(bool)remover(bool)_original__init__(mobject,reverse_rate_function=True,remover=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject|OpenGLVMobject)reverse_rate_function(bool)remover(bool)Return type:None\n\nBases:Create\n\nLikeCreatebut in reverse.\n\nExamples\n\nExample: ShowUncreate\u00b6\n\nSee also\n\nCreate\n\nMethods\n\nAttributes\n\nrun_time\n\nParameters:\n\nmobject(VMobject|OpenGLVMobject)reverse_rate_function(bool)remover(bool)\n\nmobject(VMobject|OpenGLVMobject)\n\nmobject(VMobject|OpenGLVMobject)\n\nreverse_rate_function(bool)\n\nreverse_rate_function(bool)\n\nremover(bool)\n\nremover(bool)\n\n_original__init__(mobject,reverse_rate_function=True,remover=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(VMobject|OpenGLVMobject)reverse_rate_function(bool)remover(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(VMobject|OpenGLVMobject)reverse_rate_function(bool)remover(bool)\n\nmobject(VMobject|OpenGLVMobject)\n\nmobject(VMobject|OpenGLVMobject)\n\nreverse_rate_function(bool)\n\nreverse_rate_function(bool)\n\nremover(bool)\n\nremover(bool)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classShowUncreate(Scene):defconstruct(self):self.play(Uncreate(Square()))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShowUncreate(Scene):\n    def construct(self):\n        self.play(Uncreate(Square()))",
+      "language": "python",
+      "context": "Example: ShowUncreate\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Uncreate",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Create"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Create",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "geometry",
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

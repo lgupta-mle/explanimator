@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.tex_mobject.Title.html",
+  "title": "Title\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Title\u00b6\n\nQualified name:manim.mobject.text.tex\\_mobject.Title\n\nclassTitle(*text_parts,include_underline=True,match_underline_width_to_text=False,underline_buff=0.25,**kwargs)[source]\u00b6\n\nBases:TexA mobject representing an underlined title.ExamplesExample: TitleExample\u00b6frommanimimport*importmanimclassTitleExample(Scene):defconstruct(self):banner=ManimBanner()title=Title(f\"Manim version{manim.__version__}\")self.add(banner,title)import manim\n\nclass TitleExample(Scene):\n    def construct(self):\n        banner = ManimBanner()\n        title = Title(f\"Manim version {manim.__version__}\")\n        self.add(banner, title)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first onefont_sizeThe font size of the tex mobject.hash_seedA unique hash representing the result of the generated mobject points.heightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:text_parts(str)include_underline(bool)match_underline_width_to_text(bool)underline_buff(float)kwargs(Any)_original__init__(*text_parts,include_underline=True,match_underline_width_to_text=False,underline_buff=0.25,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text_parts(str)include_underline(bool)match_underline_width_to_text(bool)underline_buff(float)kwargs(Any)\n\nBases:Tex\n\nA mobject representing an underlined title.\n\nExamples\n\nExample: TitleExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nfont_size\n\nThe font size of the tex mobject.\n\nhash_seed\n\nA unique hash representing the result of the generated mobject points.\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\ntext_parts(str)include_underline(bool)match_underline_width_to_text(bool)underline_buff(float)kwargs(Any)\n\ntext_parts(str)\n\ntext_parts(str)\n\ninclude_underline(bool)\n\ninclude_underline(bool)\n\nmatch_underline_width_to_text(bool)\n\nmatch_underline_width_to_text(bool)\n\nunderline_buff(float)\n\nunderline_buff(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*text_parts,include_underline=True,match_underline_width_to_text=False,underline_buff=0.25,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text_parts(str)include_underline(bool)match_underline_width_to_text(bool)underline_buff(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext_parts(str)include_underline(bool)match_underline_width_to_text(bool)underline_buff(float)kwargs(Any)\n\ntext_parts(str)\n\ntext_parts(str)\n\ninclude_underline(bool)\n\ninclude_underline(bool)\n\nmatch_underline_width_to_text(bool)\n\nmatch_underline_width_to_text(bool)\n\nunderline_buff(float)\n\nunderline_buff(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*importmanimclassTitleExample(Scene):defconstruct(self):banner=ManimBanner()title=Title(f\"Manim version{manim.__version__}\")self.add(banner,title)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "import manim\n\nclass TitleExample(Scene):\n    def construct(self):\n        banner = ManimBanner()\n        title = Title(f\"Manim version {manim.__version__}\")\n        self.add(banner, title)",
+      "language": "python",
+      "context": "Example: TitleExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Title",
+      "class_name": null,
+      "parameters": [
+        "*text_parts"
+      ],
+      "return_type": null,
+      "description": "Bases:Tex"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*text_parts"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Tex"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "animation"
+  ]
+}

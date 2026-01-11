@@ -1,0 +1,64 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.mapping_camera.OldMultiCamera.html",
+  "title": "OldMultiCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "OldMultiCamera\u00b6\n\nQualified name:manim.camera.mapping\\_camera.OldMultiCamera\n\nclassOldMultiCamera(*cameras_with_start_positions,**kwargs)[source]\u00b6\n\nBases:CameraParameters:cameras_with_start_positions(tuple) \u2013 Tuples of (Camera, (start_y, start_x)) indicating camera and\nits pixel offset on the final frame.Methodscapture_mobjectsCapture mobjects by printing them onpixel_array.init_backgroundInitialize the background.set_backgroundSets the background to the passed pixel_array after converting to valid RGB values.set_pixel_arraySets the pixel array of the camera to the passed pixel array.Attributesbackground_colorbackground_opacitycapture_mobjects(mobjects,**kwargs)[source]\u00b6Capture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects\u2013 Mobjects to capture.kwargs\u2013 Keyword arguments to be passed toget_mobjects_to_display().NotesFor a list of classes that can currently be rendered, seedisplay_funcs().init_background()[source]\u00b6Initialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background.set_background(pixel_array,**kwargs)[source]\u00b6Sets the background to the passed pixel_array after converting\nto valid RGB values.Parameters:pixel_array\u2013 The pixel array to set the background to.convert_from_floats\u2013 Whether or not to convert floats values to proper RGB valid ones, by default Falseset_pixel_array(pixel_array,**kwargs)[source]\u00b6Sets the pixel array of the camera to the passed pixel array.Parameters:pixel_array\u2013 The pixel array to convert and then set as the camera\u2019s pixel array.convert_from_floats\u2013 Whether or not to convert float values to proper RGB values, by default False\n\nBases:Camera\n\nParameters:\n\ncameras_with_start_positions(tuple) \u2013 Tuples of (Camera, (start_y, start_x)) indicating camera and\nits pixel offset on the final frame.\n\ncameras_with_start_positions(tuple) \u2013 Tuples of (Camera, (start_y, start_x)) indicating camera and\nits pixel offset on the final frame.\n\nMethods\n\ncapture_mobjects\n\nCapture mobjects by printing them onpixel_array.\n\ninit_background\n\nInitialize the background.\n\nset_background\n\nSets the background to the passed pixel_array after converting to valid RGB values.\n\nset_pixel_array\n\nSets the pixel array of the camera to the passed pixel array.\n\nAttributes\n\nbackground_color\n\nbackground_opacity\n\ncapture_mobjects(mobjects,**kwargs)[source]\u00b6\n\nCapture mobjects by printing them onpixel_array.This is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.Parameters:mobjects\u2013 Mobjects to capture.kwargs\u2013 Keyword arguments to be passed toget_mobjects_to_display().NotesFor a list of classes that can currently be rendered, seedisplay_funcs().\n\nCapture mobjects by printing them onpixel_array.\n\nThis is the essential function that converts the contents of a Scene\ninto an array, which is then converted to an image or video.\n\nParameters:\n\nmobjects\u2013 Mobjects to capture.kwargs\u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nmobjects\u2013 Mobjects to capture.\n\nmobjects\u2013 Mobjects to capture.\n\nkwargs\u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nkwargs\u2013 Keyword arguments to be passed toget_mobjects_to_display().\n\nNotes\n\nFor a list of classes that can currently be rendered, seedisplay_funcs().\n\ninit_background()[source]\u00b6\n\nInitialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background.\n\nInitialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background.\n\nset_background(pixel_array,**kwargs)[source]\u00b6\n\nSets the background to the passed pixel_array after converting\nto valid RGB values.Parameters:pixel_array\u2013 The pixel array to set the background to.convert_from_floats\u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\nSets the background to the passed pixel_array after converting\nto valid RGB values.\n\nParameters:\n\npixel_array\u2013 The pixel array to set the background to.convert_from_floats\u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\npixel_array\u2013 The pixel array to set the background to.\n\npixel_array\u2013 The pixel array to set the background to.\n\nconvert_from_floats\u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\nconvert_from_floats\u2013 Whether or not to convert floats values to proper RGB valid ones, by default False\n\nset_pixel_array(pixel_array,**kwargs)[source]\u00b6\n\nSets the pixel array of the camera to the passed pixel array.Parameters:pixel_array\u2013 The pixel array to convert and then set as the camera\u2019s pixel array.convert_from_floats\u2013 Whether or not to convert float values to proper RGB values, by default False\n\nSets the pixel array of the camera to the passed pixel array.\n\nParameters:\n\npixel_array\u2013 The pixel array to convert and then set as the camera\u2019s pixel array.convert_from_floats\u2013 Whether or not to convert float values to proper RGB values, by default False\n\npixel_array\u2013 The pixel array to convert and then set as the camera\u2019s pixel array.\n\npixel_array\u2013 The pixel array to convert and then set as the camera\u2019s pixel array.\n\nconvert_from_floats\u2013 Whether or not to convert float values to proper RGB values, by default False\n\nconvert_from_floats\u2013 Whether or not to convert float values to proper RGB values, by default False",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "OldMultiCamera",
+      "class_name": null,
+      "parameters": [
+        "*cameras_with_start_positions"
+      ],
+      "return_type": null,
+      "description": "Bases:Camera"
+    },
+    {
+      "name": "capture_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects by printing them onpixel_array."
+    },
+    {
+      "name": "init_background",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Initialize the background.\nIf self.background_image is the path of an image\nthe image is set as background; else, the default\nbackground color fills the background."
+    },
+    {
+      "name": "set_background",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Sets the background to the passed pixel_array after converting\nto valid RGB values."
+    },
+    {
+      "name": "set_pixel_array",
+      "class_name": null,
+      "parameters": [
+        "pixel_array"
+      ],
+      "return_type": null,
+      "description": "Sets the pixel array of the camera to the passed pixel array."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "graph"
+  ]
+}

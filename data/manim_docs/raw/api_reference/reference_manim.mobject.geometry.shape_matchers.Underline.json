@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.shape_matchers.Underline.html",
+  "title": "Underline\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Underline\u00b6\n\nQualified name:manim.mobject.geometry.shape\\_matchers.Underline\n\nclassUnderline(mobject,buff=0.1,**kwargs)[source]\u00b6\n\nBases:LineCreates an underline.ExamplesExample: UnderLine\u00b6frommanimimport*classUnderLine(Scene):defconstruct(self):man=Tex(\"Manim\")# Full Wordul=Underline(man)# Underlining the wordself.add(man,ul)class UnderLine(Scene):\n    def construct(self):\n        man = Tex(\"Manim\")  # Full Word\n        ul = Underline(man)  # Underlining the word\n        self.add(man, ul)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:mobject(Mobject)buff(float)kwargs(Any)_original__init__(mobject,buff=0.1,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)buff(float)kwargs(Any)Return type:None\n\nBases:Line\n\nCreates an underline.\n\nExamples\n\nExample: UnderLine\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nmobject(Mobject)buff(float)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nbuff(float)\n\nbuff(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(mobject,buff=0.1,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)buff(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)buff(float)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nbuff(float)\n\nbuff(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUnderLine(Scene):defconstruct(self):man=Tex(\"Manim\")# Full Wordul=Underline(man)# Underlining the wordself.add(man,ul)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UnderLine(Scene):\n    def construct(self):\n        man = Tex(\"Manim\")  # Full Word\n        ul = Underline(man)  # Underlining the word\n        self.add(man, ul)",
+      "language": "python",
+      "context": "Example: UnderLine\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Underline",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Bases:Line"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "Create",
+    "Tex",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "geometry",
+    "animation"
+  ]
+}

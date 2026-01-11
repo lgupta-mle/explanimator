@@ -1,0 +1,18 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.html",
+  "title": "text\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "text\u00b6\n\nMobjects used to display Text using Pango or LaTeX.\n\nModules\u00b6\n\ncode_mobject\n\nMobject representing highlighted source code listings.\n\nnumbers\n\nMobjects representing numbers.\n\ntex_mobject\n\nMobjects representing text rendered using LaTeX.\n\ntext_mobject\n\nMobjects used for displaying (non-LaTeX) text.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Text",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "text"
+  ]
+}

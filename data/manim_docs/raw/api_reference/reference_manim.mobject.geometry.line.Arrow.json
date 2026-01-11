@@ -1,0 +1,133 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.line.Arrow.html",
+  "title": "Arrow\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Arrow\u00b6\n\nQualified name:manim.mobject.geometry.line.Arrow\n\nclassArrow(*args,stroke_width=6,buff=0.25,max_tip_length_to_length_ratio=0.25,max_stroke_width_to_length_ratio=5,**kwargs)[source]\u00b6\n\nBases:LineAn arrow.Parameters:args(Any) \u2013 Arguments to be passed toLine.stroke_width(float) \u2013 The thickness of the arrow. Influenced bymax_stroke_width_to_length_ratio.buff(float) \u2013 The distance of the arrow from its start and end points.max_tip_length_to_length_ratio(float) \u2013tip_lengthscales with the length of the arrow. Increasing this ratio raises the max value oftip_length.max_stroke_width_to_length_ratio(float) \u2013stroke_widthscales with the length of the arrow. Increasing this ratio ratios the max value ofstroke_width.kwargs(Any) \u2013 Additional arguments to be passed toLine.See alsoArrowTipCurvedArrowExamplesExample: ArrowExample\u00b6frommanimimport*frommanim.mobject.geometry.tipsimportArrowSquareTipclassArrowExample(Scene):defconstruct(self):arrow_1=Arrow(start=RIGHT,end=LEFT,color=GOLD)arrow_2=Arrow(start=RIGHT,end=LEFT,color=GOLD,tip_shape=ArrowSquareTip).shift(DOWN)g1=Group(arrow_1,arrow_2)# the effect of buffsquare=Square(color=MAROON_A)arrow_3=Arrow(start=LEFT,end=RIGHT)arrow_4=Arrow(start=LEFT,end=RIGHT,buff=0).next_to(arrow_1,UP)g2=Group(arrow_3,arrow_4,square)# a shorter arrow has a shorter tip and smaller stroke widtharrow_5=Arrow(start=ORIGIN,end=config.top).shift(LEFT*4)arrow_6=Arrow(start=config.top+DOWN,end=config.top).shift(LEFT*3)g3=Group(arrow_5,arrow_6)self.add(Group(g1,g2,g3).arrange(buff=2))from manim.mobject.geometry.tips import ArrowSquareTip\nclass ArrowExample(Scene):\n    def construct(self):\n        arrow_1 = Arrow(start=RIGHT, end=LEFT, color=GOLD)\n        arrow_2 = Arrow(start=RIGHT, end=LEFT, color=GOLD, tip_shape=ArrowSquareTip).shift(DOWN)\n        g1 = Group(arrow_1, arrow_2)\n\n        # the effect of buff\n        square = Square(color=MAROON_A)\n        arrow_3 = Arrow(start=LEFT, end=RIGHT)\n        arrow_4 = Arrow(start=LEFT, end=RIGHT, buff=0).next_to(arrow_1, UP)\n        g2 = Group(arrow_3, arrow_4, square)\n\n        # a shorter arrow has a shorter tip and smaller stroke width\n        arrow_5 = Arrow(start=ORIGIN, end=config.top).shift(LEFT * 4)\n        arrow_6 = Arrow(start=config.top + DOWN, end=config.top).shift(LEFT * 3)\n        g3 = Group(arrow_5, arrow_6)\n\n        self.add(Group(g1, g2, g3).arrange(buff=2))Example: ArrowExample\u00b6frommanimimport*classArrowExample(Scene):defconstruct(self):left_group=VGroup()# As buff increases, the size of the arrow decreases.forbuffinnp.arange(0,2.2,0.45):left_group+=Arrow(buff=buff,start=2*LEFT,end=2*RIGHT)# Required to arrange arrows.left_group.arrange(DOWN)left_group.move_to(4*LEFT)middle_group=VGroup()# As max_stroke_width_to_length_ratio gets bigger,# the width of stroke increases.foriinnp.arange(0,5,0.5):middle_group+=Arrow(max_stroke_width_to_length_ratio=i)middle_group.arrange(DOWN)UR_group=VGroup()# As max_tip_length_to_length_ratio increases,# the length of the tip increases.foriinnp.arange(0,0.3,0.1):UR_group+=Arrow(max_tip_length_to_length_ratio=i)UR_group.arrange(DOWN)UR_group.move_to(4*RIGHT+2*UP)DR_group=VGroup()DR_group+=Arrow(start=LEFT,end=RIGHT,color=BLUE,tip_shape=ArrowSquareTip)DR_group+=Arrow(start=LEFT,end=RIGHT,color=BLUE,tip_shape=ArrowSquareFilledTip)DR_group+=Arrow(start=LEFT,end=RIGHT,color=YELLOW,tip_shape=ArrowCircleTip)DR_group+=Arrow(start=LEFT,end=RIGHT,color=YELLOW,tip_shape=ArrowCircleFilledTip)DR_group.arrange(DOWN)DR_group.move_to(4*RIGHT+2*DOWN)self.add(left_group,middle_group,UR_group,DR_group)class ArrowExample(Scene):\n    def construct(self):\n        left_group = VGroup()\n        # As buff increases, the size of the arrow decreases.\n        for buff in np.arange(0, 2.2, 0.45):\n            left_group += Arrow(buff=buff, start=2 * LEFT, end=2 * RIGHT)\n        # Required to arrange arrows.\n        left_group.arrange(DOWN)\n        left_group.move_to(4 * LEFT)\n\n        middle_group = VGroup()\n        # As max_stroke_width_to_length_ratio gets bigger,\n        # the width of stroke increases.\n        for i in np.arange(0, 5, 0.5):\n            middle_group += Arrow(max_stroke_width_to_length_ratio=i)\n        middle_group.arrange(DOWN)\n\n        UR_group = VGroup()\n        # As max_tip_length_to_length_ratio increases,\n        # the length of the tip increases.\n        for i in np.arange(0, 0.3, 0.1):\n            UR_group += Arrow(max_tip_length_to_length_ratio=i)\n        UR_group.arrange(DOWN)\n        UR_group.move_to(4 * RIGHT + 2 * UP)\n\n        DR_group = VGroup()\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=BLUE, tip_shape=ArrowSquareTip)\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=BLUE, tip_shape=ArrowSquareFilledTip)\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=YELLOW, tip_shape=ArrowCircleTip)\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=YELLOW, tip_shape=ArrowCircleFilledTip)\n        DR_group.arrange(DOWN)\n        DR_group.move_to(4 * RIGHT + 2 * DOWN)\n\n        self.add(left_group, middle_group, UR_group, DR_group)Methodsget_default_tip_lengthReturns the default tip_length of the arrow.get_normal_vectorReturns the normal of a vector.reset_normal_vectorResets the normal of a vectorscaleScale an arrow, but keep stroke width and arrow tip size fixed.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*args,stroke_width=6,buff=0.25,max_tip_length_to_length_ratio=0.25,max_stroke_width_to_length_ratio=5,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)stroke_width(float)buff(float)max_tip_length_to_length_ratio(float)max_stroke_width_to_length_ratio(float)kwargs(Any)Return type:None_set_stroke_width_from_length()[source]\u00b6Sets stroke width based on length.Return type:Selfget_default_tip_length()[source]\u00b6Returns the default tip_length of the arrow.Examples>>>Arrow().get_default_tip_length()0.35Return type:floatget_normal_vector()[source]\u00b6Returns the normal of a vector.Examples>>>np.round(Arrow().get_normal_vector())+0.# add 0. to avoid negative 0 in outputarray([ 0.,  0., -1.])Return type:Vector3Dreset_normal_vector()[source]\u00b6Resets the normal of a vectorReturn type:Selfscale(factor,scale_tips=False,**kwargs)[source]\u00b6Scale an arrow, but keep stroke width and arrow tip size fixed.See alsoscale()Examples>>>arrow=Arrow(np.array([-1,-1,0]),np.array([1,1,0]),buff=0)>>>scaled_arrow=arrow.scale(2)>>>np.round(scaled_arrow.get_start_and_end(),8)+0array([[-2., -2.,  0.],[ 2.,  2.,  0.]])>>>arrow.tip.length==scaled_arrow.tip.lengthTrueManually scaling the object using the default methodscale()does not have the same properties:>>>new_arrow=Arrow(np.array([-1,-1,0]),np.array([1,1,0]),buff=0)>>>another_scaled_arrow=VMobject.scale(new_arrow,2)>>>another_scaled_arrow.tip.length==arrow.tip.lengthFalseParameters:factor(float)scale_tips(bool)kwargs(Any)Return type:Self\n\nBases:Line\n\nAn arrow.\n\nParameters:\n\nargs(Any) \u2013 Arguments to be passed toLine.stroke_width(float) \u2013 The thickness of the arrow. Influenced bymax_stroke_width_to_length_ratio.buff(float) \u2013 The distance of the arrow from its start and end points.max_tip_length_to_length_ratio(float) \u2013tip_lengthscales with the length of the arrow. Increasing this ratio raises the max value oftip_length.max_stroke_width_to_length_ratio(float) \u2013stroke_widthscales with the length of the arrow. Increasing this ratio ratios the max value ofstroke_width.kwargs(Any) \u2013 Additional arguments to be passed toLine.\n\nargs(Any) \u2013 Arguments to be passed toLine.\n\nargs(Any) \u2013 Arguments to be passed toLine.\n\nstroke_width(float) \u2013 The thickness of the arrow. Influenced bymax_stroke_width_to_length_ratio.\n\nstroke_width(float) \u2013 The thickness of the arrow. Influenced bymax_stroke_width_to_length_ratio.\n\nbuff(float) \u2013 The distance of the arrow from its start and end points.\n\nbuff(float) \u2013 The distance of the arrow from its start and end points.\n\nmax_tip_length_to_length_ratio(float) \u2013tip_lengthscales with the length of the arrow. Increasing this ratio raises the max value oftip_length.\n\nmax_tip_length_to_length_ratio(float) \u2013tip_lengthscales with the length of the arrow. Increasing this ratio raises the max value oftip_length.\n\nmax_stroke_width_to_length_ratio(float) \u2013stroke_widthscales with the length of the arrow. Increasing this ratio ratios the max value ofstroke_width.\n\nmax_stroke_width_to_length_ratio(float) \u2013stroke_widthscales with the length of the arrow. Increasing this ratio ratios the max value ofstroke_width.\n\nkwargs(Any) \u2013 Additional arguments to be passed toLine.\n\nkwargs(Any) \u2013 Additional arguments to be passed toLine.\n\nSee also\n\nArrowTipCurvedArrow\n\nExamples\n\nExample: ArrowExample\u00b6\n\nExample: ArrowExample\u00b6\n\nMethods\n\nget_default_tip_length\n\nReturns the default tip_length of the arrow.\n\nget_normal_vector\n\nReturns the normal of a vector.\n\nreset_normal_vector\n\nResets the normal of a vector\n\nscale\n\nScale an arrow, but keep stroke width and arrow tip size fixed.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*args,stroke_width=6,buff=0.25,max_tip_length_to_length_ratio=0.25,max_stroke_width_to_length_ratio=5,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)stroke_width(float)buff(float)max_tip_length_to_length_ratio(float)max_stroke_width_to_length_ratio(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nargs(Any)stroke_width(float)buff(float)max_tip_length_to_length_ratio(float)max_stroke_width_to_length_ratio(float)kwargs(Any)\n\nargs(Any)\n\nargs(Any)\n\nstroke_width(float)\n\nstroke_width(float)\n\nbuff(float)\n\nbuff(float)\n\nmax_tip_length_to_length_ratio(float)\n\nmax_tip_length_to_length_ratio(float)\n\nmax_stroke_width_to_length_ratio(float)\n\nmax_stroke_width_to_length_ratio(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\n_set_stroke_width_from_length()[source]\u00b6\n\nSets stroke width based on length.Return type:Self\n\nSets stroke width based on length.\n\nReturn type:\n\nSelf\n\nSelf\n\nget_default_tip_length()[source]\u00b6\n\nReturns the default tip_length of the arrow.Examples>>>Arrow().get_default_tip_length()0.35Return type:float\n\nReturns the default tip_length of the arrow.\n\nExamples\n\nReturn type:\n\nfloat\n\nfloat\n\nget_normal_vector()[source]\u00b6\n\nReturns the normal of a vector.Examples>>>np.round(Arrow().get_normal_vector())+0.# add 0. to avoid negative 0 in outputarray([ 0.,  0., -1.])Return type:Vector3D\n\nReturns the normal of a vector.\n\nExamples\n\nReturn type:\n\nVector3D\n\nVector3D\n\nreset_normal_vector()[source]\u00b6\n\nResets the normal of a vectorReturn type:Self\n\nResets the normal of a vector\n\nReturn type:\n\nSelf\n\nSelf\n\nscale(factor,scale_tips=False,**kwargs)[source]\u00b6\n\nScale an arrow, but keep stroke width and arrow tip size fixed.See alsoscale()Examples>>>arrow=Arrow(np.array([-1,-1,0]),np.array([1,1,0]),buff=0)>>>scaled_arrow=arrow.scale(2)>>>np.round(scaled_arrow.get_start_and_end(),8)+0array([[-2., -2.,  0.],[ 2.,  2.,  0.]])>>>arrow.tip.length==scaled_arrow.tip.lengthTrueManually scaling the object using the default methodscale()does not have the same properties:>>>new_arrow=Arrow(np.array([-1,-1,0]),np.array([1,1,0]),buff=0)>>>another_scaled_arrow=VMobject.scale(new_arrow,2)>>>another_scaled_arrow.tip.length==arrow.tip.lengthFalseParameters:factor(float)scale_tips(bool)kwargs(Any)Return type:Self\n\nScale an arrow, but keep stroke width and arrow tip size fixed.\n\nSee also\n\nscale()\n\nExamples\n\nManually scaling the object using the default methodscale()does not have the same properties:\n\nParameters:\n\nfactor(float)scale_tips(bool)kwargs(Any)\n\nfactor(float)\n\nfactor(float)\n\nscale_tips(bool)\n\nscale_tips(bool)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nSelf\n\nSelf",
+  "code_examples": [
+    {
+      "code": "frommanimimport*frommanim.mobject.geometry.tipsimportArrowSquareTipclassArrowExample(Scene):defconstruct(self):arrow_1=Arrow(start=RIGHT,end=LEFT,color=GOLD)arrow_2=Arrow(start=RIGHT,end=LEFT,color=GOLD,tip_shape=ArrowSquareTip).shift(DOWN)g1=Group(arrow_1,arrow_2)# the effect of buffsquare=Square(color=MAROON_A)arrow_3=Arrow(start=LEFT,end=RIGHT)arrow_4=Arrow(start=LEFT,end=RIGHT,buff=0).next_to(arrow_1,UP)g2=Group(arrow_3,arrow_4,square)# a shorter arrow has a shorter tip and smaller stroke widtharrow_5=Arrow(start=ORIGIN,end=config.top).shift(LEFT*4)arrow_6=Arrow(start=config.top+DOWN,end=config.top).shift(LEFT*3)g3=Group(arrow_5,arrow_6)self.add(Group(g1,g2,g3).arrange(buff=2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "from manim.mobject.geometry.tips import ArrowSquareTip\nclass ArrowExample(Scene):\n    def construct(self):\n        arrow_1 = Arrow(start=RIGHT, end=LEFT, color=GOLD)\n        arrow_2 = Arrow(start=RIGHT, end=LEFT, color=GOLD, tip_shape=ArrowSquareTip).shift(DOWN)\n        g1 = Group(arrow_1, arrow_2)\n\n        # the effect of buff\n        square = Square(color=MAROON_A)\n        arrow_3 = Arrow(start=LEFT, end=RIGHT)\n        arrow_4 = Arrow(start=LEFT, end=RIGHT, buff=0).next_to(arrow_1, UP)\n        g2 = Group(arrow_3, arrow_4, square)\n\n        # a shorter arrow has a shorter tip and smaller stroke width\n        arrow_5 = Arrow(start=ORIGIN, end=config.top).shift(LEFT * 4)\n        arrow_6 = Arrow(start=config.top + DOWN, end=config.top).shift(LEFT * 3)\n        g3 = Group(arrow_5, arrow_6)\n\n        self.add(Group(g1, g2, g3).arrange(buff=2))",
+      "language": "python",
+      "context": "Example: ArrowExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classArrowExample(Scene):defconstruct(self):left_group=VGroup()# As buff increases, the size of the arrow decreases.forbuffinnp.arange(0,2.2,0.45):left_group+=Arrow(buff=buff,start=2*LEFT,end=2*RIGHT)# Required to arrange arrows.left_group.arrange(DOWN)left_group.move_to(4*LEFT)middle_group=VGroup()# As max_stroke_width_to_length_ratio gets bigger,# the width of stroke increases.foriinnp.arange(0,5,0.5):middle_group+=Arrow(max_stroke_width_to_length_ratio=i)middle_group.arrange(DOWN)UR_group=VGroup()# As max_tip_length_to_length_ratio increases,# the length of the tip increases.foriinnp.arange(0,0.3,0.1):UR_group+=Arrow(max_tip_length_to_length_ratio=i)UR_group.arrange(DOWN)UR_group.move_to(4*RIGHT+2*UP)DR_group=VGroup()DR_group+=Arrow(start=LEFT,end=RIGHT,color=BLUE,tip_shape=ArrowSquareTip)DR_group+=Arrow(start=LEFT,end=RIGHT,color=BLUE,tip_shape=ArrowSquareFilledTip)DR_group+=Arrow(start=LEFT,end=RIGHT,color=YELLOW,tip_shape=ArrowCircleTip)DR_group+=Arrow(start=LEFT,end=RIGHT,color=YELLOW,tip_shape=ArrowCircleFilledTip)DR_group.arrange(DOWN)DR_group.move_to(4*RIGHT+2*DOWN)self.add(left_group,middle_group,UR_group,DR_group)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArrowExample(Scene):\n    def construct(self):\n        left_group = VGroup()\n        # As buff increases, the size of the arrow decreases.\n        for buff in np.arange(0, 2.2, 0.45):\n            left_group += Arrow(buff=buff, start=2 * LEFT, end=2 * RIGHT)\n        # Required to arrange arrows.\n        left_group.arrange(DOWN)\n        left_group.move_to(4 * LEFT)\n\n        middle_group = VGroup()\n        # As max_stroke_width_to_length_ratio gets bigger,\n        # the width of stroke increases.\n        for i in np.arange(0, 5, 0.5):\n            middle_group += Arrow(max_stroke_width_to_length_ratio=i)\n        middle_group.arrange(DOWN)\n\n        UR_group = VGroup()\n        # As max_tip_length_to_length_ratio increases,\n        # the length of the tip increases.\n        for i in np.arange(0, 0.3, 0.1):\n            UR_group += Arrow(max_tip_length_to_length_ratio=i)\n        UR_group.arrange(DOWN)\n        UR_group.move_to(4 * RIGHT + 2 * UP)\n\n        DR_group = VGroup()\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=BLUE, tip_shape=ArrowSquareTip)\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=BLUE, tip_shape=ArrowSquareFilledTip)\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=YELLOW, tip_shape=ArrowCircleTip)\n        DR_group += Arrow(start=LEFT, end=RIGHT, color=YELLOW, tip_shape=ArrowCircleFilledTip)\n        DR_group.arrange(DOWN)\n        DR_group.move_to(4 * RIGHT + 2 * DOWN)\n\n        self.add(left_group, middle_group, UR_group, DR_group)",
+      "language": "python",
+      "context": "Example: ArrowExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>Arrow().get_default_tip_length()0.35",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>np.round(Arrow().get_normal_vector())+0.# add 0. to avoid negative 0 in outputarray([ 0.,  0., -1.])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>arrow=Arrow(np.array([-1,-1,0]),np.array([1,1,0]),buff=0)>>>scaled_arrow=arrow.scale(2)>>>np.round(scaled_arrow.get_start_and_end(),8)+0array([[-2., -2.,  0.],[ 2.,  2.,  0.]])>>>arrow.tip.length==scaled_arrow.tip.lengthTrue",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>new_arrow=Arrow(np.array([-1,-1,0]),np.array([1,1,0]),buff=0)>>>another_scaled_arrow=VMobject.scale(new_arrow,2)>>>another_scaled_arrow.tip.length==arrow.tip.lengthFalse",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Arrow",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:Line"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_set_stroke_width_from_length",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Sets stroke width based on length."
+    },
+    {
+      "name": "get_default_tip_length",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the default tip_length of the arrow."
+    },
+    {
+      "name": "get_normal_vector",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the normal of a vector."
+    },
+    {
+      "name": "reset_normal_vector",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Resets the normal of a vector"
+    },
+    {
+      "name": "scale",
+      "class_name": null,
+      "parameters": [
+        "factor"
+      ],
+      "return_type": null,
+      "description": "Scale an arrow, but keep stroke width and arrow tip size fixed."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Line",
+    "VGroup",
+    "VMobject",
+    "Arrow",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

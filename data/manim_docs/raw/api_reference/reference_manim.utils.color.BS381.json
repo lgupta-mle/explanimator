@@ -1,0 +1,20 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.BS381.html",
+  "title": "BS381\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "BS381\u00b6\n\nBritish Color Standard\n\nThis module contains colors defined in one of the British Standards\nfor colors, BS381C. This standard specifies colors used in identification,\ncoding, and other special purposes. Seehttps://www.britishstandardcolour.com/for more information.\n\nTo use the colors from this list, access them directly from the module (which\nis exposed to Manim\u2019s global name space):\n\nList of Color Constants\u00b6\n\nThese hex values (taken fromhttps://www.w3schools.com/colors/colors_british.asp)\nare non official approximate values intended to simulate the ones defined\nin the standard:\n\nColor Name\n\nRGB Hex Code\n\nColor Name\n\nRGB Hex Code",
+  "code_examples": [
+    {
+      "code": ">>>frommanimimportBS381>>>BS381.OXFORD_BLUEManimColor('#1F3057')",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [],
+  "tags": [
+    "color"
+  ]
+}

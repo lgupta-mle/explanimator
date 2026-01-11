@@ -1,0 +1,26 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.mapping_camera.SplitScreenCamera.html",
+  "title": "SplitScreenCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SplitScreenCamera\u00b6\n\nQualified name:manim.camera.mapping\\_camera.SplitScreenCamera\n\nclassSplitScreenCamera(left_camera,right_camera,**kwargs)[source]\u00b6\n\nBases:OldMultiCameraInitializes a split screen camera setup with two side-by-side cameras.Parameters:left_camera(Camera)right_camera(Camera)kwargs(dict)MethodsAttributesbackground_colorbackground_opacity\n\nBases:OldMultiCamera\n\nInitializes a split screen camera setup with two side-by-side cameras.\n\nParameters:\n\nleft_camera(Camera)right_camera(Camera)kwargs(dict)\n\nleft_camera(Camera)\n\nleft_camera(Camera)\n\nright_camera(Camera)\n\nright_camera(Camera)\n\nkwargs(dict)\n\nkwargs(dict)\n\nMethods\n\nAttributes\n\nbackground_color\n\nbackground_opacity",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SplitScreenCamera",
+      "class_name": null,
+      "parameters": [
+        "left_camera"
+      ],
+      "return_type": null,
+      "description": "Bases:OldMultiCamera"
+    }
+  ],
+  "related_classes": [
+    "Camera"
+  ],
+  "tags": [
+    "color",
+    "3d"
+  ]
+}

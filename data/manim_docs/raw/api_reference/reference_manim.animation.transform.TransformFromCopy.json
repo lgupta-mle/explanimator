@@ -1,0 +1,46 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.TransformFromCopy.html",
+  "title": "TransformFromCopy\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TransformFromCopy\u00b6\n\nQualified name:manim.animation.transform.TransformFromCopy\n\nclassTransformFromCopy(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformPerforms a reversed TransformMethodsinterpolateSet the animation progress.Attributespath_arcpath_funcrun_timeParameters:mobject(Mobject)target_mobject(Mobject)_original__init__(mobject,target_mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)Return type:Noneinterpolate(alpha)[source]\u00b6Set the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nBases:Transform\n\nPerforms a reversed Transform\n\nMethods\n\ninterpolate\n\nSet the animation progress.\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\n_original__init__(mobject,target_mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate(alpha)[source]\u00b6\n\nSet the animation progress.This method gets called for every frame during an animation.Parameters:alpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.Return type:None\n\nSet the animation progress.\n\nThis method gets called for every frame during an animation.\n\nParameters:\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nalpha(float) \u2013 The relative time to set the animation to, 0 meaning the start, 1 meaning\nthe end.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "TransformFromCopy",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Set the animation progress."
+    }
+  ],
+  "related_classes": [
+    "Transform",
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

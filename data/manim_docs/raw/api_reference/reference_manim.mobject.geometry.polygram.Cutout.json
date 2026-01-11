@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.Cutout.html",
+  "title": "Cutout\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Cutout\u00b6\n\nQualified name:manim.mobject.geometry.polygram.Cutout\n\nclassCutout(main_shape,*mobjects,**kwargs)[source]\u00b6\n\nBases:VMobjectA shape with smaller cutouts.Parameters:main_shape(VMobject) \u2013 The primary shape from which cutouts are made.mobjects(VMobject) \u2013 The smaller shapes which are to be cut out of themain_shape.kwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.WarningTechnically, this class behaves similar to a symmetric difference: if\nparts of themobjectsare not located within themain_shape,\nthese parts will be added to the resultingVMobject.ExamplesExample: CutoutExample\u00b6frommanimimport*classCutoutExample(Scene):defconstruct(self):s1=Square().scale(2.5)s2=Triangle().shift(DOWN+RIGHT).scale(0.5)s3=Square().shift(UP+RIGHT).scale(0.5)s4=RegularPolygon(5).shift(DOWN+LEFT).scale(0.5)s5=RegularPolygon(6).shift(UP+LEFT).scale(0.5)c=Cutout(s1,s2,s3,s4,s5,fill_opacity=1,color=BLUE,stroke_color=RED)self.play(Write(c),run_time=4)self.wait()class CutoutExample(Scene):\n    def construct(self):\n        s1 = Square().scale(2.5)\n        s2 = Triangle().shift(DOWN + RIGHT).scale(0.5)\n        s3 = Square().shift(UP + RIGHT).scale(0.5)\n        s4 = RegularPolygon(5).shift(DOWN + LEFT).scale(0.5)\n        s5 = RegularPolygon(6).shift(UP + LEFT).scale(0.5)\n        c = Cutout(s1, s2, s3, s4, s5, fill_opacity=1, color=BLUE, stroke_color=RED)\n        self.play(Write(c), run_time=4)\n        self.wait()MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(main_shape,*mobjects,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:main_shape(VMobject)mobjects(VMobject)kwargs(Any)Return type:None\n\nBases:VMobject\n\nA shape with smaller cutouts.\n\nParameters:\n\nmain_shape(VMobject) \u2013 The primary shape from which cutouts are made.mobjects(VMobject) \u2013 The smaller shapes which are to be cut out of themain_shape.kwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.\n\nmain_shape(VMobject) \u2013 The primary shape from which cutouts are made.\n\nmain_shape(VMobject) \u2013 The primary shape from which cutouts are made.\n\nmobjects(VMobject) \u2013 The smaller shapes which are to be cut out of themain_shape.\n\nmobjects(VMobject) \u2013 The smaller shapes which are to be cut out of themain_shape.\n\nkwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.\n\nkwargs(Any) \u2013 Further keyword arguments that are passed to the constructor ofVMobject.\n\nWarning\n\nTechnically, this class behaves similar to a symmetric difference: if\nparts of themobjectsare not located within themain_shape,\nthese parts will be added to the resultingVMobject.\n\nExamples\n\nExample: CutoutExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(main_shape,*mobjects,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:main_shape(VMobject)mobjects(VMobject)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmain_shape(VMobject)mobjects(VMobject)kwargs(Any)\n\nmain_shape(VMobject)\n\nmain_shape(VMobject)\n\nmobjects(VMobject)\n\nmobjects(VMobject)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCutoutExample(Scene):defconstruct(self):s1=Square().scale(2.5)s2=Triangle().shift(DOWN+RIGHT).scale(0.5)s3=Square().shift(UP+RIGHT).scale(0.5)s4=RegularPolygon(5).shift(DOWN+LEFT).scale(0.5)s5=RegularPolygon(6).shift(UP+LEFT).scale(0.5)c=Cutout(s1,s2,s3,s4,s5,fill_opacity=1,color=BLUE,stroke_color=RED)self.play(Write(c),run_time=4)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CutoutExample(Scene):\n    def construct(self):\n        s1 = Square().scale(2.5)\n        s2 = Triangle().shift(DOWN + RIGHT).scale(0.5)\n        s3 = Square().shift(UP + RIGHT).scale(0.5)\n        s4 = RegularPolygon(5).shift(DOWN + LEFT).scale(0.5)\n        s5 = RegularPolygon(6).shift(UP + LEFT).scale(0.5)\n        c = Cutout(s1, s2, s3, s4, s5, fill_opacity=1, color=BLUE, stroke_color=RED)\n        self.play(Write(c), run_time=4)\n        self.wait()",
+      "language": "python",
+      "context": "Example: CutoutExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Cutout",
+      "class_name": null,
+      "parameters": [
+        "main_shape"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "main_shape"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

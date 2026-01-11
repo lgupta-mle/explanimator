@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.ConvexHull.html",
+  "title": "ConvexHull\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ConvexHull\u00b6\n\nQualified name:manim.mobject.geometry.polygram.ConvexHull\n\nclassConvexHull(*points,tolerance=1e-05,**kwargs)[source]\u00b6\n\nBases:PolygramConstructs a convex hull for a set of points in no particular order.Parameters:points(Point3DLike) \u2013 The points to consider.tolerance(float) \u2013 The tolerance used by quickhull.kwargs(Any) \u2013 Forwarded to the parent constructor.ExamplesExample: ConvexHullExample\u00b6frommanimimport*classConvexHullExample(Scene):defconstruct(self):points=[[-2.35,-2.25,0],[1.65,-2.25,0],[2.65,-0.25,0],[1.65,1.75,0],[-0.35,2.75,0],[-2.35,0.75,0],[-0.35,-1.25,0],[0.65,-0.25,0],[-1.35,0.25,0],[0.15,0.75,0]]hull=ConvexHull(*points,color=BLUE)dots=VGroup(*[Dot(point)forpointinpoints])self.add(hull)self.add(dots)class ConvexHullExample(Scene):\n    def construct(self):\n        points = [\n            [-2.35, -2.25, 0],\n            [1.65, -2.25, 0],\n            [2.65, -0.25, 0],\n            [1.65, 1.75, 0],\n            [-0.35, 2.75, 0],\n            [-2.35, 0.75, 0],\n            [-0.35, -1.25, 0],\n            [0.65, -0.25, 0],\n            [-1.35, 0.25, 0],\n            [0.15, 0.75, 0]\n        ]\n        hull = ConvexHull(*points, color=BLUE)\n        dots = VGroup(*[Dot(point) for point in points])\n        self.add(hull)\n        self.add(dots)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*points,tolerance=1e-05,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:points(Point3DLike)tolerance(float)kwargs(Any)Return type:None\n\nBases:Polygram\n\nConstructs a convex hull for a set of points in no particular order.\n\nParameters:\n\npoints(Point3DLike) \u2013 The points to consider.tolerance(float) \u2013 The tolerance used by quickhull.kwargs(Any) \u2013 Forwarded to the parent constructor.\n\npoints(Point3DLike) \u2013 The points to consider.\n\npoints(Point3DLike) \u2013 The points to consider.\n\ntolerance(float) \u2013 The tolerance used by quickhull.\n\ntolerance(float) \u2013 The tolerance used by quickhull.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nExamples\n\nExample: ConvexHullExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*points,tolerance=1e-05,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:points(Point3DLike)tolerance(float)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\npoints(Point3DLike)tolerance(float)kwargs(Any)\n\npoints(Point3DLike)\n\npoints(Point3DLike)\n\ntolerance(float)\n\ntolerance(float)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classConvexHullExample(Scene):defconstruct(self):points=[[-2.35,-2.25,0],[1.65,-2.25,0],[2.65,-0.25,0],[1.65,1.75,0],[-0.35,2.75,0],[-2.35,0.75,0],[-0.35,-1.25,0],[0.65,-0.25,0],[-1.35,0.25,0],[0.15,0.75,0]]hull=ConvexHull(*points,color=BLUE)dots=VGroup(*[Dot(point)forpointinpoints])self.add(hull)self.add(dots)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ConvexHullExample(Scene):\n    def construct(self):\n        points = [\n            [-2.35, -2.25, 0],\n            [1.65, -2.25, 0],\n            [2.65, -0.25, 0],\n            [1.65, 1.75, 0],\n            [-0.35, 2.75, 0],\n            [-2.35, 0.75, 0],\n            [-0.35, -1.25, 0],\n            [0.65, -0.25, 0],\n            [-1.35, 0.25, 0],\n            [0.15, 0.75, 0]\n        ]\n        hull = ConvexHull(*points, color=BLUE)\n        dots = VGroup(*[Dot(point) for point in points])\n        self.add(hull)\n        self.add(dots)",
+      "language": "python",
+      "context": "Example: ConvexHullExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ConvexHull",
+      "class_name": null,
+      "parameters": [
+        "*points"
+      ],
+      "return_type": null,
+      "description": "Bases:Polygram"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*points"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Dot",
+    "VGroup",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

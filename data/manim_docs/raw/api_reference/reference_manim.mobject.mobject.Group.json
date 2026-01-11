@@ -1,0 +1,36 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.mobject.Group.html",
+  "title": "Group\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Group\u00b6\n\nQualified name:manim.mobject.mobject.Group\n\nclassGroup(*mobjects,**kwargs)[source]\u00b6\n\nBases:MobjectGroups together multipleMobjects.NotesWhen adding the same mobject more than once, repetitions are ignored.\nUseMobject.copy()to create a separate copy which can then\nbe added to the group.MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridesdepthThe depth of the mobject.heightThe height of the mobject.widthThe width of the mobject._original__init__(*mobjects,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Return type:None\n\nBases:Mobject\n\nGroups together multipleMobjects.\n\nNotes\n\nWhen adding the same mobject more than once, repetitions are ignored.\nUseMobject.copy()to create a separate copy which can then\nbe added to the group.\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ndepth\n\nThe depth of the mobject.\n\nheight\n\nThe height of the mobject.\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*mobjects,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "Group",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Bases:Mobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*mobjects"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "3d",
+    "timing"
+  ]
+}

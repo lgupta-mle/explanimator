@@ -1,0 +1,57 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.ReplacementTransform.html",
+  "title": "ReplacementTransform\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ReplacementTransform\u00b6\n\nQualified name:manim.animation.transform.ReplacementTransform\n\nclassReplacementTransform(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformReplaces and morphs a mobject into a target mobject.Parameters:mobject(Mobject) \u2013 The startingMobject.target_mobject(Mobject) \u2013 The targetMobject.kwargs\u2013 Further keyword arguments that are passed toTransform.ExamplesExample: ReplacementTransformOrTransform\u00b6frommanimimport*classReplacementTransformOrTransform(Scene):defconstruct(self):# set up the numbersr_transform=VGroup(*[Integer(i)foriinrange(1,4)])text_1=Text(\"ReplacementTransform\",color=RED)r_transform.add(text_1)transform=VGroup(*[Integer(i)foriinrange(4,7)])text_2=Text(\"Transform\",color=BLUE)transform.add(text_2)ints=VGroup(r_transform,transform)texts=VGroup(text_1,text_2).scale(0.75)r_transform.arrange(direction=UP,buff=1)transform.arrange(direction=UP,buff=1)ints.arrange(buff=2)self.add(ints,texts)# The mobs replace each other and none are left behindself.play(ReplacementTransform(r_transform[0],r_transform[1]))self.play(ReplacementTransform(r_transform[1],r_transform[2]))# The mobs linger after the Transform()self.play(Transform(transform[0],transform[1]))self.play(Transform(transform[1],transform[2]))self.wait()class ReplacementTransformOrTransform(Scene):\n    def construct(self):\n        # set up the numbers\n        r_transform = VGroup(*[Integer(i) for i in range(1,4)])\n        text_1 = Text(\"ReplacementTransform\", color=RED)\n        r_transform.add(text_1)\n\n        transform = VGroup(*[Integer(i) for i in range(4,7)])\n        text_2 = Text(\"Transform\", color=BLUE)\n        transform.add(text_2)\n\n        ints = VGroup(r_transform, transform)\n        texts = VGroup(text_1, text_2).scale(0.75)\n        r_transform.arrange(direction=UP, buff=1)\n        transform.arrange(direction=UP, buff=1)\n\n        ints.arrange(buff=2)\n        self.add(ints, texts)\n\n        # The mobs replace each other and none are left behind\n        self.play(ReplacementTransform(r_transform[0], r_transform[1]))\n        self.play(ReplacementTransform(r_transform[1], r_transform[2]))\n\n        # The mobs linger after the Transform()\n        self.play(Transform(transform[0], transform[1]))\n        self.play(Transform(transform[1], transform[2]))\n        self.wait()MethodsAttributespath_arcpath_funcrun_time_original__init__(mobject,target_mobject,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)Return type:None\n\nBases:Transform\n\nReplaces and morphs a mobject into a target mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The startingMobject.target_mobject(Mobject) \u2013 The targetMobject.kwargs\u2013 Further keyword arguments that are passed toTransform.\n\nmobject(Mobject) \u2013 The startingMobject.\n\nmobject(Mobject) \u2013 The startingMobject.\n\ntarget_mobject(Mobject) \u2013 The targetMobject.\n\ntarget_mobject(Mobject) \u2013 The targetMobject.\n\nkwargs\u2013 Further keyword arguments that are passed toTransform.\n\nkwargs\u2013 Further keyword arguments that are passed toTransform.\n\nExamples\n\nExample: ReplacementTransformOrTransform\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,target_mobject,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classReplacementTransformOrTransform(Scene):defconstruct(self):# set up the numbersr_transform=VGroup(*[Integer(i)foriinrange(1,4)])text_1=Text(\"ReplacementTransform\",color=RED)r_transform.add(text_1)transform=VGroup(*[Integer(i)foriinrange(4,7)])text_2=Text(\"Transform\",color=BLUE)transform.add(text_2)ints=VGroup(r_transform,transform)texts=VGroup(text_1,text_2).scale(0.75)r_transform.arrange(direction=UP,buff=1)transform.arrange(direction=UP,buff=1)ints.arrange(buff=2)self.add(ints,texts)# The mobs replace each other and none are left behindself.play(ReplacementTransform(r_transform[0],r_transform[1]))self.play(ReplacementTransform(r_transform[1],r_transform[2]))# The mobs linger after the Transform()self.play(Transform(transform[0],transform[1]))self.play(Transform(transform[1],transform[2]))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ReplacementTransformOrTransform(Scene):\n    def construct(self):\n        # set up the numbers\n        r_transform = VGroup(*[Integer(i) for i in range(1,4)])\n        text_1 = Text(\"ReplacementTransform\", color=RED)\n        r_transform.add(text_1)\n\n        transform = VGroup(*[Integer(i) for i in range(4,7)])\n        text_2 = Text(\"Transform\", color=BLUE)\n        transform.add(text_2)\n\n        ints = VGroup(r_transform, transform)\n        texts = VGroup(text_1, text_2).scale(0.75)\n        r_transform.arrange(direction=UP, buff=1)\n        transform.arrange(direction=UP, buff=1)\n\n        ints.arrange(buff=2)\n        self.add(ints, texts)\n\n        # The mobs replace each other and none are left behind\n        self.play(ReplacementTransform(r_transform[0], r_transform[1]))\n        self.play(ReplacementTransform(r_transform[1], r_transform[2]))\n\n        # The mobs linger after the Transform()\n        self.play(Transform(transform[0], transform[1]))\n        self.play(Transform(transform[1], transform[2]))\n        self.wait()",
+      "language": "python",
+      "context": "Example: ReplacementTransformOrTransform\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ReplacementTransform",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "Transform",
+    "Text",
+    "ReplacementTransform",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

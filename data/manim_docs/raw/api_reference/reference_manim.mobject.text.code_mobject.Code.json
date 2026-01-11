@@ -1,0 +1,71 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.code_mobject.Code.html",
+  "title": "Code\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Code\u00b6\n\nQualified name:manim.mobject.text.code\\_mobject.Code\n\nclassCode(code_file=None,code_string=None,language=None,formatter_style='vim',tab_width=4,add_line_numbers=True,line_numbers_from=1,background='rectangle',background_config=None,paragraph_config=None)[source]\u00b6\n\nBases:VMobjectA highlighted source code listing.ExamplesNormal usage:listing=Code(\"helloworldcpp.cpp\",tab_width=4,formatter_style=\"emacs\",background=\"window\",language=\"cpp\",background_config={\"stroke_color\":WHITE},paragraph_config={\"font\":\"Noto Sans Mono\"},)We can also render code passed as a string. As the automatic language\ndetection can be a bit flaky, it is recommended to specify the language\nexplicitly:Example: CodeFromString\u00b6frommanimimport*classCodeFromString(Scene):defconstruct(self):code='''from manim import Scene, Squareclass FadeInSquare(Scene):def construct(self):s = Square()self.play(FadeIn(s))self.play(s.animate.scale(2))self.wait()'''rendered_code=Code(code_string=code,language=\"python\",background=\"window\",background_config={\"stroke_color\":\"maroon\"},)self.add(rendered_code)class CodeFromString(Scene):\n    def construct(self):\n        code = '''from manim import Scene, Square\n\nclass FadeInSquare(Scene):\n    def construct(self):\n        s = Square()\n        self.play(FadeIn(s))\n        self.play(s.animate.scale(2))\n        self.wait()'''\n\n        rendered_code = Code(\n            code_string=code,\n            language=\"python\",\n            background=\"window\",\n            background_config={\"stroke_color\": \"maroon\"},\n        )\n        self.add(rendered_code)Parameters:code_file(StrPath|None) \u2013 The path to the code file to display.code_string(str|None) \u2013 Alternatively, the code string to display.language(str|None) \u2013 The programming language of the code. If not specified, it will be\nguessed from the file extension or the code itself.formatter_style(str) \u2013 The style to use for the code highlighting. Defaults to\"vim\".\nA list of all available styles can be obtained by callingCode.get_styles_list().tab_width(int) \u2013 The width of a tab character in spaces. Defaults to 4.add_line_numbers(bool) \u2013 Whether to display line numbers. Defaults toTrue.line_numbers_from(int) \u2013 The first line number to display. Defaults to 1.background(Literal['rectangle','window']) \u2013 The type of background to use. Can be either\"rectangle\"(the\ndefault) or\"window\".background_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the background constructor. Default\nsettings are stored in the class attributedefault_background_config(which can also be modified\ndirectly).paragraph_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the constructor of theParagraphobjects holding the code, and the line\nnumbers. Default settings are stored in the class attributedefault_paragraph_config(which can also be modified\ndirectly).Methodsget_styles_listGet the list of all available formatter styles.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordefault_background_configdefault_paragraph_configdepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.code_original__init__(code_file=None,code_string=None,language=None,formatter_style='vim',tab_width=4,add_line_numbers=True,line_numbers_from=1,background='rectangle',background_config=None,paragraph_config=None)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:code_file(StrPath|None)code_string(str|None)language(str|None)formatter_style(str)tab_width(int)add_line_numbers(bool)line_numbers_from(int)background(Literal['rectangle','window'])background_config(dict[str,Any]|None)paragraph_config(dict[str,Any]|None)classmethodget_styles_list()[source]\u00b6Get the list of all available formatter styles.Return type:list[str]\n\nBases:VMobject\n\nA highlighted source code listing.\n\nExamples\n\nNormal usage:\n\nWe can also render code passed as a string. As the automatic language\ndetection can be a bit flaky, it is recommended to specify the language\nexplicitly:\n\nExample: CodeFromString\u00b6\n\nParameters:\n\ncode_file(StrPath|None) \u2013 The path to the code file to display.code_string(str|None) \u2013 Alternatively, the code string to display.language(str|None) \u2013 The programming language of the code. If not specified, it will be\nguessed from the file extension or the code itself.formatter_style(str) \u2013 The style to use for the code highlighting. Defaults to\"vim\".\nA list of all available styles can be obtained by callingCode.get_styles_list().tab_width(int) \u2013 The width of a tab character in spaces. Defaults to 4.add_line_numbers(bool) \u2013 Whether to display line numbers. Defaults toTrue.line_numbers_from(int) \u2013 The first line number to display. Defaults to 1.background(Literal['rectangle','window']) \u2013 The type of background to use. Can be either\"rectangle\"(the\ndefault) or\"window\".background_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the background constructor. Default\nsettings are stored in the class attributedefault_background_config(which can also be modified\ndirectly).paragraph_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the constructor of theParagraphobjects holding the code, and the line\nnumbers. Default settings are stored in the class attributedefault_paragraph_config(which can also be modified\ndirectly).\n\ncode_file(StrPath|None) \u2013 The path to the code file to display.\n\ncode_file(StrPath|None) \u2013 The path to the code file to display.\n\ncode_string(str|None) \u2013 Alternatively, the code string to display.\n\ncode_string(str|None) \u2013 Alternatively, the code string to display.\n\nlanguage(str|None) \u2013 The programming language of the code. If not specified, it will be\nguessed from the file extension or the code itself.\n\nlanguage(str|None) \u2013 The programming language of the code. If not specified, it will be\nguessed from the file extension or the code itself.\n\nformatter_style(str) \u2013 The style to use for the code highlighting. Defaults to\"vim\".\nA list of all available styles can be obtained by callingCode.get_styles_list().\n\nformatter_style(str) \u2013 The style to use for the code highlighting. Defaults to\"vim\".\nA list of all available styles can be obtained by callingCode.get_styles_list().\n\ntab_width(int) \u2013 The width of a tab character in spaces. Defaults to 4.\n\ntab_width(int) \u2013 The width of a tab character in spaces. Defaults to 4.\n\nadd_line_numbers(bool) \u2013 Whether to display line numbers. Defaults toTrue.\n\nadd_line_numbers(bool) \u2013 Whether to display line numbers. Defaults toTrue.\n\nline_numbers_from(int) \u2013 The first line number to display. Defaults to 1.\n\nline_numbers_from(int) \u2013 The first line number to display. Defaults to 1.\n\nbackground(Literal['rectangle','window']) \u2013 The type of background to use. Can be either\"rectangle\"(the\ndefault) or\"window\".\n\nbackground(Literal['rectangle','window']) \u2013 The type of background to use. Can be either\"rectangle\"(the\ndefault) or\"window\".\n\nbackground_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the background constructor. Default\nsettings are stored in the class attributedefault_background_config(which can also be modified\ndirectly).\n\nbackground_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the background constructor. Default\nsettings are stored in the class attributedefault_background_config(which can also be modified\ndirectly).\n\nparagraph_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the constructor of theParagraphobjects holding the code, and the line\nnumbers. Default settings are stored in the class attributedefault_paragraph_config(which can also be modified\ndirectly).\n\nparagraph_config(dict[str,Any]|None) \u2013 Keyword arguments passed to the constructor of theParagraphobjects holding the code, and the line\nnumbers. Default settings are stored in the class attributedefault_paragraph_config(which can also be modified\ndirectly).\n\nMethods\n\nget_styles_list\n\nGet the list of all available formatter styles.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndefault_background_config\n\ndefault_paragraph_config\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\ncode\n\n_original__init__(code_file=None,code_string=None,language=None,formatter_style='vim',tab_width=4,add_line_numbers=True,line_numbers_from=1,background='rectangle',background_config=None,paragraph_config=None)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:code_file(StrPath|None)code_string(str|None)language(str|None)formatter_style(str)tab_width(int)add_line_numbers(bool)line_numbers_from(int)background(Literal['rectangle','window'])background_config(dict[str,Any]|None)paragraph_config(dict[str,Any]|None)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ncode_file(StrPath|None)code_string(str|None)language(str|None)formatter_style(str)tab_width(int)add_line_numbers(bool)line_numbers_from(int)background(Literal['rectangle','window'])background_config(dict[str,Any]|None)paragraph_config(dict[str,Any]|None)\n\ncode_file(StrPath|None)\n\ncode_file(StrPath|None)\n\ncode_string(str|None)\n\ncode_string(str|None)\n\nlanguage(str|None)\n\nlanguage(str|None)\n\nformatter_style(str)\n\nformatter_style(str)\n\ntab_width(int)\n\ntab_width(int)\n\nadd_line_numbers(bool)\n\nadd_line_numbers(bool)\n\nline_numbers_from(int)\n\nline_numbers_from(int)\n\nbackground(Literal['rectangle','window'])\n\nbackground(Literal['rectangle','window'])\n\nbackground_config(dict[str,Any]|None)\n\nbackground_config(dict[str,Any]|None)\n\nparagraph_config(dict[str,Any]|None)\n\nparagraph_config(dict[str,Any]|None)\n\nclassmethodget_styles_list()[source]\u00b6\n\nGet the list of all available formatter styles.Return type:list[str]\n\nGet the list of all available formatter styles.\n\nReturn type:\n\nlist[str]\n\nlist[str]",
+  "code_examples": [
+    {
+      "code": "listing=Code(\"helloworldcpp.cpp\",tab_width=4,formatter_style=\"emacs\",background=\"window\",language=\"cpp\",background_config={\"stroke_color\":WHITE},paragraph_config={\"font\":\"Noto Sans Mono\"},)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classCodeFromString(Scene):defconstruct(self):code='''from manim import Scene, Squareclass FadeInSquare(Scene):def construct(self):s = Square()self.play(FadeIn(s))self.play(s.animate.scale(2))self.wait()'''rendered_code=Code(code_string=code,language=\"python\",background=\"window\",background_config={\"stroke_color\":\"maroon\"},)self.add(rendered_code)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CodeFromString(Scene):\n    def construct(self):\n        code = '''from manim import Scene, Square\n\nclass FadeInSquare(Scene):\n    def construct(self):\n        s = Square()\n        self.play(FadeIn(s))\n        self.play(s.animate.scale(2))\n        self.wait()'''\n\n        rendered_code = Code(\n            code_string=code,\n            language=\"python\",\n            background=\"window\",\n            background_config={\"stroke_color\": \"maroon\"},\n        )\n        self.add(rendered_code)",
+      "language": "python",
+      "context": "Example: CodeFromString\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Code",
+      "class_name": null,
+      "parameters": [
+        "code_file=None"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "code_file=None"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_styles_list",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Get the list of all available formatter styles."
+    }
+  ],
+  "related_classes": [
+    "FadeIn",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

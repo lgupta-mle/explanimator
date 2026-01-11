@@ -1,0 +1,34 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.html",
+  "title": "indication\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "indication\u00b6\n\nAnimations drawing attention to particular mobjects.\n\nExamples\n\nExample: Indications\u00b6\n\nClasses\n\nApplyWave\n\nSend a wave through the Mobject distorting it temporarily.\n\nBlink\n\nBlink the mobject.\n\nCircumscribe\n\nDraw a temporary line surrounding the mobject.\n\nFlash\n\nSend out lines in all directions.\n\nFocusOn\n\nShrink a spotlight to a position.\n\nIndicate\n\nIndicate a Mobject by temporarily resizing and recoloring it.\n\nShowPassingFlash\n\nShow only a sliver of the VMobject each frame.\n\nShowPassingFlashWithThinningStrokeWidth\n\nWiggle\n\nWiggle a Mobject.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classIndications(Scene):defconstruct(self):indications=[ApplyWave,Circumscribe,Flash,FocusOn,Indicate,ShowPassingFlash,Wiggle]names=[Tex(i.__name__).scale(3)foriinindications]self.add(names[0])foriinrange(len(names)):ifindications[i]isFlash:self.play(Flash(UP))elifindications[i]isShowPassingFlash:self.play(ShowPassingFlash(Underline(names[i])))else:self.play(indications[i](names[i]))self.play(AnimationGroup(FadeOut(names[i],shift=UP*1.5),FadeIn(names[(i+1)%len(names)],shift=UP*1.5),))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Indications(Scene):\n    def construct(self):\n        indications = [ApplyWave,Circumscribe,Flash,FocusOn,Indicate,ShowPassingFlash,Wiggle]\n        names = [Tex(i.__name__).scale(3) for i in indications]\n\n        self.add(names[0])\n        for i in range(len(names)):\n            if indications[i] is Flash:\n                self.play(Flash(UP))\n            elif indications[i] is ShowPassingFlash:\n                self.play(ShowPassingFlash(Underline(names[i])))\n            else:\n                self.play(indications[i](names[i]))\n            self.play(AnimationGroup(\n                FadeOut(names[i], shift=UP*1.5),\n                FadeIn(names[(i+1)%len(names)], shift=UP*1.5),\n            ))",
+      "language": "python",
+      "context": "Example: Indications\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [
+    "Circumscribe",
+    "Indicate",
+    "Flash",
+    "VMobject",
+    "ShowPassingFlash",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation"
+  ]
+}

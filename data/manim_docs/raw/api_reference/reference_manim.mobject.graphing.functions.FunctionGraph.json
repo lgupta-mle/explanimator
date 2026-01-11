@@ -1,0 +1,53 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.graphing.functions.FunctionGraph.html",
+  "title": "FunctionGraph\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "FunctionGraph\u00b6\n\nQualified name:manim.mobject.graphing.functions.FunctionGraph\n\nclassFunctionGraph(function,x_range=None,color=ManimColor('#FFFF00'),**kwargs)[source]\u00b6\n\nBases:ParametricFunctionAParametricFunctionthat spans the length of the scene by default.ExamplesExample: ExampleFunctionGraph\u00b6frommanimimport*classExampleFunctionGraph(Scene):defconstruct(self):cos_func=FunctionGraph(lambdat:np.cos(t)+0.5*np.cos(7*t)+(1/7)*np.cos(14*t),color=RED,)sin_func_1=FunctionGraph(lambdat:np.sin(t)+0.5*np.sin(7*t)+(1/7)*np.sin(14*t),color=BLUE,)sin_func_2=FunctionGraph(lambdat:np.sin(t)+0.5*np.sin(7*t)+(1/7)*np.sin(14*t),x_range=[-4,4],color=GREEN,).move_to([0,1,0])self.add(cos_func,sin_func_1,sin_func_2)class ExampleFunctionGraph(Scene):\n    def construct(self):\n        cos_func = FunctionGraph(\n            lambda t: np.cos(t) + 0.5 * np.cos(7 * t) + (1 / 7) * np.cos(14 * t),\n            color=RED,\n        )\n\n        sin_func_1 = FunctionGraph(\n            lambda t: np.sin(t) + 0.5 * np.sin(7 * t) + (1 / 7) * np.sin(14 * t),\n            color=BLUE,\n        )\n\n        sin_func_2 = FunctionGraph(\n            lambda t: np.sin(t) + 0.5 * np.sin(7 * t) + (1 / 7) * np.sin(14 * t),\n            x_range=[-4, 4],\n            color=GREEN,\n        ).move_to([0, 1, 0])\n\n        self.add(cos_func, sin_func_1, sin_func_2)Methodsget_functionget_point_from_functionAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject.Parameters:function(Callable[[float],Any])x_range(tuple[float,float]|tuple[float,float,float]|None)color(ManimColor)kwargs(Any)_original__init__(function,x_range=None,color=ManimColor('#FFFF00'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:function(Callable[[float],Any])x_range(tuple[float,float]|tuple[float,float,float]|None)color(ParsableManimColor)kwargs(Any)Return type:None\n\nBases:ParametricFunction\n\nAParametricFunctionthat spans the length of the scene by default.\n\nExamples\n\nExample: ExampleFunctionGraph\u00b6\n\nMethods\n\nget_function\n\nget_point_from_function\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nfunction(Callable[[float],Any])x_range(tuple[float,float]|tuple[float,float,float]|None)color(ManimColor)kwargs(Any)\n\nfunction(Callable[[float],Any])\n\nfunction(Callable[[float],Any])\n\nx_range(tuple[float,float]|tuple[float,float,float]|None)\n\nx_range(tuple[float,float]|tuple[float,float,float]|None)\n\ncolor(ManimColor)\n\ncolor(ManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(function,x_range=None,color=ManimColor('#FFFF00'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:function(Callable[[float],Any])x_range(tuple[float,float]|tuple[float,float,float]|None)color(ParsableManimColor)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nfunction(Callable[[float],Any])x_range(tuple[float,float]|tuple[float,float,float]|None)color(ParsableManimColor)kwargs(Any)\n\nfunction(Callable[[float],Any])\n\nfunction(Callable[[float],Any])\n\nx_range(tuple[float,float]|tuple[float,float,float]|None)\n\nx_range(tuple[float,float]|tuple[float,float,float]|None)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleFunctionGraph(Scene):defconstruct(self):cos_func=FunctionGraph(lambdat:np.cos(t)+0.5*np.cos(7*t)+(1/7)*np.cos(14*t),color=RED,)sin_func_1=FunctionGraph(lambdat:np.sin(t)+0.5*np.sin(7*t)+(1/7)*np.sin(14*t),color=BLUE,)sin_func_2=FunctionGraph(lambdat:np.sin(t)+0.5*np.sin(7*t)+(1/7)*np.sin(14*t),x_range=[-4,4],color=GREEN,).move_to([0,1,0])self.add(cos_func,sin_func_1,sin_func_2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleFunctionGraph(Scene):\n    def construct(self):\n        cos_func = FunctionGraph(\n            lambda t: np.cos(t) + 0.5 * np.cos(7 * t) + (1 / 7) * np.cos(14 * t),\n            color=RED,\n        )\n\n        sin_func_1 = FunctionGraph(\n            lambda t: np.sin(t) + 0.5 * np.sin(7 * t) + (1 / 7) * np.sin(14 * t),\n            color=BLUE,\n        )\n\n        sin_func_2 = FunctionGraph(\n            lambda t: np.sin(t) + 0.5 * np.sin(7 * t) + (1 / 7) * np.sin(14 * t),\n            x_range=[-4, 4],\n            color=GREEN,\n        ).move_to([0, 1, 0])\n\n        self.add(cos_func, sin_func_1, sin_func_2)",
+      "language": "python",
+      "context": "Example: ExampleFunctionGraph\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "FunctionGraph",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Bases:ParametricFunction"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "function"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Graph",
+    "ParametricFunction",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene_file_writer.html#manim.scene.scene_file_writer.convert_audio",
+  "title": "scene_file_writer\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "scene_file_writer\u00b6\n\nThe interface between scenes and ffmpeg.\n\nClasses\n\nSceneFileWriter\n\nSceneFileWriter is the object that actually writes the animations played, into video files, using FFMPEG.\n\nFunctions\n\nconvert_audio(input_path,output_path,codec_name)[source]\u00b6\n\nParameters:input_path(Path)output_path(Path|_TemporaryFileWrapper[bytes])codec_name(str)Return type:None\n\nParameters:\n\ninput_path(Path)output_path(Path|_TemporaryFileWrapper[bytes])codec_name(str)\n\ninput_path(Path)\n\ninput_path(Path)\n\noutput_path(Path|_TemporaryFileWrapper[bytes])\n\noutput_path(Path|_TemporaryFileWrapper[bytes])\n\ncodec_name(str)\n\ncodec_name(str)\n\nReturn type:\n\nNone\n\nNone\n\nto_av_frame_rate(fps)[source]\u00b6\n\nParameters:fps(float)Return type:Fraction\n\nParameters:\n\nfps(float)\n\nfps(float)\n\nReturn type:\n\nFraction\n\nFraction",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "convert_audio",
+      "class_name": null,
+      "parameters": [
+        "input_path"
+      ],
+      "return_type": null,
+      "description": "input_path(Path)"
+    },
+    {
+      "name": "to_av_frame_rate",
+      "class_name": null,
+      "parameters": [
+        "fps"
+      ],
+      "return_type": null,
+      "description": "fps(float)"
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Write"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "graph"
+  ]
+}

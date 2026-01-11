@@ -1,0 +1,22 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.html",
+  "title": "creation\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "creation\u00b6\n\nAnimate the display or removal of a mobject from a scene.\n\nClasses\n\nAddTextLetterByLetter\n\nShow aTextletter by letter on the scene.\n\nAddTextWordByWord\n\nShow aTextword by word on the scene.\n\nCreate\n\nIncrementally show a VMobject.\n\nDrawBorderThenFill\n\nDraw the border first and then show the fill.\n\nRemoveTextLetterByLetter\n\nRemove aTextletter by letter from the scene.\n\nShowIncreasingSubsets\n\nShow one submobject at a time, leaving all previous ones displayed on screen.\n\nShowPartial\n\nAbstract class for Animations that show the VMobject partially.\n\nShowSubmobjectsOneByOne\n\nShow one submobject at a time, removing all previously displayed ones from screen.\n\nSpiralIn\n\nCreate the Mobject with sub-Mobjects flying in on spiral trajectories.\n\nTypeWithCursor\n\nSimilar toAddTextLetterByLetter, but with an additional cursor mobject at the end.\n\nUncreate\n\nLikeCreatebut in reverse.\n\nUntypeWithCursor\n\nSimilar toRemoveTextLetterByLetter, but with an additional cursor mobject at the end.\n\nUnwrite\n\nSimulate erasing by hand aTextor aVMobject.\n\nWrite\n\nSimulate hand-writing aTextor hand-drawing aVMobject.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Write",
+    "Create",
+    "Tex",
+    "VMobject",
+    "Text",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "animation",
+    "text"
+  ]
+}

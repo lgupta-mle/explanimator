@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.camera.mapping_camera.MappingCamera.html",
+  "title": "MappingCamera\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "MappingCamera\u00b6\n\nQualified name:manim.camera.mapping\\_camera.MappingCamera\n\nclassMappingCamera(mapping_func=<functionMappingCamera.<lambda>>,min_num_curves=50,allow_object_intrusion=False,**kwargs)[source]\u00b6\n\nBases:CameraParameters:mapping_func(callable) \u2013 Function to map 3D points to new 3D points (identity by default).min_num_curves(int) \u2013 Minimum number of curves for VMobjects to avoid visual glitches.allow_object_intrusion(bool) \u2013 If True, modifies original mobjects; else works on copies.kwargs(dict) \u2013 Additional arguments passed to Camera base class.Methodscapture_mobjectsCapture mobjects for rendering after applying the spatial mapping.points_to_pixel_coordsAttributesbackground_colorbackground_opacitycapture_mobjects(mobjects,**kwargs)[source]\u00b6Capture mobjects for rendering after applying the spatial mapping.Copies mobjects unless intrusion is allowed, and ensures\nvector objects have enough curves for smooth distortion.\n\nBases:Camera\n\nParameters:\n\nmapping_func(callable) \u2013 Function to map 3D points to new 3D points (identity by default).min_num_curves(int) \u2013 Minimum number of curves for VMobjects to avoid visual glitches.allow_object_intrusion(bool) \u2013 If True, modifies original mobjects; else works on copies.kwargs(dict) \u2013 Additional arguments passed to Camera base class.\n\nmapping_func(callable) \u2013 Function to map 3D points to new 3D points (identity by default).\n\nmapping_func(callable) \u2013 Function to map 3D points to new 3D points (identity by default).\n\nmin_num_curves(int) \u2013 Minimum number of curves for VMobjects to avoid visual glitches.\n\nmin_num_curves(int) \u2013 Minimum number of curves for VMobjects to avoid visual glitches.\n\nallow_object_intrusion(bool) \u2013 If True, modifies original mobjects; else works on copies.\n\nallow_object_intrusion(bool) \u2013 If True, modifies original mobjects; else works on copies.\n\nkwargs(dict) \u2013 Additional arguments passed to Camera base class.\n\nkwargs(dict) \u2013 Additional arguments passed to Camera base class.\n\nMethods\n\ncapture_mobjects\n\nCapture mobjects for rendering after applying the spatial mapping.\n\npoints_to_pixel_coords\n\nAttributes\n\nbackground_color\n\nbackground_opacity\n\ncapture_mobjects(mobjects,**kwargs)[source]\u00b6\n\nCapture mobjects for rendering after applying the spatial mapping.Copies mobjects unless intrusion is allowed, and ensures\nvector objects have enough curves for smooth distortion.\n\nCapture mobjects for rendering after applying the spatial mapping.\n\nCopies mobjects unless intrusion is allowed, and ensures\nvector objects have enough curves for smooth distortion.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "MappingCamera",
+      "class_name": null,
+      "parameters": [
+        "mapping_func=<function MappingCamera.<lambda>>"
+      ],
+      "return_type": null,
+      "description": "Bases:Camera"
+    },
+    {
+      "name": "capture_mobjects",
+      "class_name": null,
+      "parameters": [
+        "mobjects"
+      ],
+      "return_type": null,
+      "description": "Capture mobjects for rendering after applying the spatial mapping."
+    }
+  ],
+  "related_classes": [
+    "Camera",
+    "VMobject",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "graph",
+    "3d",
+    "math"
+  ]
+}

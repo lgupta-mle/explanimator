@@ -1,0 +1,52 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.Rectangle.html",
+  "title": "Rectangle\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Rectangle\u00b6\n\nQualified name:manim.mobject.geometry.polygram.Rectangle\n\nclassRectangle(color=ManimColor('#FFFFFF'),height=2.0,width=4.0,grid_xstep=None,grid_ystep=None,mark_paths_closed=True,close_new_points=True,**kwargs)[source]\u00b6\n\nBases:PolygonA quadrilateral with two sets of parallel sides.Parameters:color(ParsableManimColor) \u2013 The color of the rectangle.height(float) \u2013 The vertical height of the rectangle.width(float) \u2013 The horizontal width of the rectangle.grid_xstep(float|None) \u2013 Space between vertical grid lines.grid_ystep(float|None) \u2013 Space between horizontal grid lines.mark_paths_closed(bool) \u2013 No purpose.close_new_points(bool) \u2013 No purpose.kwargs(Any) \u2013 Additional arguments to be passed toPolygonExamplesExample: RectangleExample\u00b6frommanimimport*classRectangleExample(Scene):defconstruct(self):rect1=Rectangle(width=4.0,height=2.0,grid_xstep=1.0,grid_ystep=0.5)rect2=Rectangle(width=1.0,height=4.0)rect3=Rectangle(width=2.0,height=2.0,grid_xstep=1.0,grid_ystep=1.0)rect3.grid_lines.set_stroke(width=1)rects=Group(rect1,rect2,rect3).arrange(buff=1)self.add(rects)class RectangleExample(Scene):\n    def construct(self):\n        rect1 = Rectangle(width=4.0, height=2.0, grid_xstep=1.0, grid_ystep=0.5)\n        rect2 = Rectangle(width=1.0, height=4.0)\n        rect3 = Rectangle(width=2.0, height=2.0, grid_xstep=1.0, grid_ystep=1.0)\n        rect3.grid_lines.set_stroke(width=1)\n\n        rects = Group(rect1, rect2, rect3).arrange(buff=1)\n        self.add(rects)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(color=ManimColor('#FFFFFF'),height=2.0,width=4.0,grid_xstep=None,grid_ystep=None,mark_paths_closed=True,close_new_points=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:color(ParsableManimColor)height(float)width(float)grid_xstep(float|None)grid_ystep(float|None)mark_paths_closed(bool)close_new_points(bool)kwargs(Any)\n\nBases:Polygon\n\nA quadrilateral with two sets of parallel sides.\n\nParameters:\n\ncolor(ParsableManimColor) \u2013 The color of the rectangle.height(float) \u2013 The vertical height of the rectangle.width(float) \u2013 The horizontal width of the rectangle.grid_xstep(float|None) \u2013 Space between vertical grid lines.grid_ystep(float|None) \u2013 Space between horizontal grid lines.mark_paths_closed(bool) \u2013 No purpose.close_new_points(bool) \u2013 No purpose.kwargs(Any) \u2013 Additional arguments to be passed toPolygon\n\ncolor(ParsableManimColor) \u2013 The color of the rectangle.\n\ncolor(ParsableManimColor) \u2013 The color of the rectangle.\n\nheight(float) \u2013 The vertical height of the rectangle.\n\nheight(float) \u2013 The vertical height of the rectangle.\n\nwidth(float) \u2013 The horizontal width of the rectangle.\n\nwidth(float) \u2013 The horizontal width of the rectangle.\n\ngrid_xstep(float|None) \u2013 Space between vertical grid lines.\n\ngrid_xstep(float|None) \u2013 Space between vertical grid lines.\n\ngrid_ystep(float|None) \u2013 Space between horizontal grid lines.\n\ngrid_ystep(float|None) \u2013 Space between horizontal grid lines.\n\nmark_paths_closed(bool) \u2013 No purpose.\n\nmark_paths_closed(bool) \u2013 No purpose.\n\nclose_new_points(bool) \u2013 No purpose.\n\nclose_new_points(bool) \u2013 No purpose.\n\nkwargs(Any) \u2013 Additional arguments to be passed toPolygon\n\nkwargs(Any) \u2013 Additional arguments to be passed toPolygon\n\nExamples\n\nExample: RectangleExample\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(color=ManimColor('#FFFFFF'),height=2.0,width=4.0,grid_xstep=None,grid_ystep=None,mark_paths_closed=True,close_new_points=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:color(ParsableManimColor)height(float)width(float)grid_xstep(float|None)grid_ystep(float|None)mark_paths_closed(bool)close_new_points(bool)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ncolor(ParsableManimColor)height(float)width(float)grid_xstep(float|None)grid_ystep(float|None)mark_paths_closed(bool)close_new_points(bool)kwargs(Any)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nheight(float)\n\nheight(float)\n\nwidth(float)\n\nwidth(float)\n\ngrid_xstep(float|None)\n\ngrid_xstep(float|None)\n\ngrid_ystep(float|None)\n\ngrid_ystep(float|None)\n\nmark_paths_closed(bool)\n\nmark_paths_closed(bool)\n\nclose_new_points(bool)\n\nclose_new_points(bool)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classRectangleExample(Scene):defconstruct(self):rect1=Rectangle(width=4.0,height=2.0,grid_xstep=1.0,grid_ystep=0.5)rect2=Rectangle(width=1.0,height=4.0)rect3=Rectangle(width=2.0,height=2.0,grid_xstep=1.0,grid_ystep=1.0)rect3.grid_lines.set_stroke(width=1)rects=Group(rect1,rect2,rect3).arrange(buff=1)self.add(rects)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RectangleExample(Scene):\n    def construct(self):\n        rect1 = Rectangle(width=4.0, height=2.0, grid_xstep=1.0, grid_ystep=0.5)\n        rect2 = Rectangle(width=1.0, height=4.0)\n        rect3 = Rectangle(width=2.0, height=2.0, grid_xstep=1.0, grid_ystep=1.0)\n        rect3.grid_lines.set_stroke(width=1)\n\n        rects = Group(rect1, rect2, rect3).arrange(buff=1)\n        self.add(rects)",
+      "language": "python",
+      "context": "Example: RectangleExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Rectangle",
+      "class_name": null,
+      "parameters": [
+        "color=ManimColor('#FFFFFF')"
+      ],
+      "return_type": null,
+      "description": "Bases:Polygon"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "color=ManimColor('#FFFFFF')"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "geometry",
+    "animation"
+  ]
+}

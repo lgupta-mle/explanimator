@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.ApplyWave.html",
+  "title": "ApplyWave\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ApplyWave\u00b6\n\nQualified name:manim.animation.indication.ApplyWave\n\nclassApplyWave(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:HomotopySend a wave through the Mobject distorting it temporarily.Parameters:mobject(Mobject) \u2013 The mobject to be distorted.direction(Vector3DLike) \u2013 The direction in which the wave nudges points of the shapeamplitude(float) \u2013 The distance points of the shape get shiftedwave_func(RateFunction) \u2013 The function defining the shape of one wave flank.time_width(float) \u2013 The length of the wave relative to the width of the mobject.ripples(int) \u2013 The number of ripples of the waverun_time(float) \u2013 The duration of the animation.kwargs(Any)ExamplesExample: ApplyingWaves\u00b6frommanimimport*classApplyingWaves(Scene):defconstruct(self):tex=Tex(\"WaveWaveWaveWaveWave\").scale(2)self.play(ApplyWave(tex))self.play(ApplyWave(tex,direction=RIGHT,time_width=0.5,amplitude=0.3))self.play(ApplyWave(tex,rate_func=linear,ripples=4))class ApplyingWaves(Scene):\n    def construct(self):\n        tex = Tex(\"WaveWaveWaveWaveWave\").scale(2)\n        self.play(ApplyWave(tex))\n        self.play(ApplyWave(\n            tex,\n            direction=RIGHT,\n            time_width=0.5,\n            amplitude=0.3\n        ))\n        self.play(ApplyWave(\n            tex,\n            rate_func=linear,\n            ripples=4\n        ))MethodsAttributesrun_time_original__init__(mobject,direction=array([0.,1.,0.]),amplitude=0.2,wave_func=<functionsmooth>,time_width=1,ripples=1,run_time=2,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)direction(Vector3DLike)amplitude(float)wave_func(RateFunction)time_width(float)ripples(int)run_time(float)kwargs(Any)\n\nBases:Homotopy\n\nSend a wave through the Mobject distorting it temporarily.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be distorted.direction(Vector3DLike) \u2013 The direction in which the wave nudges points of the shapeamplitude(float) \u2013 The distance points of the shape get shiftedwave_func(RateFunction) \u2013 The function defining the shape of one wave flank.time_width(float) \u2013 The length of the wave relative to the width of the mobject.ripples(int) \u2013 The number of ripples of the waverun_time(float) \u2013 The duration of the animation.kwargs(Any)\n\nmobject(Mobject) \u2013 The mobject to be distorted.\n\nmobject(Mobject) \u2013 The mobject to be distorted.\n\ndirection(Vector3DLike) \u2013 The direction in which the wave nudges points of the shape\n\ndirection(Vector3DLike) \u2013 The direction in which the wave nudges points of the shape\n\namplitude(float) \u2013 The distance points of the shape get shifted\n\namplitude(float) \u2013 The distance points of the shape get shifted\n\nwave_func(RateFunction) \u2013 The function defining the shape of one wave flank.\n\nwave_func(RateFunction) \u2013 The function defining the shape of one wave flank.\n\ntime_width(float) \u2013 The length of the wave relative to the width of the mobject.\n\ntime_width(float) \u2013 The length of the wave relative to the width of the mobject.\n\nripples(int) \u2013 The number of ripples of the wave\n\nripples(int) \u2013 The number of ripples of the wave\n\nrun_time(float) \u2013 The duration of the animation.\n\nrun_time(float) \u2013 The duration of the animation.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: ApplyingWaves\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,direction=array([0.,1.,0.]),amplitude=0.2,wave_func=<functionsmooth>,time_width=1,ripples=1,run_time=2,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)direction(Vector3DLike)amplitude(float)wave_func(RateFunction)time_width(float)ripples(int)run_time(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)direction(Vector3DLike)amplitude(float)wave_func(RateFunction)time_width(float)ripples(int)run_time(float)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ndirection(Vector3DLike)\n\ndirection(Vector3DLike)\n\namplitude(float)\n\namplitude(float)\n\nwave_func(RateFunction)\n\nwave_func(RateFunction)\n\ntime_width(float)\n\ntime_width(float)\n\nripples(int)\n\nripples(int)\n\nrun_time(float)\n\nrun_time(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classApplyingWaves(Scene):defconstruct(self):tex=Tex(\"WaveWaveWaveWaveWave\").scale(2)self.play(ApplyWave(tex))self.play(ApplyWave(tex,direction=RIGHT,time_width=0.5,amplitude=0.3))self.play(ApplyWave(tex,rate_func=linear,ripples=4))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ApplyingWaves(Scene):\n    def construct(self):\n        tex = Tex(\"WaveWaveWaveWaveWave\").scale(2)\n        self.play(ApplyWave(tex))\n        self.play(ApplyWave(\n            tex,\n            direction=RIGHT,\n            time_width=0.5,\n            amplitude=0.3\n        ))\n        self.play(ApplyWave(\n            tex,\n            rate_func=linear,\n            ripples=4\n        ))",
+      "language": "python",
+      "context": "Example: ApplyingWaves\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ApplyWave",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Homotopy"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Tex",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

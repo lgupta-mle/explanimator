@@ -1,0 +1,35 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.arc.html",
+  "title": "arc\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "arc\u00b6\n\nMobjects that are curved.\n\nExamples\n\nExample: UsefulAnnotations\u00b6\n\nClasses\n\nAnnotationDot\n\nA dot with bigger radius and bold stroke to annotate scenes.\n\nAnnularSector\n\nA sector of an annulus.\n\nAnnulus\n\nRegion between two concentricCircles.\n\nArc\n\nA circular arc.\n\nArcBetweenPoints\n\nInherits from Arc and additionally takes 2 points between which the arc is spanned.\n\nArcPolygon\n\nA generalized polygon allowing for points to be connected with arcs.\n\nArcPolygonFromArcs\n\nA generalized polygon allowing for points to be connected with arcs.\n\nCircle\n\nA circle.\n\nCubicBezier\n\nA cubic B\u00e9zier curve.\n\nCurvedArrow\n\nCurvedDoubleArrow\n\nDot\n\nA circle with a very small radius.\n\nEllipse\n\nA circular shape; oval, circle.\n\nLabeledDot\n\nADotcontaining a label in its center.\n\nSector\n\nA sector of a circle.\n\nTangentialArc\n\nConstruct an arc that is tangent to two intersecting lines.\n\nTipableVMobject\n\nMeant for shared functionality between Arc and Line.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUsefulAnnotations(Scene):defconstruct(self):m0=Dot()m1=AnnotationDot()m2=LabeledDot(\"ii\")m3=LabeledDot(MathTex(r\"\\alpha\").set_color(ORANGE))m4=CurvedArrow(2*LEFT,2*RIGHT,radius=-5)m5=CurvedArrow(2*LEFT,2*RIGHT,radius=8)m6=CurvedDoubleArrow(ORIGIN,2*RIGHT)self.add(m0,m1,m2,m3,m4,m5,m6)fori,mobjinenumerate(self.mobjects):mobj.shift(DOWN*(i-3))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UsefulAnnotations(Scene):\n    def construct(self):\n        m0 = Dot()\n        m1 = AnnotationDot()\n        m2 = LabeledDot(\"ii\")\n        m3 = LabeledDot(MathTex(r\"\\alpha\").set_color(ORANGE))\n        m4 = CurvedArrow(2*LEFT, 2*RIGHT, radius= -5)\n        m5 = CurvedArrow(2*LEFT, 2*RIGHT, radius= 8)\n        m6 = CurvedDoubleArrow(ORIGIN, 2*RIGHT)\n\n        self.add(m0, m1, m2, m3, m4, m5, m6)\n        for i, mobj in enumerate(self.mobjects):\n            mobj.shift(DOWN * (i-3))",
+      "language": "python",
+      "context": "Example: UsefulAnnotations\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [
+    "Circle",
+    "Line",
+    "VMobject",
+    "Arrow",
+    "Dot",
+    "Mobject"
+  ],
+  "tags": [
+    "geometry",
+    "color",
+    "graph"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.text.text_mobject.Paragraph.html",
+  "title": "Paragraph\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Paragraph\u00b6\n\nQualified name:manim.mobject.text.text\\_mobject.Paragraph\n\nclassParagraph(*text,line_spacing=-1,alignment=None,**kwargs)[source]\u00b6\n\nBases:VGroupDisplay a paragraph of text.For a givenParagraphpar, the attributepar.charsis aVGroupcontaining all the lines. In this context, every line is\nconstructed as aVGroupof characters contained in the line.Parameters:line_spacing(float) \u2013 Represents the spacing between lines. Defaults to -1, which means auto.alignment(str|None) \u2013 Defines the alignment of paragraph. Defaults to None. Possible values are \u201cleft\u201d, \u201cright\u201d or \u201ccenter\u201d.text(str)kwargs(Any)ExamplesNormal usage:paragraph=Paragraph(\"this is a awesome\",\"paragraph\",\"With\\nNewlines\",\"\\tWith Tabs\",\"  With Spaces\",\"With Alignments\",\"center\",\"left\",\"right\",)Remove unwanted invisible characters:self.play(Transform(remove_invisible_chars(paragraph.chars[0:2]),remove_invisible_chars(paragraph.chars[3][0:3]))MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._change_alignment_for_a_line(alignment,line_no)[source]\u00b6Function to change one line\u2019s alignment to a specific value.Parameters:alignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.line_no(int) \u2013 Defines the line number for which we want to set given alignment.Return type:None_gen_chars(lines_str_list)[source]\u00b6Function to convert a list of plain strings to a VGroup of VGroups of chars.Parameters:lines_str_list(list) \u2013 List of plain text strings.Returns:The generated 2d-VGroup of chars.Return type:VGroup_original__init__(*text,line_spacing=-1,alignment=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text(str)line_spacing(float)alignment(str|None)kwargs(Any)_set_all_lines_alignments(alignment)[source]\u00b6Function to set all line\u2019s alignment to a specific value.Parameters:alignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.Return type:Paragraph_set_all_lines_to_initial_positions()[source]\u00b6Set all lines to their initial positions.Return type:Paragraph_set_line_alignment(alignment,line_no)[source]\u00b6Function to set one line\u2019s alignment to a specific value.Parameters:alignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.line_no(int) \u2013 Defines the line number for which we want to set given alignment.Return type:Paragraph_set_line_to_initial_position(line_no)[source]\u00b6Function to set one line to initial positions.Parameters:line_no(int) \u2013 Defines the line number for which we want to set given alignment.Return type:Paragraph\n\nBases:VGroup\n\nDisplay a paragraph of text.\n\nFor a givenParagraphpar, the attributepar.charsis aVGroupcontaining all the lines. In this context, every line is\nconstructed as aVGroupof characters contained in the line.\n\nParameters:\n\nline_spacing(float) \u2013 Represents the spacing between lines. Defaults to -1, which means auto.alignment(str|None) \u2013 Defines the alignment of paragraph. Defaults to None. Possible values are \u201cleft\u201d, \u201cright\u201d or \u201ccenter\u201d.text(str)kwargs(Any)\n\nline_spacing(float) \u2013 Represents the spacing between lines. Defaults to -1, which means auto.\n\nline_spacing(float) \u2013 Represents the spacing between lines. Defaults to -1, which means auto.\n\nalignment(str|None) \u2013 Defines the alignment of paragraph. Defaults to None. Possible values are \u201cleft\u201d, \u201cright\u201d or \u201ccenter\u201d.\n\nalignment(str|None) \u2013 Defines the alignment of paragraph. Defaults to None. Possible values are \u201cleft\u201d, \u201cright\u201d or \u201ccenter\u201d.\n\ntext(str)\n\ntext(str)\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nNormal usage:\n\nRemove unwanted invisible characters:\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_change_alignment_for_a_line(alignment,line_no)[source]\u00b6\n\nFunction to change one line\u2019s alignment to a specific value.Parameters:alignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.line_no(int) \u2013 Defines the line number for which we want to set given alignment.Return type:None\n\nFunction to change one line\u2019s alignment to a specific value.\n\nParameters:\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.line_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.\n\nline_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nline_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nReturn type:\n\nNone\n\nNone\n\n_gen_chars(lines_str_list)[source]\u00b6\n\nFunction to convert a list of plain strings to a VGroup of VGroups of chars.Parameters:lines_str_list(list) \u2013 List of plain text strings.Returns:The generated 2d-VGroup of chars.Return type:VGroup\n\nFunction to convert a list of plain strings to a VGroup of VGroups of chars.\n\nParameters:\n\nlines_str_list(list) \u2013 List of plain text strings.\n\nlines_str_list(list) \u2013 List of plain text strings.\n\nReturns:\n\nThe generated 2d-VGroup of chars.\n\nThe generated 2d-VGroup of chars.\n\nReturn type:\n\nVGroup\n\nVGroup\n\n_original__init__(*text,line_spacing=-1,alignment=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text(str)line_spacing(float)alignment(str|None)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext(str)line_spacing(float)alignment(str|None)kwargs(Any)\n\ntext(str)\n\ntext(str)\n\nline_spacing(float)\n\nline_spacing(float)\n\nalignment(str|None)\n\nalignment(str|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_set_all_lines_alignments(alignment)[source]\u00b6\n\nFunction to set all line\u2019s alignment to a specific value.Parameters:alignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.Return type:Paragraph\n\nFunction to set all line\u2019s alignment to a specific value.\n\nParameters:\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.\n\nReturn type:\n\nParagraph\n\nParagraph\n\n_set_all_lines_to_initial_positions()[source]\u00b6\n\nSet all lines to their initial positions.Return type:Paragraph\n\nSet all lines to their initial positions.\n\nReturn type:\n\nParagraph\n\nParagraph\n\n_set_line_alignment(alignment,line_no)[source]\u00b6\n\nFunction to set one line\u2019s alignment to a specific value.Parameters:alignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.line_no(int) \u2013 Defines the line number for which we want to set given alignment.Return type:Paragraph\n\nFunction to set one line\u2019s alignment to a specific value.\n\nParameters:\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.line_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.\n\nalignment(str) \u2013 Defines the alignment of paragraph. Possible values are \u201cleft\u201d, \u201cright\u201d, \u201ccenter\u201d.\n\nline_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nline_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nReturn type:\n\nParagraph\n\nParagraph\n\n_set_line_to_initial_position(line_no)[source]\u00b6\n\nFunction to set one line to initial positions.Parameters:line_no(int) \u2013 Defines the line number for which we want to set given alignment.Return type:Paragraph\n\nFunction to set one line to initial positions.\n\nParameters:\n\nline_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nline_no(int) \u2013 Defines the line number for which we want to set given alignment.\n\nReturn type:\n\nParagraph\n\nParagraph",
+  "code_examples": [
+    {
+      "code": "paragraph=Paragraph(\"this is a awesome\",\"paragraph\",\"With\\nNewlines\",\"\\tWith Tabs\",\"  With Spaces\",\"With Alignments\",\"center\",\"left\",\"right\",)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "self.play(Transform(remove_invisible_chars(paragraph.chars[0:2]),remove_invisible_chars(paragraph.chars[3][0:3]))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Paragraph",
+      "class_name": null,
+      "parameters": [
+        "*text"
+      ],
+      "return_type": null,
+      "description": "Bases:VGroup"
+    },
+    {
+      "name": "_change_alignment_for_a_line",
+      "class_name": null,
+      "parameters": [
+        "alignment"
+      ],
+      "return_type": null,
+      "description": "Function to change one line\u2019s alignment to a specific value."
+    },
+    {
+      "name": "_gen_chars",
+      "class_name": null,
+      "parameters": [
+        "lines_str_list"
+      ],
+      "return_type": null,
+      "description": "Function to convert a list of plain strings to a VGroup of VGroups of chars."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*text"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "_set_all_lines_alignments",
+      "class_name": null,
+      "parameters": [
+        "alignment"
+      ],
+      "return_type": null,
+      "description": "Function to set all line\u2019s alignment to a specific value."
+    },
+    {
+      "name": "_set_all_lines_to_initial_positions",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Set all lines to their initial positions."
+    },
+    {
+      "name": "_set_line_alignment",
+      "class_name": null,
+      "parameters": [
+        "alignment"
+      ],
+      "return_type": null,
+      "description": "Function to set one line\u2019s alignment to a specific value."
+    },
+    {
+      "name": "_set_line_to_initial_position",
+      "class_name": null,
+      "parameters": [
+        "line_no"
+      ],
+      "return_type": null,
+      "description": "Function to set one line to initial positions."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Transform"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

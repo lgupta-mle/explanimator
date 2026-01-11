@@ -1,0 +1,88 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.mobject.html#manim.mobject.mobject.Updater",
+  "title": "mobject\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "mobject\u00b6\n\nBase classes for objects that can be displayed.\n\nType Aliases\n\nclassTimeBasedUpdater\u00b6\n\nCallable[['Mobject',float],object]\n\nclassNonTimeBasedUpdater\u00b6\n\nCallable[['Mobject'],object]\n\nclassUpdater\u00b6\n\nNonTimeBasedUpdater|TimeBasedUpdater\n\nClasses\n\nGroup\n\nGroups together multipleMobjects.\n\nMobject\n\nMathematical Object: base class for objects that can be displayed on screen.\n\nFunctions\n\noverride_animate(method)[source]\u00b6\n\nDecorator for overriding method animations.This allows to specify a method (returning anAnimation)\nwhich is called when the decorated method is used with the.animatesyntax\nfor animating the application of a method.See alsoanimateNoteOverridden methods cannot be combined with normal or other overridden\nmethods using method chaining with the.animatesyntax.ExamplesExample: AnimationOverrideExample\u00b6frommanimimport*classCircleWithContent(VGroup):def__init__(self,content):super().__init__()self.circle=Circle()self.content=contentself.add(self.circle,content)content.move_to(self.circle.get_center())defclear_content(self):self.remove(self.content)self.content=None@override_animate(clear_content)def_clear_content_animation(self,anim_args=None):ifanim_argsisNone:anim_args={}anim=Uncreate(self.content,**anim_args)self.clear_content()returnanimclassAnimationOverrideExample(Scene):defconstruct(self):t=Text(\"hello!\")my_mobject=CircleWithContent(t)self.play(Create(my_mobject))self.play(my_mobject.animate.clear_content())self.wait()class CircleWithContent(VGroup):\n    def __init__(self, content):\n        super().__init__()\n        self.circle = Circle()\n        self.content = content\n        self.add(self.circle, content)\n        content.move_to(self.circle.get_center())\n\n    def clear_content(self):\n        self.remove(self.content)\n        self.content = None\n\n    @override_animate(clear_content)\n    def _clear_content_animation(self, anim_args=None):\n        if anim_args is None:\n            anim_args = {}\n        anim = Uncreate(self.content, **anim_args)\n        self.clear_content()\n        return anim\n\nclass AnimationOverrideExample(Scene):\n    def construct(self):\n        t = Text(\"hello!\")\n        my_mobject = CircleWithContent(t)\n        self.play(Create(my_mobject))\n        self.play(my_mobject.animate.clear_content())\n        self.wait()Return type:LambdaType\n\nDecorator for overriding method animations.\n\nThis allows to specify a method (returning anAnimation)\nwhich is called when the decorated method is used with the.animatesyntax\nfor animating the application of a method.\n\nSee also\n\nanimate\n\nNote\n\nOverridden methods cannot be combined with normal or other overridden\nmethods using method chaining with the.animatesyntax.\n\nExamples\n\nExample: AnimationOverrideExample\u00b6\n\nReturn type:\n\nLambdaType\n\nLambdaType",
+  "code_examples": [
+    {
+      "code": "Callable[['Mobject',float],object]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "Callable[['Mobject'],object]",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "NonTimeBasedUpdater",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classCircleWithContent(VGroup):def__init__(self,content):super().__init__()self.circle=Circle()self.content=contentself.add(self.circle,content)content.move_to(self.circle.get_center())defclear_content(self):self.remove(self.content)self.content=None@override_animate(clear_content)def_clear_content_animation(self,anim_args=None):ifanim_argsisNone:anim_args={}anim=Uncreate(self.content,**anim_args)self.clear_content()returnanimclassAnimationOverrideExample(Scene):defconstruct(self):t=Text(\"hello!\")my_mobject=CircleWithContent(t)self.play(Create(my_mobject))self.play(my_mobject.animate.clear_content())self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CircleWithContent(VGroup):\n    def __init__(self, content):\n        super().__init__()\n        self.circle = Circle()\n        self.content = content\n        self.add(self.circle, content)\n        content.move_to(self.circle.get_center())\n\n    def clear_content(self):\n        self.remove(self.content)\n        self.content = None\n\n    @override_animate(clear_content)\n    def _clear_content_animation(self, anim_args=None):\n        if anim_args is None:\n            anim_args = {}\n        anim = Uncreate(self.content, **anim_args)\n        self.clear_content()\n        return anim\n\nclass AnimationOverrideExample(Scene):\n    def construct(self):\n        t = Text(\"hello!\")\n        my_mobject = CircleWithContent(t)\n        self.play(Create(my_mobject))\n        self.play(my_mobject.animate.clear_content())\n        self.wait()",
+      "language": "python",
+      "context": "Example: AnimationOverrideExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TimeBasedUpdater",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "NonTimeBasedUpdater",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "Updater",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    },
+    {
+      "name": "override_animate",
+      "class_name": null,
+      "parameters": [
+        "method"
+      ],
+      "return_type": null,
+      "description": "Decorator for overriding method animations."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Create",
+    "VGroup",
+    "Tex",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

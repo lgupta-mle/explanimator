@@ -1,0 +1,151 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.tips.ArrowTip.html",
+  "title": "ArrowTip\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ArrowTip\u00b6\n\nQualified name:manim.mobject.geometry.tips.ArrowTip\n\nclassArrowTip(*args,**kwargs)[source]\u00b6\n\nBases:VMobjectBase class for arrow tips.See alsoArrowTriangleTipArrowTriangleFilledTipArrowCircleTipArrowCircleFilledTipArrowSquareTipArrowSquareFilledTipStealthTipExamplesCannot be used directly, only intended for inheritance:>>>tip=ArrowTip()Traceback (most recent call last):...NotImplementedError:Has to be implemented in inheriting subclasses.Instead, use one of the pre-defined ones, or make\na custom one like this:Example: CustomTipExample\u00b6frommanimimport*>>>frommanimimportRegularPolygon,Arrow>>>classMyCustomArrowTip(ArrowTip,RegularPolygon):...def__init__(self,length=0.35,**kwargs):...RegularPolygon.__init__(self,n=5,**kwargs)...self.width=length...self.stretch_to_fit_height(length)>>>arr=Arrow(...np.array([-2,-2,0]),np.array([2,2,0]),tip_shape=MyCustomArrowTip...)>>>isinstance(arr.tip,RegularPolygon)True>>>frommanimimportScene,Create>>>classCustomTipExample(Scene):...defconstruct(self):...self.play(Create(arr))>>> from manim import RegularPolygon, Arrow\n>>> class MyCustomArrowTip(ArrowTip, RegularPolygon):\n...     def __init__(self, length=0.35, **kwargs):\n...         RegularPolygon.__init__(self, n=5, **kwargs)\n...         self.width = length\n...         self.stretch_to_fit_height(length)\n>>> arr = Arrow(\n...     np.array([-2, -2, 0]), np.array([2, 2, 0]), tip_shape=MyCustomArrowTip\n... )\n>>> isinstance(arr.tip, RegularPolygon)\nTrue\n>>> from manim import Scene, Create\n>>> class CustomTipExample(Scene):\n...     def construct(self):\n...         self.play(Create(arr))Using a class inherited fromArrowTipto get a non-filled\ntip is a shorthand to manually specifying the arrow tip style as follows:>>>arrow=Arrow(np.array([0,0,0]),np.array([1,1,0]),...tip_style={'fill_opacity':0,'stroke_width':3})The following example illustrates the usage of all of the predefined\narrow tips.Example: ArrowTipsShowcase\u00b6frommanimimport*classArrowTipsShowcase(Scene):defconstruct(self):tip_names=['Default (YELLOW)','ArrowTriangleTip','Default','ArrowSquareTip','ArrowSquareFilledTip','ArrowCircleTip','ArrowCircleFilledTip','StealthTip']big_arrows=[Arrow(start=[-4,3.5,0],end=[2,3.5,0],color=YELLOW),Arrow(start=[-4,2.5,0],end=[2,2.5,0],tip_shape=ArrowTriangleTip),Arrow(start=[-4,1.5,0],end=[2,1.5,0]),Arrow(start=[-4,0.5,0],end=[2,0.5,0],tip_shape=ArrowSquareTip),Arrow([-4,-0.5,0],[2,-0.5,0],tip_shape=ArrowSquareFilledTip),Arrow([-4,-1.5,0],[2,-1.5,0],tip_shape=ArrowCircleTip),Arrow([-4,-2.5,0],[2,-2.5,0],tip_shape=ArrowCircleFilledTip),Arrow([-4,-3.5,0],[2,-3.5,0],tip_shape=StealthTip)]small_arrows=(arrow.copy().scale(0.5,scale_tips=True).next_to(arrow,RIGHT)forarrowinbig_arrows)labels=(Text(tip_names[i],font='monospace',font_size=20,color=BLUE).next_to(big_arrows[i],LEFT)foriinrange(len(big_arrows)))self.add(*big_arrows,*small_arrows,*labels)class ArrowTipsShowcase(Scene):\n    def construct(self):\n        tip_names = [\n            'Default (YELLOW)', 'ArrowTriangleTip', 'Default', 'ArrowSquareTip',\n            'ArrowSquareFilledTip', 'ArrowCircleTip', 'ArrowCircleFilledTip', 'StealthTip'\n        ]\n\n        big_arrows = [\n            Arrow(start=[-4, 3.5, 0], end=[2, 3.5, 0], color=YELLOW),\n            Arrow(start=[-4, 2.5, 0], end=[2, 2.5, 0], tip_shape=ArrowTriangleTip),\n            Arrow(start=[-4, 1.5, 0], end=[2, 1.5, 0]),\n            Arrow(start=[-4, 0.5, 0], end=[2, 0.5, 0], tip_shape=ArrowSquareTip),\n\n            Arrow([-4, -0.5, 0], [2, -0.5, 0], tip_shape=ArrowSquareFilledTip),\n            Arrow([-4, -1.5, 0], [2, -1.5, 0], tip_shape=ArrowCircleTip),\n            Arrow([-4, -2.5, 0], [2, -2.5, 0], tip_shape=ArrowCircleFilledTip),\n            Arrow([-4, -3.5, 0], [2, -3.5, 0], tip_shape=StealthTip)\n        ]\n\n        small_arrows = (\n            arrow.copy().scale(0.5, scale_tips=True).next_to(arrow, RIGHT) for arrow in big_arrows\n        )\n\n        labels = (\n            Text(tip_names[i], font='monospace', font_size=20, color=BLUE).next_to(big_arrows[i], LEFT) for i in range(len(big_arrows))\n        )\n\n        self.add(*big_arrows, *small_arrows, *labels)MethodsAttributesanimateUsed to animate the application of any method ofself.animation_overridesbaseThe base point of the arrow tip.colordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.lengthThe length of the arrow tip.n_points_per_curvesheen_factorstroke_colortip_angleThe angle of the arrow tip.tip_pointThe tip point of the arrow tip.vectorThe vector pointing from the base point to the tip point.widthThe width of the mobject.Parameters:args(Any)kwargs(Any)_original__init__(*args,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)kwargs(Any)Return type:Nonepropertybase:Point3D\u00b6The base point of the arrow tip.This is the point connecting to the arrow line.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,0,0]),buff=0)>>>arrow.tip.base.round(2)+0.# add 0. to avoid negative 0 in outputarray([1.65, 0.  , 0.  ])propertylength:float\u00b6The length of the arrow tip.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([1,2,0]))>>>round(arrow.tip.length,3)0.35propertytip_angle:float\u00b6The angle of the arrow tip.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([1,1,0]),buff=0)>>>bool(round(arrow.tip.tip_angle,5)==round(PI/4,5))Truepropertytip_point:Point3D\u00b6The tip point of the arrow tip.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,0,0]),buff=0)>>>arrow.tip.tip_point.round(2)+0.array([2., 0., 0.])propertyvector:Vector3D\u00b6The vector pointing from the base point to the tip point.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,2,0]),buff=0)>>>arrow.tip.vector.round(2)+0.array([0.25, 0.25, 0.  ])\n\nBases:VMobject\n\nBase class for arrow tips.\n\nSee also\n\nArrowTriangleTipArrowTriangleFilledTipArrowCircleTipArrowCircleFilledTipArrowSquareTipArrowSquareFilledTipStealthTip\n\nExamples\n\nCannot be used directly, only intended for inheritance:\n\nInstead, use one of the pre-defined ones, or make\na custom one like this:\n\nExample: CustomTipExample\u00b6\n\nUsing a class inherited fromArrowTipto get a non-filled\ntip is a shorthand to manually specifying the arrow tip style as follows:\n\nThe following example illustrates the usage of all of the predefined\narrow tips.\n\nExample: ArrowTipsShowcase\u00b6\n\nMethods\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\nbase\n\nThe base point of the arrow tip.\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nlength\n\nThe length of the arrow tip.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\ntip_angle\n\nThe angle of the arrow tip.\n\ntip_point\n\nThe tip point of the arrow tip.\n\nvector\n\nThe vector pointing from the base point to the tip point.\n\nwidth\n\nThe width of the mobject.\n\nParameters:\n\nargs(Any)kwargs(Any)\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\n_original__init__(*args,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:args(Any)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nargs(Any)kwargs(Any)\n\nargs(Any)\n\nargs(Any)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\npropertybase:Point3D\u00b6\n\nThe base point of the arrow tip.This is the point connecting to the arrow line.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,0,0]),buff=0)>>>arrow.tip.base.round(2)+0.# add 0. to avoid negative 0 in outputarray([1.65, 0.  , 0.  ])\n\nThe base point of the arrow tip.\n\nThis is the point connecting to the arrow line.\n\nExamples\n\npropertylength:float\u00b6\n\nThe length of the arrow tip.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([1,2,0]))>>>round(arrow.tip.length,3)0.35\n\nThe length of the arrow tip.\n\nExamples\n\npropertytip_angle:float\u00b6\n\nThe angle of the arrow tip.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([1,1,0]),buff=0)>>>bool(round(arrow.tip.tip_angle,5)==round(PI/4,5))True\n\nThe angle of the arrow tip.\n\nExamples\n\npropertytip_point:Point3D\u00b6\n\nThe tip point of the arrow tip.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,0,0]),buff=0)>>>arrow.tip.tip_point.round(2)+0.array([2., 0., 0.])\n\nThe tip point of the arrow tip.\n\nExamples\n\npropertyvector:Vector3D\u00b6\n\nThe vector pointing from the base point to the tip point.Examples>>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,2,0]),buff=0)>>>arrow.tip.vector.round(2)+0.array([0.25, 0.25, 0.  ])\n\nThe vector pointing from the base point to the tip point.\n\nExamples",
+  "code_examples": [
+    {
+      "code": ">>>tip=ArrowTip()Traceback (most recent call last):...NotImplementedError:Has to be implemented in inheriting subclasses.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*>>>frommanimimportRegularPolygon,Arrow>>>classMyCustomArrowTip(ArrowTip,RegularPolygon):...def__init__(self,length=0.35,**kwargs):...RegularPolygon.__init__(self,n=5,**kwargs)...self.width=length...self.stretch_to_fit_height(length)>>>arr=Arrow(...np.array([-2,-2,0]),np.array([2,2,0]),tip_shape=MyCustomArrowTip...)>>>isinstance(arr.tip,RegularPolygon)True>>>frommanimimportScene,Create>>>classCustomTipExample(Scene):...defconstruct(self):...self.play(Create(arr))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>> from manim import RegularPolygon, Arrow\n>>> class MyCustomArrowTip(ArrowTip, RegularPolygon):\n...     def __init__(self, length=0.35, **kwargs):\n...         RegularPolygon.__init__(self, n=5, **kwargs)\n...         self.width = length\n...         self.stretch_to_fit_height(length)\n>>> arr = Arrow(\n...     np.array([-2, -2, 0]), np.array([2, 2, 0]), tip_shape=MyCustomArrowTip\n... )\n>>> isinstance(arr.tip, RegularPolygon)\nTrue\n>>> from manim import Scene, Create\n>>> class CustomTipExample(Scene):\n...     def construct(self):\n...         self.play(Create(arr))",
+      "language": "python",
+      "context": "Example: CustomTipExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>arrow=Arrow(np.array([0,0,0]),np.array([1,1,0]),...tip_style={'fill_opacity':0,'stroke_width':3})",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classArrowTipsShowcase(Scene):defconstruct(self):tip_names=['Default (YELLOW)','ArrowTriangleTip','Default','ArrowSquareTip','ArrowSquareFilledTip','ArrowCircleTip','ArrowCircleFilledTip','StealthTip']big_arrows=[Arrow(start=[-4,3.5,0],end=[2,3.5,0],color=YELLOW),Arrow(start=[-4,2.5,0],end=[2,2.5,0],tip_shape=ArrowTriangleTip),Arrow(start=[-4,1.5,0],end=[2,1.5,0]),Arrow(start=[-4,0.5,0],end=[2,0.5,0],tip_shape=ArrowSquareTip),Arrow([-4,-0.5,0],[2,-0.5,0],tip_shape=ArrowSquareFilledTip),Arrow([-4,-1.5,0],[2,-1.5,0],tip_shape=ArrowCircleTip),Arrow([-4,-2.5,0],[2,-2.5,0],tip_shape=ArrowCircleFilledTip),Arrow([-4,-3.5,0],[2,-3.5,0],tip_shape=StealthTip)]small_arrows=(arrow.copy().scale(0.5,scale_tips=True).next_to(arrow,RIGHT)forarrowinbig_arrows)labels=(Text(tip_names[i],font='monospace',font_size=20,color=BLUE).next_to(big_arrows[i],LEFT)foriinrange(len(big_arrows)))self.add(*big_arrows,*small_arrows,*labels)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ArrowTipsShowcase(Scene):\n    def construct(self):\n        tip_names = [\n            'Default (YELLOW)', 'ArrowTriangleTip', 'Default', 'ArrowSquareTip',\n            'ArrowSquareFilledTip', 'ArrowCircleTip', 'ArrowCircleFilledTip', 'StealthTip'\n        ]\n\n        big_arrows = [\n            Arrow(start=[-4, 3.5, 0], end=[2, 3.5, 0], color=YELLOW),\n            Arrow(start=[-4, 2.5, 0], end=[2, 2.5, 0], tip_shape=ArrowTriangleTip),\n            Arrow(start=[-4, 1.5, 0], end=[2, 1.5, 0]),\n            Arrow(start=[-4, 0.5, 0], end=[2, 0.5, 0], tip_shape=ArrowSquareTip),\n\n            Arrow([-4, -0.5, 0], [2, -0.5, 0], tip_shape=ArrowSquareFilledTip),\n            Arrow([-4, -1.5, 0], [2, -1.5, 0], tip_shape=ArrowCircleTip),\n            Arrow([-4, -2.5, 0], [2, -2.5, 0], tip_shape=ArrowCircleFilledTip),\n            Arrow([-4, -3.5, 0], [2, -3.5, 0], tip_shape=StealthTip)\n        ]\n\n        small_arrows = (\n            arrow.copy().scale(0.5, scale_tips=True).next_to(arrow, RIGHT) for arrow in big_arrows\n        )\n\n        labels = (\n            Text(tip_names[i], font='monospace', font_size=20, color=BLUE).next_to(big_arrows[i], LEFT) for i in range(len(big_arrows))\n        )\n\n        self.add(*big_arrows, *small_arrows, *labels)",
+      "language": "python",
+      "context": "Example: ArrowTipsShowcase\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,0,0]),buff=0)>>>arrow.tip.base.round(2)+0.# add 0. to avoid negative 0 in outputarray([1.65, 0.  , 0.  ])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([1,2,0]))>>>round(arrow.tip.length,3)0.35",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([1,1,0]),buff=0)>>>bool(round(arrow.tip.tip_angle,5)==round(PI/4,5))True",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,0,0]),buff=0)>>>arrow.tip.tip_point.round(2)+0.array([2., 0., 0.])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>frommanimimportArrow>>>arrow=Arrow(np.array([0,0,0]),np.array([2,2,0]),buff=0)>>>arrow.tip.vector.round(2)+0.array([0.25, 0.25, 0.  ])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ArrowTip",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*args"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "base",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The base point of the arrow tip."
+    },
+    {
+      "name": "length",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The length of the arrow tip."
+    },
+    {
+      "name": "tip_angle",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The angle of the arrow tip."
+    },
+    {
+      "name": "tip_point",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The tip point of the arrow tip."
+    },
+    {
+      "name": "vector",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "The vector pointing from the base point to the tip point."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Create",
+    "Tex",
+    "VMobject",
+    "Text",
+    "Arrow",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

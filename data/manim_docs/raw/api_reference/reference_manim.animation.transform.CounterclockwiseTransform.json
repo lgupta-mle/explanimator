@@ -1,0 +1,56 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.transform.CounterclockwiseTransform.html",
+  "title": "CounterclockwiseTransform\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "CounterclockwiseTransform\u00b6\n\nQualified name:manim.animation.transform.CounterclockwiseTransform\n\nclassCounterclockwiseTransform(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformTransforms the points of a mobject along a counterclockwise oriented arc.See alsoTransform,ClockwiseTransformExamplesExample: CounterclockwiseTransform_vs_Transform\u00b6frommanimimport*classCounterclockwiseTransform_vs_Transform(Scene):defconstruct(self):# set up the numbersc_transform=VGroup(DecimalNumber(number=3.141,num_decimal_places=3),DecimalNumber(number=1.618,num_decimal_places=3))text_1=Text(\"CounterclockwiseTransform\",color=RED)c_transform.add(text_1)transform=VGroup(DecimalNumber(number=1.618,num_decimal_places=3),DecimalNumber(number=3.141,num_decimal_places=3))text_2=Text(\"Transform\",color=BLUE)transform.add(text_2)ints=VGroup(c_transform,transform)texts=VGroup(text_1,text_2).scale(0.75)c_transform.arrange(direction=UP,buff=1)transform.arrange(direction=UP,buff=1)ints.arrange(buff=2)self.add(ints,texts)# The mobs move in clockwise direction for ClockwiseTransform()self.play(CounterclockwiseTransform(c_transform[0],c_transform[1]))# The mobs move straight up for Transform()self.play(Transform(transform[0],transform[1]))class CounterclockwiseTransform_vs_Transform(Scene):\n    def construct(self):\n        # set up the numbers\n        c_transform = VGroup(DecimalNumber(number=3.141, num_decimal_places=3), DecimalNumber(number=1.618, num_decimal_places=3))\n        text_1 = Text(\"CounterclockwiseTransform\", color=RED)\n        c_transform.add(text_1)\n\n        transform = VGroup(DecimalNumber(number=1.618, num_decimal_places=3), DecimalNumber(number=3.141, num_decimal_places=3))\n        text_2 = Text(\"Transform\", color=BLUE)\n        transform.add(text_2)\n\n        ints = VGroup(c_transform, transform)\n        texts = VGroup(text_1, text_2).scale(0.75)\n        c_transform.arrange(direction=UP, buff=1)\n        transform.arrange(direction=UP, buff=1)\n\n        ints.arrange(buff=2)\n        self.add(ints, texts)\n\n        # The mobs move in clockwise direction for ClockwiseTransform()\n        self.play(CounterclockwiseTransform(c_transform[0], c_transform[1]))\n\n        # The mobs move straight up for Transform()\n        self.play(Transform(transform[0], transform[1]))MethodsAttributespath_arcpath_funcrun_timeParameters:mobject(Mobject)target_mobject(Mobject)path_arc(float)_original__init__(mobject,target_mobject,path_arc=3.141592653589793,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)path_arc(float)Return type:None\n\nBases:Transform\n\nTransforms the points of a mobject along a counterclockwise oriented arc.\n\nSee also\n\nTransform,ClockwiseTransform\n\nExamples\n\nExample: CounterclockwiseTransform_vs_Transform\u00b6\n\nMethods\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)path_arc(float)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\n_original__init__(mobject,target_mobject,path_arc=3.141592653589793,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)target_mobject(Mobject)path_arc(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)target_mobject(Mobject)path_arc(float)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\ntarget_mobject(Mobject)\n\ntarget_mobject(Mobject)\n\npath_arc(float)\n\npath_arc(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classCounterclockwiseTransform_vs_Transform(Scene):defconstruct(self):# set up the numbersc_transform=VGroup(DecimalNumber(number=3.141,num_decimal_places=3),DecimalNumber(number=1.618,num_decimal_places=3))text_1=Text(\"CounterclockwiseTransform\",color=RED)c_transform.add(text_1)transform=VGroup(DecimalNumber(number=1.618,num_decimal_places=3),DecimalNumber(number=3.141,num_decimal_places=3))text_2=Text(\"Transform\",color=BLUE)transform.add(text_2)ints=VGroup(c_transform,transform)texts=VGroup(text_1,text_2).scale(0.75)c_transform.arrange(direction=UP,buff=1)transform.arrange(direction=UP,buff=1)ints.arrange(buff=2)self.add(ints,texts)# The mobs move in clockwise direction for ClockwiseTransform()self.play(CounterclockwiseTransform(c_transform[0],c_transform[1]))# The mobs move straight up for Transform()self.play(Transform(transform[0],transform[1]))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class CounterclockwiseTransform_vs_Transform(Scene):\n    def construct(self):\n        # set up the numbers\n        c_transform = VGroup(DecimalNumber(number=3.141, num_decimal_places=3), DecimalNumber(number=1.618, num_decimal_places=3))\n        text_1 = Text(\"CounterclockwiseTransform\", color=RED)\n        c_transform.add(text_1)\n\n        transform = VGroup(DecimalNumber(number=1.618, num_decimal_places=3), DecimalNumber(number=3.141, num_decimal_places=3))\n        text_2 = Text(\"Transform\", color=BLUE)\n        transform.add(text_2)\n\n        ints = VGroup(c_transform, transform)\n        texts = VGroup(text_1, text_2).scale(0.75)\n        c_transform.arrange(direction=UP, buff=1)\n        transform.arrange(direction=UP, buff=1)\n\n        ints.arrange(buff=2)\n        self.add(ints, texts)\n\n        # The mobs move in clockwise direction for ClockwiseTransform()\n        self.play(CounterclockwiseTransform(c_transform[0], c_transform[1]))\n\n        # The mobs move straight up for Transform()\n        self.play(Transform(transform[0], transform[1]))",
+      "language": "python",
+      "context": "Example: CounterclockwiseTransform_vs_Transform\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "CounterclockwiseTransform",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "VGroup",
+    "Tex",
+    "Transform",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "animation"
+  ]
+}

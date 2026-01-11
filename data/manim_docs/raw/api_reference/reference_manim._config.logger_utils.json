@@ -1,0 +1,42 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim._config.logger_utils.html",
+  "title": "logger_utils\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "logger_utils\u00b6\n\nUtilities to create and set the logger.\n\nManim\u2019s logger can be accessed asmanim.logger, or aslogging.getLogger(\"manim\"), once the library has been imported.  Manim also\nexports a second object,console, which should be used to print on screen\nmessages that need not be logged.\n\nBothloggerandconsoleuse therichlibrary to produce rich text\nformat.\n\nClasses\n\nJSONFormatter\n\nA formatter that outputs logs in a custom JSON format.\n\nFunctions\n\nmake_logger(parser,verbosity)[source]\u00b6\n\nMake the manim logger and console.Parameters:parser(SectionProxy) \u2013 A parser containing any .cfg files in use.verbosity(str) \u2013 The verbosity level of the logger.Returns:The manim logger and consoles. The first console outputs\nto stdout, the second to stderr. All use the theme returned byparse_theme().Return type:logging.Logger,rich.Console,rich.ConsoleSee alsomake_config_parser(),parse_theme()NotesTheparseris assumed to contain only the options related to\nconfiguring the logger at the top level.\n\nMake the manim logger and console.\n\nParameters:\n\nparser(SectionProxy) \u2013 A parser containing any .cfg files in use.verbosity(str) \u2013 The verbosity level of the logger.\n\nparser(SectionProxy) \u2013 A parser containing any .cfg files in use.\n\nparser(SectionProxy) \u2013 A parser containing any .cfg files in use.\n\nverbosity(str) \u2013 The verbosity level of the logger.\n\nverbosity(str) \u2013 The verbosity level of the logger.\n\nReturns:\n\nThe manim logger and consoles. The first console outputs\nto stdout, the second to stderr. All use the theme returned byparse_theme().\n\nThe manim logger and consoles. The first console outputs\nto stdout, the second to stderr. All use the theme returned byparse_theme().\n\nReturn type:\n\nlogging.Logger,rich.Console,rich.Console\n\nlogging.Logger,rich.Console,rich.Console\n\nSee also\n\nmake_config_parser(),parse_theme()\n\nNotes\n\nTheparseris assumed to contain only the options related to\nconfiguring the logger at the top level.\n\nparse_theme(parser)[source]\u00b6\n\nConfigure the rich style of logger and console output.Parameters:parser(SectionProxy) \u2013 A parser containing any .cfg files in use.Returns:The rich theme to be used by the manim logger.Return type:rich.ThemeSee alsomake_logger()\n\nConfigure the rich style of logger and console output.\n\nParameters:\n\nparser(SectionProxy) \u2013 A parser containing any .cfg files in use.\n\nparser(SectionProxy) \u2013 A parser containing any .cfg files in use.\n\nReturns:\n\nThe rich theme to be used by the manim logger.\n\nThe rich theme to be used by the manim logger.\n\nReturn type:\n\nrich.Theme\n\nrich.Theme\n\nSee also\n\nmake_logger()\n\nset_file_logger(scene_name,module_name,log_dir)[source]\u00b6\n\nAdd a file handler to manim logger.The path to the file is built usingconfig.log_dir.Parameters:scene_name(str) \u2013 The name of the scene, used in the name of the log file.module_name(str) \u2013 The name of the module, used in the name of the log file.log_dir(Path) \u2013 Path to the folder where log files are stored.Return type:None\n\nAdd a file handler to manim logger.\n\nThe path to the file is built usingconfig.log_dir.\n\nParameters:\n\nscene_name(str) \u2013 The name of the scene, used in the name of the log file.module_name(str) \u2013 The name of the module, used in the name of the log file.log_dir(Path) \u2013 Path to the folder where log files are stored.\n\nscene_name(str) \u2013 The name of the scene, used in the name of the log file.\n\nscene_name(str) \u2013 The name of the scene, used in the name of the log file.\n\nmodule_name(str) \u2013 The name of the module, used in the name of the log file.\n\nmodule_name(str) \u2013 The name of the module, used in the name of the log file.\n\nlog_dir(Path) \u2013 Path to the folder where log files are stored.\n\nlog_dir(Path) \u2013 Path to the folder where log files are stored.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "make_logger",
+      "class_name": null,
+      "parameters": [
+        "parser"
+      ],
+      "return_type": null,
+      "description": "Make the manim logger and console."
+    },
+    {
+      "name": "parse_theme",
+      "class_name": null,
+      "parameters": [
+        "parser"
+      ],
+      "return_type": null,
+      "description": "Configure the rich style of logger and console output."
+    },
+    {
+      "name": "set_file_logger",
+      "class_name": null,
+      "parameters": [
+        "scene_name"
+      ],
+      "return_type": null,
+      "description": "Add a file handler to manim logger."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "text",
+    "graph"
+  ]
+}

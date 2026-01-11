@@ -1,0 +1,16 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.html",
+  "title": "types\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "types\u00b6\n\nSpecialized mobject base classes.\n\nModules\u00b6\n\nimage_mobject\n\nMobjects representing raster images.\n\npoint_cloud_mobject\n\nMobjects representing point clouds.\n\nvectorized_mobject\n\nMobjects that use vector graphics.",
+  "code_examples": [],
+  "method_signatures": [],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "graph",
+    "math"
+  ]
+}

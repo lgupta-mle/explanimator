@@ -1,0 +1,28 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.fading.html",
+  "title": "fading\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "fading\u00b6\n\nFading in and out of view.\n\nExample: Fading\u00b6\n\nClasses\n\nFadeIn\n\nFade inMobjects.\n\nFadeOut\n\nFade outMobjects.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classFading(Scene):defconstruct(self):tex_in=Tex(\"Fade\",\"In\").scale(3)tex_out=Tex(\"Fade\",\"Out\").scale(3)self.play(FadeIn(tex_in,shift=DOWN,scale=0.66))self.play(ReplacementTransform(tex_in,tex_out))self.play(FadeOut(tex_out,shift=DOWN*2,scale=1.5))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class Fading(Scene):\n    def construct(self):\n        tex_in = Tex(\"Fade\", \"In\").scale(3)\n        tex_out = Tex(\"Fade\", \"Out\").scale(3)\n        self.play(FadeIn(tex_in, shift=DOWN, scale=0.66))\n        self.play(ReplacementTransform(tex_in, tex_out))\n        self.play(FadeOut(tex_out, shift=DOWN * 2, scale=1.5))",
+      "language": "python",
+      "context": "Example: Fading\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [
+    "FadeOut",
+    "FadeIn",
+    "Mobject"
+  ],
+  "tags": []
+}

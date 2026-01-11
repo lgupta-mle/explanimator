@@ -1,0 +1,154 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.updaters.mobject_update_utils.html",
+  "title": "mobject_update_utils\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "mobject_update_utils\u00b6\n\nUtility functions for continuous animation of mobjects.\n\nFunctions\n\nalways(method,*args,**kwargs)[source]\u00b6\n\nParameters:method(Callable)Return type:Mobject\n\nParameters:\n\nmethod(Callable)\n\nmethod(Callable)\n\nReturn type:\n\nMobject\n\nMobject\n\nalways_redraw(func)[source]\u00b6\n\nRedraw the mobject constructed by a function every frame.This function returns a mobject with an attached updater that\ncontinuously regenerates the mobject according to the\nspecified function.Parameters:func(Callable[[],Mobject]) \u2013 A function without (required) input arguments that returns\na mobject.Return type:MobjectExamplesExample: TangentAnimation\u00b6frommanimimport*classTangentAnimation(Scene):defconstruct(self):ax=Axes()sine=ax.plot(np.sin,color=RED)alpha=ValueTracker(0)point=always_redraw(lambda:Dot(sine.point_from_proportion(alpha.get_value()),color=BLUE))tangent=always_redraw(lambda:TangentLine(sine,alpha=alpha.get_value(),color=YELLOW,length=4))self.add(ax,sine,point,tangent)self.play(alpha.animate.set_value(1),rate_func=linear,run_time=2)class TangentAnimation(Scene):\n    def construct(self):\n        ax = Axes()\n        sine = ax.plot(np.sin, color=RED)\n        alpha = ValueTracker(0)\n        point = always_redraw(\n            lambda: Dot(\n                sine.point_from_proportion(alpha.get_value()),\n                color=BLUE\n            )\n        )\n        tangent = always_redraw(\n            lambda: TangentLine(\n                sine,\n                alpha=alpha.get_value(),\n                color=YELLOW,\n                length=4\n            )\n        )\n        self.add(ax, sine, point, tangent)\n        self.play(alpha.animate.set_value(1), rate_func=linear, run_time=2)\n\nRedraw the mobject constructed by a function every frame.\n\nThis function returns a mobject with an attached updater that\ncontinuously regenerates the mobject according to the\nspecified function.\n\nParameters:\n\nfunc(Callable[[],Mobject]) \u2013 A function without (required) input arguments that returns\na mobject.\n\nfunc(Callable[[],Mobject]) \u2013 A function without (required) input arguments that returns\na mobject.\n\nReturn type:\n\nMobject\n\nMobject\n\nExamples\n\nExample: TangentAnimation\u00b6\n\nalways_rotate(mobject,rate=0.3490658503988659,**kwargs)[source]\u00b6\n\nA mobject which is continuously rotated at a certain rate.Parameters:mobject(Mobject) \u2013 The mobject to be rotated.rate(float) \u2013 The angle which the mobject is rotated by\nover one second.kwags\u2013 Further arguments to be passed toMobject.rotate().Return type:MobjectExamplesExample: SpinningTriangle\u00b6frommanimimport*classSpinningTriangle(Scene):defconstruct(self):tri=Triangle().set_fill(opacity=1).set_z_index(2)sq=Square().to_edge(LEFT)# will keep spinning while there is an animation going onalways_rotate(tri,rate=2*PI,about_point=ORIGIN)self.add(tri,sq)self.play(sq.animate.to_edge(RIGHT),rate_func=linear,run_time=1)class SpinningTriangle(Scene):\n    def construct(self):\n        tri = Triangle().set_fill(opacity=1).set_z_index(2)\n        sq = Square().to_edge(LEFT)\n\n        # will keep spinning while there is an animation going on\n        always_rotate(tri, rate=2*PI, about_point=ORIGIN)\n\n        self.add(tri, sq)\n        self.play(sq.animate.to_edge(RIGHT), rate_func=linear, run_time=1)\n\nA mobject which is continuously rotated at a certain rate.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be rotated.rate(float) \u2013 The angle which the mobject is rotated by\nover one second.kwags\u2013 Further arguments to be passed toMobject.rotate().\n\nmobject(Mobject) \u2013 The mobject to be rotated.\n\nmobject(Mobject) \u2013 The mobject to be rotated.\n\nrate(float) \u2013 The angle which the mobject is rotated by\nover one second.\n\nrate(float) \u2013 The angle which the mobject is rotated by\nover one second.\n\nkwags\u2013 Further arguments to be passed toMobject.rotate().\n\nkwags\u2013 Further arguments to be passed toMobject.rotate().\n\nReturn type:\n\nMobject\n\nMobject\n\nExamples\n\nExample: SpinningTriangle\u00b6\n\nalways_shift(mobject,direction=array([1.,0.,0.]),rate=0.1)[source]\u00b6\n\nA mobject which is continuously shifted along some direction\nat a certain rate.Parameters:mobject(Mobject) \u2013 The mobject to shift.direction(ndarray[float64]) \u2013 The direction to shift. The vector is normalized, the specified magnitude\nis not relevant.rate(float) \u2013 Length in Manim units which the mobject travels in one\nsecond along the specified direction.Return type:MobjectExamplesExample: ShiftingSquare\u00b6frommanimimport*classShiftingSquare(Scene):defconstruct(self):sq=Square().set_fill(opacity=1)tri=Triangle()VGroup(sq,tri).arrange(LEFT)# construct a square which is continuously# shifted to the rightalways_shift(sq,RIGHT,rate=5)self.add(sq)self.play(tri.animate.set_fill(opacity=1))class ShiftingSquare(Scene):\n    def construct(self):\n        sq = Square().set_fill(opacity=1)\n        tri = Triangle()\n        VGroup(sq, tri).arrange(LEFT)\n\n        # construct a square which is continuously\n        # shifted to the right\n        always_shift(sq, RIGHT, rate=5)\n\n        self.add(sq)\n        self.play(tri.animate.set_fill(opacity=1))\n\nA mobject which is continuously shifted along some direction\nat a certain rate.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to shift.direction(ndarray[float64]) \u2013 The direction to shift. The vector is normalized, the specified magnitude\nis not relevant.rate(float) \u2013 Length in Manim units which the mobject travels in one\nsecond along the specified direction.\n\nmobject(Mobject) \u2013 The mobject to shift.\n\nmobject(Mobject) \u2013 The mobject to shift.\n\ndirection(ndarray[float64]) \u2013 The direction to shift. The vector is normalized, the specified magnitude\nis not relevant.\n\ndirection(ndarray[float64]) \u2013 The direction to shift. The vector is normalized, the specified magnitude\nis not relevant.\n\nrate(float) \u2013 Length in Manim units which the mobject travels in one\nsecond along the specified direction.\n\nrate(float) \u2013 Length in Manim units which the mobject travels in one\nsecond along the specified direction.\n\nReturn type:\n\nMobject\n\nMobject\n\nExamples\n\nExample: ShiftingSquare\u00b6\n\nassert_is_mobject_method(method)[source]\u00b6\n\nParameters:method(Callable)Return type:None\n\nParameters:\n\nmethod(Callable)\n\nmethod(Callable)\n\nReturn type:\n\nNone\n\nNone\n\ncycle_animation(animation,**kwargs)[source]\u00b6\n\nParameters:animation(Animation)Return type:Mobject\n\nParameters:\n\nanimation(Animation)\n\nanimation(Animation)\n\nReturn type:\n\nMobject\n\nMobject\n\nf_always(method,*arg_generators,**kwargs)[source]\u00b6\n\nMore functional version of always, where instead\nof taking in args, it takes in functions which output\nthe relevant arguments.Parameters:method(Callable[[Mobject],None])Return type:Mobject\n\nMore functional version of always, where instead\nof taking in args, it takes in functions which output\nthe relevant arguments.\n\nParameters:\n\nmethod(Callable[[Mobject],None])\n\nmethod(Callable[[Mobject],None])\n\nReturn type:\n\nMobject\n\nMobject\n\nturn_animation_into_updater(animation,cycle=False,delay=0,**kwargs)[source]\u00b6\n\nAdd an updater to the animation\u2019s mobject which applies\nthe interpolation and update functions of the animationIf cycle is True, this repeats over and over.  Otherwise,\nthe updater will be popped upon completionThedelayparameter is the delay (in seconds) before the animation starts..ExamplesExample: WelcomeToManim\u00b6frommanimimport*classWelcomeToManim(Scene):defconstruct(self):words=Text(\"Welcome to\")banner=ManimBanner().scale(0.5)VGroup(words,banner).arrange(DOWN)turn_animation_into_updater(Write(words,run_time=0.9))self.add(words)self.wait(0.5)self.play(banner.expand(),run_time=0.5)class WelcomeToManim(Scene):\n    def construct(self):\n        words = Text(\"Welcome to\")\n        banner = ManimBanner().scale(0.5)\n        VGroup(words, banner).arrange(DOWN)\n\n        turn_animation_into_updater(Write(words, run_time=0.9))\n        self.add(words)\n        self.wait(0.5)\n        self.play(banner.expand(), run_time=0.5)Parameters:animation(Animation)cycle(bool)delay(float)Return type:Mobject\n\nAdd an updater to the animation\u2019s mobject which applies\nthe interpolation and update functions of the animation\n\nIf cycle is True, this repeats over and over.  Otherwise,\nthe updater will be popped upon completion\n\nThedelayparameter is the delay (in seconds) before the animation starts..\n\nExamples\n\nExample: WelcomeToManim\u00b6\n\nParameters:\n\nanimation(Animation)cycle(bool)delay(float)\n\nanimation(Animation)\n\nanimation(Animation)\n\ncycle(bool)\n\ncycle(bool)\n\ndelay(float)\n\ndelay(float)\n\nReturn type:\n\nMobject\n\nMobject",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classTangentAnimation(Scene):defconstruct(self):ax=Axes()sine=ax.plot(np.sin,color=RED)alpha=ValueTracker(0)point=always_redraw(lambda:Dot(sine.point_from_proportion(alpha.get_value()),color=BLUE))tangent=always_redraw(lambda:TangentLine(sine,alpha=alpha.get_value(),color=YELLOW,length=4))self.add(ax,sine,point,tangent)self.play(alpha.animate.set_value(1),rate_func=linear,run_time=2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TangentAnimation(Scene):\n    def construct(self):\n        ax = Axes()\n        sine = ax.plot(np.sin, color=RED)\n        alpha = ValueTracker(0)\n        point = always_redraw(\n            lambda: Dot(\n                sine.point_from_proportion(alpha.get_value()),\n                color=BLUE\n            )\n        )\n        tangent = always_redraw(\n            lambda: TangentLine(\n                sine,\n                alpha=alpha.get_value(),\n                color=YELLOW,\n                length=4\n            )\n        )\n        self.add(ax, sine, point, tangent)\n        self.play(alpha.animate.set_value(1), rate_func=linear, run_time=2)",
+      "language": "python",
+      "context": "Example: TangentAnimation\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classSpinningTriangle(Scene):defconstruct(self):tri=Triangle().set_fill(opacity=1).set_z_index(2)sq=Square().to_edge(LEFT)# will keep spinning while there is an animation going onalways_rotate(tri,rate=2*PI,about_point=ORIGIN)self.add(tri,sq)self.play(sq.animate.to_edge(RIGHT),rate_func=linear,run_time=1)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class SpinningTriangle(Scene):\n    def construct(self):\n        tri = Triangle().set_fill(opacity=1).set_z_index(2)\n        sq = Square().to_edge(LEFT)\n\n        # will keep spinning while there is an animation going on\n        always_rotate(tri, rate=2*PI, about_point=ORIGIN)\n\n        self.add(tri, sq)\n        self.play(sq.animate.to_edge(RIGHT), rate_func=linear, run_time=1)",
+      "language": "python",
+      "context": "Example: SpinningTriangle\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classShiftingSquare(Scene):defconstruct(self):sq=Square().set_fill(opacity=1)tri=Triangle()VGroup(sq,tri).arrange(LEFT)# construct a square which is continuously# shifted to the rightalways_shift(sq,RIGHT,rate=5)self.add(sq)self.play(tri.animate.set_fill(opacity=1))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShiftingSquare(Scene):\n    def construct(self):\n        sq = Square().set_fill(opacity=1)\n        tri = Triangle()\n        VGroup(sq, tri).arrange(LEFT)\n\n        # construct a square which is continuously\n        # shifted to the right\n        always_shift(sq, RIGHT, rate=5)\n\n        self.add(sq)\n        self.play(tri.animate.set_fill(opacity=1))",
+      "language": "python",
+      "context": "Example: ShiftingSquare\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classWelcomeToManim(Scene):defconstruct(self):words=Text(\"Welcome to\")banner=ManimBanner().scale(0.5)VGroup(words,banner).arrange(DOWN)turn_animation_into_updater(Write(words,run_time=0.9))self.add(words)self.wait(0.5)self.play(banner.expand(),run_time=0.5)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class WelcomeToManim(Scene):\n    def construct(self):\n        words = Text(\"Welcome to\")\n        banner = ManimBanner().scale(0.5)\n        VGroup(words, banner).arrange(DOWN)\n\n        turn_animation_into_updater(Write(words, run_time=0.9))\n        self.add(words)\n        self.wait(0.5)\n        self.play(banner.expand(), run_time=0.5)",
+      "language": "python",
+      "context": "Example: WelcomeToManim\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "always",
+      "class_name": null,
+      "parameters": [
+        "method"
+      ],
+      "return_type": null,
+      "description": "method(Callable)"
+    },
+    {
+      "name": "always_redraw",
+      "class_name": null,
+      "parameters": [
+        "func"
+      ],
+      "return_type": null,
+      "description": "Redraw the mobject constructed by a function every frame."
+    },
+    {
+      "name": "always_rotate",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "A mobject which is continuously rotated at a certain rate."
+    },
+    {
+      "name": "always_shift",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "A mobject which is continuously shifted along some direction\nat a certain rate."
+    },
+    {
+      "name": "assert_is_mobject_method",
+      "class_name": null,
+      "parameters": [
+        "method"
+      ],
+      "return_type": null,
+      "description": "method(Callable)"
+    },
+    {
+      "name": "cycle_animation",
+      "class_name": null,
+      "parameters": [
+        "animation"
+      ],
+      "return_type": null,
+      "description": "animation(Animation)"
+    },
+    {
+      "name": "f_always",
+      "class_name": null,
+      "parameters": [
+        "method"
+      ],
+      "return_type": null,
+      "description": "More functional version of always, where instead\nof taking in args, it takes in functions which output\nthe relevant arguments."
+    },
+    {
+      "name": "turn_animation_into_updater",
+      "class_name": null,
+      "parameters": [
+        "animation"
+      ],
+      "return_type": null,
+      "description": "Add an updater to the animation\u2019s mobject which applies\nthe interpolation and update functions of the animation"
+    }
+  ],
+  "related_classes": [
+    "Axes",
+    "Line",
+    "Write",
+    "VGroup",
+    "Tex",
+    "Text",
+    "Dot",
+    "Shift",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

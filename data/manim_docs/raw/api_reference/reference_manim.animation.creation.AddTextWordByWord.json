@@ -1,0 +1,38 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.AddTextWordByWord.html",
+  "title": "AddTextWordByWord\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AddTextWordByWord\u00b6\n\nQualified name:manim.animation.creation.AddTextWordByWord\n\nclassAddTextWordByWord(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:SuccessionShow aTextword by word on the scene. Note: currently broken.MethodsAttributesrun_timeParameters:text_mobject(Text)run_time(float)time_per_char(float)_original__init__(text_mobject,run_time=None,time_per_char=0.06,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text_mobject(Text)run_time(float)time_per_char(float)Return type:None\n\nBases:Succession\n\nShow aTextword by word on the scene. Note: currently broken.\n\nMethods\n\nAttributes\n\nrun_time\n\nParameters:\n\ntext_mobject(Text)run_time(float)time_per_char(float)\n\ntext_mobject(Text)\n\ntext_mobject(Text)\n\nrun_time(float)\n\nrun_time(float)\n\ntime_per_char(float)\n\ntime_per_char(float)\n\n_original__init__(text_mobject,run_time=None,time_per_char=0.06,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text_mobject(Text)run_time(float)time_per_char(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext_mobject(Text)run_time(float)time_per_char(float)\n\ntext_mobject(Text)\n\ntext_mobject(Text)\n\nrun_time(float)\n\nrun_time(float)\n\ntime_per_char(float)\n\ntime_per_char(float)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "AddTextWordByWord",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Succession"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "text_mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Succession",
+    "Text",
+    "Tex"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "text"
+  ]
+}

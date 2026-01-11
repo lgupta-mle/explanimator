@@ -1,0 +1,58 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.indication.Circumscribe.html",
+  "title": "Circumscribe\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Circumscribe\u00b6\n\nQualified name:manim.animation.indication.Circumscribe\n\nclassCircumscribe(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:SuccessionDraw a temporary line surrounding the mobject.Parameters:mobject(Mobject) \u2013 The mobject to be circumscribed.shape(type[Rectangle]|type[Circle]) \u2013 The shape with which to surround the given mobject. Should be eitherRectangleorCirclefade_in(bool) \u2013 Whether to make the surrounding shape to fade in. It will be drawn otherwise.fade_out(bool) \u2013 Whether to make the surrounding shape to fade out. It will be undrawn otherwise.time_width(float) \u2013 The time_width of the drawing and undrawing. Gets ignored if eitherfade_inorfade_outisTrue.buff(float) \u2013 The distance between the surrounding shape and the given mobject.color(ParsableManimColor) \u2013 The color of the surrounding shape.run_time(float) \u2013 The duration of the entire animation.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructorstroke_width(float)ExamplesExample: UsingCircumscribe\u00b6frommanimimport*classUsingCircumscribe(Scene):defconstruct(self):lbl=Tex(r\"Circum-\\\\scribe\").scale(2)self.add(lbl)self.play(Circumscribe(lbl))self.play(Circumscribe(lbl,Circle))self.play(Circumscribe(lbl,fade_out=True))self.play(Circumscribe(lbl,time_width=2))self.play(Circumscribe(lbl,Circle,True))class UsingCircumscribe(Scene):\n    def construct(self):\n        lbl = Tex(r\"Circum-\\\\scribe\").scale(2)\n        self.add(lbl)\n        self.play(Circumscribe(lbl))\n        self.play(Circumscribe(lbl, Circle))\n        self.play(Circumscribe(lbl, fade_out=True))\n        self.play(Circumscribe(lbl, time_width=2))\n        self.play(Circumscribe(lbl, Circle, True))MethodsAttributesrun_time_original__init__(mobject,shape=<class'manim.mobject.geometry.polygram.Rectangle'>,fade_in=False,fade_out=False,time_width=0.3,buff=0.1,color=ManimColor('#FFFF00'),run_time=1,stroke_width=4,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)shape(type[Rectangle]|type[Circle])fade_in(bool)fade_out(bool)time_width(float)buff(float)color(ParsableManimColor)run_time(float)stroke_width(float)kwargs(Any)\n\nBases:Succession\n\nDraw a temporary line surrounding the mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be circumscribed.shape(type[Rectangle]|type[Circle]) \u2013 The shape with which to surround the given mobject. Should be eitherRectangleorCirclefade_in(bool) \u2013 Whether to make the surrounding shape to fade in. It will be drawn otherwise.fade_out(bool) \u2013 Whether to make the surrounding shape to fade out. It will be undrawn otherwise.time_width(float) \u2013 The time_width of the drawing and undrawing. Gets ignored if eitherfade_inorfade_outisTrue.buff(float) \u2013 The distance between the surrounding shape and the given mobject.color(ParsableManimColor) \u2013 The color of the surrounding shape.run_time(float) \u2013 The duration of the entire animation.kwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructorstroke_width(float)\n\nmobject(Mobject) \u2013 The mobject to be circumscribed.\n\nmobject(Mobject) \u2013 The mobject to be circumscribed.\n\nshape(type[Rectangle]|type[Circle]) \u2013 The shape with which to surround the given mobject. Should be eitherRectangleorCircle\n\nshape(type[Rectangle]|type[Circle]) \u2013 The shape with which to surround the given mobject. Should be eitherRectangleorCircle\n\nfade_in(bool) \u2013 Whether to make the surrounding shape to fade in. It will be drawn otherwise.\n\nfade_in(bool) \u2013 Whether to make the surrounding shape to fade in. It will be drawn otherwise.\n\nfade_out(bool) \u2013 Whether to make the surrounding shape to fade out. It will be undrawn otherwise.\n\nfade_out(bool) \u2013 Whether to make the surrounding shape to fade out. It will be undrawn otherwise.\n\ntime_width(float) \u2013 The time_width of the drawing and undrawing. Gets ignored if eitherfade_inorfade_outisTrue.\n\ntime_width(float) \u2013 The time_width of the drawing and undrawing. Gets ignored if eitherfade_inorfade_outisTrue.\n\nbuff(float) \u2013 The distance between the surrounding shape and the given mobject.\n\nbuff(float) \u2013 The distance between the surrounding shape and the given mobject.\n\ncolor(ParsableManimColor) \u2013 The color of the surrounding shape.\n\ncolor(ParsableManimColor) \u2013 The color of the surrounding shape.\n\nrun_time(float) \u2013 The duration of the entire animation.\n\nrun_time(float) \u2013 The duration of the entire animation.\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nkwargs(Any) \u2013 Additional arguments to be passed to theSuccessionconstructor\n\nstroke_width(float)\n\nstroke_width(float)\n\nExamples\n\nExample: UsingCircumscribe\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,shape=<class'manim.mobject.geometry.polygram.Rectangle'>,fade_in=False,fade_out=False,time_width=0.3,buff=0.1,color=ManimColor('#FFFF00'),run_time=1,stroke_width=4,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)shape(type[Rectangle]|type[Circle])fade_in(bool)fade_out(bool)time_width(float)buff(float)color(ParsableManimColor)run_time(float)stroke_width(float)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)shape(type[Rectangle]|type[Circle])fade_in(bool)fade_out(bool)time_width(float)buff(float)color(ParsableManimColor)run_time(float)stroke_width(float)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nshape(type[Rectangle]|type[Circle])\n\nshape(type[Rectangle]|type[Circle])\n\nfade_in(bool)\n\nfade_in(bool)\n\nfade_out(bool)\n\nfade_out(bool)\n\ntime_width(float)\n\ntime_width(float)\n\nbuff(float)\n\nbuff(float)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nrun_time(float)\n\nrun_time(float)\n\nstroke_width(float)\n\nstroke_width(float)\n\nkwargs(Any)\n\nkwargs(Any)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUsingCircumscribe(Scene):defconstruct(self):lbl=Tex(r\"Circum-\\\\scribe\").scale(2)self.add(lbl)self.play(Circumscribe(lbl))self.play(Circumscribe(lbl,Circle))self.play(Circumscribe(lbl,fade_out=True))self.play(Circumscribe(lbl,time_width=2))self.play(Circumscribe(lbl,Circle,True))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UsingCircumscribe(Scene):\n    def construct(self):\n        lbl = Tex(r\"Circum-\\\\scribe\").scale(2)\n        self.add(lbl)\n        self.play(Circumscribe(lbl))\n        self.play(Circumscribe(lbl, Circle))\n        self.play(Circumscribe(lbl, fade_out=True))\n        self.play(Circumscribe(lbl, time_width=2))\n        self.play(Circumscribe(lbl, Circle, True))",
+      "language": "python",
+      "context": "Example: UsingCircumscribe\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Circumscribe",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Succession"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Circumscribe",
+    "Tex",
+    "Succession",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

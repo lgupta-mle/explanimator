@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.AddTextLetterByLetter.html",
+  "title": "AddTextLetterByLetter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "AddTextLetterByLetter\u00b6\n\nQualified name:manim.animation.creation.AddTextLetterByLetter\n\nclassAddTextLetterByLetter(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:ShowIncreasingSubsetsShow aTextletter by letter on the scene.Parameters:time_per_char(float) \u2013 Frequency of appearance of the letters.tip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTextext(Text)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])rate_func(Callable[[float],float])run_time(float|None)MethodsAttributesrun_time_original__init__(text,suspend_mobject_updating=False,int_func=<ufunc'ceil'>,rate_func=<functionlinear>,time_per_char=0.1,run_time=None,reverse_rate_function=False,introducer=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text(Text)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])rate_func(Callable[[float],float])time_per_char(float)run_time(float|None)Return type:None\n\nBases:ShowIncreasingSubsets\n\nShow aTextletter by letter on the scene.\n\nParameters:\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.tip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTextext(Text)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])rate_func(Callable[[float],float])run_time(float|None)\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.\n\ntip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex\n\ntip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex\n\ntext(Text)\n\ntext(Text)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nrun_time(float|None)\n\nrun_time(float|None)\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(text,suspend_mobject_updating=False,int_func=<ufunc'ceil'>,rate_func=<functionlinear>,time_per_char=0.1,run_time=None,reverse_rate_function=False,introducer=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text(Text)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])rate_func(Callable[[float],float])time_per_char(float)run_time(float|None)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext(Text)suspend_mobject_updating(bool)int_func(Callable[[np.ndarray],np.ndarray])rate_func(Callable[[float],float])time_per_char(float)run_time(float|None)\n\ntext(Text)\n\ntext(Text)\n\nsuspend_mobject_updating(bool)\n\nsuspend_mobject_updating(bool)\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\nint_func(Callable[[np.ndarray],np.ndarray])\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\ntime_per_char(float)\n\ntime_per_char(float)\n\nrun_time(float|None)\n\nrun_time(float|None)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "AddTextLetterByLetter",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:ShowIncreasingSubsets"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "MathTex",
+    "Text",
+    "Tex"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "text",
+    "graph"
+  ]
+}

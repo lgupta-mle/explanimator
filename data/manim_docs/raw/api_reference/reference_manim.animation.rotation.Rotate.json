@@ -1,0 +1,55 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.rotation.Rotate.html",
+  "title": "Rotate\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Rotate\u00b6\n\nQualified name:manim.animation.rotation.Rotate\n\nclassRotate(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:TransformAnimation that rotates a Mobject.Parameters:mobject(Mobject) \u2013 The mobject to be rotated.angle(float) \u2013 The rotation angle.axis(np.ndarray) \u2013 The rotation axis as a numpy vector.about_point(Sequence[float]|None) \u2013 The rotation center.about_edge(Sequence[float]|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.kwargs(Any)ExamplesExample: UsingRotate\u00b6frommanimimport*classUsingRotate(Scene):defconstruct(self):self.play(Rotate(Square(side_length=0.5).shift(UP*2),angle=2*PI,about_point=ORIGIN,rate_func=linear,),Rotate(Square(side_length=0.5),angle=2*PI,rate_func=linear),)class UsingRotate(Scene):\n    def construct(self):\n        self.play(\n            Rotate(\n                Square(side_length=0.5).shift(UP * 2),\n                angle=2*PI,\n                about_point=ORIGIN,\n                rate_func=linear,\n            ),\n            Rotate(Square(side_length=0.5), angle=2*PI, rate_func=linear),\n            )See alsoRotating,rotate()Methodscreate_targetAttributespath_arcpath_funcrun_time_original__init__(mobject,angle=3.141592653589793,axis=array([0.,0.,1.]),about_point=None,about_edge=None,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)angle(float)axis(np.ndarray)about_point(Sequence[float]|None)about_edge(Sequence[float]|None)kwargs(Any)Return type:None\n\nBases:Transform\n\nAnimation that rotates a Mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be rotated.angle(float) \u2013 The rotation angle.axis(np.ndarray) \u2013 The rotation axis as a numpy vector.about_point(Sequence[float]|None) \u2013 The rotation center.about_edge(Sequence[float]|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.kwargs(Any)\n\nmobject(Mobject) \u2013 The mobject to be rotated.\n\nmobject(Mobject) \u2013 The mobject to be rotated.\n\nangle(float) \u2013 The rotation angle.\n\nangle(float) \u2013 The rotation angle.\n\naxis(np.ndarray) \u2013 The rotation axis as a numpy vector.\n\naxis(np.ndarray) \u2013 The rotation axis as a numpy vector.\n\nabout_point(Sequence[float]|None) \u2013 The rotation center.\n\nabout_point(Sequence[float]|None) \u2013 The rotation center.\n\nabout_edge(Sequence[float]|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.\n\nabout_edge(Sequence[float]|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.\n\nkwargs(Any)\n\nkwargs(Any)\n\nExamples\n\nExample: UsingRotate\u00b6\n\nSee also\n\nRotating,rotate()\n\nMethods\n\ncreate_target\n\nAttributes\n\npath_arc\n\npath_func\n\nrun_time\n\n_original__init__(mobject,angle=3.141592653589793,axis=array([0.,0.,1.]),about_point=None,about_edge=None,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)angle(float)axis(np.ndarray)about_point(Sequence[float]|None)about_edge(Sequence[float]|None)kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)angle(float)axis(np.ndarray)about_point(Sequence[float]|None)about_edge(Sequence[float]|None)kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nangle(float)\n\nangle(float)\n\naxis(np.ndarray)\n\naxis(np.ndarray)\n\nabout_point(Sequence[float]|None)\n\nabout_point(Sequence[float]|None)\n\nabout_edge(Sequence[float]|None)\n\nabout_edge(Sequence[float]|None)\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUsingRotate(Scene):defconstruct(self):self.play(Rotate(Square(side_length=0.5).shift(UP*2),angle=2*PI,about_point=ORIGIN,rate_func=linear,),Rotate(Square(side_length=0.5),angle=2*PI,rate_func=linear),)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UsingRotate(Scene):\n    def construct(self):\n        self.play(\n            Rotate(\n                Square(side_length=0.5).shift(UP * 2),\n                angle=2*PI,\n                about_point=ORIGIN,\n                rate_func=linear,\n            ),\n            Rotate(Square(side_length=0.5), angle=2*PI, rate_func=linear),\n            )",
+      "language": "python",
+      "context": "Example: UsingRotate\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Rotate",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Transform"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Rotate",
+    "Transform",
+    "Scene",
+    "Mobject",
+    "Square"
+  ],
+  "tags": [
+    "timing",
+    "transformation",
+    "geometry",
+    "math",
+    "animation"
+  ]
+}

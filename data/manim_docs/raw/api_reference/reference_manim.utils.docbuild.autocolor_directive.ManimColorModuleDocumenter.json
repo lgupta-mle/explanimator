@@ -1,0 +1,39 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.autocolor_directive.ManimColorModuleDocumenter.html",
+  "title": "ManimColorModuleDocumenter\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimColorModuleDocumenter\u00b6\n\nQualified name:manim.utils.docbuild.autocolor\\_directive.ManimColorModuleDocumenter\n\nclassManimColorModuleDocumenter(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine)[source]\u00b6\n\nBases:DirectiveMethodsadd_directive_headerrunAttributesfinal_argument_whitespaceMay the final argument contain whitespace?has_contentMay the directive have content?objtypeoption_specMapping of option names to validator functions.optional_argumentsNumber of optional arguments after the required arguments.required_argumentsNumber of required directive arguments.has_content=True\u00b6May the directive have content?required_arguments=1\u00b6Number of required directive arguments.\n\nBases:Directive\n\nMethods\n\nadd_directive_header\n\nrun\n\nAttributes\n\nfinal_argument_whitespace\n\nMay the final argument contain whitespace?\n\nhas_content\n\nMay the directive have content?\n\nobjtype\n\noption_spec\n\nMapping of option names to validator functions.\n\noptional_arguments\n\nNumber of optional arguments after the required arguments.\n\nrequired_arguments\n\nNumber of required directive arguments.\n\nhas_content=True\u00b6\n\nMay the directive have content?\n\nMay the directive have content?\n\nrequired_arguments=1\u00b6\n\nNumber of required directive arguments.\n\nNumber of required directive arguments.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ManimColorModuleDocumenter",
+      "class_name": null,
+      "parameters": [
+        "name"
+      ],
+      "return_type": null,
+      "description": "Bases:Directive"
+    },
+    {
+      "name": "has_content",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "May the directive have content?"
+    },
+    {
+      "name": "required_arguments",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Number of required directive arguments."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "text",
+    "graph"
+  ]
+}

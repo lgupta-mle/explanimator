@@ -1,0 +1,66 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.ipython_magic.ManimMagic.html",
+  "title": "ManimMagic\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimMagic\u00b6\n\nQualified name:manim.utils.ipython\\_magic.ManimMagic\n\nclassManimMagic(**kwargs)[source]\u00b6\n\nBases:MagicsCreate a configurable given a config config.Parameters:config(Config) \u2013 If this is empty, default values are used. If config is aConfiginstance, it will be used to configure the\ninstance.parent(Configurable instance,optional) \u2013 The parent Configurable instance of this object.shell(InteractiveShell)NotesSubclasses of Configurable must call the__init__()method ofConfigurablebeforedoing anything else and usingsuper():classMyConfigurable(Configurable):def__init__(self,config=None):super(MyConfigurable,self).__init__(config=config)# Then any other code you need to finish initialization.This ensures that instances will be configured properly.Methodsadd_additional_argsmanimRender Manim scenes contained in IPython cells.AttributesconfigA trait whose value must be an instance of a specified class.cross_validation_lockA contextmanager for running a block with our cross validation lock set to True.magicsoptions_tableparentA trait whose value must be an instance of a specified class.registeredshellmanim(line,cell=None,local_ns=None)[source]\u00b6Render Manim scenes contained in IPython cells.\nWorks as a line or cell magic.HintThis line and cell magic works best when used in a JupyterLab\nenvironment: while all of the functionality is available for\nclassic Jupyter notebooks as well, it is possible that videos\nsometimes don\u2019t update on repeated execution of the same cell\nif the scene name stays the same.This problem does not occur when using JupyterLab.Please refer tohttps://jupyter.org/for more information about JupyterLab\nand Jupyter notebooks.Usage in line mode:%manim[CLIoptions]MyAwesomeSceneUsage in cell mode:%%manim[CLIoptions]MyAwesomeSceneclassMyAweseomeScene(Scene):defconstruct(self):...Run%manim--helpand%manimrender--helpfor possible command line interface options.NoteThe maximal width of the rendered videos that are displayed in the notebook can be\nconfigured via themedia_widthconfiguration option. The default is set to25vw,\nwhich is 25% of your current viewport width. To allow the output to become as large\nas possible, setconfig.media_width=\"100%\".Themedia_embedoption will embed the image/video output in the notebook. This is\ngenerally undesirable as it makes the notebooks very large, but is required on some\nplatforms (notably Google\u2019s CoLab, where it is automatically enabled unless suppressed\nbyconfig.embed=False) and needed in cases when the notebook (or converted HTML\nfile) will be moved relative to the video locations. Use-cases include building\ndocumentation with Sphinx and JupyterBook. See also themanimdirectiveforSphinx.ExamplesFirst make sure to putimportmanim, or evenfrommanimimport*in a cell and evaluate it. Then, a typical Jupyter notebook cell for Manim\ncould look as follows:%%manim-vWARNING--disable_caching-qmBannerExampleconfig.media_width=\"75%\"config.media_embed=TrueclassBannerExample(Scene):defconstruct(self):self.camera.background_color=\"#ece6e2\"banner_large=ManimBanner(dark_theme=False).scale(0.7)self.play(banner_large.create())self.play(banner_large.expand())Evaluating this cell will render and display theBannerExamplescene defined in the body of the cell.NoteIn case you want to hide the red box containing the output progress bar, theprogress_barconfig\noption should be set toNone. This can also be done by passing--progress_barNoneas a\nCLI flag.Parameters:line(str)cell(str|None)local_ns(dict[str,Any]|None)Return type:None\n\nBases:Magics\n\nCreate a configurable given a config config.\n\nParameters:\n\nconfig(Config) \u2013 If this is empty, default values are used. If config is aConfiginstance, it will be used to configure the\ninstance.parent(Configurable instance,optional) \u2013 The parent Configurable instance of this object.shell(InteractiveShell)\n\nconfig(Config) \u2013 If this is empty, default values are used. If config is aConfiginstance, it will be used to configure the\ninstance.\n\nconfig(Config) \u2013 If this is empty, default values are used. If config is aConfiginstance, it will be used to configure the\ninstance.\n\nparent(Configurable instance,optional) \u2013 The parent Configurable instance of this object.\n\nparent(Configurable instance,optional) \u2013 The parent Configurable instance of this object.\n\nshell(InteractiveShell)\n\nshell(InteractiveShell)\n\nNotes\n\nSubclasses of Configurable must call the__init__()method ofConfigurablebeforedoing anything else and usingsuper():\n\nThis ensures that instances will be configured properly.\n\nMethods\n\nadd_additional_args\n\nmanim\n\nRender Manim scenes contained in IPython cells.\n\nAttributes\n\nconfig\n\nA trait whose value must be an instance of a specified class.\n\ncross_validation_lock\n\nA contextmanager for running a block with our cross validation lock set to True.\n\nmagics\n\noptions_table\n\nparent\n\nA trait whose value must be an instance of a specified class.\n\nregistered\n\nshell\n\nmanim(line,cell=None,local_ns=None)[source]\u00b6\n\nRender Manim scenes contained in IPython cells.\nWorks as a line or cell magic.HintThis line and cell magic works best when used in a JupyterLab\nenvironment: while all of the functionality is available for\nclassic Jupyter notebooks as well, it is possible that videos\nsometimes don\u2019t update on repeated execution of the same cell\nif the scene name stays the same.This problem does not occur when using JupyterLab.Please refer tohttps://jupyter.org/for more information about JupyterLab\nand Jupyter notebooks.Usage in line mode:%manim[CLIoptions]MyAwesomeSceneUsage in cell mode:%%manim[CLIoptions]MyAwesomeSceneclassMyAweseomeScene(Scene):defconstruct(self):...Run%manim--helpand%manimrender--helpfor possible command line interface options.NoteThe maximal width of the rendered videos that are displayed in the notebook can be\nconfigured via themedia_widthconfiguration option. The default is set to25vw,\nwhich is 25% of your current viewport width. To allow the output to become as large\nas possible, setconfig.media_width=\"100%\".Themedia_embedoption will embed the image/video output in the notebook. This is\ngenerally undesirable as it makes the notebooks very large, but is required on some\nplatforms (notably Google\u2019s CoLab, where it is automatically enabled unless suppressed\nbyconfig.embed=False) and needed in cases when the notebook (or converted HTML\nfile) will be moved relative to the video locations. Use-cases include building\ndocumentation with Sphinx and JupyterBook. See also themanimdirectiveforSphinx.ExamplesFirst make sure to putimportmanim, or evenfrommanimimport*in a cell and evaluate it. Then, a typical Jupyter notebook cell for Manim\ncould look as follows:%%manim-vWARNING--disable_caching-qmBannerExampleconfig.media_width=\"75%\"config.media_embed=TrueclassBannerExample(Scene):defconstruct(self):self.camera.background_color=\"#ece6e2\"banner_large=ManimBanner(dark_theme=False).scale(0.7)self.play(banner_large.create())self.play(banner_large.expand())Evaluating this cell will render and display theBannerExamplescene defined in the body of the cell.NoteIn case you want to hide the red box containing the output progress bar, theprogress_barconfig\noption should be set toNone. This can also be done by passing--progress_barNoneas a\nCLI flag.Parameters:line(str)cell(str|None)local_ns(dict[str,Any]|None)Return type:None\n\nRender Manim scenes contained in IPython cells.\nWorks as a line or cell magic.\n\nHint\n\nThis line and cell magic works best when used in a JupyterLab\nenvironment: while all of the functionality is available for\nclassic Jupyter notebooks as well, it is possible that videos\nsometimes don\u2019t update on repeated execution of the same cell\nif the scene name stays the same.\n\nThis problem does not occur when using JupyterLab.\n\nPlease refer tohttps://jupyter.org/for more information about JupyterLab\nand Jupyter notebooks.\n\nUsage in line mode:\n\nUsage in cell mode:\n\nRun%manim--helpand%manimrender--helpfor possible command line interface options.\n\nNote\n\nThe maximal width of the rendered videos that are displayed in the notebook can be\nconfigured via themedia_widthconfiguration option. The default is set to25vw,\nwhich is 25% of your current viewport width. To allow the output to become as large\nas possible, setconfig.media_width=\"100%\".\n\nThemedia_embedoption will embed the image/video output in the notebook. This is\ngenerally undesirable as it makes the notebooks very large, but is required on some\nplatforms (notably Google\u2019s CoLab, where it is automatically enabled unless suppressed\nbyconfig.embed=False) and needed in cases when the notebook (or converted HTML\nfile) will be moved relative to the video locations. Use-cases include building\ndocumentation with Sphinx and JupyterBook. See also themanimdirectiveforSphinx.\n\nExamples\n\nFirst make sure to putimportmanim, or evenfrommanimimport*in a cell and evaluate it. Then, a typical Jupyter notebook cell for Manim\ncould look as follows:\n\nEvaluating this cell will render and display theBannerExamplescene defined in the body of the cell.\n\nNote\n\nIn case you want to hide the red box containing the output progress bar, theprogress_barconfig\noption should be set toNone. This can also be done by passing--progress_barNoneas a\nCLI flag.\n\nParameters:\n\nline(str)cell(str|None)local_ns(dict[str,Any]|None)\n\nline(str)\n\nline(str)\n\ncell(str|None)\n\ncell(str|None)\n\nlocal_ns(dict[str,Any]|None)\n\nlocal_ns(dict[str,Any]|None)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "classMyConfigurable(Configurable):def__init__(self,config=None):super(MyConfigurable,self).__init__(config=config)# Then any other code you need to finish initialization.",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "%manim[CLIoptions]MyAwesomeScene",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "%%manim[CLIoptions]MyAwesomeSceneclassMyAweseomeScene(Scene):defconstruct(self):...",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "%%manim-vWARNING--disable_caching-qmBannerExampleconfig.media_width=\"75%\"config.media_embed=TrueclassBannerExample(Scene):defconstruct(self):self.camera.background_color=\"#ece6e2\"banner_large=ManimBanner(dark_theme=False).scale(0.7)self.play(banner_large.create())self.play(banner_large.expand())",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "ManimMagic",
+      "class_name": null,
+      "parameters": [
+        "**kwargs"
+      ],
+      "return_type": null,
+      "description": "Bases:Magics"
+    },
+    {
+      "name": "manim",
+      "class_name": null,
+      "parameters": [
+        "line"
+      ],
+      "return_type": null,
+      "description": "Render Manim scenes contained in IPython cells.\nWorks as a line or cell magic."
+    }
+  ],
+  "related_classes": [
+    "Scene",
+    "Create"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}

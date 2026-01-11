@@ -1,0 +1,106 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.geometry.polygram.Polygram.html",
+  "title": "Polygram\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Polygram\u00b6\n\nQualified name:manim.mobject.geometry.polygram.Polygram\n\nclassPolygram(*vertex_groups,color=ManimColor('#58C4DD'),**kwargs)[source]\u00b6\n\nBases:VMobjectA generalizedPolygon, allowing for disconnected sets of edges.Parameters:vertex_groups(Point3DLike_Array) \u2013The groups of vertices making up thePolygram.The first vertex in each group is repeated to close the shape.\nEach point must be 3-dimensional:[x,y,z]color(manim.utils.color.core.ManimColor) \u2013 The color of thePolygram.kwargs(Any) \u2013 Forwarded to the parent constructor.ExamplesExample: PolygramExample\u00b6frommanimimport*importnumpyasnpclassPolygramExample(Scene):defconstruct(self):hexagram=Polygram([[0,2,0],[-np.sqrt(3),-1,0],[np.sqrt(3),-1,0]],[[-np.sqrt(3),1,0],[0,-2,0],[np.sqrt(3),1,0]],)self.add(hexagram)dot=Dot()self.play(MoveAlongPath(dot,hexagram),run_time=5,rate_func=linear)self.remove(dot)self.wait()import numpy as np\n\nclass PolygramExample(Scene):\n    def construct(self):\n        hexagram = Polygram(\n            [[0, 2, 0], [-np.sqrt(3), -1, 0], [np.sqrt(3), -1, 0]],\n            [[-np.sqrt(3), 1, 0], [0, -2, 0], [np.sqrt(3), 1, 0]],\n        )\n        self.add(hexagram)\n\n        dot = Dot()\n        self.play(MoveAlongPath(dot, hexagram), run_time=5, rate_func=linear)\n        self.remove(dot)\n        self.wait()Methodsget_vertex_groupsGets the vertex groups of thePolygram.get_verticesGets the vertices of thePolygram.round_cornersRounds off the corners of thePolygram.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(*vertex_groups,color=ManimColor('#58C4DD'),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vertex_groups(Point3DLike_Array)color(ParsableManimColor)kwargs(Any)get_vertex_groups()[source]\u00b6Gets the vertex groups of thePolygram.Returns:The list of vertex groups of thePolygram.Return type:list[Point3D_Array]Examples>>>poly=Polygram([ORIGIN,RIGHT,UP,LEFT+UP],[LEFT,LEFT+UP,2*LEFT])>>>groups=poly.get_vertex_groups()>>>len(groups)2>>>groups[0]array([[ 0.,  0.,  0.],[ 1.,  0.,  0.],[ 0.,  1.,  0.],[-1.,  1.,  0.]])>>>groups[1]array([[-1.,  0.,  0.],[-1.,  1.,  0.],[-2.,  0.,  0.]])get_vertices()[source]\u00b6Gets the vertices of thePolygram.Returns:The vertices of thePolygram.Return type:numpy.ndarrayExamples>>>sq=Square()>>>sq.get_vertices()array([[ 1.,  1.,  0.],[-1.,  1.,  0.],[-1., -1.,  0.],[ 1., -1.,  0.]])round_corners(radius=0.5,evenly_distribute_anchors=False,components_per_rounded_corner=2)[source]\u00b6Rounds off the corners of thePolygram.Parameters:radius(float|list[float]) \u2013 The curvature of the corners of thePolygram.evenly_distribute_anchors(bool) \u2013 Break long line segments into proportionally-sized segments.components_per_rounded_corner(int) \u2013 The number of points used to represent the rounded corner curve.Return type:SelfSee alsoRoundedRectangleNoteIfradiusis supplied as a single value, then the same radius\nwill be applied to all corners.  Ifradiusis a list, then the\nindividual values will be applied sequentially, with the first\ncorner receivingradius[0], the second corner receivingradius[1], etc.  The radius list will be repeated as necessary.Thecomponents_per_rounded_cornervalue is provided so that the\nfidelity of the rounded corner may be fine-tuned as needed.  2 is\nan appropriate value for most shapes, however a larger value may be\nneed if the rounded corner is particularly large.  2 is the minimum\nnumber allowed, representing the start and end of the curve.  3 will\nresult in a start, middle, and end point, meaning 2 curves will be\ngenerated.The option toevenly_distribute_anchorsis provided so that the\nline segments (the part part of each line remaining after rounding\noff the corners) can be subdivided to a density similar to that of\nthe average density of the rounded corners.  This may be desirable\nin situations in which an even distribution of curves is desired\nfor use in later transformation animations.  Be aware, though, that\nenabling this option can result in an an object containing\nsignificantly more points than the original, especially when the\nrounded corner curves are small.ExamplesExample: PolygramRoundCorners\u00b6frommanimimport*classPolygramRoundCorners(Scene):defconstruct(self):star=Star(outer_radius=2)shapes=VGroup(star)shapes.add(star.copy().round_corners(radius=0.1))shapes.add(star.copy().round_corners(radius=0.25))shapes.arrange(RIGHT)self.add(shapes)class PolygramRoundCorners(Scene):\n    def construct(self):\n        star = Star(outer_radius=2)\n\n        shapes = VGroup(star)\n        shapes.add(star.copy().round_corners(radius=0.1))\n        shapes.add(star.copy().round_corners(radius=0.25))\n\n        shapes.arrange(RIGHT)\n        self.add(shapes)\n\nBases:VMobject\n\nA generalizedPolygon, allowing for disconnected sets of edges.\n\nParameters:\n\nvertex_groups(Point3DLike_Array) \u2013The groups of vertices making up thePolygram.The first vertex in each group is repeated to close the shape.\nEach point must be 3-dimensional:[x,y,z]color(manim.utils.color.core.ManimColor) \u2013 The color of thePolygram.kwargs(Any) \u2013 Forwarded to the parent constructor.\n\nvertex_groups(Point3DLike_Array) \u2013The groups of vertices making up thePolygram.The first vertex in each group is repeated to close the shape.\nEach point must be 3-dimensional:[x,y,z]\n\nvertex_groups(Point3DLike_Array) \u2013The groups of vertices making up thePolygram.The first vertex in each group is repeated to close the shape.\nEach point must be 3-dimensional:[x,y,z]\n\nThe groups of vertices making up thePolygram.\n\nThe first vertex in each group is repeated to close the shape.\nEach point must be 3-dimensional:[x,y,z]\n\ncolor(manim.utils.color.core.ManimColor) \u2013 The color of thePolygram.\n\ncolor(manim.utils.color.core.ManimColor) \u2013 The color of thePolygram.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nkwargs(Any) \u2013 Forwarded to the parent constructor.\n\nExamples\n\nExample: PolygramExample\u00b6\n\nMethods\n\nget_vertex_groups\n\nGets the vertex groups of thePolygram.\n\nget_vertices\n\nGets the vertices of thePolygram.\n\nround_corners\n\nRounds off the corners of thePolygram.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(*vertex_groups,color=ManimColor('#58C4DD'),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vertex_groups(Point3DLike_Array)color(ParsableManimColor)kwargs(Any)\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvertex_groups(Point3DLike_Array)color(ParsableManimColor)kwargs(Any)\n\nvertex_groups(Point3DLike_Array)\n\nvertex_groups(Point3DLike_Array)\n\ncolor(ParsableManimColor)\n\ncolor(ParsableManimColor)\n\nkwargs(Any)\n\nkwargs(Any)\n\nget_vertex_groups()[source]\u00b6\n\nGets the vertex groups of thePolygram.Returns:The list of vertex groups of thePolygram.Return type:list[Point3D_Array]Examples>>>poly=Polygram([ORIGIN,RIGHT,UP,LEFT+UP],[LEFT,LEFT+UP,2*LEFT])>>>groups=poly.get_vertex_groups()>>>len(groups)2>>>groups[0]array([[ 0.,  0.,  0.],[ 1.,  0.,  0.],[ 0.,  1.,  0.],[-1.,  1.,  0.]])>>>groups[1]array([[-1.,  0.,  0.],[-1.,  1.,  0.],[-2.,  0.,  0.]])\n\nGets the vertex groups of thePolygram.\n\nReturns:\n\nThe list of vertex groups of thePolygram.\n\nThe list of vertex groups of thePolygram.\n\nReturn type:\n\nlist[Point3D_Array]\n\nlist[Point3D_Array]\n\nExamples\n\nget_vertices()[source]\u00b6\n\nGets the vertices of thePolygram.Returns:The vertices of thePolygram.Return type:numpy.ndarrayExamples>>>sq=Square()>>>sq.get_vertices()array([[ 1.,  1.,  0.],[-1.,  1.,  0.],[-1., -1.,  0.],[ 1., -1.,  0.]])\n\nGets the vertices of thePolygram.\n\nReturns:\n\nThe vertices of thePolygram.\n\nThe vertices of thePolygram.\n\nReturn type:\n\nnumpy.ndarray\n\nnumpy.ndarray\n\nExamples\n\nround_corners(radius=0.5,evenly_distribute_anchors=False,components_per_rounded_corner=2)[source]\u00b6\n\nRounds off the corners of thePolygram.Parameters:radius(float|list[float]) \u2013 The curvature of the corners of thePolygram.evenly_distribute_anchors(bool) \u2013 Break long line segments into proportionally-sized segments.components_per_rounded_corner(int) \u2013 The number of points used to represent the rounded corner curve.Return type:SelfSee alsoRoundedRectangleNoteIfradiusis supplied as a single value, then the same radius\nwill be applied to all corners.  Ifradiusis a list, then the\nindividual values will be applied sequentially, with the first\ncorner receivingradius[0], the second corner receivingradius[1], etc.  The radius list will be repeated as necessary.Thecomponents_per_rounded_cornervalue is provided so that the\nfidelity of the rounded corner may be fine-tuned as needed.  2 is\nan appropriate value for most shapes, however a larger value may be\nneed if the rounded corner is particularly large.  2 is the minimum\nnumber allowed, representing the start and end of the curve.  3 will\nresult in a start, middle, and end point, meaning 2 curves will be\ngenerated.The option toevenly_distribute_anchorsis provided so that the\nline segments (the part part of each line remaining after rounding\noff the corners) can be subdivided to a density similar to that of\nthe average density of the rounded corners.  This may be desirable\nin situations in which an even distribution of curves is desired\nfor use in later transformation animations.  Be aware, though, that\nenabling this option can result in an an object containing\nsignificantly more points than the original, especially when the\nrounded corner curves are small.ExamplesExample: PolygramRoundCorners\u00b6frommanimimport*classPolygramRoundCorners(Scene):defconstruct(self):star=Star(outer_radius=2)shapes=VGroup(star)shapes.add(star.copy().round_corners(radius=0.1))shapes.add(star.copy().round_corners(radius=0.25))shapes.arrange(RIGHT)self.add(shapes)class PolygramRoundCorners(Scene):\n    def construct(self):\n        star = Star(outer_radius=2)\n\n        shapes = VGroup(star)\n        shapes.add(star.copy().round_corners(radius=0.1))\n        shapes.add(star.copy().round_corners(radius=0.25))\n\n        shapes.arrange(RIGHT)\n        self.add(shapes)\n\nRounds off the corners of thePolygram.\n\nParameters:\n\nradius(float|list[float]) \u2013 The curvature of the corners of thePolygram.evenly_distribute_anchors(bool) \u2013 Break long line segments into proportionally-sized segments.components_per_rounded_corner(int) \u2013 The number of points used to represent the rounded corner curve.\n\nradius(float|list[float]) \u2013 The curvature of the corners of thePolygram.\n\nradius(float|list[float]) \u2013 The curvature of the corners of thePolygram.\n\nevenly_distribute_anchors(bool) \u2013 Break long line segments into proportionally-sized segments.\n\nevenly_distribute_anchors(bool) \u2013 Break long line segments into proportionally-sized segments.\n\ncomponents_per_rounded_corner(int) \u2013 The number of points used to represent the rounded corner curve.\n\ncomponents_per_rounded_corner(int) \u2013 The number of points used to represent the rounded corner curve.\n\nReturn type:\n\nSelf\n\nSelf\n\nSee also\n\nRoundedRectangle\n\nNote\n\nIfradiusis supplied as a single value, then the same radius\nwill be applied to all corners.  Ifradiusis a list, then the\nindividual values will be applied sequentially, with the first\ncorner receivingradius[0], the second corner receivingradius[1], etc.  The radius list will be repeated as necessary.\n\nThecomponents_per_rounded_cornervalue is provided so that the\nfidelity of the rounded corner may be fine-tuned as needed.  2 is\nan appropriate value for most shapes, however a larger value may be\nneed if the rounded corner is particularly large.  2 is the minimum\nnumber allowed, representing the start and end of the curve.  3 will\nresult in a start, middle, and end point, meaning 2 curves will be\ngenerated.\n\nThe option toevenly_distribute_anchorsis provided so that the\nline segments (the part part of each line remaining after rounding\noff the corners) can be subdivided to a density similar to that of\nthe average density of the rounded corners.  This may be desirable\nin situations in which an even distribution of curves is desired\nfor use in later transformation animations.  Be aware, though, that\nenabling this option can result in an an object containing\nsignificantly more points than the original, especially when the\nrounded corner curves are small.\n\nExamples\n\nExample: PolygramRoundCorners\u00b6",
+  "code_examples": [
+    {
+      "code": "frommanimimport*importnumpyasnpclassPolygramExample(Scene):defconstruct(self):hexagram=Polygram([[0,2,0],[-np.sqrt(3),-1,0],[np.sqrt(3),-1,0]],[[-np.sqrt(3),1,0],[0,-2,0],[np.sqrt(3),1,0]],)self.add(hexagram)dot=Dot()self.play(MoveAlongPath(dot,hexagram),run_time=5,rate_func=linear)self.remove(dot)self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "import numpy as np\n\nclass PolygramExample(Scene):\n    def construct(self):\n        hexagram = Polygram(\n            [[0, 2, 0], [-np.sqrt(3), -1, 0], [np.sqrt(3), -1, 0]],\n            [[-np.sqrt(3), 1, 0], [0, -2, 0], [np.sqrt(3), 1, 0]],\n        )\n        self.add(hexagram)\n\n        dot = Dot()\n        self.play(MoveAlongPath(dot, hexagram), run_time=5, rate_func=linear)\n        self.remove(dot)\n        self.wait()",
+      "language": "python",
+      "context": "Example: PolygramExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": ">>>poly=Polygram([ORIGIN,RIGHT,UP,LEFT+UP],[LEFT,LEFT+UP,2*LEFT])>>>groups=poly.get_vertex_groups()>>>len(groups)2>>>groups[0]array([[ 0.,  0.,  0.],[ 1.,  0.,  0.],[ 0.,  1.,  0.],[-1.,  1.,  0.]])>>>groups[1]array([[-1.,  0.,  0.],[-1.,  1.,  0.],[-2.,  0.,  0.]])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": ">>>sq=Square()>>>sq.get_vertices()array([[ 1.,  1.,  0.],[-1.,  1.,  0.],[-1., -1.,  0.],[ 1., -1.,  0.]])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPolygramRoundCorners(Scene):defconstruct(self):star=Star(outer_radius=2)shapes=VGroup(star)shapes.add(star.copy().round_corners(radius=0.1))shapes.add(star.copy().round_corners(radius=0.25))shapes.arrange(RIGHT)self.add(shapes)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PolygramRoundCorners(Scene):\n    def construct(self):\n        star = Star(outer_radius=2)\n\n        shapes = VGroup(star)\n        shapes.add(star.copy().round_corners(radius=0.1))\n        shapes.add(star.copy().round_corners(radius=0.25))\n\n        shapes.arrange(RIGHT)\n        self.add(shapes)",
+      "language": "python",
+      "context": "Example: PolygramRoundCorners\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Polygram",
+      "class_name": null,
+      "parameters": [
+        "*vertex_groups"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "*vertex_groups"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_vertex_groups",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Gets the vertex groups of thePolygram."
+    },
+    {
+      "name": "get_vertices",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Gets the vertices of thePolygram."
+    },
+    {
+      "name": "round_corners",
+      "class_name": null,
+      "parameters": [
+        "radius=0.5"
+      ],
+      "return_type": null,
+      "description": "Rounds off the corners of thePolygram."
+    }
+  ],
+  "related_classes": [
+    "Square",
+    "VGroup",
+    "VMobject",
+    "Dot",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "animation"
+  ]
+}

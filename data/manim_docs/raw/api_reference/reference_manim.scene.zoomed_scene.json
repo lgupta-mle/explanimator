@@ -1,0 +1,42 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.zoomed_scene.html",
+  "title": "zoomed_scene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "zoomed_scene\u00b6\n\nA scene supporting zooming in on a specified section.\n\nExamples\n\nExample: UseZoomedScene\u00b6\n\nExample: ChangingZoomScale\u00b6\n\nClasses\n\nZoomedScene\n\nThis is a Scene with special configurations made for when a particular part of the scene must be zoomed in on and displayed separately.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUseZoomedScene(ZoomedScene):defconstruct(self):dot=Dot().set_color(GREEN)self.add(dot)self.wait(1)self.activate_zooming(animate=False)self.wait(1)self.play(dot.animate.shift(LEFT))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UseZoomedScene(ZoomedScene):\n    def construct(self):\n        dot = Dot().set_color(GREEN)\n        self.add(dot)\n        self.wait(1)\n        self.activate_zooming(animate=False)\n        self.wait(1)\n        self.play(dot.animate.shift(LEFT))",
+      "language": "python",
+      "context": "Example: UseZoomedScene\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classChangingZoomScale(ZoomedScene):def__init__(self,**kwargs):ZoomedScene.__init__(self,zoom_factor=0.3,zoomed_display_height=1,zoomed_display_width=3,image_frame_stroke_width=20,zoomed_camera_config={\"default_frame_stroke_width\":3,},**kwargs)defconstruct(self):dot=Dot().set_color(GREEN)sq=Circle(fill_opacity=1,radius=0.2).next_to(dot,RIGHT)self.add(dot,sq)self.wait(1)self.activate_zooming(animate=False)self.wait(1)self.play(dot.animate.shift(LEFT*0.3))self.play(self.zoomed_camera.frame.animate.scale(4))self.play(self.zoomed_camera.frame.animate.shift(0.5*DOWN))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ChangingZoomScale(ZoomedScene):\n    def __init__(self, **kwargs):\n        ZoomedScene.__init__(\n            self,\n            zoom_factor=0.3,\n            zoomed_display_height=1,\n            zoomed_display_width=3,\n            image_frame_stroke_width=20,\n            zoomed_camera_config={\n                \"default_frame_stroke_width\": 3,\n            },\n            **kwargs\n        )\n\n    def construct(self):\n        dot = Dot().set_color(GREEN)\n        sq = Circle(fill_opacity=1, radius=0.2).next_to(dot, RIGHT)\n        self.add(dot, sq)\n        self.wait(1)\n        self.activate_zooming(animate=False)\n        self.wait(1)\n        self.play(dot.animate.shift(LEFT * 0.3))\n\n        self.play(self.zoomed_camera.frame.animate.scale(4))\n        self.play(self.zoomed_camera.frame.animate.shift(0.5 * DOWN))",
+      "language": "python",
+      "context": "Example: ChangingZoomScale\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation",
+    "timing",
+    "transformation"
+  ]
+}

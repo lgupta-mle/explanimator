@@ -1,0 +1,32 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.autoaliasattr_directive.html",
+  "title": "autoaliasattr_directive\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "autoaliasattr_directive\u00b6\n\nA directive for documenting type aliases and other module-level attributes.\n\nClasses\n\nAliasAttrDocumenter\n\nDirective which replaces Sphinx's Autosummary for module-level attributes: instead, it manually crafts a new \"Type Aliases\" section, where all the module-level attributes which are explicitly annotated asTypeAliasare considered as such, for their use all around the Manim docs.\n\nFunctions\n\nsetup(app)[source]\u00b6\n\nParameters:app(Sphinx)Return type:None\n\nParameters:\n\napp(Sphinx)\n\napp(Sphinx)\n\nReturn type:\n\nNone\n\nNone\n\nsmart_replace(base,alias,substitution)[source]\u00b6\n\nAuxiliary function for substituting type aliases into a base\nstring, when there are overlaps between the aliases themselves.Parameters:base(str) \u2013 The string in which the type aliases will be located and\nreplaced.alias(str) \u2013 The substring to be substituted.substitution(str) \u2013 The string which will replace every occurrence ofalias.Returns:The new string after the alias substitution.Return type:str\n\nAuxiliary function for substituting type aliases into a base\nstring, when there are overlaps between the aliases themselves.\n\nParameters:\n\nbase(str) \u2013 The string in which the type aliases will be located and\nreplaced.alias(str) \u2013 The substring to be substituted.substitution(str) \u2013 The string which will replace every occurrence ofalias.\n\nbase(str) \u2013 The string in which the type aliases will be located and\nreplaced.\n\nbase(str) \u2013 The string in which the type aliases will be located and\nreplaced.\n\nalias(str) \u2013 The substring to be substituted.\n\nalias(str) \u2013 The substring to be substituted.\n\nsubstitution(str) \u2013 The string which will replace every occurrence ofalias.\n\nsubstitution(str) \u2013 The string which will replace every occurrence ofalias.\n\nReturns:\n\nThe new string after the alias substitution.\n\nThe new string after the alias substitution.\n\nReturn type:\n\nstr\n\nstr",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "setup",
+      "class_name": null,
+      "parameters": [
+        "app"
+      ],
+      "return_type": null,
+      "description": "app(Sphinx)"
+    },
+    {
+      "name": "smart_replace",
+      "class_name": null,
+      "parameters": [
+        "base"
+      ],
+      "return_type": null,
+      "description": "Auxiliary function for substituting type aliases into a base\nstring, when there are overlaps between the aliases themselves."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "graph"
+  ]
+}

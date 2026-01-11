@@ -1,0 +1,83 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.rotation.Rotating.html",
+  "title": "Rotating\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Rotating\u00b6\n\nQualified name:manim.animation.rotation.Rotating\n\nclassRotating(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AnimationAnimation that rotates a Mobject.Parameters:mobject(Mobject) \u2013 The mobject to be rotated.angle(float) \u2013 The rotation angle in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.axis(np.ndarray) \u2013 The rotation axis as a numpy vector.about_point(np.ndarray|None) \u2013 The rotation center.about_edge(np.ndarray|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.run_time(float) \u2013 The duration of the animation in seconds.rate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .**kwargs(Any) \u2013 Additional keyword arguments passed toAnimation.ExamplesExample: RotatingDemo\u00b6frommanimimport*classRotatingDemo(Scene):defconstruct(self):circle=Circle(radius=1,color=BLUE)line=Line(start=ORIGIN,end=RIGHT)arrow=Arrow(start=ORIGIN,end=RIGHT,buff=0,color=GOLD)vg=VGroup(circle,line,arrow)self.add(vg)anim_kw={\"about_point\":arrow.get_start(),\"run_time\":1}self.play(Rotating(arrow,180*DEGREES,**anim_kw))self.play(Rotating(arrow,PI,**anim_kw))self.play(Rotating(vg,PI,about_point=RIGHT))self.play(Rotating(vg,PI,axis=UP,about_point=ORIGIN))self.play(Rotating(vg,PI,axis=RIGHT,about_edge=UP))self.play(vg.animate.move_to(ORIGIN))class RotatingDemo(Scene):\n    def construct(self):\n        circle = Circle(radius=1, color=BLUE)\n        line = Line(start=ORIGIN, end=RIGHT)\n        arrow = Arrow(start=ORIGIN, end=RIGHT, buff=0, color=GOLD)\n        vg = VGroup(circle,line,arrow)\n        self.add(vg)\n        anim_kw = {\"about_point\": arrow.get_start(), \"run_time\": 1}\n        self.play(Rotating(arrow, 180*DEGREES, **anim_kw))\n        self.play(Rotating(arrow, PI, **anim_kw))\n        self.play(Rotating(vg, PI, about_point=RIGHT))\n        self.play(Rotating(vg, PI, axis=UP, about_point=ORIGIN))\n        self.play(Rotating(vg, PI, axis=RIGHT, about_edge=UP))\n        self.play(vg.animate.move_to(ORIGIN))Example: RotatingDifferentAxis\u00b6frommanimimport*classRotatingDifferentAxis(ThreeDScene):defconstruct(self):axes=ThreeDAxes()cube=Cube()arrow2d=Arrow(start=[0,-1.2,1],end=[0,1.2,1],color=YELLOW_E)cube_group=VGroup(cube,arrow2d)self.set_camera_orientation(gamma=0,phi=40*DEGREES,theta=40*DEGREES)self.add(axes,cube_group)play_kw={\"run_time\":1.5}self.play(Rotating(cube_group,PI),**play_kw)self.play(Rotating(cube_group,PI,axis=UP),**play_kw)self.play(Rotating(cube_group,180*DEGREES,axis=RIGHT),**play_kw)self.wait(0.5)class RotatingDifferentAxis(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        cube = Cube()\n        arrow2d = Arrow(start=[0, -1.2, 1], end=[0, 1.2, 1], color=YELLOW_E)\n        cube_group = VGroup(cube,arrow2d)\n        self.set_camera_orientation(gamma=0, phi=40*DEGREES, theta=40*DEGREES)\n        self.add(axes, cube_group)\n        play_kw = {\"run_time\": 1.5}\n        self.play(Rotating(cube_group, PI), **play_kw)\n        self.play(Rotating(cube_group, PI, axis=UP), **play_kw)\n        self.play(Rotating(cube_group, 180*DEGREES, axis=RIGHT), **play_kw)\n        self.wait(0.5)See alsoRotate,rotate()Methodsinterpolate_mobjectInterpolates the mobject of theAnimationbased on alpha value.Attributesrun_time_original__init__(mobject,angle=6.283185307179586,axis=array([0.,0.,1.]),about_point=None,about_edge=None,run_time=5,rate_func=<functionlinear>,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)angle(float)axis(np.ndarray)about_point(np.ndarray|None)about_edge(np.ndarray|None)run_time(float)rate_func(Callable[[float],float])kwargs(Any)Return type:Noneinterpolate_mobject(alpha)[source]\u00b6Interpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nBases:Animation\n\nAnimation that rotates a Mobject.\n\nParameters:\n\nmobject(Mobject) \u2013 The mobject to be rotated.angle(float) \u2013 The rotation angle in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.axis(np.ndarray) \u2013 The rotation axis as a numpy vector.about_point(np.ndarray|None) \u2013 The rotation center.about_edge(np.ndarray|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.run_time(float) \u2013 The duration of the animation in seconds.rate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .**kwargs(Any) \u2013 Additional keyword arguments passed toAnimation.\n\nmobject(Mobject) \u2013 The mobject to be rotated.\n\nmobject(Mobject) \u2013 The mobject to be rotated.\n\nangle(float) \u2013 The rotation angle in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.\n\nangle(float) \u2013 The rotation angle in radians. Predefined constants such asDEGREEScan also be used to specify the angle in degrees.\n\naxis(np.ndarray) \u2013 The rotation axis as a numpy vector.\n\naxis(np.ndarray) \u2013 The rotation axis as a numpy vector.\n\nabout_point(np.ndarray|None) \u2013 The rotation center.\n\nabout_point(np.ndarray|None) \u2013 The rotation center.\n\nabout_edge(np.ndarray|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.\n\nabout_edge(np.ndarray|None) \u2013 Ifabout_pointisNone, this argument specifies\nthe direction of the bounding box point to be taken as\nthe rotation center.\n\nrun_time(float) \u2013 The duration of the animation in seconds.\n\nrun_time(float) \u2013 The duration of the animation in seconds.\n\nrate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .\n\nrate_func(Callable[[float],float]) \u2013 The function defining the animation progress based on the relative\nruntime (seerate_functions) .\n\n**kwargs(Any) \u2013 Additional keyword arguments passed toAnimation.\n\n**kwargs(Any) \u2013 Additional keyword arguments passed toAnimation.\n\nExamples\n\nExample: RotatingDemo\u00b6\n\nExample: RotatingDifferentAxis\u00b6\n\nSee also\n\nRotate,rotate()\n\nMethods\n\ninterpolate_mobject\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nAttributes\n\nrun_time\n\n_original__init__(mobject,angle=6.283185307179586,axis=array([0.,0.,1.]),about_point=None,about_edge=None,run_time=5,rate_func=<functionlinear>,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mobject(Mobject)angle(float)axis(np.ndarray)about_point(np.ndarray|None)about_edge(np.ndarray|None)run_time(float)rate_func(Callable[[float],float])kwargs(Any)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmobject(Mobject)angle(float)axis(np.ndarray)about_point(np.ndarray|None)about_edge(np.ndarray|None)run_time(float)rate_func(Callable[[float],float])kwargs(Any)\n\nmobject(Mobject)\n\nmobject(Mobject)\n\nangle(float)\n\nangle(float)\n\naxis(np.ndarray)\n\naxis(np.ndarray)\n\nabout_point(np.ndarray|None)\n\nabout_point(np.ndarray|None)\n\nabout_edge(np.ndarray|None)\n\nabout_edge(np.ndarray|None)\n\nrun_time(float)\n\nrun_time(float)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nkwargs(Any)\n\nkwargs(Any)\n\nReturn type:\n\nNone\n\nNone\n\ninterpolate_mobject(alpha)[source]\u00b6\n\nInterpolates the mobject of theAnimationbased on alpha value.Parameters:alpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.Return type:None\n\nInterpolates the mobject of theAnimationbased on alpha value.\n\nParameters:\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nalpha(float) \u2013 A float between 0 and 1 expressing the ratio to which the animation\nis completed. For example, alpha-values of 0, 0.5, and 1 correspond\nto the animation being completed 0%, 50%, and 100%, respectively.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classRotatingDemo(Scene):defconstruct(self):circle=Circle(radius=1,color=BLUE)line=Line(start=ORIGIN,end=RIGHT)arrow=Arrow(start=ORIGIN,end=RIGHT,buff=0,color=GOLD)vg=VGroup(circle,line,arrow)self.add(vg)anim_kw={\"about_point\":arrow.get_start(),\"run_time\":1}self.play(Rotating(arrow,180*DEGREES,**anim_kw))self.play(Rotating(arrow,PI,**anim_kw))self.play(Rotating(vg,PI,about_point=RIGHT))self.play(Rotating(vg,PI,axis=UP,about_point=ORIGIN))self.play(Rotating(vg,PI,axis=RIGHT,about_edge=UP))self.play(vg.animate.move_to(ORIGIN))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RotatingDemo(Scene):\n    def construct(self):\n        circle = Circle(radius=1, color=BLUE)\n        line = Line(start=ORIGIN, end=RIGHT)\n        arrow = Arrow(start=ORIGIN, end=RIGHT, buff=0, color=GOLD)\n        vg = VGroup(circle,line,arrow)\n        self.add(vg)\n        anim_kw = {\"about_point\": arrow.get_start(), \"run_time\": 1}\n        self.play(Rotating(arrow, 180*DEGREES, **anim_kw))\n        self.play(Rotating(arrow, PI, **anim_kw))\n        self.play(Rotating(vg, PI, about_point=RIGHT))\n        self.play(Rotating(vg, PI, axis=UP, about_point=ORIGIN))\n        self.play(Rotating(vg, PI, axis=RIGHT, about_edge=UP))\n        self.play(vg.animate.move_to(ORIGIN))",
+      "language": "python",
+      "context": "Example: RotatingDemo\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classRotatingDifferentAxis(ThreeDScene):defconstruct(self):axes=ThreeDAxes()cube=Cube()arrow2d=Arrow(start=[0,-1.2,1],end=[0,1.2,1],color=YELLOW_E)cube_group=VGroup(cube,arrow2d)self.set_camera_orientation(gamma=0,phi=40*DEGREES,theta=40*DEGREES)self.add(axes,cube_group)play_kw={\"run_time\":1.5}self.play(Rotating(cube_group,PI),**play_kw)self.play(Rotating(cube_group,PI,axis=UP),**play_kw)self.play(Rotating(cube_group,180*DEGREES,axis=RIGHT),**play_kw)self.wait(0.5)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class RotatingDifferentAxis(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        cube = Cube()\n        arrow2d = Arrow(start=[0, -1.2, 1], end=[0, 1.2, 1], color=YELLOW_E)\n        cube_group = VGroup(cube,arrow2d)\n        self.set_camera_orientation(gamma=0, phi=40*DEGREES, theta=40*DEGREES)\n        self.add(axes, cube_group)\n        play_kw = {\"run_time\": 1.5}\n        self.play(Rotating(cube_group, PI), **play_kw)\n        self.play(Rotating(cube_group, PI, axis=UP), **play_kw)\n        self.play(Rotating(cube_group, 180*DEGREES, axis=RIGHT), **play_kw)\n        self.wait(0.5)",
+      "language": "python",
+      "context": "Example: RotatingDifferentAxis\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Rotating",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Animation"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "interpolate_mobject",
+      "class_name": null,
+      "parameters": [
+        "alpha"
+      ],
+      "return_type": null,
+      "description": "Interpolates the mobject of theAnimationbased on alpha value."
+    }
+  ],
+  "related_classes": [
+    "Rotate",
+    "Circle",
+    "Line",
+    "VGroup",
+    "ThreeDScene",
+    "Arrow",
+    "Axes",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

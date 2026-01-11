@@ -1,0 +1,136 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.types.vectorized_mobject.VDict.html",
+  "title": "VDict\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "VDict\u00b6\n\nQualified name:manim.mobject.types.vectorized\\_mobject.VDict\n\nclassVDict(mapping_or_iterable={},show_keys=False,**kwargs)[source]\u00b6\n\nBases:VMobjectA VGroup-like class, also offering submobject access by\nkey, like a python dictParameters:mapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.show_keys(bool) \u2013 Whether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. Defaults to False.kwargs\u2013 Other arguments to be passed toMobject.show_keys\u00b6Whether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. When displayed, the key is towards\nthe left of the mobject.\nDefaults to False.Type:boolsubmob_dict\u00b6Is the actual python dictionary that is used to bind\nthe keys to the mobjects.Type:dictExamplesExample: ShapesWithVDict\u00b6frommanimimport*classShapesWithVDict(Scene):defconstruct(self):square=Square().set_color(RED)circle=Circle().set_color(YELLOW).next_to(square,UP)# create dict from list of tuples each having key-mobject pairpairs=[(\"s\",square),(\"c\",circle)]my_dict=VDict(pairs,show_keys=True)# display it just like a VGroupself.play(Create(my_dict))self.wait()text=Tex(\"Some text\").set_color(GREEN).next_to(square,DOWN)# add a key-value pair by wrapping it in a single-element list of tuple# after attrs branch is merged, it will be easier like `.add(t=text)`my_dict.add([(\"t\",text)])self.wait()rect=Rectangle().next_to(text,DOWN)# can also do key assignment like a python dictmy_dict[\"r\"]=rect# access submobjects like a python dictmy_dict[\"t\"].set_color(PURPLE)self.play(my_dict[\"t\"].animate.scale(3))self.wait()# also supports python dict styled reassignmentmy_dict[\"t\"]=Tex(\"Some other text\").set_color(BLUE)self.wait()# remove submobject by keymy_dict.remove(\"t\")self.wait()self.play(Uncreate(my_dict[\"s\"]))self.wait()self.play(FadeOut(my_dict[\"c\"]))self.wait()self.play(FadeOut(my_dict[\"r\"],shift=DOWN))self.wait()# you can also make a VDict from an existing dict of mobjectsplain_dict={1:Integer(1).shift(DOWN),2:Integer(2).shift(2*DOWN),3:Integer(3).shift(3*DOWN),}vdict_from_plain_dict=VDict(plain_dict)vdict_from_plain_dict.shift(1.5*(UP+LEFT))self.play(Create(vdict_from_plain_dict))# you can even use zipvdict_using_zip=VDict(zip([\"s\",\"c\",\"r\"],[Square(),Circle(),Rectangle()]))vdict_using_zip.shift(1.5*RIGHT)self.play(Create(vdict_using_zip))self.wait()class ShapesWithVDict(Scene):\n    def construct(self):\n        square = Square().set_color(RED)\n        circle = Circle().set_color(YELLOW).next_to(square, UP)\n\n        # create dict from list of tuples each having key-mobject pair\n        pairs = [(\"s\", square), (\"c\", circle)]\n        my_dict = VDict(pairs, show_keys=True)\n\n        # display it just like a VGroup\n        self.play(Create(my_dict))\n        self.wait()\n\n        text = Tex(\"Some text\").set_color(GREEN).next_to(square, DOWN)\n\n        # add a key-value pair by wrapping it in a single-element list of tuple\n        # after attrs branch is merged, it will be easier like `.add(t=text)`\n        my_dict.add([(\"t\", text)])\n        self.wait()\n\n        rect = Rectangle().next_to(text, DOWN)\n        # can also do key assignment like a python dict\n        my_dict[\"r\"] = rect\n\n        # access submobjects like a python dict\n        my_dict[\"t\"].set_color(PURPLE)\n        self.play(my_dict[\"t\"].animate.scale(3))\n        self.wait()\n\n        # also supports python dict styled reassignment\n        my_dict[\"t\"] = Tex(\"Some other text\").set_color(BLUE)\n        self.wait()\n\n        # remove submobject by key\n        my_dict.remove(\"t\")\n        self.wait()\n\n        self.play(Uncreate(my_dict[\"s\"]))\n        self.wait()\n\n        self.play(FadeOut(my_dict[\"c\"]))\n        self.wait()\n\n        self.play(FadeOut(my_dict[\"r\"], shift=DOWN))\n        self.wait()\n\n        # you can also make a VDict from an existing dict of mobjects\n        plain_dict = {\n            1: Integer(1).shift(DOWN),\n            2: Integer(2).shift(2 * DOWN),\n            3: Integer(3).shift(3 * DOWN),\n        }\n\n        vdict_from_plain_dict = VDict(plain_dict)\n        vdict_from_plain_dict.shift(1.5 * (UP + LEFT))\n        self.play(Create(vdict_from_plain_dict))\n\n        # you can even use zip\n        vdict_using_zip = VDict(zip([\"s\", \"c\", \"r\"], [Square(), Circle(), Rectangle()]))\n        vdict_using_zip.shift(1.5 * RIGHT)\n        self.play(Create(vdict_using_zip))\n        self.wait()MethodsaddAdds the key-value pairs to theVDictobject.add_key_value_pairA utility function used byadd()to add the key-value pair tosubmob_dict.get_all_submobjectsTo get all the submobjects associated with a particularVDictobjectremoveRemoves the mobject from theVDictobject having the keykeyAttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(mapping_or_iterable={},show_keys=False,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:mapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]])show_keys(bool)Return type:Noneadd(mapping_or_iterable)[source]\u00b6Adds the key-value pairs to theVDictobject.Also, it internally adds the value to thesubmobjectslistofMobject, which is responsible for actual on-screen display.Parameters:mapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.Returns:Returns theVDictobject on which this method was called.Return type:VDictExamplesNormal usage:square_obj=Square()my_dict.add([(\"s\",square_obj)])add_key_value_pair(key,value)[source]\u00b6A utility function used byadd()to add the key-value pair\ntosubmob_dict. Not really meant to be used externally.Parameters:key(Hashable) \u2013 The key of the submobject to be added.value(VMobject) \u2013 The mobject associated with the keyReturn type:NoneRaises:TypeError\u2013 If the value is not an instance of VMobjectExamplesNormal usage:square_obj=Square()self.add_key_value_pair(\"s\",square_obj)get_all_submobjects()[source]\u00b6To get all the submobjects associated with a particularVDictobjectReturns:All the submobjects associated with theVDictobjectReturn type:dict_valuesExamplesNormal usage:forsubmobinmy_dict.get_all_submobjects():self.play(Create(submob))remove(key)[source]\u00b6Removes the mobject from theVDictobject having the keykeyAlso, it internally removes the mobject from thesubmobjectslistofMobject, (which is responsible for removing it from the screen)Parameters:key(Hashable) \u2013 The key of the submoject to be removed.Returns:Returns theVDictobject on which this method was called.Return type:VDictExamplesNormal usage:my_dict.remove(\"square\")\n\nBases:VMobject\n\nA VGroup-like class, also offering submobject access by\nkey, like a python dict\n\nParameters:\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.show_keys(bool) \u2013 Whether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. Defaults to False.kwargs\u2013 Other arguments to be passed toMobject.\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.\n\nshow_keys(bool) \u2013 Whether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. Defaults to False.\n\nshow_keys(bool) \u2013 Whether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. Defaults to False.\n\nkwargs\u2013 Other arguments to be passed toMobject.\n\nkwargs\u2013 Other arguments to be passed toMobject.\n\nshow_keys\u00b6\n\nWhether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. When displayed, the key is towards\nthe left of the mobject.\nDefaults to False.Type:bool\n\nWhether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. When displayed, the key is towards\nthe left of the mobject.\nDefaults to False.\n\nType:\n\nbool\n\nbool\n\nsubmob_dict\u00b6\n\nIs the actual python dictionary that is used to bind\nthe keys to the mobjects.Type:dict\n\nIs the actual python dictionary that is used to bind\nthe keys to the mobjects.\n\nType:\n\ndict\n\ndict\n\nExamples\n\nExample: ShapesWithVDict\u00b6\n\nMethods\n\nadd\n\nAdds the key-value pairs to theVDictobject.\n\nadd_key_value_pair\n\nA utility function used byadd()to add the key-value pair tosubmob_dict.\n\nget_all_submobjects\n\nTo get all the submobjects associated with a particularVDictobject\n\nremove\n\nRemoves the mobject from theVDictobject having the keykey\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(mapping_or_iterable={},show_keys=False,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:mapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]])show_keys(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]])show_keys(bool)\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]])\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]])\n\nshow_keys(bool)\n\nshow_keys(bool)\n\nReturn type:\n\nNone\n\nNone\n\nadd(mapping_or_iterable)[source]\u00b6\n\nAdds the key-value pairs to theVDictobject.Also, it internally adds the value to thesubmobjectslistofMobject, which is responsible for actual on-screen display.Parameters:mapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.Returns:Returns theVDictobject on which this method was called.Return type:VDictExamplesNormal usage:square_obj=Square()my_dict.add([(\"s\",square_obj)])\n\nAdds the key-value pairs to theVDictobject.\n\nAlso, it internally adds the value to thesubmobjectslistofMobject, which is responsible for actual on-screen display.\n\nParameters:\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.\n\nmapping_or_iterable(Mapping[Hashable,VMobject]|Iterable[tuple[Hashable,VMobject]]) \u2013 The parameter specifying the key-value mapping of keys and mobjects.\n\nReturns:\n\nReturns theVDictobject on which this method was called.\n\nReturns theVDictobject on which this method was called.\n\nReturn type:\n\nVDict\n\nVDict\n\nExamples\n\nNormal usage:\n\nadd_key_value_pair(key,value)[source]\u00b6\n\nA utility function used byadd()to add the key-value pair\ntosubmob_dict. Not really meant to be used externally.Parameters:key(Hashable) \u2013 The key of the submobject to be added.value(VMobject) \u2013 The mobject associated with the keyReturn type:NoneRaises:TypeError\u2013 If the value is not an instance of VMobjectExamplesNormal usage:square_obj=Square()self.add_key_value_pair(\"s\",square_obj)\n\nA utility function used byadd()to add the key-value pair\ntosubmob_dict. Not really meant to be used externally.\n\nParameters:\n\nkey(Hashable) \u2013 The key of the submobject to be added.value(VMobject) \u2013 The mobject associated with the key\n\nkey(Hashable) \u2013 The key of the submobject to be added.\n\nkey(Hashable) \u2013 The key of the submobject to be added.\n\nvalue(VMobject) \u2013 The mobject associated with the key\n\nvalue(VMobject) \u2013 The mobject associated with the key\n\nReturn type:\n\nNone\n\nNone\n\nRaises:\n\nTypeError\u2013 If the value is not an instance of VMobject\n\nTypeError\u2013 If the value is not an instance of VMobject\n\nExamples\n\nNormal usage:\n\nget_all_submobjects()[source]\u00b6\n\nTo get all the submobjects associated with a particularVDictobjectReturns:All the submobjects associated with theVDictobjectReturn type:dict_valuesExamplesNormal usage:forsubmobinmy_dict.get_all_submobjects():self.play(Create(submob))\n\nTo get all the submobjects associated with a particularVDictobject\n\nReturns:\n\nAll the submobjects associated with theVDictobject\n\nAll the submobjects associated with theVDictobject\n\nReturn type:\n\ndict_values\n\ndict_values\n\nExamples\n\nNormal usage:\n\nremove(key)[source]\u00b6\n\nRemoves the mobject from theVDictobject having the keykeyAlso, it internally removes the mobject from thesubmobjectslistofMobject, (which is responsible for removing it from the screen)Parameters:key(Hashable) \u2013 The key of the submoject to be removed.Returns:Returns theVDictobject on which this method was called.Return type:VDictExamplesNormal usage:my_dict.remove(\"square\")\n\nRemoves the mobject from theVDictobject having the keykey\n\nAlso, it internally removes the mobject from thesubmobjectslistofMobject, (which is responsible for removing it from the screen)\n\nParameters:\n\nkey(Hashable) \u2013 The key of the submoject to be removed.\n\nkey(Hashable) \u2013 The key of the submoject to be removed.\n\nReturns:\n\nReturns theVDictobject on which this method was called.\n\nReturns theVDictobject on which this method was called.\n\nReturn type:\n\nVDict\n\nVDict\n\nExamples\n\nNormal usage:",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classShapesWithVDict(Scene):defconstruct(self):square=Square().set_color(RED)circle=Circle().set_color(YELLOW).next_to(square,UP)# create dict from list of tuples each having key-mobject pairpairs=[(\"s\",square),(\"c\",circle)]my_dict=VDict(pairs,show_keys=True)# display it just like a VGroupself.play(Create(my_dict))self.wait()text=Tex(\"Some text\").set_color(GREEN).next_to(square,DOWN)# add a key-value pair by wrapping it in a single-element list of tuple# after attrs branch is merged, it will be easier like `.add(t=text)`my_dict.add([(\"t\",text)])self.wait()rect=Rectangle().next_to(text,DOWN)# can also do key assignment like a python dictmy_dict[\"r\"]=rect# access submobjects like a python dictmy_dict[\"t\"].set_color(PURPLE)self.play(my_dict[\"t\"].animate.scale(3))self.wait()# also supports python dict styled reassignmentmy_dict[\"t\"]=Tex(\"Some other text\").set_color(BLUE)self.wait()# remove submobject by keymy_dict.remove(\"t\")self.wait()self.play(Uncreate(my_dict[\"s\"]))self.wait()self.play(FadeOut(my_dict[\"c\"]))self.wait()self.play(FadeOut(my_dict[\"r\"],shift=DOWN))self.wait()# you can also make a VDict from an existing dict of mobjectsplain_dict={1:Integer(1).shift(DOWN),2:Integer(2).shift(2*DOWN),3:Integer(3).shift(3*DOWN),}vdict_from_plain_dict=VDict(plain_dict)vdict_from_plain_dict.shift(1.5*(UP+LEFT))self.play(Create(vdict_from_plain_dict))# you can even use zipvdict_using_zip=VDict(zip([\"s\",\"c\",\"r\"],[Square(),Circle(),Rectangle()]))vdict_using_zip.shift(1.5*RIGHT)self.play(Create(vdict_using_zip))self.wait()",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ShapesWithVDict(Scene):\n    def construct(self):\n        square = Square().set_color(RED)\n        circle = Circle().set_color(YELLOW).next_to(square, UP)\n\n        # create dict from list of tuples each having key-mobject pair\n        pairs = [(\"s\", square), (\"c\", circle)]\n        my_dict = VDict(pairs, show_keys=True)\n\n        # display it just like a VGroup\n        self.play(Create(my_dict))\n        self.wait()\n\n        text = Tex(\"Some text\").set_color(GREEN).next_to(square, DOWN)\n\n        # add a key-value pair by wrapping it in a single-element list of tuple\n        # after attrs branch is merged, it will be easier like `.add(t=text)`\n        my_dict.add([(\"t\", text)])\n        self.wait()\n\n        rect = Rectangle().next_to(text, DOWN)\n        # can also do key assignment like a python dict\n        my_dict[\"r\"] = rect\n\n        # access submobjects like a python dict\n        my_dict[\"t\"].set_color(PURPLE)\n        self.play(my_dict[\"t\"].animate.scale(3))\n        self.wait()\n\n        # also supports python dict styled reassignment\n        my_dict[\"t\"] = Tex(\"Some other text\").set_color(BLUE)\n        self.wait()\n\n        # remove submobject by key\n        my_dict.remove(\"t\")\n        self.wait()\n\n        self.play(Uncreate(my_dict[\"s\"]))\n        self.wait()\n\n        self.play(FadeOut(my_dict[\"c\"]))\n        self.wait()\n\n        self.play(FadeOut(my_dict[\"r\"], shift=DOWN))\n        self.wait()\n\n        # you can also make a VDict from an existing dict of mobjects\n        plain_dict = {\n            1: Integer(1).shift(DOWN),\n            2: Integer(2).shift(2 * DOWN),\n            3: Integer(3).shift(3 * DOWN),\n        }\n\n        vdict_from_plain_dict = VDict(plain_dict)\n        vdict_from_plain_dict.shift(1.5 * (UP + LEFT))\n        self.play(Create(vdict_from_plain_dict))\n\n        # you can even use zip\n        vdict_using_zip = VDict(zip([\"s\", \"c\", \"r\"], [Square(), Circle(), Rectangle()]))\n        vdict_using_zip.shift(1.5 * RIGHT)\n        self.play(Create(vdict_using_zip))\n        self.wait()",
+      "language": "python",
+      "context": "Example: ShapesWithVDict\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "square_obj=Square()my_dict.add([(\"s\",square_obj)])",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "square_obj=Square()self.add_key_value_pair(\"s\",square_obj)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "forsubmobinmy_dict.get_all_submobjects():self.play(Create(submob))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "my_dict.remove(\"square\")",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "VDict",
+      "class_name": null,
+      "parameters": [
+        "mapping_or_iterable={}"
+      ],
+      "return_type": null,
+      "description": "Bases:VMobject"
+    },
+    {
+      "name": "show_keys",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Whether to also display the key associated with\nthe mobject. This might be useful when debugging,\nespecially when there are a lot of mobjects in theVDict. When displayed, the key is towards\nthe left of the mobject.\nDefaults to False."
+    },
+    {
+      "name": "submob_dict",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Is the actual python dictionary that is used to bind\nthe keys to the mobjects."
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "mapping_or_iterable={}"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "add",
+      "class_name": null,
+      "parameters": [
+        "mapping_or_iterable"
+      ],
+      "return_type": null,
+      "description": "Adds the key-value pairs to theVDictobject."
+    },
+    {
+      "name": "add_key_value_pair",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "A utility function used byadd()to add the key-value pair\ntosubmob_dict. Not really meant to be used externally."
+    },
+    {
+      "name": "get_all_submobjects",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "To get all the submobjects associated with a particularVDictobject"
+    },
+    {
+      "name": "remove",
+      "class_name": null,
+      "parameters": [
+        "key"
+      ],
+      "return_type": null,
+      "description": "Removes the mobject from theVDictobject having the keykey"
+    }
+  ],
+  "related_classes": [
+    "Circle",
+    "Square",
+    "Create",
+    "VGroup",
+    "Tex",
+    "FadeOut",
+    "VMobject",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "text",
+    "transformation",
+    "geometry",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

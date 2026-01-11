@@ -1,0 +1,30 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.scene.scene.html#manim.scene.scene.SceneInteractAction",
+  "title": "scene\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "scene\u00b6\n\nBasic canvas for animations.\n\nType Aliases\n\nclassSceneInteractAction\u00b6\n\nMethodWithArgs|'SceneInteractContinue'|'SceneInteractRerun'\n\nClasses\n\nRerunSceneHandler\n\nA class to handle rerunning a Scene after the input file is modified.\n\nScene\n\nA Scene is the canvas of your animation.\n\nSceneInteractContinue\n\nObject which, when encountered inScene.interact(), triggers the end of the scene interaction, continuing with the rest of the animations, if any.\n\nSceneInteractRerun\n\nObject which, when encountered inScene.interact(), triggers the rerun of the scene.",
+  "code_examples": [
+    {
+      "code": "MethodWithArgs|'SceneInteractContinue'|'SceneInteractRerun'",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "SceneInteractAction",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": ""
+    }
+  ],
+  "related_classes": [
+    "Scene"
+  ],
+  "tags": [
+    "animation"
+  ]
+}

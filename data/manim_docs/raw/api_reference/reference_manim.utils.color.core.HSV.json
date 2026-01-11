@@ -1,0 +1,47 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.color.core.HSV.html",
+  "title": "HSV\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "HSV\u00b6\n\nQualified name:manim.utils.color.core.HSV\n\nclassHSV(hsv,alpha=1.0)[source]\u00b6\n\nBases:ManimColorHSV Color SpaceMethodsAttributeshhuessaturationvvalueParameters:hsv(FloatHSVLike|FloatHSVALike)alpha(float)classmethod_from_internal(value)[source]\u00b6This method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor.The method constructs a new object of the given class by transforming the value\nin the internal format[r,g,b,a]into a format which the constructor of the\ncustom class can understand. Look atHSVfor an example.Parameters:value(ManimColorInternal)Return type:Selfproperty_internal_space:ndarray[tuple[Any,...],dtype[_ScalarT]]\u00b6This is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space.property_internal_value:ManimColorInternal\u00b6Return the internal value of the currentManimColoras an[r,g,b,a]float array.Returns:Internal color representation.Return type:ManimColorInternal\n\nBases:ManimColor\n\nHSV Color Space\n\nMethods\n\nAttributes\n\nh\n\nhue\n\ns\n\nsaturation\n\nv\n\nvalue\n\nParameters:\n\nhsv(FloatHSVLike|FloatHSVALike)alpha(float)\n\nhsv(FloatHSVLike|FloatHSVALike)\n\nhsv(FloatHSVLike|FloatHSVALike)\n\nalpha(float)\n\nalpha(float)\n\nclassmethod_from_internal(value)[source]\u00b6\n\nThis method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor.The method constructs a new object of the given class by transforming the value\nin the internal format[r,g,b,a]into a format which the constructor of the\ncustom class can understand. Look atHSVfor an example.Parameters:value(ManimColorInternal)Return type:Self\n\nThis method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor.\n\nThe method constructs a new object of the given class by transforming the value\nin the internal format[r,g,b,a]into a format which the constructor of the\ncustom class can understand. Look atHSVfor an example.\n\nParameters:\n\nvalue(ManimColorInternal)\n\nvalue(ManimColorInternal)\n\nReturn type:\n\nSelf\n\nSelf\n\nproperty_internal_space:ndarray[tuple[Any,...],dtype[_ScalarT]]\u00b6\n\nThis is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space.\n\nThis is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space.\n\nproperty_internal_value:ManimColorInternal\u00b6\n\nReturn the internal value of the currentManimColoras an[r,g,b,a]float array.Returns:Internal color representation.Return type:ManimColorInternal\n\nReturn the internal value of the currentManimColoras an[r,g,b,a]float array.\n\nReturns:\n\nInternal color representation.\n\nInternal color representation.\n\nReturn type:\n\nManimColorInternal\n\nManimColorInternal",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "HSV",
+      "class_name": null,
+      "parameters": [
+        "hsv"
+      ],
+      "return_type": null,
+      "description": "Bases:ManimColor"
+    },
+    {
+      "name": "_from_internal",
+      "class_name": null,
+      "parameters": [
+        "value"
+      ],
+      "return_type": null,
+      "description": "This method is intended to be overwritten by custom color space classes\nwhich are subtypes ofManimColor."
+    },
+    {
+      "name": "_internal_space",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "This is a readonly property which is a custom representation for color space\noperations. It is used for operators and can be used when implementing a custom\ncolor space."
+    },
+    {
+      "name": "_internal_value",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Return the internal value of the currentManimColoras an[r,g,b,a]float array."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "color",
+    "transformation"
+  ]
+}

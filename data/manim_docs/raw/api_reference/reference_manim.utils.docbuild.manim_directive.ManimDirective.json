@@ -1,0 +1,60 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.manim_directive.ManimDirective.html",
+  "title": "ManimDirective\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "ManimDirective\u00b6\n\nQualified name:manim.utils.docbuild.manim\\_directive.ManimDirective\n\nclassManimDirective(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine)[source]\u00b6\n\nBases:DirectiveThe manim directive, rendering videos while building\nthe documentation.See the module docstring for documentation.MethodsrunAttributesfinal_argument_whitespaceMay the final argument contain whitespace?has_contentMay the directive have content?option_specMapping of option names to validator functions.optional_argumentsNumber of optional arguments after the required arguments.required_argumentsNumber of required directive arguments.final_argument_whitespace=True\u00b6May the final argument contain whitespace?has_content=True\u00b6May the directive have content?option_spec={'hide_source':<class'bool'>,'no_autoplay':<class'bool'>,'quality':<functionManimDirective.<lambda>>,'ref_classes':<functionManimDirective.<lambda>>,'ref_functions':<functionManimDirective.<lambda>>,'ref_methods':<functionManimDirective.<lambda>>,'ref_modules':<functionManimDirective.<lambda>>,'save_as_gif':<class'bool'>,'save_last_frame':<class'bool'>}\u00b6Mapping of option names to validator functions.optional_arguments=0\u00b6Number of optional arguments after the required arguments.required_arguments=1\u00b6Number of required directive arguments.\n\nBases:Directive\n\nThe manim directive, rendering videos while building\nthe documentation.\n\nSee the module docstring for documentation.\n\nMethods\n\nrun\n\nAttributes\n\nfinal_argument_whitespace\n\nMay the final argument contain whitespace?\n\nhas_content\n\nMay the directive have content?\n\noption_spec\n\nMapping of option names to validator functions.\n\noptional_arguments\n\nNumber of optional arguments after the required arguments.\n\nrequired_arguments\n\nNumber of required directive arguments.\n\nfinal_argument_whitespace=True\u00b6\n\nMay the final argument contain whitespace?\n\nMay the final argument contain whitespace?\n\nhas_content=True\u00b6\n\nMay the directive have content?\n\nMay the directive have content?\n\noption_spec={'hide_source':<class'bool'>,'no_autoplay':<class'bool'>,'quality':<functionManimDirective.<lambda>>,'ref_classes':<functionManimDirective.<lambda>>,'ref_functions':<functionManimDirective.<lambda>>,'ref_methods':<functionManimDirective.<lambda>>,'ref_modules':<functionManimDirective.<lambda>>,'save_as_gif':<class'bool'>,'save_last_frame':<class'bool'>}\u00b6\n\nMapping of option names to validator functions.\n\nMapping of option names to validator functions.\n\noptional_arguments=0\u00b6\n\nNumber of optional arguments after the required arguments.\n\nNumber of optional arguments after the required arguments.\n\nrequired_arguments=1\u00b6\n\nNumber of required directive arguments.\n\nNumber of required directive arguments.",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "ManimDirective",
+      "class_name": null,
+      "parameters": [
+        "name"
+      ],
+      "return_type": null,
+      "description": "Bases:Directive"
+    },
+    {
+      "name": "final_argument_whitespace",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "May the final argument contain whitespace?"
+    },
+    {
+      "name": "has_content",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "May the directive have content?"
+    },
+    {
+      "name": "option_spec",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Mapping of option names to validator functions."
+    },
+    {
+      "name": "optional_arguments",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Number of optional arguments after the required arguments."
+    },
+    {
+      "name": "required_arguments",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Number of required directive arguments."
+    }
+  ],
+  "related_classes": [],
+  "tags": [
+    "animation",
+    "text",
+    "graph"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.TypeWithCursor.html",
+  "title": "TypeWithCursor\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "TypeWithCursor\u00b6\n\nQualified name:manim.animation.creation.TypeWithCursor\n\nclassTypeWithCursor(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:AddTextLetterByLetterSimilar toAddTextLetterByLetter, but with an additional cursor mobject at the end.Parameters:time_per_char(float) \u2013 Frequency of appearance of the letters.cursor(Mobject) \u2013Mobjectshown after the last added letter.buff(float) \u2013 Controls how far away the cursor is to the right of the last added letter.keep_cursor_y(bool) \u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.leave_cursor_on(bool) \u2013 Whether to show the cursor after the animation.tip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.text(Text)ExamplesExample: InsertingTextExample\u00b6frommanimimport*classInsertingTextExample(Scene):defconstruct(self):text=Text(\"Inserting\",color=PURPLE).scale(1.5).to_edge(LEFT)cursor=Rectangle(color=GREY_A,fill_color=GREY_A,fill_opacity=1.0,height=1.1,width=0.5,).move_to(text[0])# Position the cursorself.play(TypeWithCursor(text,cursor))self.play(Blink(cursor,blinks=2))class InsertingTextExample(Scene):\n    def construct(self):\n        text = Text(\"Inserting\", color=PURPLE).scale(1.5).to_edge(LEFT)\n        cursor = Rectangle(\n            color = GREY_A,\n            fill_color = GREY_A,\n            fill_opacity = 1.0,\n            height = 1.1,\n            width = 0.5,\n        ).move_to(text[0]) # Position the cursor\n\n        self.play(TypeWithCursor(text, cursor))\n        self.play(Blink(cursor, blinks=2))References:BlinkMethodsbeginBegin the animation.clean_up_from_sceneClean up theSceneafter finishing the animation.finishFinish the animation.update_submobject_listAttributesrun_time_original__init__(text,cursor,buff=0.1,keep_cursor_y=True,leave_cursor_on=True,time_per_char=0.1,reverse_rate_function=False,introducer=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:text(Text)cursor(Mobject)buff(float)keep_cursor_y(bool)leave_cursor_on(bool)time_per_char(float)Return type:Nonebegin()[source]\u00b6Begin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:Noneclean_up_from_scene(scene)[source]\u00b6Clean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:Nonefinish()[source]\u00b6Finish the animation.This method gets called when the animation is over.Return type:None\n\nBases:AddTextLetterByLetter\n\nSimilar toAddTextLetterByLetter, but with an additional cursor mobject at the end.\n\nParameters:\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.cursor(Mobject) \u2013Mobjectshown after the last added letter.buff(float) \u2013 Controls how far away the cursor is to the right of the last added letter.keep_cursor_y(bool) \u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.leave_cursor_on(bool) \u2013 Whether to show the cursor after the animation.tip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.text(Text)\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.\n\ntime_per_char(float) \u2013 Frequency of appearance of the letters.\n\ncursor(Mobject) \u2013Mobjectshown after the last added letter.\n\ncursor(Mobject) \u2013Mobjectshown after the last added letter.\n\nbuff(float) \u2013 Controls how far away the cursor is to the right of the last added letter.\n\nbuff(float) \u2013 Controls how far away the cursor is to the right of the last added letter.\n\nkeep_cursor_y(bool) \u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.\n\nkeep_cursor_y(bool) \u2013 IfTrue, the cursor\u2019s y-coordinate is set to the center of theTextand remains the same throughout the animation. Otherwise, it is set to the center of the last added letter.\n\nleave_cursor_on(bool) \u2013 Whether to show the cursor after the animation.\n\nleave_cursor_on(bool) \u2013 Whether to show the cursor after the animation.\n\ntip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.\n\ntip::(..) \u2013 This is currently only possible for class:~.Textand not for class:~.MathTex.\n\ntext(Text)\n\ntext(Text)\n\nExamples\n\nExample: InsertingTextExample\u00b6\n\nReferences:Blink\n\nMethods\n\nbegin\n\nBegin the animation.\n\nclean_up_from_scene\n\nClean up theSceneafter finishing the animation.\n\nfinish\n\nFinish the animation.\n\nupdate_submobject_list\n\nAttributes\n\nrun_time\n\n_original__init__(text,cursor,buff=0.1,keep_cursor_y=True,leave_cursor_on=True,time_per_char=0.1,reverse_rate_function=False,introducer=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:text(Text)cursor(Mobject)buff(float)keep_cursor_y(bool)leave_cursor_on(bool)time_per_char(float)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ntext(Text)cursor(Mobject)buff(float)keep_cursor_y(bool)leave_cursor_on(bool)time_per_char(float)\n\ntext(Text)\n\ntext(Text)\n\ncursor(Mobject)\n\ncursor(Mobject)\n\nbuff(float)\n\nbuff(float)\n\nkeep_cursor_y(bool)\n\nkeep_cursor_y(bool)\n\nleave_cursor_on(bool)\n\nleave_cursor_on(bool)\n\ntime_per_char(float)\n\ntime_per_char(float)\n\nReturn type:\n\nNone\n\nNone\n\nbegin()[source]\u00b6\n\nBegin the animation.This method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.Return type:None\n\nBegin the animation.\n\nThis method is called right as an animation is being played. As much\ninitialization as possible, especially any mobject copying, should live in this\nmethod.\n\nReturn type:\n\nNone\n\nNone\n\nclean_up_from_scene(scene)[source]\u00b6\n\nClean up theSceneafter finishing the animation.This includes toremove()the Animation\u2019sMobjectif the animation is a remover.Parameters:scene(Scene) \u2013 The scene the animation should be cleaned up from.Return type:None\n\nClean up theSceneafter finishing the animation.\n\nThis includes toremove()the Animation\u2019sMobjectif the animation is a remover.\n\nParameters:\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nscene(Scene) \u2013 The scene the animation should be cleaned up from.\n\nReturn type:\n\nNone\n\nNone\n\nfinish()[source]\u00b6\n\nFinish the animation.This method gets called when the animation is over.Return type:None\n\nFinish the animation.\n\nThis method gets called when the animation is over.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classInsertingTextExample(Scene):defconstruct(self):text=Text(\"Inserting\",color=PURPLE).scale(1.5).to_edge(LEFT)cursor=Rectangle(color=GREY_A,fill_color=GREY_A,fill_opacity=1.0,height=1.1,width=0.5,).move_to(text[0])# Position the cursorself.play(TypeWithCursor(text,cursor))self.play(Blink(cursor,blinks=2))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class InsertingTextExample(Scene):\n    def construct(self):\n        text = Text(\"Inserting\", color=PURPLE).scale(1.5).to_edge(LEFT)\n        cursor = Rectangle(\n            color = GREY_A,\n            fill_color = GREY_A,\n            fill_opacity = 1.0,\n            height = 1.1,\n            width = 0.5,\n        ).move_to(text[0]) # Position the cursor\n\n        self.play(TypeWithCursor(text, cursor))\n        self.play(Blink(cursor, blinks=2))",
+      "language": "python",
+      "context": "Example: InsertingTextExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "TypeWithCursor",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:AddTextLetterByLetter"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "text"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "begin",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Begin the animation."
+    },
+    {
+      "name": "clean_up_from_scene",
+      "class_name": null,
+      "parameters": [
+        "scene"
+      ],
+      "return_type": null,
+      "description": "Clean up theSceneafter finishing the animation."
+    },
+    {
+      "name": "finish",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Finish the animation."
+    }
+  ],
+  "related_classes": [
+    "Tex",
+    "MathTex",
+    "Text",
+    "Scene",
+    "Mobject",
+    "Rectangle"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "text",
+    "transformation",
+    "geometry",
+    "animation",
+    "graph"
+  ]
+}

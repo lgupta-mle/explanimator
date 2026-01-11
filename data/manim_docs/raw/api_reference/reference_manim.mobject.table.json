@@ -1,0 +1,29 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.table.html",
+  "title": "table\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "table\u00b6\n\nMobjects representing tables.\n\nExamples\n\nExample: TableExamples\u00b6\n\nClasses\n\nDecimalTable\n\nA specializedTablemobject for use withDecimalNumberto display decimal entries.\n\nIntegerTable\n\nA specializedTablemobject for use withInteger.\n\nMathTable\n\nA specializedTablemobject for use with LaTeX.\n\nMobjectTable\n\nA specializedTablemobject for use withMobject.\n\nTable\n\nA mobject that displays a table on the screen.",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classTableExamples(Scene):defconstruct(self):t0=Table([[\"First\",\"Second\"],[\"Third\",\"Fourth\"]],row_labels=[Text(\"R1\"),Text(\"R2\")],col_labels=[Text(\"C1\"),Text(\"C2\")],top_left_entry=Text(\"TOP\"))t0.add_highlighted_cell((2,2),color=GREEN)x_vals=np.linspace(-2,2,5)y_vals=np.exp(x_vals)t1=DecimalTable([x_vals,y_vals],row_labels=[MathTex(\"x\"),MathTex(\"f(x)\")],include_outer_lines=True)t1.add(t1.get_cell((2,2),color=RED))t2=MathTable([[\"+\",0,5,10],[0,0,5,10],[2,2,7,12],[4,4,9,14]],include_outer_lines=True)t2.get_horizontal_lines()[:3].set_color(BLUE)t2.get_vertical_lines()[:3].set_color(BLUE)t2.get_horizontal_lines()[:3].set_z_index(1)cross=VGroup(Line(UP+LEFT,DOWN+RIGHT),Line(UP+RIGHT,DOWN+LEFT))a=Circle().set_color(RED).scale(0.5)b=cross.set_color(BLUE).scale(0.5)t3=MobjectTable([[a.copy(),b.copy(),a.copy()],[b.copy(),a.copy(),a.copy()],[a.copy(),b.copy(),b.copy()]])t3.add(Line(t3.get_corner(DL),t3.get_corner(UR)).set_color(RED))vals=np.arange(1,21).reshape(5,4)t4=IntegerTable(vals,include_outer_lines=True)g1=Group(t0,t1).scale(0.5).arrange(buff=1).to_edge(UP,buff=1)g2=Group(t2,t3,t4).scale(0.5).arrange(buff=1).to_edge(DOWN,buff=1)self.add(g1,g2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class TableExamples(Scene):\n    def construct(self):\n        t0 = Table(\n            [[\"First\", \"Second\"],\n            [\"Third\",\"Fourth\"]],\n            row_labels=[Text(\"R1\"), Text(\"R2\")],\n            col_labels=[Text(\"C1\"), Text(\"C2\")],\n            top_left_entry=Text(\"TOP\"))\n        t0.add_highlighted_cell((2,2), color=GREEN)\n        x_vals = np.linspace(-2,2,5)\n        y_vals = np.exp(x_vals)\n        t1 = DecimalTable(\n            [x_vals, y_vals],\n            row_labels=[MathTex(\"x\"), MathTex(\"f(x)\")],\n            include_outer_lines=True)\n        t1.add(t1.get_cell((2,2), color=RED))\n        t2 = MathTable(\n            [[\"+\", 0, 5, 10],\n            [0, 0, 5, 10],\n            [2, 2, 7, 12],\n            [4, 4, 9, 14]],\n            include_outer_lines=True)\n        t2.get_horizontal_lines()[:3].set_color(BLUE)\n        t2.get_vertical_lines()[:3].set_color(BLUE)\n        t2.get_horizontal_lines()[:3].set_z_index(1)\n        cross = VGroup(\n            Line(UP + LEFT, DOWN + RIGHT),\n            Line(UP + RIGHT, DOWN + LEFT))\n        a = Circle().set_color(RED).scale(0.5)\n        b = cross.set_color(BLUE).scale(0.5)\n        t3 = MobjectTable(\n            [[a.copy(),b.copy(),a.copy()],\n            [b.copy(),a.copy(),a.copy()],\n            [a.copy(),b.copy(),b.copy()]])\n        t3.add(Line(\n            t3.get_corner(DL), t3.get_corner(UR)\n        ).set_color(RED))\n        vals = np.arange(1,21).reshape(5,4)\n        t4 = IntegerTable(\n            vals,\n            include_outer_lines=True\n        )\n        g1 = Group(t0, t1).scale(0.5).arrange(buff=1).to_edge(UP, buff=1)\n        g2 = Group(t2, t3, t4).scale(0.5).arrange(buff=1).to_edge(DOWN, buff=1)\n        self.add(g1, g2)",
+      "language": "python",
+      "context": "Example: TableExamples\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [],
+  "related_classes": [
+    "Mobject"
+  ],
+  "tags": [
+    "animation",
+    "text"
+  ]
+}

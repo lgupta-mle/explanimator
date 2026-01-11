@@ -1,0 +1,134 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Line3D.html",
+  "title": "Line3D\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Line3D\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Line3D\n\nclassLine3D(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),thickness=0.02,color=None,resolution=24,**kwargs)[source]\u00b6\n\nBases:CylinderA cylindrical line, for use in ThreeDScene.Parameters:start(np.ndarray) \u2013 The start point of the line.end(np.ndarray) \u2013 The end point of the line.thickness(float) \u2013 The thickness of the line.color(ParsableManimColor|None) \u2013 The color of the line.resolution(int|Sequence[int]) \u2013 The resolution of the line.\nBy default this value is the number of points the line will sampled at.\nIf you want the line to also come out checkered, use a tuple.\nFor example, for a line made of 24 points with 4 checker points on each\ncylinder, pass the tuple (4, 24).ExamplesExample: ExampleLine3D\u00b6frommanimimport*classExampleLine3D(ThreeDScene):defconstruct(self):axes=ThreeDAxes()line=Line3D(start=np.array([0,0,0]),end=np.array([2,2,2]))self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,line)class ExampleLine3D(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        line = Line3D(start=np.array([0, 0, 0]), end=np.array([2, 2, 2]))\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, line)Methodsget_endReturns the ending point of theLine3D.get_startReturns the starting point of theLine3D.parallel_toReturns a line parallel to another line going through a given point.perpendicular_toReturns a line perpendicular to another line going through a given point.pointifyGets a point representing the center of theMobjects.set_start_and_end_attrsSets the start and end points of the line.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),thickness=0.02,color=None,resolution=24,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:start(np.ndarray)end(np.ndarray)thickness(float)color(ParsableManimColor|None)resolution(int|Sequence[int])get_end()[source]\u00b6Returns the ending point of theLine3D.Returns:end\u2013 Ending point of theLine3D.Return type:numpy.arrayget_start()[source]\u00b6Returns the starting point of theLine3D.Returns:start\u2013 Starting point of theLine3D.Return type:numpy.arrayclassmethodparallel_to(line,point=array([0.,0.,0.]),length=5,**kwargs)[source]\u00b6Returns a line parallel to another line going through\na given point.Parameters:line(Line3D) \u2013 The line to be parallel to.point(Point3DLike) \u2013 The point to pass through.length(float) \u2013 Length of the parallel line.kwargs\u2013 Additional parameters to be passed to the class.Returns:Line parallel toline.Return type:Line3DExamplesExample: ParallelLineExample\u00b6frommanimimport*classParallelLineExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(PI/3,-PI/4)ax=ThreeDAxes((-5,5),(-5,5),(-5,5),10,10,10)line1=Line3D(RIGHT*2,UP+OUT,color=RED)line2=Line3D.parallel_to(line1,color=YELLOW)self.add(ax,line1,line2)class ParallelLineExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(PI / 3, -PI / 4)\n        ax = ThreeDAxes((-5, 5), (-5, 5), (-5, 5), 10, 10, 10)\n        line1 = Line3D(RIGHT * 2, UP + OUT, color=RED)\n        line2 = Line3D.parallel_to(line1, color=YELLOW)\n        self.add(ax, line1, line2)classmethodperpendicular_to(line,point=array([0.,0.,0.]),length=5,**kwargs)[source]\u00b6Returns a line perpendicular to another line going through\na given point.Parameters:line(Line3D) \u2013 The line to be perpendicular to.point(Vector3DLike) \u2013 The point to pass through.length(float) \u2013 Length of the perpendicular line.kwargs\u2013 Additional parameters to be passed to the class.Returns:Line perpendicular toline.Return type:Line3DExamplesExample: PerpLineExample\u00b6frommanimimport*classPerpLineExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(PI/3,-PI/4)ax=ThreeDAxes((-5,5),(-5,5),(-5,5),10,10,10)line1=Line3D(RIGHT*2,UP+OUT,color=RED)line2=Line3D.perpendicular_to(line1,color=BLUE)self.add(ax,line1,line2)class PerpLineExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(PI / 3, -PI / 4)\n        ax = ThreeDAxes((-5, 5), (-5, 5), (-5, 5), 10, 10, 10)\n        line1 = Line3D(RIGHT * 2, UP + OUT, color=RED)\n        line2 = Line3D.perpendicular_to(line1, color=BLUE)\n        self.add(ax, line1, line2)pointify(mob_or_point,direction=None)[source]\u00b6Gets a point representing the center of theMobjects.Parameters:mob_or_point(Mobject|Point3DLike) \u2013Mobjectsor point whose center should be returned.direction(Vector3DLike|None) \u2013 If an edge of aMobjectsshould be returned, the direction of the edge.Returns:Center of theMobjectsor point, or edge if direction is given.Return type:numpy.arrayset_start_and_end_attrs(start,end,**kwargs)[source]\u00b6Sets the start and end points of the line.If eitherstartorendareMobjects,\nthis gives their centers.Parameters:start(ndarray) \u2013 Starting point orMobject.end(ndarray) \u2013 Ending point orMobject.Return type:None\n\nBases:Cylinder\n\nA cylindrical line, for use in ThreeDScene.\n\nParameters:\n\nstart(np.ndarray) \u2013 The start point of the line.end(np.ndarray) \u2013 The end point of the line.thickness(float) \u2013 The thickness of the line.color(ParsableManimColor|None) \u2013 The color of the line.resolution(int|Sequence[int]) \u2013 The resolution of the line.\nBy default this value is the number of points the line will sampled at.\nIf you want the line to also come out checkered, use a tuple.\nFor example, for a line made of 24 points with 4 checker points on each\ncylinder, pass the tuple (4, 24).\n\nstart(np.ndarray) \u2013 The start point of the line.\n\nstart(np.ndarray) \u2013 The start point of the line.\n\nend(np.ndarray) \u2013 The end point of the line.\n\nend(np.ndarray) \u2013 The end point of the line.\n\nthickness(float) \u2013 The thickness of the line.\n\nthickness(float) \u2013 The thickness of the line.\n\ncolor(ParsableManimColor|None) \u2013 The color of the line.\n\ncolor(ParsableManimColor|None) \u2013 The color of the line.\n\nresolution(int|Sequence[int]) \u2013 The resolution of the line.\nBy default this value is the number of points the line will sampled at.\nIf you want the line to also come out checkered, use a tuple.\nFor example, for a line made of 24 points with 4 checker points on each\ncylinder, pass the tuple (4, 24).\n\nresolution(int|Sequence[int]) \u2013 The resolution of the line.\nBy default this value is the number of points the line will sampled at.\nIf you want the line to also come out checkered, use a tuple.\nFor example, for a line made of 24 points with 4 checker points on each\ncylinder, pass the tuple (4, 24).\n\nExamples\n\nExample: ExampleLine3D\u00b6\n\nMethods\n\nget_end\n\nReturns the ending point of theLine3D.\n\nget_start\n\nReturns the starting point of theLine3D.\n\nparallel_to\n\nReturns a line parallel to another line going through a given point.\n\nperpendicular_to\n\nReturns a line perpendicular to another line going through a given point.\n\npointify\n\nGets a point representing the center of theMobjects.\n\nset_start_and_end_attrs\n\nSets the start and end points of the line.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(start=array([-1.,0.,0.]),end=array([1.,0.,0.]),thickness=0.02,color=None,resolution=24,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:start(np.ndarray)end(np.ndarray)thickness(float)color(ParsableManimColor|None)resolution(int|Sequence[int])\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nstart(np.ndarray)end(np.ndarray)thickness(float)color(ParsableManimColor|None)resolution(int|Sequence[int])\n\nstart(np.ndarray)\n\nstart(np.ndarray)\n\nend(np.ndarray)\n\nend(np.ndarray)\n\nthickness(float)\n\nthickness(float)\n\ncolor(ParsableManimColor|None)\n\ncolor(ParsableManimColor|None)\n\nresolution(int|Sequence[int])\n\nresolution(int|Sequence[int])\n\nget_end()[source]\u00b6\n\nReturns the ending point of theLine3D.Returns:end\u2013 Ending point of theLine3D.Return type:numpy.array\n\nReturns the ending point of theLine3D.\n\nReturns:\n\nend\u2013 Ending point of theLine3D.\n\nend\u2013 Ending point of theLine3D.\n\nReturn type:\n\nnumpy.array\n\nnumpy.array\n\nget_start()[source]\u00b6\n\nReturns the starting point of theLine3D.Returns:start\u2013 Starting point of theLine3D.Return type:numpy.array\n\nReturns the starting point of theLine3D.\n\nReturns:\n\nstart\u2013 Starting point of theLine3D.\n\nstart\u2013 Starting point of theLine3D.\n\nReturn type:\n\nnumpy.array\n\nnumpy.array\n\nclassmethodparallel_to(line,point=array([0.,0.,0.]),length=5,**kwargs)[source]\u00b6\n\nReturns a line parallel to another line going through\na given point.Parameters:line(Line3D) \u2013 The line to be parallel to.point(Point3DLike) \u2013 The point to pass through.length(float) \u2013 Length of the parallel line.kwargs\u2013 Additional parameters to be passed to the class.Returns:Line parallel toline.Return type:Line3DExamplesExample: ParallelLineExample\u00b6frommanimimport*classParallelLineExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(PI/3,-PI/4)ax=ThreeDAxes((-5,5),(-5,5),(-5,5),10,10,10)line1=Line3D(RIGHT*2,UP+OUT,color=RED)line2=Line3D.parallel_to(line1,color=YELLOW)self.add(ax,line1,line2)class ParallelLineExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(PI / 3, -PI / 4)\n        ax = ThreeDAxes((-5, 5), (-5, 5), (-5, 5), 10, 10, 10)\n        line1 = Line3D(RIGHT * 2, UP + OUT, color=RED)\n        line2 = Line3D.parallel_to(line1, color=YELLOW)\n        self.add(ax, line1, line2)\n\nReturns a line parallel to another line going through\na given point.\n\nParameters:\n\nline(Line3D) \u2013 The line to be parallel to.point(Point3DLike) \u2013 The point to pass through.length(float) \u2013 Length of the parallel line.kwargs\u2013 Additional parameters to be passed to the class.\n\nline(Line3D) \u2013 The line to be parallel to.\n\nline(Line3D) \u2013 The line to be parallel to.\n\npoint(Point3DLike) \u2013 The point to pass through.\n\npoint(Point3DLike) \u2013 The point to pass through.\n\nlength(float) \u2013 Length of the parallel line.\n\nlength(float) \u2013 Length of the parallel line.\n\nkwargs\u2013 Additional parameters to be passed to the class.\n\nkwargs\u2013 Additional parameters to be passed to the class.\n\nReturns:\n\nLine parallel toline.\n\nLine parallel toline.\n\nReturn type:\n\nLine3D\n\nLine3D\n\nExamples\n\nExample: ParallelLineExample\u00b6\n\nclassmethodperpendicular_to(line,point=array([0.,0.,0.]),length=5,**kwargs)[source]\u00b6\n\nReturns a line perpendicular to another line going through\na given point.Parameters:line(Line3D) \u2013 The line to be perpendicular to.point(Vector3DLike) \u2013 The point to pass through.length(float) \u2013 Length of the perpendicular line.kwargs\u2013 Additional parameters to be passed to the class.Returns:Line perpendicular toline.Return type:Line3DExamplesExample: PerpLineExample\u00b6frommanimimport*classPerpLineExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(PI/3,-PI/4)ax=ThreeDAxes((-5,5),(-5,5),(-5,5),10,10,10)line1=Line3D(RIGHT*2,UP+OUT,color=RED)line2=Line3D.perpendicular_to(line1,color=BLUE)self.add(ax,line1,line2)class PerpLineExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(PI / 3, -PI / 4)\n        ax = ThreeDAxes((-5, 5), (-5, 5), (-5, 5), 10, 10, 10)\n        line1 = Line3D(RIGHT * 2, UP + OUT, color=RED)\n        line2 = Line3D.perpendicular_to(line1, color=BLUE)\n        self.add(ax, line1, line2)\n\nReturns a line perpendicular to another line going through\na given point.\n\nParameters:\n\nline(Line3D) \u2013 The line to be perpendicular to.point(Vector3DLike) \u2013 The point to pass through.length(float) \u2013 Length of the perpendicular line.kwargs\u2013 Additional parameters to be passed to the class.\n\nline(Line3D) \u2013 The line to be perpendicular to.\n\nline(Line3D) \u2013 The line to be perpendicular to.\n\npoint(Vector3DLike) \u2013 The point to pass through.\n\npoint(Vector3DLike) \u2013 The point to pass through.\n\nlength(float) \u2013 Length of the perpendicular line.\n\nlength(float) \u2013 Length of the perpendicular line.\n\nkwargs\u2013 Additional parameters to be passed to the class.\n\nkwargs\u2013 Additional parameters to be passed to the class.\n\nReturns:\n\nLine perpendicular toline.\n\nLine perpendicular toline.\n\nReturn type:\n\nLine3D\n\nLine3D\n\nExamples\n\nExample: PerpLineExample\u00b6\n\npointify(mob_or_point,direction=None)[source]\u00b6\n\nGets a point representing the center of theMobjects.Parameters:mob_or_point(Mobject|Point3DLike) \u2013Mobjectsor point whose center should be returned.direction(Vector3DLike|None) \u2013 If an edge of aMobjectsshould be returned, the direction of the edge.Returns:Center of theMobjectsor point, or edge if direction is given.Return type:numpy.array\n\nGets a point representing the center of theMobjects.\n\nParameters:\n\nmob_or_point(Mobject|Point3DLike) \u2013Mobjectsor point whose center should be returned.direction(Vector3DLike|None) \u2013 If an edge of aMobjectsshould be returned, the direction of the edge.\n\nmob_or_point(Mobject|Point3DLike) \u2013Mobjectsor point whose center should be returned.\n\nmob_or_point(Mobject|Point3DLike) \u2013Mobjectsor point whose center should be returned.\n\ndirection(Vector3DLike|None) \u2013 If an edge of aMobjectsshould be returned, the direction of the edge.\n\ndirection(Vector3DLike|None) \u2013 If an edge of aMobjectsshould be returned, the direction of the edge.\n\nReturns:\n\nCenter of theMobjectsor point, or edge if direction is given.\n\nCenter of theMobjectsor point, or edge if direction is given.\n\nReturn type:\n\nnumpy.array\n\nnumpy.array\n\nset_start_and_end_attrs(start,end,**kwargs)[source]\u00b6\n\nSets the start and end points of the line.If eitherstartorendareMobjects,\nthis gives their centers.Parameters:start(ndarray) \u2013 Starting point orMobject.end(ndarray) \u2013 Ending point orMobject.Return type:None\n\nSets the start and end points of the line.\n\nIf eitherstartorendareMobjects,\nthis gives their centers.\n\nParameters:\n\nstart(ndarray) \u2013 Starting point orMobject.end(ndarray) \u2013 Ending point orMobject.\n\nstart(ndarray) \u2013 Starting point orMobject.\n\nstart(ndarray) \u2013 Starting point orMobject.\n\nend(ndarray) \u2013 Ending point orMobject.\n\nend(ndarray) \u2013 Ending point orMobject.\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleLine3D(ThreeDScene):defconstruct(self):axes=ThreeDAxes()line=Line3D(start=np.array([0,0,0]),end=np.array([2,2,2]))self.set_camera_orientation(phi=75*DEGREES,theta=30*DEGREES)self.add(axes,line)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleLine3D(ThreeDScene):\n    def construct(self):\n        axes = ThreeDAxes()\n        line = Line3D(start=np.array([0, 0, 0]), end=np.array([2, 2, 2]))\n        self.set_camera_orientation(phi=75 * DEGREES, theta=30 * DEGREES)\n        self.add(axes, line)",
+      "language": "python",
+      "context": "Example: ExampleLine3D\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classParallelLineExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(PI/3,-PI/4)ax=ThreeDAxes((-5,5),(-5,5),(-5,5),10,10,10)line1=Line3D(RIGHT*2,UP+OUT,color=RED)line2=Line3D.parallel_to(line1,color=YELLOW)self.add(ax,line1,line2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ParallelLineExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(PI / 3, -PI / 4)\n        ax = ThreeDAxes((-5, 5), (-5, 5), (-5, 5), 10, 10, 10)\n        line1 = Line3D(RIGHT * 2, UP + OUT, color=RED)\n        line2 = Line3D.parallel_to(line1, color=YELLOW)\n        self.add(ax, line1, line2)",
+      "language": "python",
+      "context": "Example: ParallelLineExample\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classPerpLineExample(ThreeDScene):defconstruct(self):self.set_camera_orientation(PI/3,-PI/4)ax=ThreeDAxes((-5,5),(-5,5),(-5,5),10,10,10)line1=Line3D(RIGHT*2,UP+OUT,color=RED)line2=Line3D.perpendicular_to(line1,color=BLUE)self.add(ax,line1,line2)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class PerpLineExample(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(PI / 3, -PI / 4)\n        ax = ThreeDAxes((-5, 5), (-5, 5), (-5, 5), 10, 10, 10)\n        line1 = Line3D(RIGHT * 2, UP + OUT, color=RED)\n        line2 = Line3D.perpendicular_to(line1, color=BLUE)\n        self.add(ax, line1, line2)",
+      "language": "python",
+      "context": "Example: PerpLineExample\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Line3D",
+      "class_name": null,
+      "parameters": [
+        "start=array([-1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:Cylinder"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "start=array([-1.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "get_end",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the ending point of theLine3D."
+    },
+    {
+      "name": "get_start",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Returns the starting point of theLine3D."
+    },
+    {
+      "name": "parallel_to",
+      "class_name": null,
+      "parameters": [
+        "line"
+      ],
+      "return_type": null,
+      "description": "Returns a line parallel to another line going through\na given point."
+    },
+    {
+      "name": "perpendicular_to",
+      "class_name": null,
+      "parameters": [
+        "line"
+      ],
+      "return_type": null,
+      "description": "Returns a line perpendicular to another line going through\na given point."
+    },
+    {
+      "name": "pointify",
+      "class_name": null,
+      "parameters": [
+        "mob_or_point"
+      ],
+      "return_type": null,
+      "description": "Gets a point representing the center of theMobjects."
+    },
+    {
+      "name": "set_start_and_end_attrs",
+      "class_name": null,
+      "parameters": [
+        "start"
+      ],
+      "return_type": null,
+      "description": "Sets the start and end points of the line."
+    }
+  ],
+  "related_classes": [
+    "Line",
+    "ThreeDScene",
+    "Axes",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "math",
+    "animation",
+    "graph"
+  ]
+}

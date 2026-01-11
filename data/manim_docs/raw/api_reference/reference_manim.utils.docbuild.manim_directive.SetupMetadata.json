@@ -1,0 +1,19 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.utils.docbuild.manim_directive.SetupMetadata.html",
+  "title": "SetupMetadata\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "SetupMetadata\u00b6\n\nQualified name:manim.utils.docbuild.manim\\_directive.SetupMetadata\n\nclassSetupMetadata[source]\u00b6\n\nBases:TypedDictMethodsAttributesparallel_read_safeparallel_write_safe\n\nBases:TypedDict\n\nMethods\n\nAttributes\n\nparallel_read_safe\n\nparallel_write_safe",
+  "code_examples": [],
+  "method_signatures": [
+    {
+      "name": "SetupMetadata",
+      "class_name": null,
+      "parameters": [],
+      "return_type": null,
+      "description": "Bases:TypedDict"
+    }
+  ],
+  "related_classes": [],
+  "tags": []
+}

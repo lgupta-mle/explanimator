@@ -1,0 +1,65 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.mobject.three_d.three_dimensions.Sphere.html",
+  "title": "Sphere\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Sphere\u00b6\n\nQualified name:manim.mobject.three\\_d.three\\_dimensions.Sphere\n\nclassSphere(center=array([0.,0.,0.]),radius=1,resolution=None,u_range=(0,6.283185307179586),v_range=(0,3.141592653589793),**kwargs)[source]\u00b6\n\nBases:SurfaceA three-dimensional sphere.Parameters:center(Point3DLike) \u2013 Center of theSphere.radius(float) \u2013 The radius of theSphere.resolution(Sequence[int]|None) \u2013 The number of samples taken of theSphere. A tuple can be used\nto define different resolutions foruandvrespectively.u_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).v_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).ExamplesExample: ExampleSphere\u00b6frommanimimport*classExampleSphere(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=PI/6,theta=PI/6)sphere1=Sphere(center=(3,0,0),radius=1,resolution=(20,20),u_range=[0.001,PI-0.001],v_range=[0,TAU])sphere1.set_color(RED)self.add(sphere1)sphere2=Sphere(center=(-1,-3,0),radius=2,resolution=(18,18))sphere2.set_color(GREEN)self.add(sphere2)sphere3=Sphere(center=(-1,2,0),radius=2,resolution=(16,16))sphere3.set_color(BLUE)self.add(sphere3)class ExampleSphere(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=PI / 6, theta=PI / 6)\n        sphere1 = Sphere(\n            center=(3, 0, 0),\n            radius=1,\n            resolution=(20, 20),\n            u_range=[0.001, PI - 0.001],\n            v_range=[0, TAU]\n        )\n        sphere1.set_color(RED)\n        self.add(sphere1)\n        sphere2 = Sphere(center=(-1, -3, 0), radius=2, resolution=(18, 18))\n        sphere2.set_color(GREEN)\n        self.add(sphere2)\n        sphere3 = Sphere(center=(-1, 2, 0), radius=2, resolution=(16, 16))\n        sphere3.set_color(BLUE)\n        self.add(sphere3)MethodsfuncThe z values defining theSpherebeing plotted.AttributesanimateUsed to animate the application of any method ofself.animation_overridescolordepthThe depth of the mobject.fill_colorIf there are multiple colors (for gradient) this returns the first oneheightThe height of the mobject.n_points_per_curvesheen_factorstroke_colorwidthThe width of the mobject._original__init__(center=array([0.,0.,0.]),radius=1,resolution=None,u_range=(0,6.283185307179586),v_range=(0,3.141592653589793),**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:center(Point3DLike)radius(float)resolution(Sequence[int]|None)u_range(Sequence[float])v_range(Sequence[float])Return type:Nonefunc(u,v)[source]\u00b6The z values defining theSpherebeing plotted.Returns:The z values defining theSphere.Return type:numpy.arrayParameters:u(float)v(float)\n\nBases:Surface\n\nA three-dimensional sphere.\n\nParameters:\n\ncenter(Point3DLike) \u2013 Center of theSphere.radius(float) \u2013 The radius of theSphere.resolution(Sequence[int]|None) \u2013 The number of samples taken of theSphere. A tuple can be used\nto define different resolutions foruandvrespectively.u_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).v_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).\n\ncenter(Point3DLike) \u2013 Center of theSphere.\n\ncenter(Point3DLike) \u2013 Center of theSphere.\n\nradius(float) \u2013 The radius of theSphere.\n\nradius(float) \u2013 The radius of theSphere.\n\nresolution(Sequence[int]|None) \u2013 The number of samples taken of theSphere. A tuple can be used\nto define different resolutions foruandvrespectively.\n\nresolution(Sequence[int]|None) \u2013 The number of samples taken of theSphere. A tuple can be used\nto define different resolutions foruandvrespectively.\n\nu_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).\n\nu_range(Sequence[float]) \u2013 The range of theuvariable:(u_min,u_max).\n\nv_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).\n\nv_range(Sequence[float]) \u2013 The range of thevvariable:(v_min,v_max).\n\nExamples\n\nExample: ExampleSphere\u00b6\n\nMethods\n\nfunc\n\nThe z values defining theSpherebeing plotted.\n\nAttributes\n\nanimate\n\nUsed to animate the application of any method ofself.\n\nanimation_overrides\n\ncolor\n\ndepth\n\nThe depth of the mobject.\n\nfill_color\n\nIf there are multiple colors (for gradient) this returns the first one\n\nheight\n\nThe height of the mobject.\n\nn_points_per_curve\n\nsheen_factor\n\nstroke_color\n\nwidth\n\nThe width of the mobject.\n\n_original__init__(center=array([0.,0.,0.]),radius=1,resolution=None,u_range=(0,6.283185307179586),v_range=(0,3.141592653589793),**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:center(Point3DLike)radius(float)resolution(Sequence[int]|None)u_range(Sequence[float])v_range(Sequence[float])Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\ncenter(Point3DLike)radius(float)resolution(Sequence[int]|None)u_range(Sequence[float])v_range(Sequence[float])\n\ncenter(Point3DLike)\n\ncenter(Point3DLike)\n\nradius(float)\n\nradius(float)\n\nresolution(Sequence[int]|None)\n\nresolution(Sequence[int]|None)\n\nu_range(Sequence[float])\n\nu_range(Sequence[float])\n\nv_range(Sequence[float])\n\nv_range(Sequence[float])\n\nReturn type:\n\nNone\n\nNone\n\nfunc(u,v)[source]\u00b6\n\nThe z values defining theSpherebeing plotted.Returns:The z values defining theSphere.Return type:numpy.arrayParameters:u(float)v(float)\n\nThe z values defining theSpherebeing plotted.\n\nReturns:\n\nThe z values defining theSphere.\n\nThe z values defining theSphere.\n\nReturn type:\n\nnumpy.array\n\nnumpy.array\n\nParameters:\n\nu(float)v(float)\n\nu(float)\n\nu(float)\n\nv(float)\n\nv(float)",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classExampleSphere(ThreeDScene):defconstruct(self):self.set_camera_orientation(phi=PI/6,theta=PI/6)sphere1=Sphere(center=(3,0,0),radius=1,resolution=(20,20),u_range=[0.001,PI-0.001],v_range=[0,TAU])sphere1.set_color(RED)self.add(sphere1)sphere2=Sphere(center=(-1,-3,0),radius=2,resolution=(18,18))sphere2.set_color(GREEN)self.add(sphere2)sphere3=Sphere(center=(-1,2,0),radius=2,resolution=(16,16))sphere3.set_color(BLUE)self.add(sphere3)",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class ExampleSphere(ThreeDScene):\n    def construct(self):\n        self.set_camera_orientation(phi=PI / 6, theta=PI / 6)\n        sphere1 = Sphere(\n            center=(3, 0, 0),\n            radius=1,\n            resolution=(20, 20),\n            u_range=[0.001, PI - 0.001],\n            v_range=[0, TAU]\n        )\n        sphere1.set_color(RED)\n        self.add(sphere1)\n        sphere2 = Sphere(center=(-1, -3, 0), radius=2, resolution=(18, 18))\n        sphere2.set_color(GREEN)\n        self.add(sphere2)\n        sphere3 = Sphere(center=(-1, 2, 0), radius=2, resolution=(16, 16))\n        sphere3.set_color(BLUE)\n        self.add(sphere3)",
+      "language": "python",
+      "context": "Example: ExampleSphere\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Sphere",
+      "class_name": null,
+      "parameters": [
+        "center=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Bases:Surface"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "center=array([0.",
+        "0.",
+        "0.])"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    },
+    {
+      "name": "func",
+      "class_name": null,
+      "parameters": [
+        "u"
+      ],
+      "return_type": null,
+      "description": "The z values defining theSpherebeing plotted."
+    }
+  ],
+  "related_classes": [
+    "ThreeDScene",
+    "Scene"
+  ],
+  "tags": [
+    "color",
+    "timing",
+    "3d",
+    "animation",
+    "graph"
+  ]
+}

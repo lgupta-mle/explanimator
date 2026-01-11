@@ -1,0 +1,68 @@
+{
+  "url": "https://docs.manim.community/en/stable/reference/manim.animation.creation.Unwrite.html",
+  "title": "Unwrite\u00b6",
+  "section": "api_reference",
+  "breadcrumb": [],
+  "content": "Unwrite\u00b6\n\nQualified name:manim.animation.creation.Unwrite\n\nclassUnwrite(mobject=None,*args,use_override=True,**kwargs)[source]\u00b6\n\nBases:WriteSimulate erasing by hand aTextor aVMobject.Parameters:reverse(bool) \u2013 Set True to have the animation start erasing from the last submobject first.vmobject(VMobject)rate_func(Callable[[float],float])ExamplesExample: UnwriteReverseTrue\u00b6frommanimimport*classUnwriteReverseTrue(Scene):defconstruct(self):text=Tex(\"Alice and Bob\").scale(3)self.add(text)self.play(Unwrite(text))class UnwriteReverseTrue(Scene):\n    def construct(self):\n        text = Tex(\"Alice and Bob\").scale(3)\n        self.add(text)\n        self.play(Unwrite(text))Example: UnwriteReverseFalse\u00b6frommanimimport*classUnwriteReverseFalse(Scene):defconstruct(self):text=Tex(\"Alice and Bob\").scale(3)self.add(text)self.play(Unwrite(text,reverse=False))class UnwriteReverseFalse(Scene):\n    def construct(self):\n        text = Tex(\"Alice and Bob\").scale(3)\n        self.add(text)\n        self.play(Unwrite(text, reverse=False))MethodsAttributesrun_time_original__init__(vmobject,rate_func=<functionlinear>,reverse=True,**kwargs)\u00b6Initialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)rate_func(Callable[[float],float])reverse(bool)Return type:None\n\nBases:Write\n\nSimulate erasing by hand aTextor aVMobject.\n\nParameters:\n\nreverse(bool) \u2013 Set True to have the animation start erasing from the last submobject first.vmobject(VMobject)rate_func(Callable[[float],float])\n\nreverse(bool) \u2013 Set True to have the animation start erasing from the last submobject first.\n\nreverse(bool) \u2013 Set True to have the animation start erasing from the last submobject first.\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nExamples\n\nExample: UnwriteReverseTrue\u00b6\n\nExample: UnwriteReverseFalse\u00b6\n\nMethods\n\nAttributes\n\nrun_time\n\n_original__init__(vmobject,rate_func=<functionlinear>,reverse=True,**kwargs)\u00b6\n\nInitialize self.  See help(type(self)) for accurate signature.Parameters:vmobject(VMobject)rate_func(Callable[[float],float])reverse(bool)Return type:None\n\nInitialize self.  See help(type(self)) for accurate signature.\n\nParameters:\n\nvmobject(VMobject)rate_func(Callable[[float],float])reverse(bool)\n\nvmobject(VMobject)\n\nvmobject(VMobject)\n\nrate_func(Callable[[float],float])\n\nrate_func(Callable[[float],float])\n\nreverse(bool)\n\nreverse(bool)\n\nReturn type:\n\nNone\n\nNone",
+  "code_examples": [
+    {
+      "code": "frommanimimport*classUnwriteReverseTrue(Scene):defconstruct(self):text=Tex(\"Alice and Bob\").scale(3)self.add(text)self.play(Unwrite(text))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UnwriteReverseTrue(Scene):\n    def construct(self):\n        text = Tex(\"Alice and Bob\").scale(3)\n        self.add(text)\n        self.play(Unwrite(text))",
+      "language": "python",
+      "context": "Example: UnwriteReverseTrue\u00b6",
+      "output_description": null
+    },
+    {
+      "code": "frommanimimport*classUnwriteReverseFalse(Scene):defconstruct(self):text=Tex(\"Alice and Bob\").scale(3)self.add(text)self.play(Unwrite(text,reverse=False))",
+      "language": "python",
+      "context": "",
+      "output_description": null
+    },
+    {
+      "code": "class UnwriteReverseFalse(Scene):\n    def construct(self):\n        text = Tex(\"Alice and Bob\").scale(3)\n        self.add(text)\n        self.play(Unwrite(text, reverse=False))",
+      "language": "python",
+      "context": "Example: UnwriteReverseFalse\u00b6",
+      "output_description": null
+    }
+  ],
+  "method_signatures": [
+    {
+      "name": "Unwrite",
+      "class_name": null,
+      "parameters": [
+        "mobject=None"
+      ],
+      "return_type": null,
+      "description": "Bases:Write"
+    },
+    {
+      "name": "_original__init__",
+      "class_name": null,
+      "parameters": [
+        "vmobject"
+      ],
+      "return_type": null,
+      "description": "Initialize self.  See help(type(self)) for accurate signature."
+    }
+  ],
+  "related_classes": [
+    "Write",
+    "Tex",
+    "VMobject",
+    "Text",
+    "Scene",
+    "Mobject"
+  ],
+  "tags": [
+    "timing",
+    "text",
+    "transformation",
+    "animation",
+    "graph"
+  ]
+}
