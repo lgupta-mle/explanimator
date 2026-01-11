@@ -13,13 +13,20 @@ from pathlib import Path
 class ManimCodeValidator:
     """Validate generated Manim code for basic correctness."""
 
-    def __init__(self, enable_runtime_validation: bool = True):
+    def __init__(
+        self, 
+        enable_runtime_validation: bool = True,
+        enable_manim_rendering: bool = True
+    ):
         """
         Args:
             enable_runtime_validation: If True, actually try to import the code
                                        to catch runtime errors (undefined names, etc.)
+            enable_manim_rendering: If True, actually run manim render to validate
+                                   the animation can be generated (catches Manim-specific errors)
         """
         self.enable_runtime_validation = enable_runtime_validation
+        self.enable_manim_rendering = enable_manim_rendering
 
     def validate(self, code: str) -> Tuple[bool, List[str]]:
         """
@@ -31,6 +38,8 @@ class ManimCodeValidator:
         3. Has construct() method
         4. Has required imports
         5. No obvious API misuse patterns
+        6. (Optional) Runtime Python validation
+        7. (Optional) Actual Manim rendering validation - THE MOST IMPORTANT CHECK
 
         Args:
             code: Python code string to validate
@@ -70,6 +79,13 @@ class ManimCodeValidator:
         if self.enable_runtime_validation:
             runtime_errors = self._validate_runtime(code)
             errors.extend(runtime_errors)
+
+        # Check 7: ACTUAL MANIM RENDERING VALIDATION - Run manim to see if it renders
+        # This is the most important check as it catches real animation errors
+        if self.enable_manim_rendering and len(errors) == 0:
+            # Only run manim if basic checks passed (saves time)
+            render_errors = self._validate_manim_render(code)
+            errors.extend(render_errors)
 
         is_valid = len(errors) == 0
         return (is_valid, errors)
@@ -232,6 +248,140 @@ except Exception as e:
                 pass
 
         return errors
+
+    def _validate_manim_render(self, code: str) -> List[str]:
+        """
+        Actually run manim render to validate the animation can be generated.
+        
+        This is the MOST IMPORTANT validation - it catches real Manim errors:
+        - Undefined colors (e.g., DARK_GREEN vs GREEN_D)
+        - LaTeX syntax errors in Tex/MathTex
+        - Incorrect method calls or parameters
+        - Animation-specific errors
+        - Scene rendering issues
+        
+        Returns list of rendering errors found.
+        """
+        errors = []
+        
+        # Extract Scene class name from code
+        scene_name = self._extract_scene_name(code)
+        if not scene_name:
+            errors.append("Could not extract Scene class name for rendering validation")
+            return errors
+        
+        # Create temporary file with the code
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False, encoding='utf-8') as f:
+            f.write(code)
+            temp_file = f.name
+        
+        # Create temporary output directory
+        temp_output_dir = tempfile.mkdtemp()
+        
+        try:
+            # Run manim render in preview quality (fast)
+            # -ql = preview quality (480p15)
+            # --disable_caching to ensure fresh render
+            # -v WARNING to reduce output noise
+            result = subprocess.run(
+                [
+                    'manim', 'render',
+                    '-ql',  # Preview quality for speed
+                    '--disable_caching',
+                    '-v', 'WARNING',
+                    '--media_dir', temp_output_dir,
+                    temp_file,
+                    scene_name
+                ],
+                capture_output=True,
+                text=True,
+                timeout=60  # 60 second timeout for rendering
+            )
+            
+            if result.returncode != 0:
+                # Manim rendering failed - extract the error message
+                stderr = result.stderr.strip()
+                stdout = result.stdout.strip()
+                
+                # Parse Manim error messages
+                error_msg = self._parse_manim_error(stderr, stdout)
+                errors.append(f"Manim rendering failed: {error_msg}")
+                
+        except subprocess.TimeoutExpired:
+            errors.append("Manim rendering timeout - animation took too long to render (>60s)")
+        except FileNotFoundError:
+            errors.append("Manim command not found - is Manim installed? Run: pip install manim")
+        except Exception as e:
+            errors.append(f"Manim rendering validation error: {e}")
+        finally:
+            # Clean up temp files
+            try:
+                Path(temp_file).unlink()
+            except:
+                pass
+            try:
+                import shutil
+                shutil.rmtree(temp_output_dir, ignore_errors=True)
+            except:
+                pass
+        
+        return errors
+    
+    def _extract_scene_name(self, code: str) -> str:
+        """Extract the Scene class name from the code."""
+        try:
+            tree = ast.parse(code)
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ClassDef):
+                    for base in node.bases:
+                        if isinstance(base, ast.Name) and base.id == "Scene":
+                            return node.name
+                        if isinstance(base, ast.Attribute) and base.attr == "Scene":
+                            return node.name
+            return ""
+        except:
+            return ""
+    
+    def _parse_manim_error(self, stderr: str, stdout: str) -> str:
+        """
+        Parse Manim error messages to extract the most useful information.
+        
+        Manim errors often include:
+        - NameError for undefined colors/constants
+        - AttributeError for incorrect method calls
+        - LaTeX compilation errors
+        - TypeError for incorrect parameters
+        """
+        # Combine stderr and stdout (Manim sometimes prints errors to stdout)
+        full_output = stderr + "\n" + stdout
+        
+        # Common error patterns to extract
+        error_patterns = [
+            "NameError:",
+            "AttributeError:",
+            "TypeError:",
+            "ValueError:",
+            "LaTeX Error:",
+            "Error:",
+        ]
+        
+        # Find the most relevant error lines
+        error_lines = []
+        for line in full_output.split('\n'):
+            for pattern in error_patterns:
+                if pattern in line:
+                    error_lines.append(line.strip())
+                    break
+        
+        if error_lines:
+            # Return the first few error lines (most relevant)
+            return "\n".join(error_lines[:5])
+        
+        # If no specific error pattern found, return last 500 chars of output
+        if full_output.strip():
+            return full_output.strip()[-500:]
+        
+        return "Unknown rendering error - check Manim installation"
 
     def validate_file(self, file_path: str) -> Tuple[bool, List[str]]:
         """

@@ -70,7 +70,11 @@ class ManimCodeGenerator:
         self.context_token_budget = context_token_budget
         self.max_retries = max_retries
         self.enable_validation = enable_validation
-        self.validator = ManimCodeValidator(enable_runtime_validation=enable_validation)
+        # Enable both Python validation AND actual Manim rendering validation
+        self.validator = ManimCodeValidator(
+            enable_runtime_validation=enable_validation,
+            enable_manim_rendering=enable_validation  # Actually run manim render to validate
+        )
 
     def generate_scene_code(
         self,
