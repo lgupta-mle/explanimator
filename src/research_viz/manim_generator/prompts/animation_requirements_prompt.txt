@@ -470,7 +470,7 @@ Before submitting your output, verify:
 ✓ Visual elements support understanding (not just decoration)
 ✓ Layout strategy is appropriate for the content
 ✓ From_kg_operation fields reference valid operation IDs when applicable
-✓ **Positioning avoids overlaps** (equations at top, diagrams at center, max 5-7 shapes per scene)
+✓ **Positioning avoids overlaps** (max 5-7 shapes per scene)
 
 ---
 
