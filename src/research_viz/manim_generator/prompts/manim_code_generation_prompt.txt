@@ -107,14 +107,22 @@ These are more complex, involving mathematical formulas:
 
 ## Position Mapping Reference
 
-Based on the examples, common position strings map to:
+**Common position strings map to Manim coordinates:**
 - "center" → ORIGIN
 - "left" → LEFT * 3 or LEFT * 2
+- "center_left" → LEFT * 1.5
 - "right" → RIGHT * 3 or RIGHT * 2
-- "top" → UP * 2
-- "bottom" → DOWN * 2
+- "center_right" → RIGHT * 1.5
+- "top" → UP * 2 or UP * 3
 - "top_left" → UP * 2 + LEFT * 3
-- Use `.next_to()`, `.to_edge()`, `.shift()` for relative positioning
+- "top_right" → UP * 2 + RIGHT * 3
+- "bottom" → DOWN * 2
+- "above" / "below" → Use `.next_to(ref_shape, UP/DOWN, buff=0.5)`
+
+**Avoid overlaps:**
+- If equation/title at "top", don't put diagram at "top" too
+- Use different vertical OR horizontal positions for multiple shapes
+- Use `.next_to()` with appropriate `buff` for spacing
 
 ## Color Mapping Reference
 
