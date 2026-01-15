@@ -51,25 +51,31 @@ class ManimCodeGenerator:
 
     def __init__(
         self,
-        retriever: ManimDocRetriever,
+        retriever: ManimDocRetriever = None,
         model_name: str = "openai/gpt-5",
         context_token_budget: int = 10000,
         max_retries: int = 3,
-        enable_validation: bool = True
+        enable_validation: bool = True,
+        enable_rag_initial: bool = False,
+        enable_rag_on_error: bool = True
     ):
         """
         Args:
-            retriever: ManimDocRetriever for RAG
+            retriever: ManimDocRetriever for RAG (optional if RAG disabled)
             model_name: LLM model to use
             context_token_budget: Max tokens for RAG context
             max_retries: Maximum attempts to fix validation errors
             enable_validation: Enable runtime validation and retry loop
+            enable_rag_initial: Use RAG for initial code generation (default: False)
+            enable_rag_on_error: Use RAG for error recovery (default: True)
         """
         self.retriever = retriever
         self.model_name = model_name
         self.context_token_budget = context_token_budget
         self.max_retries = max_retries
         self.enable_validation = enable_validation
+        self.enable_rag_initial = enable_rag_initial
+        self.enable_rag_on_error = enable_rag_on_error
         # Enable both Python validation AND actual Manim rendering validation
         self.validator = ManimCodeValidator(
             enable_runtime_validation=enable_validation,
@@ -95,18 +101,22 @@ class ManimCodeGenerator:
         """
         print(f"  Generating code for: {scene.scene_id}")
 
-        # Step 1: Retrieve documentation
-        retrieval_results = self.retriever.retrieve_for_scene(
-            scene,
-            top_k=20,
-            rerank_top_k=10
-        )
-
-        # Step 2: Assemble context
-        rag_context = self.retriever.assemble_context(
-            retrieval_results,
-            max_tokens=self.context_token_budget
-        )
+        # Step 1: Retrieve documentation (only if RAG initial is enabled)
+        rag_context = ""
+        if self.enable_rag_initial and self.retriever is not None:
+            retrieval_results = self.retriever.retrieve_for_scene(
+                scene,
+                top_k=20,
+                rerank_top_k=10
+            )
+            # Step 2: Assemble context
+            rag_context = self.retriever.assemble_context(
+                retrieval_results,
+                max_tokens=self.context_token_budget
+            )
+            print(f"    RAG context retrieved: {len(rag_context)} chars")
+        else:
+            print(f"    Skipping initial RAG (enable_rag_initial={self.enable_rag_initial})")
 
         # Step 3: Build prompt
         system_prompt = self._load_system_prompt()
@@ -349,8 +359,12 @@ Study the above examples to understand correct Manim usage and fix the errors.
         """Build a prompt to fix validation errors with RAG-retrieved fix guidance."""
         errors_list = "\n".join(f"  {i+1}. {error}" for i, error in enumerate(errors[:10]))
 
-        # Fetch relevant documentation for fixing these errors
-        fix_context = self._fetch_error_fix_context(errors)
+        # Fetch relevant documentation for fixing these errors (only if RAG on error is enabled)
+        fix_context = ""
+        if self.enable_rag_on_error and self.retriever is not None:
+            fix_context = self._fetch_error_fix_context(errors)
+            if fix_context:
+                print(f"      RAG error context retrieved for fixing errors")
 
         return f"""
 ## VALIDATION ERRORS FOUND - FIX REQUIRED (Attempt {attempt})
@@ -444,6 +458,8 @@ def main(
     context_token_budget: int = 10000,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     max_retries: int = 3,
+    enable_rag_initial: bool = False,
+    enable_rag_on_error: bool = True,
 ):
     """
     Generate Manim code from animation requirements.
@@ -454,15 +470,21 @@ def main(
         model_name: LLM model to use (default: openai/gpt-5)
         context_token_budget: Max tokens for RAG context (default: 10000)
         chroma_path: Path to ChromaDB storage
+        max_retries: Max retry attempts for validation errors
+        enable_rag_initial: Use RAG for initial code generation (default: False)
+        enable_rag_on_error: Use RAG for error recovery (default: True)
 
     Examples:
-        # Basic usage
+        # Basic usage (no initial RAG, RAG on error)
         python -m research_viz.manim_generator.manim_code_generator
 
-        # Custom settings
+        # With initial RAG enabled
         python -m research_viz.manim_generator.manim_code_generator \\
-            --model-name "openai/gpt-4" \\
-            --context-token-budget 15000
+            --enable-rag-initial
+
+        # Disable all RAG
+        python -m research_viz.manim_generator.manim_code_generator \\
+            --enable-rag-initial=false --enable-rag-on-error=false
     """
     # Default paths
     if requirements_path is None:
@@ -477,30 +499,34 @@ def main(
         print(f"Please run animation_requirements_generator.py first")
         return
 
-    # Validate ChromaDB exists
-    if not os.path.exists(chroma_path):
-        print(f"ERROR: {chroma_path} not found")
-        print(f"Please run build_manim_index.py first to create the documentation index")
-        return
-
     # Load requirements
     print(f"Loading animation requirements from: {requirements_path}")
     with open(requirements_path, 'r', encoding='utf-8') as f:
         requirements_data = json.load(f)
     requirements = AnimationRequirements.model_validate(requirements_data)
 
-    # Initialize retriever
-    print(f"Initializing RAG retriever...")
-    print(f"  ChromaDB path: {chroma_path}")
-    print(f"  Context budget: {context_token_budget} tokens")
-    retriever = ManimDocRetriever(chroma_path=chroma_path)
+    # Initialize retriever only if RAG is needed
+    retriever = None
+    if enable_rag_initial or enable_rag_on_error:
+        if not os.path.exists(chroma_path):
+            print(f"WARNING: {chroma_path} not found")
+            print(f"RAG will be disabled. Run build_manim_index.py to enable RAG.")
+        else:
+            print(f"Initializing RAG retriever...")
+            print(f"  ChromaDB path: {chroma_path}")
+            print(f"  Context budget: {context_token_budget} tokens")
+            retriever = ManimDocRetriever(chroma_path=chroma_path)
+    else:
+        print(f"RAG disabled (enable_rag_initial={enable_rag_initial}, enable_rag_on_error={enable_rag_on_error})")
 
     # Initialize generator
     generator = ManimCodeGenerator(
         retriever=retriever,
         model_name=model_name,
         context_token_budget=context_token_budget,
-        max_retries=max_retries
+        max_retries=max_retries,
+        enable_rag_initial=enable_rag_initial,
+        enable_rag_on_error=enable_rag_on_error
     )
 
     # Generate code

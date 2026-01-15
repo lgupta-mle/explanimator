@@ -126,3 +126,58 @@ class AnimationRequirements(BaseModel):
     )
 
     kg_files_used: List[str] = Field(default_factory=list, description="All low-level KG files referenced")
+
+
+# =============================================================================
+# Simplified Animation Schemas (for creative freedom)
+# =============================================================================
+
+class AnimationSceneSimple(BaseModel):
+    """Simplified animation scene with creative freedom."""
+    model_config = ConfigDict(extra="forbid")
+
+    scene_id: str = Field(..., description="Unique scene identifier")
+    purpose: str = Field(..., description="What this scene accomplishes")
+
+    # Narration anchor
+    narration_snippet: str = Field(..., description="The narration this scene covers")
+    duration: float = Field(..., description="Scene duration in seconds")
+
+    # Free-form descriptions instead of rigid structures
+    visual_description: str = Field(..., description="Describe what should appear visually")
+    animation_description: str = Field(..., description="Describe the motion/changes/transformations")
+
+    # Optional structured elements (use when specificity helps)
+    shapes: Optional[List[ShapeSpec]] = Field(None, description="Specific shapes if needed")
+    key_formulas: Optional[List[str]] = Field(None, description="LaTeX formulas to display")
+
+    # Creative guidance
+    visual_style: str = Field("3b1b", description="Visual style hint (3b1b, minimal, technical)")
+    suggested_transitions: List[str] = Field(default_factory=list, description="Transition suggestions")
+
+
+class SegmentAnimationPlanSimple(BaseModel):
+    """Simplified animation plan for a video segment."""
+    model_config = ConfigDict(extra="forbid")
+
+    segment_id: str = Field(..., description="Matches segment_id from explanation")
+    segment_title: str = Field(..., description="Segment title")
+
+    full_narration: str = Field(..., description="Complete narration for this segment")
+    estimated_duration: int = Field(..., description="Total duration in seconds")
+
+    scenes: List[AnimationSceneSimple] = Field(..., description="Simplified scenes")
+
+    color_scheme: List[PropertyValue] = Field(default_factory=list, description="Color mappings")
+
+
+class AnimationRequirementsSimple(BaseModel):
+    """Simplified animation requirements with creative freedom."""
+    model_config = ConfigDict(extra="forbid")
+
+    paper_title: str = Field(..., description="Paper title")
+    running_example: str = Field(..., description="The consistent example used throughout")
+
+    segment_plans: List[SegmentAnimationPlanSimple] = Field(..., description="Animation plans")
+
+    global_style: str = Field("3b1b", description="Overall visual style")
