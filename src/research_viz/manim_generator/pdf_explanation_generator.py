@@ -255,6 +255,7 @@ Generate a revised explanation that addresses ALL the feedback above.
                 schema=EducationalExplanation3B1B
             )
         except ImportError:
+            print("  Error: ImportError")
             response = create_pdf_llm_response(
                 pdf_path=pdf_path,
                 prompt=user_prompt,
@@ -264,7 +265,7 @@ Generate a revised explanation that addresses ALL the feedback above.
             )
 
         if "choices" not in response or len(response["choices"]) == 0:
-            print(f"  Error: Invalid response from LLM")
+            print(f"  Error: Invalid response from LLM: {response}")
             continue
 
         content = response["choices"][0]["message"]["content"]

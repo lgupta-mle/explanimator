@@ -42,6 +42,59 @@ The documentation examples provided are your PRIMARY source of truth. You MUST:
 - Include proper timing (self.wait() between animation groups)
 - Add brief comments for clarity
 
+**CRITICAL ANIMATION QUALITY RULES**
+
+1. **NO OVERLAPPING ANIMATIONS**
+   - Remove or transition old content before showing new content
+   - NEVER let old text/equations/diagrams overlap with new ones
+
+2. **RICH TEXTUAL CONTEXT**
+   - When showing equations: ALWAYS add text labels explaining variables
+   - Example: If showing Q=XW_Q, add Text("Q: Query matrix") nearby
+   - When showing diagrams: ALWAYS add descriptive text (concise, not walls of text)
+
+3. **STAY WITHIN FRAME BOUNDARIES**
+   - ALWAYS check positions: LEFT * 3, RIGHT * 3, UP * 2, DOWN * 2 are safe
+
+4. **PROPER ANIMATION PACING**
+   - Use `run_time=2.0` or longer for complex animations (not 0.5s!)
+   - Add 1.5s wait after important reveals
+   - Total scene should be 45-90 seconds minimum
+   - Use a 2 second wait at the end for final viewing
+
+**SPATIAL REASONING PROTOCOL**
+
+Before placing any object, you MUST think through spatial conflicts to prevent overlaps.
+
+**Core Principles:**
+
+1. **Track Vertical Positions Explicitly**
+   - Note exact y-coordinates for positioned objects (`move_to(UP*2)` means y=+2)
+   - Calculate `next_to()` placements: object placed `next_to(ref, DOWN)` typically sits 0.5-1.0 units below reference
+   - Text with font_size=28 has height ≈ 0.5-0.7 units
+
+2. **Calculate Bounding Boxes**
+   - Circles: center ± radius in all directions
+   - Rectangles: center ± (width/2, height/2)
+   - Text/MathTex: typically 0.5-1.0 units tall, variable width
+
+3. **Overlap Detection Before Placement**
+   - If |y_posA - y_posB| < (height_A/2 + height_B/2 + buffer), objects will overlap
+   - Maintain minimum buffer of 0.5-1.0 units between unrelated objects
+
+4. **Vertical Zone Allocation**
+   - Title zone: y > +2.5 (top edge)
+   - Upper content: y = +1.0 to +2.0
+   - Middle content: y = -1.0 to +1.0
+   - Lower content: y < -1.0
+   - Leave entire zones empty between conceptually separate elements
+
+5. **Mental Checklist Before Adding Objects**
+   - List all currently visible objects and their y-positions
+   - Calculate new object's bounding box
+   - Check: does it intersect any existing object?
+   - If yes: adjust position, remove old objects first, or move to different zone
+
 **FIDELITY TO SPECIFICATION**
 - Scene class name: Use the `scene_id` to create a descriptive class name
 - Shapes: Create exactly what's specified in `scene.shapes` list
@@ -133,31 +186,108 @@ Common colors in Manim (check examples for exact usage):
 
 ---
 
-## Code Structure Template
+## Code Structure Template with Spatial Reasoning
+
+**BEFORE writing code like this, you MUST think through spatial positioning:**
+
+I need to place multiple objects in this scene. Let me track positions to avoid overlaps:
+
+Step 1 - Title:
+- title uses .to_edge(UP), which places it at y ≈ +3.5
+- Height ≈ 0.6 units (font_size=36)
+- Occupies vertical zone: y = +3.2 to +3.8
+- Status: Title zone reserved
+
+Step 2 - Main content planning:
+- equation at UP * 2 → y = +2.0
+- MathTex height ≈ 0.5 units → occupies y = +1.75 to +2.25
+- eq_label uses next_to(equation, DOWN) → places it roughly 0.5 units below
+- eq_label at y ≈ +1.3, height ≈ 0.5 units (font_size=28)
+- eq_label occupies: y = +1.05 to +1.55
+
+Now for the diagram (Circle with radius=1.5):
+- If I place at ORIGIN (y=0): extends from y = -1.5 to y = +1.5
+- Top of circle (y = +1.5) would OVERLAP with eq_label (y ≈ +1.05 to +1.55)
+- CONFLICT DETECTED: |1.5 - 1.3| = 0.2, which is < (1.5 + 0.25 + 0.5 buffer)
+
+Solution: Move circle to DOWN * 1.5 → y = -1.5
+- Circle now extends from y = -3.0 to y = 0.0
+- diagram_label below circle at y ≈ -3.5
+- Clear separation: gap between eq_label bottom (+1.05) and circle top (0.0) = 1.05 units ✓
+
+Current layout after Step 2:
+y = +3.5: [title - Text]
+y = +2.0: [equation - MathTex]
+y = +1.3: [eq_label - Text]
+y = -1.5: [diagram - Circle, radius 1.5, extends to y=0.0]
+y = -3.5: [diagram_label - Text]
+
+All objects have proper spacing ✓
 
 ```python
 class YourSceneClassName(Scene):
-    \"\"\"
-    Brief description of what this scene does.
-    Narration: [first 100 chars of narration]
-    \"\"\"
+  """
+  Brief description of what this scene does.
+  Narration: [first 100 chars of narration]
+  """
     def construct(self):
-        # Step 1: Create all shapes
-        shape1 = ... # Based on examples
-        shape2 = ... # Based on examples
+        # Step 1: Create title/context
+        title = Text("Concept Name", font_size=36).to_edge(UP)
+        self.play(Write(title), run_time=1.5)
+        self.wait(1)
 
-        # Step 2: Position shapes
-        shape1.move_to(ORIGIN)
-        shape2.next_to(shape1, DOWN)
+        # Step 2: Create main content with labels
+        equation = MathTex(r"Q = XW_Q").move_to(UP * 2)
+        eq_label = Text("Q: Query matrix", font_size=28).next_to(equation, DOWN)
 
-        # Step 3: Animations (follow scene.animations order)
-        self.play(Create(shape1), run_time=1.0)
-        self.wait(0.5)
-        self.play(FadeIn(shape2), run_time=1.5)
+        diagram = Circle(radius=1.5, color=BLUE).move_to(DOWN * 1.5)
+        diagram_label = Text("Token embedding", font_size=24).next_to(diagram, DOWN)
 
-        # Step 4: Wait for remaining duration if needed
-        self.wait(2.0)
+        # Step 3: Animate with proper pacing
+        self.play(Write(equation), run_time=2.0)
+        self.play(FadeIn(eq_label), run_time=1.0)
+        self.wait(1.5)  # Let viewer absorb
+
+        self.play(Create(diagram), run_time=2.0)
+        self.play(FadeIn(diagram_label), run_time=1.0)
+        self.wait(2)
+
+        # Step 4: MANDATORY CLEANUP - Clear before transitioning to new concept
+        # This is NOT optional - prevents temporal overlap!
+        self.play(
+            FadeOut(equation),
+            FadeOut(eq_label),
+            FadeOut(diagram),
+            FadeOut(diagram_label),
+            run_time=1.5
+        )
+        self.wait(0.5)  # Brief pause for clean transition
+
+        # Step 5: Show next concept in CLEAN SPACE (canvas is now empty)
+        next_content = Text("Next concept...", font_size=32)
+        self.play(Write(next_content), run_time=2.0)
+        self.wait(2)
+
+        # Alternative (ONLY if next concept builds on previous):
+        # If the new content is directly related and you want to keep context:
+        # group = Group(equation, eq_label)
+        # self.play(
+        #     group.animate.scale(0.4).to_corner(UL),
+        #     FadeOut(diagram),
+        #     FadeOut(diagram_label),
+        #     run_time=1.5
+        # )
+        # self.wait(0.5)
+        # next_content = Text("Next concept...", font_size=32).shift(DOWN)
+        # self.play(Write(next_content), run_time=2.0)
+
+        # Step 6: Final cleanup
+        self.play(FadeOut(title), FadeOut(next_content), run_time=1.0)
+        self.wait(1)
 ```
+
+**Key Insight from This Example:**
+The circle was deliberately placed at `DOWN * 1.5` (not ORIGIN) to avoid overlapping with the equation label above it. This is the result of spatial reasoning, not guesswork.
 
 ---
 
@@ -244,7 +374,6 @@ The `code` field should contain valid Python code that:
 
 Before submitting, verify:
 
-✓ All class names come from the RAG documentation examples
 ✓ Code is syntactically valid Python
 ✓ All shapes from specification are created
 ✓ All animations from specification are executed
@@ -254,16 +383,152 @@ Before submitting, verify:
 ✓ Comments explain key steps
 ✓ No invented/guessed class names
 
+**CRITICAL - Overlap Prevention:**
+✓ Each major conceptual shift has a FadeOut phase BEFORE new content
+✓ No objects are created while unrelated objects are still visible
+✓ Spatial reasoning performed for positioning (no bounding box conflicts)
+✓ Temporal reasoning documented in thinking blocks for phase transitions
+
 ---
 
 ## Example Workflow
 
 1. **Read the scene specification** to understand requirements
 2. **Study the RAG examples** to find relevant Manim classes
-3. **Plan the code structure** (shapes → positioning → animations)
-4. **Generate the code** using classes from examples
-5. **Verify completeness** against the specification
-6. **Format as JSON** matching the output schema
+3. **Think through spatial layout** (use the thinking pattern shown above)
+   - List all objects and their planned positions
+   - Calculate bounding boxes and check for overlaps
+   - Adjust positions to ensure proper spacing
+4. **Plan the code structure** (shapes → positioning → animations)
+5. **Generate the code** using classes from examples
+6. **Verify completeness** against the specification
+7. **Format as JSON** matching the output schema
+
+**MANDATORY: When generating code, internally perform spatial reasoning as shown in the thinking example above. Track y-coordinates, calculate bounding boxes, and verify no overlaps exist before finalizing positions.**
+
+---
+
+## CRITICAL: Temporal Overlap Prevention
+
+**The #1 animation quality issue is TEMPORAL OVERLAP - showing new content before clearing old content.**
+
+### Before Writing ANY `self.play()` Call
+
+Ask yourself these questions:
+
+<thinking>
+1. What objects are currently visible on screen?
+2. Is the new content conceptually different from what's visible?
+3. If yes → MUST FadeOut old content first
+4. If no → Can build on existing content
+</thinking>
+
+### Mandatory Phases Pattern
+
+Structure your construct() method into CLEAR PHASES separated by cleanup:
+
+```python
+def construct(self):
+    # PHASE 1: Setup
+    title = Text(...)
+    self.play(Write(title))
+    self.wait(1)
+
+    # PHASE 2: First concept
+    diagram1 = ...
+    self.play(Create(diagram1))
+    self.wait(1.5)
+
+    # CLEANUP BEFORE PHASE 3 - MANDATORY!
+    self.play(FadeOut(diagram1), run_time=1.5)
+
+    # PHASE 3: Second concept (FRESH CANVAS)
+    diagram2 = ...
+    self.play(Create(diagram2))
+    self.wait(1.5)
+
+    # CLEANUP BEFORE PHASE 4
+    self.play(FadeOut(diagram2), run_time=1.5)
+
+    # Final cleanup
+    self.play(FadeOut(title), run_time=1.0)
+```
+
+### Rules for When to Clear
+
+✓ **MUST FadeOut when transitioning between**:
+- Different diagrams (architecture → heatmap → flowchart)
+- Different equations (unless building on previous)
+- Different examples (sentence A → sentence B)
+- Intuitive explanation → technical explanation
+- Any conceptual shift in narration
+
+✗ **Can keep visible when**:
+- Adding labels to existing elements
+- Highlighting/indicating existing elements
+- Small additions that complement (not replace) current content
+
+### Anti-Pattern Example (NEVER DO THIS)
+
+```python
+# Creates encoder diagram
+self.play(FadeIn(encoder_layers))  # Many boxes visible
+self.wait(1)
+
+# Creates text WITHOUT clearing diagram first ❌ WRONG!
+german_text = Text("Das Gesetz...").move_to(DOWN*0.5)
+self.play(Write(german_text))  # NOW OVERLAPPING!
+
+# Too late to cleanup
+self.play(FadeOut(encoder_layers), FadeOut(german_text))
+```
+
+### Correct Pattern (DO THIS)
+
+```python
+# Creates encoder diagram
+self.play(FadeIn(encoder_layers))
+self.wait(1.5)
+
+# CLEAR FIRST ✓
+self.play(FadeOut(encoder_layers), run_time=1.5)
+self.wait(0.5)  # Brief pause for clean transition
+
+# NOW show text on clean canvas
+german_text = Text("Das Gesetz...").move_to(DOWN*0.5)
+self.play(Write(german_text))
+self.wait(2.0)
+```
+
+### Thinking Template for Temporal Management
+
+Before generating each section of construct(), think:
+
+<thinking>
+Current phase: [describe what's happening now]
+Currently visible objects: [list all mobjects on screen]
+Next action: [what I want to show]
+Conceptual shift: [yes/no - is this a different idea?]
+
+Decision:
+- If conceptual shift = yes → FadeOut all current objects first
+- If building on same idea → Keep and add
+- Document: "Keeping X visible because Y" OR "Clearing X because moving to Y"
+</thinking>
+
+**Example application to the problematic code**:
+
+<thinking>
+Current phase: Showing encoder/decoder architecture diagram
+Currently visible: encoder_layers, decoder_layers, labels, tokens, heatmap, arrows, source_words
+Next action: Show German translation text and vocabulary softmax bars
+Conceptual shift: YES - moving from "architecture diagram" to "decoding example output"
+
+Decision: MUST FadeOut encoder/decoder diagram before showing German text
+Action: Insert FadeOut(encoder_layers, decoder_layers, heatmap, source_words, ...) BEFORE creating german_text
+</thinking>
+
+This would have prevented the overlap in TransformerPipelineSceneS4.
 
 ---
 

@@ -7,3 +7,7 @@
 myenv/
 venv/
 env/
+
+media/
+output/
+out.txt 
