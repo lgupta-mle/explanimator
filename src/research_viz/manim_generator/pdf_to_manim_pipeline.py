@@ -382,12 +382,346 @@ def run_pipeline(
     return output_path
 
 
+def get_video_duration(video_path: str) -> float:
+    """Get video duration using ffprobe."""
+    try:
+        result = subprocess.run(
+            ['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+             '-of', 'default=noprint_wrappers=1:nokey=1', video_path],
+            capture_output=True,
+            text=True
+        )
+        return float(result.stdout.strip())
+    except Exception as e:
+        print(f"Error getting video duration: {e}")
+        return 0.0
+
+
+def get_audio_duration(audio_path: str) -> float:
+    """Get audio duration using ffprobe."""
+    try:
+        result = subprocess.run(
+            ['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+             '-of', 'default=noprint_wrappers=1:nokey=1', audio_path],
+            capture_output=True,
+            text=True
+        )
+        return float(result.stdout.strip())
+    except Exception as e:
+        print(f"Error getting audio duration: {e}")
+        return 0.0
+
+
+def extend_video_to_duration(video_path: str, target_duration: float, output_path: str) -> bool:
+    """
+    Extend video to target duration by freezing the last frame.
+
+    Args:
+        video_path: Input video path
+        target_duration: Target duration in seconds
+        output_path: Output video path
+
+    Returns:
+        True if successful
+    """
+    try:
+        # Get current duration
+        current_duration = get_video_duration(video_path)
+        extension_duration = target_duration - current_duration
+
+        if extension_duration <= 0:
+            # No extension needed, just copy
+            subprocess.run(['cp', video_path, output_path], check=True)
+            return True
+
+        # Extract last frame - seek to end and extract one frame
+        last_frame_path = output_path.replace('.mp4', '_lastframe.png')
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-sseof', '-1',
+            '-i', video_path,
+            '-vframes', '1',
+            '-q:v', '2',
+            last_frame_path
+        ], capture_output=True, check=True)
+
+        # Create video from last frame with extension duration
+        extended_part_path = output_path.replace('.mp4', '_extended.mp4')
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-loop', '1',
+            '-i', last_frame_path,
+            '-c:v', 'libx264',
+            '-t', str(extension_duration),
+            '-pix_fmt', 'yuv420p',
+            '-r', '15',
+            extended_part_path
+        ], capture_output=True, check=True)
+
+        # Concatenate original + extended using filter_complex for reliable merging
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-i', video_path,
+            '-i', extended_part_path,
+            '-filter_complex', '[0:v][1:v]concat=n=2:v=1:a=0[outv]',
+            '-map', '[outv]',
+            '-c:v', 'libx264',
+            '-pix_fmt', 'yuv420p',
+            output_path
+        ], capture_output=True, check=True)
+
+        # Cleanup
+        for temp_file in [last_frame_path, extended_part_path]:
+            try:
+                os.unlink(temp_file)
+            except:
+                pass
+
+        return True
+    except Exception as e:
+        print(f"Error extending video: {e}")
+        return False
+
+
+def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) -> bool:
+    """
+    Sync audio with video, extending video if needed.
+
+    Args:
+        video_path: Input video path
+        audio_path: Input audio path
+        output_path: Output synced video path
+
+    Returns:
+        True if successful
+    """
+    try:
+        video_duration = get_video_duration(video_path)
+        audio_duration = get_audio_duration(audio_path)
+
+        print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
+
+        if audio_duration > video_duration:
+            print(f"    Extending video by {audio_duration - video_duration:.2f}s")
+            extended_video = output_path.replace('.mp4', '_tmp_extended.mp4')
+            if not extend_video_to_duration(video_path, audio_duration, extended_video):
+                return False
+            video_to_use = extended_video
+        else:
+            video_to_use = video_path
+
+        # Merge audio with video (re-encode to ensure compatibility)
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-i', video_to_use,
+            '-i', audio_path,
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
+            '-b:a', '192k',
+            '-pix_fmt', 'yuv420p',
+            '-shortest',
+            output_path
+        ], capture_output=True, check=True)
+
+        # Cleanup temp extended video
+        if audio_duration > video_duration:
+            try:
+                os.unlink(extended_video)
+            except:
+                pass
+
+        return True
+    except Exception as e:
+        print(f"Error syncing audio with video: {e}")
+        return False
+
+
+def render_and_sync_all_scenes(
+    scene_codes: List[ManimSceneCode],
+    explanation: dict,
+    audio_timeline_path: str,
+    output_dir: str,
+    quality: str = "l"
+) -> Optional[str]:
+    """
+    Render all Manim scenes, sync with audio, and stitch together.
+
+    Args:
+        scene_codes: List of generated scene codes
+        explanation: Explanation dict with segments
+        audio_timeline_path: Path to beat timeline JSON
+        output_dir: Output directory
+        quality: Manim quality (-ql, -qm, -qh)
+
+    Returns:
+        Path to final stitched video, or None on failure
+    """
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    # Load audio timeline
+    with open(audio_timeline_path, 'r') as f:
+        audio_timeline = json.load(f)
+
+    segments = explanation.get('segments', [])
+
+    print(f"\n{'='*70}")
+    print("RENDERING AND SYNCING SCENES")
+    print(f"{'='*70}")
+    print(f"Scenes to render: {len(scene_codes)}")
+    print(f"Quality: {quality}")
+
+    synced_videos = []
+
+    for i, scene_code in enumerate(scene_codes):
+        segment = segments[i] if i < len(segments) else {}
+        segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
+
+        print(f"\n[{i+1}/{len(scene_codes)}] Scene: {scene_code.scene_id}")
+
+        # Find rendered video - Manim quality mapping
+        quality_dirs = {
+            'l': '480p15',
+            'm': '720p30',
+            'h': '1080p60',
+            'k': '2160p60'
+        }
+        quality_dir = quality_dirs.get(quality, '480p15')
+        video_pattern = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
+
+        # Check if video already exists
+        if os.path.exists(video_pattern):
+            print(f"  Video already exists: {video_pattern}")
+        else:
+            # Write scene to temp file
+            temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
+            with open(temp_scene_path, 'w') as f:
+                f.write("from manim import *\nimport numpy as np\n\n")
+                f.write(scene_code.code)
+
+            # Render scene
+            print(f"  Rendering Manim scene...")
+            try:
+                result = subprocess.run(
+                    ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
+                    capture_output=True,
+                    text=True,
+                    timeout=300
+                )
+                if result.returncode != 0:
+                    print(f"  ERROR: Manim render failed")
+                    print(result.stderr)
+                    continue
+            except Exception as e:
+                print(f"  ERROR: {e}")
+                continue
+
+            if not os.path.exists(video_pattern):
+                print(f"  ERROR: Rendered video not found at {video_pattern}")
+                continue
+
+        # Check if synced video already exists
+        synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
+        if os.path.exists(synced_video_path):
+            print(f"  Synced video already exists: {synced_video_path}")
+            synced_videos.append(synced_video_path)
+            continue
+
+        # Get audio for this segment
+        segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
+        if not segment_audio_data:
+            print(f"  WARNING: No audio found for segment {segment_id}, skipping sync")
+            synced_videos.append(video_pattern)
+            continue
+
+        # Concatenate all beat audio files for this segment
+        beats = segment_audio_data.get('beats', [])
+        if not beats:
+            print(f"  WARNING: No beats found for segment {segment_id}")
+            synced_videos.append(video_pattern)
+            continue
+
+        # Combine beat audio files
+        segment_audio_path = f"{output_dir}/segment_{i+1}_audio.wav"
+        if len(beats) == 1:
+            # Single beat, just copy
+            subprocess.run(['cp', beats[0]['audio_file'], segment_audio_path])
+        else:
+            # Multiple beats, concatenate
+            concat_list = f"{output_dir}/segment_{i+1}_audio_concat.txt"
+            with open(concat_list, 'w') as f:
+                for beat in beats:
+                    f.write(f"file '{os.path.abspath(beat['audio_file'])}'\n")
+            subprocess.run([
+                'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
+                '-i', concat_list,
+                '-c', 'copy',
+                segment_audio_path
+            ], capture_output=True)
+            os.unlink(concat_list)
+
+        # Sync audio with video
+        print(f"  Syncing audio with video...")
+        if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
+            print(f"  SUCCESS: {synced_video_path}")
+            synced_videos.append(synced_video_path)
+        else:
+            print(f"  WARNING: Sync failed, using video without audio")
+            synced_videos.append(video_pattern)
+
+    if not synced_videos:
+        print("\nERROR: No videos to stitch")
+        return None
+
+    # Stitch all videos together
+    print(f"\n{'='*70}")
+    print("STITCHING VIDEOS")
+    print(f"{'='*70}")
+    print(f"Videos to stitch: {len(synced_videos)}")
+
+    concat_list_path = f"{output_dir}/final_concat.txt"
+    with open(concat_list_path, 'w') as f:
+        for video in synced_videos:
+            f.write(f"file '{os.path.abspath(video)}'\n")
+
+    final_output = f"{output_dir}/final_video.mp4"
+    try:
+        # Re-encode to ensure audio/video consistency across all clips
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-f', 'concat',
+            '-safe', '0',
+            '-i', concat_list_path,
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
+            '-b:a', '192k',
+            '-pix_fmt', 'yuv420p',
+            final_output
+        ], capture_output=True, check=True)
+
+        print(f"\n{'='*70}")
+        print("SUCCESS!")
+        print(f"{'='*70}")
+        print(f"Final video: {final_output}")
+
+        final_duration = get_video_duration(final_output)
+        print(f"Duration: {final_duration:.1f}s ({final_duration/60:.1f} min)")
+
+        return final_output
+    except Exception as e:
+        print(f"ERROR stitching videos: {e}")
+        return None
+
+
 def main(
     pdf_path: Optional[str] = None,
     explanation_path: Optional[str] = None,
     output_dir: str = "src/research_viz/manim_generator/output",
     model_name: str = "anthropic/claude-sonnet-4.5",
-    max_retries: int = 3
+    max_retries: int = 3,
+    generate_audio: bool = False,
+    tts_voice: str = "nova",
+    render_video: bool = False,
+    video_quality: str = "l"
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -398,37 +732,141 @@ def main(
         output_dir: Output directory
         model_name: LLM model to use
         max_retries: Max retries per segment
+        generate_audio: Generate TTS audio for narrations
+        tts_voice: Voice to use for TTS
+        render_video: Render scenes and create final video
+        video_quality: Manim quality (l=low, m=medium, h=high)
 
     Examples:
-        # From PDF (full pipeline)
-        python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
-            --pdf-path papers/attention.pdf
-
-        # From existing explanation
+        # Generate code only
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
             --explanation-path output/attention_explanation.json
+
+        # Generate code + audio + video
+        python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
+            --explanation-path output/attention_explanation.json \\
+            --generate-audio --render-video
     """
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    # Step 1: Load or generate explanation
     if explanation_path and os.path.exists(explanation_path):
-        run_pipeline(
-            pdf_path=explanation_path,  # Not used but required
-            output_dir=output_dir,
-            model_name=model_name,
-            max_retries=max_retries,
-            skip_explanation=True,
-            explanation_path=explanation_path
-        )
+        print(f"Loading existing explanation: {explanation_path}")
+        with open(explanation_path, 'r') as f:
+            explanation = json.load(f)
+        used_explanation_path = explanation_path
+        pdf_stem = Path(explanation_path).stem.replace('_explanation', '')
     elif pdf_path and os.path.exists(pdf_path):
-        run_pipeline(
+        print(f"Generating explanation from PDF: {pdf_path}")
+        from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+        pdf_stem = Path(pdf_path).stem
+        explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
+        explanation = generate_explanation_from_pdf(
             pdf_path=pdf_path,
-            output_dir=output_dir,
+            output_path=explanation_output,
             model_name=model_name,
-            max_retries=max_retries,
-            skip_explanation=False
+            max_judge_attempts=3
         )
+        if not explanation:
+            print("Failed to generate explanation")
+            return
+        used_explanation_path = explanation_output
     else:
         print("ERROR: Provide either --pdf-path or --explanation-path")
         print("  --pdf-path: Path to research paper PDF")
         print("  --explanation-path: Path to existing explanation JSON")
+        return
+
+    # Step 2: Generate Manim code (skip if already exists)
+    code_output_path = f"{output_dir}/{pdf_stem}_animation.py"
+    scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
+
+    if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
+        print(f"\n{'='*70}")
+        print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
+        print(f"{'='*70}")
+        print(f"Using existing: {code_output_path}")
+
+        # Load scene metadata
+        with open(scene_metadata_path, 'r') as f:
+            scene_data = json.load(f)
+        scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
+    else:
+        print(f"\n{'='*70}")
+        print("GENERATING MANIM CODE")
+        print(f"{'='*70}")
+        scene_codes = generate_all_scenes(
+            explanation=explanation,
+            model_name=model_name,
+            max_retries=max_retries
+        )
+
+        if not scene_codes:
+            print("No scenes generated successfully")
+            return
+
+        # Save assembled code
+        paper_title = explanation.get('paper_title', pdf_stem)
+        complete_code = assemble_complete_code(scene_codes, paper_title)
+        with open(code_output_path, 'w') as f:
+            f.write(complete_code)
+
+        # Save scene metadata for future reuse
+        with open(scene_metadata_path, 'w') as f:
+            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
+
+        print(f"\n{'='*70}")
+        print(f"CODE GENERATION COMPLETE")
+        print(f"{'='*70}")
+        print(f"Generated {len(scene_codes)} scenes")
+        print(f"Output: {code_output_path}")
+
+    # Step 3: Generate audio if requested (skip if already exists)
+    audio_timeline_path = None
+    if generate_audio or render_video:
+        audio_dir = f"{output_dir}/audio_beats"
+        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
+
+        if os.path.exists(audio_timeline_path):
+            print(f"\n{'='*70}")
+            print("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
+            print(f"{'='*70}")
+            print(f"Using existing: {audio_timeline_path}")
+        else:
+            print(f"\n{'='*70}")
+            print("GENERATING TTS AUDIO")
+            print(f"{'='*70}")
+
+            from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+
+            generate_beat_timeline(
+                explanation_path=used_explanation_path,
+                output_dir=audio_dir,
+                voice=tts_voice
+            )
+
+            print(f"\n✓ Audio generation complete!")
+            print(f"  Timeline: {audio_timeline_path}")
+
+    # Step 4: Render video if requested
+    if render_video:
+        if not audio_timeline_path:
+            print("\nERROR: Cannot render video without audio. Enable --generate-audio")
+            return
+
+        final_video = render_and_sync_all_scenes(
+            scene_codes=scene_codes,
+            explanation=explanation,
+            audio_timeline_path=audio_timeline_path,
+            output_dir=output_dir,
+            quality=video_quality
+        )
+
+        if final_video:
+            print(f"\n✓ Pipeline complete!")
+            print(f"  Final video: {final_video}")
+        else:
+            print(f"\n✗ Video rendering failed")
 
 
 if __name__ == "__main__":

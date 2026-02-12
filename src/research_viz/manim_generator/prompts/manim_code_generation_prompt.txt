@@ -107,24 +107,79 @@ Before placing any object, you MUST think through spatial conflicts to prevent o
 
 ## Understanding the Specification
 
-### Shapes (scene.shapes)
+**You will receive a segment specification with:**
+- `segment_id`, `title`: Identifiers
+- `narration_script`: Complete narration text
+- `intuition`: Object with core_insight, visual_metaphor, key_visuals, transformations_to_show
+- `technical`: Object with key_equations, intuition_to_math_bridge, mathematical_insight
+- `running_example`: The concrete example to use throughout
 
-Each shape has:
-- `shape_id`: Variable name to use
-- `shape_type`: Type descriptor (circle, text, equation, rectangle, arrow, etc.)
-- `content`: Text or LaTeX formula if applicable
-- `position`: Where to place it (center, left, top_right, etc.)
-- `color`: Color to use
-- `scale`: Scale factor
-- `represents`: What it conceptually means (for your understanding)
+**Your job**: Convert this flat specification into phase-structured Manim code with clean transitions.
 
-**Your job**: Look at the RAG examples to find how to create these shape types in Manim.
+### Code Generation Pattern with Phase Tracking
+
+```python
+def construct(self):
+    # Title (persists across phases)
+    title = Text("Scene Title", font_size=36).to_edge(UP)
+    self.play(Write(title), run_time=1.5)
+    self.wait(1)
+
+    # ===== PHASE 1: Opening Hook/Intuition =====
+    phase_1_objects = []
+
+    visual1 = Circle(radius=1.5, color=BLUE).move_to(UP * 1)
+    label1 = Text("Core concept", font_size=28).next_to(visual1, DOWN)
+    phase_1_objects.extend([visual1, label1])
+
+    self.play(Create(visual1), Write(label1), run_time=2.0)
+    self.wait(1.5)
+
+    # CLEANUP PHASE 1
+    self.play(*[FadeOut(obj) for obj in phase_1_objects], run_time=1.5)
+    self.wait(0.5)
+
+    # ===== PHASE 2: Technical/Mathematical =====
+    phase_2_objects = []
+
+    equation = MathTex(r"E = mc^2").move_to(UP * 2)
+    eq_label = Text("Equation explanation", font_size=24).next_to(equation, DOWN)
+    phase_2_objects.extend([equation, eq_label])
+
+    self.play(Write(equation), FadeIn(eq_label), run_time=2.0)
+    self.wait(2.0)
+
+    # CLEANUP PHASE 2
+    self.play(*[FadeOut(obj) for obj in phase_2_objects], run_time=1.5)
+
+    # Final cleanup
+    self.play(FadeOut(title), run_time=1.0)
+    self.wait(1)
+```
+
+### Content from Specification
+
+**Your job**: Extract visual elements from the specification and create appropriate Manim objects.
+
+From `intuition.key_visuals`: Descriptions of what to visualize (e.g., "attention weights as springs", "encoder stack diagram")
+From `intuition.transformations_to_show`: Motion/changes to animate (e.g., "token vectors flowing upward", "softmax normalization")
+From `technical.key_equations`: LaTeX equations with intuitive explanations
+
+**Creation pattern**:
+1. Read key_visuals → Decide on Manim objects (Circle, Rectangle, Arrow, Text, etc.)
+2. Look at RAG examples to find correct Manim class and usage
+3. Position using coordinate reasoning (avoid overlaps)
+4. Create in appropriate phase
 
 Example:
 ```
-Shape spec: {"shape_type": "circle", "color": "blue", "position": "center"}
-→ Study examples to learn: use Circle()
-→ Generate: circle = Circle(color=BLUE).move_to(ORIGIN)
+key_visual: "attention weights as colored springs between words"
+→ Study examples to learn: use Line() with varying stroke_width and color
+→ Generate:
+   springs = VGroup()
+   for connection in connections:
+       line = Line(start, end, color=YELLOW, stroke_width=weight*5)
+       springs.add(line)
 ```
 
 ### Animations (scene.animations)
@@ -393,16 +448,46 @@ Before submitting, verify:
 
 ## Example Workflow
 
-1. **Read the scene specification** to understand requirements
-2. **Study the RAG examples** to find relevant Manim classes
-3. **Think through spatial layout** (use the thinking pattern shown above)
+1. **Read the segment specification** to understand requirements
+   - You'll receive: narration, intuition section, technical section, key visuals, equations
+   - This is FLAT - no explicit phases provided
+
+2. **MENTALLY decompose into PHASES** (CRITICAL):
+   - Read through narration and identify conceptual shifts
+   - Typical phase structure:
+     * Phase 1: Title + Opening hook (30-45s)
+     * Phase 2: Visual intuition demonstration (45-60s)
+     * Phase 3: Technical/mathematical explanation (45-60s)
+     * Phase 4: Conclusion or example application (30s)
+   - Mark transition points where you MUST clear screen
+
+3. **Study the RAG examples** to find relevant Manim classes
+
+4. **For each mental phase**:
+   - Decide what to visualize (from key_visuals, equations, narration)
+   - Think through spatial layout (use spatial reasoning pattern)
    - List all objects and their planned positions
    - Calculate bounding boxes and check for overlaps
    - Adjust positions to ensure proper spacing
-4. **Plan the code structure** (shapes → positioning → animations)
-5. **Generate the code** using classes from examples
-6. **Verify completeness** against the specification
-7. **Format as JSON** matching the output schema
+
+5. **Plan inter-phase transitions** (MANDATORY - THIS PREVENTS OVERLAPS):
+   - Track ALL objects created in each phase in a list
+   - Before starting next phase, insert FadeOut code for previous phase's objects
+   - Default: ALWAYS clear between major conceptual shifts
+   - Exception: Only keep objects if directly building on previous (rare)
+
+6. **Generate the code** using classes from examples
+   - Include phase tracking lists (e.g., `phase_1_objects = []`)
+   - Include FadeOut transitions between phases
+   - Add comments marking phase boundaries
+
+7. **Verify completeness**:
+   - All conceptual phases have cleanup transitions
+   - All key visuals and equations from spec are included
+   - No phase adds content while previous phase objects are still visible
+   - Spatial + temporal reasoning documented
+
+8. **Format as JSON** matching the output schema
 
 **MANDATORY: When generating code, internally perform spatial reasoning as shown in the thinking example above. Track y-coordinates, calculate bounding boxes, and verify no overlaps exist before finalizing positions.**
 
