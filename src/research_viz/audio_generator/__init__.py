@@ -1,20 +1,21 @@
 """
 Audio Generation Module
 
-Beat-synchronized TTS generation for Manim animations.
+Beat-synchronized TTS generation for Manim animations using OpenAI TTS API.
 
-Level 2 Synchronization:
+Features:
 - Splits narration into beats (sentences/phrases)
-- Generates TTS audio per beat
-- Allocates animation durations to match audio
-- Generates beat-synced Manim code
+- Generates TTS audio per beat using OpenAI
+- Tracks exact duration for video syncing
+- Integrates with pdf_to_manim_pipeline for full video generation
 
 Quick Start:
-    from research_viz.audio_generator import run_complete_workflow
-    
-    run_complete_workflow(
+    from research_viz.audio_generator import generate_beat_timeline, OPENAI_VOICES
+
+    timeline = generate_beat_timeline(
         explanation_path="output/explanation.json",
-        voice="dan"
+        output_dir="output/audio_beats",
+        voice="nova"
     )
 """
 
@@ -26,40 +27,10 @@ from .beat_sync_tts import (
     OPENAI_VOICES
 )
 
-from .beat_duration_allocator import (
-    BeatAllocation,
-    AnimationAllocation,
-    allocate_beat_duration,
-    build_beat_allocations,
-    ANIMATION_WEIGHTS
-)
-
-from .beat_synced_manim_generator import (
-    generate_beat_synced_scene,
-    generate_all_beat_synced_scenes
-)
-
-from .workflow import run_complete_workflow
-
 __all__ = [
-    # TTS Generation
     'BeatSyncTTS',
     'NarrationBeat',
     'split_into_beats',
     'generate_beat_timeline',
     'OPENAI_VOICES',
-    
-    # Duration Allocation
-    'BeatAllocation',
-    'AnimationAllocation',
-    'allocate_beat_duration',
-    'build_beat_allocations',
-    'ANIMATION_WEIGHTS',
-    
-    # Manim Code Generation
-    'generate_beat_synced_scene',
-    'generate_all_beat_synced_scenes',
-    
-    # Complete Workflow
-    'run_complete_workflow'
 ]
