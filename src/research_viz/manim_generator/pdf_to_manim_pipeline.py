@@ -143,6 +143,13 @@ def generate_scene_code(
     intuition = segment.get('intuition', {})
     technical = segment.get('technical', {})
 
+    # Calculate expected narration duration
+    word_count = len(narration.split())
+    # Average speech rate: ~150 words per minute = ~2.5 words per second
+    estimated_narration_duration = word_count / 2.5
+    # Add 20% buffer for pacing and pauses
+    target_animation_duration = estimated_narration_duration * 1.2
+    
     base_prompt = f"""
 Generate a Manim animation scene for this segment of a 3Blue1Brown-style educational video.
 
@@ -159,15 +166,23 @@ Generate a Manim animation scene for this segment of a 3Blue1Brown-style educati
 - Math Bridge: {technical.get('intuition_to_math_bridge', '')}
 - Key Equations: {json.dumps(technical.get('key_equations', []), indent=2)}
 
-### Narration:
-{narration[:1500]}
+### Narration (FULL TEXT - {word_count} words):
+{narration}
+
+### CRITICAL DURATION REQUIREMENT:
+- Narration word count: {word_count} words
+- Estimated narration duration: {estimated_narration_duration:.1f} seconds
+- **Your animation MUST run for at least {target_animation_duration:.1f} seconds**
+- Strategy: Use longer run_time values, add extended self.wait() periods, and include a long final hold
+- The final frame should remain visible while the narration completes
 
 ## Requirements:
 1. Create a complete, executable Manim Scene class
 2. Visualize the key visuals and transformations described
 3. Include any relevant equations using MathTex (not Tex for math symbols)
 4. Use smooth animations and 3Blue1Brown style (dark background, clear colors)
-5. The scene should be 30-60 seconds of animation
+5. **CRITICAL**: The total scene duration MUST be at least {target_animation_duration:.1f} seconds to match the narration length
+6. Add a comment at the top of your construct() method showing your duration planning breakdown
 
 Output a JSON object with:
 - scene_id: "{segment_id}"
@@ -501,16 +516,22 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
 
         print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
 
-        if audio_duration > video_duration:
-            print(f"    Extending video by {audio_duration - video_duration:.2f}s")
+        # Add a small buffer (0.5s) to ensure video fully covers audio
+        # This prevents black screen issues from minor timing discrepancies
+        target_duration = audio_duration + 0.5
+        
+        if target_duration > video_duration:
+            print(f"    Extending video by {target_duration - video_duration:.2f}s (includes 0.5s buffer)")
             extended_video = output_path.replace('.mp4', '_tmp_extended.mp4')
-            if not extend_video_to_duration(video_path, audio_duration, extended_video):
+            if not extend_video_to_duration(video_path, target_duration, extended_video):
                 return False
             video_to_use = extended_video
         else:
             video_to_use = video_path
 
         # Merge audio with video (re-encode to ensure compatibility)
+        # IMPORTANT: Removed -shortest flag to prevent premature video cutoff
+        # Using explicit stream mapping to ensure video plays for full audio duration
         subprocess.run([
             'ffmpeg', '-y',
             '-i', video_to_use,
@@ -519,12 +540,13 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
             '-c:a', 'aac',
             '-b:a', '192k',
             '-pix_fmt', 'yuv420p',
-            '-shortest',
+            '-map', '0:v:0',  # Map video from first input
+            '-map', '1:a:0',  # Map audio from second input
             output_path
         ], capture_output=True, check=True)
 
         # Cleanup temp extended video
-        if audio_duration > video_duration:
+        if target_duration > video_duration:
             try:
                 os.unlink(extended_video)
             except:

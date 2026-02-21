@@ -56,13 +56,24 @@ The documentation examples provided are your PRIMARY source of truth. You MUST:
 3. **STAY WITHIN FRAME BOUNDARIES**
    - ALWAYS check positions: LEFT * 3, RIGHT * 3, UP * 2, DOWN * 2 are safe
 
-4. **PROPER ANIMATION PACING**
+4. **PROPER ANIMATION PACING & DURATION MATCHING**
    - Use `run_time=2.0` or longer for complex animations (not 0.5s!)
    - Add 1.5s wait after important reveals
    - Total scene should be 120-150 seconds minimum
    - Use a 2 second wait at the end for final viewing
+   - **CRITICAL: Match animation duration to narration length**
+     * Before generating code, estimate narration word count (you'll see the narration_script)
+     * Average speech rate: ~150 words per minute = ~2.5 words per second
+     * Calculate minimum scene duration: (word_count / 2.5) seconds
+     * Your animations MUST run for at least this duration
+   - **Duration matching strategies**:
+     * Use longer `run_time` values for animations (3-4 seconds instead of 1-2)
+     * Add extended `self.wait()` periods between animations (2-3 seconds)
+     * After final content appears, add a long hold: `self.wait(X)` where X ensures total duration matches narration
+     * Keep final visuals on screen rather than fading out early
    - Sync the animation speed with the average speed of the narration, such that when the narration is long, the animation should either be slow or remain on the screen.
    - DO NOT remove the animation from the screen once it has ended IF the narration for that segment is in progress.
+   - **Add a final hold at the end**: After all content is shown, calculate remaining time needed and add `self.wait(remaining_time)` to keep visuals visible during final narration
 
 **SPATIAL REASONING PROTOCOL**
 
@@ -286,12 +297,18 @@ class YourSceneClassName(Scene):
   """
   Brief description of what this scene does.
   Narration: [first 100 chars of narration]
+  Narration word count: ~250 words
+  Estimated narration duration: 250 / 2.5 = 100 seconds
   """
     def construct(self):
-        # Step 1: Create title/context
+        # DURATION PLANNING:
+        # Target duration: ~100 seconds (based on narration)
+        # Animation structure: title(3s) + content_phase_1(30s) + content_phase_2(35s) + hold(32s) = 100s
+        
+        # Step 1: Create title/context (3 seconds total)
         title = Text("Concept Name", font_size=36).to_edge(UP)
         self.play(Write(title), run_time=1.5)
-        self.wait(1)
+        self.wait(1.5)  # Extended wait for narration catchup
 
         # Step 2: Create main content with labels
         equation = MathTex(r"Q = XW_Q").move_to(UP * 2)
@@ -338,7 +355,12 @@ class YourSceneClassName(Scene):
         # next_content = Text("Next concept...", font_size=32).shift(DOWN)
         # self.play(Write(next_content), run_time=2.0)
 
-        # Step 6: Final cleanup
+        # Step 6: Final hold to match narration duration
+        # Keep visuals on screen for remaining narration
+        # Estimated remaining time: 100s total - 68s used = 32s
+        self.wait(30)  # Extended final hold while narration completes
+        
+        # Step 7: Final cleanup only after narration finishes
         self.play(FadeOut(title), FadeOut(next_content), run_time=1.0)
         self.wait(1)
 ```
