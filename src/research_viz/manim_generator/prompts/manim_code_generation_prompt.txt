@@ -59,8 +59,10 @@ The documentation examples provided are your PRIMARY source of truth. You MUST:
 4. **PROPER ANIMATION PACING**
    - Use `run_time=2.0` or longer for complex animations (not 0.5s!)
    - Add 1.5s wait after important reveals
-   - Total scene should be 45-90 seconds minimum
+   - Total scene should be 120-150 seconds minimum
    - Use a 2 second wait at the end for final viewing
+   - Sync the animation speed with the average speed of the narration, such that when the narration is long, the animation should either be slow or remain on the screen.
+   - DO NOT remove the animation from the screen once it has ended IF the narration for that segment is in progress.
 
 **SPATIAL REASONING PROTOCOL**
 
