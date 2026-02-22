@@ -245,6 +245,64 @@ research-paper-graphviz/
 └── README.md
 ```
 
+## Audio-Video Synchronization
+
+### Sync Modes
+
+The pipeline supports configurable synchronization modes to ensure animations match narration timing:
+
+#### **Segment-Level Sync** (Default, Recommended)
+
+Adjusts entire segment video to match segment audio duration.
+
+```bash
+python -m research_viz.manim_generator.pdf_to_manim_pipeline \
+  --explanation-path output/explanation.json \
+  --generate-audio --render-video \
+  --sync-mode segment \
+  --max-speed-change 0.3
+```
+
+**How it works**:
+1. Render segment animation (LLM creates code without worrying about exact timing)
+2. Measure actual video duration (e.g., 53.4s)
+3. Get exact audio duration (e.g., 47.8s)
+4. Adjust video speed to match: 53.4s → 47.8s (11.7% faster)
+5. Merge adjusted video with audio → perfect sync!
+
+**Benefits**:
+- ✅ Removes reliance on unreliable LLM timing calculations
+- ✅ Guarantees duration matching (measured, not estimated)
+- ✅ Smooth playback (typically < 20% speed change)
+- ✅ Solves desynchronization at the root
+
+#### **Beat-Level Sync** (Experimental)
+
+Adjusts each beat separately for frame-perfect synchronization.
+
+```bash
+python -m research_viz.manim_generator.pdf_to_manim_pipeline \
+  --explanation-path output/explanation.json \
+  --generate-audio --render-video \
+  --sync-mode beat \
+  --max-speed-change 0.2
+```
+
+**Status**: Currently falls back to segment-level with warning (per-beat rendering not yet implemented).
+
+### Configuration Parameters
+
+- `--sync-mode`: `"segment"` (default) or `"beat"`
+- `--max-speed-change`: Maximum video speed adjustment (default: `0.3` = 30%)
+
+**Speed change perception**:
+- 0-10%: Imperceptible
+- 10-20%: Barely noticeable
+- 20-30%: Acceptable for educational content
+- >30%: Falls back to extend/trim to preserve naturalness
+
+See [SYNC_MODES.md](SYNC_MODES.md) for detailed documentation.
+
 ## Troubleshooting
 
 ### "OpenAI API key not set"

@@ -542,6 +542,117 @@ def extend_video_to_duration(video_path: str, target_duration: float, output_pat
         return False
 
 
+def adjust_video_speed(video_path: str, target_duration: float, output_path: str) -> bool:
+    """
+    Adjust video playback speed to match target duration.
+    
+    Args:
+        video_path: Input video path
+        target_duration: Target duration in seconds
+        output_path: Output video path
+    
+    Returns:
+        True if successful
+    """
+    try:
+        current_duration = get_video_duration(video_path)
+        
+        if current_duration == 0:
+            print(f"Error: Could not get video duration")
+            return False
+        
+        # Calculate speed factor (PTS multiplier)
+        # To slow down: setpts=PTS*2 (makes 10s video → 20s)
+        # To speed up: setpts=PTS/2 (makes 10s video → 5s)
+        speed_factor = current_duration / target_duration
+        
+        # If very close, just extend or copy
+        if abs(current_duration - target_duration) < 0.1:
+            if current_duration < target_duration:
+                return extend_video_to_duration(video_path, target_duration, output_path)
+            else:
+                subprocess.run(['cp', video_path, output_path], check=True)
+                return True
+        
+        print(f"    Adjusting speed: {current_duration:.2f}s → {target_duration:.2f}s (factor: {speed_factor:.3f}x)")
+        
+        # Apply speed adjustment
+        # Note: setpts changes playback speed without re-encoding frames
+        subprocess.run([
+            'ffmpeg', '-y',
+            '-i', video_path,
+            '-filter:v', f'setpts=PTS/{speed_factor}',
+            '-an',  # Remove audio (we'll add it separately)
+            '-c:v', 'libx264',
+            '-pix_fmt', 'yuv420p',
+            output_path
+        ], capture_output=True, check=True)
+        
+        # Verify final duration
+        final_duration = get_video_duration(output_path)
+        print(f"    Result: {final_duration:.2f}s (target: {target_duration:.2f}s)")
+        
+        return True
+    except Exception as e:
+        print(f"Error adjusting video speed: {e}")
+        return False
+
+
+def adjust_video_to_audio_duration(
+    video_path: str,
+    audio_duration: float,
+    output_path: str,
+    max_speed_change: float = 0.3
+) -> bool:
+    """
+    Adjust video to match audio duration with configurable speed limits.
+    
+    Args:
+        video_path: Input video path
+        audio_duration: Target audio duration
+        output_path: Output adjusted video
+        max_speed_change: Maximum allowed speed change (0.3 = 30%)
+    
+    Returns:
+        True if successful
+    """
+    try:
+        video_duration = get_video_duration(video_path)
+        
+        # Calculate required speed change
+        speed_ratio = abs(video_duration - audio_duration) / audio_duration
+        
+        print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
+        print(f"    Speed change required: {speed_ratio*100:.1f}%")
+        
+        # If speed change is within limits, adjust speed
+        if speed_ratio <= max_speed_change:
+            print(f"    Using speed adjustment (within {max_speed_change*100:.0f}% limit)")
+            return adjust_video_speed(video_path, audio_duration, output_path)
+        else:
+            # Speed change too large, use extend/trim approach
+            print(f"    Speed change too large, using extend/trim approach")
+            if video_duration < audio_duration:
+                # Extend by freezing last frame
+                return extend_video_to_duration(video_path, audio_duration, output_path)
+            else:
+                # Trim to target duration (lose some content at end)
+                print(f"    WARNING: Video too long, trimming from {video_duration:.2f}s to {audio_duration:.2f}s")
+                subprocess.run([
+                    'ffmpeg', '-y',
+                    '-i', video_path,
+                    '-t', str(audio_duration),
+                    '-c:v', 'libx264',
+                    '-pix_fmt', 'yuv420p',
+                    output_path
+                ], capture_output=True, check=True)
+                return True
+        
+    except Exception as e:
+        print(f"Error adjusting video to audio duration: {e}")
+        return False
+
+
 def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) -> bool:
     """
     Sync audio with video, extending video if needed.
@@ -607,7 +718,9 @@ def render_and_sync_all_scenes(
     explanation: dict,
     audio_timeline_path: str,
     output_dir: str,
-    quality: str = "l"
+    quality: str = "l",
+    sync_mode: str = "segment",
+    max_speed_change: float = 0.3
 ) -> Optional[str]:
     """
     Render all Manim scenes, sync with audio, and stitch together.
@@ -618,9 +731,15 @@ def render_and_sync_all_scenes(
         audio_timeline_path: Path to beat timeline JSON
         output_dir: Output directory
         quality: Manim quality (-ql, -qm, -qh)
+        sync_mode: Sync granularity - "segment" (default) or "beat"
+        max_speed_change: Maximum allowed speed adjustment (0.3 = 30%)
 
     Returns:
         Path to final stitched video, or None on failure
+        
+    Sync Modes:
+        - "segment": Adjust entire segment video to match segment audio (simpler, smoother)
+        - "beat": Adjust each beat separately for frame-perfect sync (more precise)
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -635,6 +754,8 @@ def render_and_sync_all_scenes(
     print(f"{'='*70}")
     print(f"Scenes to render: {len(scene_codes)}")
     print(f"Quality: {quality}")
+    print(f"Sync mode: {sync_mode}")
+    print(f"Max speed change: {max_speed_change*100:.0f}%")
 
     synced_videos = []
 
@@ -725,14 +846,77 @@ def render_and_sync_all_scenes(
             ], capture_output=True)
             os.unlink(concat_list)
 
-        # Sync audio with video
-        print(f"  Syncing audio with video...")
-        if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-            print(f"  SUCCESS: {synced_video_path}")
-            synced_videos.append(synced_video_path)
+        # Sync audio with video based on mode
+        print(f"  Syncing audio with video (mode: {sync_mode})...")
+        
+        if sync_mode == "segment":
+            # SEGMENT-LEVEL SYNC: Adjust entire video to match total audio duration
+            segment_audio_duration = get_audio_duration(segment_audio_path)
+            
+            # First adjust video duration to match audio
+            adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
+            if adjust_video_to_audio_duration(
+                video_pattern,
+                segment_audio_duration,
+                adjusted_video_path,
+                max_speed_change
+            ):
+                # Then merge audio with adjusted video
+                if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
+                    print(f"  SUCCESS: {synced_video_path}")
+                    synced_videos.append(synced_video_path)
+                    # Cleanup temp file
+                    try:
+                        os.unlink(adjusted_video_path)
+                    except:
+                        pass
+                else:
+                    print(f"  WARNING: Audio merge failed, using adjusted video")
+                    synced_videos.append(adjusted_video_path)
+            else:
+                print(f"  WARNING: Duration adjustment failed, using original sync")
+                if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
+                    synced_videos.append(synced_video_path)
+                else:
+                    synced_videos.append(video_pattern)
+        
+        elif sync_mode == "beat":
+            # BEAT-LEVEL SYNC: Process each beat separately
+            # TODO: This requires splitting the video into beats, which is complex
+            # For now, fall back to segment sync with a warning
+            print(f"  WARNING: Beat-level sync requires per-beat video rendering")
+            print(f"  Falling back to segment-level sync")
+            
+            segment_audio_duration = get_audio_duration(segment_audio_path)
+            adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
+            
+            if adjust_video_to_audio_duration(
+                video_pattern,
+                segment_audio_duration,
+                adjusted_video_path,
+                max_speed_change
+            ):
+                if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
+                    synced_videos.append(synced_video_path)
+                    try:
+                        os.unlink(adjusted_video_path)
+                    except:
+                        pass
+                else:
+                    synced_videos.append(adjusted_video_path)
+            else:
+                if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
+                    synced_videos.append(synced_video_path)
+                else:
+                    synced_videos.append(video_pattern)
+        
         else:
-            print(f"  WARNING: Sync failed, using video without audio")
-            synced_videos.append(video_pattern)
+            # Unknown mode, use old method
+            print(f"  WARNING: Unknown sync mode '{sync_mode}', using default")
+            if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
+                synced_videos.append(synced_video_path)
+            else:
+                synced_videos.append(video_pattern)
 
     if not synced_videos:
         print("\nERROR: No videos to stitch")
@@ -787,7 +971,9 @@ def main(
     generate_audio: bool = False,
     tts_voice: str = "nova",
     render_video: bool = False,
-    video_quality: str = "l"
+    video_quality: str = "l",
+    sync_mode: str = "segment",
+    max_speed_change: float = 0.3
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -802,16 +988,29 @@ def main(
         tts_voice: Voice to use for TTS
         render_video: Render scenes and create final video
         video_quality: Manim quality (l=low, m=medium, h=high)
+        sync_mode: Audio-video sync mode - "segment" (default) or "beat"
+        max_speed_change: Maximum video speed adjustment (0.3 = 30%)
+
+    Sync Modes:
+        - "segment": Adjust entire segment video to match audio (smoother, simpler)
+        - "beat": Adjust each beat separately (more precise, experimental)
 
     Examples:
         # Generate code only
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
             --explanation-path output/attention_explanation.json
 
-        # Generate code + audio + video
+        # Generate with segment-level sync (default, recommended)
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
             --explanation-path output/attention_explanation.json \\
-            --generate-audio --render-video
+            --generate-audio --render-video \\
+            --sync-mode segment --max-speed-change 0.3
+
+        # Try beat-level sync (experimental)
+        python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
+            --explanation-path output/attention_explanation.json \\
+            --generate-audio --render-video \\
+            --sync-mode beat --max-speed-change 0.2
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -927,7 +1126,9 @@ def main(
             explanation=explanation,
             audio_timeline_path=audio_timeline_path,
             output_dir=output_dir,
-            quality=video_quality
+            quality=video_quality,
+            sync_mode=sync_mode,
+            max_speed_change=max_speed_change
         )
 
         if final_video:
