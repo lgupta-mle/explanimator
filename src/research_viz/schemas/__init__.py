@@ -1,12 +1,14 @@
-from research_viz.schemas.kg_schemas import (
-    HighLevelKnowledgeGraph,
-    LowLevelKnowledgeGraph,
-)
+"""Schemas used by the pipeline.
+
+Only exports schemas that are actively used.
+"""
 from research_viz.schemas.explanation_schemas import (
-    EducationalExplanation,
-    VideoSegment,
+    EducationalExplanation3B1B,
+    Segment3B1B,
+    IntuitiveSection,
+    TechnicalSection,
+    EquationExplanation,
 )
-from research_viz.schemas.animation_schemas import (
-    AnimationRequirements,
-    SegmentAnimationPlan,
+from research_viz.schemas.manim_docs_schemas import (
+    ManimDocChunk,
 )

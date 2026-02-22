@@ -7,17 +7,41 @@ Automatically generate educational explainer videos from research papers using A
 This tool converts research papers (PDFs) into 3Blue1Brown-style animated explainer videos with synchronized narration:
 
 ```
-PDF → Explanation → Manim Code → Audio → Rendered Videos → Final Video
+PDF → Explanation → Audio Beats → Manim Code (with timing) → Rendered Videos → Synced & Stitched Video
 ```
+
+### Pipeline Flow
+
+1. **PDF → Explanation**
+   - Extracts and structures paper content
+   - LLM generates educational breakdown per segment
+
+2. **Audio Generation FIRST** 
+   - Splits narration into beats (sentences)
+   - Generates TTS audio with precise timing
+   - Creates a json file with exact durations
+
+3. **Code Generation with Timing** 
+   - Loads beat timeline for precise timing info
+   - LLM generates Manim code per segment
+   - Validates by executing code by using RAG to retrieve the manim documentation and store it as vector db, such that it can be referenced in case an error occurs.
+
+4. **Video Rendering & Sync** 
+   - Renders each segment with Manim
+   - **Measures** actual video duration
+   - **Adjusts** video speed to match audio exactly
+   - Merges audio with speed-adjusted video
+
+5. **Stitching** - Concatenates all synced segments → Final video
 
 ## Features
 
-- **PDF Parsing**: Extracts structured content from research papers using GROBID
-- **AI Explanation**: Generates educational explanations using LLMs (Claude/GPT)
-- **Manim Code Generation**: Creates executable Manim animation code with retry logic
-- **TTS Audio**: Generates natural speech using OpenAI TTS API
-- **Video Syncing**: Synchronizes animations with narration (extends video if needed)
-- **Auto-Stitching**: Combines all scenes into one final video
+- **AI Explanation**: LLM (Gemini-3.1-Pro) generates 3Blue1Brown-style educational explanations from research paper PDF as input
+- **Beat-Synchronized Audio**: OpenAI TTS with precise sentence-level timing
+- **Manim Code Generation**: Executable animation code with automatic error fixing via RAG
+- **Measured Duration Sync**: Mesures the duration of each segment and adjusts the video speed to match the audio
+- **Configurable Speed Adjustment**: Segment-level or beat-level sync modes (Preferred and default: segment-level sync)
+- **Auto-Stitching**: Seamlessly combines all segments
 
 ## Quick Start
 
@@ -43,22 +67,23 @@ brew install ffmpeg  # macOS
 ```bash
 # From existing explanation JSON
 python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --explanation-path src/research_viz/manim_generator/output/attention_is_all_you_need_explanation.json \
+  --pdf-path resources/attention_is_all_you_need.pdf \
   --output-dir output/final \
   --generate-audio \
   --render-video \
   --video-quality l \
-  --model-name openai/gpt-5.2-codex \
+  --model-name google/gemini-3.1-pro-preview \
   --tts-voice nova
 ```
 
 This will:
-1. ✓ Load explanation (or generate from PDF with `--pdf-path`)
-2. ✓ Generate Manim animation code for each segment (with execution validation)
-3. ✓ Generate TTS audio for each segment's narration
-4. ✓ Render each scene to video using Manim
-5. ✓ Sync audio with video (extends video if audio is longer)
-6. ✓ Stitch all scenes into final video
+1. ✓ Load research paper PDF and create an intuitive explanation (stored in JSON)
+2. ✓ Generate TTS audio with beat-level timing → `beat_timeline.json`
+3. ✓ Generate Manim code (with beat timing info, validated by execution)
+4. ✓ Render each segment to video using Manim
+5. ✓ Measure video segment duration, adjust speed to match audio
+6. ✓ Merge adjusted video with audio (segment-level sync)
+7. ✓ Stitch all synced segments into final video
 
 **Output**: `output/final/final_video.mp4`
 
@@ -68,7 +93,7 @@ This will:
 
 ```bash
 python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --explanation-path explanation.json \
+  --pdf-path research_paper.pdf \
   --output-dir output
 ```
 
@@ -78,7 +103,7 @@ Generates Manim code without rendering videos.
 
 ```bash
 python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --explanation-path explanation.json \
+  --pdf-path research_paper.pdf \
   --generate-audio \
   --tts-voice nova
 ```
@@ -89,7 +114,7 @@ Generates code and audio files (no video rendering).
 
 ```bash
 python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --explanation-path explanation.json \
+  --pdf-path research_paper.pdf \
   --generate-audio \
   --render-video \
   --video-quality m \
@@ -133,7 +158,7 @@ OpenAI TTS provides six natural voices:
 ### Model Selection
 
 ```bash
---model-name anthropic/claude-sonnet-4.5  # Best for code generation
+--model-name google/gemini-3.1-pro-preview  # Preferred
 --model-name openai/gpt-5.2-codex         # Alternative
 ```
 
@@ -158,61 +183,13 @@ output/
 └── final_video.mp4                           # Complete stitched video
 ```
 
-## How It Works
-
-### 1. Explanation Generation
-
-Converts PDF → structured educational explanation:
-- Running example (concrete walkthrough)
-- Segments (one per key concept)
-- Narration scripts (what to say)
-- Visual descriptions (what to show)
-
-### 2. Manim Code Generation
-
-Uses LLM to generate executable Manim code:
-- Validates by actually running Manim
-- Retries with RAG if errors occur
-- Uses vector DB of Manim documentation
-
-### 3. Audio Generation
-
-Splits narration into beats and generates TTS:
-- Beat = sentence or phrase (~8-25 words)
-- OpenAI TTS generates natural speech
-- Tracks exact duration per beat
-
-### 4. Video Rendering & Syncing
-
-Renders animations and syncs with audio:
-- Manim renders each scene
-- Compares video duration vs audio duration
-- Extends video (freeze last frame) if audio is longer
-- Merges audio with video using ffmpeg
-
-### 5. Stitching
-
-Concatenates all synced scenes into final video.
-
 ## Advanced Usage
-
-### Generate Explanation from PDF
-
-```bash
-# Requires GROBID running on port 8070
-docker run --rm -p 8070:8070 lfoppiano/grobid:0.8.0
-
-# Generate explanation
-python -m research_viz.manim_generator.pdf_explanation_generator \
-  --pdf-path papers/attention.pdf \
-  --output-path output/explanation.json
-```
 
 ### Standalone Audio Generation
 
 ```bash
 python -m research_viz.audio_generator.beat_sync_tts \
-  --explanation-path explanation.json \
+  --pdf-path research_paper.pdf \
   --output-dir audio_output \
   --voice nova
 ```
@@ -229,21 +206,35 @@ manim -pqm output/animation.py -a
 
 ## Project Structure
 
+### Core Pipeline Files (Runtime)
 ```
-research-paper-graphviz/
-├── src/research_viz/
-│   ├── manim_generator/
-│   │   ├── pdf_to_manim_pipeline.py      # Main pipeline
-│   │   ├── pdf_explanation_generator.py  # PDF → Explanation
-│   │   └── prompts/                      # LLM prompts
-│   ├── audio_generator/
-│   │   ├── beat_sync_tts.py             # OpenAI TTS integration
-│   │   └── workflow.py                   # Audio workflow
-│   └── preprocessing/
-│       └── manim_db.py                   # RAG for Manim docs
-├── requirements.txt
-└── README.md
+src/research_viz/
+├── manim_generator/
+│   ├── pdf_to_manim_pipeline.py          # Main pipeline orchestrator
+│   ├── pdf_explanation_generator.py      # PDF → Educational explanation
+│   └── prompts/
+│       └── manim_code_generation_prompt.txt  # LLM instructions for code
+├── audio_generator/
+│   └── beat_sync_tts.py                  # Beat-synchronized TTS (OpenAI)
+├── preprocessing/
+│   └── manim_db.py                       # RAG for Manim documentation
+└── schemas/
+    ├── explanation_schemas.py            # Data structures
+    └── manim_docs_schemas.py             # RAG schemas
 ```
+
+### Setup Files (One-Time)
+```
+src/research_viz/preprocessing/
+├── manim_docs_scraper.py       # Scrape Manim docs
+├── manim_docs_chunker.py       # Split into chunks
+├── manim_docs_embedder.py      # Generate embeddings
+└── build_manim_index.py        # Build ChromaDB index
+```
+
+**Setup**: Run once to create RAG database in `data/manim_docs/vector_db/chroma_db/`
+
+See [PIPELINE_FILES.md](PIPELINE_FILES.md) for detailed dependency mapping.
 
 ## Audio-Video Synchronization
 
@@ -263,19 +254,6 @@ python -m research_viz.manim_generator.pdf_to_manim_pipeline \
   --max-speed-change 0.3
 ```
 
-**How it works**:
-1. Render segment animation (LLM creates code without worrying about exact timing)
-2. Measure actual video duration (e.g., 53.4s)
-3. Get exact audio duration (e.g., 47.8s)
-4. Adjust video speed to match: 53.4s → 47.8s (11.7% faster)
-5. Merge adjusted video with audio → perfect sync!
-
-**Benefits**:
-- ✅ Removes reliance on unreliable LLM timing calculations
-- ✅ Guarantees duration matching (measured, not estimated)
-- ✅ Smooth playback (typically < 20% speed change)
-- ✅ Solves desynchronization at the root
-
 #### **Beat-Level Sync** (Experimental)
 
 Adjusts each beat separately for frame-perfect synchronization.
@@ -287,92 +265,5 @@ python -m research_viz.manim_generator.pdf_to_manim_pipeline \
   --sync-mode beat \
   --max-speed-change 0.2
 ```
-
-**Status**: Currently falls back to segment-level with warning (per-beat rendering not yet implemented).
-
-### Configuration Parameters
-
-- `--sync-mode`: `"segment"` (default) or `"beat"`
-- `--max-speed-change`: Maximum video speed adjustment (default: `0.3` = 30%)
-
-**Speed change perception**:
-- 0-10%: Imperceptible
-- 10-20%: Barely noticeable
-- 20-30%: Acceptable for educational content
-- >30%: Falls back to extend/trim to preserve naturalness
-
-See [SYNC_MODES.md](SYNC_MODES.md) for detailed documentation.
-
-## Troubleshooting
-
-### "OpenAI API key not set"
-
-```bash
-export OPENAI_API_KEY="sk-..."
-# Add to ~/.bashrc or ~/.zshrc for persistence
-```
-
-### "Manim render failed"
-
-Check generated code in output directory:
-```bash
-cat output/animation.py
-```
-
-The pipeline retries with RAG if Manim execution fails.
-
-### "ffmpeg not found"
-
-```bash
-brew install ffmpeg  # macOS
-sudo apt install ffmpeg  # Ubuntu/Debian
-```
-
-### Videos have no audio
-
-Ensure:
-- `--generate-audio` flag is set
-- `OPENAI_API_KEY` is configured
-- Audio files exist in `audio_beats/` directory
-
-### "Rendered video not found"
-
-Check Manim output quality directory matches setting:
-- `-ql` → `media/videos/temp_scene_X/480p15/`
-- `-qm` → `media/videos/temp_scene_X/720p30/`
-- `-qh` → `media/videos/temp_scene_X/1080p60/`
-
-## Performance
-
-Typical pipeline timing (5 segments):
-- **Explanation generation**: 2-5 minutes (LLM calls)
-- **Code generation**: 5-10 minutes (includes execution validation)
-- **Audio generation**: 1-2 minutes (OpenAI TTS API)
-- **Video rendering**: 5-15 minutes (Manim + ffmpeg, depends on quality)
-- **Syncing & stitching**: 2-3 minutes (ffmpeg)
-
-**Total**: ~15-35 minutes for complete pipeline
-
-## Examples
-
-Example output video from "Attention is All You Need" paper:
-- 5 segments explaining Transformer architecture
-- 4 minutes total duration
-- Synchronized narration with animations
-- Beat-level audio sync
-
-## License
-
-MIT
-
-## Contributing
-
-Contributions welcome! Key areas:
-- Better Manim code generation prompts
-- Improved error handling and retries
-- Support for more TTS providers
-- Enhanced video quality options
-
----
 
 **Transform research papers into engaging educational videos automatically!** 📄 → 🎬

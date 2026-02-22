@@ -1,3 +1,0 @@
-[submodule "submodules/grobid"]
-	path = submodules/grobid
-	url = git@github-personal:kermitt2/grobid.git
