@@ -56,24 +56,49 @@ The documentation examples provided are your PRIMARY source of truth. You MUST:
 3. **STAY WITHIN FRAME BOUNDARIES**
    - ALWAYS check positions: LEFT * 3, RIGHT * 3, UP * 2, DOWN * 2 are safe
 
-4. **PROPER ANIMATION PACING & DURATION MATCHING**
+4. **PROPER ANIMATION PACING & BEAT-LEVEL SYNCHRONIZATION**
    - Use `run_time=2.0` or longer for complex animations (not 0.5s!)
    - Add 1.5s wait after important reveals
    - Total scene should be 120-150 seconds minimum
    - Use a 2 second wait at the end for final viewing
-   - **CRITICAL: Match animation duration to narration length**
-     * Before generating code, estimate narration word count (you'll see the narration_script)
+   
+   - **CRITICAL: Beat-Level Synchronization**
+     * If you receive BEAT-LEVEL TIMING information, this is the MOST IMPORTANT requirement
+     * Each beat represents a sentence/phrase with exact audio duration
+     * Structure your animation into sections matching each beat
+     * Each beat's animation duration MUST match its audio duration exactly
+     * Example: If Beat 1 is 8.5s, all animations + waits for Beat 1 = 8.5s total
+   
+   - **Beat Synchronization Strategy**:
+     ```python
+     # Beat 1: Introduction (8.5s total)
+     intro_text = Text("Transformers use attention")  # 2s
+     self.play(Write(intro_text), run_time=2.0)
+     self.wait(6.5)  # Remaining time: 8.5 - 2.0 = 6.5s
+     
+     # Beat 2: Key concept (12.3s total)
+     diagram = Circle()  # 3s
+     self.play(Create(diagram), run_time=3.0)
+     label = Text("Self-attention")  # 2s
+     self.play(FadeIn(label), run_time=2.0)
+     self.wait(7.3)  # Remaining time: 12.3 - 3.0 - 2.0 = 7.3s
+     ```
+   
+   - **If NO beat timing provided** (fallback):
+     * Estimate narration word count from narration_script
      * Average speech rate: ~150 words per minute = ~2.5 words per second
      * Calculate minimum scene duration: (word_count / 2.5) seconds
      * Your animations MUST run for at least this duration
-   - **Duration matching strategies**:
-     * Use longer `run_time` values for animations (3-4 seconds instead of 1-2)
+     * Use longer `run_time` values (3-4 seconds instead of 1-2)
      * Add extended `self.wait()` periods between animations (2-3 seconds)
-     * After final content appears, add a long hold: `self.wait(X)` where X ensures total duration matches narration
+     * After final content, add long hold to match total duration
+   
+   - **General Rules**:
+     * Sync animation speed with narration pace
+     * DO NOT remove animations while narration is in progress
      * Keep final visuals on screen rather than fading out early
-   - Sync the animation speed with the average speed of the narration, such that when the narration is long, the animation should either be slow or remain on the screen.
-   - DO NOT remove the animation from the screen once it has ended IF the narration for that segment is in progress.
-   - **Add a final hold at the end**: After all content is shown, calculate remaining time needed and add `self.wait(remaining_time)` to keep visuals visible during final narration
+     * Add comments marking beat boundaries: `# Beat 1: ...`
+     * Calculate cumulative time to ensure you hit target duration
 
 **SPATIAL REASONING PROTOCOL**
 
@@ -299,26 +324,85 @@ class YourSceneClassName(Scene):
   Narration: [first 100 chars of narration]
   Narration word count: ~250 words
   Estimated narration duration: 250 / 2.5 = 100 seconds
+  
+  BEAT TIMING (if provided):
+  Beat 1: 8.5s - "Introduction to the concept..."
+  Beat 2: 12.3s - "The key idea is that..."
+  Beat 3: 15.7s - "Mathematically, this means..."
+  Total: 36.5s
   """
     def construct(self):
-        # DURATION PLANNING:
-        # Target duration: ~100 seconds (based on narration)
-        # Animation structure: title(3s) + content_phase_1(30s) + content_phase_2(35s) + hold(32s) = 100s
+        # DURATION PLANNING WITH BEAT SYNC:
+        # If beat timing provided: Match each beat's duration exactly
+        # If not: Target ~100s total based on word count
         
-        # Step 1: Create title/context (3 seconds total)
+        # Title (persists across beats)
         title = Text("Concept Name", font_size=36).to_edge(UP)
         self.play(Write(title), run_time=1.5)
-        self.wait(1.5)  # Extended wait for narration catchup
+        self.wait(0.5)
+        
+        # ===== BEAT 1: Introduction (8.5s total) =====
+        # Cumulative time: 0.0s → 8.5s
+        intro_text = Text("Introduction to the concept", font_size=32)
+        self.play(Write(intro_text), run_time=2.0)  # 2.0s
+        self.wait(6.5)  # Remaining: 8.5 - 2.0 = 6.5s
+        
+        # Transition
+        self.play(FadeOut(intro_text), run_time=1.0)
+        
+        # ===== BEAT 2: Key Idea (12.3s total) =====
+        # Cumulative time: 8.5s → 20.8s
+        diagram = Circle(radius=1.5, color=BLUE).move_to(UP)
+        label = Text("Key Idea", font_size=28).next_to(diagram, DOWN)
+        self.play(Create(diagram), run_time=3.0)  # 3.0s
+        self.play(FadeIn(label), run_time=2.0)    # 2.0s
+        self.wait(7.3)  # Remaining: 12.3 - 3.0 - 2.0 = 7.3s
+        
+        # Transition
+        self.play(FadeOut(diagram), FadeOut(label), run_time=1.0)
+        
+        # ===== BEAT 3: Mathematical Explanation (15.7s total) =====
+        # Cumulative time: 20.8s → 36.5s
+        equation = MathTex(r"E = mc^2").move_to(UP * 2)
+        eq_label = Text("Energy equals mass times speed of light squared", font_size=24).next_to(equation, DOWN)
+        
+        self.play(Write(equation), run_time=3.0)  # 3.0s
+        self.play(FadeIn(eq_label), run_time=2.0)  # 2.0s
+        self.wait(10.7)  # Remaining: 15.7 - 3.0 - 2.0 = 10.7s
+        
+        # Final cleanup
+        self.play(FadeOut(equation), FadeOut(eq_label), FadeOut(title), run_time=1.0)
+        self.wait(1)
+        
+        # TOTAL DURATION: 8.5 + 12.3 + 15.7 = 36.5s (matches beat timeline!)
+```
 
-        # Step 2: Create main content with labels
-        equation = MathTex(r"Q = XW_Q").move_to(UP * 2)
-        eq_label = Text("Q: Query matrix", font_size=28).next_to(equation, DOWN)
+**Key Points from This Example:**
+- Each beat section is clearly marked with comments
+- Duration calculations are shown inline
+- `self.wait()` is used to pad to exact beat duration
+- Cumulative time tracking ensures synchronization
+- Total duration matches the sum of all beat durations
 
-        diagram = Circle(radius=1.5, color=BLUE).move_to(DOWN * 1.5)
-        diagram_label = Text("Token embedding", font_size=24).next_to(diagram, DOWN)
+---
 
-        # Step 3: Animate with proper pacing
-        self.play(Write(equation), run_time=2.0)
+## Alternative Example (No Beat Timing - Fallback Mode)
+
+```python
+class FallbackSceneExample(Scene):
+  """
+  When no beat timing is provided, estimate from word count.
+  Narration word count: ~250 words
+  Estimated duration: 250 / 2.5 = 100 seconds
+  """
+    def construct(self):
+        # DURATION PLANNING (NO BEAT TIMING):
+        # Target: ~100 seconds total
+        # Structure: intro(20s) + main(50s) + conclusion(30s)
+        
+        title = Text("Concept", font_size=36).to_edge(UP)
+        self.play(Write(title), run_time=2.0)
+        self.wait(1)
         self.play(FadeIn(eq_label), run_time=1.0)
         self.wait(1.5)  # Let viewer absorb
 

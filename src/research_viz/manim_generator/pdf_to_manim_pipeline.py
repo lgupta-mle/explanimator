@@ -125,7 +125,8 @@ def generate_scene_code(
     running_example: str,
     model_name: str = "anthropic/claude-sonnet-4.5",
     max_retries: int = 3,
-    chroma_path: str = "data/manim_docs/vector_db/chroma_db"
+    chroma_path: str = "data/manim_docs/vector_db/chroma_db",
+    beat_timeline: Optional[List[dict]] = None
 ) -> Optional[ManimSceneCode]:
     """
     Generate Manim code for a segment with execution-based feedback loop.
@@ -150,6 +151,29 @@ def generate_scene_code(
     # Add 20% buffer for pacing and pauses
     target_animation_duration = estimated_narration_duration * 1.2
     
+    # Build beat timing information if available
+    beat_timing_section = ""
+    if beat_timeline:
+        beat_timing_section = "\n### BEAT-LEVEL TIMING (CRITICAL FOR SYNC):\n"
+        beat_timing_section += "The narration has been split into beats with precise timing. Your animation MUST sync with these beats:\n\n"
+        total_audio_duration = sum(beat.get('duration', 0) for beat in beat_timeline)
+        
+        for i, beat in enumerate(beat_timeline, 1):
+            beat_text = beat.get('text', '')[:80]
+            beat_duration = beat.get('duration', 0)
+            beat_start = beat.get('start_time', 0)
+            beat_timing_section += f"**Beat {i}** (starts at {beat_start:.1f}s, duration {beat_duration:.1f}s):\n"
+            beat_timing_section += f"  Text: \"{beat_text}{'...' if len(beat.get('text', '')) > 80 else ''}\"\n"
+            beat_timing_section += f"  → Animation for this beat should take ~{beat_duration:.1f} seconds\n\n"
+        
+        beat_timing_section += f"\n**TOTAL AUDIO DURATION: {total_audio_duration:.1f} seconds**\n"
+        beat_timing_section += "**SYNCHRONIZATION STRATEGY**:\n"
+        beat_timing_section += "- Structure your animation into phases matching the beats above\n"
+        beat_timing_section += "- Use comments like '# Beat 1: ...' to mark each beat's animation\n"
+        beat_timing_section += "- Ensure each beat's animation duration matches its audio duration\n"
+        beat_timing_section += "- Use self.wait() to pad if needed to match exact timing\n"
+        beat_timing_section += "- Example: If Beat 1 is 8.5s, your animations + waits for Beat 1 should total 8.5s\n"
+    
     base_prompt = f"""
 Generate a Manim animation scene for this segment of a 3Blue1Brown-style educational video.
 
@@ -168,7 +192,7 @@ Generate a Manim animation scene for this segment of a 3Blue1Brown-style educati
 
 ### Narration (FULL TEXT - {word_count} words):
 {narration}
-
+{beat_timing_section}
 ### CRITICAL DURATION REQUIREMENT:
 - Narration word count: {word_count} words
 - Estimated narration duration: {estimated_narration_duration:.1f} seconds
@@ -183,6 +207,7 @@ Generate a Manim animation scene for this segment of a 3Blue1Brown-style educati
 4. Use smooth animations and 3Blue1Brown style (dark background, clear colors)
 5. **CRITICAL**: The total scene duration MUST be at least {target_animation_duration:.1f} seconds to match the narration length
 6. Add a comment at the top of your construct() method showing your duration planning breakdown
+7. **IF BEAT TIMING PROVIDED**: Structure animations to match each beat's duration exactly
 
 Output a JSON object with:
 - scene_id: "{segment_id}"
@@ -267,24 +292,43 @@ def generate_all_scenes(
     explanation: dict,
     model_name: str = "anthropic/claude-sonnet-4.5",
     max_retries: int = 3,
-    chroma_path: str = "data/manim_docs/vector_db/chroma_db"
+    chroma_path: str = "data/manim_docs/vector_db/chroma_db",
+    audio_timeline_path: Optional[str] = None
 ) -> List[ManimSceneCode]:
     """Generate Manim code for all segments in the explanation."""
     running_example = explanation.get('running_example', '')
     segments = explanation.get('segments', [])
+
+    # Load beat timeline if available
+    beat_timeline_by_segment = {}
+    if audio_timeline_path and os.path.exists(audio_timeline_path):
+        print(f"\nLoading beat timeline from {audio_timeline_path}")
+        with open(audio_timeline_path, 'r') as f:
+            audio_timeline = json.load(f)
+            beat_timeline_by_segment = audio_timeline.get('segments', {})
+        print(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
 
     print(f"\nGenerating Manim code for {len(segments)} segments")
     print(f"Running example: {running_example[:100]}...")
 
     scene_codes = []
     for i, segment in enumerate(segments):
+        segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
         print(f"\n[{i+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')}")
+        
+        # Get beat timeline for this segment
+        segment_beats = None
+        if segment_id in beat_timeline_by_segment:
+            segment_beats = beat_timeline_by_segment[segment_id].get('beats', [])
+            print(f"  Using beat timing: {len(segment_beats)} beats")
+        
         scene_code = generate_scene_code(
             segment=segment,
             running_example=running_example,
             model_name=model_name,
             max_retries=max_retries,
-            chroma_path=chroma_path
+            chroma_path=chroma_path,
+            beat_timeline=segment_beats
         )
         if scene_code:
             scene_codes.append(scene_code)
@@ -799,51 +843,7 @@ def main(
         print("  --explanation-path: Path to existing explanation JSON")
         return
 
-    # Step 2: Generate Manim code (skip if already exists)
-    code_output_path = f"{output_dir}/{pdf_stem}_animation.py"
-    scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
-
-    if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
-        print(f"\n{'='*70}")
-        print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
-        print(f"{'='*70}")
-        print(f"Using existing: {code_output_path}")
-
-        # Load scene metadata
-        with open(scene_metadata_path, 'r') as f:
-            scene_data = json.load(f)
-        scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
-    else:
-        print(f"\n{'='*70}")
-        print("GENERATING MANIM CODE")
-        print(f"{'='*70}")
-        scene_codes = generate_all_scenes(
-            explanation=explanation,
-            model_name=model_name,
-            max_retries=max_retries
-        )
-
-        if not scene_codes:
-            print("No scenes generated successfully")
-            return
-
-        # Save assembled code
-        paper_title = explanation.get('paper_title', pdf_stem)
-        complete_code = assemble_complete_code(scene_codes, paper_title)
-        with open(code_output_path, 'w') as f:
-            f.write(complete_code)
-
-        # Save scene metadata for future reuse
-        with open(scene_metadata_path, 'w') as f:
-            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
-
-        print(f"\n{'='*70}")
-        print(f"CODE GENERATION COMPLETE")
-        print(f"{'='*70}")
-        print(f"Generated {len(scene_codes)} scenes")
-        print(f"Output: {code_output_path}")
-
-    # Step 3: Generate audio if requested (skip if already exists)
+    # Step 2: Generate audio FIRST if requested (needed for beat-sync code generation)
     audio_timeline_path = None
     if generate_audio or render_video:
         audio_dir = f"{output_dir}/audio_beats"
@@ -869,6 +869,52 @@ def main(
 
             print(f"\n✓ Audio generation complete!")
             print(f"  Timeline: {audio_timeline_path}")
+
+    # Step 3: Generate Manim code (skip if already exists)
+    # Now with beat timing information if audio was generated
+    code_output_path = f"{output_dir}/{pdf_stem}_animation.py"
+    scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
+
+    if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
+        print(f"\n{'='*70}")
+        print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
+        print(f"{'='*70}")
+        print(f"Using existing: {code_output_path}")
+
+        # Load scene metadata
+        with open(scene_metadata_path, 'r') as f:
+            scene_data = json.load(f)
+        scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
+    else:
+        print(f"\n{'='*70}")
+        print("GENERATING MANIM CODE")
+        print(f"{'='*70}")
+        scene_codes = generate_all_scenes(
+            explanation=explanation,
+            model_name=model_name,
+            max_retries=max_retries,
+            audio_timeline_path=audio_timeline_path  # Pass beat timing!
+        )
+
+        if not scene_codes:
+            print("No scenes generated successfully")
+            return
+
+        # Save assembled code
+        paper_title = explanation.get('paper_title', pdf_stem)
+        complete_code = assemble_complete_code(scene_codes, paper_title)
+        with open(code_output_path, 'w') as f:
+            f.write(complete_code)
+
+        # Save scene metadata for future reuse
+        with open(scene_metadata_path, 'w') as f:
+            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
+
+        print(f"\n{'='*70}")
+        print(f"CODE GENERATION COMPLETE")
+        print(f"{'='*70}")
+        print(f"Generated {len(scene_codes)} scenes")
+        print(f"Output: {code_output_path}")
 
     # Step 4: Render video if requested
     if render_video:
