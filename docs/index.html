@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Paper to 3B1B-Style Video</title>
+  <meta name="description" content="An AI pipeline that ingests research papers and outputs 3Blue1Brown-style animated explainer videos with synchronized narration." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <p class="project-name">Manimify</p>
+  <h1>From Research Papers to<br>3Blue1Brown-Style Videos</h1>
+  <p class="authors">
+    <a href="https://www.linkedin.com/in/lakshyaadm/" target="_blank" rel="noopener">Lakshya Gupta</a>,
+    <a href="https://www.linkedin.com/in/anannya-popat/" target="_blank" rel="noopener">Anannya Popat</a>
+  </p>
+  <p class="affiliation">Tool for assisting quicker understanding of research papers</p>
+  <div class="buttons">
+    <a class="btn btn-dark" href="https://github.com/ChaosAdmStudent/research-paper-graphviz" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+      </svg>
+      View Code
+    </a>
+  </div>
+</header>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="content">
+
+  <!-- ── MOTIVATION ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Motivation</h2>
+
+  <p>
+    After being enthusiastic followers of 3Blue1Brown over the years, we set aside some time over a few weekends to answer one question: <em>"How well can frontier models visually explain AI research papers using Grant Sanderson's Manim framework?"</em>
+  </p>
+
+  <p>
+    So we built something we personally always wanted — a pipeline that ingests a research paper and outputs a 3Blue1Brown-style animated explainer video with narration, where key mathematical components of the paper are visualized for intuitive understanding. The hope is to get through a paper quickly without parsing through academic jargon.
+  </p>
+
+  <!-- ── DEMO GIF ── -->
+  <figure class="demo-figure">
+    <img src="assets/demo.gif" alt="Animation demo: Unified Latents paper visualized" loading="lazy" />
+    <figcaption>A clip from our pipeline's output on <a href="https://arxiv.org/abs/2602.17270" target="_blank" rel="noopener" style="color:var(--muted);">the Unified Latents paper</a> — generated with Gemini 3.1.</figcaption>
+  </figure>
+
+  <!-- ── PIPELINE OVERVIEW ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Pipeline Overview</h2>
+
+  <p>
+    The system takes a research paper PDF as input and produces a fully narrated, animated video as output. There are five stages, each feeding into the next:
+  </p>
+
+  <div class="pipeline-flow" aria-label="Pipeline stages">
+    <span class="flow-step">PDF</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Explanation</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Audio Beats</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Manim Code</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Synced Video</span>
+  </div>
+
+  <p>
+    Audio is generated <em>before</em> the animation code. This ordering is deliberate: the beat timeline produced by TTS generation becomes the source of truth for animation timing. Each segment's narration is split into sentence-level beats, each with a precise measured duration. The Manim code generator receives this timing metadata and structures its animations to land on the right beats.
+  </p>
+
+  <!-- ── SPECIALIZED AGENTS ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Specialized Agents</h2>
+
+  <div class="pipeline-grid">
+    <div class="pipeline-card">
+      <p class="card-label">Agent 1</p>
+      <h3>Intuition Generator</h3>
+      <p>Reads the full paper PDF and produces a 3B1B-style educational breakdown. Each segment has a core insight, a concrete visual metaphor, a running example, and a narration script. Emphasizes intuition before formulas.</p>
+    </div>
+    <div class="pipeline-card">
+      <p class="card-label">Agent 2</p>
+      <h3>Manim Code Generator</h3>
+      <p>Takes the educational breakdown, the running example, and beat-level timing metadata, and produces executable Manim Python code. Strictly limited to classes demonstrated in actual Manim documentation — no hallucinated APIs.</p>
+    </div>
+  </div>
+
+  <p>
+    Separating these concerns matters. The intuition agent focuses entirely on the <em>what</em> and <em>why</em> — it doesn't know anything about Manim. The code agent focuses entirely on translating those ideas into valid, runnable Python. Each agent has a tightly scoped system prompt tuned for its role.
+  </p>
+
+  <!-- ── LLM-AS-JUDGE ── -->
+  <hr class="divider" />
+  <h2 class="section-title">LLM-as-Judge Feedback Loops</h2>
+
+  <p>
+    Not every generated explanation is worth animating. A separate judge agent evaluates each explanation against six binary criteria: does it lead with intuition before formulas? Are the visual metaphors strong? Is the running example used consistently? Does it have real animation potential? Is math connected back to intuition? Is the narration script natural?
+  </p>
+
+  <p>
+    All six must pass. If any fail, the judge returns specific written feedback, and the explanation agent regenerates with that feedback appended to its prompt. This loop runs up to three times. The result is that only explanations meeting a consistent quality bar proceed to the expensive rendering stages.
+  </p>
+
+  <!-- Judge loop diagram -->
+  <div class="flow-diag">
+    <div class="flow-row">
+      <div class="fnode fnode-blue">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        <span class="fnode-label">Generate<br>Explanation</span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-amber">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"/><polyline points="5 7 12 3 19 7"/><line x1="3" y1="7" x2="9" y2="7"/><line x1="15" y1="7" x2="21" y2="7"/></svg>
+        <span class="fnode-label">Judge Agent<br><span class="fnode-sub">6 criteria</span></span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-slate">
+        <span class="fnode-label">Score = 1?</span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-green">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="fnode-label">Pass · Done</span>
+      </div>
+    </div>
+    <div class="flow-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      On fail — written feedback injected into prompt, regenerate &nbsp;·&nbsp; max 3 attempts
+    </div>
+  </div>
+
+  <!-- ── EXECUTION-BASED FEEDBACK ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Execution-Based Feedback</h2>
+
+  <p>
+    LLM-generated Manim code frequently references classes or methods that don't exist, or assembles valid-looking Python that fails at render time. Rather than filtering this statically, the pipeline runs the generated code through <code style="font-family:monospace;font-size:0.9em;background:#f3f4f6;padding:2px 6px;border-radius:4px">manim render</code> as a subprocess. If it executes cleanly, we move on. If it fails, the error output is parsed.
+  </p>
+
+  <p>
+    Key terms and class names are extracted from the error message, used to query the RAG system, and the retrieved documentation is injected back into the code generation prompt alongside the original error. The code agent then regenerates with this grounded context. This loop runs up to three retries per scene before falling back.
+  </p>
+
+  <!-- Execution feedback diagram -->
+  <div class="flow-diag">
+    <!-- Success path -->
+    <div class="flow-row">
+      <div class="fnode fnode-blue">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        <span class="fnode-label">Gen Manim<br>Code</span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-slate">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <span class="fnode-label">Execute<br><span class="fnode-sub">manim render</span></span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-green">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="fnode-label">Success</span>
+      </div>
+    </div>
+    <!-- Error recovery path -->
+    <div class="flow-row" style="margin-top:4px;">
+      <div style="min-width:0; flex:1; text-align:center; font-size:0.7rem; color:#b91c1c; padding: 3px 0; align-self:center;">↓ error</div>
+      <span class="farrow" style="opacity:0; flex:0 0 auto;"></span>
+      <div class="fnode fnode-red">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="fnode-label">Parse Error<br><span class="fnode-sub">extract terms</span></span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-purple">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="fnode-label">Query RAG<br><span class="fnode-sub">ChromaDB</span></span>
+      </div>
+      <div class="farrow-labeled">
+        <span class="farrow-text">inject context</span>
+        <span class="farrow">→</span>
+      </div>
+      <div class="fnode fnode-blue fnode-dashed">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        <span class="fnode-label">Gen Manim<br>Code<br><span class="fnode-sub">↩ retry</span></span>
+      </div>
+    </div>
+    <div class="flow-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      RAG context + original error injected into code gen prompt &nbsp;·&nbsp; max 3 attempts per scene
+    </div>
+  </div>
+
+  <!-- ── RAG ── -->
+  <hr class="divider" />
+  <h2 class="section-title">RAG with Manim Documentation</h2>
+
+  <p>
+    The Manim documentation — API reference, tutorials, guides — was scraped, chunked at ~1000 tokens with 200-token overlap, and embedded using OpenAI's <code style="font-family:monospace;font-size:0.9em;background:#f3f4f6;padding:2px 6px;border-radius:4px">text-embedding-3-large</code>. The resulting ChromaDB vector store holds thousands of chunks, each labeled with its Manim classes, animation types, and chunk type (code example, API doc, tutorial, concept).
+  </p>
+
+  <p>
+    Retrieval is error-driven. When a code execution fails, the system builds a semantic query from the extracted error terms and fetches the top candidates from ChromaDB. These are then reranked: code example chunks get a significant boost, API docs get a moderate boost, and chunks mentioning more Manim classes rank higher. The top results are assembled into a documentation context block that the code agent sees on its next attempt.
+  </p>
+
+  <p>
+    This grounds the model in actual implementation details — real class signatures, working code patterns, confirmed behaviors — rather than letting it hallucinate from training data alone.
+  </p>
+
+  <!-- RAG diagram -->
+  <div class="rag-diag">
+    <div class="rag-row">
+      <div class="fnode fnode-red" style="flex-direction:row; gap:7px; padding:9px 14px; width:100%; flex:1;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span class="fnode-label">Execution Error · extract key terms</span>
+      </div>
+    </div>
+    <div class="rag-down">↓</div>
+    <div class="rag-row">
+      <div class="fnode fnode-slate" style="flex-direction:row; gap:7px; padding:9px 14px; width:100%; flex:1;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span class="fnode-label">Build semantic query → embed with <code style="font-size:0.68rem;background:#e2e8f0;padding:1px 5px;border-radius:3px;font-family:monospace">text-embedding-3-large</code></span>
+      </div>
+    </div>
+    <div class="rag-down">↓</div>
+    <div class="rag-db">
+      <div class="rag-db-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        ChromaDB · vector similarity search → top 20 candidates
+      </div>
+      <div class="rag-chunks">
+        <div class="rag-chunk rag-chunk-code">
+          Code Examples
+          <span class="rag-chunk-boost">+0.4 boost</span>
+        </div>
+        <div class="rag-chunk rag-chunk-tutorial">
+          Tutorials
+          <span class="rag-chunk-boost">+0.25 boost</span>
+        </div>
+        <div class="rag-chunk rag-chunk-api">
+          API Docs
+          <span class="rag-chunk-boost">+0.2 boost</span>
+        </div>
+      </div>
+    </div>
+    <div class="rag-down">↓</div>
+    <div class="rag-row">
+      <div class="fnode fnode-teal" style="flex-direction:row; gap:7px; padding:9px 14px; width:100%; flex:1;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 20 9 4 6 12 2 12"/></svg>
+        <span class="fnode-label">Rerank by type + metadata richness → top 10 → context block</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AUDIO + VIDEO SYNC ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Audio and Video Synchronization</h2>
+
+  <p>
+    Narration is generated using OpenAI TTS at the beat level — each sentence or short phrase is its own audio file with a precisely measured WAV duration. These durations are accumulated into a timeline JSON that records the exact start time and length of every beat within every segment.
+  </p>
+
+  <p>
+    After a Manim segment renders, its actual video duration is measured with ffprobe. The pipeline then computes a speed factor: <code style="font-family:monospace;font-size:0.9em;background:#f3f4f6;padding:2px 6px;border-radius:4px">target_duration / actual_duration</code>. If the adjustment is within ±30%, ffmpeg's <code style="font-family:monospace;font-size:0.9em;background:#f3f4f6;padding:2px 6px;border-radius:4px">setpts</code> filter is applied to retime the video. If the video runs short, the last frame is frozen and appended. If it runs long, it's trimmed. The speed-adjusted video and audio are then merged into a single synced segment, and all segments are concatenated into the final output.
+  </p>
+
+  <!-- Sync diagram -->
+  <div class="sync-diag">
+    <div class="sync-tracks">
+      <div class="sync-track">
+        <div class="sync-track-label">Audio track</div>
+        <div class="flow-row">
+          <div class="fnode fnode-blue" style="min-width:0; padding:8px 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <span class="fnode-label">Narration</span>
+          </div>
+          <span class="farrow">→</span>
+          <div class="fnode fnode-slate" style="min-width:0; padding:8px 10px;">
+            <span class="fnode-label">Beat Split<br><span class="fnode-sub">8–25 words</span></span>
+          </div>
+          <span class="farrow">→</span>
+          <div class="fnode fnode-teal" style="min-width:0; padding:8px 10px;">
+            <span class="fnode-label">TTS<br><span class="fnode-sub">OpenAI</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="sync-track">
+        <div class="sync-track-label">Video track</div>
+        <div class="flow-row">
+          <div class="fnode fnode-purple" style="min-width:0; padding:8px 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <span class="fnode-label">Manim<br>Code</span>
+          </div>
+          <span class="farrow">→</span>
+          <div class="fnode fnode-slate" style="min-width:0; padding:8px 10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span class="fnode-label">Render<br><span class="fnode-sub">Manim</span></span>
+          </div>
+          <span class="farrow">→</span>
+          <div class="fnode fnode-slate" style="min-width:0; padding:8px 10px;">
+            <span class="fnode-label">ffprobe<br><span class="fnode-sub">measure</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sync-merge">
+      <div class="sync-merge-label">Synchronization</div>
+      <span class="sync-formula">speed_factor = audio_duration / video_duration</span>
+      <span style="font-size:0.75rem; color:var(--muted); display:block; margin-top:4px;">within ±30% → <code style="font-size:0.75rem;background:#e2e8f0;padding:1px 5px;border-radius:3px;font-family:monospace">ffmpeg setpts</code> &nbsp;·&nbsp; too short → freeze last frame &nbsp;·&nbsp; too long → trim</span>
+    </div>
+    <div class="flow-row">
+      <div class="fnode fnode-green" style="flex-direction:row; gap:7px; padding:9px 14px; width:100%; flex:1;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="2" y1="17" x2="7" y2="17"/></svg>
+        <span class="fnode-label">Synced segment &nbsp;→&nbsp; concatenate all &nbsp;→&nbsp; final_video.mp4</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIDEO COMPARISON ── -->
+  <hr class="divider" />
+  <div class="video-section">
+    <h2 class="section-title" style="margin-top: 0;">Model Comparison</h2>
+    <p>
+      We ran the same paper — <a href="https://arxiv.org/abs/2602.17270" target="_blank" rel="noopener"><em>Unified Latents</em></a> — through the pipeline using three different frontier models for the explanation and code generation steps. Here's what each produced.
+    </p>
+
+    <div class="tab-bar" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="gemini">Gemini 3.1</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="gpt">GPT 5.2 Codex</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="kimi">Kimi K2.5</button>
+    </div>
+
+    <div id="panel-gemini" class="tab-panel active" role="tabpanel">
+      <div class="video-wrapper">
+        <video controls preload="metadata" src="videos/UL_gemini3.1.mp4"></video>
+      </div>
+      <p class="video-meta">Google Gemini 3.1 Pro Preview via OpenRouter — strongest overall visual metaphors and narration quality.</p>
+    </div>
+
+    <div id="panel-gpt" class="tab-panel" role="tabpanel">
+      <div class="video-wrapper">
+        <video controls preload="metadata" src="videos/UL_gpt5.2codex.mp4"></video>
+      </div>
+      <p class="video-meta">OpenAI GPT 5.2 Codex — most compact output; tighter pacing, slightly more code-literal in its visualizations.</p>
+    </div>
+
+    <div id="panel-kimi" class="tab-panel" role="tabpanel">
+      <div class="video-wrapper">
+        <video controls preload="metadata" src="videos/UL_kimik2.5.mp4"></video>
+      </div>
+      <p class="video-meta">Kimi K2.5 — longest output; richest animation density with more elaborate scene compositions.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>
+    Built by <a href="https://www.linkedin.com/in/lakshyaadm/" target="_blank" rel="noopener">Lakshya Gupta</a> &amp;
+    <a href="https://www.linkedin.com/in/anannya-popat/" target="_blank" rel="noopener">Anannya Popat</a> &nbsp;·&nbsp;
+    <a href="https://github.com/ChaosAdmStudent/research-paper-graphviz" target="_blank" rel="noopener">GitHub</a>
+  </p>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      const panel = document.getElementById('panel-' + btn.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
