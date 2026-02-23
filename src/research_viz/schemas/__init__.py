@@ -9,6 +9,3 @@ from research_viz.schemas.explanation_schemas import (
     TechnicalSection,
     EquationExplanation,
 )
-from research_viz.schemas.manim_docs_schemas import (
-    ManimDocChunk,
-)
