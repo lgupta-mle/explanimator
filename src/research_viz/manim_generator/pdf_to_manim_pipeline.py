@@ -5,6 +5,7 @@ Complete pipeline: PDF → 3B1B Explanation → Manim Code with execution feedba
 Uses RAG only when execution errors occur.
 """
 
+import copy
 import os
 import json
 import subprocess
@@ -17,11 +18,13 @@ from dotenv import load_dotenv
 
 from research_viz.manim_generator.pdf_explanation_generator import (
     create_pdf_llm_response,
-    call_openrouter,
     load_prompt,
     encode_pdf_to_base64
 )
+from research_viz.utils.llm_utils import call_openrouter
 from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B, Segment3B1B
+from research_viz.config.difficulty import DifficultyConfig, DIFFICULTY_CONFIGS
+from research_viz.schemas.language_schemas import LanguageConfig, SUPPORTED_LANGUAGES
 
 load_dotenv()
 
@@ -968,12 +971,14 @@ def main(
     output_dir: str = "src/research_viz/manim_generator/output",
     model_name: str = "google/gemini-3.1-pro-preview",
     max_retries: int = 3,
-    generate_audio: bool = False,
+    generate_audio: bool = True,
     tts_voice: str = "nova",
-    render_video: bool = False,
-    video_quality: str = "l",
+    render_video: bool = True,
+    video_quality: str = "m",
     sync_mode: str = "segment",
-    max_speed_change: float = 0.3
+    max_speed_change: float = 0.3,
+    difficulty: str = "medium",
+    language: str = "en"
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -990,29 +995,58 @@ def main(
         video_quality: Manim quality (l=low, m=medium, h=high)
         sync_mode: Audio-video sync mode - "segment" (default) or "beat"
         max_speed_change: Maximum video speed adjustment (0.3 = 30%)
-
-    Sync Modes:
-        - "segment": Adjust entire segment video to match audio (smoother, simpler)
-        - "beat": Adjust each beat separately (more precise, experimental)
+        difficulty: Difficulty level - easy, medium, or hard (default: medium)
+        language: ISO 639-1 language code (default: en). Supported: en, es, fr, de, ja, zh, ko, hi, ar, ru, pt
 
     Examples:
-        # Generate code only
+        # Generate in Spanish with easy difficulty
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
-            --explanation-path output/attention_explanation.json
+            --pdf-path papers/attention.pdf --difficulty easy --language es --generate-audio --render-video
 
-        # Generate with segment-level sync (default, recommended)
+        # Generate in Japanese
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
-            --explanation-path output/attention_explanation.json \\
-            --generate-audio --render-video \\
-            --sync-mode segment --max-speed-change 0.3
-
-        # Try beat-level sync (experimental)
-        python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
-            --explanation-path output/attention_explanation.json \\
-            --generate-audio --render-video \\
-            --sync-mode beat --max-speed-change 0.2
+            --pdf-path papers/attention.pdf --language ja --generate-audio --render-video
     """
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    if difficulty not in DIFFICULTY_CONFIGS:
+        print(f"ERROR: Invalid difficulty '{difficulty}'. Choose from: easy, medium, hard")
+        return
+
+    if language not in SUPPORTED_LANGUAGES:
+        print(f"ERROR: Unsupported language '{language}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
+        return
+
+    difficulty_config = DIFFICULTY_CONFIGS[difficulty]
+    lang_config = SUPPORTED_LANGUAGES[language]
+    print(f"Difficulty: {difficulty} (segments: {difficulty_config.min_segments}-{difficulty_config.max_segments})")
+    print(f"Language: {lang_config.name} ({language})")
+
+    # Font availability check for non-Latin scripts
+    if lang_config.font:
+        try:
+            result = subprocess.run(
+                ['fc-list', f':family={lang_config.font}'],
+                capture_output=True, text=True, timeout=5
+            )
+            if not result.stdout.strip():
+                print(f"WARNING: Font '{lang_config.font}' not found. Install it for proper {lang_config.name} rendering.")
+                print(f"  On macOS: brew install --cask font-noto-sans-{lang_config.name.lower()}")
+                print(f"  On Ubuntu: sudo apt install fonts-noto-{lang_config.script}")
+        except Exception:
+            pass  # fc-list not available, skip check
+
+    # Determine pdf_stem early so we can build the run-specific output dir
+    if explanation_path and os.path.exists(explanation_path):
+        pdf_stem = Path(explanation_path).stem.replace('_explanation', '').split('_explanation_')[0]
+    elif pdf_path and os.path.exists(pdf_path):
+        pdf_stem = Path(pdf_path).stem
+    else:
+        print("ERROR: Provide either --pdf-path or --explanation-path")
+        return
+
+    # Create run-specific subdirectory so different difficulty/language combos don't collide
+    run_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{language}"
+    Path(run_dir).mkdir(parents=True, exist_ok=True)
+    print(f"Output directory: {run_dir}")
 
     # Step 1: Load or generate explanation
     if explanation_path and os.path.exists(explanation_path):
@@ -1020,32 +1054,50 @@ def main(
         with open(explanation_path, 'r') as f:
             explanation = json.load(f)
         used_explanation_path = explanation_path
-        pdf_stem = Path(explanation_path).stem.replace('_explanation', '')
-    elif pdf_path and os.path.exists(pdf_path):
+    elif pdf_path:
         print(f"Generating explanation from PDF: {pdf_path}")
         from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
-        pdf_stem = Path(pdf_path).stem
-        explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
+        explanation_output = f"{run_dir}/{pdf_stem}_explanation.json"
         explanation = generate_explanation_from_pdf(
             pdf_path=pdf_path,
             output_path=explanation_output,
             model_name=model_name,
-            max_judge_attempts=3
+            max_judge_attempts=3,
+            difficulty_config=difficulty_config
         )
         if not explanation:
             print("Failed to generate explanation")
             return
         used_explanation_path = explanation_output
-    else:
-        print("ERROR: Provide either --pdf-path or --explanation-path")
-        print("  --pdf-path: Path to research paper PDF")
-        print("  --explanation-path: Path to existing explanation JSON")
-        return
+
+    # Step 1b: Translate narration if non-English
+    # Use a deep copy so the original English explanation stays intact for Manim code gen
+    translated_explanation = None
+    translator = None
+    if language != "en":
+        print(f"\n{'='*70}")
+        print(f"TRANSLATING NARRATION TO {lang_config.name.upper()}")
+        print(f"{'='*70}")
+        from research_viz.translation.translator import NarrationTranslator
+        translator = NarrationTranslator()
+        translated_explanation = copy.deepcopy(explanation)
+        for segment in translated_explanation.get("segments", []):
+            segment["narration_script_original"] = segment["narration_script"]
+            segment["narration_script"] = translator.translate_narration(
+                segment["narration_script"], lang_config
+            )
+            print(f"  Translated segment: {segment.get('segment_id', '?')}")
+
+        # Save translated explanation
+        translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
+        with open(translated_path, 'w', encoding='utf-8') as f:
+            json.dump(translated_explanation, f, indent=2, ensure_ascii=False)
+        print(f"  Saved translated explanation: {translated_path}")
 
     # Step 2: Generate audio FIRST if requested (needed for beat-sync code generation)
     audio_timeline_path = None
     if generate_audio or render_video:
-        audio_dir = f"{output_dir}/audio_beats"
+        audio_dir = f"{run_dir}/audio_beats"
         audio_timeline_path = f"{audio_dir}/beat_timeline.json"
 
         if os.path.exists(audio_timeline_path):
@@ -1060,10 +1112,20 @@ def main(
 
             from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
 
+            # Use translated explanation path if available
+            timeline_explanation_path = used_explanation_path
+            if language != "en":
+                translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
+                if os.path.exists(translated_path):
+                    timeline_explanation_path = translated_path
+
             generate_beat_timeline(
-                explanation_path=used_explanation_path,
+                explanation_path=timeline_explanation_path,
                 output_dir=audio_dir,
-                voice=tts_voice
+                voice=tts_voice,
+                min_words=difficulty_config.beat_min_words,
+                max_words=difficulty_config.beat_max_words,
+                language=language
             )
 
             print(f"\n✓ Audio generation complete!")
@@ -1071,8 +1133,8 @@ def main(
 
     # Step 3: Generate Manim code (skip if already exists)
     # Now with beat timing information if audio was generated
-    code_output_path = f"{output_dir}/{pdf_stem}_animation.py"
-    scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
+    code_output_path = f"{run_dir}/{pdf_stem}_animation.py"
+    scene_metadata_path = f"{run_dir}/{pdf_stem}_scene_metadata.json"
 
     if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
         print(f"\n{'='*70}")
@@ -1098,6 +1160,23 @@ def main(
         if not scene_codes:
             print("No scenes generated successfully")
             return
+
+        # Translate Manim Text() strings if non-English
+        if language != "en":
+            print(f"\n{'='*70}")
+            print(f"TRANSLATING MANIM TEXT TO {lang_config.name.upper()}")
+            print(f"{'='*70}")
+            from research_viz.translation.manim_text_processor import ManimTextProcessor
+            if translator is None:
+                from research_viz.translation.translator import NarrationTranslator
+                translator = NarrationTranslator()
+            processor = ManimTextProcessor()
+            for sc in scene_codes:
+                texts = processor.extract_text_strings(sc.code)
+                if texts:
+                    translations = translator.translate_display_texts(texts, lang_config)
+                    sc.code = processor.translate_code_texts(sc.code, translations, lang_config)
+                    print(f"  Translated {len(texts)} text strings in {sc.scene_id}")
 
         # Save assembled code
         paper_title = explanation.get('paper_title', pdf_stem)
@@ -1125,7 +1204,7 @@ def main(
             scene_codes=scene_codes,
             explanation=explanation,
             audio_timeline_path=audio_timeline_path,
-            output_dir=output_dir,
+            output_dir=run_dir,
             quality=video_quality,
             sync_mode=sync_mode,
             max_speed_change=max_speed_change
