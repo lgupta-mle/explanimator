@@ -1161,7 +1161,7 @@ def main(
         print(f"\n✓ Audio generation complete!")
         print(f"  Timeline: {audio_timeline_path}")
 
-    def _run_codegen():
+    def _run_codegen(use_audio_timeline: bool = False):
         if not need_codegen:
             return None  # signal to load from disk
         print(f"\n{'='*70}")
@@ -1171,9 +1171,7 @@ def main(
             explanation=explanation,
             model_name=model_name,
             max_retries=max_retries,
-            # No audio_timeline_path: TTS runs concurrently so beat timing
-            # is not yet available. Audio-video sync happens in Step 4 via
-            # ffmpeg speed adjustment anyway.
+            audio_timeline_path=audio_timeline_path if use_audio_timeline else None,
         )
 
     # Run TTS and code gen concurrently
@@ -1188,7 +1186,7 @@ def main(
             scene_codes = codegen_future.result()  # wait for codegen
     else:
         _run_tts()
-        scene_codes = _run_codegen()
+        scene_codes = _run_codegen(use_audio_timeline=need_audio)
 
     # Load from disk if code already existed
     if scene_codes is None:
