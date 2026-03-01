@@ -11,6 +11,7 @@ import json
 import shutil
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 from typing import Optional, List
 from pydantic import BaseModel, Field
@@ -234,7 +235,7 @@ Output a JSON object with:
     previous_error = None
 
     for attempt in range(max_retries):
-        print(f"    Attempt {attempt + 1}/{max_retries}")
+        print(f"    [{title}] Attempt {attempt + 1}/{max_retries} (t={time.time():.1f})", flush=True)
 
         # Build prompt with error feedback if retry
         if previous_error:
@@ -261,7 +262,9 @@ Fix the errors and regenerate the complete scene code.
             {"role": "user", "content": prompt}
         ]
 
+        llm_start = time.time()
         response = call_openrouter(messages, model_name, ManimSceneCode)
+        print(f"      [{title}] LLM responded in {time.time() - llm_start:.1f}s (t={time.time():.1f})", flush=True)
 
         if "error" in response:
             print(f"      API error: {response['error']}")
@@ -290,14 +293,15 @@ Fix the errors and regenerate the complete scene code.
                 continue
 
         # Execute the code
-        print(f"      Executing Manim...")
+        print(f"      [{title}] Executing Manim... (t={time.time():.1f})", flush=True)
+        exec_start = time.time()
         success, output = execute_manim_scene(scene_code.code, scene_code.class_name)
 
         if success:
-            print(f"      SUCCESS!")
+            print(f"      [{title}] SUCCESS in {time.time() - exec_start:.1f}s (t={time.time():.1f})", flush=True)
             return scene_code
         else:
-            print(f"      Execution failed")
+            print(f"      [{title}] Execution failed in {time.time() - exec_start:.1f}s", flush=True)
             previous_error = output
 
     print(f"    Failed after {max_retries} attempts")
@@ -333,11 +337,11 @@ def generate_all_scenes(
         print(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
 
     print(f"\nGenerating Manim code for {len(segments)} segments (max {max_workers} parallel)")
-    print(f"Running example: {running_example[:100]}...")
+    print(f"Running example: {running_example[:100]}...", flush=True)
 
     def _generate_one(index: int, segment: dict) -> Optional[ManimSceneCode]:
         segment_id = segment.get('segment_id', f'seg_{index+1:02d}')
-        print(f"\n[{index+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')}")
+        print(f"\n[{index+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')} (t={time.time():.1f})", flush=True)
 
         segment_beats = None
         if segment_id in beat_timeline_by_segment:
