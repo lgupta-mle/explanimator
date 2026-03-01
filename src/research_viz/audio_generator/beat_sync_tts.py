@@ -277,6 +277,25 @@ def generate_beat_timeline(
     print(f"\nTotal beats to generate: {len(jobs)}")
 
     if not jobs:
+        # Still write an empty timeline so downstream steps find the file
+        timeline_data = {
+            'explanation_source': explanation_path,
+            'voice': voice,
+            'total_segments': len(segments),
+            'segments': {
+                seg.get('segment_id', 'unknown'): {
+                    'beat_count': 0,
+                    'total_duration': 0.0,
+                    'beats': []
+                }
+                for seg in segments
+            }
+        }
+        metadata_path = Path(output_dir) / "beat_timeline.json"
+        metadata_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(metadata_path, 'w') as f:
+            json.dump(timeline_data, f, indent=2)
+        print(f"\nBeat timeline saved to {metadata_path} (no beats)")
         return {}
 
     # Phase 2: Generate all beat audio in parallel
