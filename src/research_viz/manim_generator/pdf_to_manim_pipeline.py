@@ -13,6 +13,7 @@ import tempfile
 from pathlib import Path
 from typing import Optional, List
 from pydantic import BaseModel, Field
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import tyro
 from dotenv import load_dotenv
 
@@ -291,14 +292,22 @@ Fix the errors and regenerate the complete scene code.
     return None
 
 
+MAX_CODEGEN_WORKERS = 4  # Max parallel Manim code generation workers
+
+
 def generate_all_scenes(
     explanation: dict,
     model_name: str = "google/gemini-3.1-pro-preview",
     max_retries: int = 3,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
-    audio_timeline_path: Optional[str] = None
+    audio_timeline_path: Optional[str] = None,
+    max_workers: int = MAX_CODEGEN_WORKERS
 ) -> List[ManimSceneCode]:
-    """Generate Manim code for all segments in the explanation."""
+    """Generate Manim code for all segments in parallel.
+
+    Each segment's code generation (including its retry loop) runs in its own
+    thread. Results are collected and returned in original segment order.
+    """
     running_example = explanation.get('running_example', '')
     segments = explanation.get('segments', [])
 
@@ -311,21 +320,19 @@ def generate_all_scenes(
             beat_timeline_by_segment = audio_timeline.get('segments', {})
         print(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
 
-    print(f"\nGenerating Manim code for {len(segments)} segments")
+    print(f"\nGenerating Manim code for {len(segments)} segments (max {max_workers} parallel)")
     print(f"Running example: {running_example[:100]}...")
 
-    scene_codes = []
-    for i, segment in enumerate(segments):
-        segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
-        print(f"\n[{i+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')}")
-        
-        # Get beat timeline for this segment
+    def _generate_one(index: int, segment: dict) -> Optional[ManimSceneCode]:
+        segment_id = segment.get('segment_id', f'seg_{index+1:02d}')
+        print(f"\n[{index+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')}")
+
         segment_beats = None
         if segment_id in beat_timeline_by_segment:
             segment_beats = beat_timeline_by_segment[segment_id].get('beats', [])
             print(f"  Using beat timing: {len(segment_beats)} beats")
-        
-        scene_code = generate_scene_code(
+
+        return generate_scene_code(
             segment=segment,
             running_example=running_example,
             model_name=model_name,
@@ -333,9 +340,25 @@ def generate_all_scenes(
             chroma_path=chroma_path,
             beat_timeline=segment_beats
         )
-        if scene_code:
-            scene_codes.append(scene_code)
 
+    # Parallel generation — results keyed by index to preserve order
+    results: dict[int, Optional[ManimSceneCode]] = {}
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_idx = {
+            executor.submit(_generate_one, i, seg): i
+            for i, seg in enumerate(segments)
+        }
+        for future in as_completed(future_to_idx):
+            idx = future_to_idx[future]
+            try:
+                results[idx] = future.result()
+            except Exception as e:
+                print(f"  ERROR generating scene {idx+1}: {e}")
+                results[idx] = None
+
+    # Collect successful results in original segment order
+    scene_codes = [results[i] for i in sorted(results) if results[i] is not None]
     return scene_codes
 
 
@@ -716,6 +739,131 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
         return False
 
 
+MAX_RENDER_WORKERS = 4  # Max parallel video render+sync workers
+
+
+def _render_and_sync_one_scene(
+    i: int,
+    scene_code: ManimSceneCode,
+    segment: dict,
+    audio_timeline: dict,
+    output_dir: str,
+    quality: str,
+    sync_mode: str,
+    max_speed_change: float
+) -> Optional[str]:
+    """Render and sync a single scene. Returns path to synced video or None."""
+    segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
+    print(f"\n[{i+1}] Scene: {scene_code.scene_id}")
+
+    quality_dirs = {
+        'l': '480p15',
+        'm': '720p30',
+        'h': '1080p60',
+        'k': '2160p60'
+    }
+    quality_dir = quality_dirs.get(quality, '480p15')
+    video_pattern = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
+
+    # Check if video already exists
+    if os.path.exists(video_pattern):
+        print(f"  Video already exists: {video_pattern}")
+    else:
+        temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
+        with open(temp_scene_path, 'w') as f:
+            f.write("from manim import *\nimport numpy as np\n\n")
+            f.write(scene_code.code)
+
+        print(f"  Rendering Manim scene...")
+        try:
+            result = subprocess.run(
+                ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
+                capture_output=True,
+                text=True,
+                timeout=300
+            )
+            if result.returncode != 0:
+                print(f"  ERROR: Manim render failed")
+                print(result.stderr)
+                return None
+        except Exception as e:
+            print(f"  ERROR: {e}")
+            return None
+
+        if not os.path.exists(video_pattern):
+            print(f"  ERROR: Rendered video not found at {video_pattern}")
+            return None
+
+    synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
+    if os.path.exists(synced_video_path):
+        print(f"  Synced video already exists: {synced_video_path}")
+        return synced_video_path
+
+    segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
+    if not segment_audio_data:
+        print(f"  WARNING: No audio found for segment {segment_id}, skipping sync")
+        return video_pattern
+
+    beats = segment_audio_data.get('beats', [])
+    if not beats:
+        print(f"  WARNING: No beats found for segment {segment_id}")
+        return video_pattern
+
+    # Combine beat audio files
+    segment_audio_path = f"{output_dir}/segment_{i+1}_audio.wav"
+    if len(beats) == 1:
+        subprocess.run(['cp', beats[0]['audio_file'], segment_audio_path])
+    else:
+        concat_list = f"{output_dir}/segment_{i+1}_audio_concat.txt"
+        with open(concat_list, 'w') as f:
+            for beat in beats:
+                f.write(f"file '{os.path.abspath(beat['audio_file'])}'\n")
+        subprocess.run([
+            'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
+            '-i', concat_list,
+            '-c', 'copy',
+            segment_audio_path
+        ], capture_output=True)
+        os.unlink(concat_list)
+
+    # Sync audio with video
+    print(f"  Syncing audio with video (mode: {sync_mode})...")
+    segment_audio_duration = get_audio_duration(segment_audio_path)
+    adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
+
+    if sync_mode in ("segment", "beat"):
+        if sync_mode == "beat":
+            print(f"  WARNING: Beat-level sync requires per-beat video rendering")
+            print(f"  Falling back to segment-level sync")
+
+        if adjust_video_to_audio_duration(
+            video_pattern,
+            segment_audio_duration,
+            adjusted_video_path,
+            max_speed_change
+        ):
+            if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
+                print(f"  SUCCESS: {synced_video_path}")
+                try:
+                    os.unlink(adjusted_video_path)
+                except:
+                    pass
+                return synced_video_path
+            else:
+                print(f"  WARNING: Audio merge failed, using adjusted video")
+                return adjusted_video_path
+        else:
+            print(f"  WARNING: Duration adjustment failed, using original sync")
+            if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
+                return synced_video_path
+            return video_pattern
+    else:
+        print(f"  WARNING: Unknown sync mode '{sync_mode}', using default")
+        if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
+            return synced_video_path
+        return video_pattern
+
+
 def render_and_sync_all_scenes(
     scene_codes: List[ManimSceneCode],
     explanation: dict,
@@ -723,10 +871,14 @@ def render_and_sync_all_scenes(
     output_dir: str,
     quality: str = "l",
     sync_mode: str = "segment",
-    max_speed_change: float = 0.3
+    max_speed_change: float = 0.3,
+    max_workers: int = MAX_RENDER_WORKERS
 ) -> Optional[str]:
     """
     Render all Manim scenes, sync with audio, and stitch together.
+
+    Per-scene rendering and audio sync are parallelized via ThreadPoolExecutor.
+    Only the final stitching step is sequential.
 
     Args:
         scene_codes: List of generated scene codes
@@ -736,17 +888,13 @@ def render_and_sync_all_scenes(
         quality: Manim quality (-ql, -qm, -qh)
         sync_mode: Sync granularity - "segment" (default) or "beat"
         max_speed_change: Maximum allowed speed adjustment (0.3 = 30%)
+        max_workers: Max parallel render workers
 
     Returns:
         Path to final stitched video, or None on failure
-        
-    Sync Modes:
-        - "segment": Adjust entire segment video to match segment audio (simpler, smoother)
-        - "beat": Adjust each beat separately for frame-perfect sync (more precise)
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-    # Load audio timeline
     with open(audio_timeline_path, 'r') as f:
         audio_timeline = json.load(f)
 
@@ -759,167 +907,32 @@ def render_and_sync_all_scenes(
     print(f"Quality: {quality}")
     print(f"Sync mode: {sync_mode}")
     print(f"Max speed change: {max_speed_change*100:.0f}%")
+    print(f"Max parallel render workers: {max_workers}")
 
-    synced_videos = []
+    # Parallel render + sync
+    results: dict[int, Optional[str]] = {}
 
-    for i, scene_code in enumerate(scene_codes):
-        segment = segments[i] if i < len(segments) else {}
-        segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_idx = {}
+        for i, scene_code in enumerate(scene_codes):
+            segment = segments[i] if i < len(segments) else {}
+            future = executor.submit(
+                _render_and_sync_one_scene,
+                i, scene_code, segment, audio_timeline,
+                output_dir, quality, sync_mode, max_speed_change
+            )
+            future_to_idx[future] = i
 
-        print(f"\n[{i+1}/{len(scene_codes)}] Scene: {scene_code.scene_id}")
-
-        # Find rendered video - Manim quality mapping
-        quality_dirs = {
-            'l': '480p15',
-            'm': '720p30',
-            'h': '1080p60',
-            'k': '2160p60'
-        }
-        quality_dir = quality_dirs.get(quality, '480p15')
-        video_pattern = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
-
-        # Check if video already exists
-        if os.path.exists(video_pattern):
-            print(f"  Video already exists: {video_pattern}")
-        else:
-            # Write scene to temp file
-            temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
-            with open(temp_scene_path, 'w') as f:
-                f.write("from manim import *\nimport numpy as np\n\n")
-                f.write(scene_code.code)
-
-            # Render scene
-            print(f"  Rendering Manim scene...")
+        for future in as_completed(future_to_idx):
+            idx = future_to_idx[future]
             try:
-                result = subprocess.run(
-                    ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
-                    capture_output=True,
-                    text=True,
-                    timeout=300
-                )
-                if result.returncode != 0:
-                    print(f"  ERROR: Manim render failed")
-                    print(result.stderr)
-                    continue
+                results[idx] = future.result()
             except Exception as e:
-                print(f"  ERROR: {e}")
-                continue
+                print(f"  ERROR rendering scene {idx+1}: {e}")
+                results[idx] = None
 
-            if not os.path.exists(video_pattern):
-                print(f"  ERROR: Rendered video not found at {video_pattern}")
-                continue
-
-        # Check if synced video already exists
-        synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
-        if os.path.exists(synced_video_path):
-            print(f"  Synced video already exists: {synced_video_path}")
-            synced_videos.append(synced_video_path)
-            continue
-
-        # Get audio for this segment
-        segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
-        if not segment_audio_data:
-            print(f"  WARNING: No audio found for segment {segment_id}, skipping sync")
-            synced_videos.append(video_pattern)
-            continue
-
-        # Concatenate all beat audio files for this segment
-        beats = segment_audio_data.get('beats', [])
-        if not beats:
-            print(f"  WARNING: No beats found for segment {segment_id}")
-            synced_videos.append(video_pattern)
-            continue
-
-        # Combine beat audio files
-        segment_audio_path = f"{output_dir}/segment_{i+1}_audio.wav"
-        if len(beats) == 1:
-            # Single beat, just copy
-            subprocess.run(['cp', beats[0]['audio_file'], segment_audio_path])
-        else:
-            # Multiple beats, concatenate
-            concat_list = f"{output_dir}/segment_{i+1}_audio_concat.txt"
-            with open(concat_list, 'w') as f:
-                for beat in beats:
-                    f.write(f"file '{os.path.abspath(beat['audio_file'])}'\n")
-            subprocess.run([
-                'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
-                '-i', concat_list,
-                '-c', 'copy',
-                segment_audio_path
-            ], capture_output=True)
-            os.unlink(concat_list)
-
-        # Sync audio with video based on mode
-        print(f"  Syncing audio with video (mode: {sync_mode})...")
-        
-        if sync_mode == "segment":
-            # SEGMENT-LEVEL SYNC: Adjust entire video to match total audio duration
-            segment_audio_duration = get_audio_duration(segment_audio_path)
-            
-            # First adjust video duration to match audio
-            adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
-            if adjust_video_to_audio_duration(
-                video_pattern,
-                segment_audio_duration,
-                adjusted_video_path,
-                max_speed_change
-            ):
-                # Then merge audio with adjusted video
-                if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
-                    print(f"  SUCCESS: {synced_video_path}")
-                    synced_videos.append(synced_video_path)
-                    # Cleanup temp file
-                    try:
-                        os.unlink(adjusted_video_path)
-                    except:
-                        pass
-                else:
-                    print(f"  WARNING: Audio merge failed, using adjusted video")
-                    synced_videos.append(adjusted_video_path)
-            else:
-                print(f"  WARNING: Duration adjustment failed, using original sync")
-                if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                    synced_videos.append(synced_video_path)
-                else:
-                    synced_videos.append(video_pattern)
-        
-        elif sync_mode == "beat":
-            # BEAT-LEVEL SYNC: Process each beat separately
-            # TODO: This requires splitting the video into beats, which is complex
-            # For now, fall back to segment sync with a warning
-            print(f"  WARNING: Beat-level sync requires per-beat video rendering")
-            print(f"  Falling back to segment-level sync")
-            
-            segment_audio_duration = get_audio_duration(segment_audio_path)
-            adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
-            
-            if adjust_video_to_audio_duration(
-                video_pattern,
-                segment_audio_duration,
-                adjusted_video_path,
-                max_speed_change
-            ):
-                if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
-                    synced_videos.append(synced_video_path)
-                    try:
-                        os.unlink(adjusted_video_path)
-                    except:
-                        pass
-                else:
-                    synced_videos.append(adjusted_video_path)
-            else:
-                if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                    synced_videos.append(synced_video_path)
-                else:
-                    synced_videos.append(video_pattern)
-        
-        else:
-            # Unknown mode, use old method
-            print(f"  WARNING: Unknown sync mode '{sync_mode}', using default")
-            if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                synced_videos.append(synced_video_path)
-            else:
-                synced_videos.append(video_pattern)
+    # Collect in order, skip failures
+    synced_videos = [results[i] for i in sorted(results) if results[i] is not None]
 
     if not synced_videos:
         print("\nERROR: No videos to stitch")
@@ -1070,23 +1083,26 @@ def main(
             return
         used_explanation_path = explanation_output
 
-    # Step 1b: Translate narration if non-English
+    # Step 1b: Translate narration if non-English (batched into a single LLM call)
     # Use a deep copy so the original English explanation stays intact for Manim code gen
     translated_explanation = None
     translator = None
     if language != "en":
         print(f"\n{'='*70}")
-        print(f"TRANSLATING NARRATION TO {lang_config.name.upper()}")
+        print(f"TRANSLATING NARRATION TO {lang_config.name.upper()} (batched)")
         print(f"{'='*70}")
         from research_viz.translation.translator import NarrationTranslator
         translator = NarrationTranslator()
         translated_explanation = copy.deepcopy(explanation)
-        for segment in translated_explanation.get("segments", []):
-            segment["narration_script_original"] = segment["narration_script"]
-            segment["narration_script"] = translator.translate_narration(
-                segment["narration_script"], lang_config
-            )
-            print(f"  Translated segment: {segment.get('segment_id', '?')}")
+
+        segments_to_translate = translated_explanation.get("segments", [])
+        narrations = [seg["narration_script"] for seg in segments_to_translate]
+        translated_narrations = translator.translate_all_narrations(narrations, lang_config)
+
+        for seg, translated in zip(segments_to_translate, translated_narrations):
+            seg["narration_script_original"] = seg["narration_script"]
+            seg["narration_script"] = translated
+            print(f"  Translated segment: {seg.get('segment_id', '?')}")
 
         # Save translated explanation
         translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
@@ -1094,89 +1110,123 @@ def main(
             json.dump(translated_explanation, f, indent=2, ensure_ascii=False)
         print(f"  Saved translated explanation: {translated_path}")
 
-    # Step 2: Generate audio FIRST if requested (needed for beat-sync code generation)
+    # Steps 2+3: TTS audio generation and Manim code generation run concurrently.
+    # TTS uses the translated narration; Manim code gen uses the original English
+    # explanation. Neither depends on the other's output.
     audio_timeline_path = None
-    if generate_audio or render_video:
-        audio_dir = f"{run_dir}/audio_beats"
+    code_output_path = f"{run_dir}/{pdf_stem}_animation.py"
+    scene_metadata_path = f"{run_dir}/{pdf_stem}_scene_metadata.json"
+
+    need_audio = generate_audio or render_video
+    need_codegen = not (os.path.exists(code_output_path) and os.path.exists(scene_metadata_path))
+
+    # Determine audio explanation path
+    audio_dir = f"{run_dir}/audio_beats"
+    if need_audio:
         audio_timeline_path = f"{audio_dir}/beat_timeline.json"
 
-        if os.path.exists(audio_timeline_path):
+    audio_already_exists = audio_timeline_path and os.path.exists(audio_timeline_path)
+
+    # Define the two tasks as callables for concurrent execution
+    def _run_tts():
+        if not need_audio:
+            return
+        if audio_already_exists:
             print(f"\n{'='*70}")
             print("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
             print(f"{'='*70}")
             print(f"Using existing: {audio_timeline_path}")
-        else:
-            print(f"\n{'='*70}")
-            print("GENERATING TTS AUDIO")
-            print(f"{'='*70}")
+            return
 
-            from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+        print(f"\n{'='*70}")
+        print("GENERATING TTS AUDIO")
+        print(f"{'='*70}")
 
-            # Use translated explanation path if available
-            timeline_explanation_path = used_explanation_path
-            if language != "en":
-                translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
-                if os.path.exists(translated_path):
-                    timeline_explanation_path = translated_path
+        from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
 
-            generate_beat_timeline(
-                explanation_path=timeline_explanation_path,
-                output_dir=audio_dir,
-                voice=tts_voice,
-                min_words=difficulty_config.beat_min_words,
-                max_words=difficulty_config.beat_max_words,
-                language=language
-            )
+        timeline_explanation_path = used_explanation_path
+        if language != "en":
+            tp = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
+            if os.path.exists(tp):
+                timeline_explanation_path = tp
 
-            print(f"\n✓ Audio generation complete!")
-            print(f"  Timeline: {audio_timeline_path}")
+        generate_beat_timeline(
+            explanation_path=timeline_explanation_path,
+            output_dir=audio_dir,
+            voice=tts_voice,
+            min_words=difficulty_config.beat_min_words,
+            max_words=difficulty_config.beat_max_words,
+            language=language
+        )
+        print(f"\n✓ Audio generation complete!")
+        print(f"  Timeline: {audio_timeline_path}")
 
-    # Step 3: Generate Manim code (skip if already exists)
-    # Now with beat timing information if audio was generated
-    code_output_path = f"{run_dir}/{pdf_stem}_animation.py"
-    scene_metadata_path = f"{run_dir}/{pdf_stem}_scene_metadata.json"
+    def _run_codegen():
+        if not need_codegen:
+            return None  # signal to load from disk
+        print(f"\n{'='*70}")
+        print("GENERATING MANIM CODE")
+        print(f"{'='*70}")
+        return generate_all_scenes(
+            explanation=explanation,
+            model_name=model_name,
+            max_retries=max_retries,
+            # No audio_timeline_path: TTS runs concurrently so beat timing
+            # is not yet available. Audio-video sync happens in Step 4 via
+            # ffmpeg speed adjustment anyway.
+        )
 
-    if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
+    # Run TTS and code gen concurrently
+    if need_audio and not audio_already_exists and need_codegen:
+        print(f"\n{'='*70}")
+        print("RUNNING TTS AND CODE GEN CONCURRENTLY")
+        print(f"{'='*70}")
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            tts_future = executor.submit(_run_tts)
+            codegen_future = executor.submit(_run_codegen)
+            tts_future.result()  # wait for TTS
+            scene_codes = codegen_future.result()  # wait for codegen
+    else:
+        _run_tts()
+        scene_codes = _run_codegen()
+
+    # Load from disk if code already existed
+    if scene_codes is None:
         print(f"\n{'='*70}")
         print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
         print(f"{'='*70}")
         print(f"Using existing: {code_output_path}")
-
-        # Load scene metadata
         with open(scene_metadata_path, 'r') as f:
             scene_data = json.load(f)
         scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
     else:
-        print(f"\n{'='*70}")
-        print("GENERATING MANIM CODE")
-        print(f"{'='*70}")
-        scene_codes = generate_all_scenes(
-            explanation=explanation,
-            model_name=model_name,
-            max_retries=max_retries,
-            audio_timeline_path=audio_timeline_path  # Pass beat timing!
-        )
-
         if not scene_codes:
             print("No scenes generated successfully")
             return
 
-        # Translate Manim Text() strings if non-English
+        # Translate Manim Text() strings if non-English (batched across all scenes)
         if language != "en":
             print(f"\n{'='*70}")
-            print(f"TRANSLATING MANIM TEXT TO {lang_config.name.upper()}")
+            print(f"TRANSLATING MANIM TEXT TO {lang_config.name.upper()} (batched)")
             print(f"{'='*70}")
             from research_viz.translation.manim_text_processor import ManimTextProcessor
             if translator is None:
                 from research_viz.translation.translator import NarrationTranslator
                 translator = NarrationTranslator()
             processor = ManimTextProcessor()
+
+            # Collect all display texts across all scenes, deduplicate, single LLM call
+            all_texts = []
             for sc in scene_codes:
-                texts = processor.extract_text_strings(sc.code)
-                if texts:
-                    translations = translator.translate_display_texts(texts, lang_config)
-                    sc.code = processor.translate_code_texts(sc.code, translations, lang_config)
-                    print(f"  Translated {len(texts)} text strings in {sc.scene_id}")
+                all_texts.extend(processor.extract_text_strings(sc.code))
+
+            if all_texts:
+                global_translations = translator.translate_display_texts(all_texts, lang_config)
+                print(f"  Translated {len(global_translations)} unique display texts in 1 call")
+                for sc in scene_codes:
+                    sc.code = processor.translate_code_texts(sc.code, global_translations, lang_config)
+            else:
+                print(f"  No Text() strings found to translate")
 
         # Save assembled code
         paper_title = explanation.get('paper_title', pdf_stem)

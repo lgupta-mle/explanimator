@@ -3,6 +3,8 @@ Beat-synchronized TTS Generation
 
 Splits narration into beats (sentences/phrases), generates TTS per beat,
 and tracks timing for precise animation sync.
+
+Beat audio generation is parallelized across all segments via ThreadPoolExecutor.
 """
 
 import re
@@ -12,8 +14,11 @@ import time
 from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 OPENAI_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
+
+MAX_TTS_WORKERS = 6  # Max parallel OpenAI TTS requests
 
 
 @dataclass
@@ -205,16 +210,29 @@ class BeatSyncTTS:
         return beats
 
 
+@dataclass
+class _BeatJob:
+    """Internal: describes a single TTS job for parallel execution."""
+    segment_id: str
+    beat_id: int
+    text: str
+    audio_file: str
+
+
 def generate_beat_timeline(
     explanation_path: str,
     output_dir: str = "src/research_viz/manim_generator/output/audio_beats",
     voice: str = "nova",
     min_words: int = 8,
     max_words: int = 25,
-    language: str = "en"
+    language: str = "en",
+    max_workers: int = MAX_TTS_WORKERS
 ) -> Dict[str, List[NarrationBeat]]:
     """
     Generate complete beat timeline for all segments.
+
+    All TTS calls across all segments are parallelized via ThreadPoolExecutor.
+    Cumulative timing is computed after all audio durations are known.
 
     Returns:
         Dict mapping segment_id to list of beats
@@ -225,22 +243,103 @@ def generate_beat_timeline(
     segments = explanation.get('segments', [])
     print(f"\nGenerating beat timeline for {len(segments)} segments")
     print(f"Voice: {voice}, Language: {language}")
-    print(f"Beat length: {min_words}-{max_words} words\n")
+    print(f"Beat length: {min_words}-{max_words} words")
+    print(f"Max parallel TTS workers: {max_workers}\n")
 
-    tts = BeatSyncTTS(voice=voice)
+    # Phase 1: Split all segments into beats (CPU-only, fast)
+    jobs: List[_BeatJob] = []
+    segment_beat_counts: Dict[str, int] = {}  # segment_id -> number of beats
 
-    timeline = {}
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     for segment in segments:
         segment_id = segment.get('segment_id', 'unknown')
-        beats = tts.generate_segment_beats(
-            segment=segment,
-            output_dir=output_dir,
-            min_words=min_words,
-            max_words=max_words,
-            language=language
+        narration = segment.get('narration_script', '').strip()
+        if not narration:
+            segment_beat_counts[segment_id] = 0
+            continue
+
+        beat_texts = split_into_beats(narration, min_words, max_words, language)
+        segment_beat_counts[segment_id] = len(beat_texts)
+        safe_segment_id = segment_id.replace('/', '_').replace(' ', '_')
+
+        print(f"Segment {segment_id} ({segment.get('title', 'Untitled')}): {len(beat_texts)} beats")
+
+        for i, text in enumerate(beat_texts, 1):
+            audio_file = str(Path(output_dir) / f"{safe_segment_id}_beat_{i}.wav")
+            jobs.append(_BeatJob(
+                segment_id=segment_id,
+                beat_id=i,
+                text=text,
+                audio_file=audio_file
+            ))
+
+    print(f"\nTotal beats to generate: {len(jobs)}")
+
+    if not jobs:
+        return {}
+
+    # Phase 2: Generate all beat audio in parallel
+    tts = BeatSyncTTS(voice=voice)
+    # Eagerly load the client so all threads share the same connection pool
+    tts._load_client()
+
+    # Map (segment_id, beat_id) -> duration
+    durations: Dict[tuple, float] = {}
+    gen_start = time.monotonic()
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_job = {
+            executor.submit(tts.generate_beat_audio, job.text, job.audio_file): job
+            for job in jobs
+        }
+
+        for future in as_completed(future_to_job):
+            job = future_to_job[future]
+            try:
+                duration = future.result()
+                durations[(job.segment_id, job.beat_id)] = duration
+                print(f"  [{len(durations)}/{len(jobs)}] {job.segment_id} beat {job.beat_id}: "
+                      f"{duration:.2f}s  \"{job.text[:50]}{'...' if len(job.text) > 50 else ''}\"")
+            except Exception as e:
+                print(f"  ERROR: {job.segment_id} beat {job.beat_id}: {e}")
+                durations[(job.segment_id, job.beat_id)] = 0.0
+
+    gen_elapsed = time.monotonic() - gen_start
+    print(f"\nAll {len(jobs)} beats generated in {gen_elapsed:.1f}s "
+          f"(avg {gen_elapsed/len(jobs):.2f}s/beat, {len(jobs)/gen_elapsed:.1f} beats/s)")
+
+    # Phase 3: Assemble timeline with cumulative timing per segment
+    timeline: Dict[str, List[NarrationBeat]] = {}
+
+    for job in jobs:
+        if job.segment_id not in timeline:
+            timeline[job.segment_id] = []
+
+    for job in jobs:
+        duration = durations.get((job.segment_id, job.beat_id), 0.0)
+        beat = NarrationBeat(
+            beat_id=job.beat_id,
+            text=job.text,
+            audio_file=job.audio_file,
+            duration=duration,
+            start_time=0.0  # computed below
         )
-        timeline[segment_id] = beats
+        timeline[job.segment_id].append(beat)
+
+    # Sort beats within each segment and compute cumulative start_time
+    for seg_id in timeline:
+        timeline[seg_id].sort(key=lambda b: b.beat_id)
+        cumulative = 0.0
+        for beat in timeline[seg_id]:
+            beat.start_time = cumulative
+            cumulative += beat.duration
+
+    # Include segments with no narration as empty lists
+    for segment in segments:
+        seg_id = segment.get('segment_id', 'unknown')
+        if seg_id not in timeline:
+            timeline[seg_id] = []
 
     # Save timeline metadata
     timeline_data = {
@@ -313,6 +412,12 @@ def main():
         default="en",
         help="ISO 639-1 language code (default: en)"
     )
+    parser.add_argument(
+        "--max-workers",
+        type=int,
+        default=MAX_TTS_WORKERS,
+        help=f"Max parallel TTS workers (default: {MAX_TTS_WORKERS})"
+    )
 
     args = parser.parse_args()
 
@@ -322,7 +427,8 @@ def main():
         voice=args.voice,
         min_words=args.min_words,
         max_words=args.max_words,
-        language=args.language
+        language=args.language,
+        max_workers=args.max_workers
     )
 
 
