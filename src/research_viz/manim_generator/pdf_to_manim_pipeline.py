@@ -8,6 +8,7 @@ Uses RAG only when execution errors occur.
 import copy
 import os
 import json
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -48,16 +49,27 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
     """
     Execute Manim code and return success status and output/errors.
 
+    Each call uses an isolated temp directory for both the script and Manim's
+    media output, so multiple calls can safely run in parallel threads without
+    file-level contention on the shared default media/ folder.
+
     Returns:
         (success, output_or_error)
     """
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+    temp_dir = tempfile.mkdtemp(prefix="manim_exec_")
+    temp_path = os.path.join(temp_dir, "scene.py")
+    media_dir = os.path.join(temp_dir, "media")
+
+    with open(temp_path, 'w') as f:
         f.write(code)
-        temp_path = f.name
 
     try:
         result = subprocess.run(
-            ['manim', 'render', '-ql', '--disable_caching', temp_path, class_name],
+            [
+                'manim', 'render', '-ql', '--disable_caching',
+                '--media_dir', media_dir,
+                temp_path, class_name,
+            ],
             capture_output=True,
             text=True,
             timeout=120
@@ -75,7 +87,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
         return False, f"Exception: {str(e)}"
     finally:
         try:
-            os.unlink(temp_path)
+            shutil.rmtree(temp_dir, ignore_errors=True)
         except:
             pass
 
