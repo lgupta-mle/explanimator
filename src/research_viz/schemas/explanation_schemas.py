@@ -5,6 +5,28 @@ Only contains the 3Blue1Brown-style schemas that are actively used.
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
 
+
+# =============================================================================
+# Difficulty & Prerequisite Schemas
+# =============================================================================
+
+class PrerequisiteConcept(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    concept_name: str
+    why_needed: str
+    depth_level: int  # 0=paper concept, 1=direct prereq, 2=prereq-of-prereq
+    parent_concept: Optional[str] = None
+    estimated_explanation_time_seconds: int
+
+
+class PrerequisiteTree(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    paper_title: str
+    root_concepts: List[str]
+    prerequisites: List[PrerequisiteConcept]
+
 # =============================================================================
 # 3Blue1Brown-Style Schemas (Used by Pipeline)
 # =============================================================================
@@ -76,3 +98,7 @@ class EducationalExplanation3B1B(BaseModel):
 
     # Video segments
     segments: List[Segment3B1B] = Field(..., description="Ordered video segments (4-6 typical)")
+
+    # Difficulty metadata (optional, set by pipeline)
+    difficulty_level: Optional[str] = Field(None, description="easy, medium, or hard")
+    prerequisite_tree: Optional[dict] = Field(None, description="Prerequisite tree for easy mode")

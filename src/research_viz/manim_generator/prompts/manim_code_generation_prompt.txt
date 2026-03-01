@@ -733,4 +733,13 @@ This would have prevented the overlap in TransformerPipelineSceneS4.
 - **Quality over cleverness** - readable, working code is best
 - **Follow the spec precisely** - implement exactly what's requested
 
+## Multilingual Support
+
+When code is post-processed for non-English languages:
+1. Use Text() for ALL non-math display text (never Tex() for translated text)
+2. MathTex() stays in English/LaTeX - NEVER translate math
+3. Keep text content short and clear - it will be translated
+
+---
+
 Generate executable, correct Manim code that faithfully implements the animation scene.

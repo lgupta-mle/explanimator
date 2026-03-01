@@ -1,3 +1,4 @@
+import requests
 from openai import OpenAI
 from pathlib import Path
 import base64
@@ -12,6 +13,42 @@ T = TypeVar('T', bound=BaseModel)
 def encode_image_to_base64(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
+
+
+def call_openrouter(
+    messages: list,
+    model_name: str = "openai/gpt-5",
+    schema: Optional[Type[T]] = None,
+    plugins: Optional[list] = None
+) -> dict:
+    """Generic OpenRouter API call via requests."""
+    url = "https://openrouter.ai/api/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": model_name,
+        "messages": messages
+    }
+
+    if plugins:
+        payload["plugins"] = plugins
+
+    if schema is not None:
+        payload["response_format"] = {
+            "type": "json_schema",
+            "json_schema": {
+                "name": schema.__name__,
+                "schema": schema.model_json_schema(),
+                "strict": False
+            }
+        }
+
+    response = requests.post(url, headers=headers, json=payload)
+    return response.json()
+
 
 def make_schema_openai_compatible(schema: dict) -> dict:
     """

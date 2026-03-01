@@ -26,44 +26,61 @@ class NarrationBeat:
     start_time: float = 0.0  # Cumulative start time in scene
 
 
-def split_into_beats(narration: str, min_words: int = 8, max_words: int = 25) -> List[str]:
+CJK_LANGUAGES = {"ja", "zh", "ko"}
+CJK_CHAR_PER_WORD = 3  # ~3 CJK characters ≈ 1 English word for pacing purposes
+
+
+def _count_units(text: str, language: str) -> int:
+    """Count words (Latin/Cyrillic) or character-equivalent units (CJK)."""
+    if language in CJK_LANGUAGES:
+        # Count non-whitespace characters, divide by CJK_CHAR_PER_WORD
+        char_count = len(re.sub(r'\s+', '', text))
+        return max(1, char_count // CJK_CHAR_PER_WORD)
+    return len(text.split())
+
+
+def split_into_beats(narration: str, min_words: int = 8, max_words: int = 25, language: str = "en") -> List[str]:
     """
     Split narration into beats (sentences or natural phrase breaks).
 
     Args:
         narration: Full narration text
-        min_words: Minimum words per beat
-        max_words: Maximum words per beat
+        min_words: Minimum words (or CJK char-equivalent units) per beat
+        max_words: Maximum words (or CJK char-equivalent units) per beat
+        language: ISO 639-1 language code
 
     Returns:
         List of beat texts
     """
-    sentences = re.split(r'(?<=[.!?])\s+', narration.strip())
+    # Sentence splitting works for all languages (CJK/Arabic also use .!? or equivalents)
+    sentences = re.split(r'(?<=[.!?\u3002\uff01\uff1f\u061f])\s*', narration.strip())
+    sentences = [s for s in sentences if s.strip()]
 
     beats = []
     current_beat = []
-    current_word_count = 0
+    current_count = 0
 
     for sentence in sentences:
-        words = sentence.split()
-        word_count = len(words)
+        unit_count = _count_units(sentence, language)
 
-        if current_word_count + word_count <= max_words:
+        if current_count + unit_count <= max_words:
             current_beat.append(sentence)
-            current_word_count += word_count
+            current_count += unit_count
         else:
-            if current_word_count >= min_words:
-                beats.append(' '.join(current_beat))
+            if current_count >= min_words:
+                beats.append(' '.join(current_beat) if language not in CJK_LANGUAGES else ''.join(current_beat))
                 current_beat = [sentence]
-                current_word_count = word_count
+                current_count = unit_count
             else:
                 current_beat.append(sentence)
-                beats.append(' '.join(current_beat))
+                joiner = '' if language in CJK_LANGUAGES else ' '
+                beats.append(joiner.join(current_beat))
                 current_beat = []
-                current_word_count = 0
+                current_count = 0
 
     if current_beat:
-        beats.append(' '.join(current_beat))
+        joiner = '' if language in CJK_LANGUAGES else ' '
+        beats.append(joiner.join(current_beat))
 
     return beats
 
@@ -130,7 +147,8 @@ class BeatSyncTTS:
         segment: dict,
         output_dir: str,
         min_words: int = 8,
-        max_words: int = 25
+        max_words: int = 25,
+        language: str = "en"
     ) -> List[NarrationBeat]:
         """
         Generate beat-synced audio for an entire segment.
@@ -149,7 +167,7 @@ class BeatSyncTTS:
         print(f"Segment: {segment_id} - {title}")
         print(f"{'='*70}")
 
-        beat_texts = split_into_beats(narration, min_words, max_words)
+        beat_texts = split_into_beats(narration, min_words, max_words, language)
         print(f"Split into {len(beat_texts)} beats")
 
         beats = []
@@ -192,7 +210,8 @@ def generate_beat_timeline(
     output_dir: str = "src/research_viz/manim_generator/output/audio_beats",
     voice: str = "nova",
     min_words: int = 8,
-    max_words: int = 25
+    max_words: int = 25,
+    language: str = "en"
 ) -> Dict[str, List[NarrationBeat]]:
     """
     Generate complete beat timeline for all segments.
@@ -205,7 +224,7 @@ def generate_beat_timeline(
 
     segments = explanation.get('segments', [])
     print(f"\nGenerating beat timeline for {len(segments)} segments")
-    print(f"Voice: {voice}")
+    print(f"Voice: {voice}, Language: {language}")
     print(f"Beat length: {min_words}-{max_words} words\n")
 
     tts = BeatSyncTTS(voice=voice)
@@ -218,7 +237,8 @@ def generate_beat_timeline(
             segment=segment,
             output_dir=output_dir,
             min_words=min_words,
-            max_words=max_words
+            max_words=max_words,
+            language=language
         )
         timeline[segment_id] = beats
 
@@ -288,6 +308,11 @@ def main():
         default=25,
         help="Maximum words per beat"
     )
+    parser.add_argument(
+        "--language",
+        default="en",
+        help="ISO 639-1 language code (default: en)"
+    )
 
     args = parser.parse_args()
 
@@ -296,7 +321,8 @@ def main():
         output_dir=args.output_dir,
         voice=args.voice,
         min_words=args.min_words,
-        max_words=args.max_words
+        max_words=args.max_words,
+        language=args.language
     )
 
 
