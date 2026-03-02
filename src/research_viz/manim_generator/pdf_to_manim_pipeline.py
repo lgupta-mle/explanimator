@@ -994,6 +994,178 @@ def render_and_sync_all_scenes(
         return None
 
 
+def _run_for_language(
+    language: str,
+    explanation: dict,
+    scene_codes_english: List[ManimSceneCode],
+    pdf_stem: str,
+    output_dir: str,
+    difficulty: str,
+    difficulty_config: "DifficultyConfig",
+    generate_audio: bool,
+    tts_voice: str,
+    render_video: bool,
+    video_quality: str,
+    sync_mode: str,
+    max_speed_change: float,
+    used_explanation_path: str,
+):
+    """Run the language-specific pipeline stages for a single language.
+
+    This handles narration translation, TTS generation, display text
+    translation in Manim code, and video rendering.  It is designed to be
+    called once per target language after the shared English explanation and
+    Manim code generation have already been completed.
+    """
+    lang_config = SUPPORTED_LANGUAGES[language]
+    run_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{language}"
+    Path(run_dir).mkdir(parents=True, exist_ok=True)
+
+    print(f"\n{'#'*70}")
+    print(f"# LANGUAGE: {lang_config.name} ({language})  ->  {run_dir}")
+    print(f"{'#'*70}")
+
+    # Font availability check for non-Latin scripts
+    if lang_config.font:
+        try:
+            result = subprocess.run(
+                ['fc-list', f':family={lang_config.font}'],
+                capture_output=True, text=True, timeout=5
+            )
+            if not result.stdout.strip():
+                print(f"WARNING: Font '{lang_config.font}' not found. Install it for proper {lang_config.name} rendering.")
+        except Exception:
+            pass
+
+    # --- Translate narration (or skip for English) ---
+    translated_explanation = None
+    translator = None
+    if language != "en":
+        translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
+        if os.path.exists(translated_path):
+            print(f"Loading existing translated explanation: {translated_path}")
+            with open(translated_path, 'r', encoding='utf-8') as f:
+                translated_explanation = json.load(f)
+        else:
+            print(f"\n{'='*70}")
+            print(f"TRANSLATING NARRATION TO {lang_config.name.upper()} (batched)")
+            print(f"{'='*70}")
+            from research_viz.translation.translator import NarrationTranslator
+            translator = NarrationTranslator()
+            translated_explanation = copy.deepcopy(explanation)
+
+            segments_to_translate = translated_explanation.get("segments", [])
+            narrations = [seg["narration_script"] for seg in segments_to_translate]
+            translated_narrations = translator.translate_all_narrations(narrations, lang_config)
+
+            for seg, translated in zip(segments_to_translate, translated_narrations):
+                seg["narration_script_original"] = seg["narration_script"]
+                seg["narration_script"] = translated
+                print(f"  Translated segment: {seg.get('segment_id', '?')}")
+
+            with open(translated_path, 'w', encoding='utf-8') as f:
+                json.dump(translated_explanation, f, indent=2, ensure_ascii=False)
+            print(f"  Saved translated explanation: {translated_path}")
+
+    # --- TTS audio generation ---
+    audio_timeline_path = None
+    audio_dir = f"{run_dir}/audio_beats"
+    need_audio = generate_audio or render_video
+
+    if need_audio:
+        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
+        if os.path.exists(audio_timeline_path):
+            print(f"\n{'='*70}")
+            print("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
+            print(f"{'='*70}")
+            print(f"Using existing: {audio_timeline_path}")
+        else:
+            print(f"\n{'='*70}")
+            print("GENERATING TTS AUDIO")
+            print(f"{'='*70}")
+            from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+
+            timeline_explanation_path = used_explanation_path
+            if language != "en":
+                tp = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
+                if os.path.exists(tp):
+                    timeline_explanation_path = tp
+
+            generate_beat_timeline(
+                explanation_path=timeline_explanation_path,
+                output_dir=audio_dir,
+                voice=tts_voice,
+                min_words=difficulty_config.beat_min_words,
+                max_words=difficulty_config.beat_max_words,
+                language=language
+            )
+            print(f"\n  Audio generation complete!")
+            print(f"  Timeline: {audio_timeline_path}")
+
+    # --- Translate display texts in Manim code + save per-language copy ---
+    code_output_path = f"{run_dir}/{pdf_stem}_animation.py"
+    scene_metadata_path = f"{run_dir}/{pdf_stem}_scene_metadata.json"
+
+    # Start from the English scene codes
+    lang_scene_codes = [ManimSceneCode(**sc.model_dump()) for sc in scene_codes_english]
+
+    if language != "en":
+        print(f"\n{'='*70}")
+        print(f"TRANSLATING MANIM TEXT TO {lang_config.name.upper()} (batched)")
+        print(f"{'='*70}")
+        from research_viz.translation.manim_text_processor import ManimTextProcessor
+        if translator is None:
+            from research_viz.translation.translator import NarrationTranslator
+            translator = NarrationTranslator()
+        processor = ManimTextProcessor()
+
+        all_texts = []
+        for sc in lang_scene_codes:
+            all_texts.extend(processor.extract_text_strings(sc.code))
+
+        if all_texts:
+            global_translations = translator.translate_display_texts(all_texts, lang_config)
+            print(f"  Translated {len(global_translations)} unique display texts in 1 call")
+            for sc in lang_scene_codes:
+                sc.code = processor.translate_code_texts(sc.code, global_translations, lang_config)
+        else:
+            print(f"  No Text() strings found to translate")
+
+    # Save code and metadata for this language
+    paper_title = explanation.get('paper_title', pdf_stem)
+    complete_code = assemble_complete_code(lang_scene_codes, paper_title)
+    with open(code_output_path, 'w') as f:
+        f.write(complete_code)
+    with open(scene_metadata_path, 'w') as f:
+        json.dump([scene.model_dump() for scene in lang_scene_codes], f, indent=2)
+
+    print(f"  Saved: {code_output_path}")
+
+    # --- Render video ---
+    if render_video:
+        if not audio_timeline_path:
+            print("\nERROR: Cannot render video without audio. Enable --generate-audio")
+            return run_dir
+
+        final_video = render_and_sync_all_scenes(
+            scene_codes=lang_scene_codes,
+            explanation=explanation,
+            audio_timeline_path=audio_timeline_path,
+            output_dir=run_dir,
+            quality=video_quality,
+            sync_mode=sync_mode,
+            max_speed_change=max_speed_change
+        )
+
+        if final_video:
+            print(f"\n  Pipeline complete for {lang_config.name}!")
+            print(f"  Final video: {final_video}")
+        else:
+            print(f"\n  Video rendering failed for {lang_config.name}")
+
+    return run_dir
+
+
 def main(
     pdf_path: Optional[str] = None,
     explanation_path: Optional[str] = None,
@@ -1007,7 +1179,8 @@ def main(
     sync_mode: str = "segment",
     max_speed_change: float = 0.3,
     difficulty: str = "medium",
-    language: str = "en"
+    language: str = "en",
+    languages: Optional[str] = None,
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -1026,6 +1199,9 @@ def main(
         max_speed_change: Maximum video speed adjustment (0.3 = 30%)
         difficulty: Difficulty level - easy, medium, or hard (default: medium)
         language: ISO 639-1 language code (default: en). Supported: en, es, fr, de, ja, zh, ko, hi, ar, ru, pt
+        languages: Comma-separated list of language codes for multi-language batch mode.
+            Generates explanation and Manim code once, then translates + renders for each
+            language. Example: "en,es,ja,fr". Overrides --language when set.
 
     Examples:
         # Generate in Spanish with easy difficulty
@@ -1035,35 +1211,40 @@ def main(
         # Generate in Japanese
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
             --pdf-path papers/attention.pdf --language ja --generate-audio --render-video
+
+        # Multi-language batch: generate once, translate to 4 languages
+        python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
+            --pdf-path papers/attention.pdf --languages en,es,ja,fr --generate-audio --render-video
     """
     if difficulty not in DIFFICULTY_CONFIGS:
         print(f"ERROR: Invalid difficulty '{difficulty}'. Choose from: easy, medium, hard")
         return
 
-    if language not in SUPPORTED_LANGUAGES:
-        print(f"ERROR: Unsupported language '{language}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
-        return
-
     difficulty_config = DIFFICULTY_CONFIGS[difficulty]
-    lang_config = SUPPORTED_LANGUAGES[language]
+
+    # --- Resolve target language list ---
+    # --languages overrides --language when set.
+    target_languages: List[str] = []
+    if languages:
+        for code in languages.split(","):
+            code = code.strip()
+            if code not in SUPPORTED_LANGUAGES:
+                print(f"ERROR: Unsupported language '{code}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
+                return
+            if code not in target_languages:
+                target_languages.append(code)
+    else:
+        if language not in SUPPORTED_LANGUAGES:
+            print(f"ERROR: Unsupported language '{language}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
+            return
+        target_languages = [language]
+
+    multi_lang = len(target_languages) > 1
+    lang_names = ", ".join(f"{SUPPORTED_LANGUAGES[c].name} ({c})" for c in target_languages)
     print(f"Difficulty: {difficulty} (segments: {difficulty_config.min_segments}-{difficulty_config.max_segments})")
-    print(f"Language: {lang_config.name} ({language})")
+    print(f"Target language(s): {lang_names}")
 
-    # Font availability check for non-Latin scripts
-    if lang_config.font:
-        try:
-            result = subprocess.run(
-                ['fc-list', f':family={lang_config.font}'],
-                capture_output=True, text=True, timeout=5
-            )
-            if not result.stdout.strip():
-                print(f"WARNING: Font '{lang_config.font}' not found. Install it for proper {lang_config.name} rendering.")
-                print(f"  On macOS: brew install --cask font-noto-sans-{lang_config.name.lower()}")
-                print(f"  On Ubuntu: sudo apt install fonts-noto-{lang_config.script}")
-        except Exception:
-            pass  # fc-list not available, skip check
-
-    # Determine pdf_stem early so we can build the run-specific output dir
+    # --- Determine pdf_stem ---
     if explanation_path and os.path.exists(explanation_path):
         pdf_stem = Path(explanation_path).stem.replace('_explanation', '').split('_explanation_')[0]
     elif pdf_path and os.path.exists(pdf_path):
@@ -1072,12 +1253,22 @@ def main(
         print("ERROR: Provide either --pdf-path or --explanation-path")
         return
 
-    # Create run-specific subdirectory so different difficulty/language combos don't collide
-    run_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{language}"
-    Path(run_dir).mkdir(parents=True, exist_ok=True)
-    print(f"Output directory: {run_dir}")
+    # For shared (English) artefacts, use a base directory that is language-agnostic
+    # when in multi-language mode; single-language keeps the original layout.
+    if multi_lang:
+        base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_base"
+    else:
+        base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{target_languages[0]}"
+    Path(base_dir).mkdir(parents=True, exist_ok=True)
 
-    # Step 1: Load or generate explanation
+    # ================================================================
+    # PHASE 1 — Shared work: explanation + English Manim code generation
+    # ================================================================
+    print(f"\n{'='*70}")
+    print("PHASE 1: SHARED GENERATION (explanation + Manim code)")
+    print(f"{'='*70}")
+
+    # Step 1: Load or generate explanation (always English)
     if explanation_path and os.path.exists(explanation_path):
         print(f"Loading existing explanation: {explanation_path}")
         with open(explanation_path, 'r') as f:
@@ -1085,7 +1276,7 @@ def main(
         used_explanation_path = explanation_path
     elif pdf_path:
         from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
-        explanation_output = f"{run_dir}/{pdf_stem}_explanation.json"
+        explanation_output = f"{base_dir}/{pdf_stem}_explanation.json"
         if os.path.exists(explanation_output):
             print(f"Loading existing explanation: {explanation_output}")
             with open(explanation_output, 'r') as f:
@@ -1104,113 +1295,38 @@ def main(
                 return
         used_explanation_path = explanation_output
 
-    # Step 1b: Translate narration if non-English (batched into a single LLM call)
-    # Use a deep copy so the original English explanation stays intact for Manim code gen
-    translated_explanation = None
-    translator = None
-    if language != "en":
-        print(f"\n{'='*70}")
-        print(f"TRANSLATING NARRATION TO {lang_config.name.upper()} (batched)")
-        print(f"{'='*70}")
-        from research_viz.translation.translator import NarrationTranslator
-        translator = NarrationTranslator()
-        translated_explanation = copy.deepcopy(explanation)
-
-        segments_to_translate = translated_explanation.get("segments", [])
-        narrations = [seg["narration_script"] for seg in segments_to_translate]
-        translated_narrations = translator.translate_all_narrations(narrations, lang_config)
-
-        for seg, translated in zip(segments_to_translate, translated_narrations):
-            seg["narration_script_original"] = seg["narration_script"]
-            seg["narration_script"] = translated
-            print(f"  Translated segment: {seg.get('segment_id', '?')}")
-
-        # Save translated explanation
-        translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
-        with open(translated_path, 'w', encoding='utf-8') as f:
-            json.dump(translated_explanation, f, indent=2, ensure_ascii=False)
-        print(f"  Saved translated explanation: {translated_path}")
-
-    # Steps 2+3: TTS audio generation and Manim code generation run concurrently.
-    # TTS uses the translated narration; Manim code gen uses the original English
-    # explanation. Neither depends on the other's output.
-    audio_timeline_path = None
-    code_output_path = f"{run_dir}/{pdf_stem}_animation.py"
-    scene_metadata_path = f"{run_dir}/{pdf_stem}_scene_metadata.json"
-
-    need_audio = generate_audio or render_video
+    # Step 2: Generate Manim code (English, once) — reused for all languages
+    code_output_path = f"{base_dir}/{pdf_stem}_animation.py"
+    scene_metadata_path = f"{base_dir}/{pdf_stem}_scene_metadata.json"
     need_codegen = not (os.path.exists(code_output_path) and os.path.exists(scene_metadata_path))
 
-    # Determine audio explanation path
-    audio_dir = f"{run_dir}/audio_beats"
-    if need_audio:
-        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
-
-    audio_already_exists = audio_timeline_path and os.path.exists(audio_timeline_path)
-
-    # Define the two tasks as callables for concurrent execution
-    def _run_tts():
-        if not need_audio:
-            return
-        if audio_already_exists:
-            print(f"\n{'='*70}")
-            print("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
-            print(f"{'='*70}")
-            print(f"Using existing: {audio_timeline_path}")
-            return
-
+    # In single-language non-English mode, TTS and codegen can still run concurrently
+    # for the first (and only) language. In multi-language mode, we generate code first
+    # since all languages need the English scene codes.
+    if need_codegen:
         print(f"\n{'='*70}")
-        print("GENERATING TTS AUDIO")
+        print("GENERATING MANIM CODE (English, shared across all languages)")
         print(f"{'='*70}")
-
-        from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
-
-        timeline_explanation_path = used_explanation_path
-        if language != "en":
-            tp = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
-            if os.path.exists(tp):
-                timeline_explanation_path = tp
-
-        generate_beat_timeline(
-            explanation_path=timeline_explanation_path,
-            output_dir=audio_dir,
-            voice=tts_voice,
-            min_words=difficulty_config.beat_min_words,
-            max_words=difficulty_config.beat_max_words,
-            language=language
-        )
-        print(f"\n✓ Audio generation complete!")
-        print(f"  Timeline: {audio_timeline_path}")
-
-    def _run_codegen(use_audio_timeline: bool = False):
-        if not need_codegen:
-            return None  # signal to load from disk
-        print(f"\n{'='*70}")
-        print("GENERATING MANIM CODE")
-        print(f"{'='*70}")
-        return generate_all_scenes(
+        scene_codes = generate_all_scenes(
             explanation=explanation,
             model_name=model_name,
             max_retries=max_retries,
-            audio_timeline_path=audio_timeline_path if use_audio_timeline else None,
         )
+        if not scene_codes:
+            print("No scenes generated successfully")
+            return
 
-    # Run TTS and code gen concurrently
-    if need_audio and not audio_already_exists and need_codegen:
-        print(f"\n{'='*70}")
-        print("RUNNING TTS AND CODE GEN CONCURRENTLY")
-        print(f"{'='*70}")
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            tts_future = executor.submit(_run_tts)
-            codegen_future = executor.submit(_run_codegen)
-            tts_future.result()  # wait for TTS
-            scene_codes = codegen_future.result()  # wait for codegen
+        # Save English code + metadata for reuse
+        paper_title = explanation.get('paper_title', pdf_stem)
+        complete_code = assemble_complete_code(scene_codes, paper_title)
+        with open(code_output_path, 'w') as f:
+            f.write(complete_code)
+        with open(scene_metadata_path, 'w') as f:
+            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
+
+        print(f"Generated {len(scene_codes)} scenes")
+        print(f"Saved English code: {code_output_path}")
     else:
-        _run_tts()
-        scene_codes = _run_codegen(use_audio_timeline=need_audio)
-
-    # Load from disk if code already existed
-    if scene_codes is None:
         print(f"\n{'='*70}")
         print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
         print(f"{'='*70}")
@@ -1218,72 +1334,44 @@ def main(
         with open(scene_metadata_path, 'r') as f:
             scene_data = json.load(f)
         scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
-    else:
-        if not scene_codes:
-            print("No scenes generated successfully")
-            return
 
-        # Translate Manim Text() strings if non-English (batched across all scenes)
-        if language != "en":
-            print(f"\n{'='*70}")
-            print(f"TRANSLATING MANIM TEXT TO {lang_config.name.upper()} (batched)")
-            print(f"{'='*70}")
-            from research_viz.translation.manim_text_processor import ManimTextProcessor
-            if translator is None:
-                from research_viz.translation.translator import NarrationTranslator
-                translator = NarrationTranslator()
-            processor = ManimTextProcessor()
-
-            # Collect all display texts across all scenes, deduplicate, single LLM call
-            all_texts = []
-            for sc in scene_codes:
-                all_texts.extend(processor.extract_text_strings(sc.code))
-
-            if all_texts:
-                global_translations = translator.translate_display_texts(all_texts, lang_config)
-                print(f"  Translated {len(global_translations)} unique display texts in 1 call")
-                for sc in scene_codes:
-                    sc.code = processor.translate_code_texts(sc.code, global_translations, lang_config)
-            else:
-                print(f"  No Text() strings found to translate")
-
-        # Save assembled code
-        paper_title = explanation.get('paper_title', pdf_stem)
-        complete_code = assemble_complete_code(scene_codes, paper_title)
-        with open(code_output_path, 'w') as f:
-            f.write(complete_code)
-
-        # Save scene metadata for future reuse
-        with open(scene_metadata_path, 'w') as f:
-            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
-
+    # ================================================================
+    # PHASE 2 — Per-language work: translate, TTS, render
+    # ================================================================
+    if multi_lang:
         print(f"\n{'='*70}")
-        print(f"CODE GENERATION COMPLETE")
+        print(f"PHASE 2: MULTI-LANGUAGE FAN-OUT ({len(target_languages)} languages)")
         print(f"{'='*70}")
-        print(f"Generated {len(scene_codes)} scenes")
-        print(f"Output: {code_output_path}")
 
-    # Step 4: Render video if requested
-    if render_video:
-        if not audio_timeline_path:
-            print("\nERROR: Cannot render video without audio. Enable --generate-audio")
-            return
-
-        final_video = render_and_sync_all_scenes(
-            scene_codes=scene_codes,
+    results = {}
+    for lang_code in target_languages:
+        run_dir = _run_for_language(
+            language=lang_code,
             explanation=explanation,
-            audio_timeline_path=audio_timeline_path,
-            output_dir=run_dir,
-            quality=video_quality,
+            scene_codes_english=scene_codes,
+            pdf_stem=pdf_stem,
+            output_dir=output_dir,
+            difficulty=difficulty,
+            difficulty_config=difficulty_config,
+            generate_audio=generate_audio,
+            tts_voice=tts_voice,
+            render_video=render_video,
+            video_quality=video_quality,
             sync_mode=sync_mode,
-            max_speed_change=max_speed_change
+            max_speed_change=max_speed_change,
+            used_explanation_path=used_explanation_path,
         )
+        results[lang_code] = run_dir
 
-        if final_video:
-            print(f"\n✓ Pipeline complete!")
-            print(f"  Final video: {final_video}")
-        else:
-            print(f"\n✗ Video rendering failed")
+    # --- Summary ---
+    if multi_lang:
+        print(f"\n{'='*70}")
+        print("MULTI-LANGUAGE PIPELINE COMPLETE")
+        print(f"{'='*70}")
+        for lang_code, run_dir in results.items():
+            print(f"  {SUPPORTED_LANGUAGES[lang_code].name:12s} ({lang_code}): {run_dir}")
+    else:
+        print(f"\nPipeline complete!")
 
 
 if __name__ == "__main__":
