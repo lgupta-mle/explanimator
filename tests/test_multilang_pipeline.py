@@ -327,3 +327,119 @@ def test_run_for_language_does_not_mutate_english_scenes():
     # Original scene codes must be unchanged
     for sc, orig_code in zip(SAMPLE_SCENE_CODES, original_codes):
         assert sc.code == orig_code, "English scene code was mutated!"
+
+
+# ---------------------------------------------------------------------------
+# Tests: artefact auto-discovery from sibling output directories
+# ---------------------------------------------------------------------------
+
+def test_main_discovers_explanation_from_sibling_en_dir():
+    """Running --language es should find explanation in existing paper_medium_en/."""
+    from research_viz.manim_generator.pdf_to_manim_pipeline import main
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Simulate a prior English run that produced artefacts
+        en_dir = os.path.join(tmpdir, "paper_medium_en")
+        Path(en_dir).mkdir()
+        exp_file = os.path.join(en_dir, "paper_explanation.json")
+        with open(exp_file, "w") as f:
+            json.dump(SAMPLE_EXPLANATION, f)
+        meta_file = os.path.join(en_dir, "paper_scene_metadata.json")
+        with open(meta_file, "w") as f:
+            json.dump([sc.model_dump() for sc in SAMPLE_SCENE_CODES], f)
+        code_file = os.path.join(en_dir, "paper_animation.py")
+        with open(code_file, "w") as f:
+            f.write("# dummy code")
+
+        # Run for Spanish without --explanation-path — should auto-discover
+        with patch(
+            "research_viz.manim_generator.pdf_to_manim_pipeline._run_for_language",
+            return_value=tmpdir,
+        ) as mock_run, patch(
+            "research_viz.manim_generator.pdf_to_manim_pipeline.generate_all_scenes",
+        ) as mock_gen:
+            main(
+                pdf_path=os.path.join(tmpdir, "paper.pdf"),  # doesn't need to exist since we discover artefacts
+                output_dir=tmpdir,
+                language="es",
+                generate_audio=False,
+                render_video=False,
+            )
+
+            # generate_all_scenes should NOT have been called — code was discovered
+            mock_gen.assert_not_called()
+            # _run_for_language should be called with the Spanish language
+            assert mock_run.call_count == 1
+            assert mock_run.call_args.kwargs["language"] == "es"
+
+
+def test_main_discovers_scene_metadata_from_sibling():
+    """Scene metadata in a sibling dir should be copied and reused."""
+    from research_viz.manim_generator.pdf_to_manim_pipeline import main
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create a sibling English dir with all artefacts
+        en_dir = os.path.join(tmpdir, "doc_medium_en")
+        Path(en_dir).mkdir()
+        with open(os.path.join(en_dir, "doc_explanation.json"), "w") as f:
+            json.dump(SAMPLE_EXPLANATION, f)
+        with open(os.path.join(en_dir, "doc_scene_metadata.json"), "w") as f:
+            json.dump([sc.model_dump() for sc in SAMPLE_SCENE_CODES], f)
+        with open(os.path.join(en_dir, "doc_animation.py"), "w") as f:
+            f.write("# english animation code")
+
+        # Run for French — the French dir doesn't exist yet
+        fr_dir = os.path.join(tmpdir, "doc_medium_fr")
+        assert not os.path.exists(fr_dir)
+
+        with patch(
+            "research_viz.manim_generator.pdf_to_manim_pipeline._run_for_language",
+            return_value=fr_dir,
+        ) as mock_run, patch(
+            "research_viz.manim_generator.pdf_to_manim_pipeline.generate_all_scenes",
+        ) as mock_gen:
+            main(
+                pdf_path=os.path.join(tmpdir, "doc.pdf"),
+                output_dir=tmpdir,
+                language="fr",
+                generate_audio=False,
+                render_video=False,
+            )
+
+            mock_gen.assert_not_called()
+
+        # The French base dir should have the scene metadata copied in
+        assert os.path.isfile(os.path.join(fr_dir, "doc_scene_metadata.json"))
+
+
+def test_main_falls_back_to_generation_when_no_sibling_exists():
+    """Without siblings, the pipeline should generate from scratch."""
+    from research_viz.manim_generator.pdf_to_manim_pipeline import main
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create a dummy PDF so pdf_path validation passes
+        pdf_file = os.path.join(tmpdir, "new.pdf")
+        with open(pdf_file, "w") as f:
+            f.write("dummy")
+
+        with patch(
+            "research_viz.manim_generator.pdf_explanation_generator.generate_explanation_from_pdf",
+            return_value=SAMPLE_EXPLANATION,
+        ) as mock_explain, patch(
+            "research_viz.manim_generator.pdf_to_manim_pipeline.generate_all_scenes",
+            return_value=SAMPLE_SCENE_CODES,
+        ) as mock_gen, patch(
+            "research_viz.manim_generator.pdf_to_manim_pipeline._run_for_language",
+            return_value=tmpdir,
+        ):
+            main(
+                pdf_path=pdf_file,
+                output_dir=tmpdir,
+                language="en",
+                generate_audio=False,
+                render_video=False,
+            )
+
+            # Both explanation and code generation should have been called
+            mock_explain.assert_called_once()
+            mock_gen.assert_called_once()
