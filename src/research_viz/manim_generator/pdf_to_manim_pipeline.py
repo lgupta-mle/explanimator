@@ -1245,43 +1245,79 @@ def main(
     print(f"Target language(s): {lang_names}")
 
     # --- Determine pdf_stem ---
-    if explanation_path and os.path.exists(explanation_path):
+    # We derive the stem even when the file doesn't exist on disk yet, so
+    # that sibling-directory discovery can still find previously generated
+    # artefacts (e.g. running --language es after an earlier English run).
+    if explanation_path:
         pdf_stem = Path(explanation_path).stem.replace('_explanation', '').split('_explanation_')[0]
-    elif pdf_path and os.path.exists(pdf_path):
+    elif pdf_path:
         pdf_stem = Path(pdf_path).stem
     else:
         print("ERROR: Provide either --pdf-path or --explanation-path")
         return
 
-    # For shared (English) artefacts, use a base directory that is language-agnostic
-    # when in multi-language mode; single-language keeps the original layout.
+    # ================================================================
+    # PHASE 1 — Shared work: explanation + English Manim code generation
+    #
+    # Before generating anything, look for existing artefacts that can be
+    # reused.  The search order for each artefact is:
+    #   1. Explicit --explanation-path (if given)
+    #   2. Any sibling output dir for the same pdf_stem + difficulty
+    #      (e.g. paper_medium_en/, paper_medium_base/)
+    #   3. Generate from scratch
+    # ================================================================
+
+    def _find_existing_artefact(filename: str) -> Optional[str]:
+        """Search sibling output dirs for an existing file."""
+        parent = Path(output_dir)
+        if not parent.is_dir():
+            return None
+        prefix = f"{pdf_stem}_{difficulty}_"
+        for sibling in sorted(parent.iterdir()):
+            if sibling.is_dir() and sibling.name.startswith(prefix):
+                candidate = sibling / filename
+                if candidate.is_file():
+                    return str(candidate)
+        return None
+
+    # For shared artefacts we use a base directory.  In multi-language mode
+    # this is a dedicated _base dir; in single-language mode we use the
+    # target language's own dir so the layout stays familiar.
     if multi_lang:
         base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_base"
     else:
         base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{target_languages[0]}"
     Path(base_dir).mkdir(parents=True, exist_ok=True)
 
-    # ================================================================
-    # PHASE 1 — Shared work: explanation + English Manim code generation
-    # ================================================================
     print(f"\n{'='*70}")
     print("PHASE 1: SHARED GENERATION (explanation + Manim code)")
     print(f"{'='*70}")
 
     # Step 1: Load or generate explanation (always English)
+    explanation = None
+    used_explanation_path = None
+
     if explanation_path and os.path.exists(explanation_path):
         print(f"Loading existing explanation: {explanation_path}")
         with open(explanation_path, 'r') as f:
             explanation = json.load(f)
         used_explanation_path = explanation_path
-    elif pdf_path:
-        from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+    else:
+        # Check the current base_dir first, then scan siblings
         explanation_output = f"{base_dir}/{pdf_stem}_explanation.json"
-        if os.path.exists(explanation_output):
-            print(f"Loading existing explanation: {explanation_output}")
-            with open(explanation_output, 'r') as f:
+        found = explanation_output if os.path.exists(explanation_output) else _find_existing_artefact(f"{pdf_stem}_explanation.json")
+
+        if found:
+            print(f"Reusing existing explanation: {found}")
+            with open(found, 'r') as f:
                 explanation = json.load(f)
-        else:
+            used_explanation_path = found
+            # Copy into base_dir if it came from a sibling so future runs
+            # find it locally too
+            if found != explanation_output and not os.path.exists(explanation_output):
+                shutil.copy2(found, explanation_output)
+        elif pdf_path:
+            from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
             print(f"Generating explanation from PDF: {pdf_path}")
             explanation = generate_explanation_from_pdf(
                 pdf_path=pdf_path,
@@ -1293,11 +1329,25 @@ def main(
             if not explanation:
                 print("Failed to generate explanation")
                 return
-        used_explanation_path = explanation_output
+            used_explanation_path = explanation_output
+        else:
+            print("ERROR: Provide either --pdf-path or --explanation-path")
+            return
 
     # Step 2: Generate Manim code (English, once) — reused for all languages
     code_output_path = f"{base_dir}/{pdf_stem}_animation.py"
     scene_metadata_path = f"{base_dir}/{pdf_stem}_scene_metadata.json"
+
+    # Check current base_dir, then scan siblings for existing scene metadata
+    if not os.path.exists(scene_metadata_path):
+        found_meta = _find_existing_artefact(f"{pdf_stem}_scene_metadata.json")
+        found_code = _find_existing_artefact(f"{pdf_stem}_animation.py")
+        if found_meta:
+            print(f"Reusing existing scene metadata: {found_meta}")
+            shutil.copy2(found_meta, scene_metadata_path)
+            if found_code and not os.path.exists(code_output_path):
+                shutil.copy2(found_code, code_output_path)
+
     need_codegen = not (os.path.exists(code_output_path) and os.path.exists(scene_metadata_path))
 
     # In single-language non-English mode, TTS and codegen can still run concurrently
