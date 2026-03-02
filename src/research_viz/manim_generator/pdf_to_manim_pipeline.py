@@ -1042,11 +1042,23 @@ def _run_for_language(
     translator = None
     if language != "en":
         translated_path = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
+        # Check if a cached translation exists AND actually contains translated
+        # content (not just a copy of the English explanation from a stale run).
+        cached_is_valid = False
         if os.path.exists(translated_path):
-            print(f"Loading existing translated explanation: {translated_path}")
             with open(translated_path, 'r', encoding='utf-8') as f:
-                translated_explanation = json.load(f)
-        else:
+                cached = json.load(f)
+            segs = cached.get("segments", [])
+            if segs and "narration_script_original" in segs[0]:
+                # Has the marker field set by the translation step — trust it
+                cached_is_valid = True
+                translated_explanation = cached
+                print(f"Loading existing translated explanation: {translated_path}")
+            else:
+                print(f"  Stale translation cache (no translated content): {translated_path}")
+                print(f"  Re-translating narrations...")
+
+        if not cached_is_valid:
             print(f"\n{'='*70}")
             print(f"TRANSLATING NARRATION TO {lang_config.name.upper()} (batched)")
             print(f"{'='*70}")
@@ -1090,6 +1102,11 @@ def _run_for_language(
                 tp = f"{run_dir}/{pdf_stem}_explanation_{language}.json"
                 if os.path.exists(tp):
                     timeline_explanation_path = tp
+                else:
+                    print(f"  WARNING: Translated explanation not found at {tp}")
+                    print(f"  TTS will use the English explanation — audio will be in English!")
+
+            print(f"  Using explanation for TTS: {timeline_explanation_path}")
 
             generate_beat_timeline(
                 explanation_path=timeline_explanation_path,
