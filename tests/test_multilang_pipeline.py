@@ -254,7 +254,11 @@ def test_run_for_language_reuses_existing_translation():
         Path(run_dir).mkdir(parents=True)
         pre_translated = SAMPLE_EXPLANATION.copy()
         pre_translated["segments"] = [
-            {**seg, "narration_script": f"Pre-translated: {seg['narration_script']}"}
+            {
+                **seg,
+                "narration_script": f"Pre-translated: {seg['narration_script']}",
+                "narration_script_original": seg["narration_script"],
+            }
             for seg in SAMPLE_EXPLANATION["segments"]
         ]
         translated_path = os.path.join(run_dir, "test_explanation_es.json")
