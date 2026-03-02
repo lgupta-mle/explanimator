@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 218 45% 8%;
+    --foreground: 42 30% 95%;
+
+    --card: 218 40% 12%;
+    --card-foreground: 42 30% 95%;
+
+    --popover: 218 40% 12%;
+    --popover-foreground: 42 30% 95%;
+
+    --primary: 38 70% 68%;
+    --primary-foreground: 218 45% 8%;
+
+    --secondary: 218 35% 18%;
+    --secondary-foreground: 42 30% 95%;
+
+    --muted: 218 30% 16%;
+    --muted-foreground: 220 15% 78%;
+
+    --accent: 160 30% 42%;
+    --accent-foreground: 42 30% 95%;
+
+    --destructive: 350 45% 50%;
+    --destructive-foreground: 42 30% 95%;
+
+    --border: 38 40% 30%;
+    --input: 218 30% 20%;
+    --ring: 38 65% 65%;
+
+    --radius: 1rem;
+
+    /* Anvaya custom tokens */
+    --gold: 38 70% 68%;
+    --gold-soft: 38 60% 82%;
+    --gold-glow: 38 70% 68%;
+    --mystic-green: 160 30% 42%;
+    --rose-warm: 345 40% 66%;
+    --parchment: 42 50% 88%;
+
+    --glass-bg: 218 40% 12%;
+    --glass-border: 38 40% 30%;
+
+    --sidebar-background: 218 45% 6%;
+    --sidebar-foreground: 42 30% 95%;
+    --sidebar-primary: 38 70% 68%;
+    --sidebar-primary-foreground: 218 45% 8%;
+    --sidebar-accent: 218 35% 14%;
+    --sidebar-accent-foreground: 42 30% 95%;
+    --sidebar-border: 218 30% 18%;
+    --sidebar-ring: 38 65% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+  }
+
+  h1, h2 {
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: hsla(218, 40%, 12%, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsla(38, 65%, 65%, 0.18);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsla(38, 65%, 65%, 0.4), transparent);
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 20px hsla(38, 65%, 65%, 0.4);
+  }
+
+  .gold-glow-sm {
+    box-shadow: 0 0 10px hsla(38, 65%, 65%, 0.25);
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      hsla(38, 65%, 65%, 0.15) 50%,
+      transparent 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(135deg, hsl(38, 65%, 65%), hsl(38, 55%, 78%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .magical-glow-overlay {
+    background: radial-gradient(circle at 50% 0%, hsla(38, 65%, 65%, 0.12), transparent 60%);
+  }
+
+  /* Decorative runic divider */
+  .runic-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .runic-divider::before,
+  .runic-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsla(38, 65%, 65%, 0.3), transparent);
+  }
+
+  /* Corner ornaments for special panels */
+  .ornate-corners::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-bottom: 1px solid hsla(38, 65%, 65%, 0.3);
+    border-right: 1px solid hsla(38, 65%, 65%, 0.3);
+    border-radius: 0 0 20px 0;
+    pointer-events: none;
+  }
+
+  .ornate-corners::before {
+    width: 40px;
+    height: 40px;
+    border-top: 1px solid hsla(38, 65%, 65%, 0.3);
+    border-left: 1px solid hsla(38, 65%, 65%, 0.3);
+    border-radius: 20px 0 0 0;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05em;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 15px hsla(38, 65%, 65%, 0.3); }
+  50% { box-shadow: 0 0 30px hsla(38, 65%, 65%, 0.6); }
+}
+
+@keyframes particle-float {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
