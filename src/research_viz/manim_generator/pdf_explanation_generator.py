@@ -125,7 +125,8 @@ prerequisites (list of PrerequisiteConcept with concept_name, why_needed, depth_
     )
 
     if "choices" not in response or len(response["choices"]) == 0:
-        raise RuntimeError(f"Prerequisite tree generation failed: no choices in LLM response. Response: {response}")
+        print(f"  WARNING: Prerequisite tree generation failed: {response.get('error', response)}")
+        return None
 
     content = response["choices"][0]["message"]["content"]
     try:
