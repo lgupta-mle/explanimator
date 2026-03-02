@@ -1084,19 +1084,24 @@ def main(
             explanation = json.load(f)
         used_explanation_path = explanation_path
     elif pdf_path:
-        print(f"Generating explanation from PDF: {pdf_path}")
         from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
         explanation_output = f"{run_dir}/{pdf_stem}_explanation.json"
-        explanation = generate_explanation_from_pdf(
-            pdf_path=pdf_path,
-            output_path=explanation_output,
-            model_name=model_name,
-            max_judge_attempts=3,
-            difficulty_config=difficulty_config
-        )
-        if not explanation:
-            print("Failed to generate explanation")
-            return
+        if os.path.exists(explanation_output):
+            print(f"Loading existing explanation: {explanation_output}")
+            with open(explanation_output, 'r') as f:
+                explanation = json.load(f)
+        else:
+            print(f"Generating explanation from PDF: {pdf_path}")
+            explanation = generate_explanation_from_pdf(
+                pdf_path=pdf_path,
+                output_path=explanation_output,
+                model_name=model_name,
+                max_judge_attempts=3,
+                difficulty_config=difficulty_config
+            )
+            if not explanation:
+                print("Failed to generate explanation")
+                return
         used_explanation_path = explanation_output
 
     # Step 1b: Translate narration if non-English (batched into a single LLM call)
