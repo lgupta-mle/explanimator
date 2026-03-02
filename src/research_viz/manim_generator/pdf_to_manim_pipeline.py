@@ -123,7 +123,7 @@ def fetch_rag_context_for_error(error_message: str, chroma_path: str = "data/man
 def generate_scene_code(
     segment: dict,
     running_example: str,
-    model_name: str = "anthropic/claude-sonnet-4.5",
+    model_name: str = "google/gemini-3.1-pro-preview",
     max_retries: int = 3,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     beat_timeline: Optional[List[dict]] = None
@@ -290,7 +290,7 @@ Fix the errors and regenerate the complete scene code.
 
 def generate_all_scenes(
     explanation: dict,
-    model_name: str = "anthropic/claude-sonnet-4.5",
+    model_name: str = "google/gemini-3.1-pro-preview",
     max_retries: int = 3,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     audio_timeline_path: Optional[str] = None
@@ -370,7 +370,7 @@ import numpy as np
 def run_pipeline(
     pdf_path: str,
     output_dir: str = "src/research_viz/manim_generator/output",
-    model_name: str = "anthropic/claude-sonnet-4.5",
+    model_name: str = "google/gemini-3.1-pro-preview",
     max_retries: int = 3,
     skip_explanation: bool = False,
     explanation_path: Optional[str] = None
@@ -966,7 +966,7 @@ def main(
     pdf_path: Optional[str] = None,
     explanation_path: Optional[str] = None,
     output_dir: str = "src/research_viz/manim_generator/output",
-    model_name: str = "anthropic/claude-sonnet-4.5",
+    model_name: str = "google/gemini-3.1-pro-preview",
     max_retries: int = 3,
     generate_audio: bool = False,
     tts_voice: str = "nova",
