@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional
 
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from dotenv import load_dotenv
@@ -50,6 +50,26 @@ jobs: Dict[str, Dict[str, Any]] = {}
 
 JOBS_DIR = Path(__file__).parent / "jobs"
 JOBS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Load existing job metadata on startup
+def _load_existing_jobs():
+    """Load job metadata from disk for any completed jobs."""
+    for job_dir in JOBS_DIR.iterdir():
+        if not job_dir.is_dir():
+            continue
+        metadata_file = job_dir / "job_metadata.json"
+        if metadata_file.exists():
+            try:
+                with open(metadata_file, "r") as f:
+                    job_data = json.load(f)
+                    job_id = job_data.get("job_id")
+                    if job_id:
+                        jobs[job_id] = job_data
+                        print(f"Loaded existing job: {job_id} - {job_data.get('paper_title', 'Untitled')}")
+            except Exception as e:
+                print(f"Failed to load job metadata from {metadata_file}: {e}")
+
+_load_existing_jobs()
 
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
@@ -124,7 +144,7 @@ def _build_segment_list(explanation: dict, audio_timeline: Optional[dict] = None
 
 # ── Background pipeline runner ───────────────────────────────────────────────
 
-def run_pipeline(job_id: str, pdf_path: str):
+def run_pipeline(job_id: str, pdf_path: str, difficulty: str = "medium"):
     job = jobs[job_id]
     output_dir = str(JOBS_DIR / job_id / "output")
     Path(output_dir).mkdir(parents=True, exist_ok=True)
@@ -133,6 +153,10 @@ def run_pipeline(job_id: str, pdf_path: str):
     explanation_model = "google/gemini-3.1-pro-preview"
     manim_model = "google/gemini-3.1-pro-preview"
     tts_voice = "nova"
+
+    # Difficulty config
+    from research_viz.config.difficulty import DIFFICULTY_CONFIGS
+    difficulty_config = DIFFICULTY_CONFIGS.get(difficulty, DIFFICULTY_CONFIGS["medium"])
 
     try:
         # ── Step 0: Extract concepts ──────────────────────────────────────
@@ -148,6 +172,7 @@ def run_pipeline(job_id: str, pdf_path: str):
         print(f"{'='*70}")
         print(f"Model: {explanation_model}")
         print(f"PDF: {pdf_path}")
+        print(f"Difficulty: {difficulty} (segments: {difficulty_config.min_segments}-{difficulty_config.max_segments})")
         print(f"{'='*70}\n")
 
         explanation_path = f"{output_dir}/explanation.json"
@@ -156,6 +181,7 @@ def run_pipeline(job_id: str, pdf_path: str):
             output_path=explanation_path,
             model_name=explanation_model,
             max_judge_attempts=2,
+            difficulty_config=difficulty_config,
         )
 
         if not explanation:
@@ -261,6 +287,7 @@ def run_pipeline(job_id: str, pdf_path: str):
                 "explanation": explanation_model,
                 "manim_code": manim_model,
                 "tts_voice": tts_voice,
+                "difficulty": difficulty,
             },
         )
 
@@ -274,11 +301,25 @@ def run_pipeline(job_id: str, pdf_path: str):
 
 # ── API Routes ───────────────────────────────────────────────────────────────
 
+# UI label → pipeline difficulty name
+_DIFFICULTY_MAP = {
+    "initiate": "easy",
+    "scholar": "medium",
+    "easy": "easy",
+    "medium": "medium",
+}
+
+
 @app.post("/api/generate")
-async def generate_video(file: UploadFile = File(...)):
+async def generate_video(
+    file: UploadFile = File(...),
+    difficulty: str = Form("scholar"),
+):
     """Accept a PDF and kick off the generation pipeline."""
     if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are accepted.")
+
+    pipeline_difficulty = _DIFFICULTY_MAP.get(difficulty, "medium")
 
     job_id = str(uuid.uuid4())
     job_dir = JOBS_DIR / job_id
@@ -295,6 +336,7 @@ async def generate_video(file: UploadFile = File(...)):
         "message": "Job queued…",
         "filename": file.filename,
         "pdf_path": pdf_path,
+        "difficulty": pipeline_difficulty,
         "error": None,
         "video_path": None,
         "segments": [],
@@ -302,10 +344,33 @@ async def generate_video(file: UploadFile = File(...)):
         "paper_title": "",
     }
 
-    thread = threading.Thread(target=run_pipeline, args=(job_id, pdf_path), daemon=True)
+    thread = threading.Thread(
+        target=run_pipeline,
+        args=(job_id, pdf_path, pipeline_difficulty),
+        daemon=True,
+    )
     thread.start()
 
     return {"job_id": job_id}
+
+
+@app.get("/api/jobs")
+async def list_jobs():
+    """Return all completed jobs as a list for the My Videos page."""
+    result = []
+    for job_id, job in jobs.items():
+        if job.get("status") != "completed":
+            continue
+        segments = job.get("segments", [])
+        total_duration = sum(s.get("duration", 0) for s in segments)
+        result.append({
+            "job_id": job_id,
+            "paper_title": job.get("paper_title", "Untitled"),
+            "difficulty": job.get("difficulty", "medium"),
+            "segments_count": len(segments),
+            "duration_seconds": total_duration,
+        })
+    return result
 
 
 @app.get("/api/status/{job_id}")
@@ -339,6 +404,7 @@ async def get_result(job_id: str):
         "segments": job.get("segments", []),
         "transcript": job.get("transcript", ""),
         "models": job.get("models", {}),
+        "difficulty": job.get("difficulty", "medium"),
     }
 
 

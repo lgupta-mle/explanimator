@@ -25,11 +25,13 @@ export interface JobResult {
   video_url: string;
   segments: Segment[];
   transcript: string;
+  difficulty?: string;
 }
 
-export async function uploadPDF(file: File): Promise<{ job_id: string }> {
+export async function uploadPDF(file: File, difficulty: string = "scholar"): Promise<{ job_id: string }> {
   const formData = new FormData();
   formData.append("file", file);
+  formData.append("difficulty", difficulty);
   const res = await fetch(`${BASE_URL}/generate`, {
     method: "POST",
     body: formData,
@@ -61,4 +63,18 @@ export async function getResult(jobId: string): Promise<JobResult> {
 
 export function videoURL(jobId: string): string {
   return `${BASE_URL}/video/${jobId}`;
+}
+
+export interface JobSummary {
+  job_id: string;
+  paper_title: string;
+  difficulty: string;
+  segments_count: number;
+  duration_seconds: number;
+}
+
+export async function listJobs(): Promise<JobSummary[]> {
+  const res = await fetch(`${BASE_URL}/jobs`);
+  if (!res.ok) return [];
+  return res.json();
 }

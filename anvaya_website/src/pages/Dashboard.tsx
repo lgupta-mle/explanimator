@@ -27,7 +27,7 @@ const Dashboard = () => {
     setUploadError(null);
     setIsSubmitting(true);
     try {
-      const { job_id } = await uploadPDF(selectedFile);
+      const { job_id } = await uploadPDF(selectedFile, difficulty);
       navigate("/generation", { state: { job_id, filename: selectedFile.name } });
     } catch (err: unknown) {
       setUploadError(err instanceof Error ? err.message : "Upload failed. Is the backend running?");

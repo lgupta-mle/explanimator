@@ -8,6 +8,7 @@ export interface SavedVideo {
   date: string;
   duration_seconds: number;
   segments_count: number;
+  difficulty?: string;
 }
 
 export function saveVideo(jobId: string, result: JobResult): void {
@@ -16,13 +17,18 @@ export function saveVideo(jobId: string, result: JobResult): void {
   if (alreadySaved) return;
 
   const totalDuration = result.segments.reduce((acc, s) => acc + (s.duration ?? 0), 0);
+  
+  // Map difficulty to display label
+  const difficultyLabel = result.difficulty === "easy" ? "Initiate" : result.difficulty === "medium" ? "Scholar" : "";
+  const displayTitle = difficultyLabel ? `${result.paper_title} (${difficultyLabel})` : result.paper_title;
 
   const entry: SavedVideo = {
     job_id: jobId,
-    paper_title: result.paper_title || "Untitled",
+    paper_title: displayTitle,
     date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
     duration_seconds: totalDuration,
     segments_count: result.segments.length,
+    difficulty: result.difficulty,
   };
 
   try {
@@ -39,6 +45,16 @@ export function loadVideos(): SavedVideo[] {
     return JSON.parse(raw) as SavedVideo[];
   } catch {
     return [];
+  }
+}
+
+export function deleteVideo(jobId: string): void {
+  try {
+    const existing = loadVideos();
+    const updated = existing.filter((v) => v.job_id !== jobId);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  } catch {
+    // localStorage may be unavailable
   }
 }
 

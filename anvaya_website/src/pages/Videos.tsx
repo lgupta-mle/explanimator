@@ -1,17 +1,37 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import GlassPanel from "@/components/GlassPanel";
 import FloatingParticles from "@/components/FloatingParticles";
-import { Play, Clock, Sparkles, Layers } from "lucide-react";
-import { loadVideos, formatDuration, type SavedVideo } from "@/lib/videoStorage";
+import { Play, Clock, Sparkles, Layers, Trash2 } from "lucide-react";
+import { listJobs, type JobSummary } from "@/services/api";
+import { formatDuration } from "@/lib/videoStorage";
+
+const DIFFICULTY_LABEL: Record<string, string> = {
+  easy: "Initiate",
+  medium: "Scholar",
+};
 
 const Videos = () => {
   const navigate = useNavigate();
-  const videos: SavedVideo[] = loadVideos();
+  const [videos, setVideos] = useState<JobSummary[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleOpen = (video: SavedVideo) => {
+  useEffect(() => {
+    listJobs().then((jobs) => {
+      setVideos(jobs);
+      setLoading(false);
+    });
+  }, []);
+
+  const handleDelete = (e: React.MouseEvent, jobId: string) => {
+    e.stopPropagation();
+    setVideos((prev) => prev.filter((v) => v.job_id !== jobId));
+  };
+
+  const handleOpen = (video: JobSummary) => {
     navigate("/player", { state: { job_id: video.job_id } });
   };
 
@@ -41,7 +61,11 @@ const Videos = () => {
                 <p className="text-muted-foreground text-base sm:text-lg">Your previously generated lectures.</p>
               </motion.div>
 
-              {videos.length === 0 ? (
+              {loading ? (
+                <GlassPanel className="text-center py-16 sm:py-24 px-6 sm:px-8">
+                  <p className="text-muted-foreground font-body text-base sm:text-lg">Loading videos…</p>
+                </GlassPanel>
+              ) : videos.length === 0 ? (
                 <GlassPanel className="text-center py-16 sm:py-24 px-6 sm:px-8">
                   <Sparkles className="w-12 h-12 sm:w-14 sm:h-14 text-primary/40 mx-auto mb-5 sm:mb-6" />
                   <p className="text-muted-foreground font-body text-base sm:text-lg">No videos yet. Generate your first lecture from the Dashboard.</p>
@@ -62,10 +86,10 @@ const Videos = () => {
                         <Play className="w-6 h-6 sm:w-9 sm:h-9 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-heading text-base sm:text-xl tracking-wider text-foreground mb-1 sm:mb-2 truncate">{video.paper_title}</h3>
+                        <h3 className="font-heading text-base sm:text-xl tracking-wider text-foreground mb-1 sm:mb-2 truncate">
+                          {video.paper_title}{video.difficulty && DIFFICULTY_LABEL[video.difficulty] ? ` (${DIFFICULTY_LABEL[video.difficulty]})` : ""}
+                        </h3>
                         <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-sm sm:text-base text-muted-foreground">
-                          <span>{video.date}</span>
-                          <span className="text-primary/60 hidden sm:inline">·</span>
                           <span className="flex items-center gap-1.5">
                             <Clock className="w-4 h-4" /> {formatDuration(video.duration_seconds)}
                           </span>
@@ -75,6 +99,13 @@ const Videos = () => {
                           </span>
                         </div>
                       </div>
+                      <button
+                        onClick={(e) => handleDelete(e, video.job_id)}
+                        className="ml-2 p-2 rounded-lg text-muted-foreground hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 flex-shrink-0 opacity-0 group-hover:opacity-100"
+                        aria-label="Delete video"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
                     </GlassPanel>
                   </motion.div>
                 ))
