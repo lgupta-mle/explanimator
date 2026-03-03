@@ -8,6 +8,9 @@ myenv/
 venv/
 env/
 
+# Node.js
+node_modules/
+
 media/
 output/
 out.txt 
