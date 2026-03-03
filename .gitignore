@@ -13,4 +13,7 @@ node_modules/
 
 media/
 output/
-out.txt 
+out.txt
+
+# Claude artifacts
+.claude/
