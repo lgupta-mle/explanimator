@@ -8,4 +8,8 @@ from research_viz.schemas.explanation_schemas import (
     IntuitiveSection,
     TechnicalSection,
     EquationExplanation,
+    SeriesBible,
+    BookChapter,
+    BookChapterPart,
+    BookSection,
 )
