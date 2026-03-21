@@ -25,6 +25,7 @@ class OpenRouterProvider(LLMProvider):
         max_retries: int = 3,
         retry_base_delay: float = 1.0,
     ):
+        super().__init__()
         self.api_key = api_key or os.getenv("OPENROUTER_API_KEY", "")
         self.max_retries = max_retries
         self.retry_base_delay = retry_base_delay
@@ -85,13 +86,15 @@ class OpenRouterProvider(LLMProvider):
                     usage = data["usage"]
                     tokens_used = usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0)
 
-                return LLMResponse(
+                response = LLMResponse(
                     content=content,
                     model=model,
                     tokens_used=tokens_used,
                     latency_ms=latency_ms,
                     raw=data,
                 )
+                self._record_call(response)
+                return response
 
             except (requests.ConnectionError, requests.Timeout) as exc:
                 last_exception = exc

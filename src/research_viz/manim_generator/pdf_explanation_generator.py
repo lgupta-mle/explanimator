@@ -5,7 +5,6 @@ Generates 3Blue1Brown-style educational explanations directly from PDF research 
 Uses OpenRouter's native PDF processing and includes an LLM judge for quality verification.
 """
 
-import requests
 import base64
 import os
 import json
@@ -15,7 +14,7 @@ from pydantic import BaseModel, Field
 import tyro
 from dotenv import load_dotenv
 
-from research_viz.config.pipeline_config import get_config
+from research_viz.config.pipeline_config import get_config, get_provider
 
 load_dotenv()
 
@@ -45,41 +44,44 @@ def encode_pdf_to_base64(pdf_path: str) -> str:
         return base64.b64encode(f.read()).decode('utf-8')
 
 
-def call_openrouter(
+def _build_response_format(schema: Optional[Type[T]]) -> Optional[dict]:
+    """Build response_format dict from a Pydantic schema."""
+    if schema is None:
+        return None
+    return {
+        "type": "json_schema",
+        "json_schema": {
+            "name": schema.__name__,
+            "schema": schema.model_json_schema(),
+            "strict": False,
+        },
+    }
+
+
+def call_llm_provider(
     messages: list,
     model_name: Optional[str] = None,
     schema: Optional[Type[T]] = None,
-    plugins: Optional[list] = None
-) -> dict:
-    """Generic OpenRouter API call."""
+    plugins: Optional[list] = None,
+) -> "LLMResponse":
+    """Call the LLM provider and return an LLMResponse.
+
+    This replaces the old call_openrouter() function. All pipeline stages
+    should use this (or get_provider().generate() directly).
+    """
+    from research_viz.providers.llm_provider import LLMResponse  # noqa: F811
+
     if model_name is None:
         model_name = get_config().llm.default_model
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
-        "Content-Type": "application/json"
-    }
 
-    payload = {
-        "model": model_name,
-        "messages": messages
-    }
-
+    kwargs: dict = {}
     if plugins:
-        payload["plugins"] = plugins
+        kwargs["plugins"] = plugins
+    rf = _build_response_format(schema)
+    if rf:
+        kwargs["response_format"] = rf
 
-    if schema is not None:
-        payload["response_format"] = {
-            "type": "json_schema",
-            "json_schema": {
-                "name": schema.__name__,
-                "schema": schema.model_json_schema(),
-                "strict": False
-            }
-        }
-
-    response = requests.post(url, headers=headers, json=payload)
-    return response.json()
+    return get_provider().generate(messages, model_name, **kwargs)
 
 
 def create_pdf_llm_response(
@@ -87,14 +89,11 @@ def create_pdf_llm_response(
     prompt: str,
     system_prompt: str,
     model_name: Optional[str] = None,
-    schema: Optional[Type[T]] = None
-) -> dict:
-    """
-    Call OpenRouter with native PDF processing.
+    schema: Optional[Type[T]] = None,
+) -> "LLMResponse":
+    """Call the LLM provider with native PDF processing.
 
-    Best practices:
-    - PDF placed BEFORE text in request
-    - Native engine to avoid parsing costs
+    Returns an LLMResponse (content in .content, raw API data in .raw).
     """
     if model_name is None:
         model_name = get_config().llm.explanation_model
@@ -110,17 +109,17 @@ def create_pdf_llm_response(
                     "type": "file",
                     "file": {
                         "filename": Path(pdf_path).name,
-                        "file_data": data_url
-                    }
+                        "file_data": data_url,
+                    },
                 },
-                {"type": "text", "text": prompt}
-            ]
-        }
+                {"type": "text", "text": prompt},
+            ],
+        },
     ]
 
     plugins = [{"id": "file-parser", "pdf": {"engine": "native"}}]
 
-    return call_openrouter(messages, model_name, schema, plugins)
+    return call_llm_provider(messages, model_name, schema, plugins)
 
 
 def load_prompt(prompt_name: str) -> str:
@@ -160,31 +159,25 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
     ]
 
     try:
-        response = call_openrouter(messages, model_name, JudgeResult)
+        llm_response = call_llm_provider(messages, model_name, JudgeResult)
+        content = llm_response.content
 
-        if "error" in response:
-            print(f"    Judge API error: {response['error']}")
-            return JudgeResult(score=0, criteria_scores={}, feedback=f"API error: {response['error']}")
+        if not content:
+            print(f"    Judge returned empty content")
+            return JudgeResult(score=0, criteria_scores={}, feedback="Empty response")
 
-        if "choices" in response and len(response["choices"]) > 0:
-            content = response["choices"][0]["message"]["content"]
-            try:
-                return JudgeResult.model_validate_json(content)
-            except Exception as e:
-                # Try to extract JSON from the response
-                import re
-                json_match = re.search(r'\{[^{}]*"score"[^{}]*\}', content, re.DOTALL)
-                if json_match:
-                    try:
-                        return JudgeResult.model_validate_json(json_match.group())
-                    except:
-                        pass
-                print(f"    Judge parse error: {e}")
-                print(f"    Raw content: {content[:500]}...")
-                return JudgeResult(score=0, criteria_scores={}, feedback=f"Parse error: {str(e)[:100]}")
-
-        print(f"    Unexpected judge response: {response}")
-        return JudgeResult(score=0, criteria_scores={}, feedback="Unexpected response format")
+        try:
+            return JudgeResult.model_validate_json(content)
+        except Exception as e:
+            import re
+            json_match = re.search(r'\{[^{}]*"score"[^{}]*\}', content, re.DOTALL)
+            if json_match:
+                try:
+                    return JudgeResult.model_validate_json(json_match.group())
+                except:
+                    pass
+            print(f"    Judge parse error: {e}")
+            return JudgeResult(score=0, criteria_scores={}, feedback=f"Parse error: {str(e)[:100]}")
 
     except Exception as e:
         print(f"    Judge exception: {e}")
@@ -257,28 +250,27 @@ Generate a revised explanation that addresses ALL the feedback above.
         print("  Generating explanation from PDF...")
         try:
             from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
-            response = create_pdf_llm_response(
+            llm_response = create_pdf_llm_response(
                 pdf_path=pdf_path,
                 prompt=user_prompt,
                 system_prompt=system_prompt,
                 model_name=model_name,
-                schema=EducationalExplanation3B1B
+                schema=EducationalExplanation3B1B,
             )
         except ImportError:
-            print("  Error: ImportError")
-            response = create_pdf_llm_response(
+            llm_response = create_pdf_llm_response(
                 pdf_path=pdf_path,
                 prompt=user_prompt,
                 system_prompt=system_prompt,
                 model_name=model_name,
-                schema=None
+                schema=None,
             )
 
-        if "choices" not in response or len(response["choices"]) == 0:
-            print(f"  Error: Invalid response from LLM: {response}")
+        content = llm_response.content
+        if not content:
+            print(f"  Error: Empty response from LLM")
             continue
 
-        content = response["choices"][0]["message"]["content"]
         print(f"  Generated explanation ({len(content)} chars)")
 
         # Judge the explanation

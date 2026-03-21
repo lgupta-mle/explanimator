@@ -61,41 +61,47 @@ def custom_config(tmp_path):
 
 
 class TestPdfExplanationGeneratorConfig:
-    def test_call_openrouter_uses_config_default(self, custom_config):
-        from research_viz.manim_generator.pdf_explanation_generator import call_openrouter
+    def test_call_llm_provider_uses_config_default(self, custom_config):
+        from research_viz.manim_generator.pdf_explanation_generator import call_llm_provider
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.manim_generator.pdf_explanation_generator.requests.post") as mock_post:
-            mock_post.return_value.json.return_value = {"choices": []}
-            call_openrouter([{"role": "user", "content": "test"}])
-            payload = mock_post.call_args[1]["json"]
-            assert payload["model"] == "test/default-model"
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(content="ok", model="m")
+        with patch("research_viz.manim_generator.pdf_explanation_generator.get_provider", return_value=mock_provider):
+            call_llm_provider([{"role": "user", "content": "test"}])
+            model_arg = mock_provider.generate.call_args[0][1]
+            assert model_arg == "test/default-model"
 
-    def test_call_openrouter_explicit_model_overrides(self, custom_config):
-        from research_viz.manim_generator.pdf_explanation_generator import call_openrouter
+    def test_call_llm_provider_explicit_model_overrides(self, custom_config):
+        from research_viz.manim_generator.pdf_explanation_generator import call_llm_provider
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.manim_generator.pdf_explanation_generator.requests.post") as mock_post:
-            mock_post.return_value.json.return_value = {"choices": []}
-            call_openrouter([{"role": "user", "content": "test"}], model_name="explicit/model")
-            payload = mock_post.call_args[1]["json"]
-            assert payload["model"] == "explicit/model"
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(content="ok", model="m")
+        with patch("research_viz.manim_generator.pdf_explanation_generator.get_provider", return_value=mock_provider):
+            call_llm_provider([{"role": "user", "content": "test"}], model_name="explicit/model")
+            model_arg = mock_provider.generate.call_args[0][1]
+            assert model_arg == "explicit/model"
 
     def test_judge_explanation_uses_judge_model(self, custom_config):
         from research_viz.manim_generator.pdf_explanation_generator import judge_explanation
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.manim_generator.pdf_explanation_generator.call_openrouter") as mock_call:
-            mock_call.return_value = {
-                "choices": [{"message": {"content": '{"score": 1, "criteria_scores": {}, "feedback": null}'}}]
-            }
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(
+            content='{"score": 1, "criteria_scores": {}, "feedback": null}', model="m"
+        )
+        with patch("research_viz.manim_generator.pdf_explanation_generator.get_provider", return_value=mock_provider):
             judge_explanation('{"test": true}')
-            assert mock_call.call_args[0][1] == "test/judge-model"
+            model_arg = mock_provider.generate.call_args[0][1]
+            assert model_arg == "test/judge-model"
 
     def test_generate_with_feedback_loop_uses_explanation_model(self, custom_config):
         from research_viz.manim_generator.pdf_explanation_generator import generate_with_feedback_loop
+        from research_viz.providers.llm_provider import LLMResponse
 
         with patch("research_viz.manim_generator.pdf_explanation_generator.create_pdf_llm_response") as mock_create:
-            mock_create.return_value = {
-                "choices": [{"message": {"content": '{"paper_title": "test"}'}}]
-            }
+            mock_create.return_value = LLMResponse(content='{"paper_title": "test"}', model="m")
             with patch("research_viz.manim_generator.pdf_explanation_generator.judge_explanation") as mock_judge:
                 from research_viz.manim_generator.pdf_explanation_generator import JudgeResult
                 mock_judge.return_value = JudgeResult(score=1)
@@ -114,25 +120,30 @@ class TestPdfToManimPipelineConfig:
 
     def test_generate_scene_code_uses_config_model(self, custom_config):
         from research_viz.manim_generator.pdf_to_manim_pipeline import generate_scene_code
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.manim_generator.pdf_to_manim_pipeline.call_openrouter") as mock_call:
-            mock_call.return_value = {"error": "test"}
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(content="", model="m")
+        with patch("research_viz.manim_generator.pdf_explanation_generator.get_provider", return_value=mock_provider):
             generate_scene_code(
                 segment={"segment_id": "s1", "title": "T"},
                 running_example="example",
             )
-            assert mock_call.call_args[0][1] == "test/codegen-model"
+            model_arg = mock_provider.generate.call_args[0][1]
+            assert model_arg == "test/codegen-model"
 
     def test_generate_scene_code_uses_config_retries(self, custom_config):
         from research_viz.manim_generator.pdf_to_manim_pipeline import generate_scene_code
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.manim_generator.pdf_to_manim_pipeline.call_openrouter") as mock_call:
-            mock_call.return_value = {"error": "test"}
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(content="", model="m")
+        with patch("research_viz.manim_generator.pdf_explanation_generator.get_provider", return_value=mock_provider):
             generate_scene_code(
                 segment={"segment_id": "s1", "title": "T"},
                 running_example="example",
             )
-            assert mock_call.call_count == 5  # max_retries from config
+            assert mock_provider.generate.call_count == 5  # max_retries from config
 
 
 class TestBeatSyncTTSConfig:
@@ -155,30 +166,22 @@ class TestBeatSyncTTSConfig:
 class TestLLMUtilsConfig:
     def test_create_llm_response_uses_config_default(self, custom_config):
         from research_viz.utils.llm_utils import create_llm_response
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.utils.llm_utils.OpenAI") as mock_openai:
-            mock_client = MagicMock()
-            mock_openai.return_value = mock_client
-            mock_response = MagicMock()
-            mock_response.choices = [MagicMock(message=MagicMock(content="test"))]
-            mock_response.usage = MagicMock()
-            mock_client.chat.completions.create.return_value = mock_response
-
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(content="test", model="m")
+        with patch("research_viz.utils.llm_utils.get_provider", return_value=mock_provider):
             create_llm_response("prompt", "system")
-            call_kwargs = mock_client.chat.completions.create.call_args[1]
-            assert call_kwargs["model"] == "test/default-model"
+            model_arg = mock_provider.generate.call_args[0][1]
+            assert model_arg == "test/default-model"
 
     def test_create_llm_response_explicit_override(self, custom_config):
         from research_viz.utils.llm_utils import create_llm_response
+        from research_viz.providers.llm_provider import LLMResponse
 
-        with patch("research_viz.utils.llm_utils.OpenAI") as mock_openai:
-            mock_client = MagicMock()
-            mock_openai.return_value = mock_client
-            mock_response = MagicMock()
-            mock_response.choices = [MagicMock(message=MagicMock(content="test"))]
-            mock_response.usage = MagicMock()
-            mock_client.chat.completions.create.return_value = mock_response
-
+        mock_provider = MagicMock()
+        mock_provider.generate.return_value = LLMResponse(content="test", model="m")
+        with patch("research_viz.utils.llm_utils.get_provider", return_value=mock_provider):
             create_llm_response("prompt", "system", model_name="override/model")
-            call_kwargs = mock_client.chat.completions.create.call_args[1]
-            assert call_kwargs["model"] == "override/model"
+            model_arg = mock_provider.generate.call_args[0][1]
+            assert model_arg == "override/model"

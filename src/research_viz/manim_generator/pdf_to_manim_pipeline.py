@@ -17,9 +17,10 @@ from dotenv import load_dotenv
 
 from research_viz.manim_generator.pdf_explanation_generator import (
     create_pdf_llm_response,
-    call_openrouter,
+    call_llm_provider,
+    _build_response_format,
     load_prompt,
-    encode_pdf_to_base64
+    encode_pdf_to_base64,
 )
 from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B, Segment3B1B
 from research_viz.config.pipeline_config import get_config
@@ -252,17 +253,12 @@ Fix the errors and regenerate the complete scene code.
             {"role": "user", "content": prompt}
         ]
 
-        response = call_openrouter(messages, model_name, ManimSceneCode)
+        llm_response = call_llm_provider(messages, model_name, ManimSceneCode)
+        content = llm_response.content
 
-        if "error" in response:
-            print(f"      API error: {response['error']}")
+        if not content:
+            print(f"      Empty response from LLM")
             continue
-
-        if "choices" not in response or len(response["choices"]) == 0:
-            print(f"      Invalid response")
-            continue
-
-        content = response["choices"][0]["message"]["content"]
 
         try:
             scene_code = ManimSceneCode.model_validate_json(content)
