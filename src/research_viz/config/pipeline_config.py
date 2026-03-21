@@ -70,15 +70,40 @@ class PipelineConfig(BaseSettings):
     @model_validator(mode="before")
     @classmethod
     def load_yaml_defaults(cls, values):
-        """Load config.yaml as defaults, then overlay with provided values."""
+        """Load config.yaml as defaults, overlay profile, then provided values.
+
+        Resolution order (highest priority first):
+        1. ANVAYA_* environment variables
+        2. Profile-specific YAML (config/{profile}.yaml)
+        3. Base config.yaml
+        4. Field defaults
+        """
         yaml_path = _find_config_yaml()
+        base = {}
         if yaml_path and yaml_path.exists():
             with open(yaml_path) as f:
-                yaml_data = yaml.safe_load(f) or {}
-            # yaml_data is the base; values (from env vars) override
-            merged = _deep_merge(yaml_data, values)
-            return merged
-        return values
+                base = yaml.safe_load(f) or {}
+
+        profile_data = _load_profile_yaml(yaml_path)
+        if profile_data:
+            base = _deep_merge(base, profile_data)
+
+        merged = _deep_merge(base, values)
+        return merged
+
+
+def _load_profile_yaml(base_yaml_path: Optional[Path]) -> Optional[dict]:
+    """Load profile-specific YAML config based on ANVAYA_PROFILE env var."""
+    profile = os.environ.get("ANVAYA_PROFILE", "dev")
+    if not base_yaml_path:
+        return None
+
+    profile_dir = base_yaml_path.parent / "config"
+    profile_path = profile_dir / f"{profile}.yaml"
+    if profile_path.exists():
+        with open(profile_path) as f:
+            return yaml.safe_load(f) or {}
+    return None
 
 
 def _find_config_yaml() -> Optional[Path]:

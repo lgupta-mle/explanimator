@@ -20,16 +20,19 @@ from research_viz.config.pipeline_config import (
 
 
 @pytest.fixture(autouse=True)
-def clean_config():
+def clean_config(tmp_path):
     """Reset singleton and env vars between tests."""
     reset_config()
     env_keys = [k for k in os.environ if k.startswith("ANVAYA_")]
-    for k in env_keys:
-        del os.environ[k]
+    saved = {k: os.environ.pop(k) for k in env_keys}
+    # Isolate from project config files by default
+    os.environ["ANVAYA_CONFIG_PATH"] = str(tmp_path / "config.yaml")
     yield
     reset_config()
-    for k in env_keys:
-        os.environ.pop(k, None)
+    for k in list(os.environ):
+        if k.startswith("ANVAYA_"):
+            del os.environ[k]
+    os.environ.update(saved)
 
 
 class TestDefaults:
