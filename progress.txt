@@ -25,6 +25,8 @@
 - Legacy `adjust_video_to_audio_duration()` and `sync_audio_with_video()` are kept as thin wrappers for backward compat
 - `render_and_sync_all_scenes` uses producer-consumer pattern: render pool feeds sync pool via `ThreadPoolExecutor`; configure via `video.render_workers` and `video.sync_workers`
 - `_render_scene()` and `_sync_scene()` are extracted helpers for single-scene render and sync; test them individually
+- Model tiering: use `get_config().llm.get_model("explanation_model", difficulty)` to resolve per-difficulty model; falls back to base if tier not set
+- `TierConfig` has `skip_judge: bool` for per-difficulty behavior toggles; access via `get_config().llm.get_tier(difficulty)`
 ---
 
 ## 2026-03-21 - US-001
@@ -212,4 +214,19 @@
 - Files changed: prd.json (marked passes: true)
 - **Learnings for future iterations:**
   - When a PRD story references a deleted file, verify the requirement is met by existing infrastructure before writing new code
+---
+
+## 2026-03-21 - US-012
+- Added `TierConfig` model with optional per-stage model overrides and `skip_judge` flag
+- Added `tiers: dict[str, TierConfig]` to `LLMConfig` with `get_model(stage, difficulty)` and `get_tier(difficulty)` methods
+- Fallback: if tier or tier-specific model not set, returns base LLMConfig model
+- Added tier configs to config.yaml (hard uses fast/cheap models, medium/easy use production models)
+- Files changed:
+  - `src/research_viz/config/pipeline_config.py` (added TierConfig, tiers dict, get_model, get_tier)
+  - `config.yaml` (added tiers section)
+  - `tests/test_model_tiering.py` (created, 13 tests)
+- **Learnings for future iterations:**
+  - `get_model(stage, difficulty)` uses `getattr` on both LLMConfig and TierConfig for uniform stage name resolution
+  - TierConfig fields are all Optional[str] = None so partial overrides work naturally
+  - `skip_judge` lives on TierConfig since it's a per-difficulty behavior toggle, not a model name
 ---
