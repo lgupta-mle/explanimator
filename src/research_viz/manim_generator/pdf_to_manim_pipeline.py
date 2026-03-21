@@ -794,6 +794,96 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
         return False
 
 
+def _render_scene(
+    i: int,
+    scene_code: ManimSceneCode,
+    output_dir: str,
+    quality: str,
+) -> Optional[str]:
+    """Render a single Manim scene and return the video path, or None on failure."""
+    quality_dirs = {'l': '480p15', 'm': '720p30', 'h': '1080p60', 'k': '2160p60'}
+    quality_dir = quality_dirs.get(quality, '480p15')
+    video_path = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
+
+    if os.path.exists(video_path):
+        print(f"  [{i+1}] Video already exists: {video_path}")
+        return video_path
+
+    temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
+    with open(temp_scene_path, 'w') as f:
+        f.write("from manim import *\nimport numpy as np\n\n")
+        f.write(scene_code.code)
+
+    print(f"  [{i+1}] Rendering Manim scene {scene_code.scene_id}...")
+    try:
+        result = subprocess.run(
+            ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
+            capture_output=True, text=True, timeout=300
+        )
+        if result.returncode != 0:
+            print(f"  [{i+1}] ERROR: Manim render failed")
+            print(result.stderr)
+            return None
+    except Exception as e:
+        print(f"  [{i+1}] ERROR: {e}")
+        return None
+
+    if not os.path.exists(video_path):
+        print(f"  [{i+1}] ERROR: Rendered video not found at {video_path}")
+        return None
+
+    return video_path
+
+
+def _sync_scene(
+    i: int,
+    video_path: str,
+    segment_id: str,
+    audio_timeline: dict,
+    output_dir: str,
+    max_speed_change: float,
+    sync_mode: str,
+) -> str:
+    """Sync a rendered scene with its audio. Returns the synced (or fallback) video path."""
+    synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
+    if os.path.exists(synced_video_path):
+        print(f"  [{i+1}] Synced video already exists: {synced_video_path}")
+        return synced_video_path
+
+    segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
+    if not segment_audio_data:
+        print(f"  [{i+1}] WARNING: No audio for segment {segment_id}, skipping sync")
+        return video_path
+
+    beats = segment_audio_data.get('beats', [])
+    if not beats:
+        print(f"  [{i+1}] WARNING: No beats for segment {segment_id}")
+        return video_path
+
+    # Combine beat audio files
+    segment_audio_path = f"{output_dir}/segment_{i+1}_audio.wav"
+    if len(beats) == 1:
+        subprocess.run(['cp', beats[0]['audio_file'], segment_audio_path])
+    else:
+        concat_list = f"{output_dir}/segment_{i+1}_audio_concat.txt"
+        with open(concat_list, 'w') as f:
+            for beat in beats:
+                f.write(f"file '{os.path.abspath(beat['audio_file'])}'\n")
+        subprocess.run([
+            'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
+            '-i', concat_list, '-c', 'copy', segment_audio_path
+        ], capture_output=True)
+        os.unlink(concat_list)
+
+    print(f"  [{i+1}] Syncing audio with video (single-pass, mode: {sync_mode})...")
+    if sync_video_audio_single_pass(video_path, segment_audio_path, synced_video_path, max_speed_change):
+        print(f"  [{i+1}] SUCCESS: {synced_video_path}")
+        return synced_video_path
+    else:
+        print(f"  [{i+1}] WARNING: Single-pass sync failed, using raw video")
+        return video_path
+
+
 def render_and_sync_all_scenes(
     scene_codes: List[ManimSceneCode],
     explanation: dict,
@@ -806,6 +896,9 @@ def render_and_sync_all_scenes(
     """
     Render all Manim scenes, sync with audio, and stitch together.
 
+    Uses a producer-consumer pattern: render pool produces completed scenes
+    and sync pool processes them as they finish, overlapping render and sync work.
+
     Args:
         scene_codes: List of generated scene codes
         explanation: Explanation dict with segments
@@ -817,129 +910,60 @@ def render_and_sync_all_scenes(
 
     Returns:
         Path to final stitched video, or None on failure
-        
-    Sync Modes:
-        - "segment": Adjust entire segment video to match segment audio (simpler, smoother)
-        - "beat": Adjust each beat separately for frame-perfect sync (more precise)
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-    # Load audio timeline
     with open(audio_timeline_path, 'r') as f:
         audio_timeline = json.load(f)
 
     segments = explanation.get('segments', [])
+    cfg = get_config()
 
     print(f"\n{'='*70}")
-    print("RENDERING AND SYNCING SCENES")
+    print("RENDERING AND SYNCING SCENES (pipeline-parallel)")
     print(f"{'='*70}")
-    print(f"Scenes to render: {len(scene_codes)}")
-    print(f"Quality: {quality}")
-    print(f"Sync mode: {sync_mode}")
-    print(f"Max speed change: {max_speed_change*100:.0f}%")
+    print(f"Scenes: {len(scene_codes)} | Quality: {quality} | Sync: {sync_mode}")
+    print(f"Render workers: {cfg.video.render_workers} | Sync workers: {cfg.video.sync_workers}")
 
-    synced_videos = []
+    # Result slots — preserve scene ordering
+    synced_videos: list[Optional[str]] = [None] * len(scene_codes)
 
-    for i, scene_code in enumerate(scene_codes):
+    # Producer-consumer: render pool feeds sync pool
+    render_pool = ThreadPoolExecutor(max_workers=cfg.video.render_workers)
+    sync_pool = ThreadPoolExecutor(max_workers=cfg.video.sync_workers)
+
+    def _render_then_sync(i: int, scene_code: ManimSceneCode) -> tuple[int, Optional[str]]:
         segment = segments[i] if i < len(segments) else {}
         segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
 
-        print(f"\n[{i+1}/{len(scene_codes)}] Scene: {scene_code.scene_id}")
+        video_path = _render_scene(i, scene_code, output_dir, quality)
+        if video_path is None:
+            return (i, None)
 
-        # Find rendered video - Manim quality mapping
-        quality_dirs = {
-            'l': '480p15',
-            'm': '720p30',
-            'h': '1080p60',
-            'k': '2160p60'
-        }
-        quality_dir = quality_dirs.get(quality, '480p15')
-        video_pattern = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
+        # Submit sync to the sync pool and wait for it
+        sync_future = sync_pool.submit(
+            _sync_scene, i, video_path, segment_id,
+            audio_timeline, output_dir, max_speed_change, sync_mode,
+        )
+        return (i, sync_future.result())
 
-        # Check if video already exists
-        if os.path.exists(video_pattern):
-            print(f"  Video already exists: {video_pattern}")
-        else:
-            # Write scene to temp file
-            temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
-            with open(temp_scene_path, 'w') as f:
-                f.write("from manim import *\nimport numpy as np\n\n")
-                f.write(scene_code.code)
+    # Submit all render tasks
+    render_futures = {
+        render_pool.submit(_render_then_sync, i, sc): i
+        for i, sc in enumerate(scene_codes)
+    }
 
-            # Render scene
-            print(f"  Rendering Manim scene...")
-            try:
-                result = subprocess.run(
-                    ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
-                    capture_output=True,
-                    text=True,
-                    timeout=300
-                )
-                if result.returncode != 0:
-                    print(f"  ERROR: Manim render failed")
-                    print(result.stderr)
-                    continue
-            except Exception as e:
-                print(f"  ERROR: {e}")
-                continue
+    for future in as_completed(render_futures):
+        idx, result_path = future.result()
+        synced_videos[idx] = result_path
 
-            if not os.path.exists(video_pattern):
-                print(f"  ERROR: Rendered video not found at {video_pattern}")
-                continue
+    render_pool.shutdown(wait=True)
+    sync_pool.shutdown(wait=True)
 
-        # Check if synced video already exists
-        synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
-        if os.path.exists(synced_video_path):
-            print(f"  Synced video already exists: {synced_video_path}")
-            synced_videos.append(synced_video_path)
-            continue
+    # Filter out failed scenes (None entries)
+    final_videos = [v for v in synced_videos if v is not None]
 
-        # Get audio for this segment
-        segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
-        if not segment_audio_data:
-            print(f"  WARNING: No audio found for segment {segment_id}, skipping sync")
-            synced_videos.append(video_pattern)
-            continue
-
-        # Concatenate all beat audio files for this segment
-        beats = segment_audio_data.get('beats', [])
-        if not beats:
-            print(f"  WARNING: No beats found for segment {segment_id}")
-            synced_videos.append(video_pattern)
-            continue
-
-        # Combine beat audio files
-        segment_audio_path = f"{output_dir}/segment_{i+1}_audio.wav"
-        if len(beats) == 1:
-            # Single beat, just copy
-            subprocess.run(['cp', beats[0]['audio_file'], segment_audio_path])
-        else:
-            # Multiple beats, concatenate
-            concat_list = f"{output_dir}/segment_{i+1}_audio_concat.txt"
-            with open(concat_list, 'w') as f:
-                for beat in beats:
-                    f.write(f"file '{os.path.abspath(beat['audio_file'])}'\n")
-            subprocess.run([
-                'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
-                '-i', concat_list,
-                '-c', 'copy',
-                segment_audio_path
-            ], capture_output=True)
-            os.unlink(concat_list)
-
-        # Single-pass: speed-adjust + pad + audio merge in one ffmpeg call
-        print(f"  Syncing audio with video (single-pass, mode: {sync_mode})...")
-
-        if sync_video_audio_single_pass(
-            video_pattern, segment_audio_path, synced_video_path, max_speed_change
-        ):
-            print(f"  SUCCESS: {synced_video_path}")
-            synced_videos.append(synced_video_path)
-        else:
-            print(f"  WARNING: Single-pass sync failed, using raw video")
-            synced_videos.append(video_pattern)
-
-    if not synced_videos:
+    if not final_videos:
         print("\nERROR: No videos to stitch")
         return None
 
@@ -947,33 +971,25 @@ def render_and_sync_all_scenes(
     print(f"\n{'='*70}")
     print("STITCHING VIDEOS")
     print(f"{'='*70}")
-    print(f"Videos to stitch: {len(synced_videos)}")
+    print(f"Videos to stitch: {len(final_videos)}")
 
     concat_list_path = f"{output_dir}/final_concat.txt"
     with open(concat_list_path, 'w') as f:
-        for video in synced_videos:
+        for video in final_videos:
             f.write(f"file '{os.path.abspath(video)}'\n")
 
     final_output = f"{output_dir}/final_video.mp4"
     try:
-        # Re-encode to ensure audio/video consistency across all clips
         subprocess.run([
             'ffmpeg', '-y',
-            '-f', 'concat',
-            '-safe', '0',
+            '-f', 'concat', '-safe', '0',
             '-i', concat_list_path,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
-            '-b:a', '192k',
-            '-pix_fmt', 'yuv420p',
+            '-c:v', 'libx264', '-c:a', 'aac',
+            '-b:a', '192k', '-pix_fmt', 'yuv420p',
             final_output
         ], capture_output=True, check=True)
 
-        print(f"\n{'='*70}")
-        print("SUCCESS!")
-        print(f"{'='*70}")
-        print(f"Final video: {final_output}")
-
+        print(f"\nSUCCESS! Final video: {final_output}")
         final_duration = get_video_duration(final_output)
         print(f"Duration: {final_duration:.1f}s ({final_duration/60:.1f} min)")
 

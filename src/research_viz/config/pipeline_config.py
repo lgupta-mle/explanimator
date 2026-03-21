@@ -50,6 +50,8 @@ class VideoConfig(BaseModel):
     sync_mode: str = "segment"
     max_speed_change: float = 0.3
     render_timeout: int = 300
+    render_workers: int = 2
+    sync_workers: int = 2
 
 
 class ManimConfig(BaseModel):
