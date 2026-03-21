@@ -1,0 +1,29 @@
+llm:
+  explanation_model: "openai/gpt-5"
+  judge_model: "openai/gpt-5"
+  prereq_model: "openai/gpt-5"
+  code_gen_model: "anthropic/claude-sonnet-4.5"
+  default_model: "openai/gpt-5"
+
+audio:
+  tts_model: "tts-1"
+  voice: "nova"
+  max_workers: 4
+  sample_rate: 24000
+  min_words_per_beat: 8
+  max_words_per_beat: 25
+
+video:
+  quality: "l"
+  sync_mode: "segment"
+  max_speed_change: 0.3
+  render_timeout: 300
+
+manim:
+  timeout: 120
+  max_workers: 4
+  max_retries: 3
+
+translation:
+  model: "openai/gpt-5"
+  max_workers: 10

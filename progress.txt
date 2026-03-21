@@ -1,0 +1,26 @@
+## Codebase Patterns
+- Config lives in `src/research_viz/config/pipeline_config.py`; use `get_config()` singleton accessor
+- YAML config at project root `config.yaml`; env overrides via `ANVAYA_*` prefix with `__` nesting (e.g. `ANVAYA_LLM__EXPLANATION_MODEL`)
+- Use `reset_config()` in tests to clear singleton state
+- Tests go in `tests/` directory; run with `python3 -m pytest tests/ -v`
+- Project uses pydantic for schemas, pydantic-settings for config
+- LLM calls go through OpenRouter (prefix models with provider e.g. `openai/gpt-5`)
+- Hardcoded model names scattered across: `pdf_explanation_generator.py`, `pdf_to_manim_pipeline.py`, `llm_utils.py`, `beat_sync_tts.py`
+---
+
+## 2026-03-21 - US-001
+- Implemented PipelineConfig Pydantic model with sections: llm, audio, video, manim, translation
+- Loads from config.yaml in project root with ANVAYA_* env var overrides
+- Singleton pattern via get_config()/reset_config()
+- Files changed:
+  - `src/research_viz/config/__init__.py` (created)
+  - `src/research_viz/config/pipeline_config.py` (created)
+  - `config.yaml` (created)
+  - `requirements.txt` (added pydantic-settings, pyyaml)
+  - `tests/test_pipeline_config.py` (created, 13 tests)
+- **Learnings for future iterations:**
+  - `src/research_viz/config/` directory existed but was empty (no __init__.py)
+  - pydantic-settings handles env var parsing with nested delimiter support out of the box
+  - The `_find_config_yaml()` walks up from the module to find project root via pyproject.toml
+  - Translation module directory exists but has no Python files (was removed in a refactor)
+---

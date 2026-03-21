@@ -1,0 +1,279 @@
+{
+  "project": "Anvaya",
+  "branchName": "ralph/pipeline-optimization",
+  "description": "Pipeline Optimization & Architecture Refactor - Reduce video generation latency (hard <5min), centralize config, abstract LLM providers, add checkpointing, structured logging, and model tiering by difficulty.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create PipelineConfig Pydantic model",
+      "description": "As a developer, I want a single PipelineConfig Pydantic model that defines all pipeline parameters in one place.",
+      "acceptanceCriteria": [
+        "config/pipeline_config.py with PipelineConfig Pydantic model",
+        "Sections: llm (model names per stage), audio (TTS model, voice, max_workers), video (quality, sync_mode, max_speed_change), manim (timeout, max_workers), translation (model, max_workers)",
+        "Loads from config.yaml in project root",
+        "ANVAYA_* env var overrides (e.g. ANVAYA_LLM__EXPLANATION_MODEL)",
+        "Config validated at startup; fails fast with actionable error on missing required values",
+        "Tests pass"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Migrate hardcoded values to config",
+      "description": "As a developer, I want all hardcoded model names and concurrency values replaced with reads from PipelineConfig.",
+      "acceptanceCriteria": [
+        "pdf_explanation_generator.py reads explanation, judge, prereq models from config (lines 23-24, 36, 274, 398, 464)",
+        "code_generator.py reads code gen model + timeout + max_workers from config (lines 66, 162, 307, 345)",
+        "translator.py reads translation model from config (line 9)",
+        "beat_sync_tts.py reads TTS model + max_workers from config (lines 19, 124)",
+        "video_renderer.py reads max_workers from config",
+        "llm_utils.py reads default model from config (line 13)",
+        "constants.py reads embedding model from config (line 4)",
+        "Zero hardcoded model names or worker counts remain in business logic",
+        "Tests pass"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Depends on US-001. This is the largest story — touches 7 files but each change is mechanical (replace string literal with config read)."
+    },
+    {
+      "id": "US-003",
+      "title": "Add config profiles for dev/staging/prod",
+      "description": "As a developer, I want separate config profiles so dev uses cheap models and prod uses quality models.",
+      "acceptanceCriteria": [
+        "config/dev.yaml, config/staging.yaml, config/prod.yaml created",
+        "ANVAYA_PROFILE env var selects profile (default: dev)",
+        "Dev profile uses cheapest/fastest models for iteration",
+        "Prod profile uses current production models",
+        "Profile-specific values override base config.yaml",
+        "Tests pass"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Depends on US-001."
+    },
+    {
+      "id": "US-004",
+      "title": "Create LLMProvider abstract base class",
+      "description": "As a developer, I want an LLMProvider ABC so pipeline stages don't depend on OpenRouter directly.",
+      "acceptanceCriteria": [
+        "providers/llm_provider.py with LLMProvider ABC defining generate(messages, model, **kwargs) -> LLMResponse",
+        "LLMResponse dataclass with: content, model, tokens_used (input + output), latency_ms",
+        "OpenRouterProvider implementation wrapping current call_openrouter() logic",
+        "Provider instantiated from PipelineConfig at startup",
+        "Tests pass"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "Depends on US-001."
+    },
+    {
+      "id": "US-005",
+      "title": "Add retry with exponential backoff to LLMProvider",
+      "description": "As a developer, I want LLM calls to auto-retry on transient failures instead of crashing the pipeline.",
+      "acceptanceCriteria": [
+        "OpenRouterProvider.generate() retries on 429, 500, 502, 503, timeout errors",
+        "Exponential backoff: 1s, 2s, 4s (max 3 retries, configurable)",
+        "Non-retryable errors (400, 401, 404) raise immediately",
+        "Each retry logged with attempt number and wait time",
+        "Tests pass with mock tests for retry behavior"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Depends on US-004."
+    },
+    {
+      "id": "US-006",
+      "title": "Migrate pipeline stages to use LLMProvider",
+      "description": "As a developer, I want all pipeline stages calling LLMs through the provider instead of call_openrouter() directly.",
+      "acceptanceCriteria": [
+        "pdf_explanation_generator.py uses provider for explanation + judge + prereq calls",
+        "code_generator.py uses provider for code generation calls",
+        "translator.py uses provider for translation calls",
+        "call_openrouter() in llm_utils.py removed or deprecated (only provider used)",
+        "Token usage accumulated per pipeline run",
+        "Tests pass"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Depends on US-004 and US-002."
+    },
+    {
+      "id": "US-007",
+      "title": "Add token usage tracking per job",
+      "description": "As a developer, I want to know how many tokens and API calls each pipeline run consumes for cost tracking.",
+      "acceptanceCriteria": [
+        "LLMProvider accumulates per-call stats: model, tokens_in, tokens_out, latency_ms",
+        "Pipeline run produces a run_metrics.json with: total_tokens, total_cost_estimate, calls_per_stage, total_duration",
+        "Cost estimate uses configurable per-model pricing table in config",
+        "Tests pass"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "Depends on US-006."
+    },
+    {
+      "id": "US-008",
+      "title": "Parallelize audio and code generation",
+      "description": "As a developer, I want audio generation and Manim code generation to run concurrently after the explanation is produced.",
+      "acceptanceCriteria": [
+        "After explanation generation, TTS (beat_sync_tts) and code gen (code_generator) launch in parallel via concurrent.futures",
+        "Both stages receive the explanation as input; neither depends on the other's output",
+        "If one fails, the other is cancelled (fail-fast)",
+        "Wall-clock time for both stages combined equals the slower of the two (not sum)",
+        "Tests pass"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": "Depends on US-002 for configurable workers. Modify pdf_to_manim_pipeline.py."
+    },
+    {
+      "id": "US-009",
+      "title": "Single-pass ffmpeg filter chain",
+      "description": "As a developer, I want ffmpeg speed adjustment and audio merge done in one pass instead of two sequential re-encodes.",
+      "acceptanceCriteria": [
+        "video_renderer.py: replace adjust_video_speed() + extend_video_to_duration() chain with single ffmpeg command using combined filter (-vf setpts=PTS*X,tpad=stop_duration=Y)",
+        "Audio merge happens in same ffmpeg call (-i video -i audio -c:v copy when no speed change needed)",
+        "Eliminates double re-encode: one ffmpeg invocation per scene, not two",
+        "Output quality identical to current (test on sample video)",
+        "Tests pass"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": "Independent — can be done in parallel with other stories. Modify video_renderer.py lines 38-127."
+    },
+    {
+      "id": "US-010",
+      "title": "Pipeline-parallel render and sync",
+      "description": "As a developer, I want scene N+1 to start rendering while scene N is being synced with audio.",
+      "acceptanceCriteria": [
+        "Replace sequential render-all-then-sync-all with producer-consumer pattern",
+        "Render pool produces completed scenes; sync consumer processes them as they finish",
+        "Overall wall-clock time reduced (render and sync overlap)",
+        "Configurable render workers and sync workers in PipelineConfig",
+        "Tests pass"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": "Independent. Modify video_renderer.py lines 391-453."
+    },
+    {
+      "id": "US-011",
+      "title": "Increase translation worker pool",
+      "description": "As a developer, I want the translation fallback pool larger than 4 workers to reduce translation latency.",
+      "acceptanceCriteria": [
+        "Translation worker count reads from PipelineConfig.translation.max_workers (default 10)",
+        "translator.py fallback ThreadPoolExecutor uses configured value instead of hardcoded 4",
+        "Tests pass"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": "Depends on US-002. Small change in translator.py."
+    },
+    {
+      "id": "US-012",
+      "title": "Model tiering config per difficulty",
+      "description": "As a developer, I want PipelineConfig to support per-difficulty model overrides so hard-mode uses fast models.",
+      "acceptanceCriteria": [
+        "Config structure: llm.tiers.hard.explanation_model, llm.tiers.medium.explanation_model, etc.",
+        "If tier-specific model not set, falls back to base llm.explanation_model",
+        "Pipeline reads model from tier based on current job's difficulty",
+        "Tests pass"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": "Depends on US-001. Extend PipelineConfig with nested tier structure."
+    },
+    {
+      "id": "US-013",
+      "title": "Skip judge loop for hard mode",
+      "description": "As a developer, I want hard-mode to skip the judge feedback loop to save 1-2 LLM calls (~30s).",
+      "acceptanceCriteria": [
+        "When difficulty is hard, generate_with_feedback_loop() skips judge evaluation",
+        "Segment count validation still runs (retry if outside 2-3 range)",
+        "Configurable via PipelineConfig: llm.tiers.hard.skip_judge: true",
+        "Tests pass"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": "Depends on US-012. Modify pdf_explanation_generator.py."
+    },
+    {
+      "id": "US-014",
+      "title": "Checkpoint write on stage completion",
+      "description": "As a developer, I want each pipeline stage to write a checkpoint file when it completes successfully.",
+      "acceptanceCriteria": [
+        "pipeline/checkpoint.py with write_checkpoint(run_dir, stage_name, artifact_paths) and read_checkpoints(run_dir)",
+        "Checkpoint file: JSON with stage name, artifact file paths, SHA-256 hashes, timestamp",
+        "Written to {run_dir}/checkpoints/{stage_name}.json",
+        "Tests pass"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": "Independent — can be done in parallel with config/provider stories."
+    },
+    {
+      "id": "US-015",
+      "title": "Resume pipeline from checkpoint",
+      "description": "As a developer, I want the pipeline to skip completed stages on re-run by validating checkpoint hashes.",
+      "acceptanceCriteria": [
+        "On startup, pipeline reads checkpoint files from run directory",
+        "For each completed stage, validates artifact hashes match checkpoint",
+        "If hash matches, skips stage; if mismatch, re-runs from that stage forward",
+        "--force-restart CLI flag ignores all checkpoints",
+        "Partial audio resume: if beat 47/100 failed, only regenerate beats 47-100",
+        "Tests pass"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": "Depends on US-014. Modify pdf_to_manim_pipeline.py and beat_sync_tts.py."
+    },
+    {
+      "id": "US-016",
+      "title": "Replace print() with structured logging",
+      "description": "As a developer, I want all print() statements replaced with Python logging calls.",
+      "acceptanceCriteria": [
+        "Logger configured per module: logging.getLogger(__name__)",
+        "All 50+ print() calls replaced with appropriate log level (info, warning, error, debug)",
+        "Log format includes: timestamp, level, module, message",
+        "No print() statements remain in src/research_viz/",
+        "Tests pass"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": "Independent — can be done in parallel with other stories. Touches all files in src/research_viz/."
+    },
+    {
+      "id": "US-017",
+      "title": "Per-stage timing metrics",
+      "description": "As a developer, I want each pipeline stage to emit timing and resource usage on completion.",
+      "acceptanceCriteria": [
+        "Each stage logs on completion: stage_name, duration_seconds, tokens_used, api_calls_count",
+        "Error logs include: exception type, stage, artifact_id, whether recoverable",
+        "All metrics aggregated into run_metrics.json per pipeline run",
+        "Tests pass"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": "Depends on US-016 and US-007."
+    },
+    {
+      "id": "US-018",
+      "title": "Hard-mode end-to-end latency validation",
+      "description": "As a developer, I want to verify hard-mode completes in under 5 minutes on a typical paper.",
+      "acceptanceCriteria": [
+        "Profiling script that runs hard-mode on a sample paper and reports per-stage timings",
+        "Uses fast model tier (US-012) + parallel stages (US-008) + single-pass ffmpeg (US-009) + skip judge (US-013)",
+        "Hard-mode (2-3 segments) completes end-to-end in <5 min for a 10-page paper",
+        "Per-stage timing breakdown logged to run_metrics.json",
+        "If >5 min, report identifies which stage is the bottleneck",
+        "Tests pass"
+      ],
+      "priority": 18,
+      "passes": false,
+      "notes": "Final validation story. Depends on US-008, US-009, US-012, US-013. This is the integration test for the entire PRD."
+    }
+  ]
+}
