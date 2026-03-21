@@ -11,3 +11,4 @@ class BookConfig:
     max_workers: int = 4
     token_count_method: str = "approx"  # "approx" uses len(text)/4
     output_subdir_name: Optional[str] = None  # defaults to book title slug
+    skip_exercises: bool = True  # exclude exercise/bibliographical sections from animation

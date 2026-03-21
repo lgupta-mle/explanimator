@@ -121,9 +121,6 @@ Write narration as if speaking directly to a student working through this book:
 - "If you're finding this part tricky, you're in good company..."
 
 Avoid:
-- "In this paper, the authors propose..."
-- "State-of-the-art methods..."
-- "Our contribution is..."
 - Passive voice and dry academic register
 - Introducing notation without a visual anchor first
 

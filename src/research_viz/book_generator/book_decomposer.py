@@ -22,7 +22,7 @@ from research_viz.schemas.explanation_schemas import (
     BookSection,
 )
 from research_viz.config.book_config import BookConfig
-from research_viz.utils.llm_utils import call_openrouter
+from research_viz.utils.llm_utils import create_llm_response
 
 
 # ---------------------------------------------------------------------------
@@ -86,26 +86,49 @@ def _toc_level_is_section(title: str, level: int) -> bool:
 # Page number map: printed page number → PDF 0-indexed page
 # ---------------------------------------------------------------------------
 
+_PAGE_NUM_RE = re.compile(r'\b(\d{1,4})\b')
+
+
 def _build_page_number_map(doc: fitz.Document) -> Dict[int, int]:
     """
-    Scan every PDF page's header and footer zone (top/bottom 7%) for a standalone
-    integer — that's the printed page number. Returns {printed_page: pdf_page_0idx}.
+    Scan every PDF page's header and footer zone (top/bottom 7%) for a printed
+    page number. Returns {printed_page: pdf_page_0idx}.
+
+    Two-pass per block:
+    1. Whole block is a pure integer (standalone number).
+    2. Fallback: extract all 1-4 digit numbers from the block and take the last
+       one — covers running titles like "The RL Problem   3".
+    First occurrence of each printed number wins.
     """
+    total = len(doc)
     page_map: Dict[int, int] = {}
-    for pdf_idx in range(len(doc)):
+    for pdf_idx in range(total):
         page = doc[pdf_idx]
         height = page.rect.height
         width = page.rect.width
         header_rect = fitz.Rect(0, 0, width, height * 0.07)
         footer_rect = fitz.Rect(0, height * 0.93, width, height)
+        found = False
         for zone in (header_rect, footer_rect):
+            if found:
+                break
             blocks = page.get_text("blocks", clip=zone)
             for block in blocks:
                 text = block[4].strip()
+                # Pass 1: whole block is a number
                 if text.isdigit():
                     num = int(text)
-                    if num not in page_map:  # first occurrence wins
+                    if 0 < num <= total * 2 and num not in page_map:
                         page_map[num] = pdf_idx
+                    found = True
+                    break
+                # Pass 2: number embedded in running title — take last match
+                matches = _PAGE_NUM_RE.findall(text)
+                if matches:
+                    num = int(matches[-1])
+                    if 0 < num <= total * 2 and num not in page_map:
+                        page_map[num] = pdf_idx
+                    found = True
                     break
     return page_map
 
@@ -129,6 +152,13 @@ def _nearest_mapped_page(page_map: Dict[int, int], logical: int, total_pages: in
 
 _TOC_MODEL = "google/gemini-3.1-pro-preview"
 
+_EXERCISE_SECTION_RE = re.compile(
+    r'^(exercises?|problems?|practice\s+problems?|exercises?\s+and\s+problems?'
+    r'|bibliographical\s+remarks?|further\s+reading|notes?\s+and\s+references?'
+    r'|chapter\s+notes?|end-of-chapter|summary\s+and\s+exercises?)\s*$',
+    re.IGNORECASE,
+)
+
 _TOC_SYSTEM_PROMPT = (
     "You are extracting a table of contents from the beginning of a book. "
     "Return ONLY a JSON array with no markdown formatting. "
@@ -142,7 +172,7 @@ _TOC_SYSTEM_PROMPT = (
 
 def _extract_toc_with_llm(
     raw_text: str,
-    model_name: str = "google/gemini-2.5-pro-preview",
+    model_name: str = _TOC_MODEL,
     cache_path: Optional[str] = None,
 ) -> List[TocEntry]:
     """Send the first N pages of raw text to an LLM and parse out TOC entries."""
@@ -154,32 +184,34 @@ def _extract_toc_with_llm(
         return [TocEntry(**e) for e in raw]
 
     print(f"  Calling {model_name} for TOC extraction...")
-    messages = [
-        {"role": "system", "content": _TOC_SYSTEM_PROMPT},
-        {"role": "user", "content": f"Here is the beginning of the book:\n\n{raw_text}"},
-    ]
-    response = call_openrouter(messages, model_name=model_name)
+    content = create_llm_response(
+        prepared_usr_prompt=f"Here is the beginning of the book:\n\n{raw_text}",
+        system_prompt=_TOC_SYSTEM_PROMPT,
+        model_name=model_name,
+    )
+
+    if not content:
+        print("  Warning: LLM returned no content for TOC extraction")
+        return []
 
     entries: List[TocEntry] = []
     try:
-        choices = response.get("choices", [])
-        if choices:
-            content = choices[0]["message"]["content"].strip()
-            # Strip markdown code fences if present
-            if content.startswith("```"):
-                content = re.sub(r"^```[^\n]*\n", "", content)
-                content = re.sub(r"\n```$", "", content.strip())
-            raw_list = json.loads(content)
-            entries = [TocEntry(**e) for e in raw_list if isinstance(e, dict)]
+        content = content.strip()
+        if content.startswith("```"):
+            content = re.sub(r"^```[^\n]*\n", "", content)
+            content = re.sub(r"\n```$", "", content.strip())
+        raw_list = json.loads(content)
+        entries = [TocEntry(**e) for e in raw_list if isinstance(e, dict)]
     except Exception as exc:
         print(f"  Warning: could not parse LLM TOC response: {exc}")
         return []
 
-    # Cache result
-    if cache_path:
+    # Only cache non-empty results to avoid poisoning future runs
+    if entries and cache_path:
         Path(cache_path).parent.mkdir(parents=True, exist_ok=True)
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump([e.model_dump() for e in entries], f, indent=2)
+        print(f"  TOC cached to: {cache_path}")
 
     return entries
 
@@ -187,8 +219,9 @@ def _extract_toc_with_llm(
 def _chapters_from_text_toc(
     doc: fitz.Document,
     total_pages: int,
-    model_name: str = "google/gemini-2.5-pro-preview",
+    model_name: str = _TOC_MODEL,
     cache_path: Optional[str] = None,
+    book_config: Optional[BookConfig] = None,
 ) -> List[BookChapter]:
     """
     Extract chapter structure using:
@@ -264,6 +297,10 @@ def _chapters_from_text_toc(
                 token_count=_approx_tokens(sec_text),
             ))
 
+        # Filter out exercise/bibliographical sections and trim chapter end
+        if book_config is None or book_config.skip_exercises:
+            sections, ch_end = _trim_exercise_sections(sections, ch_end)
+
         ch_text = _extract_page_text(doc, ch_start, ch_end)
         chapters.append(BookChapter(
             chapter_id=ch_id,
@@ -278,14 +315,27 @@ def _chapters_from_text_toc(
     return chapters
 
 
+def _trim_exercise_sections(
+    sections: List[BookSection],
+    ch_end: int,
+) -> Tuple[List[BookSection], int]:
+    """Remove exercise/bibliographical sections and trim ch_end accordingly."""
+    for i, sec in enumerate(sections):
+        if _EXERCISE_SECTION_RE.match(sec.title.strip()):
+            trimmed_end = max(sec.start_page - 1, sections[i - 1].end_page if i > 0 else ch_end)
+            return sections[:i], trimmed_end
+    return sections, ch_end
+
+
 # ---------------------------------------------------------------------------
 # Core decomposition
 # ---------------------------------------------------------------------------
 
 def extract_chapters(
     pdf_path: str,
-    model_name: str = "google/gemini-2.5-pro-preview",
+    model_name: str = _TOC_MODEL,
     toc_cache_path: Optional[str] = None,
+    book_config: Optional[BookConfig] = None,
 ) -> List[BookChapter]:
     """
     Extract chapter structure from a book PDF.
@@ -321,7 +371,8 @@ def extract_chapters(
     # Strategy 2: LLM TOC extraction + page number map
     print("  No embedded TOC — using LLM TOC extraction + page number map")
     chapters = _chapters_from_text_toc(
-        doc, total_pages, model_name=model_name, cache_path=toc_cache_path
+        doc, total_pages, model_name=model_name, cache_path=toc_cache_path,
+        book_config=book_config,
     )
     if chapters:
         doc.close()

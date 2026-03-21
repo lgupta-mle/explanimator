@@ -76,7 +76,7 @@ as already-known to the viewer.
 def judge_chapter_explanation(
     explanation_json: str,
     bible: SeriesBible,
-    model_name: str = "google/gemini-2.5-pro-preview",
+    model_name: str = "google/gemini-3.1-pro-preview",
     difficulty_config: Optional[DifficultyConfig] = None,
 ) -> JudgeResult:
     """
@@ -145,7 +145,7 @@ def generate_chapter_explanation(
     chapter_id: str,
     output_path: str,
     bible: SeriesBible,
-    model_name: str = "google/gemini-2.5-pro-preview",
+    model_name: str = "google/gemini-3.1-pro-preview",
     max_judge_attempts: int = 3,
     difficulty_config: Optional[DifficultyConfig] = None,
     prev_chapter_narration: Optional[str] = None,

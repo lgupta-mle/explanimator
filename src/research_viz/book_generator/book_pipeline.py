@@ -154,7 +154,7 @@ def _run_chapter_video(
 def run_book_pipeline(
     book_pdf_path: str,
     output_base_dir: str = "output/books",
-    model_name: str = "google/gemini-2.5-pro-preview",
+    model_name: str = "google/gemini-3.1-pro-preview",
     difficulty: str = "medium",
     book_config: Optional[BookConfig] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
@@ -197,7 +197,7 @@ def run_book_pipeline(
 
     # --- Phase 1: Decompose book ---
     print("\n[Phase 1] Extracting chapter structure...")
-    chapters = extract_chapters(book_pdf_path, model_name="google/gemini-3.1-pro-preview")
+    chapters = extract_chapters(book_pdf_path, model_name=model_name, book_config=book_config)
     print(f"  Found {len(chapters)} chapters")
     for ch in chapters:
         print(f"    {ch.chapter_id}: {ch.title} (pp.{ch.start_page+1}–{ch.end_page+1}, ~{ch.token_count:,} tokens)")
@@ -370,7 +370,7 @@ if __name__ == "__main__":
         """Path to the book PDF."""
         output_dir: str = "output/books"
         """Root directory for all output."""
-        model: str = "google/gemini-2.5-pro-preview"
+        model: str = "google/gemini-3.1-pro-preview"
         """LLM model name."""
         difficulty: str = "medium"
         """Difficulty: easy, medium, or hard."""
