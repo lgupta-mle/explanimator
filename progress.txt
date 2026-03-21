@@ -317,3 +317,18 @@
   - On exception, `time_stage()` still records timing with the error type, then re-raises
   - `record_error()` is separate from `time_stage()` for cases where errors are caught and handled (recoverable)
 ---
+
+## 2026-03-21 - US-018
+- Created `scripts/profile_hard_mode.py` — profiling script for hard-mode end-to-end latency
+- Uses fast model tier (US-012), skip judge (US-013), parallel stages (US-008), single-pass ffmpeg (US-009)
+- Reports per-stage timings, total duration, token usage, cost estimate
+- Identifies bottleneck stage if total exceeds 5-minute target
+- Returns exit code 0 (pass) or 1 (fail) for CI integration
+- Files changed:
+  - `scripts/profile_hard_mode.py` (created)
+  - `tests/test_profile_hard_mode.py` (created, 5 tests)
+- **Learnings for future iterations:**
+  - The profiling script uses `generate_explanation_from_pdf(difficulty="hard")` directly, then `run_pipeline(skip_explanation=True)` for the rest
+  - `report()` function is pure (takes metrics dict, returns bool) — easy to test without running the actual pipeline
+  - Tests add `scripts/` to PYTHONPATH to import the profiling module
+---
