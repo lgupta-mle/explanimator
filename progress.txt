@@ -29,6 +29,7 @@
 - `TierConfig` has `skip_judge: bool` for per-difficulty behavior toggles; access via `get_config().llm.get_tier(difficulty)`
 - `generate_with_feedback_loop` and `generate_explanation_from_pdf` accept `difficulty` param; pass it to use tier-specific models and skip_judge
 - `_validate_segment_count(content)` checks 2-3 segment range — always runs even when judge is skipped
+- Checkpoint module at `src/research_viz/pipeline/checkpoint.py`; use `write_checkpoint(run_dir, stage, paths)` after each stage, `read_checkpoints(run_dir)` to load, `validate_checkpoint(cp)` to verify hashes
 ---
 
 ## 2026-03-21 - US-001
@@ -245,4 +246,18 @@
   - Segment count validation is separate from judge quality check — it's structural, not qualitative
   - `_validate_segment_count` parses JSON and checks `len(segments)` — runs before judge to avoid wasting an LLM call on structurally invalid output
   - The `difficulty` param flows: `generate_explanation_from_pdf` → `generate_with_feedback_loop` → `cfg.llm.get_model/get_tier`
+---
+
+## 2026-03-21 - US-014
+- Created `pipeline/checkpoint.py` with `write_checkpoint()`, `read_checkpoints()`, and `validate_checkpoint()`
+- `Checkpoint` dataclass: stage_name, artifact_paths, artifact_hashes (SHA-256), timestamp
+- Checkpoints written to `{run_dir}/checkpoints/{stage_name}.json`
+- Hash validation detects modified/missing artifacts
+- Files changed:
+  - `src/research_viz/pipeline/checkpoint.py` (created)
+  - `tests/test_checkpoint.py` (created, 15 tests)
+- **Learnings for future iterations:**
+  - `_sha256()` reads in 8KB chunks to handle large files efficiently
+  - Missing artifacts at write time get path recorded but no hash — allows partial tracking
+  - `validate_checkpoint()` returns False if any artifact is missing or hash mismatches
 ---
