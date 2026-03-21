@@ -15,6 +15,8 @@ from pydantic import BaseModel, Field
 import tyro
 from dotenv import load_dotenv
 
+from research_viz.config.pipeline_config import get_config
+
 load_dotenv()
 
 T = TypeVar('T', bound=BaseModel)
@@ -45,11 +47,13 @@ def encode_pdf_to_base64(pdf_path: str) -> str:
 
 def call_openrouter(
     messages: list,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     schema: Optional[Type[T]] = None,
     plugins: Optional[list] = None
 ) -> dict:
     """Generic OpenRouter API call."""
+    if model_name is None:
+        model_name = get_config().llm.default_model
     url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
@@ -82,7 +86,7 @@ def create_pdf_llm_response(
     pdf_path: str,
     prompt: str,
     system_prompt: str,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     schema: Optional[Type[T]] = None
 ) -> dict:
     """
@@ -92,6 +96,8 @@ def create_pdf_llm_response(
     - PDF placed BEFORE text in request
     - Native engine to avoid parsing costs
     """
+    if model_name is None:
+        model_name = get_config().llm.explanation_model
     base64_pdf = encode_pdf_to_base64(pdf_path)
     data_url = f"data:application/pdf;base64,{base64_pdf}"
 
@@ -126,7 +132,7 @@ def load_prompt(prompt_name: str) -> str:
 
 def judge_explanation(
     explanation_json: str,
-    model_name: str = "openai/gpt-5"
+    model_name: Optional[str] = None
 ) -> JudgeResult:
     """
     Use LLM judge to evaluate the explanation quality.
@@ -134,6 +140,8 @@ def judge_explanation(
     Returns:
         JudgeResult with score (0 or 1) and feedback if failed
     """
+    if model_name is None:
+        model_name = get_config().llm.judge_model
     judge_prompt = load_prompt("3b1b_judge_prompt")
 
     user_prompt = f"""
@@ -185,7 +193,7 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
 
 def generate_with_feedback_loop(
     pdf_path: str,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     max_attempts: int = 3
 ) -> Optional[dict]:
     """
@@ -200,6 +208,8 @@ def generate_with_feedback_loop(
     Returns:
         Final explanation dict or None on failure
     """
+    if model_name is None:
+        model_name = get_config().llm.explanation_model
     system_prompt = load_prompt("3b1b_explanation_prompt")
 
     base_user_prompt = """
@@ -298,7 +308,7 @@ Generate a revised explanation that addresses ALL the feedback above.
 def generate_explanation_from_pdf(
     pdf_path: str,
     output_path: str,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     max_judge_attempts: int = 3
 ) -> Optional[dict]:
     """
@@ -341,7 +351,7 @@ def generate_explanation_from_pdf(
 def main(
     pdf_path: str,
     output_path: Optional[str] = None,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     max_judge_attempts: int = 3
 ):
     """
@@ -361,6 +371,9 @@ def main(
             --pdf-path papers/attention.pdf \\
             --max-judge-attempts 5
     """
+    if model_name is None:
+        model_name = get_config().llm.explanation_model
+
     if not os.path.exists(pdf_path):
         print(f"ERROR: PDF not found: {pdf_path}")
         return

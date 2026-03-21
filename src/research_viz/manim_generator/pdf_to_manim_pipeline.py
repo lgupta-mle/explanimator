@@ -22,6 +22,7 @@ from research_viz.manim_generator.pdf_explanation_generator import (
     encode_pdf_to_base64
 )
 from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B, Segment3B1B
+from research_viz.config.pipeline_config import get_config
 
 load_dotenv()
 
@@ -47,6 +48,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
     Returns:
         (success, output_or_error)
     """
+    cfg = get_config()
     with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
         f.write(code)
         temp_path = f.name
@@ -56,7 +58,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
             ['manim', 'render', '-ql', '--disable_caching', temp_path, class_name],
             capture_output=True,
             text=True,
-            timeout=120
+            timeout=cfg.manim.timeout
         )
 
         if result.returncode == 0:
@@ -66,7 +68,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
             return False, error_output
 
     except subprocess.TimeoutExpired:
-        return False, "Timeout: Manim render took too long (>120s)"
+        return False, f"Timeout: Manim render took too long (>{cfg.manim.timeout}s)"
     except Exception as e:
         return False, f"Exception: {str(e)}"
     finally:
@@ -123,8 +125,8 @@ def fetch_rag_context_for_error(error_message: str, chroma_path: str = "data/man
 def generate_scene_code(
     segment: dict,
     running_example: str,
-    model_name: str = "anthropic/claude-sonnet-4.5",
-    max_retries: int = 3,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     beat_timeline: Optional[List[dict]] = None
 ) -> Optional[ManimSceneCode]:
@@ -136,6 +138,11 @@ def generate_scene_code(
     2. Execute with Manim
     3. If error, fetch RAG context and retry
     """
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.code_gen_model
+    if max_retries is None:
+        max_retries = cfg.manim.max_retries
     system_prompt = load_code_gen_prompt()
 
     segment_id = segment.get('segment_id', 'scene')
@@ -290,8 +297,8 @@ Fix the errors and regenerate the complete scene code.
 
 def generate_all_scenes(
     explanation: dict,
-    model_name: str = "anthropic/claude-sonnet-4.5",
-    max_retries: int = 3,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     audio_timeline_path: Optional[str] = None
 ) -> List[ManimSceneCode]:
@@ -370,8 +377,8 @@ import numpy as np
 def run_pipeline(
     pdf_path: str,
     output_dir: str = "src/research_viz/manim_generator/output",
-    model_name: str = "anthropic/claude-sonnet-4.5",
-    max_retries: int = 3,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     skip_explanation: bool = False,
     explanation_path: Optional[str] = None
 ) -> Optional[str]:
@@ -389,6 +396,11 @@ def run_pipeline(
     Returns:
         Path to generated Manim code file, or None on failure
     """
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.code_gen_model
+    if max_retries is None:
+        max_retries = cfg.manim.max_retries
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     pdf_stem = Path(pdf_path).stem
 
@@ -966,14 +978,14 @@ def main(
     pdf_path: Optional[str] = None,
     explanation_path: Optional[str] = None,
     output_dir: str = "src/research_viz/manim_generator/output",
-    model_name: str = "anthropic/claude-sonnet-4.5",
-    max_retries: int = 3,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     generate_audio: bool = False,
-    tts_voice: str = "nova",
+    tts_voice: Optional[str] = None,
     render_video: bool = False,
-    video_quality: str = "l",
-    sync_mode: str = "segment",
-    max_speed_change: float = 0.3
+    video_quality: Optional[str] = None,
+    sync_mode: Optional[str] = None,
+    max_speed_change: Optional[float] = None
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -1012,6 +1024,20 @@ def main(
             --generate-audio --render-video \\
             --sync-mode beat --max-speed-change 0.2
     """
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.code_gen_model
+    if max_retries is None:
+        max_retries = cfg.manim.max_retries
+    if tts_voice is None:
+        tts_voice = cfg.audio.voice
+    if video_quality is None:
+        video_quality = cfg.video.quality
+    if sync_mode is None:
+        sync_mode = cfg.video.sync_mode
+    if max_speed_change is None:
+        max_speed_change = cfg.video.max_speed_change
+
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     # Step 1: Load or generate explanation

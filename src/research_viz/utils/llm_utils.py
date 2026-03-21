@@ -7,6 +7,8 @@ import copy
 from typing import Optional, Type, TypeVar, Union, List, Dict, Any
 from pydantic import BaseModel
 
+from research_viz.config.pipeline_config import get_config
+
 T = TypeVar('T', bound=BaseModel)
 
 def encode_image_to_base64(image_path):
@@ -66,7 +68,7 @@ def create_llm_response(
     prepared_usr_prompt: str,
     system_prompt: str,
     images_dir: str = None,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     schema: Optional[Type[T]] = None,
     images_metadata: Optional[List[Dict[str, Any]]] = None
 ) -> Union[str, T]:
@@ -86,6 +88,9 @@ def create_llm_response(
         If schema is provided, returns instance of the schema type.
         Otherwise, returns the raw string response.
     """
+
+    if model_name is None:
+        model_name = get_config().llm.default_model
 
     # Create the LLM client
     use_openrouter = True

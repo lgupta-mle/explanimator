@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
 
+from research_viz.config.pipeline_config import get_config
+
 OPENAI_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
 
 
@@ -73,11 +75,13 @@ class BeatSyncTTS:
 
     def __init__(
         self,
-        voice: str = "nova",
-        sample_rate: int = 24000
+        voice: Optional[str] = None,
+        sample_rate: Optional[int] = None
     ):
-        self.voice = voice
-        self.sample_rate = sample_rate
+        cfg = get_config()
+        self.voice = voice if voice is not None else cfg.audio.voice
+        self.sample_rate = sample_rate if sample_rate is not None else cfg.audio.sample_rate
+        self.tts_model = cfg.audio.tts_model
         self.client = None
 
     def _load_client(self):
@@ -99,7 +103,7 @@ class BeatSyncTTS:
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         response = self.client.audio.speech.create(
-            model="tts-1",
+            model=self.tts_model,
             voice=self.voice,
             input=text,
             response_format="wav"
@@ -129,8 +133,8 @@ class BeatSyncTTS:
         self,
         segment: dict,
         output_dir: str,
-        min_words: int = 8,
-        max_words: int = 25
+        min_words: Optional[int] = None,
+        max_words: Optional[int] = None
     ) -> List[NarrationBeat]:
         """
         Generate beat-synced audio for an entire segment.
@@ -138,6 +142,12 @@ class BeatSyncTTS:
         Returns:
             List of NarrationBeat objects with timing
         """
+        cfg = get_config()
+        if min_words is None:
+            min_words = cfg.audio.min_words_per_beat
+        if max_words is None:
+            max_words = cfg.audio.max_words_per_beat
+
         narration = segment.get('narration_script', '').strip()
         if not narration:
             return []
@@ -190,9 +200,9 @@ class BeatSyncTTS:
 def generate_beat_timeline(
     explanation_path: str,
     output_dir: str = "src/research_viz/manim_generator/output/audio_beats",
-    voice: str = "nova",
-    min_words: int = 8,
-    max_words: int = 25
+    voice: Optional[str] = None,
+    min_words: Optional[int] = None,
+    max_words: Optional[int] = None
 ) -> Dict[str, List[NarrationBeat]]:
     """
     Generate complete beat timeline for all segments.
@@ -200,6 +210,14 @@ def generate_beat_timeline(
     Returns:
         Dict mapping segment_id to list of beats
     """
+    cfg = get_config()
+    if voice is None:
+        voice = cfg.audio.voice
+    if min_words is None:
+        min_words = cfg.audio.min_words_per_beat
+    if max_words is None:
+        max_words = cfg.audio.max_words_per_beat
+
     with open(explanation_path, 'r') as f:
         explanation = json.load(f)
 
