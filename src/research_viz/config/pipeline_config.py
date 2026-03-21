@@ -18,6 +18,7 @@ class LLMConfig(BaseModel):
     prereq_model: str = "openai/gpt-5"
     code_gen_model: str = "anthropic/claude-sonnet-4.5"
     default_model: str = "openai/gpt-5"
+    provider: str = "openrouter"
 
 
 class AudioConfig(BaseModel):
@@ -150,3 +151,31 @@ def reset_config() -> None:
     """Reset the singleton (for testing)."""
     global _config
     _config = None
+    reset_provider()
+
+
+def _create_provider():
+    """Instantiate an LLMProvider from config."""
+    from research_viz.providers.openrouter_provider import OpenRouterProvider
+
+    provider_name = get_config().llm.provider
+    if provider_name == "openrouter":
+        return OpenRouterProvider()
+    raise ValueError(f"Unknown LLM provider: {provider_name}")
+
+
+_provider = None
+
+
+def get_provider():
+    """Get or create the singleton LLMProvider instance."""
+    global _provider
+    if _provider is None:
+        _provider = _create_provider()
+    return _provider
+
+
+def reset_provider() -> None:
+    """Reset the provider singleton (for testing)."""
+    global _provider
+    _provider = None
