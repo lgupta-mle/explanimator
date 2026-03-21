@@ -647,69 +647,28 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
         return False
 
 
-def adjust_video_to_audio_duration(
+def sync_video_audio_single_pass(
     video_path: str,
-    audio_duration: float,
+    audio_path: str,
     output_path: str,
     max_speed_change: float = 0.3
 ) -> bool:
     """
-    Adjust video to match audio duration with configurable speed limits.
-    
-    Args:
-        video_path: Input video path
-        audio_duration: Target audio duration
-        output_path: Output adjusted video
-        max_speed_change: Maximum allowed speed change (0.3 = 30%)
-    
-    Returns:
-        True if successful
-    """
-    try:
-        video_duration = get_video_duration(video_path)
-        
-        # Calculate required speed change
-        speed_ratio = abs(video_duration - audio_duration) / audio_duration
-        
-        print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
-        print(f"    Speed change required: {speed_ratio*100:.1f}%")
-        
-        # If speed change is within limits, adjust speed
-        if speed_ratio <= max_speed_change:
-            print(f"    Using speed adjustment (within {max_speed_change*100:.0f}% limit)")
-            return adjust_video_speed(video_path, audio_duration, output_path)
-        else:
-            # Speed change too large, use extend/trim approach
-            print(f"    Speed change too large, using extend/trim approach")
-            if video_duration < audio_duration:
-                # Extend by freezing last frame
-                return extend_video_to_duration(video_path, audio_duration, output_path)
-            else:
-                # Trim to target duration (lose some content at end)
-                print(f"    WARNING: Video too long, trimming from {video_duration:.2f}s to {audio_duration:.2f}s")
-                subprocess.run([
-                    'ffmpeg', '-y',
-                    '-i', video_path,
-                    '-t', str(audio_duration),
-                    '-c:v', 'libx264',
-                    '-pix_fmt', 'yuv420p',
-                    output_path
-                ], capture_output=True, check=True)
-                return True
-        
-    except Exception as e:
-        print(f"Error adjusting video to audio duration: {e}")
-        return False
+    Single-pass ffmpeg: speed-adjust, pad, and merge audio in one command.
 
+    Combines what was previously adjust_video_to_audio_duration + sync_audio_with_video
+    into a single ffmpeg invocation, eliminating double re-encode.
 
-def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) -> bool:
-    """
-    Sync audio with video, extending video if needed.
+    Strategy based on video vs audio duration:
+    - Within max_speed_change: setpts speed adjustment + tpad + audio merge
+    - Video too short: tpad freeze last frame + audio merge
+    - Video too long: trim + audio merge
 
     Args:
         video_path: Input video path
         audio_path: Input audio path
-        output_path: Output synced video path
+        output_path: Output synced video with audio
+        max_speed_change: Maximum allowed speed change (0.3 = 30%)
 
     Returns:
         True if successful
@@ -718,14 +677,95 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
         video_duration = get_video_duration(video_path)
         audio_duration = get_audio_duration(audio_path)
 
-        print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
+        if video_duration == 0 or audio_duration == 0:
+            print(f"Error: Could not get duration (video={video_duration}, audio={audio_duration})")
+            return False
 
-        # Add a small buffer (0.5s) to ensure video fully covers audio
-        # This prevents black screen issues from minor timing discrepancies
+        # Target duration includes 0.5s buffer so video fully covers audio
         target_duration = audio_duration + 0.5
-        
+        speed_ratio = abs(video_duration - audio_duration) / audio_duration
+
+        # Build the video filter chain
+        vfilters = []
+
+        if speed_ratio <= max_speed_change and abs(video_duration - audio_duration) >= 0.1:
+            # Speed adjustment needed and within limits
+            speed_factor = video_duration / audio_duration
+            vfilters.append(f'setpts=PTS/{speed_factor}')
+            effective_duration = audio_duration  # after speed adjust
+        else:
+            effective_duration = video_duration
+
+        # Pad with last frame if video (after speed adjust) is shorter than target
+        pad_duration = target_duration - effective_duration
+        if pad_duration > 0.05:
+            vfilters.append(f'tpad=stop_mode=clone:stop_duration={pad_duration:.3f}')
+
+        # Build ffmpeg command
+        cmd = ['ffmpeg', '-y', '-i', video_path, '-i', audio_path]
+
+        if vfilters:
+            cmd += ['-filter:v', ','.join(vfilters)]
+            cmd += ['-c:v', 'libx264', '-pix_fmt', 'yuv420p']
+        else:
+            # No video filter needed — copy video stream
+            cmd += ['-c:v', 'copy']
+
+        # Trim if video is too long and speed change exceeds limit
+        if speed_ratio > max_speed_change and video_duration > audio_duration:
+            cmd += ['-t', f'{target_duration:.3f}']
+
+        cmd += [
+            '-c:a', 'aac', '-b:a', '192k',
+            '-map', '0:v:0', '-map', '1:a:0',
+            output_path
+        ]
+
+        subprocess.run(cmd, capture_output=True, check=True)
+        return True
+
+    except Exception as e:
+        print(f"Error in single-pass video/audio sync: {e}")
+        return False
+
+
+# Keep legacy functions as thin wrappers for any external callers
+def adjust_video_to_audio_duration(
+    video_path: str,
+    audio_duration: float,
+    output_path: str,
+    max_speed_change: float = 0.3
+) -> bool:
+    """Legacy wrapper — prefer sync_video_audio_single_pass for combined operations."""
+    try:
+        video_duration = get_video_duration(video_path)
+        speed_ratio = abs(video_duration - audio_duration) / audio_duration
+
+        if speed_ratio <= max_speed_change:
+            return adjust_video_speed(video_path, audio_duration, output_path)
+        elif video_duration < audio_duration:
+            return extend_video_to_duration(video_path, audio_duration, output_path)
+        else:
+            subprocess.run([
+                'ffmpeg', '-y', '-i', video_path,
+                '-t', str(audio_duration),
+                '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
+                output_path
+            ], capture_output=True, check=True)
+            return True
+    except Exception as e:
+        print(f"Error adjusting video to audio duration: {e}")
+        return False
+
+
+def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) -> bool:
+    """Legacy wrapper — prefer sync_video_audio_single_pass for combined operations."""
+    try:
+        video_duration = get_video_duration(video_path)
+        audio_duration = get_audio_duration(audio_path)
+        target_duration = audio_duration + 0.5
+
         if target_duration > video_duration:
-            print(f"    Extending video by {target_duration - video_duration:.2f}s (includes 0.5s buffer)")
             extended_video = output_path.replace('.mp4', '_tmp_extended.mp4')
             if not extend_video_to_duration(video_path, target_duration, extended_video):
                 return False
@@ -733,23 +773,15 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
         else:
             video_to_use = video_path
 
-        # Merge audio with video (re-encode to ensure compatibility)
-        # IMPORTANT: Removed -shortest flag to prevent premature video cutoff
-        # Using explicit stream mapping to ensure video plays for full audio duration
         subprocess.run([
             'ffmpeg', '-y',
-            '-i', video_to_use,
-            '-i', audio_path,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
-            '-b:a', '192k',
+            '-i', video_to_use, '-i', audio_path,
+            '-c:v', 'libx264', '-c:a', 'aac', '-b:a', '192k',
             '-pix_fmt', 'yuv420p',
-            '-map', '0:v:0',  # Map video from first input
-            '-map', '1:a:0',  # Map audio from second input
+            '-map', '0:v:0', '-map', '1:a:0',
             output_path
         ], capture_output=True, check=True)
 
-        # Cleanup temp extended video
         if target_duration > video_duration:
             try:
                 os.unlink(extended_video)
@@ -895,77 +927,17 @@ def render_and_sync_all_scenes(
             ], capture_output=True)
             os.unlink(concat_list)
 
-        # Sync audio with video based on mode
-        print(f"  Syncing audio with video (mode: {sync_mode})...")
-        
-        if sync_mode == "segment":
-            # SEGMENT-LEVEL SYNC: Adjust entire video to match total audio duration
-            segment_audio_duration = get_audio_duration(segment_audio_path)
-            
-            # First adjust video duration to match audio
-            adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
-            if adjust_video_to_audio_duration(
-                video_pattern,
-                segment_audio_duration,
-                adjusted_video_path,
-                max_speed_change
-            ):
-                # Then merge audio with adjusted video
-                if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
-                    print(f"  SUCCESS: {synced_video_path}")
-                    synced_videos.append(synced_video_path)
-                    # Cleanup temp file
-                    try:
-                        os.unlink(adjusted_video_path)
-                    except:
-                        pass
-                else:
-                    print(f"  WARNING: Audio merge failed, using adjusted video")
-                    synced_videos.append(adjusted_video_path)
-            else:
-                print(f"  WARNING: Duration adjustment failed, using original sync")
-                if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                    synced_videos.append(synced_video_path)
-                else:
-                    synced_videos.append(video_pattern)
-        
-        elif sync_mode == "beat":
-            # BEAT-LEVEL SYNC: Process each beat separately
-            # TODO: This requires splitting the video into beats, which is complex
-            # For now, fall back to segment sync with a warning
-            print(f"  WARNING: Beat-level sync requires per-beat video rendering")
-            print(f"  Falling back to segment-level sync")
-            
-            segment_audio_duration = get_audio_duration(segment_audio_path)
-            adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
-            
-            if adjust_video_to_audio_duration(
-                video_pattern,
-                segment_audio_duration,
-                adjusted_video_path,
-                max_speed_change
-            ):
-                if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
-                    synced_videos.append(synced_video_path)
-                    try:
-                        os.unlink(adjusted_video_path)
-                    except:
-                        pass
-                else:
-                    synced_videos.append(adjusted_video_path)
-            else:
-                if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                    synced_videos.append(synced_video_path)
-                else:
-                    synced_videos.append(video_pattern)
-        
+        # Single-pass: speed-adjust + pad + audio merge in one ffmpeg call
+        print(f"  Syncing audio with video (single-pass, mode: {sync_mode})...")
+
+        if sync_video_audio_single_pass(
+            video_pattern, segment_audio_path, synced_video_path, max_speed_change
+        ):
+            print(f"  SUCCESS: {synced_video_path}")
+            synced_videos.append(synced_video_path)
         else:
-            # Unknown mode, use old method
-            print(f"  WARNING: Unknown sync mode '{sync_mode}', using default")
-            if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                synced_videos.append(synced_video_path)
-            else:
-                synced_videos.append(video_pattern)
+            print(f"  WARNING: Single-pass sync failed, using raw video")
+            synced_videos.append(video_pattern)
 
     if not synced_videos:
         print("\nERROR: No videos to stitch")

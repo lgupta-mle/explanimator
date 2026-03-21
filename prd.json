@@ -35,7 +35,7 @@
         "Tests pass"
       ],
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-001. This is the largest story — touches 7 files but each change is mechanical (replace string literal with config read)."
     },
     {
@@ -51,7 +51,7 @@
         "Tests pass"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-001."
     },
     {
@@ -66,7 +66,7 @@
         "Tests pass"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-001."
     },
     {
@@ -81,7 +81,7 @@
         "Tests pass with mock tests for retry behavior"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-004."
     },
     {
@@ -97,7 +97,7 @@
         "Tests pass"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-004 and US-002."
     },
     {
@@ -111,7 +111,7 @@
         "Tests pass"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-006."
     },
     {
@@ -126,7 +126,7 @@
         "Tests pass"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-002 for configurable workers. Modify pdf_to_manim_pipeline.py."
     },
     {
@@ -141,7 +141,7 @@
         "Tests pass"
       ],
       "priority": 9,
-      "passes": false,
+      "passes": true,
       "notes": "Independent — can be done in parallel with other stories. Modify video_renderer.py lines 38-127."
     },
     {
