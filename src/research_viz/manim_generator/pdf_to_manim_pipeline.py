@@ -9,6 +9,7 @@ import os
 import json
 import subprocess
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Optional, List
 from pydantic import BaseModel, Field
@@ -419,13 +420,58 @@ def run_pipeline(
             print("Failed to generate explanation")
             return None
 
-    # Step 2: Generate Manim code for all segments
-    scene_codes = generate_all_scenes(
-        explanation=explanation,
-        model_name=model_name,
-        max_retries=max_retries
-    )
+    # Step 2: Run TTS and code generation in parallel
+    # Both only depend on the explanation, not on each other.
+    audio_dir = f"{output_dir}/audio_beats"
+    audio_timeline_path = f"{audio_dir}/beat_timeline.json"
 
+    def _run_tts():
+        from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+        explanation_json_path = f"{output_dir}/{pdf_stem}_explanation.json"
+        # Ensure explanation JSON is saved for TTS to read
+        Path(explanation_json_path).parent.mkdir(parents=True, exist_ok=True)
+        with open(explanation_json_path, 'w') as ef:
+            json.dump(explanation, ef, indent=2)
+        return generate_beat_timeline(
+            explanation_path=explanation_json_path,
+            output_dir=audio_dir,
+        )
+
+    def _run_code_gen():
+        return generate_all_scenes(
+            explanation=explanation,
+            model_name=model_name,
+            max_retries=max_retries,
+            audio_timeline_path=audio_timeline_path,
+        )
+
+    print(f"\nLaunching TTS and code generation in parallel...")
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        tts_future = executor.submit(_run_tts)
+        code_future = executor.submit(_run_code_gen)
+        futures = {tts_future: "TTS", code_future: "Code generation"}
+
+        results = {}
+        error = None
+        for future in as_completed(futures):
+            stage_name = futures[future]
+            try:
+                results[stage_name] = future.result()
+            except Exception as exc:
+                error = (stage_name, exc)
+                # Fail-fast: cancel the other future
+                for f in futures:
+                    if f is not future:
+                        f.cancel()
+                break
+
+    if error:
+        stage_name, exc = error
+        print(f"{stage_name} failed: {exc}")
+        return None
+
+    scene_codes = results["Code generation"]
     if not scene_codes:
         print("No scenes generated successfully")
         return None
@@ -438,13 +484,8 @@ def run_pipeline(
     with open(output_path, 'w') as f:
         f.write(complete_code)
 
-    print(f"\n{'='*70}")
-    print(f"SUCCESS!")
-    print(f"{'='*70}")
-    print(f"Generated {len(scene_codes)} scenes")
+    print(f"\nGenerated {len(scene_codes)} scenes")
     print(f"Output: {output_path}")
-    print(f"\nTo render:")
-    print(f"  manim -pql {output_path} <ClassName>")
 
     return output_path
 
