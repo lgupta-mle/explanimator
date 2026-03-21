@@ -34,6 +34,8 @@
 - Partial audio resume: `generate_segment_beats` skips beats with existing valid WAV files; corrupted files trigger regeneration
 - All modules use `logging.getLogger(__name__)` — no print() in src/research_viz/ (except README examples)
 - Log config in `src/research_viz/__init__.py`: format `%(asctime)s %(levelname)s %(name)s: %(message)s`
+- `RunMetricsCollector.time_stage(name, provider)` context manager for per-stage wall-clock timing with token/call delta tracking
+- `RunMetricsCollector.record_error(stage, exc, artifact_id, recoverable)` for structured error logging in metrics
 ---
 
 ## 2026-03-21 - US-001
@@ -300,4 +302,18 @@
   - `logging.basicConfig()` in `__init__.py` ensures consistent format when any module is imported
   - Use `logger.warning` for recoverable issues (empty LLM response, failed quality check) vs `logger.error` for unrecoverable
   - Removed `\n` prefixes from messages — logging handles line separation
+---
+
+## 2026-03-21 - US-017
+- Added `StageTiming` and `StageError` dataclasses to run_metrics.py
+- Added `time_stage()` context manager to `RunMetricsCollector` — times wall-clock duration, tracks tokens/API calls delta
+- Added `record_error()` method for structured error logging with exception_type, stage, artifact_id, recoverable
+- `collect()` now includes `stage_timings` and `errors` arrays in the metrics dict
+- Files changed:
+  - `src/research_viz/pipeline/run_metrics.py` (added StageTiming, StageError, time_stage, record_error)
+  - `tests/test_run_metrics.py` (added 8 tests for timing and error features)
+- **Learnings for future iterations:**
+  - `time_stage()` captures token/call deltas by recording provider state before and after
+  - On exception, `time_stage()` still records timing with the error type, then re-raises
+  - `record_error()` is separate from `time_stage()` for cases where errors are caught and handled (recoverable)
 ---

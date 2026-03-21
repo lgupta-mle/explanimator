@@ -256,7 +256,7 @@
         "Tests pass"
       ],
       "priority": 17,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-016 and US-007."
     },
     {

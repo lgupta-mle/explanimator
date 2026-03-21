@@ -15,7 +15,7 @@ from research_viz.config.pipeline_config import (
     reset_config,
 )
 from research_viz.providers.llm_provider import CallStat, LLMProvider, LLMResponse
-from research_viz.pipeline.run_metrics import RunMetricsCollector, StageMetrics
+from research_viz.pipeline.run_metrics import RunMetricsCollector, StageMetrics, StageTiming, StageError
 
 
 @pytest.fixture(autouse=True)
@@ -199,3 +199,100 @@ def test_no_calls_produces_empty_metrics():
     assert metrics["total_tokens"] == 0
     assert metrics["total_cost_estimate"] == 0.0
     assert metrics["calls_per_stage"] == {}
+
+
+# --- Stage timing ---
+
+def test_time_stage_records_timing():
+    collector = RunMetricsCollector()
+    p = FakeProvider()
+    with collector.time_stage("explanation", p):
+        import time
+        time.sleep(0.05)
+    assert len(collector.stage_timings) == 1
+    t = collector.stage_timings[0]
+    assert t.stage_name == "explanation"
+    assert t.duration_seconds >= 0.04
+    assert t.error is None
+
+def test_time_stage_records_error_on_exception():
+    collector = RunMetricsCollector()
+    p = FakeProvider()
+    with pytest.raises(ValueError):
+        with collector.time_stage("codegen", p):
+            raise ValueError("test error")
+    assert len(collector.stage_timings) == 1
+    t = collector.stage_timings[0]
+    assert t.stage_name == "codegen"
+    assert t.error == "ValueError"
+
+def test_time_stage_tracks_tokens():
+    collector = RunMetricsCollector()
+    p = FakeProvider()
+    with collector.time_stage("explanation", p):
+        p._record_call(LLMResponse(content="", model="m", tokens_used=100, tokens_in=60, tokens_out=40, latency_ms=10.0))
+    t = collector.stage_timings[0]
+    assert t.tokens_used == 100
+    assert t.api_calls_count == 1
+
+def test_time_stage_without_provider():
+    collector = RunMetricsCollector()
+    with collector.time_stage("render"):
+        pass
+    t = collector.stage_timings[0]
+    assert t.tokens_used == 0
+    assert t.api_calls_count == 0
+
+
+# --- Stage errors ---
+
+def test_record_error():
+    collector = RunMetricsCollector()
+    exc = RuntimeError("connection lost")
+    collector.record_error("tts", exc, artifact_id="beat_47", recoverable=True)
+    assert len(collector.stage_errors) == 1
+    e = collector.stage_errors[0]
+    assert e.stage == "tts"
+    assert e.exception_type == "RuntimeError"
+    assert e.recoverable is True
+    assert e.artifact_id == "beat_47"
+
+
+# --- Metrics output includes timings and errors ---
+
+def test_collect_includes_stage_timings():
+    collector = RunMetricsCollector()
+    collector.start()
+    p = FakeProvider()
+    with collector.time_stage("explanation", p):
+        pass
+    collector.stop()
+    metrics = collector.collect(p)
+    assert "stage_timings" in metrics
+    assert len(metrics["stage_timings"]) == 1
+    assert metrics["stage_timings"][0]["stage_name"] == "explanation"
+
+def test_collect_includes_errors():
+    collector = RunMetricsCollector()
+    collector.start()
+    p = FakeProvider()
+    collector.record_error("tts", ValueError("fail"))
+    collector.stop()
+    metrics = collector.collect(p)
+    assert "errors" in metrics
+    assert len(metrics["errors"]) == 1
+    assert metrics["errors"][0]["exception_type"] == "ValueError"
+
+def test_write_includes_timings_and_errors(tmp_path):
+    p = FakeProvider()
+    collector = RunMetricsCollector()
+    collector.start()
+    with collector.time_stage("explanation", p):
+        pass
+    collector.record_error("tts", RuntimeError("fail"), recoverable=True)
+    collector.stop()
+    path = collector.write(p, tmp_path / "output")
+    data = json.loads(path.read_text())
+    assert "stage_timings" in data
+    assert "errors" in data
+    assert data["errors"][0]["recoverable"] is True

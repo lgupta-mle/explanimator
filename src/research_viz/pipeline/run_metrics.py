@@ -1,14 +1,18 @@
 """Run metrics collection and persistence for pipeline jobs."""
 
+import logging
 import json
 import time
 from collections import defaultdict
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
 from research_viz.config.pipeline_config import get_config, ModelPricing
 from research_viz.providers.llm_provider import LLMProvider, CallStat
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -22,12 +26,34 @@ class StageMetrics:
     latency_ms: float = 0.0
 
 
+@dataclass
+class StageTiming:
+    """Wall-clock timing for a pipeline stage."""
+    stage_name: str
+    duration_seconds: float
+    tokens_used: int = 0
+    api_calls_count: int = 0
+    error: Optional[str] = None
+
+
+@dataclass
+class StageError:
+    """Structured error record for a pipeline stage."""
+    stage: str
+    exception_type: str
+    message: str
+    artifact_id: Optional[str] = None
+    recoverable: bool = False
+
+
 class RunMetricsCollector:
     """Collects and writes per-run metrics from the LLM provider."""
 
     def __init__(self) -> None:
         self._start_time: Optional[float] = None
         self._end_time: Optional[float] = None
+        self.stage_timings: list[StageTiming] = []
+        self.stage_errors: list[StageError] = []
 
     def start(self) -> None:
         self._start_time = time.time()
@@ -41,6 +67,42 @@ class RunMetricsCollector:
             return 0.0
         end = self._end_time or time.time()
         return end - self._start_time
+
+    @contextmanager
+    def time_stage(self, stage_name: str, provider: Optional[LLMProvider] = None):
+        """Context manager that times a stage and logs metrics on completion."""
+        start = time.time()
+        tokens_before = provider.total_tokens if provider else 0
+        calls_before = provider.total_calls if provider else 0
+        try:
+            yield
+        except Exception as exc:
+            duration = time.time() - start
+            tokens = (provider.total_tokens - tokens_before) if provider else 0
+            calls = (provider.total_calls - calls_before) if provider else 0
+            timing = StageTiming(stage_name, duration, tokens, calls, error=type(exc).__name__)
+            self.stage_timings.append(timing)
+            logger.error(f"Stage {stage_name} failed after {duration:.1f}s: {type(exc).__name__}: {exc}")
+            raise
+        else:
+            duration = time.time() - start
+            tokens = (provider.total_tokens - tokens_before) if provider else 0
+            calls = (provider.total_calls - calls_before) if provider else 0
+            timing = StageTiming(stage_name, duration, tokens, calls)
+            self.stage_timings.append(timing)
+            logger.info(f"Stage {stage_name}: {duration:.1f}s, {tokens} tokens, {calls} API calls")
+
+    def record_error(self, stage: str, exc: Exception, artifact_id: Optional[str] = None, recoverable: bool = False):
+        """Record a structured error for a stage."""
+        err = StageError(
+            stage=stage,
+            exception_type=type(exc).__name__,
+            message=str(exc)[:200],
+            artifact_id=artifact_id,
+            recoverable=recoverable,
+        )
+        self.stage_errors.append(err)
+        logger.error(f"Stage {stage} error: {type(exc).__name__}: {exc} (artifact={artifact_id}, recoverable={recoverable})")
 
     def collect(self, provider: LLMProvider) -> dict:
         """Build the metrics dict from provider call_stats."""
@@ -64,7 +126,7 @@ class RunMetricsCollector:
                 sm.cost_estimate += call_cost
                 total_cost += call_cost
 
-        return {
+        metrics = {
             "total_tokens": provider.total_tokens,
             "total_cost_estimate": round(total_cost, 6),
             "total_duration": round(self.total_duration, 2),
@@ -80,7 +142,28 @@ class RunMetricsCollector:
                 }
                 for stage, sm in stages.items()
             },
+            "stage_timings": [
+                {
+                    "stage_name": t.stage_name,
+                    "duration_seconds": round(t.duration_seconds, 2),
+                    "tokens_used": t.tokens_used,
+                    "api_calls_count": t.api_calls_count,
+                    **({"error": t.error} if t.error else {}),
+                }
+                for t in self.stage_timings
+            ],
+            "errors": [
+                {
+                    "stage": e.stage,
+                    "exception_type": e.exception_type,
+                    "message": e.message,
+                    **({"artifact_id": e.artifact_id} if e.artifact_id else {}),
+                    "recoverable": e.recoverable,
+                }
+                for e in self.stage_errors
+            ],
         }
+        return metrics
 
     def write(self, provider: LLMProvider, output_dir: Path) -> Path:
         """Collect metrics and write run_metrics.json to output_dir."""
