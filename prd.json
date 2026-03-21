@@ -156,7 +156,7 @@
         "Tests pass"
       ],
       "priority": 10,
-      "passes": false,
+      "passes": true,
       "notes": "Independent. Modify video_renderer.py lines 391-453."
     },
     {
@@ -169,8 +169,8 @@
         "Tests pass"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": "Depends on US-002. Small change in translator.py."
+      "passes": true,
+      "notes": "Depends on US-002. translator.py was removed in prior refactors; TranslationConfig.max_workers=10 default set in US-001, config profiles set in US-003."
     },
     {
       "id": "US-012",

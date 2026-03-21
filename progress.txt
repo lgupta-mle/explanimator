@@ -23,6 +23,8 @@
 - `run_pipeline()` runs TTS and code gen in parallel via `ThreadPoolExecutor(max_workers=2)` after explanation generation; fail-fast on either failure
 - `sync_video_audio_single_pass()` combines speed adjust (setpts) + pad (tpad) + audio merge in one ffmpeg call — always prefer this over the two-step chain
 - Legacy `adjust_video_to_audio_duration()` and `sync_audio_with_video()` are kept as thin wrappers for backward compat
+- `render_and_sync_all_scenes` uses producer-consumer pattern: render pool feeds sync pool via `ThreadPoolExecutor`; configure via `video.render_workers` and `video.sync_workers`
+- `_render_scene()` and `_sync_scene()` are extracted helpers for single-scene render and sync; test them individually
 ---
 
 ## 2026-03-21 - US-001
@@ -182,4 +184,32 @@
   - When no video filter is needed, use `-c:v copy` to avoid re-encoding entirely
   - ffmpeg filter chains are comma-separated in a single `-filter:v` argument (e.g. `setpts=PTS/1.2,tpad=stop_mode=clone:stop_duration=0.5`)
   - The 0.5s buffer on target duration ensures video fully covers audio — prevents black screen at end
+---
+
+## 2026-03-21 - US-010
+- Replaced sequential render-all-then-sync-all with producer-consumer pattern in `render_and_sync_all_scenes`
+- Extracted `_render_scene()` and `_sync_scene()` helpers for single-scene operations
+- Render pool (`ThreadPoolExecutor`) submits scenes; each render submits its sync to a separate sync pool
+- Results stored in ordered slots to preserve scene ordering regardless of completion order
+- Added `render_workers` (default 2) and `sync_workers` (default 2) to `VideoConfig`
+- Files changed:
+  - `src/research_viz/config/pipeline_config.py` (added render_workers, sync_workers to VideoConfig)
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (extracted _render_scene, _sync_scene, rewrote render_and_sync_all_scenes)
+  - `tests/test_pipeline_parallel_render.py` (created, 13 tests)
+- **Learnings for future iterations:**
+  - The render pool submits sync work to a separate pool, so render threads don't block waiting for sync — this achieves true overlap
+  - `synced_videos` uses a pre-allocated list indexed by scene number to maintain ordering despite concurrent completion
+  - `future.result()` in `as_completed` loop is safe here because exceptions from _render_then_sync propagate cleanly
+  - Time-based concurrency tests (sleep + assert elapsed) need generous margins — CI can be slow
+---
+
+## 2026-03-21 - US-011
+- No code changes needed — translator.py was removed in prior refactors
+- TranslationConfig.max_workers already defaults to 10 (set in US-001)
+- Config profiles already set appropriate values: dev=4, staging=8, prod=10 (US-003)
+- Existing test `test_default_translation_config` already verifies max_workers==10
+- All 123 tests pass
+- Files changed: prd.json (marked passes: true)
+- **Learnings for future iterations:**
+  - When a PRD story references a deleted file, verify the requirement is met by existing infrastructure before writing new code
 ---
