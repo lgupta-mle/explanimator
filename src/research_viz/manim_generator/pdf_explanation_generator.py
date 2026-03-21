@@ -184,25 +184,42 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
         return JudgeResult(score=0, criteria_scores={}, feedback=f"Exception: {str(e)[:100]}")
 
 
+def _validate_segment_count(content: str, min_segments: int = 2, max_segments: int = 3) -> bool:
+    """Check if explanation has between min and max segments."""
+    try:
+        data = json.loads(content)
+        segments = data.get("segments", [])
+        return min_segments <= len(segments) <= max_segments
+    except (json.JSONDecodeError, TypeError):
+        return False
+
+
 def generate_with_feedback_loop(
     pdf_path: str,
     model_name: Optional[str] = None,
-    max_attempts: int = 3
+    max_attempts: int = 3,
+    difficulty: Optional[str] = None,
 ) -> Optional[dict]:
     """
     Generate explanation with LLM judge feedback loop.
 
     Process:
     1. Generate initial explanation from PDF
-    2. Judge evaluates against quality criteria
+    2. Judge evaluates against quality criteria (skipped if tier has skip_judge=True)
     3. If score=0, regenerate with feedback
     4. Repeat until score=1 or max_attempts reached
+
+    Args:
+        difficulty: If set, uses tier-specific config (e.g. skip_judge for hard mode)
 
     Returns:
         Final explanation dict or None on failure
     """
+    cfg = get_config()
     if model_name is None:
-        model_name = get_config().llm.explanation_model
+        model_name = cfg.llm.get_model("explanation_model", difficulty)
+    tier = cfg.llm.get_tier(difficulty)
+    skip_judge = tier.skip_judge if tier else False
     system_prompt = load_prompt("3b1b_explanation_prompt")
 
     base_user_prompt = """
@@ -273,6 +290,18 @@ Generate a revised explanation that addresses ALL the feedback above.
 
         print(f"  Generated explanation ({len(content)} chars)")
 
+        # Segment count validation (always runs, even when judge is skipped)
+        if not _validate_segment_count(content):
+            print(f"  Segment count outside 2-3 range, retrying...")
+            continue
+
+        if skip_judge:
+            print("  Skipping judge (skip_judge enabled for this tier)")
+            try:
+                return json.loads(content)
+            except json.JSONDecodeError:
+                return {"raw_content": content}
+
         # Judge the explanation
         print("  Judging explanation quality...")
         judge_result = judge_explanation(content, model_name)
@@ -301,7 +330,8 @@ def generate_explanation_from_pdf(
     pdf_path: str,
     output_path: str,
     model_name: Optional[str] = None,
-    max_judge_attempts: int = 3
+    max_judge_attempts: int = 3,
+    difficulty: Optional[str] = None,
 ) -> Optional[dict]:
     """
     Generate a 3B1B-style educational explanation directly from a PDF.
@@ -311,6 +341,7 @@ def generate_explanation_from_pdf(
         output_path: Path to save the explanation JSON
         model_name: LLM model to use
         max_judge_attempts: Max attempts to pass quality check
+        difficulty: Difficulty tier for model selection and judge behavior
 
     Returns:
         The generated explanation as a dict, or None on error
@@ -322,7 +353,8 @@ def generate_explanation_from_pdf(
     explanation = generate_with_feedback_loop(
         pdf_path=pdf_path,
         model_name=model_name,
-        max_attempts=max_judge_attempts
+        max_attempts=max_judge_attempts,
+        difficulty=difficulty,
     )
 
     if explanation:

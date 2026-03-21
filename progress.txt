@@ -27,6 +27,8 @@
 - `_render_scene()` and `_sync_scene()` are extracted helpers for single-scene render and sync; test them individually
 - Model tiering: use `get_config().llm.get_model("explanation_model", difficulty)` to resolve per-difficulty model; falls back to base if tier not set
 - `TierConfig` has `skip_judge: bool` for per-difficulty behavior toggles; access via `get_config().llm.get_tier(difficulty)`
+- `generate_with_feedback_loop` and `generate_explanation_from_pdf` accept `difficulty` param; pass it to use tier-specific models and skip_judge
+- `_validate_segment_count(content)` checks 2-3 segment range — always runs even when judge is skipped
 ---
 
 ## 2026-03-21 - US-001
@@ -229,4 +231,18 @@
   - `get_model(stage, difficulty)` uses `getattr` on both LLMConfig and TierConfig for uniform stage name resolution
   - TierConfig fields are all Optional[str] = None so partial overrides work naturally
   - `skip_judge` lives on TierConfig since it's a per-difficulty behavior toggle, not a model name
+---
+
+## 2026-03-21 - US-013
+- Added `difficulty` parameter to `generate_with_feedback_loop` and `generate_explanation_from_pdf`
+- When tier has `skip_judge=True`, judge evaluation is skipped entirely
+- Added `_validate_segment_count()` — segment count validation (2-3 range) always runs, even when judge is skipped
+- Hard mode uses tier-specific model via `cfg.llm.get_model("explanation_model", difficulty)`
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_explanation_generator.py` (added _validate_segment_count, difficulty param, skip_judge logic)
+  - `tests/test_skip_judge.py` (created, 10 tests)
+- **Learnings for future iterations:**
+  - Segment count validation is separate from judge quality check — it's structural, not qualitative
+  - `_validate_segment_count` parses JSON and checks `len(segments)` — runs before judge to avoid wasting an LLM call on structurally invalid output
+  - The `difficulty` param flows: `generate_explanation_from_pdf` → `generate_with_feedback_loop` → `cfg.llm.get_model/get_tier`
 ---
