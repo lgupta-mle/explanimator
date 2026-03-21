@@ -82,14 +82,20 @@ class OpenRouterProvider(LLMProvider):
                 tokens_used = 0
                 if "choices" in data and data["choices"]:
                     content = data["choices"][0].get("message", {}).get("content", "")
+                tokens_in = 0
+                tokens_out = 0
                 if "usage" in data:
                     usage = data["usage"]
-                    tokens_used = usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0)
+                    tokens_in = usage.get("prompt_tokens", 0)
+                    tokens_out = usage.get("completion_tokens", 0)
+                    tokens_used = tokens_in + tokens_out
 
                 response = LLMResponse(
                     content=content,
                     model=model,
                     tokens_used=tokens_used,
+                    tokens_in=tokens_in,
+                    tokens_out=tokens_out,
                     latency_ms=latency_ms,
                     raw=data,
                 )

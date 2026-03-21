@@ -226,7 +226,9 @@ class TestPipelineMigration:
 
 class TestCallStat:
     def test_fields(self):
-        s = CallStat(model="m", tokens_used=100, latency_ms=50.0)
+        s = CallStat(model="m", tokens_used=100, tokens_in=60, tokens_out=40, latency_ms=50.0)
         assert s.model == "m"
         assert s.tokens_used == 100
+        assert s.tokens_in == 60
+        assert s.tokens_out == 40
         assert s.latency_ms == 50.0

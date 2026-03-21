@@ -4,6 +4,22 @@ llm:
   prereq_model: "openai/gpt-5"
   code_gen_model: "anthropic/claude-sonnet-4.5"
   default_model: "openai/gpt-5"
+  model_pricing:
+    "openai/gpt-5":
+      input: 2.5e-6
+      output: 10.0e-6
+    "anthropic/claude-sonnet-4.5":
+      input: 3.0e-6
+      output: 15.0e-6
+    "openai/gpt-4.1-mini":
+      input: 0.4e-6
+      output: 1.6e-6
+    "openai/gpt-4.1-nano":
+      input: 0.1e-6
+      output: 0.4e-6
+    "google/gemini-2.5-flash":
+      input: 0.15e-6
+      output: 0.6e-6
 
 audio:
   tts_model: "tts-1"

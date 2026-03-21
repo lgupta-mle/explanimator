@@ -10,7 +10,10 @@ class CallStat:
     """Stats for a single LLM call."""
     model: str
     tokens_used: int
+    tokens_in: int
+    tokens_out: int
     latency_ms: float
+    stage: str = ""
 
 
 @dataclass
@@ -19,6 +22,8 @@ class LLMResponse:
     content: str
     model: str
     tokens_used: int = 0  # input + output
+    tokens_in: int = 0
+    tokens_out: int = 0
     latency_ms: float = 0.0
     raw: Optional[dict] = field(default=None, repr=False)
 
@@ -32,6 +37,7 @@ class LLMProvider(ABC):
 
     def __init__(self) -> None:
         self.call_stats: list[CallStat] = []
+        self._current_stage: str = ""
 
     @property
     def total_tokens(self) -> int:
@@ -41,13 +47,25 @@ class LLMProvider(ABC):
     def total_calls(self) -> int:
         return len(self.call_stats)
 
+    def set_stage(self, stage: str) -> None:
+        """Set the current pipeline stage for call attribution."""
+        self._current_stage = stage
+
+    def reset_stats(self) -> None:
+        """Clear accumulated call stats for a new run."""
+        self.call_stats = []
+        self._current_stage = ""
+
     def _record_call(self, response: LLMResponse) -> None:
         """Record stats from a completed call."""
         self.call_stats.append(
             CallStat(
                 model=response.model,
                 tokens_used=response.tokens_used,
+                tokens_in=response.tokens_in,
+                tokens_out=response.tokens_out,
                 latency_ms=response.latency_ms,
+                stage=self._current_stage,
             )
         )
 

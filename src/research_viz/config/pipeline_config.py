@@ -12,6 +12,12 @@ from pydantic import BaseModel, model_validator
 from pydantic_settings import BaseSettings
 
 
+class ModelPricing(BaseModel):
+    """Per-token pricing for a model (USD per token)."""
+    input: float = 0.0
+    output: float = 0.0
+
+
 class LLMConfig(BaseModel):
     explanation_model: str = "openai/gpt-5"
     judge_model: str = "openai/gpt-5"
@@ -21,6 +27,13 @@ class LLMConfig(BaseModel):
     provider: str = "openrouter"
     max_retries: int = 3
     retry_base_delay: float = 1.0
+    model_pricing: dict[str, ModelPricing] = {
+        "openai/gpt-5": ModelPricing(input=2.50e-6, output=10.0e-6),
+        "anthropic/claude-sonnet-4.5": ModelPricing(input=3.0e-6, output=15.0e-6),
+        "openai/gpt-4.1-mini": ModelPricing(input=0.40e-6, output=1.60e-6),
+        "openai/gpt-4.1-nano": ModelPricing(input=0.10e-6, output=0.40e-6),
+        "google/gemini-2.5-flash": ModelPricing(input=0.15e-6, output=0.60e-6),
+    }
 
 
 class AudioConfig(BaseModel):
