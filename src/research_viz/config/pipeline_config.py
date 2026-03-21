@@ -19,6 +19,8 @@ class LLMConfig(BaseModel):
     code_gen_model: str = "anthropic/claude-sonnet-4.5"
     default_model: str = "openai/gpt-5"
     provider: str = "openrouter"
+    max_retries: int = 3
+    retry_base_delay: float = 1.0
 
 
 class AudioConfig(BaseModel):
@@ -158,9 +160,13 @@ def _create_provider():
     """Instantiate an LLMProvider from config."""
     from research_viz.providers.openrouter_provider import OpenRouterProvider
 
-    provider_name = get_config().llm.provider
+    cfg = get_config()
+    provider_name = cfg.llm.provider
     if provider_name == "openrouter":
-        return OpenRouterProvider()
+        return OpenRouterProvider(
+            max_retries=cfg.llm.max_retries,
+            retry_base_delay=cfg.llm.retry_base_delay,
+        )
     raise ValueError(f"Unknown LLM provider: {provider_name}")
 
 
