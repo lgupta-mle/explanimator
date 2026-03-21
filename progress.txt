@@ -32,6 +32,8 @@
 - Checkpoint module at `src/research_viz/pipeline/checkpoint.py`; use `write_checkpoint(run_dir, stage, paths)` after each stage, `read_checkpoints(run_dir)` to load, `validate_checkpoint(cp)` to verify hashes
 - `run_pipeline` has `force_restart` param; `main()` exposes it as `--force-restart` CLI flag
 - Partial audio resume: `generate_segment_beats` skips beats with existing valid WAV files; corrupted files trigger regeneration
+- All modules use `logging.getLogger(__name__)` — no print() in src/research_viz/ (except README examples)
+- Log config in `src/research_viz/__init__.py`: format `%(asctime)s %(levelname)s %(name)s: %(message)s`
 ---
 
 ## 2026-03-21 - US-001
@@ -278,4 +280,24 @@
   - `generate_explanation_from_pdf` is imported locally inside `run_pipeline`, so mock at source module not pipeline module
   - WAV header is 44 bytes — files ≤44 bytes are empty/corrupt
   - Code gen results are in-memory (scene_codes), so assembly stage re-runs code gen if only codegen checkpoint exists
+---
+
+## 2026-03-21 - US-016
+- Replaced all 178 print() statements across 7 files with structured logging
+- Added `import logging` + `logger = logging.getLogger(__name__)` to each module
+- Log levels: error (failures/exceptions), warning (empty responses, failed checks), info (progress), debug (file paths)
+- Added `logging.basicConfig()` in `src/research_viz/__init__.py` with timestamp+level+module format
+- Files changed:
+  - `src/research_viz/__init__.py` (logging.basicConfig)
+  - `src/research_viz/preprocessing/build_manim_index.py`
+  - `src/research_viz/preprocessing/manim_docs_scraper.py`
+  - `src/research_viz/preprocessing/manim_docs_embedder.py`
+  - `src/research_viz/manim_generator/pdf_explanation_generator.py`
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py`
+  - `src/research_viz/audio_generator/beat_sync_tts.py`
+  - `src/research_viz/utils/llm_utils.py`
+- **Learnings for future iterations:**
+  - `logging.basicConfig()` in `__init__.py` ensures consistent format when any module is imported
+  - Use `logger.warning` for recoverable issues (empty LLM response, failed quality check) vs `logger.error` for unrecoverable
+  - Removed `\n` prefixes from messages — logging handles line separation
 ---

@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 import base64
 import os
@@ -5,6 +6,8 @@ from typing import Optional, Type, TypeVar, Union, List, Dict, Any
 from pydantic import BaseModel
 
 from research_viz.config.pipeline_config import get_config, get_provider
+
+logger = logging.getLogger(__name__)
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -97,7 +100,7 @@ def create_llm_response(
     try:
         llm_response = get_provider().generate(messages, model_name, **kwargs)
     except Exception as e:
-        print(f"Error calling the LLM: {e}")
+        logger.error(f"Error calling the LLM: {e}")
         return None
 
     content = llm_response.content
@@ -106,7 +109,7 @@ def create_llm_response(
         try:
             return schema.model_validate_json(content)
         except Exception as e:
-            print(f"Error parsing structured output: {e}")
+            logger.error(f"Error parsing structured output: {e}")
             return None
 
     return content

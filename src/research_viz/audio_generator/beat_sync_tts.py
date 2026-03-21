@@ -5,6 +5,7 @@ Splits narration into beats (sentences/phrases), generates TTS per beat,
 and tracks timing for precise animation sync.
 """
 
+import logging
 import re
 import json
 import wave
@@ -14,6 +15,8 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
 
 from research_viz.config.pipeline_config import get_config
+
+logger = logging.getLogger(__name__)
 
 OPENAI_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
 
@@ -155,12 +158,12 @@ class BeatSyncTTS:
         segment_id = segment.get('segment_id', 'unknown')
         title = segment.get('title', 'Untitled')
 
-        print(f"\n{'='*70}")
-        print(f"Segment: {segment_id} - {title}")
-        print(f"{'='*70}")
+        logger.info("=" * 70)
+        logger.info(f"Segment: {segment_id} - {title}")
+        logger.info("=" * 70)
 
         beat_texts = split_into_beats(narration, min_words, max_words)
-        print(f"Split into {len(beat_texts)} beats")
+        logger.info(f"Split into {len(beat_texts)} beats")
 
         beats = []
         cumulative_time = 0.0
@@ -170,8 +173,8 @@ class BeatSyncTTS:
             safe_segment_id = segment_id.replace('/', '_').replace(' ', '_')
             audio_file = Path(output_dir) / f"{safe_segment_id}_beat_{beat_id}.wav"
 
-            print(f"\nBeat {beat_id}/{len(beat_texts)}:")
-            print(f"  Text: {text[:60]}{'...' if len(text) > 60 else ''}")
+            logger.info(f"Beat {beat_id}/{len(beat_texts)}:")
+            logger.info(f"  Text: {text[:60]}{'...' if len(text) > 60 else ''}")
 
             # Partial resume: skip beats with existing valid audio files
             if audio_file.exists() and audio_file.stat().st_size > 44:
@@ -181,7 +184,7 @@ class BeatSyncTTS:
                         frames = wf.getnframes()
                         rate = wf.getframerate()
                         duration = frames / rate
-                    print(f"  Skipped (existing audio: {duration:.2f}s)")
+                    logger.info(f"  Skipped (existing audio: {duration:.2f}s)")
                     beat = NarrationBeat(
                         beat_id=beat_id, text=text, audio_file=str(audio_file),
                         duration=duration, start_time=cumulative_time,
@@ -206,12 +209,12 @@ class BeatSyncTTS:
             beats.append(beat)
             cumulative_time += duration
 
-            print(f"  Duration: {duration:.2f}s (generated in {gen_time:.2f}s)")
-            print(f"  File: {audio_file.name}")
+            logger.info(f"  Duration: {duration:.2f}s (generated in {gen_time:.2f}s)")
+            logger.debug(f"  File: {audio_file.name}")
 
         total_duration = cumulative_time
-        print(f"\nTotal segment duration: {total_duration:.2f}s")
-        print(f"Average beat length: {total_duration/len(beats):.2f}s")
+        logger.info(f"Total segment duration: {total_duration:.2f}s")
+        logger.info(f"Average beat length: {total_duration/len(beats):.2f}s")
 
         return beats
 
@@ -241,9 +244,9 @@ def generate_beat_timeline(
         explanation = json.load(f)
 
     segments = explanation.get('segments', [])
-    print(f"\nGenerating beat timeline for {len(segments)} segments")
-    print(f"Voice: {voice}")
-    print(f"Beat length: {min_words}-{max_words} words\n")
+    logger.info(f"Generating beat timeline for {len(segments)} segments")
+    logger.info(f"Voice: {voice}")
+    logger.info(f"Beat length: {min_words}-{max_words} words")
 
     tts = BeatSyncTTS(voice=voice)
 
@@ -279,15 +282,15 @@ def generate_beat_timeline(
     with open(metadata_path, 'w') as f:
         json.dump(timeline_data, f, indent=2)
 
-    print(f"\nBeat timeline saved to {metadata_path}")
+    logger.info(f"Beat timeline saved to {metadata_path}")
 
     total_beats = sum(len(beats) for beats in timeline.values())
     total_duration = sum(
         sum(b.duration for b in beats)
         for beats in timeline.values()
     )
-    print(f"Total beats: {total_beats}")
-    print(f"Total duration: {total_duration:.1f}s")
+    logger.info(f"Total beats: {total_beats}")
+    logger.info(f"Total duration: {total_duration:.1f}s")
 
     return timeline
 

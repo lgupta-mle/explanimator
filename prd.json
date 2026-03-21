@@ -242,7 +242,7 @@
         "Tests pass"
       ],
       "priority": 16,
-      "passes": false,
+      "passes": true,
       "notes": "Independent — can be done in parallel with other stories. Touches all files in src/research_viz/."
     },
     {

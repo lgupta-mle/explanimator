@@ -5,6 +5,7 @@ Complete pipeline: PDF → 3B1B Explanation → Manim Code with execution feedba
 Uses RAG only when execution errors occur.
 """
 
+import logging
 import os
 import json
 import subprocess
@@ -15,6 +16,8 @@ from typing import Optional, List
 from pydantic import BaseModel, Field
 import tyro
 from dotenv import load_dotenv
+
+logger = logging.getLogger(__name__)
 
 from research_viz.manim_generator.pdf_explanation_generator import (
     create_pdf_llm_response,
@@ -120,7 +123,7 @@ def fetch_rag_context_for_error(error_message: str, chroma_path: str = "data/man
             return "\n\n---\n\n".join(docs)
 
     except Exception as e:
-        print(f"    RAG error: {e}")
+        logger.error(f"    RAG error: {e}")
 
     return ""
 
@@ -228,7 +231,7 @@ Output a JSON object with:
     previous_error = None
 
     for attempt in range(max_retries):
-        print(f"    Attempt {attempt + 1}/{max_retries}")
+        logger.info(f"    Attempt {attempt + 1}/{max_retries}")
 
         # Build prompt with error feedback if retry
         if previous_error:
@@ -259,7 +262,7 @@ Fix the errors and regenerate the complete scene code.
         content = llm_response.content
 
         if not content:
-            print(f"      Empty response from LLM")
+            logger.warning(f"      Empty response from LLM")
             continue
 
         try:
@@ -272,24 +275,24 @@ Fix the errors and regenerate the complete scene code.
                 try:
                     scene_code = ManimSceneCode.model_validate_json(json_match.group())
                 except:
-                    print(f"      Parse error: {e}")
+                    logger.error(f"      Parse error: {e}")
                     continue
             else:
-                print(f"      Parse error: {e}")
+                logger.error(f"      Parse error: {e}")
                 continue
 
         # Execute the code
-        print(f"      Executing Manim...")
+        logger.info(f"      Executing Manim...")
         success, output = execute_manim_scene(scene_code.code, scene_code.class_name)
 
         if success:
-            print(f"      SUCCESS!")
+            logger.info(f"      SUCCESS!")
             return scene_code
         else:
-            print(f"      Execution failed")
+            logger.warning(f"      Execution failed")
             previous_error = output
 
-    print(f"    Failed after {max_retries} attempts")
+    logger.error(f"    Failed after {max_retries} attempts")
     return None
 
 
@@ -307,25 +310,25 @@ def generate_all_scenes(
     # Load beat timeline if available
     beat_timeline_by_segment = {}
     if audio_timeline_path and os.path.exists(audio_timeline_path):
-        print(f"\nLoading beat timeline from {audio_timeline_path}")
+        logger.info(f"Loading beat timeline from {audio_timeline_path}")
         with open(audio_timeline_path, 'r') as f:
             audio_timeline = json.load(f)
             beat_timeline_by_segment = audio_timeline.get('segments', {})
-        print(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
+        logger.info(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
 
-    print(f"\nGenerating Manim code for {len(segments)} segments")
-    print(f"Running example: {running_example[:100]}...")
+    logger.info(f"Generating Manim code for {len(segments)} segments")
+    logger.info(f"Running example: {running_example[:100]}...")
 
     scene_codes = []
     for i, segment in enumerate(segments):
         segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
-        print(f"\n[{i+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')}")
+        logger.info(f"[{i+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')}")
         
         # Get beat timeline for this segment
         segment_beats = None
         if segment_id in beat_timeline_by_segment:
             segment_beats = beat_timeline_by_segment[segment_id].get('beats', [])
-            print(f"  Using beat timing: {len(segment_beats)} beats")
+            logger.info(f"  Using beat timing: {len(segment_beats)} beats")
         
         scene_code = generate_scene_code(
             segment=segment,
@@ -417,15 +420,15 @@ def run_pipeline(
     # Step 1: Generate or load explanation
     explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
     if skip_explanation and explanation_path:
-        print(f"Loading existing explanation: {explanation_path}")
+        logger.info(f"Loading existing explanation: {explanation_path}")
         with open(explanation_path, 'r') as f:
             explanation = json.load(f)
     elif _is_stage_cached(checkpoints, "explanation"):
-        print(f"Resuming: explanation stage cached, loading from checkpoint")
+        logger.info(f"Resuming: explanation stage cached, loading from checkpoint")
         with open(explanation_output, 'r') as f:
             explanation = json.load(f)
     else:
-        print(f"Generating explanation from PDF: {pdf_path}")
+        logger.info(f"Generating explanation from PDF: {pdf_path}")
         from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
         explanation = generate_explanation_from_pdf(
             pdf_path=pdf_path,
@@ -434,7 +437,7 @@ def run_pipeline(
             max_judge_attempts=3
         )
         if not explanation:
-            print("Failed to generate explanation")
+            logger.error("Failed to generate explanation")
             return None
         write_checkpoint(output_dir, "explanation", [explanation_output])
 
@@ -467,9 +470,9 @@ def run_pipeline(
         )
 
     if tts_cached and codegen_cached:
-        print("Resuming: TTS and codegen stages cached")
+        logger.info("Resuming: TTS and codegen stages cached")
     else:
-        print(f"\nLaunching TTS and code generation in parallel...")
+        logger.info(f"Launching TTS and code generation in parallel...")
 
         with ThreadPoolExecutor(max_workers=2) as executor:
             # Only submit stages that aren't cached
@@ -477,11 +480,11 @@ def run_pipeline(
             if not tts_cached:
                 futures[executor.submit(_run_tts)] = "TTS"
             else:
-                print("  TTS cached, skipping")
+                logger.info("  TTS cached, skipping")
             if not codegen_cached:
                 futures[executor.submit(_run_code_gen)] = "Code generation"
             else:
-                print("  Code generation cached, skipping")
+                logger.info("  Code generation cached, skipping")
 
             results = {}
             error = None
@@ -498,7 +501,7 @@ def run_pipeline(
 
             if error:
                 stage_name, exc = error
-                print(f"{stage_name} failed: {exc}")
+                logger.error(f"{stage_name} failed: {exc}")
                 return None
 
             # Write checkpoints for completed stages
@@ -511,7 +514,7 @@ def run_pipeline(
     output_path = f"{output_dir}/{pdf_stem}_animation.py"
 
     if _is_stage_cached(checkpoints, "assembly"):
-        print(f"Resuming: assembly stage cached")
+        logger.info(f"Resuming: assembly stage cached")
     else:
         # Need scene_codes - either from this run or regenerate
         if codegen_cached:
@@ -521,7 +524,7 @@ def run_pipeline(
             scene_codes = results.get("Code generation")
 
         if not scene_codes:
-            print("No scenes generated successfully")
+            logger.error("No scenes generated successfully")
             return None
 
         paper_title = explanation.get('paper_title', pdf_stem)
@@ -531,7 +534,7 @@ def run_pipeline(
             f.write(complete_code)
         write_checkpoint(output_dir, "assembly", [output_path])
 
-    print(f"\nGenerated pipeline output: {output_path}")
+    logger.info(f"Generated pipeline output: {output_path}")
 
     return output_path
 
@@ -547,7 +550,7 @@ def get_video_duration(video_path: str) -> float:
         )
         return float(result.stdout.strip())
     except Exception as e:
-        print(f"Error getting video duration: {e}")
+        logger.error(f"Error getting video duration: {e}")
         return 0.0
 
 
@@ -562,7 +565,7 @@ def get_audio_duration(audio_path: str) -> float:
         )
         return float(result.stdout.strip())
     except Exception as e:
-        print(f"Error getting audio duration: {e}")
+        logger.error(f"Error getting audio duration: {e}")
         return 0.0
 
 
@@ -633,7 +636,7 @@ def extend_video_to_duration(video_path: str, target_duration: float, output_pat
 
         return True
     except Exception as e:
-        print(f"Error extending video: {e}")
+        logger.error(f"Error extending video: {e}")
         return False
 
 
@@ -653,7 +656,7 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
         current_duration = get_video_duration(video_path)
         
         if current_duration == 0:
-            print(f"Error: Could not get video duration")
+            logger.error(f"Could not get video duration")
             return False
         
         # Calculate speed factor (PTS multiplier)
@@ -669,7 +672,7 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
                 subprocess.run(['cp', video_path, output_path], check=True)
                 return True
         
-        print(f"    Adjusting speed: {current_duration:.2f}s → {target_duration:.2f}s (factor: {speed_factor:.3f}x)")
+        logger.info(f"    Adjusting speed: {current_duration:.2f}s -> {target_duration:.2f}s (factor: {speed_factor:.3f}x)")
         
         # Apply speed adjustment
         # Note: setpts changes playback speed without re-encoding frames
@@ -685,11 +688,11 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
         
         # Verify final duration
         final_duration = get_video_duration(output_path)
-        print(f"    Result: {final_duration:.2f}s (target: {target_duration:.2f}s)")
+        logger.info(f"    Result: {final_duration:.2f}s (target: {target_duration:.2f}s)")
         
         return True
     except Exception as e:
-        print(f"Error adjusting video speed: {e}")
+        logger.error(f"Error adjusting video speed: {e}")
         return False
 
 
@@ -724,7 +727,7 @@ def sync_video_audio_single_pass(
         audio_duration = get_audio_duration(audio_path)
 
         if video_duration == 0 or audio_duration == 0:
-            print(f"Error: Could not get duration (video={video_duration}, audio={audio_duration})")
+            logger.error(f"Could not get duration (video={video_duration}, audio={audio_duration})")
             return False
 
         # Target duration includes 0.5s buffer so video fully covers audio
@@ -771,7 +774,7 @@ def sync_video_audio_single_pass(
         return True
 
     except Exception as e:
-        print(f"Error in single-pass video/audio sync: {e}")
+        logger.error(f"Error in single-pass video/audio sync: {e}")
         return False
 
 
@@ -800,7 +803,7 @@ def adjust_video_to_audio_duration(
             ], capture_output=True, check=True)
             return True
     except Exception as e:
-        print(f"Error adjusting video to audio duration: {e}")
+        logger.error(f"Error adjusting video to audio duration: {e}")
         return False
 
 
@@ -836,7 +839,7 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
 
         return True
     except Exception as e:
-        print(f"Error syncing audio with video: {e}")
+        logger.error(f"Error syncing audio with video: {e}")
         return False
 
 
@@ -852,7 +855,7 @@ def _render_scene(
     video_path = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
 
     if os.path.exists(video_path):
-        print(f"  [{i+1}] Video already exists: {video_path}")
+        logger.info(f"  [{i+1}] Video already exists: {video_path}")
         return video_path
 
     temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
@@ -860,22 +863,22 @@ def _render_scene(
         f.write("from manim import *\nimport numpy as np\n\n")
         f.write(scene_code.code)
 
-    print(f"  [{i+1}] Rendering Manim scene {scene_code.scene_id}...")
+    logger.info(f"  [{i+1}] Rendering Manim scene {scene_code.scene_id}...")
     try:
         result = subprocess.run(
             ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
             capture_output=True, text=True, timeout=300
         )
         if result.returncode != 0:
-            print(f"  [{i+1}] ERROR: Manim render failed")
-            print(result.stderr)
+            logger.error(f"  [{i+1}] Manim render failed")
+            logger.error(result.stderr)
             return None
     except Exception as e:
-        print(f"  [{i+1}] ERROR: {e}")
+        logger.error(f"  [{i+1}] {e}")
         return None
 
     if not os.path.exists(video_path):
-        print(f"  [{i+1}] ERROR: Rendered video not found at {video_path}")
+        logger.error(f"  [{i+1}] Rendered video not found at {video_path}")
         return None
 
     return video_path
@@ -893,17 +896,17 @@ def _sync_scene(
     """Sync a rendered scene with its audio. Returns the synced (or fallback) video path."""
     synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
     if os.path.exists(synced_video_path):
-        print(f"  [{i+1}] Synced video already exists: {synced_video_path}")
+        logger.info(f"  [{i+1}] Synced video already exists: {synced_video_path}")
         return synced_video_path
 
     segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
     if not segment_audio_data:
-        print(f"  [{i+1}] WARNING: No audio for segment {segment_id}, skipping sync")
+        logger.warning(f"  [{i+1}] No audio for segment {segment_id}, skipping sync")
         return video_path
 
     beats = segment_audio_data.get('beats', [])
     if not beats:
-        print(f"  [{i+1}] WARNING: No beats for segment {segment_id}")
+        logger.warning(f"  [{i+1}] No beats for segment {segment_id}")
         return video_path
 
     # Combine beat audio files
@@ -921,12 +924,12 @@ def _sync_scene(
         ], capture_output=True)
         os.unlink(concat_list)
 
-    print(f"  [{i+1}] Syncing audio with video (single-pass, mode: {sync_mode})...")
+    logger.info(f"  [{i+1}] Syncing audio with video (single-pass, mode: {sync_mode})...")
     if sync_video_audio_single_pass(video_path, segment_audio_path, synced_video_path, max_speed_change):
-        print(f"  [{i+1}] SUCCESS: {synced_video_path}")
+        logger.info(f"  [{i+1}] SUCCESS: {synced_video_path}")
         return synced_video_path
     else:
-        print(f"  [{i+1}] WARNING: Single-pass sync failed, using raw video")
+        logger.warning(f"  [{i+1}] Single-pass sync failed, using raw video")
         return video_path
 
 
@@ -965,11 +968,11 @@ def render_and_sync_all_scenes(
     segments = explanation.get('segments', [])
     cfg = get_config()
 
-    print(f"\n{'='*70}")
-    print("RENDERING AND SYNCING SCENES (pipeline-parallel)")
-    print(f"{'='*70}")
-    print(f"Scenes: {len(scene_codes)} | Quality: {quality} | Sync: {sync_mode}")
-    print(f"Render workers: {cfg.video.render_workers} | Sync workers: {cfg.video.sync_workers}")
+    logger.info("=" * 70)
+    logger.info("RENDERING AND SYNCING SCENES (pipeline-parallel)")
+    logger.info("=" * 70)
+    logger.info(f"Scenes: {len(scene_codes)} | Quality: {quality} | Sync: {sync_mode}")
+    logger.info(f"Render workers: {cfg.video.render_workers} | Sync workers: {cfg.video.sync_workers}")
 
     # Result slots — preserve scene ordering
     synced_videos: list[Optional[str]] = [None] * len(scene_codes)
@@ -1010,14 +1013,14 @@ def render_and_sync_all_scenes(
     final_videos = [v for v in synced_videos if v is not None]
 
     if not final_videos:
-        print("\nERROR: No videos to stitch")
+        logger.error("No videos to stitch")
         return None
 
     # Stitch all videos together
-    print(f"\n{'='*70}")
-    print("STITCHING VIDEOS")
-    print(f"{'='*70}")
-    print(f"Videos to stitch: {len(final_videos)}")
+    logger.info("=" * 70)
+    logger.info("STITCHING VIDEOS")
+    logger.info("=" * 70)
+    logger.info(f"Videos to stitch: {len(final_videos)}")
 
     concat_list_path = f"{output_dir}/final_concat.txt"
     with open(concat_list_path, 'w') as f:
@@ -1035,13 +1038,13 @@ def render_and_sync_all_scenes(
             final_output
         ], capture_output=True, check=True)
 
-        print(f"\nSUCCESS! Final video: {final_output}")
+        logger.info(f"SUCCESS! Final video: {final_output}")
         final_duration = get_video_duration(final_output)
-        print(f"Duration: {final_duration:.1f}s ({final_duration/60:.1f} min)")
+        logger.info(f"Duration: {final_duration:.1f}s ({final_duration/60:.1f} min)")
 
         return final_output
     except Exception as e:
-        print(f"ERROR stitching videos: {e}")
+        logger.error(f"Error stitching videos: {e}")
         return None
 
 
@@ -1115,13 +1118,13 @@ def main(
 
     # Step 1: Load or generate explanation
     if explanation_path and os.path.exists(explanation_path):
-        print(f"Loading existing explanation: {explanation_path}")
+        logger.info(f"Loading existing explanation: {explanation_path}")
         with open(explanation_path, 'r') as f:
             explanation = json.load(f)
         used_explanation_path = explanation_path
         pdf_stem = Path(explanation_path).stem.replace('_explanation', '')
     elif pdf_path and os.path.exists(pdf_path):
-        print(f"Generating explanation from PDF: {pdf_path}")
+        logger.info(f"Generating explanation from PDF: {pdf_path}")
         from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
         pdf_stem = Path(pdf_path).stem
         explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
@@ -1132,13 +1135,13 @@ def main(
             max_judge_attempts=3
         )
         if not explanation:
-            print("Failed to generate explanation")
+            logger.error("Failed to generate explanation")
             return
         used_explanation_path = explanation_output
     else:
-        print("ERROR: Provide either --pdf-path or --explanation-path")
-        print("  --pdf-path: Path to research paper PDF")
-        print("  --explanation-path: Path to existing explanation JSON")
+        logger.error("Provide either --pdf-path or --explanation-path")
+        logger.error("  --pdf-path: Path to research paper PDF")
+        logger.error("  --explanation-path: Path to existing explanation JSON")
         return
 
     # Step 2: Generate audio FIRST if requested (needed for beat-sync code generation)
@@ -1148,14 +1151,14 @@ def main(
         audio_timeline_path = f"{audio_dir}/beat_timeline.json"
 
         if os.path.exists(audio_timeline_path):
-            print(f"\n{'='*70}")
-            print("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
-            print(f"{'='*70}")
-            print(f"Using existing: {audio_timeline_path}")
+            logger.info("=" * 70)
+            logger.info("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
+            logger.info("=" * 70)
+            logger.info(f"Using existing: {audio_timeline_path}")
         else:
-            print(f"\n{'='*70}")
-            print("GENERATING TTS AUDIO")
-            print(f"{'='*70}")
+            logger.info("=" * 70)
+            logger.info("GENERATING TTS AUDIO")
+            logger.info("=" * 70)
 
             from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
 
@@ -1165,8 +1168,8 @@ def main(
                 voice=tts_voice
             )
 
-            print(f"\n✓ Audio generation complete!")
-            print(f"  Timeline: {audio_timeline_path}")
+            logger.info(f"Audio generation complete!")
+            logger.info(f"  Timeline: {audio_timeline_path}")
 
     # Step 3: Generate Manim code (skip if already exists)
     # Now with beat timing information if audio was generated
@@ -1174,19 +1177,19 @@ def main(
     scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
 
     if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
-        print(f"\n{'='*70}")
-        print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
-        print(f"{'='*70}")
-        print(f"Using existing: {code_output_path}")
+        logger.info("=" * 70)
+        logger.info("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
+        logger.info("=" * 70)
+        logger.info(f"Using existing: {code_output_path}")
 
         # Load scene metadata
         with open(scene_metadata_path, 'r') as f:
             scene_data = json.load(f)
         scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
     else:
-        print(f"\n{'='*70}")
-        print("GENERATING MANIM CODE")
-        print(f"{'='*70}")
+        logger.info("=" * 70)
+        logger.info("GENERATING MANIM CODE")
+        logger.info("=" * 70)
         scene_codes = generate_all_scenes(
             explanation=explanation,
             model_name=model_name,
@@ -1195,7 +1198,7 @@ def main(
         )
 
         if not scene_codes:
-            print("No scenes generated successfully")
+            logger.error("No scenes generated successfully")
             return
 
         # Save assembled code
@@ -1208,16 +1211,16 @@ def main(
         with open(scene_metadata_path, 'w') as f:
             json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
 
-        print(f"\n{'='*70}")
-        print(f"CODE GENERATION COMPLETE")
-        print(f"{'='*70}")
-        print(f"Generated {len(scene_codes)} scenes")
-        print(f"Output: {code_output_path}")
+        logger.info("=" * 70)
+        logger.info(f"CODE GENERATION COMPLETE")
+        logger.info("=" * 70)
+        logger.info(f"Generated {len(scene_codes)} scenes")
+        logger.info(f"Output: {code_output_path}")
 
     # Step 4: Render video if requested
     if render_video:
         if not audio_timeline_path:
-            print("\nERROR: Cannot render video without audio. Enable --generate-audio")
+            logger.error("Cannot render video without audio. Enable --generate-audio")
             return
 
         final_video = render_and_sync_all_scenes(
@@ -1231,10 +1234,10 @@ def main(
         )
 
         if final_video:
-            print(f"\n✓ Pipeline complete!")
-            print(f"  Final video: {final_video}")
+            logger.info(f"Pipeline complete!")
+            logger.info(f"  Final video: {final_video}")
         else:
-            print(f"\n✗ Video rendering failed")
+            logger.error(f"Video rendering failed")
 
 
 if __name__ == "__main__":

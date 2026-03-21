@@ -2,6 +2,7 @@
 Generate embeddings for Manim documentation chunks and store in ChromaDB.
 """
 
+import logging
 import os
 from typing import List
 import chromadb
@@ -9,6 +10,8 @@ from openai import OpenAI
 import tiktoken
 from research_viz.schemas.manim_docs_schemas import DocChunk
 from tqdm import tqdm
+
+logger = logging.getLogger(__name__)
 
 
 class ManimDocsEmbedder:
@@ -59,7 +62,7 @@ class ManimDocsEmbedder:
         Processes chunks in batches for efficiency.
         """
         total_chunks = len(chunks)
-        print(f"Embedding and storing {total_chunks} chunks...")
+        logger.info(f"Embedding and storing {total_chunks} chunks...")
 
         for i in tqdm(range(0, total_chunks, self.batch_size), desc="Processing batches"):
             batch = chunks[i:i + self.batch_size]
@@ -89,7 +92,7 @@ class ManimDocsEmbedder:
                 metadatas=metadatas
             )
 
-        print(f"Successfully stored {total_chunks} chunks in ChromaDB")
+        logger.info(f"Successfully stored {total_chunks} chunks in ChromaDB")
 
     def _get_embeddings_batch(self, texts: List[str]) -> List[List[float]]:
         """Get embeddings for a batch of texts from OpenAI."""
@@ -97,7 +100,7 @@ class ManimDocsEmbedder:
         for text in texts:
             tokens = self.encoder.encode(text)
             if len(tokens) > self.max_tokens:
-                print(f"Warning: Truncating chunk from {len(tokens)} to {self.max_tokens} tokens")
+                logger.warning(f"Truncating chunk from {len(tokens)} to {self.max_tokens} tokens")
                 truncated_tokens = tokens[:self.max_tokens]
                 text = self.encoder.decode(truncated_tokens)
             validated_texts.append(text)

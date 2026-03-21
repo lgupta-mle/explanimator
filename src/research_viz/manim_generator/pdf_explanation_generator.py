@@ -6,6 +6,7 @@ Uses OpenRouter's native PDF processing and includes an LLM judge for quality ve
 """
 
 import base64
+import logging
 import os
 import json
 from pathlib import Path
@@ -15,6 +16,8 @@ import tyro
 from dotenv import load_dotenv
 
 from research_viz.config.pipeline_config import get_config, get_provider
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -163,7 +166,7 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
         content = llm_response.content
 
         if not content:
-            print(f"    Judge returned empty content")
+            logger.warning(f"    Judge returned empty content")
             return JudgeResult(score=0, criteria_scores={}, feedback="Empty response")
 
         try:
@@ -176,11 +179,11 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
                     return JudgeResult.model_validate_json(json_match.group())
                 except:
                     pass
-            print(f"    Judge parse error: {e}")
+            logger.error(f"    Judge parse error: {e}")
             return JudgeResult(score=0, criteria_scores={}, feedback=f"Parse error: {str(e)[:100]}")
 
     except Exception as e:
-        print(f"    Judge exception: {e}")
+        logger.error(f"    Judge exception: {e}")
         return JudgeResult(score=0, criteria_scores={}, feedback=f"Exception: {str(e)[:100]}")
 
 
@@ -248,7 +251,7 @@ Each segment needs:
     previous_feedback = None
 
     for attempt in range(max_attempts):
-        print(f"\nAttempt {attempt + 1}/{max_attempts}")
+        logger.info(f"Attempt {attempt + 1}/{max_attempts}")
 
         # Build prompt with feedback if this is a retry
         if previous_feedback:
@@ -264,7 +267,7 @@ Generate a revised explanation that addresses ALL the feedback above.
             user_prompt = base_user_prompt
 
         # Generate explanation
-        print("  Generating explanation from PDF...")
+        logger.info("  Generating explanation from PDF...")
         try:
             from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
             llm_response = create_pdf_llm_response(
@@ -285,44 +288,44 @@ Generate a revised explanation that addresses ALL the feedback above.
 
         content = llm_response.content
         if not content:
-            print(f"  Error: Empty response from LLM")
+            logger.error(f"  Empty response from LLM")
             continue
 
-        print(f"  Generated explanation ({len(content)} chars)")
+        logger.info(f"  Generated explanation ({len(content)} chars)")
 
         # Segment count validation (always runs, even when judge is skipped)
         if not _validate_segment_count(content):
-            print(f"  Segment count outside 2-3 range, retrying...")
+            logger.warning(f"  Segment count outside 2-3 range, retrying...")
             continue
 
         if skip_judge:
-            print("  Skipping judge (skip_judge enabled for this tier)")
+            logger.info("  Skipping judge (skip_judge enabled for this tier)")
             try:
                 return json.loads(content)
             except json.JSONDecodeError:
                 return {"raw_content": content}
 
         # Judge the explanation
-        print("  Judging explanation quality...")
+        logger.info("  Judging explanation quality...")
         judge_result = judge_explanation(content, model_name)
 
-        print(f"  Score: {judge_result.score}")
-        print(f"  Criteria: {judge_result.criteria_scores}")
+        logger.info(f"  Score: {judge_result.score}")
+        logger.info(f"  Criteria: {judge_result.criteria_scores}")
 
         if judge_result.score == 1:
-            print("  PASSED quality check!")
+            logger.info("  PASSED quality check!")
             try:
                 return json.loads(content)
             except json.JSONDecodeError:
                 return {"raw_content": content}
 
         # Failed - prepare feedback for next attempt
-        print(f"  FAILED quality check")
+        logger.warning(f"  FAILED quality check")
         if judge_result.feedback:
-            print(f"  Feedback: {judge_result.feedback[:200]}...")
+            logger.info(f"  Feedback: {judge_result.feedback[:200]}...")
             previous_feedback = judge_result.feedback
 
-    print(f"\nFailed to pass quality check after {max_attempts} attempts")
+    logger.error(f"Failed to pass quality check after {max_attempts} attempts")
     return None
 
 
@@ -346,9 +349,9 @@ def generate_explanation_from_pdf(
     Returns:
         The generated explanation as a dict, or None on error
     """
-    print(f"PDF: {pdf_path}")
-    print(f"Model: {model_name}")
-    print(f"Max judge attempts: {max_judge_attempts}")
+    logger.info(f"PDF: {pdf_path}")
+    logger.info(f"Model: {model_name}")
+    logger.info(f"Max judge attempts: {max_judge_attempts}")
 
     explanation = generate_with_feedback_loop(
         pdf_path=pdf_path,
@@ -361,13 +364,13 @@ def generate_explanation_from_pdf(
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(explanation, f, indent=2)
-        print(f"\nExplanation saved to: {output_path}")
+        logger.info(f"Explanation saved to: {output_path}")
         if "paper_title" in explanation:
-            print(f"Paper: {explanation['paper_title']}")
+            logger.info(f"Paper: {explanation['paper_title']}")
         if "segments" in explanation:
-            print(f"Segments: {len(explanation['segments'])}")
+            logger.info(f"Segments: {len(explanation['segments'])}")
         if "running_example" in explanation:
-            print(f"Running example: {explanation['running_example']}")
+            logger.info(f"Running example: {explanation['running_example']}")
 
     return explanation
 
@@ -399,7 +402,7 @@ def main(
         model_name = get_config().llm.explanation_model
 
     if not os.path.exists(pdf_path):
-        print(f"ERROR: PDF not found: {pdf_path}")
+        logger.error(f"PDF not found: {pdf_path}")
         return
 
     if output_path is None:
