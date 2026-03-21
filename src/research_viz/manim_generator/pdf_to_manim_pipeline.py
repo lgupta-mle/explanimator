@@ -25,6 +25,7 @@ from research_viz.manim_generator.pdf_explanation_generator import (
 )
 from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B, Segment3B1B
 from research_viz.config.pipeline_config import get_config
+from research_viz.pipeline.checkpoint import read_checkpoints, validate_checkpoint, write_checkpoint
 
 load_dotenv()
 
@@ -371,13 +372,21 @@ import numpy as np
     return "\n".join(parts)
 
 
+def _is_stage_cached(checkpoints: dict, stage_name: str) -> bool:
+    """Check if a stage has a valid checkpoint (artifacts exist and hashes match)."""
+    if stage_name not in checkpoints:
+        return False
+    return validate_checkpoint(checkpoints[stage_name])
+
+
 def run_pipeline(
     pdf_path: str,
     output_dir: str = "src/research_viz/manim_generator/output",
     model_name: Optional[str] = None,
     max_retries: Optional[int] = None,
     skip_explanation: bool = False,
-    explanation_path: Optional[str] = None
+    explanation_path: Optional[str] = None,
+    force_restart: bool = False,
 ) -> Optional[str]:
     """
     Run the complete PDF to Manim pipeline.
@@ -389,6 +398,7 @@ def run_pipeline(
         max_retries: Max retries for code generation per segment
         skip_explanation: If True, use existing explanation file
         explanation_path: Path to existing explanation JSON (if skip_explanation=True)
+        force_restart: If True, ignore all checkpoints and re-run from scratch
 
     Returns:
         Path to generated Manim code file, or None on failure
@@ -401,15 +411,22 @@ def run_pipeline(
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     pdf_stem = Path(pdf_path).stem
 
+    # Load checkpoints for resume support
+    checkpoints = {} if force_restart else read_checkpoints(output_dir)
+
     # Step 1: Generate or load explanation
+    explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
     if skip_explanation and explanation_path:
         print(f"Loading existing explanation: {explanation_path}")
         with open(explanation_path, 'r') as f:
             explanation = json.load(f)
+    elif _is_stage_cached(checkpoints, "explanation"):
+        print(f"Resuming: explanation stage cached, loading from checkpoint")
+        with open(explanation_output, 'r') as f:
+            explanation = json.load(f)
     else:
         print(f"Generating explanation from PDF: {pdf_path}")
         from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
-        explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
         explanation = generate_explanation_from_pdf(
             pdf_path=pdf_path,
             output_path=explanation_output,
@@ -419,11 +436,15 @@ def run_pipeline(
         if not explanation:
             print("Failed to generate explanation")
             return None
+        write_checkpoint(output_dir, "explanation", [explanation_output])
 
     # Step 2: Run TTS and code generation in parallel
     # Both only depend on the explanation, not on each other.
     audio_dir = f"{output_dir}/audio_beats"
     audio_timeline_path = f"{audio_dir}/beat_timeline.json"
+
+    tts_cached = _is_stage_cached(checkpoints, "tts")
+    codegen_cached = _is_stage_cached(checkpoints, "codegen")
 
     def _run_tts():
         from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
@@ -445,47 +466,72 @@ def run_pipeline(
             audio_timeline_path=audio_timeline_path,
         )
 
-    print(f"\nLaunching TTS and code generation in parallel...")
+    if tts_cached and codegen_cached:
+        print("Resuming: TTS and codegen stages cached")
+    else:
+        print(f"\nLaunching TTS and code generation in parallel...")
 
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        tts_future = executor.submit(_run_tts)
-        code_future = executor.submit(_run_code_gen)
-        futures = {tts_future: "TTS", code_future: "Code generation"}
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            # Only submit stages that aren't cached
+            futures = {}
+            if not tts_cached:
+                futures[executor.submit(_run_tts)] = "TTS"
+            else:
+                print("  TTS cached, skipping")
+            if not codegen_cached:
+                futures[executor.submit(_run_code_gen)] = "Code generation"
+            else:
+                print("  Code generation cached, skipping")
 
-        results = {}
-        error = None
-        for future in as_completed(futures):
-            stage_name = futures[future]
-            try:
-                results[stage_name] = future.result()
-            except Exception as exc:
-                error = (stage_name, exc)
-                # Fail-fast: cancel the other future
-                for f in futures:
-                    if f is not future:
-                        f.cancel()
-                break
+            results = {}
+            error = None
+            for future in as_completed(futures):
+                stage_name = futures[future]
+                try:
+                    results[stage_name] = future.result()
+                except Exception as exc:
+                    error = (stage_name, exc)
+                    for f in futures:
+                        if f is not future:
+                            f.cancel()
+                    break
 
-    if error:
-        stage_name, exc = error
-        print(f"{stage_name} failed: {exc}")
-        return None
+            if error:
+                stage_name, exc = error
+                print(f"{stage_name} failed: {exc}")
+                return None
 
-    scene_codes = results["Code generation"]
-    if not scene_codes:
-        print("No scenes generated successfully")
-        return None
+            # Write checkpoints for completed stages
+            if "TTS" in results:
+                write_checkpoint(output_dir, "tts", [audio_timeline_path])
+            if "Code generation" in results:
+                pass  # Code gen artifacts are in-memory scene_codes, checkpointed at assembly
 
     # Step 3: Assemble and save
-    paper_title = explanation.get('paper_title', pdf_stem)
-    complete_code = assemble_complete_code(scene_codes, paper_title)
-
     output_path = f"{output_dir}/{pdf_stem}_animation.py"
-    with open(output_path, 'w') as f:
-        f.write(complete_code)
 
-    print(f"\nGenerated {len(scene_codes)} scenes")
-    print(f"Output: {output_path}")
+    if _is_stage_cached(checkpoints, "assembly"):
+        print(f"Resuming: assembly stage cached")
+    else:
+        # Need scene_codes - either from this run or regenerate
+        if codegen_cached:
+            # Re-run code gen to get scene_codes (they're in-memory)
+            scene_codes = _run_code_gen()
+        else:
+            scene_codes = results.get("Code generation")
+
+        if not scene_codes:
+            print("No scenes generated successfully")
+            return None
+
+        paper_title = explanation.get('paper_title', pdf_stem)
+        complete_code = assemble_complete_code(scene_codes, paper_title)
+
+        with open(output_path, 'w') as f:
+            f.write(complete_code)
+        write_checkpoint(output_dir, "assembly", [output_path])
+
+    print(f"\nGenerated pipeline output: {output_path}")
 
     return output_path
 
@@ -1010,7 +1056,8 @@ def main(
     render_video: bool = False,
     video_quality: Optional[str] = None,
     sync_mode: Optional[str] = None,
-    max_speed_change: Optional[float] = None
+    max_speed_change: Optional[float] = None,
+    force_restart: bool = False,
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -1027,6 +1074,7 @@ def main(
         video_quality: Manim quality (l=low, m=medium, h=high)
         sync_mode: Audio-video sync mode - "segment" (default) or "beat"
         max_speed_change: Maximum video speed adjustment (0.3 = 30%)
+        force_restart: Ignore all checkpoints and re-run from scratch
 
     Sync Modes:
         - "segment": Adjust entire segment video to match audio (smoother, simpler)

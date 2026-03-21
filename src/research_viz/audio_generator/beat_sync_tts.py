@@ -173,6 +173,25 @@ class BeatSyncTTS:
             print(f"\nBeat {beat_id}/{len(beat_texts)}:")
             print(f"  Text: {text[:60]}{'...' if len(text) > 60 else ''}")
 
+            # Partial resume: skip beats with existing valid audio files
+            if audio_file.exists() and audio_file.stat().st_size > 44:
+                import wave
+                try:
+                    with wave.open(str(audio_file), 'rb') as wf:
+                        frames = wf.getnframes()
+                        rate = wf.getframerate()
+                        duration = frames / rate
+                    print(f"  Skipped (existing audio: {duration:.2f}s)")
+                    beat = NarrationBeat(
+                        beat_id=beat_id, text=text, audio_file=str(audio_file),
+                        duration=duration, start_time=cumulative_time,
+                    )
+                    beats.append(beat)
+                    cumulative_time += duration
+                    continue
+                except Exception:
+                    pass  # Regenerate if file is corrupted
+
             start_time = time.monotonic()
             duration = self.generate_beat_audio(text, str(audio_file))
             gen_time = time.monotonic() - start_time

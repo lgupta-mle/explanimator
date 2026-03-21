@@ -227,7 +227,7 @@
         "Tests pass"
       ],
       "priority": 15,
-      "passes": false,
+      "passes": true,
       "notes": "Depends on US-014. Modify pdf_to_manim_pipeline.py and beat_sync_tts.py."
     },
     {
