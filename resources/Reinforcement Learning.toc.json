@@ -1,0 +1,650 @@
+[
+  {
+    "entry_type": "chapter",
+    "number": "1",
+    "title": "The Reinforcement Learning Problem",
+    "logical_page": 1
+  },
+  {
+    "entry_type": "section",
+    "number": "1.1",
+    "title": "Reinforcement Learning",
+    "logical_page": 2
+  },
+  {
+    "entry_type": "section",
+    "number": "1.2",
+    "title": "Examples",
+    "logical_page": 5
+  },
+  {
+    "entry_type": "section",
+    "number": "1.3",
+    "title": "Elements of Reinforcement Learning",
+    "logical_page": 7
+  },
+  {
+    "entry_type": "section",
+    "number": "1.4",
+    "title": "Limitations and Scope",
+    "logical_page": 9
+  },
+  {
+    "entry_type": "section",
+    "number": "1.5",
+    "title": "An Extended Example: Tic-Tac-Toe",
+    "logical_page": 10
+  },
+  {
+    "entry_type": "section",
+    "number": "1.6",
+    "title": "Summary",
+    "logical_page": 15
+  },
+  {
+    "entry_type": "section",
+    "number": "1.7",
+    "title": "History of Reinforcement Learning",
+    "logical_page": 16
+  },
+  {
+    "entry_type": "section",
+    "number": "1.8",
+    "title": "Bibliographical Remarks",
+    "logical_page": 25
+  },
+  {
+    "entry_type": "part",
+    "number": "I",
+    "title": "Tabular Solution Methods",
+    "logical_page": 27
+  },
+  {
+    "entry_type": "chapter",
+    "number": "2",
+    "title": "Multi-arm Bandits",
+    "logical_page": 31
+  },
+  {
+    "entry_type": "section",
+    "number": "2.1",
+    "title": "An n-Armed Bandit Problem",
+    "logical_page": 32
+  },
+  {
+    "entry_type": "section",
+    "number": "2.2",
+    "title": "Action-Value Methods",
+    "logical_page": 33
+  },
+  {
+    "entry_type": "section",
+    "number": "2.3",
+    "title": "Incremental Implementation",
+    "logical_page": 36
+  },
+  {
+    "entry_type": "section",
+    "number": "2.4",
+    "title": "Tracking a Nonstationary Problem",
+    "logical_page": 38
+  },
+  {
+    "entry_type": "section",
+    "number": "2.5",
+    "title": "Optimistic Initial Values",
+    "logical_page": 39
+  },
+  {
+    "entry_type": "section",
+    "number": "2.6",
+    "title": "Upper-Con\ufb01dence-Bound Action Selection",
+    "logical_page": 41
+  },
+  {
+    "entry_type": "section",
+    "number": "2.7",
+    "title": "Gradient Bandits",
+    "logical_page": 42
+  },
+  {
+    "entry_type": "section",
+    "number": "2.8",
+    "title": "Associative Search (Contextual Bandits)",
+    "logical_page": 46
+  },
+  {
+    "entry_type": "section",
+    "number": "2.9",
+    "title": "Summary",
+    "logical_page": 47
+  },
+  {
+    "entry_type": "chapter",
+    "number": "3",
+    "title": "Finite Markov Decision Processes",
+    "logical_page": 53
+  },
+  {
+    "entry_type": "section",
+    "number": "3.1",
+    "title": "The Agent\u2013Environment Interface",
+    "logical_page": 53
+  },
+  {
+    "entry_type": "section",
+    "number": "3.2",
+    "title": "Goals and Rewards",
+    "logical_page": 57
+  },
+  {
+    "entry_type": "section",
+    "number": "3.3",
+    "title": "Returns",
+    "logical_page": 59
+  },
+  {
+    "entry_type": "section",
+    "number": "3.4",
+    "title": "Uni\ufb01ed Notation for Episodic and Continuing Tasks",
+    "logical_page": 61
+  },
+  {
+    "entry_type": "section",
+    "number": "3.5",
+    "title": "The Markov Property",
+    "logical_page": 62
+  },
+  {
+    "entry_type": "section",
+    "number": "3.6",
+    "title": "Markov Decision Processes",
+    "logical_page": 67
+  },
+  {
+    "entry_type": "section",
+    "number": "3.7",
+    "title": "Value Functions",
+    "logical_page": 70
+  },
+  {
+    "entry_type": "section",
+    "number": "3.8",
+    "title": "Optimal Value Functions",
+    "logical_page": 75
+  },
+  {
+    "entry_type": "section",
+    "number": "3.9",
+    "title": "Optimality and Approximation",
+    "logical_page": 79
+  },
+  {
+    "entry_type": "section",
+    "number": "3.10",
+    "title": "Summary",
+    "logical_page": 80
+  },
+  {
+    "entry_type": "chapter",
+    "number": "4",
+    "title": "Dynamic Programming",
+    "logical_page": 89
+  },
+  {
+    "entry_type": "section",
+    "number": "4.1",
+    "title": "Policy Evaluation",
+    "logical_page": 90
+  },
+  {
+    "entry_type": "section",
+    "number": "4.2",
+    "title": "Policy Improvement",
+    "logical_page": 94
+  },
+  {
+    "entry_type": "section",
+    "number": "4.3",
+    "title": "Policy Iteration",
+    "logical_page": 96
+  },
+  {
+    "entry_type": "section",
+    "number": "4.4",
+    "title": "Value Iteration",
+    "logical_page": 98
+  },
+  {
+    "entry_type": "section",
+    "number": "4.5",
+    "title": "Asynchronous Dynamic Programming",
+    "logical_page": 101
+  },
+  {
+    "entry_type": "section",
+    "number": "4.6",
+    "title": "Generalized Policy Iteration",
+    "logical_page": 104
+  },
+  {
+    "entry_type": "section",
+    "number": "4.7",
+    "title": "E\ufb03ciency of Dynamic Programming",
+    "logical_page": 106
+  },
+  {
+    "entry_type": "section",
+    "number": "4.8",
+    "title": "Summary",
+    "logical_page": 107
+  },
+  {
+    "entry_type": "chapter",
+    "number": "5",
+    "title": "Monte Carlo Methods",
+    "logical_page": 113
+  },
+  {
+    "entry_type": "section",
+    "number": "5.1",
+    "title": "Monte Carlo Prediction",
+    "logical_page": 114
+  },
+  {
+    "entry_type": "section",
+    "number": "5.2",
+    "title": "Monte Carlo Estimation of Action Values",
+    "logical_page": 119
+  },
+  {
+    "entry_type": "section",
+    "number": "5.3",
+    "title": "Monte Carlo Control",
+    "logical_page": 120
+  },
+  {
+    "entry_type": "section",
+    "number": "5.4",
+    "title": "Monte Carlo Control without Exploring Starts",
+    "logical_page": 124
+  },
+  {
+    "entry_type": "section",
+    "number": "5.5",
+    "title": "O\ufb00-policy Prediction via Importance Sampling",
+    "logical_page": 127
+  },
+  {
+    "entry_type": "section",
+    "number": "5.6",
+    "title": "Incremental Implementation",
+    "logical_page": 133
+  },
+  {
+    "entry_type": "section",
+    "number": "5.7",
+    "title": "O\ufb00-Policy Monte Carlo Control",
+    "logical_page": 135
+  },
+  {
+    "entry_type": "section",
+    "number": "5.8",
+    "title": "Importance Sampling on Truncated Returns",
+    "logical_page": 136
+  },
+  {
+    "entry_type": "section",
+    "number": "5.9",
+    "title": "Summary",
+    "logical_page": 138
+  },
+  {
+    "entry_type": "chapter",
+    "number": "6",
+    "title": "Temporal-Di\ufb00erence Learning",
+    "logical_page": 143
+  },
+  {
+    "entry_type": "section",
+    "number": "6.1",
+    "title": "TD Prediction",
+    "logical_page": 143
+  },
+  {
+    "entry_type": "section",
+    "number": "6.2",
+    "title": "Advantages of TD Prediction Methods",
+    "logical_page": 148
+  },
+  {
+    "entry_type": "section",
+    "number": "6.3",
+    "title": "Optimality of TD(0)",
+    "logical_page": 151
+  },
+  {
+    "entry_type": "section",
+    "number": "6.4",
+    "title": "Sarsa: On-Policy TD Control",
+    "logical_page": 154
+  },
+  {
+    "entry_type": "section",
+    "number": "6.5",
+    "title": "Q-Learning: O\ufb00-Policy TD Control",
+    "logical_page": 157
+  },
+  {
+    "entry_type": "section",
+    "number": "6.6",
+    "title": "Games, Afterstates, and Other Special Cases",
+    "logical_page": 160
+  },
+  {
+    "entry_type": "section",
+    "number": "6.7",
+    "title": "Summary",
+    "logical_page": 161
+  },
+  {
+    "entry_type": "chapter",
+    "number": "7",
+    "title": "Eligibility Traces",
+    "logical_page": 167
+  },
+  {
+    "entry_type": "section",
+    "number": "7.1",
+    "title": "n-Step TD Prediction",
+    "logical_page": 168
+  },
+  {
+    "entry_type": "section",
+    "number": "7.2",
+    "title": "The Forward View of TD(\u03bb)",
+    "logical_page": 172
+  },
+  {
+    "entry_type": "section",
+    "number": "7.3",
+    "title": "The Backward View of TD(\u03bb)",
+    "logical_page": 177
+  },
+  {
+    "entry_type": "section",
+    "number": "7.4",
+    "title": "Equivalences of Forward and Backward Views",
+    "logical_page": 181
+  },
+  {
+    "entry_type": "section",
+    "number": "7.5",
+    "title": "Sarsa(\u03bb)",
+    "logical_page": 183
+  },
+  {
+    "entry_type": "section",
+    "number": "7.6",
+    "title": "Watkins\u2019s Q(\u03bb)",
+    "logical_page": 186
+  },
+  {
+    "entry_type": "section",
+    "number": "7.7",
+    "title": "O\ufb00-policy Eligibility Traces using Importance Sampling",
+    "logical_page": 188
+  },
+  {
+    "entry_type": "section",
+    "number": "7.8",
+    "title": "Implementation Issues",
+    "logical_page": 189
+  },
+  {
+    "entry_type": "section",
+    "number": "7.9",
+    "title": "Variable \u03bb",
+    "logical_page": 190
+  },
+  {
+    "entry_type": "section",
+    "number": "7.10",
+    "title": "Conclusions",
+    "logical_page": 190
+  },
+  {
+    "entry_type": "chapter",
+    "number": "8",
+    "title": "Planning and Learning with Tabular Methods",
+    "logical_page": 195
+  },
+  {
+    "entry_type": "section",
+    "number": "8.1",
+    "title": "Models and Planning",
+    "logical_page": 195
+  },
+  {
+    "entry_type": "section",
+    "number": "8.2",
+    "title": "Integrating Planning, Acting, and Learning",
+    "logical_page": 198
+  },
+  {
+    "entry_type": "section",
+    "number": "8.3",
+    "title": "When the Model Is Wrong",
+    "logical_page": 203
+  },
+  {
+    "entry_type": "section",
+    "number": "8.4",
+    "title": "Prioritized Sweeping",
+    "logical_page": 206
+  },
+  {
+    "entry_type": "section",
+    "number": "8.5",
+    "title": "Full vs. Sample Backups",
+    "logical_page": 210
+  },
+  {
+    "entry_type": "section",
+    "number": "8.6",
+    "title": "Trajectory Sampling",
+    "logical_page": 213
+  },
+  {
+    "entry_type": "section",
+    "number": "8.7",
+    "title": "Heuristic Search",
+    "logical_page": 217
+  },
+  {
+    "entry_type": "section",
+    "number": "8.8",
+    "title": "Monte Carlo Tree Search",
+    "logical_page": 220
+  },
+  {
+    "entry_type": "section",
+    "number": "8.9",
+    "title": "Summary",
+    "logical_page": 220
+  },
+  {
+    "entry_type": "part",
+    "number": "II",
+    "title": "Approximate Solution Methods",
+    "logical_page": 223
+  },
+  {
+    "entry_type": "chapter",
+    "number": "9",
+    "title": "On-policy Approximation of Action Values",
+    "logical_page": 225
+  },
+  {
+    "entry_type": "section",
+    "number": "9.1",
+    "title": "Value Prediction with Function Approximation",
+    "logical_page": 226
+  },
+  {
+    "entry_type": "section",
+    "number": "9.2",
+    "title": "Gradient-Descent Methods",
+    "logical_page": 229
+  },
+  {
+    "entry_type": "section",
+    "number": "9.3",
+    "title": "Linear Methods",
+    "logical_page": 232
+  },
+  {
+    "entry_type": "section",
+    "number": "9.4",
+    "title": "Control with Function Approximation",
+    "logical_page": 241
+  },
+  {
+    "entry_type": "section",
+    "number": "9.5",
+    "title": "Should We Bootstrap?",
+    "logical_page": 247
+  },
+  {
+    "entry_type": "section",
+    "number": "9.6",
+    "title": "Summary",
+    "logical_page": 249
+  },
+  {
+    "entry_type": "chapter",
+    "number": "10",
+    "title": "O\ufb00-policy Approximation of Action Values",
+    "logical_page": 255
+  },
+  {
+    "entry_type": "chapter",
+    "number": "11",
+    "title": "Policy Approximation",
+    "logical_page": 257
+  },
+  {
+    "entry_type": "section",
+    "number": "11.1",
+    "title": "Actor\u2013Critic Methods",
+    "logical_page": 257
+  },
+  {
+    "entry_type": "section",
+    "number": "11.2",
+    "title": "Eligibility Traces for Actor\u2013Critic Methods",
+    "logical_page": 259
+  },
+  {
+    "entry_type": "section",
+    "number": "11.3",
+    "title": "R-Learning and the Average-Reward Setting",
+    "logical_page": 260
+  },
+  {
+    "entry_type": "part",
+    "number": "III",
+    "title": "Frontiers",
+    "logical_page": 265
+  },
+  {
+    "entry_type": "chapter",
+    "number": "12",
+    "title": "Psychology",
+    "logical_page": 269
+  },
+  {
+    "entry_type": "chapter",
+    "number": "13",
+    "title": "Neuroscience",
+    "logical_page": 271
+  },
+  {
+    "entry_type": "chapter",
+    "number": "14",
+    "title": "Applications and Case Studies",
+    "logical_page": 273
+  },
+  {
+    "entry_type": "section",
+    "number": "14.1",
+    "title": "TD-Gammon",
+    "logical_page": 273
+  },
+  {
+    "entry_type": "section",
+    "number": "14.2",
+    "title": "Samuel\u2019s Checkers Player",
+    "logical_page": 279
+  },
+  {
+    "entry_type": "section",
+    "number": "14.3",
+    "title": "The Acrobot",
+    "logical_page": 282
+  },
+  {
+    "entry_type": "section",
+    "number": "14.4",
+    "title": "Elevator Dispatching",
+    "logical_page": 286
+  },
+  {
+    "entry_type": "section",
+    "number": "14.5",
+    "title": "Dynamic Channel Allocation",
+    "logical_page": 291
+  },
+  {
+    "entry_type": "section",
+    "number": "14.6",
+    "title": "Job-Shop Scheduling",
+    "logical_page": 295
+  },
+  {
+    "entry_type": "chapter",
+    "number": "15",
+    "title": "Prospects",
+    "logical_page": 303
+  },
+  {
+    "entry_type": "section",
+    "number": "15.1",
+    "title": "The Uni\ufb01ed View",
+    "logical_page": 303
+  },
+  {
+    "entry_type": "section",
+    "number": "15.2",
+    "title": "State Estimation",
+    "logical_page": 306
+  },
+  {
+    "entry_type": "section",
+    "number": "15.3",
+    "title": "Temporal Abstraction",
+    "logical_page": 306
+  },
+  {
+    "entry_type": "section",
+    "number": "15.4",
+    "title": "Predictive Representations",
+    "logical_page": 306
+  },
+  {
+    "entry_type": "section",
+    "number": "15.5",
+    "title": "Other Frontier Dimensions",
+    "logical_page": 306
+  }
+]

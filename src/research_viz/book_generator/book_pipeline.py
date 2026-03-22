@@ -19,10 +19,8 @@ All outputs are saved under: output_dir/<book_slug>/
 """
 
 import json
-import os
 import re
 import shutil
-import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Optional
@@ -39,6 +37,7 @@ from research_viz.book_generator.series_bible_generator import generate_series_b
 from research_viz.book_generator.book_chapter_explainer import (
     generate_chapter_explanation,
     extract_narration_tail,
+    bible_fingerprint,
 )
 
 
@@ -89,6 +88,8 @@ def _run_chapter_video(
     prev_narration: Optional[str],
     chroma_path: str,
     max_retries: int,
+    extraction_model: str = "google/gemini-2.5-flash",
+    skip_video: bool = False,
 ) -> Optional[dict]:
     """Run the full pipeline for a single chapter part. Returns the explanation dict or None."""
     part_dir = chapter_output_dir / part.part_id
@@ -104,11 +105,18 @@ def _run_chapter_video(
 
     # --- Step 2: Generate explanation ---
     explanation_path = str(part_dir / "explanation.json")
+    current_fp = bible_fingerprint(bible)
+    explanation = None
     if Path(explanation_path).exists():
-        print(f"  [{part.part_id}] Loading cached explanation...")
         with open(explanation_path) as f:
-            explanation = json.load(f)
-    else:
+            cached = json.load(f)
+        if cached.get("_bible_fingerprint", "") == current_fp:
+            print(f"  [{part.part_id}] Loading cached explanation (bible fingerprint matches)")
+            explanation = cached
+        else:
+            print(f"  [{part.part_id}] Stale explanation cache (bible changed) — regenerating")
+
+    if explanation is None:
         explanation = generate_chapter_explanation(
             chapter_pdf_path=sub_pdf_path,
             chapter_title=part.title,
@@ -116,6 +124,7 @@ def _run_chapter_video(
             output_path=explanation_path,
             bible=bible,
             model_name=model_name,
+            extraction_model=extraction_model,
             max_judge_attempts=3,
             difficulty_config=difficulty_config,
             prev_chapter_narration=prev_narration,
@@ -126,6 +135,10 @@ def _run_chapter_video(
         return None
 
     # --- Step 3: Full Manim pipeline (audio → code → video) ---
+    if skip_video:
+        print(f"  [{part.part_id}] --skip-video set — skipping Manim pipeline")
+        return explanation
+
     print(f"\n  [{part.part_id}] Running Manim video pipeline...")
     try:
         from research_viz.manim_generator.pdf_to_manim_pipeline import main as manim_main
@@ -155,11 +168,13 @@ def run_book_pipeline(
     book_pdf_path: str,
     output_base_dir: str = "output/books",
     model_name: str = "google/gemini-3.1-pro-preview",
+    extraction_model: Optional[str] = None,
     difficulty: str = "medium",
     book_config: Optional[BookConfig] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     max_retries: int = 3,
     skip_bible: bool = False,
+    skip_video: bool = False,
     chapters_to_process: Optional[List[int]] = None,
 ) -> dict:
     """
@@ -183,6 +198,8 @@ def run_book_pipeline(
     if book_config is None:
         book_config = BookConfig()
 
+    effective_extraction_model = extraction_model or book_config.extraction_model
+
     difficulty_config = DIFFICULTY_CONFIGS.get(difficulty)
     if not difficulty_config:
         raise ValueError(f"Unknown difficulty '{difficulty}'. Choose from: {list(DIFFICULTY_CONFIGS.keys())}")
@@ -192,6 +209,7 @@ def run_book_pipeline(
     print(f"BOOK PIPELINE")
     print(f"  PDF:        {book_pdf_path}")
     print(f"  Model:      {model_name}")
+    print(f"  Extraction: {effective_extraction_model}")
     print(f"  Difficulty: {difficulty}")
     print(f"{'='*60}")
 
@@ -235,7 +253,12 @@ def run_book_pipeline(
             bible = existing
         else:
             print("\n[Phase 1b] Generating series bible...")
-            bible = generate_series_bible(book_pdf_path, model_name=model_name)
+            toc_cache = str(Path(book_pdf_path).with_suffix(".toc.json"))
+            bible = generate_series_bible(
+                book_pdf_path, model_name=model_name,
+                snippet_pages=book_config.bible_snippet_pages,
+                toc_cache_path=toc_cache,
+            )
             if bible:
                 _save_bible(bible, output_dir)
                 # Re-slug with actual book title from bible
@@ -271,7 +294,9 @@ def run_book_pipeline(
     prev_narration: Optional[str] = None
 
     if book_config.parallel_chapters and len(all_parts) > 1:
-        # Parallel: independent chapters run concurrently; rolling context is best-effort
+        # Parallel: independent chapters run concurrently; rolling context is unavailable
+        print("  NOTE: Parallel mode — chapters will NOT have rolling context from previous chapters.")
+        print("        Use --parallel false for sequential mode with continuity between chapters.")
         with ThreadPoolExecutor(max_workers=book_config.max_workers) as executor:
             futures = {
                 executor.submit(
@@ -285,6 +310,8 @@ def run_book_pipeline(
                     None,  # no rolling context in parallel mode
                     chroma_path,
                     max_retries,
+                    effective_extraction_model,
+                    skip_video,
                 ): part
                 for part in all_parts
             }
@@ -315,6 +342,8 @@ def run_book_pipeline(
                 prev_narration=prev_narration,
                 chroma_path=chroma_path,
                 max_retries=max_retries,
+                extraction_model=effective_extraction_model,
+                skip_video=skip_video,
             )
             video_path = output_dir / part.part_id / "final_video.mp4"
             results[part.part_id] = {
@@ -371,7 +400,9 @@ if __name__ == "__main__":
         output_dir: str = "output/books"
         """Root directory for all output."""
         model: str = "google/gemini-3.1-pro-preview"
-        """LLM model name."""
+        """LLM model for explanation generation (Stage 2)."""
+        extraction_model: str = "google/gemini-2.5-flash"
+        """Cheap model for chapter digest extraction (Stage 1)."""
         difficulty: str = "medium"
         """Difficulty: easy, medium, or hard."""
         chroma_path: str = "data/manim_docs/vector_db/chroma_db"
@@ -380,6 +411,8 @@ if __name__ == "__main__":
         """Max Manim code retries per scene."""
         skip_bible: bool = False
         """Skip bible generation (load from disk if available)."""
+        skip_video: bool = False
+        """Stop after explanation generation — skip Manim video rendering."""
         parallel: bool = True
         """Process chapters in parallel."""
         max_workers: int = 4
@@ -400,16 +433,19 @@ if __name__ == "__main__":
         max_tokens_per_chunk=60_000,
         parallel_chapters=args.parallel,
         max_workers=args.max_workers,
+        extraction_model=args.extraction_model,
     )
 
     run_book_pipeline(
         book_pdf_path=args.book_pdf,
         output_base_dir=args.output_dir,
         model_name=args.model,
+        extraction_model=args.extraction_model,
         difficulty=args.difficulty,
         book_config=config,
         chroma_path=args.chroma_path,
         max_retries=args.max_retries,
         skip_bible=args.skip_bible,
+        skip_video=args.skip_video,
         chapters_to_process=chapters_list,
     )

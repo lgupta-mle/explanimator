@@ -322,7 +322,13 @@ def generate_beat_timeline(
                       f"{duration:.2f}s  \"{job.text[:50]}{'...' if len(job.text) > 50 else ''}\"")
             except Exception as e:
                 print(f"  ERROR: {job.segment_id} beat {job.beat_id}: {e}")
-                durations[(job.segment_id, job.beat_id)] = 0.0
+                # Estimate duration from word count (~2.5 words/sec) so downstream
+                # sync doesn't break.  A zero duration causes divide-by-zero or
+                # missing audio segments in the final video.
+                word_count = len(job.text.split())
+                estimated = max(1.0, word_count / 2.5)
+                durations[(job.segment_id, job.beat_id)] = estimated
+                print(f"         Using estimated duration: {estimated:.1f}s ({word_count} words)")
 
     gen_elapsed = time.monotonic() - gen_start
     print(f"\nAll {len(jobs)} beats generated in {gen_elapsed:.1f}s "

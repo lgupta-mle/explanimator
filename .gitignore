@@ -13,6 +13,7 @@ node_modules/
 
 media/
 output/
+output_old/
 out.txt
 
 # Claude artifacts

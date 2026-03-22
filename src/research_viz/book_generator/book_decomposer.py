@@ -11,7 +11,8 @@ Uses PyMuPDF (fitz) to:
 import json
 import re
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from statistics import median
+from typing import List, Optional, Tuple
 
 import fitz  # PyMuPDF
 from pydantic import BaseModel
@@ -30,10 +31,15 @@ from research_viz.utils.llm_utils import create_llm_response
 # ---------------------------------------------------------------------------
 
 class TocEntry(BaseModel):
-    level: int          # 1 = chapter, 2 = section
-    number: str         # "1", "2", "1.1", "A"
+    entry_type: str     # "part", "chapter", "section"
+    number: str         # "1", "I", "1.1", "A", "" (empty if unnumbered)
     title: str
     logical_page: int   # page number as printed in the book
+
+    @property
+    def level(self) -> int:
+        """Backward-compatible level mapping."""
+        return {"part": 0, "chapter": 1, "section": 2}.get(self.entry_type, 1)
 
 
 # ---------------------------------------------------------------------------
@@ -57,93 +63,366 @@ def _extract_page_text(doc: fitz.Document, start_page: int, end_page: int) -> st
 # TOC parsing helpers
 # ---------------------------------------------------------------------------
 
-_CHAPTER_PATTERN = re.compile(
-    r"^(chapter|ch\.?|part|unit|lecture|module|section)\s*(\d+)",
+_BACK_MATTER_RE = re.compile(
+    r'^(references?|bibliography|index|glossary|appendix|appendices'
+    r'|foreword|preface|acknowledgements?|about\s+the\s+authors?)\s*$',
     re.IGNORECASE,
 )
-_SECTION_PATTERN = re.compile(r"^(\d+)\.(\d+)(\.\d+)?")
 
 
-def _toc_level_is_chapter(title: str, level: int) -> bool:
-    """Heuristic: decide if a TOC entry is a top-level chapter."""
-    if level == 1:
-        return True
-    if _CHAPTER_PATTERN.match(title.strip()):
-        return True
-    return False
+def _detect_chapter_level(
+    entries: List[Tuple[int, str, int]],
+) -> Tuple[int, int]:
+    """Determine which TOC level represents chapters vs sections.
 
+    Uses purely structural analysis — no assumptions about naming conventions.
+    The key insight: if level-2 entries consistently have level-3 children,
+    then level 1 is grouping (Parts) and level 2 is the chapter level.
 
-def _toc_level_is_section(title: str, level: int) -> bool:
-    """Heuristic: decide if a TOC entry is a section within a chapter."""
-    if level == 2:
-        return True
-    if _SECTION_PATTERN.match(title.strip()):
-        return True
-    return False
-
-
-# ---------------------------------------------------------------------------
-# Page number map: printed page number → PDF 0-indexed page
-# ---------------------------------------------------------------------------
-
-_PAGE_NUM_RE = re.compile(r'\b(\d{1,4})\b')
-
-
-def _build_page_number_map(doc: fitz.Document) -> Dict[int, int]:
+    Returns ``(chapter_level, section_level)``.
     """
-    Scan every PDF page's header and footer zone (top/bottom 7%) for a printed
-    page number. Returns {printed_page: pdf_page_0idx}.
+    levels = {l for l, _, _ in entries}
+    if not levels:
+        return (1, 2)
+    max_depth = max(levels)
 
-    Two-pass per block:
-    1. Whole block is a pure integer (standalone number).
-    2. Fallback: extract all 1-4 digit numbers from the block and take the last
-       one — covers running titles like "The RL Problem   3".
-    First occurrence of each printed number wins.
+    if max_depth <= 2:
+        return (1, 2)
+
+    # For depth >= 3, check if level-2 entries have level-3 children
+    l1_entries = [(t, p) for l, t, p in entries if l == 1]
+    l2_entries = [(t, p) for l, t, p in entries if l == 2]
+    l3_entries = [(t, p) for l, t, p in entries if l == 3]
+
+    if not l2_entries or not l3_entries:
+        return (1, 2)
+
+    # Count how many L2 entries have at least one L3 child
+    l2_with_children = 0
+    for i, (_, p2) in enumerate(l2_entries):
+        next_p2 = l2_entries[i + 1][1] if i + 1 < len(l2_entries) else float('inf')
+        has_l3 = any(p2 <= p3 < next_p2 for _, p3 in l3_entries)
+        if has_l3:
+            l2_with_children += 1
+
+    # If most L2 entries have L3 children, L2 is the chapter level
+    # Secondary check: L1 should be few (grouping) vs L2 many (content)
+    l2_ratio = l2_with_children / len(l2_entries)
+    l1_few_l2_many = len(l2_entries) >= len(l1_entries) * 2
+
+    if l2_ratio >= 0.5 and l1_few_l2_many:
+        return (2, 3)  # L1=Parts, L2=Chapters, L3=Sections
+
+    return (1, 2)  # Standard: L1=Chapters, L2=Sections
+
+
+# ---------------------------------------------------------------------------
+# Title-based chapter page detection
+# ---------------------------------------------------------------------------
+
+
+def _normalize_title(title: str) -> str:
+    """Normalize a chapter title for fuzzy matching.
+
+    Lowercases, collapses whitespace, and strips non-word punctuation
+    (keeps periods for abbreviations like "Ch." or section numbers).
+    """
+    text = title.lower().strip()
+    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r'[^\w\s.]', '', text)
+    return text
+
+
+def _estimate_page_offset(doc: fitz.Document, sample_count: int = 10) -> Tuple[int, bool]:
+    """Estimate the constant offset between printed page numbers and PDF page indices.
+
+    Samples pages spread across the document and looks **only** for standalone
+    digit blocks in the bottom 5 % of the page (footer zone).  This is
+    intentionally conservative — it ignores running headers where chapter/
+    section numbers could be confused with page numbers.
+
+    Returns ``(offset, confident)`` where offset is ``pdf_page_idx -
+    printed_page_number`` and confident indicates whether clean page numbers
+    were actually found.
     """
     total = len(doc)
-    page_map: Dict[int, int] = {}
-    for pdf_idx in range(total):
+    if total == 0:
+        return 0, False
+
+    # Spread sample indices across the document (skip first/last few pages
+    # which often have different formatting)
+    step = max(1, total // (sample_count + 1))
+    sample_indices = [step * (i + 1) for i in range(sample_count) if step * (i + 1) < total]
+    if not sample_indices:
+        sample_indices = list(range(min(total, sample_count)))
+
+    offsets: List[int] = []
+    for pdf_idx in sample_indices:
         page = doc[pdf_idx]
         height = page.rect.height
         width = page.rect.width
-        header_rect = fitz.Rect(0, 0, width, height * 0.07)
-        footer_rect = fitz.Rect(0, height * 0.93, width, height)
-        found = False
-        for zone in (header_rect, footer_rect):
-            if found:
-                break
-            blocks = page.get_text("blocks", clip=zone)
-            for block in blocks:
-                text = block[4].strip()
-                # Pass 1: whole block is a number
-                if text.isdigit():
-                    num = int(text)
-                    if 0 < num <= total * 2 and num not in page_map:
-                        page_map[num] = pdf_idx
-                    found = True
-                    break
-                # Pass 2: number embedded in running title — take last match
-                matches = _PAGE_NUM_RE.findall(text)
-                if matches:
-                    num = int(matches[-1])
-                    if 0 < num <= total * 2 and num not in page_map:
-                        page_map[num] = pdf_idx
-                    found = True
-                    break
-    return page_map
+        footer_rect = fitz.Rect(0, height * 0.95, width, height)
+        blocks = page.get_text("blocks", clip=footer_rect)
+        for block in blocks:
+            text = block[4].strip()
+            if text.isdigit():
+                num = int(text)
+                if 0 < num <= total * 2:
+                    offsets.append(pdf_idx - num)
+                break  # one number per page is enough
+
+    if not offsets:
+        return 0, False
+    return int(median(offsets)), True
 
 
-def _nearest_mapped_page(page_map: Dict[int, int], logical: int, total_pages: int) -> int:
-    """Return the pdf page for `logical`, falling back to nearest mapped number."""
-    if logical in page_map:
-        return page_map[logical]
-    # Search outward from logical page number
-    for delta in range(1, 20):
-        if (logical + delta) in page_map:
-            return page_map[logical + delta]
-        if (logical - delta) in page_map and logical - delta > 0:
-            return page_map[logical - delta]
-    return min(logical, total_pages - 1)
+def _calibrate_offset_from_first_chapter(
+    doc: fitz.Document,
+    first_chapter: "TocEntry",
+    debug: bool = False,
+) -> int:
+    """Calibrate the page offset by finding the first chapter's heading in the PDF.
+
+    Searches the entire document for the first chapter title using font-size
+    scoring.  Returns ``found_pdf_page - logical_page`` as the offset.
+
+    This is the fallback when ``_estimate_page_offset`` can't find standalone
+    page numbers (e.g. books with page numbers embedded in running headers).
+    """
+    total = len(doc)
+    norm_title = _normalize_title(first_chapter.title)
+    if not norm_title:
+        return 0
+
+    best_page = -1
+    best_score = -1
+
+    for pdf_idx in range(total):
+        page = doc[pdf_idx]
+        page_height = page.rect.height
+        blocks = page.get_text("dict")["blocks"]
+
+        for block in blocks:
+            if block.get("type") != 0:
+                continue
+            text_parts: List[str] = []
+            max_size = 0.0
+            top_y = block.get("bbox", [0, 0, 0, 0])[1]
+            for line in block.get("lines", []):
+                for span in line.get("spans", []):
+                    span_text = span["text"].strip()
+                    if span_text:
+                        text_parts.append(span_text)
+                        max_size = max(max_size, span["size"])
+
+            if not text_parts:
+                continue
+            raw = " ".join(text_parts)
+            norm = _normalize_title(raw)
+            if norm_title not in norm:
+                continue
+
+            # Score: strongly favor large headings over TOC listings or body text
+            score = 0
+            if max_size >= 18:    # likely a chapter heading
+                score += 20
+            elif max_size >= 14:  # large-ish heading
+                score += 10
+            if page_height > 0 and top_y < page_height * 0.4:
+                score += 3
+
+            # "Chapter N" label bonus
+            ch_label = re.compile(
+                rf'(chapter|ch\.?)\s*{re.escape(first_chapter.number)}',
+                re.IGNORECASE,
+            )
+            if ch_label.search(raw):
+                score += 5
+
+            if debug:
+                print(f"    [calibrate] page {pdf_idx}: score={score}  "
+                      f"font={max_size:.1f}  text={raw[:80]!r}")
+
+            if score > best_score:
+                best_score = score
+                best_page = pdf_idx
+
+    if best_page >= 0 and best_score >= 10:
+        offset = best_page - first_chapter.logical_page
+        if debug:
+            print(f"    [calibrate] Best match: page {best_page} (score={best_score}), "
+                  f"offset = {best_page} - {first_chapter.logical_page} = {offset}")
+        return offset
+    return 0
+
+
+def _find_chapter_page_by_title(
+    doc: fitz.Document,
+    title: str,
+    chapter_number: str,
+    logical_page_hint: int,
+    search_radius: int = 20,
+    debug: bool = False,
+) -> Optional[int]:
+    """Find the PDF page where a chapter begins by searching for its title text.
+
+    Uses font-size analysis to distinguish headings from body-text mentions.
+    ``logical_page_hint`` (0-indexed PDF page) narrows the search window.
+
+    Returns a 0-indexed PDF page, or ``None`` if no confident match is found.
+    """
+    total = len(doc)
+    norm_title = _normalize_title(title)
+    if not norm_title:
+        return None
+
+    lo = max(0, logical_page_hint - search_radius)
+    hi = min(total, logical_page_hint + search_radius + 1)
+
+    # Compile chapter label regex once (constant across all pages)
+    ch_label_re = re.compile(
+        rf'(chapter|ch\.?)\s*{re.escape(chapter_number)}',
+        re.IGNORECASE,
+    )
+
+    best_page: Optional[int] = None
+    best_score = -1
+
+    for pdf_idx in range(lo, hi):
+        page = doc[pdf_idx]
+        page_height = page.rect.height
+        blocks = page.get_text("dict")["blocks"]
+
+        # Single pass: collect font sizes AND per-block info simultaneously
+        all_sizes: List[float] = []
+        block_infos: List[Tuple[str, str, float, float]] = []  # (raw_text, norm_text, max_size, top_y)
+
+        for block in blocks:
+            if block.get("type") != 0:
+                continue
+            text_parts: List[str] = []
+            max_size = 0.0
+            top_y = block.get("bbox", [0, 0, 0, 0])[1]
+            for line in block.get("lines", []):
+                for span in line.get("spans", []):
+                    span_text = span["text"].strip()
+                    if span_text:
+                        text_parts.append(span_text)
+                        size = span["size"]
+                        all_sizes.append(size)
+                        max_size = max(max_size, size)
+            if text_parts:
+                raw = " ".join(text_parts)
+                block_infos.append((raw, _normalize_title(raw), max_size, top_y))
+
+        if not all_sizes:
+            continue
+        median_size = sorted(all_sizes)[len(all_sizes) // 2]
+
+        # Score each block that contains the title
+        for raw_text, norm_block, block_max_size, block_top in block_infos:
+            if norm_title not in norm_block:
+                continue
+
+            score = 10  # base: title matched
+
+            if median_size > 0 and block_max_size >= median_size * 1.3:
+                score += 5
+            if page_height > 0 and block_top < page_height * 0.4:
+                score += 3
+            if ch_label_re.search(raw_text):
+                score += 2
+
+            score -= min(abs(pdf_idx - logical_page_hint), 10)
+
+            if debug:
+                print(f"    [title-search] page {pdf_idx}: score={score}  "
+                      f"font={block_max_size:.1f} (median={median_size:.1f})  "
+                      f"top={block_top:.0f}/{page_height:.0f}  "
+                      f"text={raw_text[:80]!r}")
+
+            if score > best_score:
+                best_score = score
+                best_page = pdf_idx
+
+    # Require a minimum confidence threshold
+    if best_score >= 5:
+        return best_page
+    return None
+
+
+# ---------------------------------------------------------------------------
+# TOC page detection (heuristic)
+# ---------------------------------------------------------------------------
+
+_TOC_HEADING_KEYWORDS = frozenset({
+    "contents", "table of contents",
+    "index", "indexes",
+    "topics",
+    "chapters",
+    "outline",
+})
+
+_LINE_ENDS_WITH_NUMBER = re.compile(r'\d+\s*$')
+
+
+def _detect_toc_pages(
+    doc: fitz.Document,
+    max_scan: int = 30,
+) -> Optional[Tuple[int, int]]:
+    """Find the start and end pages of the Table of Contents.
+
+    Scans the first ``max_scan`` pages for a large-font heading that matches
+    a known TOC keyword (e.g. "Contents", "Table of Contents", "Index").
+    Then walks forward to find where the TOC ends (pages stop having lines
+    that end with page numbers).
+
+    Returns ``(toc_start, toc_end)`` as 0-indexed PDF page indices, or
+    ``None`` if no TOC heading is found.
+    """
+    total = len(doc)
+    toc_start: Optional[int] = None
+
+    # Phase 1: Find the TOC heading page
+    for page_idx in range(min(max_scan, total)):
+        page = doc[page_idx]
+        blocks = page.get_text("dict")["blocks"]
+        for block in blocks:
+            if block.get("type") != 0:
+                continue
+            max_size = 0.0
+            text_parts: List[str] = []
+            for line in block.get("lines", []):
+                for span in line.get("spans", []):
+                    t = span["text"].strip()
+                    if t:
+                        text_parts.append(t)
+                        max_size = max(max_size, span["size"])
+            if max_size >= 16:
+                block_text = " ".join(text_parts).lower().strip()
+                if block_text in _TOC_HEADING_KEYWORDS:
+                    toc_start = page_idx
+                    break
+        if toc_start is not None:
+            break
+
+    if toc_start is None:
+        return None
+
+    # Phase 2: Find where the TOC ends
+    # TOC pages have many lines ending with page numbers
+    toc_end = toc_start
+    for page_idx in range(toc_start, min(toc_start + 20, total)):
+        text = doc[page_idx].get_text("text")
+        lines = [ln.strip() for ln in text.split('\n') if ln.strip()]
+        numbered_lines = sum(1 for ln in lines if _LINE_ENDS_WITH_NUMBER.search(ln))
+        if numbered_lines >= 3 or page_idx == toc_start:
+            toc_end = page_idx
+        else:
+            break
+
+    print(f"  TOC detected: pages {toc_start}–{toc_end} (PDF 0-indexed)")
+    return (toc_start, toc_end)
 
 
 # ---------------------------------------------------------------------------
@@ -154,19 +433,34 @@ _TOC_MODEL = "google/gemini-3.1-pro-preview"
 
 _EXERCISE_SECTION_RE = re.compile(
     r'^(exercises?|problems?|practice\s+problems?|exercises?\s+and\s+problems?'
-    r'|bibliographical\s+remarks?|further\s+reading|notes?\s+and\s+references?'
-    r'|chapter\s+notes?|end-of-chapter|summary\s+and\s+exercises?)\s*$',
+    r'|end-of-chapter|summary\s+and\s+exercises?)\s*$',
     re.IGNORECASE,
 )
 
 _TOC_SYSTEM_PROMPT = (
-    "You are extracting a table of contents from the beginning of a book. "
+    "You are extracting a structured table of contents from a book. "
     "Return ONLY a JSON array with no markdown formatting. "
-    'Each entry must have: {"level": 1 or 2, "number": "1" or "1.1", "title": "...", "logical_page": 5}. '
-    "level 1 = chapter/part/unit, level 2 = section/subsection. "
-    "Only include entries whose page number is an arabic numeral (integer). "
-    "Skip front matter with roman numeral page numbers (Preface, Foreword, Index, etc.). "
-    "If no table of contents is present, return []."
+    "Each entry must have: "
+    '{"entry_type": "part"|"chapter"|"section", "number": "...", "title": "...", "logical_page": N}. '
+    "\n\n"
+    'entry_type "part": Grouping dividers that organize the book into sections '
+    '(e.g., "Part I: Foundations", "Part II: Advanced Topics"). These are NOT '
+    "content — they are just organizational labels. If a book's top-level "
+    'divisions ARE the content (no further subdivision), label them "chapter".\n'
+    'entry_type "chapter": The main content divisions of the book. These may be '
+    'called "Chapter", "Part", "Unit", "Lecture", "Module", "Topic", or have no '
+    "label at all — what matters is that they are the primary divisions "
+    "containing the book's actual content.\n"
+    'entry_type "section": Subdivisions within a chapter (e.g., "1.1 Overview", '
+    '"2.3 Methods").\n'
+    "\n"
+    "RULES:\n"
+    "- Use the PRINTED page number (as shown in the TOC), not the PDF page index.\n"
+    "- Only include entries whose page number is an arabic numeral (integer).\n"
+    "- Skip front matter with roman numeral page numbers (Preface, Contents page itself, etc.).\n"
+    "- Skip back matter like References, Bibliography, Index, Glossary, Appendix.\n"
+    "- If a chapter has no number, use an empty string for the number field.\n"
+    "- If no table of contents is found in the text, return []."
 )
 
 
@@ -175,17 +469,21 @@ def _extract_toc_with_llm(
     model_name: str = _TOC_MODEL,
     cache_path: Optional[str] = None,
 ) -> List[TocEntry]:
-    """Send the first N pages of raw text to an LLM and parse out TOC entries."""
-    # Load from cache if available
+    """Send TOC page text to an LLM and parse out structured TOC entries."""
+    # Load from cache if available (with schema migration check)
     if cache_path and Path(cache_path).exists():
-        print(f"  Loading TOC from cache: {cache_path}")
         with open(cache_path, "r", encoding="utf-8") as f:
             raw = json.load(f)
-        return [TocEntry(**e) for e in raw]
+        if raw and isinstance(raw[0], dict) and "level" in raw[0] and "entry_type" not in raw[0]:
+            print(f"  Stale TOC cache (old schema without entry_type) — re-extracting...")
+            Path(cache_path).unlink()
+        else:
+            print(f"  Loading TOC from cache: {cache_path}")
+            return [TocEntry(**e) for e in raw]
 
     print(f"  Calling {model_name} for TOC extraction...")
     content = create_llm_response(
-        prepared_usr_prompt=f"Here is the beginning of the book:\n\n{raw_text}",
+        prepared_usr_prompt=f"Here is the table of contents from a book:\n\n{raw_text}",
         system_prompt=_TOC_SYSTEM_PROMPT,
         model_name=model_name,
     )
@@ -219,18 +517,22 @@ def _extract_toc_with_llm(
 def _chapters_from_text_toc(
     doc: fitz.Document,
     total_pages: int,
+    toc_page_range: Tuple[int, int],
     model_name: str = _TOC_MODEL,
     cache_path: Optional[str] = None,
     book_config: Optional[BookConfig] = None,
 ) -> List[BookChapter]:
     """
     Extract chapter structure using:
-    1. LLM to parse raw text from the first 15 pages → structured TOC entries
-    2. PyMuPDF page number map to locate each chapter's exact PDF page
+    1. Raw text from the detected TOC pages → LLM parses structured TOC entries
+    2. Title-text search with font-size scoring to locate each chapter's PDF page
     """
-    # Step 1: extract raw text from first 15 pages
+    debug = book_config.debug_chapter_detection if book_config else False
+
+    # Step 1: extract raw text from detected TOC pages
+    toc_start, toc_end = toc_page_range
     raw_text = "".join(
-        doc[i].get_text("text") for i in range(min(15, total_pages))
+        doc[i].get_text("text") for i in range(toc_start, min(toc_end + 1, total_pages))
     )
     if not raw_text.strip():
         return []
@@ -238,32 +540,102 @@ def _chapters_from_text_toc(
     # Step 2: LLM extracts TOC entries
     toc_entries = _extract_toc_with_llm(raw_text, model_name=model_name, cache_path=cache_path)
     if not toc_entries:
-        print("  LLM found no TOC entries — will try heading detection")
+        print("  LLM found no TOC entries")
         return []
 
-    chapter_entries = [e for e in toc_entries if e.level == 1]
-    section_entries = [e for e in toc_entries if e.level == 2]
-    print(f"  LLM TOC: {len(chapter_entries)} chapters, {len(section_entries)} sections")
+    chapter_entries = [e for e in toc_entries if e.entry_type == "chapter"]
+    section_entries = [e for e in toc_entries if e.entry_type == "section"]
+    part_entries = [e for e in toc_entries if e.entry_type == "part"]
+
+    # Filter out back matter that the LLM may have labeled as "chapter"
+    _BACK_MATTER_RE = re.compile(
+        r'^(references?|bibliography|index|glossary|appendix|appendices|about\s+the\s+authors?)\s*$',
+        re.IGNORECASE,
+    )
+    back_matter = [e for e in chapter_entries if _BACK_MATTER_RE.match(e.title.strip())]
+    chapter_entries = [e for e in chapter_entries if not _BACK_MATTER_RE.match(e.title.strip())]
+
+    excluded_parts = []
+    if part_entries:
+        excluded_parts.append(f"{len(part_entries)} parts")
+    if back_matter:
+        excluded_parts.append(f"{len(back_matter)} back matter ({', '.join(e.title for e in back_matter)})")
+    excluded_str = f", excluded: {', '.join(excluded_parts)}" if excluded_parts else ""
+    print(f"  LLM TOC: {len(chapter_entries)} chapters, {len(section_entries)} sections{excluded_str}")
 
     if not chapter_entries:
         return []
 
-    # Step 3: build printed page number → PDF page map
-    print("  Building page number map from PDF footers/headers...")
-    page_map = _build_page_number_map(doc)
-    print(f"  Page map covers {len(page_map)} pages (range: {min(page_map) if page_map else '?'}–{max(page_map) if page_map else '?'})")
+    # Step 3: estimate page offset (printed page → PDF page)
+    page_offset, offset_confident = _estimate_page_offset(doc)
+    if offset_confident:
+        print(f"  Estimated page offset: {page_offset} (from standalone footer numbers)")
+    else:
+        print(f"  No standalone page numbers found — calibrating from first chapter heading...")
+        page_offset = _calibrate_offset_from_first_chapter(
+            doc, chapter_entries[0], debug=debug,
+        )
+        print(f"  Calibrated page offset: {page_offset} (from first chapter title match)")
 
-    # Step 4: build BookChapter objects
+    _page_cache: dict[Tuple[str, str, int, int], int] = {}
+
+    def _resolve_page(title: str, chapter_number: str, logical_page: int,
+                      search_radius: int = 20) -> int:
+        """Resolve a logical page to a PDF page via title search, with fallback.
+
+        Results are cached by (title, chapter_number, logical_page, search_radius)
+        to avoid redundant PDF text extraction for adjacent chapter/section boundaries.
+        """
+        key = (title, chapter_number, logical_page, search_radius)
+        if key in _page_cache:
+            return _page_cache[key]
+        hint = max(0, min(logical_page + page_offset, total_pages - 1))
+        found = _find_chapter_page_by_title(
+            doc, title, chapter_number, hint,
+            search_radius=search_radius, debug=debug,
+        )
+        if found is not None:
+            _page_cache[key] = found
+            return found
+        if debug:
+            print(f"    [title-search] No match for {title!r}, using offset fallback → page {hint}")
+        _page_cache[key] = hint
+        return hint
+
+    # Step 4: resolve Part divider page numbers (to cap chapter ranges)
+    part_pages: List[int] = []
+    for p in part_entries:
+        hint = max(0, min(p.logical_page + page_offset, total_pages - 1))
+        found = _find_chapter_page_by_title(
+            doc, p.title, p.number, hint, search_radius=5, debug=debug,
+        )
+        page = found if found is not None else hint
+        part_pages.append(page)
+        if debug:
+            print(f"  Part divider '{p.title}' → PDF page {page}")
+    part_pages.sort()
+    if part_pages:
+        print(f"  Part divider pages: {part_pages}")
+
+    # Step 5: build BookChapter objects
     chapter_entries.sort(key=lambda e: e.logical_page)
     chapters: List[BookChapter] = []
 
     for idx, ch_entry in enumerate(chapter_entries):
-        ch_start = _nearest_mapped_page(page_map, ch_entry.logical_page, total_pages)
+        ch_start = _resolve_page(ch_entry.title, ch_entry.number, ch_entry.logical_page)
         if idx + 1 < len(chapter_entries):
-            next_start = _nearest_mapped_page(page_map, chapter_entries[idx + 1].logical_page, total_pages)
+            next_entry = chapter_entries[idx + 1]
+            next_start = _resolve_page(next_entry.title, next_entry.number, next_entry.logical_page)
             ch_end = max(ch_start, next_start - 1)
         else:
             ch_end = total_pages - 1
+
+        # Cap chapter end at the first Part divider that falls within the range
+        # (Part intro pages after the divider belong to the Part, not the chapter)
+        for pp in part_pages:
+            if ch_start < pp <= ch_end:
+                ch_end = pp - 1
+                break
 
         # Parse chapter number from entry.number (handles "1", "I", "A", etc.)
         try:
@@ -272,8 +644,9 @@ def _chapters_from_text_toc(
             ch_num = idx + 1
 
         ch_id = f"ch_{ch_num:02d}"
+        print(f"  Chapter {ch_num}: '{ch_entry.title}' → PDF pages {ch_start}–{ch_end}")
 
-        # Find sections for this chapter
+        # Find sections for this chapter (narrower search radius)
         ch_sections = [
             s for s in section_entries
             if s.number.startswith(f"{ch_entry.number}.")
@@ -283,9 +656,17 @@ def _chapters_from_text_toc(
         ]
         sections: List[BookSection] = []
         for s_idx, s_entry in enumerate(ch_sections):
-            s_start = _nearest_mapped_page(page_map, s_entry.logical_page, total_pages)
+            s_start = _resolve_page(s_entry.title, s_entry.number, s_entry.logical_page,
+                                    search_radius=10)
+            # Clamp section start within the chapter range
+            s_start = max(ch_start, min(s_start, ch_end))
             if s_idx + 1 < len(ch_sections):
-                s_end = max(s_start, _nearest_mapped_page(page_map, ch_sections[s_idx + 1].logical_page, total_pages) - 1)
+                s_next = _resolve_page(ch_sections[s_idx + 1].title,
+                                       ch_sections[s_idx + 1].number,
+                                       ch_sections[s_idx + 1].logical_page,
+                                       search_radius=10)
+                s_next = max(ch_start, min(s_next, ch_end))
+                s_end = max(s_start, s_next - 1)
             else:
                 s_end = ch_end
             sec_text = _extract_page_text(doc, s_start, s_end)
@@ -319,7 +700,7 @@ def _trim_exercise_sections(
     sections: List[BookSection],
     ch_end: int,
 ) -> Tuple[List[BookSection], int]:
-    """Remove exercise/bibliographical sections and trim ch_end accordingly."""
+    """Remove exercise sections and trim ch_end accordingly."""
     for i, sec in enumerate(sections):
         if _EXERCISE_SECTION_RE.match(sec.title.strip()):
             trimmed_end = max(sec.start_page - 1, sections[i - 1].end_page if i > 0 else ch_end)
@@ -340,10 +721,11 @@ def extract_chapters(
     """
     Extract chapter structure from a book PDF.
 
-    Tries three strategies in order:
+    Tries two strategies in order:
     1. Embedded PDF TOC metadata (doc.get_toc) — instant, no API call
-    2. LLM TOC extraction + printed page number map — handles any format
-    3. Font-size heading detection — last resort fallback
+    2. Detect TOC pages heuristically, then LLM extraction + title-text search
+
+    Raises ValueError if no Table of Contents can be found.
 
     Args:
         pdf_path: Path to the book PDF.
@@ -368,44 +750,94 @@ def extract_chapters(
         doc.close()
         return chapters
 
-    # Strategy 2: LLM TOC extraction + page number map
-    print("  No embedded TOC — using LLM TOC extraction + page number map")
+    # Strategy 2: detect TOC pages, then LLM extraction + title-text search
+    print("  No embedded TOC — detecting Table of Contents pages...")
+
+    # Check if we have a valid cache (skip page detection if so)
+    has_valid_cache = False
+    if toc_cache_path and Path(toc_cache_path).exists():
+        try:
+            with open(toc_cache_path, "r", encoding="utf-8") as f:
+                raw = json.load(f)
+            if raw and isinstance(raw[0], dict) and "entry_type" in raw[0]:
+                has_valid_cache = True
+        except Exception:
+            pass
+
+    if has_valid_cache:
+        # Cache exists with new schema — we still need a toc_page_range for
+        # the function signature, but it won't be used (cache is loaded).
+        # Use a dummy range; _extract_toc_with_llm will return from cache.
+        toc_page_range = (0, 0)
+    else:
+        toc_result = _detect_toc_pages(doc)
+        if toc_result is None:
+            doc.close()
+            raise ValueError(
+                "Could not find a Table of Contents in this book. "
+                "Looked for headings like 'Contents', 'Table of Contents', "
+                "'Index', 'Topics', 'Chapters', or 'Outline' in the first "
+                "30 pages.\n"
+                "Please ensure your book PDF has a clearly titled contents page."
+            )
+        toc_page_range = toc_result
+
     chapters = _chapters_from_text_toc(
-        doc, total_pages, model_name=model_name, cache_path=toc_cache_path,
+        doc, total_pages,
+        toc_page_range=toc_page_range,
+        model_name=model_name,
+        cache_path=toc_cache_path,
         book_config=book_config,
     )
-    if chapters:
-        doc.close()
-        return chapters
-
-    # Strategy 3: font-size heading detection
-    print("  Falling back to font-size heading detection")
-    chapters = _chapters_from_headings(doc)
     doc.close()
+
+    if not chapters:
+        raise ValueError(
+            "Table of Contents was found but no chapters could be extracted. "
+            "The LLM may have failed to parse the TOC structure. "
+            "Try deleting the cache file and re-running."
+        )
+
     return chapters
 
 
 def _chapters_from_toc(
     doc: fitz.Document, toc: list, total_pages: int
 ) -> List[BookChapter]:
-    """Build BookChapter list from an embedded PDF TOC."""
+    """Build BookChapter list from an embedded PDF TOC.
+
+    Uses structural analysis to determine which TOC level represents
+    chapters vs sections vs grouping (Parts). No naming assumptions.
+    """
     # PyMuPDF TOC entries: [level, title, page_1indexed, ...]
     # Convert to 0-indexed pages
     entries = [(e[0], e[1].strip(), e[2] - 1) for e in toc]
 
-    # Separate chapter-level and section-level entries
-    chapter_entries: List[Tuple[str, int]] = []  # (title, start_page)
-    for level, title, page in entries:
-        if _toc_level_is_chapter(title, level):
-            chapter_entries.append((title, max(0, page)))
+    # Detect which level represents chapters
+    chapter_level, section_level = _detect_chapter_level(entries)
+    print(f"  TOC structure: chapter_level={chapter_level}, section_level={section_level}")
+
+    # Extract chapter entries at the detected level, filtering back matter and exercises
+    chapter_entries: List[Tuple[str, int]] = [
+        (title, max(0, page))
+        for level, title, page in entries
+        if level == chapter_level
+        and not _BACK_MATTER_RE.match(title.strip())
+        and not _EXERCISE_SECTION_RE.match(title.strip())
+    ]
 
     if not chapter_entries:
-        # Treat all level-1 TOC entries as chapters
-        chapter_entries = [
-            (title, max(0, page))
-            for level, title, page in entries
-            if level == 1
-        ]
+        return []
+
+    # Identify grouping divider pages (levels above chapter_level) to cap chapter ranges
+    grouping_pages: List[int] = []
+    if chapter_level > 1:
+        for level, title, page in entries:
+            if level < chapter_level:
+                grouping_pages.append(max(0, page))
+        grouping_pages.sort()
+        if grouping_pages:
+            print(f"  Grouping divider pages: {grouping_pages}")
 
     chapters: List[BookChapter] = []
     for idx, (ch_title, ch_start) in enumerate(chapter_entries):
@@ -414,11 +846,19 @@ def _chapters_from_toc(
             if idx + 1 < len(chapter_entries)
             else total_pages - 1
         )
-        ch_id = f"ch_{idx + 1:02d}"
+
+        # Cap chapter end at the first grouping divider that falls within the range
+        for gp in grouping_pages:
+            if ch_start < gp <= ch_end:
+                ch_end = gp - 1
+                break
+
+        ch_num = idx + 1
+        ch_id = f"ch_{ch_num:02d}"
 
         # Find sections belonging to this chapter
         sections = _sections_for_chapter(
-            doc, entries, ch_start, ch_end, ch_id, idx + 1
+            doc, entries, ch_start, ch_end, ch_id, ch_num, section_level
         )
 
         chapter_text = _extract_page_text(doc, ch_start, ch_end)
@@ -428,7 +868,7 @@ def _chapters_from_toc(
             BookChapter(
                 chapter_id=ch_id,
                 title=ch_title,
-                chapter_number=idx + 1,
+                chapter_number=ch_num,
                 start_page=ch_start,
                 end_page=ch_end,
                 sections=sections,
@@ -446,12 +886,13 @@ def _sections_for_chapter(
     ch_end: int,
     ch_id: str,
     ch_number: int,
+    section_level: int = 2,
 ) -> List[BookSection]:
     """Extract sections within a chapter's page range from the TOC."""
     section_entries = [
         (level, title, page)
         for level, title, page in toc_entries
-        if _toc_level_is_section(title, level)
+        if level == section_level
         and ch_start <= page <= ch_end
     ]
 
@@ -702,21 +1143,38 @@ def extract_sub_pdf(
 # TOC text extraction (for the series bible)
 # ---------------------------------------------------------------------------
 
-def extract_toc_text(pdf_path: str, snippet_pages: int = 2) -> str:
+def extract_toc_text(
+    pdf_path: str,
+    snippet_pages: int = 2,
+    toc_cache_path: Optional[str] = None,
+) -> str:
     """
     Extract the Table of Contents as a structured text string, plus the first
     `snippet_pages` pages of each chapter. Used as input to the series bible.
+
+    Uses extract_chapters() for accurate chapter page ranges (including page
+    offset calibration and LLM-extracted TOC cache if available).
     """
     doc = fitz.open(pdf_path)
-    toc = doc.get_toc(simple=False)
 
+    # Build TOC listing from embedded PDF TOC for display
+    toc = doc.get_toc(simple=False)
     lines = ["=== TABLE OF CONTENTS ==="]
     for level, title, page in toc:
         indent = "  " * (level - 1)
         lines.append(f"{indent}{title} (p.{page})")
 
     lines.append("\n=== CHAPTER SNIPPETS ===")
-    chapters = _chapters_from_toc(doc, [(e[0], e[1].strip(), e[2] - 1) for e in toc], len(doc)) if toc else _chapters_from_headings(doc)
+
+    # Use extract_chapters for accurate, calibrated page ranges
+    try:
+        chapters = extract_chapters(
+            pdf_path,
+            toc_cache_path=toc_cache_path,
+        )
+    except Exception:
+        # Fallback: direct embedded TOC (less accurate but better than nothing)
+        chapters = _chapters_from_toc(doc, toc, len(doc)) if toc else _chapters_from_headings(doc)
 
     for ch in chapters:
         snippet_end = min(ch.start_page + snippet_pages - 1, ch.end_page)

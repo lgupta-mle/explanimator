@@ -24,7 +24,7 @@ AI pipeline: PDF research papers --> 3Blue1Brown-style animated explainer videos
 - Manim code gen uses execution-based feedback loop with RAG fallback
 - Beat-level sync mode is a TODO stub that falls back to segment sync
 
-## Known Architectural Issues (reviewed 2026-03-08)
+## Known Architectural Issues (reviewed 2026-03-08, updated 2026-03-21)
 - Entirely sequential pipeline -- no async/parallel execution
 - Segment processing is serialized (both TTS and code gen)
 - Beat-level TTS is serialized within segments
@@ -34,6 +34,8 @@ AI pipeline: PDF research papers --> 3Blue1Brown-style animated explainer videos
 - beat_sync_tts uses argparse while pipeline uses tyro -- inconsistent CLI patterns
 - `beat_sync_tts.py` has verbose print output (decorative separators, per-beat stats)
 - get_video_duration / get_audio_duration are near-identical (DRY violation)
+- book_decomposer: deprecated page-number-map code removed 2026-03-21
+- book_decomposer: `_find_chapter_page_by_title` distance penalty is unbounded -- may need scaling
 
 ## User Preferences
 - No bloated print statements, summary statistics, or emojis in code
