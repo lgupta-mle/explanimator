@@ -55,6 +55,20 @@ Capture any visual or geometric reasoning the author provides:
 ### 9. Concept Flow
 A numbered list showing the logical dependency order of concepts introduced in this chapter. This shows how ideas build on each other within the chapter.
 
+### 10. Derivation Chains
+
+For each multi-step derivation or proof the chapter presents:
+- Chain name (e.g., "Deriving the temporal-difference update rule")
+- Starting equation or definition the derivation begins from
+- Each intermediate step:
+  - The mathematical operation applied (e.g., "substitute definition of value", "apply Bellman expectation", "take partial derivative")
+  - The resulting equation in LaTeX
+  - Any new variables introduced and their definitions
+- Final result equation
+- If the author works a numerical example through the derivation, capture EVERY intermediate numerical value
+
+If the chapter contains no multi-step derivations, write "No derivation chains in this chapter."
+
 ## Output Format
 
 Use markdown with the section headings above. Use LaTeX for all mathematical expressions (wrap inline math in $...$, display math in $$...$$).
@@ -67,3 +81,4 @@ Use markdown with the section headings above. Use LaTeX for all mathematical exp
 4. DO preserve all notation exactly as used in the chapter
 5. DO include all worked examples completely
 6. If a concept appears multiple times in the chapter, consolidate it in the most relevant section
+7. DO extract derivation chains completely — the downstream video generator animates step-by-step math

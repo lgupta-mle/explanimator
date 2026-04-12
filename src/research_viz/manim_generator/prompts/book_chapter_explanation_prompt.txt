@@ -55,6 +55,19 @@ For EACH concept in the chapter:
   - Explain what EACH SYMBOL represents in our visual metaphor
   - What part of this can we ANIMATE?
 - Explain WHY the math is defined this way — what breaks if you change it?
+- For concepts involving more than one equation, provide a **DERIVATION CHAIN**:
+    1. Start from the simplest prerequisite the viewer already knows
+    2. Introduce ONE new symbol or operation per step
+    3. Show the algebraic/calculus manipulation that produces the next equation
+    4. At EVERY step, substitute the running example's concrete numbers and compute the result
+    5. The SAME numerical values must flow through ALL steps consistently
+    6. Use `derivation_steps` in each EquationExplanation to capture this structure
+    7. Use `equation_build_order` in TechnicalSection to specify the animation sequence
+    8. Use `running_example_walkthrough` for the complete worked numerical trace
+- For concepts with only a single equation, still provide:
+    - Each symbol defined and labeled with a running-example value
+    - The complete numerical substitution showing the result
+    - A `visualizable_action` for each component
 
 ## Running Example Requirement
 
@@ -92,6 +105,9 @@ Create segments following this narrative arc (the user prompt will specify the e
 - Present the insight INTUITIVELY first, then give it its formal mathematical name and definition
 - Walk through the mechanism step by step with the running example
 - Address the most common point of confusion head-on
+- After explaining each concept, SUMMARIZE it in one clear sentence:
+  "So [concept name] is: [crisp definition]."
+  Store this in the segment's `concept_summary` field AND include it in the narration_script.
 
 ### Closing: Synthesis and Forward Look
 - Return to the opening problem and solve it completely with the new tools
@@ -109,6 +125,16 @@ Before finalizing each segment:
 - [ ] Does the formal math CONNECT back to the visual metaphor?
 - [ ] Is the "why this had to be invented" question answered?
 - [ ] Would a student who watches this feel they truly understand — not just recognize?
+- [ ] For multi-equation concepts: does EVERY derivation step show the same running example with concrete numbers?
+- [ ] Is `equation_build_order` filled in showing the logical equation progression?
+- [ ] Does each segment end with a one-sentence `concept_summary`?
+
+## Narration-Visual Alignment
+
+Every scenario or example described in `narration_script` MUST have a corresponding entry in
+`key_visuals` or `transformations_to_show`. If the narration says "imagine a grid," `key_visuals`
+must contain an actual grid diagram specification — not just text. If the narration describes a
+quantity changing, `transformations_to_show` must include that change.
 
 ## Narration Style
 

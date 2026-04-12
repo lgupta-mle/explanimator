@@ -206,6 +206,11 @@ Generate a Manim animation scene for this segment of a 3Blue1Brown-style educati
 ### Technical Section:
 - Math Bridge: {technical.get('intuition_to_math_bridge', '')}
 - Key Equations: {json.dumps(technical.get('key_equations', []), indent=2)}
+- Equation Build Order: {json.dumps(technical.get('equation_build_order', []), indent=2)}
+- Running Example Walkthrough: {technical.get('running_example_walkthrough', 'Not provided')}
+
+### Concept Summary (use verbatim for summary card):
+{segment.get('concept_summary', 'N/A')}
 
 ### Narration (FULL TEXT - {word_count} words):
 {narration}
@@ -225,6 +230,9 @@ Generate a Manim animation scene for this segment of a 3Blue1Brown-style educati
 5. **CRITICAL**: The total scene duration MUST be at least {target_animation_duration:.1f} seconds to match the narration length
 6. Add a comment at the top of your construct() method showing your duration planning breakdown
 7. **IF BEAT TIMING PROVIDED**: Structure animations to match each beat's duration exactly
+8. **EQUATION BUILD-UP**: Animate each equation incrementally per derivation_steps. Show symbolic equation, then numerical substitution in YELLOW. Shrink previous step to corner before next.
+9. **SPATIAL MANAGEMENT**: Related content → shrink existing to one side. Unrelated → FadeOut first. Never exceed frame boundaries (x: [-6,6], y: [-3.5,3.5]).
+10. **CONCEPT FRAMING**: Open with concept title card (then shrink to header). Close with summary card (concept name + concept_summary text).
 
 Output a JSON object with:
 - scene_id: "{segment_id}"

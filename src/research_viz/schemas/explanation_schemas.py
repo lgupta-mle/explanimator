@@ -31,6 +31,18 @@ class PrerequisiteTree(BaseModel):
 # 3Blue1Brown-Style Schemas (Used by Pipeline)
 # =============================================================================
 
+class DerivationStep(BaseModel):
+    """One step in a mathematical derivation chain."""
+    model_config = ConfigDict(extra="forbid")
+
+    step_number: int = Field(..., description="1-indexed position in derivation")
+    latex_formula: str = Field(..., description="LaTeX for this step")
+    from_previous: str = Field(..., description="How this follows from the prior step, e.g. 'apply chain rule', 'substitute definition'")
+    new_symbol_introduced: Optional[str] = Field(None, description="New symbol at this step and its plain-English meaning")
+    example_substitution: str = Field(..., description="Running example with concrete numbers plugged in, showing numerical result")
+    visualizable_action: str = Field(..., description="What to animate: e.g. 'highlight the new term, color it blue, expand it'")
+
+
 class EquationExplanation(BaseModel):
     """A single equation with its intuitive meaning."""
     model_config = ConfigDict(extra="forbid")
@@ -39,6 +51,10 @@ class EquationExplanation(BaseModel):
     what_it_means: str = Field(..., description="Plain English meaning of the formula")
     visualizable_aspect: str = Field(..., description="What part of this can be animated")
     example_values: Optional[str] = Field(None, description="Concrete numbers to illustrate")
+    derivation_steps: Optional[List[DerivationStep]] = Field(
+        None, description="Step-by-step derivation building to this equation from first principles")
+    connects_to_next: Optional[str] = Field(
+        None, description="How this equation feeds into the next in the derivation chain")
 
 
 class IntuitiveSection(BaseModel):
@@ -62,6 +78,10 @@ class TechnicalSection(BaseModel):
     key_equations: List[EquationExplanation] = Field(..., description="Each equation with intuitive meaning")
     shape_intuitions: List[str] = Field(..., description="What the tensor shapes mean conceptually")
     mathematical_insight: str = Field(..., description="The mathematical reason this approach works")
+    equation_build_order: Optional[List[str]] = Field(
+        None, description="Ordered list showing equation progression for animation, e.g. ['define_value', 'td_error', 'update_rule']")
+    running_example_walkthrough: Optional[str] = Field(
+        None, description="Complete worked example with concrete numbers through ALL equations in sequence")
 
 
 class Segment3B1B(BaseModel):
@@ -78,6 +98,11 @@ class Segment3B1B(BaseModel):
 
     # Narration combining both parts
     narration_script: str = Field(..., description="Full narration weaving intuition and math")
+
+    # Concept summary
+    concept_summary: Optional[str] = Field(
+        None, description="One-sentence summary of the concept introduced in this segment, "
+                          "e.g. 'A Value Function maps every state to the expected total future reward.'")
 
     # Timing
     estimated_duration_seconds: Optional[int] = Field(None, description="Estimated duration (calculated post-generation)")
