@@ -1,35 +1,31 @@
 llm:
-  explanation_model: "openai/gpt-5"
-  judge_model: "openai/gpt-5"
-  prereq_model: "openai/gpt-5"
-  code_gen_model: "anthropic/claude-sonnet-4.5"
-  default_model: "openai/gpt-5"
   tiers:
     hard:
-      explanation_model: "openai/gpt-4.1-mini"
-      judge_model: "openai/gpt-4.1-mini"
-      prereq_model: "openai/gpt-4.1-nano"
-      code_gen_model: "openai/gpt-4.1-mini"
+      explanation_model: "deepseek/deepseek-v3.2"
+      code_gen_model: "deepseek/deepseek-v3.2"
       skip_judge: true
     medium:
-      explanation_model: "openai/gpt-5"
+      explanation_model: "google/gemini-3.1-flash-lite-preview"
+      judge_model: "google/gemini-2.5-flash"
       code_gen_model: "anthropic/claude-sonnet-4.5"
     easy:
-      explanation_model: "openai/gpt-5"
-      code_gen_model: "anthropic/claude-sonnet-4.5"
+      explanation_model: "google/gemini-3.1-pro-preview"
+      judge_model: "google/gemini-2.5-flash"
+      prereq_model: "google/gemini-3.1-flash-lite-preview"
+      code_gen_model: "google/gemini-3.1-pro-preview"
   model_pricing:
-    "openai/gpt-5":
-      input: 2.5e-6
-      output: 10.0e-6
+    "deepseek/deepseek-v3.2":
+      input: 0.27e-6
+      output: 1.1e-6
     "anthropic/claude-sonnet-4.5":
       input: 3.0e-6
       output: 15.0e-6
-    "openai/gpt-4.1-mini":
-      input: 0.4e-6
-      output: 1.6e-6
-    "openai/gpt-4.1-nano":
-      input: 0.1e-6
-      output: 0.4e-6
+    "google/gemini-3.1-pro-preview":
+      input: 1.25e-6
+      output: 10.0e-6
+    "google/gemini-3.1-flash-lite-preview":
+      input: 0.0375e-6
+      output: 0.15e-6
     "google/gemini-2.5-flash":
       input: 0.15e-6
       output: 0.6e-6
@@ -54,5 +50,5 @@ manim:
   max_retries: 3
 
 translation:
-  model: "openai/gpt-5"
+  model: "google/gemini-3.1-flash-lite-preview"
   max_workers: 10

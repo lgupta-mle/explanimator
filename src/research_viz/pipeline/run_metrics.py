@@ -165,8 +165,9 @@ class RunMetricsCollector:
         }
         return metrics
 
-    def write(self, provider: LLMProvider, output_dir: Path) -> Path:
+    def write(self, provider: LLMProvider, output_dir) -> Path:
         """Collect metrics and write run_metrics.json to output_dir."""
+        output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
         metrics = self.collect(provider)
         path = output_dir / "run_metrics.json"

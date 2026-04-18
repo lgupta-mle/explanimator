@@ -63,19 +63,15 @@ def _build_response_format(schema: Optional[Type[T]]) -> Optional[dict]:
 
 def call_llm_provider(
     messages: list,
-    model_name: Optional[str] = None,
+    model_name: str,
     schema: Optional[Type[T]] = None,
     plugins: Optional[list] = None,
 ) -> "LLMResponse":
     """Call the LLM provider and return an LLMResponse.
 
-    This replaces the old call_openrouter() function. All pipeline stages
-    should use this (or get_provider().generate() directly).
+    model_name is required — resolve via get_config().llm.get_model() before calling.
     """
     from research_viz.providers.llm_provider import LLMResponse  # noqa: F811
-
-    if model_name is None:
-        model_name = get_config().llm.default_model
 
     kwargs: dict = {}
     if plugins:
@@ -91,15 +87,13 @@ def create_pdf_llm_response(
     pdf_path: str,
     prompt: str,
     system_prompt: str,
-    model_name: Optional[str] = None,
+    model_name: str,
     schema: Optional[Type[T]] = None,
 ) -> "LLMResponse":
     """Call the LLM provider with native PDF processing.
 
-    Returns an LLMResponse (content in .content, raw API data in .raw).
+    model_name is required — resolve via get_config().llm.get_model() before calling.
     """
-    if model_name is None:
-        model_name = get_config().llm.explanation_model
     base64_pdf = encode_pdf_to_base64(pdf_path)
     data_url = f"data:application/pdf;base64,{base64_pdf}"
 
@@ -134,16 +128,13 @@ def load_prompt(prompt_name: str) -> str:
 
 def judge_explanation(
     explanation_json: str,
-    model_name: Optional[str] = None
+    model_name: str,
 ) -> JudgeResult:
     """
     Use LLM judge to evaluate the explanation quality.
 
-    Returns:
-        JudgeResult with score (0 or 1) and feedback if failed
+    model_name is required — resolve via get_config().llm.get_model() before calling.
     """
-    if model_name is None:
-        model_name = get_config().llm.judge_model
     judge_prompt = load_prompt("3b1b_judge_prompt")
 
     user_prompt = f"""
@@ -199,9 +190,9 @@ def _validate_segment_count(content: str, min_segments: int = 2, max_segments: i
 
 def generate_with_feedback_loop(
     pdf_path: str,
+    difficulty: str,
     model_name: Optional[str] = None,
     max_attempts: int = 3,
-    difficulty: Optional[str] = None,
 ) -> Optional[dict]:
     """
     Generate explanation with LLM judge feedback loop.
@@ -213,7 +204,7 @@ def generate_with_feedback_loop(
     4. Repeat until score=1 or max_attempts reached
 
     Args:
-        difficulty: If set, uses tier-specific config (e.g. skip_judge for hard mode)
+        difficulty: Required. Selects model tier and judge behavior.
 
     Returns:
         Final explanation dict or None on failure
@@ -293,21 +284,26 @@ Generate a revised explanation that addresses ALL the feedback above.
 
         logger.info(f"  Generated explanation ({len(content)} chars)")
 
-        # Segment count validation (always runs, even when judge is skipped)
-        if not _validate_segment_count(content):
-            logger.warning(f"  Segment count outside 2-3 range, retrying...")
-            continue
+        # Strip markdown code fences if present
+        stripped = content.strip()
+        if stripped.startswith("```"):
+            stripped = stripped.split("\n", 1)[1] if "\n" in stripped else stripped[3:]
+            if stripped.endswith("```"):
+                stripped = stripped[:-3]
+            content = stripped.strip()
 
         if skip_judge:
             logger.info("  Skipping judge (skip_judge enabled for this tier)")
             try:
                 return json.loads(content)
             except json.JSONDecodeError:
-                return {"raw_content": content}
+                logger.error("  Failed to parse explanation as JSON")
+                continue
 
         # Judge the explanation
         logger.info("  Judging explanation quality...")
-        judge_result = judge_explanation(content, model_name)
+        judge_model = cfg.llm.get_model("judge_model", difficulty)
+        judge_result = judge_explanation(content, judge_model)
 
         logger.info(f"  Score: {judge_result.score}")
         logger.info(f"  Criteria: {judge_result.criteria_scores}")
@@ -332,9 +328,9 @@ Generate a revised explanation that addresses ALL the feedback above.
 def generate_explanation_from_pdf(
     pdf_path: str,
     output_path: str,
+    difficulty: str,
     model_name: Optional[str] = None,
     max_judge_attempts: int = 3,
-    difficulty: Optional[str] = None,
 ) -> Optional[dict]:
     """
     Generate a 3B1B-style educational explanation directly from a PDF.
@@ -342,22 +338,22 @@ def generate_explanation_from_pdf(
     Args:
         pdf_path: Path to the research paper PDF
         output_path: Path to save the explanation JSON
-        model_name: LLM model to use
+        difficulty: Required. Selects model tier.
+        model_name: Optional override for explanation model
         max_judge_attempts: Max attempts to pass quality check
-        difficulty: Difficulty tier for model selection and judge behavior
 
     Returns:
         The generated explanation as a dict, or None on error
     """
     logger.info(f"PDF: {pdf_path}")
-    logger.info(f"Model: {model_name}")
+    logger.info(f"Difficulty: {difficulty}")
     logger.info(f"Max judge attempts: {max_judge_attempts}")
 
     explanation = generate_with_feedback_loop(
         pdf_path=pdf_path,
+        difficulty=difficulty,
         model_name=model_name,
         max_attempts=max_judge_attempts,
-        difficulty=difficulty,
     )
 
     if explanation:
@@ -377,6 +373,7 @@ def generate_explanation_from_pdf(
 
 def main(
     pdf_path: str,
+    difficulty: str = "medium",
     output_path: Optional[str] = None,
     model_name: Optional[str] = None,
     max_judge_attempts: int = 3
@@ -386,21 +383,15 @@ def main(
 
     Args:
         pdf_path: Path to the research paper PDF
+        difficulty: Difficulty tier (hard, medium, easy)
         output_path: Path to save the explanation JSON (default: same dir as PDF)
-        model_name: LLM model to use
+        model_name: Optional model override
         max_judge_attempts: Max attempts to pass quality check (default: 3)
 
     Examples:
         python -m research_viz.manim_generator.pdf_explanation_generator \\
-            --pdf-path papers/attention.pdf
-
-        python -m research_viz.manim_generator.pdf_explanation_generator \\
-            --pdf-path papers/attention.pdf \\
-            --max-judge-attempts 5
+            --pdf-path papers/attention.pdf --difficulty hard
     """
-    if model_name is None:
-        model_name = get_config().llm.explanation_model
-
     if not os.path.exists(pdf_path):
         logger.error(f"PDF not found: {pdf_path}")
         return
@@ -412,8 +403,9 @@ def main(
     generate_explanation_from_pdf(
         pdf_path=pdf_path,
         output_path=output_path,
+        difficulty=difficulty,
         model_name=model_name,
-        max_judge_attempts=max_judge_attempts
+        max_judge_attempts=max_judge_attempts,
     )
 
 

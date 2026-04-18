@@ -57,6 +57,10 @@ class OpenRouterProvider(LLMProvider):
         if kwargs.get("response_format"):
             payload["response_format"] = kwargs["response_format"]
 
+        # Enable reasoning for DeepSeek models
+        if "deepseek" in model.lower():
+            payload["reasoning"] = {"enabled": True}
+
         last_exception: Exception | None = None
         for attempt in range(1, self.max_retries + 1):
             try:

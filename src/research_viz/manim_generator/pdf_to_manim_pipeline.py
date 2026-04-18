@@ -27,7 +27,7 @@ from research_viz.manim_generator.pdf_explanation_generator import (
     encode_pdf_to_base64,
 )
 from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B, Segment3B1B
-from research_viz.config.pipeline_config import get_config
+from research_viz.config.pipeline_config import get_config, get_provider
 from research_viz.pipeline.checkpoint import read_checkpoints, validate_checkpoint, write_checkpoint
 
 load_dotenv()
@@ -131,6 +131,7 @@ def fetch_rag_context_for_error(error_message: str, chroma_path: str = "data/man
 def generate_scene_code(
     segment: dict,
     running_example: str,
+    difficulty: str,
     model_name: Optional[str] = None,
     max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
@@ -146,7 +147,7 @@ def generate_scene_code(
     """
     cfg = get_config()
     if model_name is None:
-        model_name = cfg.llm.code_gen_model
+        model_name = cfg.llm.get_model("code_gen_model", difficulty)
     if max_retries is None:
         max_retries = cfg.manim.max_retries
     system_prompt = load_code_gen_prompt()
@@ -298,6 +299,7 @@ Fix the errors and regenerate the complete scene code.
 
 def generate_all_scenes(
     explanation: dict,
+    difficulty: str,
     model_name: Optional[str] = None,
     max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
@@ -333,6 +335,7 @@ def generate_all_scenes(
         scene_code = generate_scene_code(
             segment=segment,
             running_example=running_example,
+            difficulty=difficulty,
             model_name=model_name,
             max_retries=max_retries,
             chroma_path=chroma_path,
@@ -384,6 +387,7 @@ def _is_stage_cached(checkpoints: dict, stage_name: str) -> bool:
 
 def run_pipeline(
     pdf_path: str,
+    difficulty: str = "medium",
     output_dir: str = "src/research_viz/manim_generator/output",
     model_name: Optional[str] = None,
     max_retries: Optional[int] = None,
@@ -396,8 +400,9 @@ def run_pipeline(
 
     Args:
         pdf_path: Path to the research paper PDF
+        difficulty: Required. Selects model tier (hard, medium, easy).
         output_dir: Directory for output files
-        model_name: LLM model to use
+        model_name: Optional model override for code gen
         max_retries: Max retries for code generation per segment
         skip_explanation: If True, use existing explanation file
         explanation_path: Path to existing explanation JSON (if skip_explanation=True)
@@ -406,137 +411,146 @@ def run_pipeline(
     Returns:
         Path to generated Manim code file, or None on failure
     """
+    from research_viz.pipeline.run_metrics import RunMetricsCollector
+
     cfg = get_config()
     if model_name is None:
-        model_name = cfg.llm.code_gen_model
+        model_name = cfg.llm.get_model("code_gen_model", difficulty)
     if max_retries is None:
         max_retries = cfg.manim.max_retries
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     pdf_stem = Path(pdf_path).stem
 
-    # Load checkpoints for resume support
-    checkpoints = {} if force_restart else read_checkpoints(output_dir)
+    collector = RunMetricsCollector()
+    provider = get_provider()
 
-    # Step 1: Generate or load explanation
-    explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
-    if skip_explanation and explanation_path:
-        logger.info(f"Loading existing explanation: {explanation_path}")
-        with open(explanation_path, 'r') as f:
-            explanation = json.load(f)
-    elif _is_stage_cached(checkpoints, "explanation"):
-        logger.info(f"Resuming: explanation stage cached, loading from checkpoint")
-        with open(explanation_output, 'r') as f:
-            explanation = json.load(f)
-    else:
-        logger.info(f"Generating explanation from PDF: {pdf_path}")
-        from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
-        explanation = generate_explanation_from_pdf(
-            pdf_path=pdf_path,
-            output_path=explanation_output,
-            model_name=model_name,
-            max_judge_attempts=3
-        )
-        if not explanation:
-            logger.error("Failed to generate explanation")
-            return None
-        write_checkpoint(output_dir, "explanation", [explanation_output])
+    try:
+        # Load checkpoints for resume support
+        checkpoints = {} if force_restart else read_checkpoints(output_dir)
 
-    # Step 2: Run TTS and code generation in parallel
-    # Both only depend on the explanation, not on each other.
-    audio_dir = f"{output_dir}/audio_beats"
-    audio_timeline_path = f"{audio_dir}/beat_timeline.json"
-
-    tts_cached = _is_stage_cached(checkpoints, "tts")
-    codegen_cached = _is_stage_cached(checkpoints, "codegen")
-
-    def _run_tts():
-        from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
-        explanation_json_path = f"{output_dir}/{pdf_stem}_explanation.json"
-        # Ensure explanation JSON is saved for TTS to read
-        Path(explanation_json_path).parent.mkdir(parents=True, exist_ok=True)
-        with open(explanation_json_path, 'w') as ef:
-            json.dump(explanation, ef, indent=2)
-        return generate_beat_timeline(
-            explanation_path=explanation_json_path,
-            output_dir=audio_dir,
-        )
-
-    def _run_code_gen():
-        return generate_all_scenes(
-            explanation=explanation,
-            model_name=model_name,
-            max_retries=max_retries,
-            audio_timeline_path=audio_timeline_path,
-        )
-
-    if tts_cached and codegen_cached:
-        logger.info("Resuming: TTS and codegen stages cached")
-    else:
-        logger.info(f"Launching TTS and code generation in parallel...")
-
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            # Only submit stages that aren't cached
-            futures = {}
-            if not tts_cached:
-                futures[executor.submit(_run_tts)] = "TTS"
+        # Step 1: Generate or load explanation
+        explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
+        with collector.time_stage("explanation", provider):
+            if skip_explanation and explanation_path:
+                logger.info(f"Loading existing explanation: {explanation_path}")
+                with open(explanation_path, 'r') as f:
+                    explanation = json.load(f)
+            elif _is_stage_cached(checkpoints, "explanation"):
+                logger.info(f"Resuming: explanation stage cached, loading from checkpoint")
+                with open(explanation_output, 'r') as f:
+                    explanation = json.load(f)
             else:
-                logger.info("  TTS cached, skipping")
-            if not codegen_cached:
-                futures[executor.submit(_run_code_gen)] = "Code generation"
+                logger.info(f"Generating explanation from PDF: {pdf_path}")
+                from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+                explanation = generate_explanation_from_pdf(
+                    pdf_path=pdf_path,
+                    output_path=explanation_output,
+                    difficulty=difficulty,
+                    model_name=None,
+                    max_judge_attempts=3,
+                )
+                if not explanation:
+                    logger.error("Failed to generate explanation")
+                    return None
+                write_checkpoint(output_dir, "explanation", [explanation_output])
+
+        # Step 2: Run TTS and code generation in parallel
+        # Both only depend on the explanation, not on each other.
+        audio_dir = f"{output_dir}/audio_beats"
+        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
+
+        tts_cached = _is_stage_cached(checkpoints, "tts")
+        codegen_cached = _is_stage_cached(checkpoints, "codegen")
+
+        def _run_tts():
+            from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+            explanation_json_path = f"{output_dir}/{pdf_stem}_explanation.json"
+            Path(explanation_json_path).parent.mkdir(parents=True, exist_ok=True)
+            with open(explanation_json_path, 'w') as ef:
+                json.dump(explanation, ef, indent=2)
+            return generate_beat_timeline(
+                explanation_path=explanation_json_path,
+                output_dir=audio_dir,
+            )
+
+        def _run_code_gen():
+            return generate_all_scenes(
+                explanation=explanation,
+                difficulty=difficulty,
+                model_name=model_name,
+                max_retries=max_retries,
+                audio_timeline_path=audio_timeline_path,
+            )
+
+        with collector.time_stage("tts_and_codegen", provider):
+            if tts_cached and codegen_cached:
+                logger.info("Resuming: TTS and codegen stages cached")
             else:
-                logger.info("  Code generation cached, skipping")
+                logger.info(f"Launching TTS and code generation in parallel...")
 
-            results = {}
-            error = None
-            for future in as_completed(futures):
-                stage_name = futures[future]
-                try:
-                    results[stage_name] = future.result()
-                except Exception as exc:
-                    error = (stage_name, exc)
-                    for f in futures:
-                        if f is not future:
-                            f.cancel()
-                    break
+                with ThreadPoolExecutor(max_workers=2) as executor:
+                    futures = {}
+                    if not tts_cached:
+                        futures[executor.submit(_run_tts)] = "TTS"
+                    else:
+                        logger.info("  TTS cached, skipping")
+                    if not codegen_cached:
+                        futures[executor.submit(_run_code_gen)] = "Code generation"
+                    else:
+                        logger.info("  Code generation cached, skipping")
 
-            if error:
-                stage_name, exc = error
-                logger.error(f"{stage_name} failed: {exc}")
-                return None
+                    results = {}
+                    error = None
+                    for future in as_completed(futures):
+                        stage_name = futures[future]
+                        try:
+                            results[stage_name] = future.result()
+                        except Exception as exc:
+                            error = (stage_name, exc)
+                            for f in futures:
+                                if f is not future:
+                                    f.cancel()
+                            break
 
-            # Write checkpoints for completed stages
-            if "TTS" in results:
-                write_checkpoint(output_dir, "tts", [audio_timeline_path])
-            if "Code generation" in results:
-                pass  # Code gen artifacts are in-memory scene_codes, checkpointed at assembly
+                    if error:
+                        stage_name, exc = error
+                        logger.error(f"{stage_name} failed: {exc}")
+                        collector.record_error("tts_and_codegen", exc, stage_name, recoverable=False)
+                        return None
 
-    # Step 3: Assemble and save
-    output_path = f"{output_dir}/{pdf_stem}_animation.py"
+                    if "TTS" in results:
+                        write_checkpoint(output_dir, "tts", [audio_timeline_path])
+                    if "Code generation" in results:
+                        pass  # Code gen artifacts are in-memory, checkpointed at assembly
 
-    if _is_stage_cached(checkpoints, "assembly"):
-        logger.info(f"Resuming: assembly stage cached")
-    else:
-        # Need scene_codes - either from this run or regenerate
-        if codegen_cached:
-            # Re-run code gen to get scene_codes (they're in-memory)
-            scene_codes = _run_code_gen()
-        else:
-            scene_codes = results.get("Code generation")
+        # Step 3: Assemble and save
+        output_path = f"{output_dir}/{pdf_stem}_animation.py"
 
-        if not scene_codes:
-            logger.error("No scenes generated successfully")
-            return None
+        with collector.time_stage("assembly", provider):
+            if _is_stage_cached(checkpoints, "assembly"):
+                logger.info(f"Resuming: assembly stage cached")
+            else:
+                if codegen_cached:
+                    scene_codes = _run_code_gen()
+                else:
+                    scene_codes = results.get("Code generation")
 
-        paper_title = explanation.get('paper_title', pdf_stem)
-        complete_code = assemble_complete_code(scene_codes, paper_title)
+                if not scene_codes:
+                    logger.error("No scenes generated successfully")
+                    return None
 
-        with open(output_path, 'w') as f:
-            f.write(complete_code)
-        write_checkpoint(output_dir, "assembly", [output_path])
+                paper_title = explanation.get('paper_title', pdf_stem)
+                complete_code = assemble_complete_code(scene_codes, paper_title)
 
-    logger.info(f"Generated pipeline output: {output_path}")
+                with open(output_path, 'w') as f:
+                    f.write(complete_code)
+                write_checkpoint(output_dir, "assembly", [output_path])
 
-    return output_path
+        logger.info(f"Generated pipeline output: {output_path}")
+        return output_path
+
+    finally:
+        collector.write(provider, output_dir)
 
 
 def get_video_duration(video_path: str) -> float:
@@ -1051,6 +1065,7 @@ def render_and_sync_all_scenes(
 def main(
     pdf_path: Optional[str] = None,
     explanation_path: Optional[str] = None,
+    difficulty: str = "medium",
     output_dir: str = "src/research_viz/manim_generator/output",
     model_name: Optional[str] = None,
     max_retries: Optional[int] = None,
@@ -1100,9 +1115,11 @@ def main(
             --generate-audio --render-video \\
             --sync-mode beat --max-speed-change 0.2
     """
+    from research_viz.pipeline.run_metrics import RunMetricsCollector
+
     cfg = get_config()
     if model_name is None:
-        model_name = cfg.llm.code_gen_model
+        model_name = cfg.llm.get_model("code_gen_model", difficulty)
     if max_retries is None:
         max_retries = cfg.manim.max_retries
     if tts_voice is None:
@@ -1116,128 +1133,119 @@ def main(
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-    # Step 1: Load or generate explanation
-    if explanation_path and os.path.exists(explanation_path):
-        logger.info(f"Loading existing explanation: {explanation_path}")
-        with open(explanation_path, 'r') as f:
-            explanation = json.load(f)
-        used_explanation_path = explanation_path
-        pdf_stem = Path(explanation_path).stem.replace('_explanation', '')
-    elif pdf_path and os.path.exists(pdf_path):
-        logger.info(f"Generating explanation from PDF: {pdf_path}")
-        from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
-        pdf_stem = Path(pdf_path).stem
-        explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
-        explanation = generate_explanation_from_pdf(
-            pdf_path=pdf_path,
-            output_path=explanation_output,
-            model_name=model_name,
-            max_judge_attempts=3
-        )
-        if not explanation:
-            logger.error("Failed to generate explanation")
-            return
-        used_explanation_path = explanation_output
-    else:
-        logger.error("Provide either --pdf-path or --explanation-path")
-        logger.error("  --pdf-path: Path to research paper PDF")
-        logger.error("  --explanation-path: Path to existing explanation JSON")
-        return
+    collector = RunMetricsCollector()
+    provider = get_provider()
 
-    # Step 2: Generate audio FIRST if requested (needed for beat-sync code generation)
-    audio_timeline_path = None
-    if generate_audio or render_video:
-        audio_dir = f"{output_dir}/audio_beats"
-        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
+    try:
+        # Step 1: Load or generate explanation
+        with collector.time_stage("explanation", provider):
+            if explanation_path and os.path.exists(explanation_path):
+                logger.info(f"Loading existing explanation: {explanation_path}")
+                with open(explanation_path, 'r') as f:
+                    explanation = json.load(f)
+                used_explanation_path = explanation_path
+                pdf_stem = Path(explanation_path).stem.replace('_explanation', '')
+            elif pdf_path and os.path.exists(pdf_path):
+                pdf_stem = Path(pdf_path).stem
+                explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
+                if os.path.exists(explanation_output):
+                    logger.info(f"Explanation already exists, loading: {explanation_output}")
+                    with open(explanation_output, 'r') as f:
+                        explanation = json.load(f)
+                else:
+                    logger.info(f"Generating explanation from PDF: {pdf_path}")
+                    from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+                    explanation = generate_explanation_from_pdf(
+                        pdf_path=pdf_path,
+                        output_path=explanation_output,
+                        difficulty=difficulty,
+                        model_name=None,
+                        max_judge_attempts=3,
+                    )
+                    if not explanation:
+                        logger.error("Failed to generate explanation")
+                        return
+                used_explanation_path = explanation_output
+            else:
+                logger.error("Provide either --pdf-path or --explanation-path")
+                return
 
-        if os.path.exists(audio_timeline_path):
-            logger.info("=" * 70)
-            logger.info("AUDIO ALREADY EXISTS - SKIPPING GENERATION")
-            logger.info("=" * 70)
-            logger.info(f"Using existing: {audio_timeline_path}")
-        else:
-            logger.info("=" * 70)
-            logger.info("GENERATING TTS AUDIO")
-            logger.info("=" * 70)
+        # Step 2: Generate audio if requested
+        audio_timeline_path = None
+        if generate_audio or render_video:
+            audio_dir = f"{output_dir}/audio_beats"
+            audio_timeline_path = f"{audio_dir}/beat_timeline.json"
 
-            from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+            with collector.time_stage("tts", provider):
+                if os.path.exists(audio_timeline_path):
+                    logger.info(f"Audio already exists, skipping: {audio_timeline_path}")
+                else:
+                    logger.info("Generating TTS audio...")
+                    from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+                    generate_beat_timeline(
+                        explanation_path=used_explanation_path,
+                        output_dir=audio_dir,
+                        voice=tts_voice
+                    )
+                    logger.info(f"Audio generation complete: {audio_timeline_path}")
 
-            generate_beat_timeline(
-                explanation_path=used_explanation_path,
-                output_dir=audio_dir,
-                voice=tts_voice
-            )
+        # Step 3: Generate Manim code
+        code_output_path = f"{output_dir}/{pdf_stem}_animation.py"
+        scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
 
-            logger.info(f"Audio generation complete!")
-            logger.info(f"  Timeline: {audio_timeline_path}")
+        with collector.time_stage("codegen", provider):
+            if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
+                logger.info(f"Manim code already exists, skipping: {code_output_path}")
+                with open(scene_metadata_path, 'r') as f:
+                    scene_data = json.load(f)
+                scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
+            else:
+                logger.info("Generating Manim code...")
+                scene_codes = generate_all_scenes(
+                    explanation=explanation,
+                    difficulty=difficulty,
+                    model_name=model_name,
+                    max_retries=max_retries,
+                    audio_timeline_path=audio_timeline_path,
+                )
 
-    # Step 3: Generate Manim code (skip if already exists)
-    # Now with beat timing information if audio was generated
-    code_output_path = f"{output_dir}/{pdf_stem}_animation.py"
-    scene_metadata_path = f"{output_dir}/{pdf_stem}_scene_metadata.json"
+                if not scene_codes:
+                    logger.error("No scenes generated successfully")
+                    return
 
-    if os.path.exists(code_output_path) and os.path.exists(scene_metadata_path):
-        logger.info("=" * 70)
-        logger.info("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
-        logger.info("=" * 70)
-        logger.info(f"Using existing: {code_output_path}")
+                paper_title = explanation.get('paper_title', pdf_stem)
+                complete_code = assemble_complete_code(scene_codes, paper_title)
+                with open(code_output_path, 'w') as f:
+                    f.write(complete_code)
+                with open(scene_metadata_path, 'w') as f:
+                    json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
 
-        # Load scene metadata
-        with open(scene_metadata_path, 'r') as f:
-            scene_data = json.load(f)
-        scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
-    else:
-        logger.info("=" * 70)
-        logger.info("GENERATING MANIM CODE")
-        logger.info("=" * 70)
-        scene_codes = generate_all_scenes(
-            explanation=explanation,
-            model_name=model_name,
-            max_retries=max_retries,
-            audio_timeline_path=audio_timeline_path  # Pass beat timing!
-        )
+                logger.info(f"Code generation complete: {len(scene_codes)} scenes -> {code_output_path}")
 
-        if not scene_codes:
-            logger.error("No scenes generated successfully")
-            return
+        # Step 4: Render video if requested
+        if render_video:
+            if not audio_timeline_path:
+                logger.error("Cannot render video without audio. Enable --generate-audio")
+                return
 
-        # Save assembled code
-        paper_title = explanation.get('paper_title', pdf_stem)
-        complete_code = assemble_complete_code(scene_codes, paper_title)
-        with open(code_output_path, 'w') as f:
-            f.write(complete_code)
+            with collector.time_stage("render", provider):
+                final_video = render_and_sync_all_scenes(
+                    scene_codes=scene_codes,
+                    explanation=explanation,
+                    audio_timeline_path=audio_timeline_path,
+                    output_dir=output_dir,
+                    quality=video_quality,
+                    sync_mode=sync_mode,
+                    max_speed_change=max_speed_change
+                )
 
-        # Save scene metadata for future reuse
-        with open(scene_metadata_path, 'w') as f:
-            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
+            if final_video:
+                logger.info(f"Pipeline complete! Final video: {final_video}")
+            else:
+                logger.error(f"Video rendering failed")
 
-        logger.info("=" * 70)
-        logger.info(f"CODE GENERATION COMPLETE")
-        logger.info("=" * 70)
-        logger.info(f"Generated {len(scene_codes)} scenes")
-        logger.info(f"Output: {code_output_path}")
-
-    # Step 4: Render video if requested
-    if render_video:
-        if not audio_timeline_path:
-            logger.error("Cannot render video without audio. Enable --generate-audio")
-            return
-
-        final_video = render_and_sync_all_scenes(
-            scene_codes=scene_codes,
-            explanation=explanation,
-            audio_timeline_path=audio_timeline_path,
-            output_dir=output_dir,
-            quality=video_quality,
-            sync_mode=sync_mode,
-            max_speed_change=max_speed_change
-        )
-
-        if final_video:
-            logger.info(f"Pipeline complete!")
-            logger.info(f"  Final video: {final_video}")
-        else:
-            logger.error(f"Video rendering failed")
+    finally:
+        collector.write(provider, output_dir)
 
 
 if __name__ == "__main__":

@@ -20,8 +20,8 @@ def encode_image_to_base64(image_path):
 def create_llm_response(
     prepared_usr_prompt: str,
     system_prompt: str,
+    model_name: str,
     images_dir: str = None,
-    model_name: Optional[str] = None,
     schema: Optional[Type[T]] = None,
     images_metadata: Optional[List[Dict[str, Any]]] = None,
 ) -> Union[str, T, None]:
@@ -30,8 +30,7 @@ def create_llm_response(
     Args:
         prepared_usr_prompt: User prompt content
         system_prompt: System prompt content
-        images_dir: Directory containing images (legacy, used if images_metadata not provided)
-        model_name: Model identifier (e.g., "openai/gpt-5")
+        model_name: Required. Model identifier (e.g., "openai/gpt-5")
         schema: Optional Pydantic model for structured output
         images_metadata: Optional list of dicts with keys 'path', 'caption', 'figure_number'
 
@@ -39,8 +38,6 @@ def create_llm_response(
         If schema is provided, returns instance of the schema type.
         Otherwise, returns the raw string response.
     """
-    if model_name is None:
-        model_name = get_config().llm.default_model
 
     messages = [
         {"role": "system", "content": system_prompt},

@@ -19,44 +19,39 @@ class ModelPricing(BaseModel):
 
 
 class TierConfig(BaseModel):
-    """Per-difficulty model overrides. Unset fields fall back to base LLMConfig."""
+    """Per-difficulty model config. Only include models relevant to this tier."""
     explanation_model: Optional[str] = None
     judge_model: Optional[str] = None
     prereq_model: Optional[str] = None
     code_gen_model: Optional[str] = None
-    default_model: Optional[str] = None
     skip_judge: bool = False
 
 
 class LLMConfig(BaseModel):
-    explanation_model: str = "openai/gpt-5"
-    judge_model: str = "openai/gpt-5"
-    prereq_model: str = "openai/gpt-5"
-    code_gen_model: str = "anthropic/claude-sonnet-4.5"
-    default_model: str = "openai/gpt-5"
     provider: str = "openrouter"
     max_retries: int = 3
     retry_base_delay: float = 1.0
     tiers: dict[str, TierConfig] = {}
-    model_pricing: dict[str, ModelPricing] = {
-        "openai/gpt-5": ModelPricing(input=2.50e-6, output=10.0e-6),
-        "anthropic/claude-sonnet-4.5": ModelPricing(input=3.0e-6, output=15.0e-6),
-        "openai/gpt-4.1-mini": ModelPricing(input=0.40e-6, output=1.60e-6),
-        "openai/gpt-4.1-nano": ModelPricing(input=0.10e-6, output=0.40e-6),
-        "google/gemini-2.5-flash": ModelPricing(input=0.15e-6, output=0.60e-6),
-    }
+    model_pricing: dict[str, ModelPricing] = {}
 
-    def get_model(self, stage: str, difficulty: Optional[str] = None) -> str:
-        """Get model name for a stage, with optional tier-based override.
+    def get_model(self, stage: str, difficulty: str) -> str:
+        """Get model name for a stage from the difficulty tier.
 
-        Falls back to base model if tier or tier-specific model is not set.
+        Raises ValueError if no model is configured for the stage+difficulty.
         """
-        base_model = getattr(self, stage, self.default_model)
-        if difficulty and difficulty in self.tiers:
-            tier_model = getattr(self.tiers[difficulty], stage, None)
-            if tier_model is not None:
-                return tier_model
-        return base_model
+        if difficulty not in self.tiers:
+            raise ValueError(
+                f"No tier configured for difficulty '{difficulty}'. "
+                f"Available tiers: {list(self.tiers.keys())}"
+            )
+        tier = self.tiers[difficulty]
+        model = getattr(tier, stage, None)
+        if not model:
+            raise ValueError(
+                f"No '{stage}' configured for difficulty '{difficulty}'. "
+                f"Set llm.tiers.{difficulty}.{stage} in config.yaml"
+            )
+        return model
 
     def get_tier(self, difficulty: Optional[str] = None) -> Optional[TierConfig]:
         """Get TierConfig for a difficulty level, or None."""
@@ -90,7 +85,7 @@ class ManimConfig(BaseModel):
 
 
 class TranslationConfig(BaseModel):
-    model: str = "openai/gpt-5"
+    model: str = ""
     max_workers: int = 10
 
 
