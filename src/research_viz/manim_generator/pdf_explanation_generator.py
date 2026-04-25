@@ -6,6 +6,7 @@ Uses OpenRouter's native PDF processing and includes an LLM judge for quality ve
 """
 
 import base64
+import logging
 import os
 import json
 from pathlib import Path
@@ -15,7 +16,9 @@ import tyro
 from dotenv import load_dotenv
 
 from research_viz.config.difficulty import DifficultyConfig, DIFFICULTY_CONFIGS
-from research_viz.utils.llm_utils import call_openrouter
+from research_viz.config.pipeline_config import get_config, get_provider
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -45,19 +48,52 @@ def encode_pdf_to_base64(pdf_path: str) -> str:
         return base64.b64encode(f.read()).decode('utf-8')
 
 
+def _build_response_format(schema: Optional[Type[T]]) -> Optional[dict]:
+    """Build response_format dict from a Pydantic schema."""
+    if schema is None:
+        return None
+    return {
+        "type": "json_schema",
+        "json_schema": {
+            "name": schema.__name__,
+            "schema": schema.model_json_schema(),
+            "strict": False,
+        },
+    }
+
+
+def call_llm_provider(
+    messages: list,
+    model_name: str,
+    schema: Optional[Type[T]] = None,
+    plugins: Optional[list] = None,
+) -> "LLMResponse":
+    """Call the LLM provider and return an LLMResponse.
+
+    model_name is required — resolve via get_config().llm.get_model() before calling.
+    """
+    from research_viz.providers.llm_provider import LLMResponse  # noqa: F811
+
+    kwargs: dict = {}
+    if plugins:
+        kwargs["plugins"] = plugins
+    rf = _build_response_format(schema)
+    if rf:
+        kwargs["response_format"] = rf
+
+    return get_provider().generate(messages, model_name, **kwargs)
+
+
 def create_pdf_llm_response(
     pdf_path: str,
     prompt: str,
     system_prompt: str,
-    model_name: str = "openai/gpt-5",
-    schema: Optional[Type[T]] = None
-) -> dict:
-    """
-    Call OpenRouter with native PDF processing.
+    model_name: str,
+    schema: Optional[Type[T]] = None,
+) -> "LLMResponse":
+    """Call the LLM provider with native PDF processing.
 
-    Best practices:
-    - PDF placed BEFORE text in request
-    - Native engine to avoid parsing costs
+    model_name is required — resolve via get_config().llm.get_model() before calling.
     """
     base64_pdf = encode_pdf_to_base64(pdf_path)
     data_url = f"data:application/pdf;base64,{base64_pdf}"
@@ -71,17 +107,17 @@ def create_pdf_llm_response(
                     "type": "file",
                     "file": {
                         "filename": Path(pdf_path).name,
-                        "file_data": data_url
-                    }
+                        "file_data": data_url,
+                    },
                 },
-                {"type": "text", "text": prompt}
-            ]
-        }
+                {"type": "text", "text": prompt},
+            ],
+        },
     ]
 
     plugins = [{"id": "file-parser", "pdf": {"engine": "native"}}]
 
-    return call_openrouter(messages, model_name, schema, plugins)
+    return call_llm_provider(messages, model_name, schema, plugins)
 
 
 def load_prompt(prompt_name: str) -> str:
@@ -116,7 +152,7 @@ depth_level meanings:
 Output JSON with: paper_title, root_concepts (list of main paper concepts),
 prerequisites (list of PrerequisiteConcept with concept_name, why_needed, depth_level, parent_concept, estimated_explanation_time_seconds)."""
 
-    response = create_pdf_llm_response(
+    llm_response = create_pdf_llm_response(
         pdf_path=pdf_path,
         prompt=user_prompt,
         system_prompt=system_prompt,
@@ -124,16 +160,15 @@ prerequisites (list of PrerequisiteConcept with concept_name, why_needed, depth_
         schema=PrerequisiteTree
     )
 
-    if "choices" not in response or len(response["choices"]) == 0:
-        print(f"  WARNING: Prerequisite tree generation failed: {response.get('error', response)}")
+    content = llm_response.content
+    if not content:
+        logger.warning("  Prerequisite tree generation failed: empty response")
         return None
 
-    content = response["choices"][0]["message"]["content"]
     try:
         tree = PrerequisiteTree.model_validate_json(content)
         return tree.model_dump()
     except Exception:
-        # Fallback: try raw JSON parse (may lack Pydantic validation)
         return json.loads(content)
 
 
@@ -191,14 +226,13 @@ Instead, check for conciseness, density, and focus on novel contributions."""
 
 def judge_explanation(
     explanation_json: str,
-    model_name: str = "openai/gpt-5",
-    difficulty_config: Optional[DifficultyConfig] = None
+    model_name: str,
+    difficulty_config: Optional[DifficultyConfig] = None,
 ) -> JudgeResult:
     """
     Use LLM judge to evaluate the explanation quality.
 
-    Returns:
-        JudgeResult with score (0 or 1) and feedback if failed
+    model_name is required — resolve via get_config().llm.get_model() before calling.
     """
     judge_prompt = load_prompt("3b1b_judge_prompt")
 
@@ -222,56 +256,69 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
     ]
 
     try:
-        response = call_openrouter(messages, model_name, JudgeResult)
+        llm_response = call_llm_provider(messages, model_name, JudgeResult)
+        content = llm_response.content
 
-        if "error" in response:
-            print(f"    Judge API error: {response['error']}")
-            return JudgeResult(score=0, criteria_scores={}, feedback=f"API error: {response['error']}")
+        if not content:
+            logger.warning(f"    Judge returned empty content")
+            return JudgeResult(score=0, criteria_scores={}, feedback="Empty response")
 
-        if "choices" in response and len(response["choices"]) > 0:
-            content = response["choices"][0]["message"]["content"]
-            try:
-                return JudgeResult.model_validate_json(content)
-            except Exception as e:
-                # Try to extract JSON from the response
-                import re
-                json_match = re.search(r'\{[^{}]*"score"[^{}]*\}', content, re.DOTALL)
-                if json_match:
-                    try:
-                        return JudgeResult.model_validate_json(json_match.group())
-                    except:
-                        pass
-                print(f"    Judge parse error: {e}")
-                print(f"    Raw content: {content[:500]}...")
-                return JudgeResult(score=0, criteria_scores={}, feedback=f"Parse error: {str(e)[:100]}")
-
-        print(f"    Unexpected judge response: {response}")
-        return JudgeResult(score=0, criteria_scores={}, feedback="Unexpected response format")
+        try:
+            return JudgeResult.model_validate_json(content)
+        except Exception as e:
+            import re
+            json_match = re.search(r'\{[^{}]*"score"[^{}]*\}', content, re.DOTALL)
+            if json_match:
+                try:
+                    return JudgeResult.model_validate_json(json_match.group())
+                except:
+                    pass
+            logger.error(f"    Judge parse error: {e}")
+            return JudgeResult(score=0, criteria_scores={}, feedback=f"Parse error: {str(e)[:100]}")
 
     except Exception as e:
-        print(f"    Judge exception: {e}")
+        logger.error(f"    Judge exception: {e}")
         return JudgeResult(score=0, criteria_scores={}, feedback=f"Exception: {str(e)[:100]}")
+
+
+def _validate_segment_count(content: str, min_segments: int = 2, max_segments: int = 3) -> bool:
+    """Check if explanation has between min and max segments."""
+    try:
+        data = json.loads(content)
+        segments = data.get("segments", [])
+        return min_segments <= len(segments) <= max_segments
+    except (json.JSONDecodeError, TypeError):
+        return False
 
 
 def generate_with_feedback_loop(
     pdf_path: str,
-    model_name: str = "openai/gpt-5",
+    difficulty: str,
+    model_name: Optional[str] = None,
     max_attempts: int = 3,
     difficulty_config: Optional[DifficultyConfig] = None,
-    prereq_tree: Optional[dict] = None
+    prereq_tree: Optional[dict] = None,
 ) -> Optional[dict]:
     """
     Generate explanation with LLM judge feedback loop.
 
     Process:
     1. Generate initial explanation from PDF
-    2. Judge evaluates against quality criteria
+    2. Judge evaluates against quality criteria (skipped if tier has skip_judge=True)
     3. If score=0, regenerate with feedback
     4. Repeat until score=1 or max_attempts reached
+
+    Args:
+        difficulty: Required. Selects model tier and judge behavior.
 
     Returns:
         Final explanation dict or None on failure
     """
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.get_model("explanation_model", difficulty)
+    tier = cfg.llm.get_tier(difficulty)
+    skip_judge = tier.skip_judge if tier else False
     system_prompt = load_prompt("3b1b_explanation_prompt")
 
     base_user_prompt = """
@@ -305,7 +352,7 @@ Each segment needs:
     previous_feedback = None
 
     for attempt in range(max_attempts):
-        print(f"\nAttempt {attempt + 1}/{max_attempts}")
+        logger.info(f"Attempt {attempt + 1}/{max_attempts}")
 
         # Build prompt with feedback if this is a retry
         if previous_feedback:
@@ -321,32 +368,47 @@ Generate a revised explanation that addresses ALL the feedback above.
             user_prompt = base_user_prompt
 
         # Generate explanation
-        print("  Generating explanation from PDF...")
+        logger.info("  Generating explanation from PDF...")
         try:
             from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
-            response = create_pdf_llm_response(
+            llm_response = create_pdf_llm_response(
                 pdf_path=pdf_path,
                 prompt=user_prompt,
                 system_prompt=system_prompt,
                 model_name=model_name,
-                schema=EducationalExplanation3B1B
+                schema=EducationalExplanation3B1B,
             )
         except ImportError:
-            print("  Error: ImportError")
-            response = create_pdf_llm_response(
+            llm_response = create_pdf_llm_response(
                 pdf_path=pdf_path,
                 prompt=user_prompt,
                 system_prompt=system_prompt,
                 model_name=model_name,
-                schema=None
+                schema=None,
             )
 
-        if "choices" not in response or len(response["choices"]) == 0:
-            print(f"  Error: Invalid response from LLM: {response}")
+        content = llm_response.content
+        if not content:
+            logger.error(f"  Empty response from LLM")
             continue
 
-        content = response["choices"][0]["message"]["content"]
-        print(f"  Generated explanation ({len(content)} chars)")
+        logger.info(f"  Generated explanation ({len(content)} chars)")
+
+        # Strip markdown code fences if present
+        stripped = content.strip()
+        if stripped.startswith("```"):
+            stripped = stripped.split("\n", 1)[1] if "\n" in stripped else stripped[3:]
+            if stripped.endswith("```"):
+                stripped = stripped[:-3]
+            content = stripped.strip()
+
+        if skip_judge:
+            logger.info("  Skipping judge (skip_judge enabled for this tier)")
+            try:
+                return json.loads(content)
+            except json.JSONDecodeError:
+                logger.error("  Failed to parse explanation as JSON")
+                continue
 
         # Parse content once for reuse
         try:
@@ -359,7 +421,7 @@ Generate a revised explanation that addresses ALL the feedback above.
             seg_count = len(parsed.get("segments", []))
             min_s, max_s = difficulty_config.min_segments, difficulty_config.max_segments
             if not (min_s <= seg_count <= max_s):
-                print(f"  Segment count {seg_count} outside range [{min_s}, {max_s}], auto-retrying")
+                logger.info(f"  Segment count {seg_count} outside range [{min_s}, {max_s}], auto-retrying")
                 previous_feedback = (
                     f"You generated {seg_count} segments but the requirement is {min_s}-{max_s}. "
                     f"Regenerate with exactly {min_s}-{max_s} segments."
@@ -367,38 +429,43 @@ Generate a revised explanation that addresses ALL the feedback above.
                 continue
 
         # Judge the explanation
-        print("  Judging explanation quality...")
-        judge_result = judge_explanation(content, model_name, difficulty_config)
+        logger.info("  Judging explanation quality...")
+        judge_model = cfg.llm.get_model("judge_model", difficulty)
+        judge_result = judge_explanation(content, judge_model, difficulty_config)
 
-        print(f"  Score: {judge_result.score}")
-        print(f"  Criteria: {judge_result.criteria_scores}")
+        logger.info(f"  Score: {judge_result.score}")
+        logger.info(f"  Criteria: {judge_result.criteria_scores}")
 
         if judge_result.score == 1:
-            print("  PASSED quality check!")
-            if parsed is not None:
-                if difficulty_config:
-                    parsed["difficulty_level"] = difficulty_config.level
-                if prereq_tree:
-                    parsed["prerequisite_tree"] = prereq_tree
-                return parsed
-            return {"raw_content": content}
+            logger.info("  PASSED quality check!")
+            if parsed is None:
+                try:
+                    parsed = json.loads(content)
+                except json.JSONDecodeError:
+                    return {"raw_content": content}
+            if difficulty_config:
+                parsed["difficulty_level"] = difficulty_config.level
+            if prereq_tree:
+                parsed["prerequisite_tree"] = prereq_tree
+            return parsed
 
         # Failed - prepare feedback for next attempt
-        print(f"  FAILED quality check")
+        logger.warning(f"  FAILED quality check")
         if judge_result.feedback:
-            print(f"  Feedback: {judge_result.feedback[:200]}...")
+            logger.info(f"  Feedback: {judge_result.feedback[:200]}...")
             previous_feedback = judge_result.feedback
 
-    print(f"\nFailed to pass quality check after {max_attempts} attempts")
+    logger.error(f"Failed to pass quality check after {max_attempts} attempts")
     return None
 
 
 def generate_explanation_from_pdf(
     pdf_path: str,
     output_path: str,
-    model_name: str = "openai/gpt-5",
+    difficulty: str,
+    model_name: Optional[str] = None,
     max_judge_attempts: int = 3,
-    difficulty_config: Optional[DifficultyConfig] = None
+    difficulty_config: Optional[DifficultyConfig] = None,
 ) -> Optional[dict]:
     """
     Generate a 3B1B-style educational explanation directly from a PDF.
@@ -406,68 +473,69 @@ def generate_explanation_from_pdf(
     Args:
         pdf_path: Path to the research paper PDF
         output_path: Path to save the explanation JSON
-        model_name: LLM model to use
+        difficulty: Required. Selects model tier.
+        model_name: Optional override for explanation model
         max_judge_attempts: Max attempts to pass quality check
         difficulty_config: Optional difficulty configuration
 
     Returns:
         The generated explanation as a dict, or None on error
     """
-    difficulty_label = difficulty_config.level if difficulty_config else "medium (default)"
-    print(f"PDF: {pdf_path}")
-    print(f"Model: {model_name}")
-    print(f"Difficulty: {difficulty_label}")
-    print(f"Max judge attempts: {max_judge_attempts}")
+    logger.info(f"PDF: {pdf_path}")
+    logger.info(f"Difficulty: {difficulty}")
+    logger.info(f"Max judge attempts: {max_judge_attempts}")
 
     # Generate prerequisite tree for easy mode
     prereq_tree = None
     if difficulty_config and difficulty_config.include_prerequisite_segments:
-        print("\nGenerating prerequisite tree for easy mode...")
-        prereq_tree = generate_prerequisite_tree(pdf_path, model_name)
+        logger.info("Generating prerequisite tree for easy mode...")
+        prereq_model = model_name or get_config().llm.get_model("prereq_model", difficulty)
+        prereq_tree = generate_prerequisite_tree(pdf_path, prereq_model)
         if prereq_tree:
-            print(f"  Found {len(prereq_tree.get('prerequisites', []))} prerequisites")
+            logger.info(f"  Found {len(prereq_tree.get('prerequisites', []))} prerequisites")
         else:
-            print("  Warning: Failed to generate prerequisite tree, continuing without it")
+            logger.warning("  Failed to generate prerequisite tree, continuing without it")
 
     explanation = generate_with_feedback_loop(
         pdf_path=pdf_path,
+        difficulty=difficulty,
         model_name=model_name,
         max_attempts=max_judge_attempts,
         difficulty_config=difficulty_config,
-        prereq_tree=prereq_tree
+        prereq_tree=prereq_tree,
     )
 
     if explanation:
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(explanation, f, indent=2)
-        print(f"\nExplanation saved to: {output_path}")
+        logger.info(f"Explanation saved to: {output_path}")
         if "paper_title" in explanation:
-            print(f"Paper: {explanation['paper_title']}")
+            logger.info(f"Paper: {explanation['paper_title']}")
         if "segments" in explanation:
-            print(f"Segments: {len(explanation['segments'])}")
+            logger.info(f"Segments: {len(explanation['segments'])}")
         if "running_example" in explanation:
-            print(f"Running example: {explanation['running_example']}")
+            logger.info(f"Running example: {explanation['running_example']}")
 
     return explanation
 
 
 def main(
     pdf_path: str,
+    difficulty: str = "medium",
     output_path: Optional[str] = None,
-    model_name: str = "openai/gpt-5",
+    model_name: Optional[str] = None,
     max_judge_attempts: int = 3,
-    difficulty: str = "medium"
 ):
     """
     Generate 3Blue1Brown-style educational explanation from a PDF research paper.
 
     Args:
         pdf_path: Path to the research paper PDF
+        difficulty: Difficulty tier - easy, medium, or hard (default: medium)
         output_path: Path to save the explanation JSON (default: same dir as PDF)
-        model_name: LLM model to use
+        model_name: Optional model override
         max_judge_attempts: Max attempts to pass quality check (default: 3)
-        difficulty: Difficulty level - easy, medium, or hard (default: medium)
 
     Examples:
         python -m research_viz.manim_generator.pdf_explanation_generator \\
@@ -477,11 +545,11 @@ def main(
             --pdf-path papers/attention.pdf --difficulty hard
     """
     if not os.path.exists(pdf_path):
-        print(f"ERROR: PDF not found: {pdf_path}")
+        logger.error(f"PDF not found: {pdf_path}")
         return
 
     if difficulty not in DIFFICULTY_CONFIGS:
-        print(f"ERROR: Invalid difficulty '{difficulty}'. Choose from: easy, medium, hard")
+        logger.error(f"Invalid difficulty '{difficulty}'. Choose from: easy, medium, hard")
         return
 
     difficulty_config = DIFFICULTY_CONFIGS[difficulty]
@@ -493,9 +561,10 @@ def main(
     generate_explanation_from_pdf(
         pdf_path=pdf_path,
         output_path=output_path,
+        difficulty=difficulty,
         model_name=model_name,
         max_judge_attempts=max_judge_attempts,
-        difficulty_config=difficulty_config
+        difficulty_config=difficulty_config,
     )
 
 

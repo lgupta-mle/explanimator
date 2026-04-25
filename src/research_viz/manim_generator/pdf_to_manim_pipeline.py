@@ -6,6 +6,7 @@ Uses RAG only when execution errors occur.
 """
 
 import copy
+import logging
 import os
 import json
 import shutil
@@ -19,15 +20,21 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import tyro
 from dotenv import load_dotenv
 
+logger = logging.getLogger(__name__)
+
 from research_viz.manim_generator.pdf_explanation_generator import (
     create_pdf_llm_response,
+    call_llm_provider,
+    _build_response_format,
     load_prompt,
-    encode_pdf_to_base64
+    encode_pdf_to_base64,
 )
 from research_viz.utils.llm_utils import call_openrouter
 from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B, Segment3B1B
 from research_viz.config.difficulty import DifficultyConfig, DIFFICULTY_CONFIGS
 from research_viz.schemas.language_schemas import LanguageConfig, SUPPORTED_LANGUAGES
+from research_viz.config.pipeline_config import get_config, get_provider
+from research_viz.pipeline.checkpoint import read_checkpoints, validate_checkpoint, write_checkpoint
 
 load_dotenv()
 
@@ -57,6 +64,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
     Returns:
         (success, output_or_error)
     """
+    cfg = get_config()
     temp_dir = tempfile.mkdtemp(prefix="manim_exec_")
     temp_path = os.path.join(temp_dir, "scene.py")
     media_dir = os.path.join(temp_dir, "media")
@@ -73,7 +81,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
             ],
             capture_output=True,
             text=True,
-            timeout=120
+            timeout=cfg.manim.timeout
         )
 
         if result.returncode == 0:
@@ -83,7 +91,7 @@ def execute_manim_scene(code: str, class_name: str) -> tuple[bool, str]:
             return False, error_output
 
     except subprocess.TimeoutExpired:
-        return False, "Timeout: Manim render took too long (>120s)"
+        return False, f"Timeout: Manim render took too long (>{cfg.manim.timeout}s)"
     except Exception as e:
         return False, f"Exception: {str(e)}"
     finally:
@@ -132,7 +140,7 @@ def fetch_rag_context_for_error(error_message: str, chroma_path: str = "data/man
             return "\n\n---\n\n".join(docs)
 
     except Exception as e:
-        print(f"    RAG error: {e}")
+        logger.error(f"    RAG error: {e}")
 
     return ""
 
@@ -140,8 +148,9 @@ def fetch_rag_context_for_error(error_message: str, chroma_path: str = "data/man
 def generate_scene_code(
     segment: dict,
     running_example: str,
-    model_name: str = "google/gemini-3.1-pro-preview",
-    max_retries: int = 3,
+    difficulty: str,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     beat_timeline: Optional[List[dict]] = None
 ) -> Optional[ManimSceneCode]:
@@ -153,6 +162,11 @@ def generate_scene_code(
     2. Execute with Manim
     3. If error, fetch RAG context and retry
     """
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.get_model("code_gen_model", difficulty)
+    if max_retries is None:
+        max_retries = cfg.manim.max_retries
     system_prompt = load_code_gen_prompt()
 
     segment_id = segment.get('segment_id', 'scene')
@@ -243,7 +257,7 @@ Output a JSON object with:
     previous_error = None
 
     for attempt in range(max_retries):
-        print(f"    [{title}] Attempt {attempt + 1}/{max_retries} (t={time.time():.1f})", flush=True)
+        logger.info(f"    [{title}] Attempt {attempt + 1}/{max_retries} (t={time.time():.1f})")
 
         # Build prompt with error feedback if retry
         if previous_error:
@@ -271,18 +285,13 @@ Fix the errors and regenerate the complete scene code.
         ]
 
         llm_start = time.time()
-        response = call_openrouter(messages, model_name, ManimSceneCode)
-        print(f"      [{title}] LLM responded in {time.time() - llm_start:.1f}s (t={time.time():.1f})", flush=True)
+        llm_response = call_llm_provider(messages, model_name, ManimSceneCode)
+        content = llm_response.content
+        logger.info(f"      [{title}] LLM responded in {time.time() - llm_start:.1f}s (t={time.time():.1f})")
 
-        if "error" in response:
-            print(f"      API error: {response['error']}")
+        if not content:
+            logger.warning(f"      Empty response from LLM")
             continue
-
-        if "choices" not in response or len(response["choices"]) == 0:
-            print(f"      Invalid response")
-            continue
-
-        content = response["choices"][0]["message"]["content"]
 
         try:
             scene_code = ManimSceneCode.model_validate_json(content)
@@ -294,25 +303,25 @@ Fix the errors and regenerate the complete scene code.
                 try:
                     scene_code = ManimSceneCode.model_validate_json(json_match.group())
                 except:
-                    print(f"      Parse error: {e}")
+                    logger.error(f"      Parse error: {e}")
                     continue
             else:
-                print(f"      Parse error: {e}")
+                logger.error(f"      Parse error: {e}")
                 continue
 
         # Execute the code
-        print(f"      [{title}] Executing Manim... (t={time.time():.1f})", flush=True)
+        logger.info(f"      [{title}] Executing Manim... (t={time.time():.1f})")
         exec_start = time.time()
         success, output = execute_manim_scene(scene_code.code, scene_code.class_name)
 
         if success:
-            print(f"      [{title}] SUCCESS in {time.time() - exec_start:.1f}s (t={time.time():.1f})", flush=True)
+            logger.info(f"      [{title}] SUCCESS in {time.time() - exec_start:.1f}s (t={time.time():.1f})")
             return scene_code
         else:
-            print(f"      [{title}] Execution failed in {time.time() - exec_start:.1f}s", flush=True)
+            logger.warning(f"      [{title}] Execution failed in {time.time() - exec_start:.1f}s")
             previous_error = output
 
-    print(f"    Failed after {max_retries} attempts")
+    logger.error(f"    Failed after {max_retries} attempts")
     return None
 
 
@@ -321,8 +330,9 @@ MAX_CODEGEN_WORKERS = 4  # Max parallel Manim code generation workers
 
 def generate_all_scenes(
     explanation: dict,
-    model_name: str = "google/gemini-3.1-pro-preview",
-    max_retries: int = 3,
+    difficulty: str,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     audio_timeline_path: Optional[str] = None,
     max_workers: int = MAX_CODEGEN_WORKERS
@@ -338,27 +348,28 @@ def generate_all_scenes(
     # Load beat timeline if available
     beat_timeline_by_segment = {}
     if audio_timeline_path and os.path.exists(audio_timeline_path):
-        print(f"\nLoading beat timeline from {audio_timeline_path}")
+        logger.info(f"Loading beat timeline from {audio_timeline_path}")
         with open(audio_timeline_path, 'r') as f:
             audio_timeline = json.load(f)
             beat_timeline_by_segment = audio_timeline.get('segments', {})
-        print(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
+        logger.info(f"  Loaded timing for {len(beat_timeline_by_segment)} segments")
 
-    print(f"\nGenerating Manim code for {len(segments)} segments (max {max_workers} parallel)")
-    print(f"Running example: {running_example[:100]}...", flush=True)
+    logger.info(f"Generating Manim code for {len(segments)} segments (max {max_workers} parallel)")
+    logger.info(f"Running example: {running_example[:100]}...")
 
     def _generate_one(index: int, segment: dict) -> Optional[ManimSceneCode]:
         segment_id = segment.get('segment_id', f'seg_{index+1:02d}')
-        print(f"\n[{index+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')} (t={time.time():.1f})", flush=True)
+        logger.info(f"[{index+1}/{len(segments)}] Segment: {segment.get('title', 'Untitled')} (t={time.time():.1f})")
 
         segment_beats = None
         if segment_id in beat_timeline_by_segment:
             segment_beats = beat_timeline_by_segment[segment_id].get('beats', [])
-            print(f"  Using beat timing: {len(segment_beats)} beats")
+            logger.info(f"  Using beat timing: {len(segment_beats)} beats")
 
         return generate_scene_code(
             segment=segment,
             running_example=running_example,
+            difficulty=difficulty,
             model_name=model_name,
             max_retries=max_retries,
             chroma_path=chroma_path,
@@ -378,7 +389,7 @@ def generate_all_scenes(
             try:
                 results[idx] = future.result()
             except Exception as e:
-                print(f"  ERROR generating scene {idx+1}: {e}")
+                logger.error(f"  ERROR generating scene {idx+1}: {e}")
                 results[idx] = None
 
     # Collect successful results in original segment order
@@ -417,78 +428,179 @@ import numpy as np
     return "\n".join(parts)
 
 
+def _is_stage_cached(checkpoints: dict, stage_name: str) -> bool:
+    """Check if a stage has a valid checkpoint (artifacts exist and hashes match)."""
+    if stage_name not in checkpoints:
+        return False
+    return validate_checkpoint(checkpoints[stage_name])
+
+
 def run_pipeline(
     pdf_path: str,
+    difficulty: str = "medium",
     output_dir: str = "src/research_viz/manim_generator/output",
-    model_name: str = "google/gemini-3.1-pro-preview",
-    max_retries: int = 3,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
     skip_explanation: bool = False,
-    explanation_path: Optional[str] = None
+    explanation_path: Optional[str] = None,
+    force_restart: bool = False,
 ) -> Optional[str]:
     """
     Run the complete PDF to Manim pipeline.
 
     Args:
         pdf_path: Path to the research paper PDF
+        difficulty: Required. Selects model tier (hard, medium, easy).
         output_dir: Directory for output files
-        model_name: LLM model to use
+        model_name: Optional model override for code gen
         max_retries: Max retries for code generation per segment
         skip_explanation: If True, use existing explanation file
         explanation_path: Path to existing explanation JSON (if skip_explanation=True)
+        force_restart: If True, ignore all checkpoints and re-run from scratch
 
     Returns:
         Path to generated Manim code file, or None on failure
     """
+    from research_viz.pipeline.run_metrics import RunMetricsCollector
+
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.get_model("code_gen_model", difficulty)
+    if max_retries is None:
+        max_retries = cfg.manim.max_retries
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     pdf_stem = Path(pdf_path).stem
 
-    # Step 1: Generate or load explanation
-    if skip_explanation and explanation_path:
-        print(f"Loading existing explanation: {explanation_path}")
-        with open(explanation_path, 'r') as f:
-            explanation = json.load(f)
-    else:
-        print(f"Generating explanation from PDF: {pdf_path}")
-        from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+    collector = RunMetricsCollector()
+    provider = get_provider()
+
+    try:
+        # Load checkpoints for resume support
+        checkpoints = {} if force_restart else read_checkpoints(output_dir)
+
+        # Step 1: Generate or load explanation
         explanation_output = f"{output_dir}/{pdf_stem}_explanation.json"
-        explanation = generate_explanation_from_pdf(
-            pdf_path=pdf_path,
-            output_path=explanation_output,
-            model_name=model_name,
-            max_judge_attempts=3
-        )
-        if not explanation:
-            print("Failed to generate explanation")
-            return None
+        with collector.time_stage("explanation", provider):
+            if skip_explanation and explanation_path:
+                logger.info(f"Loading existing explanation: {explanation_path}")
+                with open(explanation_path, 'r') as f:
+                    explanation = json.load(f)
+            elif _is_stage_cached(checkpoints, "explanation"):
+                logger.info(f"Resuming: explanation stage cached, loading from checkpoint")
+                with open(explanation_output, 'r') as f:
+                    explanation = json.load(f)
+            else:
+                logger.info(f"Generating explanation from PDF: {pdf_path}")
+                from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+                explanation = generate_explanation_from_pdf(
+                    pdf_path=pdf_path,
+                    output_path=explanation_output,
+                    difficulty=difficulty,
+                    model_name=None,
+                    max_judge_attempts=3,
+                )
+                if not explanation:
+                    logger.error("Failed to generate explanation")
+                    return None
+                write_checkpoint(output_dir, "explanation", [explanation_output])
 
-    # Step 2: Generate Manim code for all segments
-    scene_codes = generate_all_scenes(
-        explanation=explanation,
-        model_name=model_name,
-        max_retries=max_retries
-    )
+        # Step 2: Run TTS and code generation in parallel
+        # Both only depend on the explanation, not on each other.
+        audio_dir = f"{output_dir}/audio_beats"
+        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
 
-    if not scene_codes:
-        print("No scenes generated successfully")
-        return None
+        tts_cached = _is_stage_cached(checkpoints, "tts")
+        codegen_cached = _is_stage_cached(checkpoints, "codegen")
 
-    # Step 3: Assemble and save
-    paper_title = explanation.get('paper_title', pdf_stem)
-    complete_code = assemble_complete_code(scene_codes, paper_title)
+        def _run_tts():
+            from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
+            explanation_json_path = f"{output_dir}/{pdf_stem}_explanation.json"
+            Path(explanation_json_path).parent.mkdir(parents=True, exist_ok=True)
+            with open(explanation_json_path, 'w') as ef:
+                json.dump(explanation, ef, indent=2)
+            return generate_beat_timeline(
+                explanation_path=explanation_json_path,
+                output_dir=audio_dir,
+            )
 
-    output_path = f"{output_dir}/{pdf_stem}_animation.py"
-    with open(output_path, 'w') as f:
-        f.write(complete_code)
+        def _run_code_gen():
+            return generate_all_scenes(
+                explanation=explanation,
+                difficulty=difficulty,
+                model_name=model_name,
+                max_retries=max_retries,
+                audio_timeline_path=audio_timeline_path,
+            )
 
-    print(f"\n{'='*70}")
-    print(f"SUCCESS!")
-    print(f"{'='*70}")
-    print(f"Generated {len(scene_codes)} scenes")
-    print(f"Output: {output_path}")
-    print(f"\nTo render:")
-    print(f"  manim -pql {output_path} <ClassName>")
+        with collector.time_stage("tts_and_codegen", provider):
+            if tts_cached and codegen_cached:
+                logger.info("Resuming: TTS and codegen stages cached")
+            else:
+                logger.info(f"Launching TTS and code generation in parallel...")
 
-    return output_path
+                with ThreadPoolExecutor(max_workers=2) as executor:
+                    futures = {}
+                    if not tts_cached:
+                        futures[executor.submit(_run_tts)] = "TTS"
+                    else:
+                        logger.info("  TTS cached, skipping")
+                    if not codegen_cached:
+                        futures[executor.submit(_run_code_gen)] = "Code generation"
+                    else:
+                        logger.info("  Code generation cached, skipping")
+
+                    results = {}
+                    error = None
+                    for future in as_completed(futures):
+                        stage_name = futures[future]
+                        try:
+                            results[stage_name] = future.result()
+                        except Exception as exc:
+                            error = (stage_name, exc)
+                            for f in futures:
+                                if f is not future:
+                                    f.cancel()
+                            break
+
+                    if error:
+                        stage_name, exc = error
+                        logger.error(f"{stage_name} failed: {exc}")
+                        collector.record_error("tts_and_codegen", exc, stage_name, recoverable=False)
+                        return None
+
+                    if "TTS" in results:
+                        write_checkpoint(output_dir, "tts", [audio_timeline_path])
+                    if "Code generation" in results:
+                        pass  # Code gen artifacts are in-memory, checkpointed at assembly
+
+        # Step 3: Assemble and save
+        output_path = f"{output_dir}/{pdf_stem}_animation.py"
+
+        with collector.time_stage("assembly", provider):
+            if _is_stage_cached(checkpoints, "assembly"):
+                logger.info(f"Resuming: assembly stage cached")
+            else:
+                if codegen_cached:
+                    scene_codes = _run_code_gen()
+                else:
+                    scene_codes = results.get("Code generation")
+
+                if not scene_codes:
+                    logger.error("No scenes generated successfully")
+                    return None
+
+                paper_title = explanation.get('paper_title', pdf_stem)
+                complete_code = assemble_complete_code(scene_codes, paper_title)
+
+                with open(output_path, 'w') as f:
+                    f.write(complete_code)
+                write_checkpoint(output_dir, "assembly", [output_path])
+
+        logger.info(f"Generated pipeline output: {output_path}")
+        return output_path
+
+    finally:
+        collector.write(provider, output_dir)
 
 
 def get_video_duration(video_path: str) -> float:
@@ -502,7 +614,7 @@ def get_video_duration(video_path: str) -> float:
         )
         return float(result.stdout.strip())
     except Exception as e:
-        print(f"Error getting video duration: {e}")
+        logger.error(f"Error getting video duration: {e}")
         return 0.0
 
 
@@ -517,7 +629,7 @@ def get_audio_duration(audio_path: str) -> float:
         )
         return float(result.stdout.strip())
     except Exception as e:
-        print(f"Error getting audio duration: {e}")
+        logger.error(f"Error getting audio duration: {e}")
         return 0.0
 
 
@@ -588,7 +700,7 @@ def extend_video_to_duration(video_path: str, target_duration: float, output_pat
 
         return True
     except Exception as e:
-        print(f"Error extending video: {e}")
+        logger.error(f"Error extending video: {e}")
         return False
 
 
@@ -608,7 +720,7 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
         current_duration = get_video_duration(video_path)
         
         if current_duration == 0:
-            print(f"Error: Could not get video duration")
+            logger.error(f"Could not get video duration")
             return False
         
         # Calculate speed factor (PTS multiplier)
@@ -624,7 +736,7 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
                 subprocess.run(['cp', video_path, output_path], check=True)
                 return True
         
-        print(f"    Adjusting speed: {current_duration:.2f}s → {target_duration:.2f}s (factor: {speed_factor:.3f}x)")
+        logger.info(f"    Adjusting speed: {current_duration:.2f}s -> {target_duration:.2f}s (factor: {speed_factor:.3f}x)")
         
         # Apply speed adjustment
         # Note: setpts changes playback speed without re-encoding frames
@@ -640,77 +752,36 @@ def adjust_video_speed(video_path: str, target_duration: float, output_path: str
         
         # Verify final duration
         final_duration = get_video_duration(output_path)
-        print(f"    Result: {final_duration:.2f}s (target: {target_duration:.2f}s)")
+        logger.info(f"    Result: {final_duration:.2f}s (target: {target_duration:.2f}s)")
         
         return True
     except Exception as e:
-        print(f"Error adjusting video speed: {e}")
+        logger.error(f"Error adjusting video speed: {e}")
         return False
 
 
-def adjust_video_to_audio_duration(
+def sync_video_audio_single_pass(
     video_path: str,
-    audio_duration: float,
+    audio_path: str,
     output_path: str,
     max_speed_change: float = 0.3
 ) -> bool:
     """
-    Adjust video to match audio duration with configurable speed limits.
-    
-    Args:
-        video_path: Input video path
-        audio_duration: Target audio duration
-        output_path: Output adjusted video
-        max_speed_change: Maximum allowed speed change (0.3 = 30%)
-    
-    Returns:
-        True if successful
-    """
-    try:
-        video_duration = get_video_duration(video_path)
-        
-        # Calculate required speed change
-        speed_ratio = abs(video_duration - audio_duration) / audio_duration
-        
-        print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
-        print(f"    Speed change required: {speed_ratio*100:.1f}%")
-        
-        # If speed change is within limits, adjust speed
-        if speed_ratio <= max_speed_change:
-            print(f"    Using speed adjustment (within {max_speed_change*100:.0f}% limit)")
-            return adjust_video_speed(video_path, audio_duration, output_path)
-        else:
-            # Speed change too large, use extend/trim approach
-            print(f"    Speed change too large, using extend/trim approach")
-            if video_duration < audio_duration:
-                # Extend by freezing last frame
-                return extend_video_to_duration(video_path, audio_duration, output_path)
-            else:
-                # Trim to target duration (lose some content at end)
-                print(f"    WARNING: Video too long, trimming from {video_duration:.2f}s to {audio_duration:.2f}s")
-                subprocess.run([
-                    'ffmpeg', '-y',
-                    '-i', video_path,
-                    '-t', str(audio_duration),
-                    '-c:v', 'libx264',
-                    '-pix_fmt', 'yuv420p',
-                    output_path
-                ], capture_output=True, check=True)
-                return True
-        
-    except Exception as e:
-        print(f"Error adjusting video to audio duration: {e}")
-        return False
+    Single-pass ffmpeg: speed-adjust, pad, and merge audio in one command.
 
+    Combines what was previously adjust_video_to_audio_duration + sync_audio_with_video
+    into a single ffmpeg invocation, eliminating double re-encode.
 
-def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) -> bool:
-    """
-    Sync audio with video, extending video if needed.
+    Strategy based on video vs audio duration:
+    - Within max_speed_change: setpts speed adjustment + tpad + audio merge
+    - Video too short: tpad freeze last frame + audio merge
+    - Video too long: trim + audio merge
 
     Args:
         video_path: Input video path
         audio_path: Input audio path
-        output_path: Output synced video path
+        output_path: Output synced video with audio
+        max_speed_change: Maximum allowed speed change (0.3 = 30%)
 
     Returns:
         True if successful
@@ -719,14 +790,95 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
         video_duration = get_video_duration(video_path)
         audio_duration = get_audio_duration(audio_path)
 
-        print(f"    Video: {video_duration:.2f}s, Audio: {audio_duration:.2f}s")
+        if video_duration == 0 or audio_duration == 0:
+            logger.error(f"Could not get duration (video={video_duration}, audio={audio_duration})")
+            return False
 
-        # Add a small buffer (0.5s) to ensure video fully covers audio
-        # This prevents black screen issues from minor timing discrepancies
+        # Target duration includes 0.5s buffer so video fully covers audio
         target_duration = audio_duration + 0.5
-        
+        speed_ratio = abs(video_duration - audio_duration) / audio_duration
+
+        # Build the video filter chain
+        vfilters = []
+
+        if speed_ratio <= max_speed_change and abs(video_duration - audio_duration) >= 0.1:
+            # Speed adjustment needed and within limits
+            speed_factor = video_duration / audio_duration
+            vfilters.append(f'setpts=PTS/{speed_factor}')
+            effective_duration = audio_duration  # after speed adjust
+        else:
+            effective_duration = video_duration
+
+        # Pad with last frame if video (after speed adjust) is shorter than target
+        pad_duration = target_duration - effective_duration
+        if pad_duration > 0.05:
+            vfilters.append(f'tpad=stop_mode=clone:stop_duration={pad_duration:.3f}')
+
+        # Build ffmpeg command
+        cmd = ['ffmpeg', '-y', '-i', video_path, '-i', audio_path]
+
+        if vfilters:
+            cmd += ['-filter:v', ','.join(vfilters)]
+            cmd += ['-c:v', 'libx264', '-pix_fmt', 'yuv420p']
+        else:
+            # No video filter needed — copy video stream
+            cmd += ['-c:v', 'copy']
+
+        # Trim if video is too long and speed change exceeds limit
+        if speed_ratio > max_speed_change and video_duration > audio_duration:
+            cmd += ['-t', f'{target_duration:.3f}']
+
+        cmd += [
+            '-c:a', 'aac', '-b:a', '192k',
+            '-map', '0:v:0', '-map', '1:a:0',
+            output_path
+        ]
+
+        subprocess.run(cmd, capture_output=True, check=True)
+        return True
+
+    except Exception as e:
+        logger.error(f"Error in single-pass video/audio sync: {e}")
+        return False
+
+
+# Keep legacy functions as thin wrappers for any external callers
+def adjust_video_to_audio_duration(
+    video_path: str,
+    audio_duration: float,
+    output_path: str,
+    max_speed_change: float = 0.3
+) -> bool:
+    """Legacy wrapper — prefer sync_video_audio_single_pass for combined operations."""
+    try:
+        video_duration = get_video_duration(video_path)
+        speed_ratio = abs(video_duration - audio_duration) / audio_duration
+
+        if speed_ratio <= max_speed_change:
+            return adjust_video_speed(video_path, audio_duration, output_path)
+        elif video_duration < audio_duration:
+            return extend_video_to_duration(video_path, audio_duration, output_path)
+        else:
+            subprocess.run([
+                'ffmpeg', '-y', '-i', video_path,
+                '-t', str(audio_duration),
+                '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
+                output_path
+            ], capture_output=True, check=True)
+            return True
+    except Exception as e:
+        logger.error(f"Error adjusting video to audio duration: {e}")
+        return False
+
+
+def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) -> bool:
+    """Legacy wrapper — prefer sync_video_audio_single_pass for combined operations."""
+    try:
+        video_duration = get_video_duration(video_path)
+        audio_duration = get_audio_duration(audio_path)
+        target_duration = audio_duration + 0.5
+
         if target_duration > video_duration:
-            print(f"    Extending video by {target_duration - video_duration:.2f}s (includes 0.5s buffer)")
             extended_video = output_path.replace('.mp4', '_tmp_extended.mp4')
             if not extend_video_to_duration(video_path, target_duration, extended_video):
                 return False
@@ -734,23 +886,15 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
         else:
             video_to_use = video_path
 
-        # Merge audio with video (re-encode to ensure compatibility)
-        # IMPORTANT: Removed -shortest flag to prevent premature video cutoff
-        # Using explicit stream mapping to ensure video plays for full audio duration
         subprocess.run([
             'ffmpeg', '-y',
-            '-i', video_to_use,
-            '-i', audio_path,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
-            '-b:a', '192k',
+            '-i', video_to_use, '-i', audio_path,
+            '-c:v', 'libx264', '-c:a', 'aac', '-b:a', '192k',
             '-pix_fmt', 'yuv420p',
-            '-map', '0:v:0',  # Map video from first input
-            '-map', '1:a:0',  # Map audio from second input
+            '-map', '0:v:0', '-map', '1:a:0',
             output_path
         ], capture_output=True, check=True)
 
-        # Cleanup temp extended video
         if target_duration > video_duration:
             try:
                 os.unlink(extended_video)
@@ -759,79 +903,78 @@ def sync_audio_with_video(video_path: str, audio_path: str, output_path: str) ->
 
         return True
     except Exception as e:
-        print(f"Error syncing audio with video: {e}")
+        logger.error(f"Error syncing audio with video: {e}")
         return False
 
 
 MAX_RENDER_WORKERS = 4  # Max parallel video render+sync workers
 
 
-def _render_and_sync_one_scene(
+def _render_scene(
     i: int,
     scene_code: ManimSceneCode,
-    segment: dict,
-    audio_timeline: dict,
     output_dir: str,
     quality: str,
-    sync_mode: str,
-    max_speed_change: float
 ) -> Optional[str]:
-    """Render and sync a single scene. Returns path to synced video or None."""
-    segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
-    print(f"\n[{i+1}] Scene: {scene_code.scene_id}")
-
-    quality_dirs = {
-        'l': '480p15',
-        'm': '720p30',
-        'h': '1080p60',
-        'k': '2160p60'
-    }
+    """Render a single Manim scene and return the video path, or None on failure."""
+    quality_dirs = {'l': '480p15', 'm': '720p30', 'h': '1080p60', 'k': '2160p60'}
     quality_dir = quality_dirs.get(quality, '480p15')
-    video_pattern = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
+    video_path = f"media/videos/temp_scene_{i+1}/{quality_dir}/{scene_code.class_name}.mp4"
 
-    # Check if video already exists
-    if os.path.exists(video_pattern):
-        print(f"  Video already exists: {video_pattern}")
-    else:
-        temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
-        with open(temp_scene_path, 'w') as f:
-            f.write("from manim import *\nimport numpy as np\n\n")
-            f.write(scene_code.code)
+    if os.path.exists(video_path):
+        logger.info(f"  [{i+1}] Video already exists: {video_path}")
+        return video_path
 
-        print(f"  Rendering Manim scene...")
-        try:
-            result = subprocess.run(
-                ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
-                capture_output=True,
-                text=True,
-                timeout=300
-            )
-            if result.returncode != 0:
-                print(f"  ERROR: Manim render failed")
-                print(result.stderr)
-                return None
-        except Exception as e:
-            print(f"  ERROR: {e}")
+    temp_scene_path = f"{output_dir}/temp_scene_{i+1}.py"
+    with open(temp_scene_path, 'w') as f:
+        f.write("from manim import *\nimport numpy as np\n\n")
+        f.write(scene_code.code)
+
+    logger.info(f"  [{i+1}] Rendering Manim scene {scene_code.scene_id}...")
+    try:
+        result = subprocess.run(
+            ['manim', f'-q{quality}', '--disable_caching', temp_scene_path, scene_code.class_name],
+            capture_output=True, text=True, timeout=300
+        )
+        if result.returncode != 0:
+            logger.error(f"  [{i+1}] Manim render failed")
+            logger.error(result.stderr)
             return None
+    except Exception as e:
+        logger.error(f"  [{i+1}] {e}")
+        return None
 
-        if not os.path.exists(video_pattern):
-            print(f"  ERROR: Rendered video not found at {video_pattern}")
-            return None
+    if not os.path.exists(video_path):
+        logger.error(f"  [{i+1}] Rendered video not found at {video_path}")
+        return None
 
+    return video_path
+
+
+def _sync_scene(
+    i: int,
+    video_path: str,
+    segment_id: str,
+    audio_timeline: dict,
+    output_dir: str,
+    max_speed_change: float,
+    sync_mode: str,
+) -> str:
+    """Sync a rendered scene with its audio. Returns the synced (or fallback) video path."""
     synced_video_path = f"{output_dir}/synced_scene_{i+1}.mp4"
     if os.path.exists(synced_video_path):
-        print(f"  Synced video already exists: {synced_video_path}")
+        logger.info(f"  [{i+1}] Synced video already exists: {synced_video_path}")
         return synced_video_path
 
     segment_audio_data = audio_timeline.get('segments', {}).get(segment_id)
     if not segment_audio_data:
-        print(f"  WARNING: No audio found for segment {segment_id}, skipping sync")
-        return video_pattern
+        logger.warning(f"  [{i+1}] No audio for segment {segment_id}, skipping sync")
+        return video_path
 
     beats = segment_audio_data.get('beats', [])
     if not beats:
-        print(f"  WARNING: No beats found for segment {segment_id}")
-        return video_pattern
+        logger.warning(f"  [{i+1}] No beats for segment {segment_id}")
+        return video_path
 
     # Combine beat audio files
     segment_audio_path = f"{output_dir}/segment_{i+1}_audio.wav"
@@ -844,48 +987,17 @@ def _render_and_sync_one_scene(
                 f.write(f"file '{os.path.abspath(beat['audio_file'])}'\n")
         subprocess.run([
             'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
-            '-i', concat_list,
-            '-c', 'copy',
-            segment_audio_path
+            '-i', concat_list, '-c', 'copy', segment_audio_path
         ], capture_output=True)
         os.unlink(concat_list)
 
-    # Sync audio with video
-    print(f"  Syncing audio with video (mode: {sync_mode})...")
-    segment_audio_duration = get_audio_duration(segment_audio_path)
-    adjusted_video_path = f"{output_dir}/adjusted_scene_{i+1}.mp4"
-
-    if sync_mode in ("segment", "beat"):
-        if sync_mode == "beat":
-            print(f"  WARNING: Beat-level sync requires per-beat video rendering")
-            print(f"  Falling back to segment-level sync")
-
-        if adjust_video_to_audio_duration(
-            video_pattern,
-            segment_audio_duration,
-            adjusted_video_path,
-            max_speed_change
-        ):
-            if sync_audio_with_video(adjusted_video_path, segment_audio_path, synced_video_path):
-                print(f"  SUCCESS: {synced_video_path}")
-                try:
-                    os.unlink(adjusted_video_path)
-                except:
-                    pass
-                return synced_video_path
-            else:
-                print(f"  WARNING: Audio merge failed, using adjusted video")
-                return adjusted_video_path
-        else:
-            print(f"  WARNING: Duration adjustment failed, using original sync")
-            if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-                return synced_video_path
-            return video_pattern
+    logger.info(f"  [{i+1}] Syncing audio with video (single-pass, mode: {sync_mode})...")
+    if sync_video_audio_single_pass(video_path, segment_audio_path, synced_video_path, max_speed_change):
+        logger.info(f"  [{i+1}] SUCCESS: {synced_video_path}")
+        return synced_video_path
     else:
-        print(f"  WARNING: Unknown sync mode '{sync_mode}', using default")
-        if sync_audio_with_video(video_pattern, segment_audio_path, synced_video_path):
-            return synced_video_path
-        return video_pattern
+        logger.warning(f"  [{i+1}] Single-pass sync failed, using raw video")
+        return video_path
 
 
 def render_and_sync_all_scenes(
@@ -901,8 +1013,8 @@ def render_and_sync_all_scenes(
     """
     Render all Manim scenes, sync with audio, and stitch together.
 
-    Per-scene rendering and audio sync are parallelized via ThreadPoolExecutor.
-    Only the final stitching step is sequential.
+    Uses a producer-consumer pattern: render pool produces completed scenes
+    and sync pool processes them as they finish, overlapping render and sync work.
 
     Args:
         scene_codes: List of generated scene codes
@@ -923,82 +1035,86 @@ def render_and_sync_all_scenes(
         audio_timeline = json.load(f)
 
     segments = explanation.get('segments', [])
+    cfg = get_config()
 
-    print(f"\n{'='*70}")
-    print("RENDERING AND SYNCING SCENES")
-    print(f"{'='*70}")
-    print(f"Scenes to render: {len(scene_codes)}")
-    print(f"Quality: {quality}")
-    print(f"Sync mode: {sync_mode}")
-    print(f"Max speed change: {max_speed_change*100:.0f}%")
-    print(f"Max parallel render workers: {max_workers}")
+    logger.info("=" * 70)
+    logger.info("RENDERING AND SYNCING SCENES (pipeline-parallel)")
+    logger.info("=" * 70)
+    logger.info(f"Scenes: {len(scene_codes)} | Quality: {quality} | Sync: {sync_mode}")
+    logger.info(f"Render workers: {cfg.video.render_workers} | Sync workers: {cfg.video.sync_workers}")
+    logger.info(f"Max speed change: {max_speed_change*100:.0f}%")
 
-    # Parallel render + sync
-    results: dict[int, Optional[str]] = {}
+    # Result slots — preserve scene ordering
+    synced_videos: list[Optional[str]] = [None] * len(scene_codes)
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_idx = {}
-        for i, scene_code in enumerate(scene_codes):
-            segment = segments[i] if i < len(segments) else {}
-            future = executor.submit(
-                _render_and_sync_one_scene,
-                i, scene_code, segment, audio_timeline,
-                output_dir, quality, sync_mode, max_speed_change
-            )
-            future_to_idx[future] = i
+    # Producer-consumer: render pool feeds sync pool
+    render_pool = ThreadPoolExecutor(max_workers=cfg.video.render_workers)
+    sync_pool = ThreadPoolExecutor(max_workers=cfg.video.sync_workers)
 
-        for future in as_completed(future_to_idx):
-            idx = future_to_idx[future]
-            try:
-                results[idx] = future.result()
-            except Exception as e:
-                print(f"  ERROR rendering scene {idx+1}: {e}")
-                results[idx] = None
+    def _render_then_sync(i: int, scene_code: ManimSceneCode) -> tuple[int, Optional[str]]:
+        segment = segments[i] if i < len(segments) else {}
+        segment_id = segment.get('segment_id', f'seg_{i+1:02d}')
 
-    # Collect in order, skip failures
-    synced_videos = [results[i] for i in sorted(results) if results[i] is not None]
+        video_path = _render_scene(i, scene_code, output_dir, quality)
+        if video_path is None:
+            return (i, None)
 
-    if not synced_videos:
-        print("\nERROR: No videos to stitch")
+        # Submit sync to the sync pool and wait for it
+        sync_future = sync_pool.submit(
+            _sync_scene, i, video_path, segment_id,
+            audio_timeline, output_dir, max_speed_change, sync_mode,
+        )
+        return (i, sync_future.result())
+
+    # Submit all render tasks
+    render_futures = {
+        render_pool.submit(_render_then_sync, i, sc): i
+        for i, sc in enumerate(scene_codes)
+    }
+
+    for future in as_completed(render_futures):
+        idx, result_path = future.result()
+        synced_videos[idx] = result_path
+
+    render_pool.shutdown(wait=True)
+    sync_pool.shutdown(wait=True)
+
+    # Filter out failed scenes (None entries)
+    final_videos = [v for v in synced_videos if v is not None]
+
+    if not final_videos:
+        logger.error("No videos to stitch")
         return None
 
     # Stitch all videos together
-    print(f"\n{'='*70}")
-    print("STITCHING VIDEOS")
-    print(f"{'='*70}")
-    print(f"Videos to stitch: {len(synced_videos)}")
+    logger.info("=" * 70)
+    logger.info("STITCHING VIDEOS")
+    logger.info("=" * 70)
+    logger.info(f"Videos to stitch: {len(final_videos)}")
 
     concat_list_path = f"{output_dir}/final_concat.txt"
     with open(concat_list_path, 'w') as f:
-        for video in synced_videos:
+        for video in final_videos:
             f.write(f"file '{os.path.abspath(video)}'\n")
 
     final_output = f"{output_dir}/final_video.mp4"
     try:
-        # Re-encode to ensure audio/video consistency across all clips
         subprocess.run([
             'ffmpeg', '-y',
-            '-f', 'concat',
-            '-safe', '0',
+            '-f', 'concat', '-safe', '0',
             '-i', concat_list_path,
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
-            '-b:a', '192k',
-            '-pix_fmt', 'yuv420p',
+            '-c:v', 'libx264', '-c:a', 'aac',
+            '-b:a', '192k', '-pix_fmt', 'yuv420p',
             final_output
         ], capture_output=True, check=True)
 
-        print(f"\n{'='*70}")
-        print("SUCCESS!")
-        print(f"{'='*70}")
-        print(f"Final video: {final_output}")
-
+        logger.info(f"SUCCESS! Final video: {final_output}")
         final_duration = get_video_duration(final_output)
-        print(f"Duration: {final_duration:.1f}s ({final_duration/60:.1f} min)")
+        logger.info(f"Duration: {final_duration:.1f}s ({final_duration/60:.1f} min)")
 
         return final_output
     except Exception as e:
-        print(f"ERROR stitching videos: {e}")
+        logger.error(f"Error stitching videos: {e}")
         return None
 
 
@@ -1194,18 +1310,19 @@ def _run_for_language(
 def main(
     pdf_path: Optional[str] = None,
     explanation_path: Optional[str] = None,
-    output_dir: str = "src/research_viz/manim_generator/output",
-    model_name: str = "google/gemini-3.1-pro-preview",
-    max_retries: int = 3,
-    generate_audio: bool = True,
-    tts_voice: str = "nova",
-    render_video: bool = True,
-    video_quality: str = "m",
-    sync_mode: str = "segment",
-    max_speed_change: float = 0.3,
     difficulty: str = "medium",
+    output_dir: str = "src/research_viz/manim_generator/output",
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
+    generate_audio: bool = True,
+    tts_voice: Optional[str] = None,
+    render_video: bool = True,
+    video_quality: Optional[str] = None,
+    sync_mode: Optional[str] = None,
+    max_speed_change: Optional[float] = None,
     language: str = "en",
     languages: Optional[str] = None,
+    force_restart: bool = False,
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -1227,6 +1344,11 @@ def main(
         languages: Comma-separated list of language codes for multi-language batch mode.
             Generates explanation and Manim code once, then translates + renders for each
             language. Example: "en,es,ja,fr". Overrides --language when set.
+        force_restart: Ignore all checkpoints and re-run from scratch
+
+    Sync Modes:
+        - "segment": Adjust entire segment video to match audio (smoother, simpler)
+        - "beat": Adjust each beat separately (more precise, experimental)
 
     Examples:
         # Generate in Spanish with easy difficulty
@@ -1241,8 +1363,24 @@ def main(
         python -m research_viz.manim_generator.pdf_to_manim_pipeline \\
             --pdf-path papers/attention.pdf --languages en,es,ja,fr --generate-audio --render-video
     """
+    from research_viz.pipeline.run_metrics import RunMetricsCollector
+
+    cfg = get_config()
+    if model_name is None:
+        model_name = cfg.llm.get_model("code_gen_model", difficulty)
+    if max_retries is None:
+        max_retries = cfg.manim.max_retries
+    if tts_voice is None:
+        tts_voice = cfg.audio.voice
+    if video_quality is None:
+        video_quality = cfg.video.quality
+    if sync_mode is None:
+        sync_mode = cfg.video.sync_mode
+    if max_speed_change is None:
+        max_speed_change = cfg.video.max_speed_change
+
     if difficulty not in DIFFICULTY_CONFIGS:
-        print(f"ERROR: Invalid difficulty '{difficulty}'. Choose from: easy, medium, hard")
+        logger.error(f"Invalid difficulty '{difficulty}'. Choose from: easy, medium, hard")
         return
 
     difficulty_config = DIFFICULTY_CONFIGS[difficulty]
@@ -1254,199 +1392,190 @@ def main(
         for code in languages.split(","):
             code = code.strip()
             if code not in SUPPORTED_LANGUAGES:
-                print(f"ERROR: Unsupported language '{code}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
+                logger.error(f"Unsupported language '{code}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
                 return
             if code not in target_languages:
                 target_languages.append(code)
     else:
         if language not in SUPPORTED_LANGUAGES:
-            print(f"ERROR: Unsupported language '{language}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
+            logger.error(f"Unsupported language '{language}'. Supported: {', '.join(SUPPORTED_LANGUAGES.keys())}")
             return
         target_languages = [language]
 
     multi_lang = len(target_languages) > 1
     lang_names = ", ".join(f"{SUPPORTED_LANGUAGES[c].name} ({c})" for c in target_languages)
-    print(f"Difficulty: {difficulty} (segments: {difficulty_config.min_segments}-{difficulty_config.max_segments})")
-    print(f"Target language(s): {lang_names}")
+    logger.info(f"Difficulty: {difficulty} (segments: {difficulty_config.min_segments}-{difficulty_config.max_segments})")
+    logger.info(f"Target language(s): {lang_names}")
 
     # --- Determine pdf_stem ---
-    # We derive the stem even when the file doesn't exist on disk yet, so
-    # that sibling-directory discovery can still find previously generated
-    # artefacts (e.g. running --language es after an earlier English run).
     if explanation_path:
         pdf_stem = Path(explanation_path).stem.replace('_explanation', '').split('_explanation_')[0]
     elif pdf_path:
         pdf_stem = Path(pdf_path).stem
     else:
-        print("ERROR: Provide either --pdf-path or --explanation-path")
+        logger.error("Provide either --pdf-path or --explanation-path")
         return
 
-    # ================================================================
-    # PHASE 1 — Shared work: explanation + English Manim code generation
-    #
-    # Before generating anything, look for existing artefacts that can be
-    # reused.  The search order for each artefact is:
-    #   1. Explicit --explanation-path (if given)
-    #   2. Any sibling output dir for the same pdf_stem + difficulty
-    #      (e.g. paper_medium_en/, paper_medium_base/)
-    #   3. Generate from scratch
-    # ================================================================
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-    def _find_existing_artefact(filename: str) -> Optional[str]:
-        """Search sibling output dirs for an existing file."""
-        parent = Path(output_dir)
-        if not parent.is_dir():
+    collector = RunMetricsCollector()
+    provider = get_provider()
+
+    try:
+        # ================================================================
+        # PHASE 1 — Shared work: explanation + English Manim code generation
+        # ================================================================
+        def _find_existing_artefact(filename: str) -> Optional[str]:
+            """Search sibling output dirs for an existing file."""
+            parent = Path(output_dir)
+            if not parent.is_dir():
+                return None
+            prefix = f"{pdf_stem}_{difficulty}_"
+            for sibling in sorted(parent.iterdir()):
+                if sibling.is_dir() and sibling.name.startswith(prefix):
+                    candidate = sibling / filename
+                    if candidate.is_file():
+                        return str(candidate)
             return None
-        prefix = f"{pdf_stem}_{difficulty}_"
-        for sibling in sorted(parent.iterdir()):
-            if sibling.is_dir() and sibling.name.startswith(prefix):
-                candidate = sibling / filename
-                if candidate.is_file():
-                    return str(candidate)
-        return None
 
-    # For shared artefacts we use a base directory.  In multi-language mode
-    # this is a dedicated _base dir; in single-language mode we use the
-    # target language's own dir so the layout stays familiar.
-    if multi_lang:
-        base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_base"
-    else:
-        base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{target_languages[0]}"
-    Path(base_dir).mkdir(parents=True, exist_ok=True)
-
-    print(f"\n{'='*70}")
-    print("PHASE 1: SHARED GENERATION (explanation + Manim code)")
-    print(f"{'='*70}")
-
-    # Step 1: Load or generate explanation (always English)
-    explanation = None
-    used_explanation_path = None
-
-    if explanation_path and os.path.exists(explanation_path):
-        print(f"Loading existing explanation: {explanation_path}")
-        with open(explanation_path, 'r') as f:
-            explanation = json.load(f)
-        used_explanation_path = explanation_path
-    else:
-        # Check the current base_dir first, then scan siblings
-        explanation_output = f"{base_dir}/{pdf_stem}_explanation.json"
-        found = explanation_output if os.path.exists(explanation_output) else _find_existing_artefact(f"{pdf_stem}_explanation.json")
-
-        if found:
-            print(f"Reusing existing explanation: {found}")
-            with open(found, 'r') as f:
-                explanation = json.load(f)
-            used_explanation_path = found
-            # Copy into base_dir if it came from a sibling so future runs
-            # find it locally too
-            if found != explanation_output and not os.path.exists(explanation_output):
-                shutil.copy2(found, explanation_output)
-        elif pdf_path:
-            from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
-            print(f"Generating explanation from PDF: {pdf_path}")
-            explanation = generate_explanation_from_pdf(
-                pdf_path=pdf_path,
-                output_path=explanation_output,
-                model_name=model_name,
-                max_judge_attempts=3,
-                difficulty_config=difficulty_config
-            )
-            if not explanation:
-                print("Failed to generate explanation")
-                return
-            used_explanation_path = explanation_output
+        if multi_lang:
+            base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_base"
         else:
-            print("ERROR: Provide either --pdf-path or --explanation-path")
-            return
+            base_dir = f"{output_dir}/{pdf_stem}_{difficulty}_{target_languages[0]}"
+        Path(base_dir).mkdir(parents=True, exist_ok=True)
 
-    # Step 2: Generate Manim code (English, once) — reused for all languages
-    code_output_path = f"{base_dir}/{pdf_stem}_animation.py"
-    scene_metadata_path = f"{base_dir}/{pdf_stem}_scene_metadata.json"
+        logger.info("=" * 70)
+        logger.info("PHASE 1: SHARED GENERATION (explanation + Manim code)")
+        logger.info("=" * 70)
 
-    # Check current base_dir, then scan siblings for existing scene metadata
-    if not os.path.exists(scene_metadata_path):
-        found_meta = _find_existing_artefact(f"{pdf_stem}_scene_metadata.json")
-        found_code = _find_existing_artefact(f"{pdf_stem}_animation.py")
-        if found_meta:
-            print(f"Reusing existing scene metadata: {found_meta}")
-            shutil.copy2(found_meta, scene_metadata_path)
-            if found_code and not os.path.exists(code_output_path):
-                shutil.copy2(found_code, code_output_path)
+        # Step 1: Load or generate explanation (always English)
+        explanation = None
+        used_explanation_path = None
 
-    need_codegen = not (os.path.exists(code_output_path) and os.path.exists(scene_metadata_path))
+        with collector.time_stage("explanation", provider):
+            if explanation_path and os.path.exists(explanation_path):
+                logger.info(f"Loading existing explanation: {explanation_path}")
+                with open(explanation_path, 'r') as f:
+                    explanation = json.load(f)
+                used_explanation_path = explanation_path
+            else:
+                explanation_output = f"{base_dir}/{pdf_stem}_explanation.json"
+                found = explanation_output if os.path.exists(explanation_output) else _find_existing_artefact(f"{pdf_stem}_explanation.json")
 
-    # In single-language non-English mode, TTS and codegen can still run concurrently
-    # for the first (and only) language. In multi-language mode, we generate code first
-    # since all languages need the English scene codes.
-    if need_codegen:
-        print(f"\n{'='*70}")
-        print("GENERATING MANIM CODE (English, shared across all languages)")
-        print(f"{'='*70}")
-        scene_codes = generate_all_scenes(
-            explanation=explanation,
-            model_name=model_name,
-            max_retries=max_retries,
-        )
-        if not scene_codes:
-            print("No scenes generated successfully")
-            return
+                if found:
+                    logger.info(f"Reusing existing explanation: {found}")
+                    with open(found, 'r') as f:
+                        explanation = json.load(f)
+                    used_explanation_path = found
+                    if found != explanation_output and not os.path.exists(explanation_output):
+                        shutil.copy2(found, explanation_output)
+                elif pdf_path:
+                    from research_viz.manim_generator.pdf_explanation_generator import generate_explanation_from_pdf
+                    logger.info(f"Generating explanation from PDF: {pdf_path}")
+                    explanation = generate_explanation_from_pdf(
+                        pdf_path=pdf_path,
+                        output_path=explanation_output,
+                        difficulty=difficulty,
+                        model_name=model_name,
+                        max_judge_attempts=3,
+                        difficulty_config=difficulty_config,
+                    )
+                    if not explanation:
+                        logger.error("Failed to generate explanation")
+                        return
+                    used_explanation_path = explanation_output
+                else:
+                    logger.error("Provide either --pdf-path or --explanation-path")
+                    return
 
-        # Save English code + metadata for reuse
-        paper_title = explanation.get('paper_title', pdf_stem)
-        complete_code = assemble_complete_code(scene_codes, paper_title)
-        with open(code_output_path, 'w') as f:
-            f.write(complete_code)
-        with open(scene_metadata_path, 'w') as f:
-            json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
+        # Step 2: Generate Manim code (English, once) — reused for all languages
+        code_output_path = f"{base_dir}/{pdf_stem}_animation.py"
+        scene_metadata_path = f"{base_dir}/{pdf_stem}_scene_metadata.json"
 
-        print(f"Generated {len(scene_codes)} scenes")
-        print(f"Saved English code: {code_output_path}")
-    else:
-        print(f"\n{'='*70}")
-        print("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
-        print(f"{'='*70}")
-        print(f"Using existing: {code_output_path}")
-        with open(scene_metadata_path, 'r') as f:
-            scene_data = json.load(f)
-        scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
+        if not os.path.exists(scene_metadata_path):
+            found_meta = _find_existing_artefact(f"{pdf_stem}_scene_metadata.json")
+            found_code = _find_existing_artefact(f"{pdf_stem}_animation.py")
+            if found_meta:
+                logger.info(f"Reusing existing scene metadata: {found_meta}")
+                shutil.copy2(found_meta, scene_metadata_path)
+                if found_code and not os.path.exists(code_output_path):
+                    shutil.copy2(found_code, code_output_path)
 
-    # ================================================================
-    # PHASE 2 — Per-language work: translate, TTS, render
-    # ================================================================
-    if multi_lang:
-        print(f"\n{'='*70}")
-        print(f"PHASE 2: MULTI-LANGUAGE FAN-OUT ({len(target_languages)} languages)")
-        print(f"{'='*70}")
+        need_codegen = not (os.path.exists(code_output_path) and os.path.exists(scene_metadata_path))
 
-    results = {}
-    for lang_code in target_languages:
-        run_dir = _run_for_language(
-            language=lang_code,
-            explanation=explanation,
-            scene_codes_english=scene_codes,
-            pdf_stem=pdf_stem,
-            output_dir=output_dir,
-            difficulty=difficulty,
-            difficulty_config=difficulty_config,
-            generate_audio=generate_audio,
-            tts_voice=tts_voice,
-            render_video=render_video,
-            video_quality=video_quality,
-            sync_mode=sync_mode,
-            max_speed_change=max_speed_change,
-            used_explanation_path=used_explanation_path,
-        )
-        results[lang_code] = run_dir
+        with collector.time_stage("codegen", provider):
+            if need_codegen:
+                logger.info("=" * 70)
+                logger.info("GENERATING MANIM CODE (English, shared across all languages)")
+                logger.info("=" * 70)
+                scene_codes = generate_all_scenes(
+                    explanation=explanation,
+                    difficulty=difficulty,
+                    model_name=model_name,
+                    max_retries=max_retries,
+                )
+                if not scene_codes:
+                    logger.error("No scenes generated successfully")
+                    return
 
-    # --- Summary ---
-    if multi_lang:
-        print(f"\n{'='*70}")
-        print("MULTI-LANGUAGE PIPELINE COMPLETE")
-        print(f"{'='*70}")
-        for lang_code, run_dir in results.items():
-            print(f"  {SUPPORTED_LANGUAGES[lang_code].name:12s} ({lang_code}): {run_dir}")
-    else:
-        print(f"\nPipeline complete!")
+                paper_title = explanation.get('paper_title', pdf_stem)
+                complete_code = assemble_complete_code(scene_codes, paper_title)
+                with open(code_output_path, 'w') as f:
+                    f.write(complete_code)
+                with open(scene_metadata_path, 'w') as f:
+                    json.dump([scene.model_dump() for scene in scene_codes], f, indent=2)
+
+                logger.info(f"Generated {len(scene_codes)} scenes -> {code_output_path}")
+            else:
+                logger.info("=" * 70)
+                logger.info("MANIM CODE ALREADY EXISTS - SKIPPING GENERATION")
+                logger.info("=" * 70)
+                logger.info(f"Using existing: {code_output_path}")
+                with open(scene_metadata_path, 'r') as f:
+                    scene_data = json.load(f)
+                scene_codes = [ManimSceneCode(**scene) for scene in scene_data]
+
+        # ================================================================
+        # PHASE 2 — Per-language work: translate, TTS, render
+        # ================================================================
+        if multi_lang:
+            logger.info("=" * 70)
+            logger.info(f"PHASE 2: MULTI-LANGUAGE FAN-OUT ({len(target_languages)} languages)")
+            logger.info("=" * 70)
+
+        results = {}
+        for lang_code in target_languages:
+            with collector.time_stage(f"language_{lang_code}", provider):
+                run_dir = _run_for_language(
+                    language=lang_code,
+                    explanation=explanation,
+                    scene_codes_english=scene_codes,
+                    pdf_stem=pdf_stem,
+                    output_dir=output_dir,
+                    difficulty=difficulty,
+                    difficulty_config=difficulty_config,
+                    generate_audio=generate_audio,
+                    tts_voice=tts_voice,
+                    render_video=render_video,
+                    video_quality=video_quality,
+                    sync_mode=sync_mode,
+                    max_speed_change=max_speed_change,
+                    used_explanation_path=used_explanation_path,
+                )
+            results[lang_code] = run_dir
+
+        # --- Summary ---
+        if multi_lang:
+            logger.info("=" * 70)
+            logger.info("MULTI-LANGUAGE PIPELINE COMPLETE")
+            logger.info("=" * 70)
+            for lang_code, run_dir in results.items():
+                logger.info(f"  {SUPPORTED_LANGUAGES[lang_code].name:12s} ({lang_code}): {run_dir}")
+        else:
+            logger.info("Pipeline complete!")
+
+    finally:
+        collector.write(provider, output_dir)
 
 
 if __name__ == "__main__":

@@ -23,3 +23,7 @@ chromadb
 beautifulsoup4
 lxml
 tiktoken
+
+# Configuration
+pydantic-settings
+pyyaml

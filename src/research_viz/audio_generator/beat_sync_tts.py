@@ -7,6 +7,7 @@ and tracks timing for precise animation sync.
 Beat audio generation is parallelized across all segments via ThreadPoolExecutor.
 """
 
+import logging
 import re
 import json
 import wave
@@ -15,6 +16,10 @@ from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from research_viz.config.pipeline_config import get_config
+
+logger = logging.getLogger(__name__)
 
 OPENAI_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
 
@@ -95,11 +100,13 @@ class BeatSyncTTS:
 
     def __init__(
         self,
-        voice: str = "nova",
-        sample_rate: int = 24000
+        voice: Optional[str] = None,
+        sample_rate: Optional[int] = None
     ):
-        self.voice = voice
-        self.sample_rate = sample_rate
+        cfg = get_config()
+        self.voice = voice if voice is not None else cfg.audio.voice
+        self.sample_rate = sample_rate if sample_rate is not None else cfg.audio.sample_rate
+        self.tts_model = cfg.audio.tts_model
         self.client = None
 
     def _load_client(self):
@@ -121,7 +128,7 @@ class BeatSyncTTS:
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         response = self.client.audio.speech.create(
-            model="tts-1",
+            model=self.tts_model,
             voice=self.voice,
             input=text,
             response_format="wav"
@@ -151,9 +158,9 @@ class BeatSyncTTS:
         self,
         segment: dict,
         output_dir: str,
-        min_words: int = 8,
-        max_words: int = 25,
-        language: str = "en"
+        min_words: Optional[int] = None,
+        max_words: Optional[int] = None,
+        language: str = "en",
     ) -> List[NarrationBeat]:
         """
         Generate beat-synced audio for an entire segment.
@@ -161,6 +168,12 @@ class BeatSyncTTS:
         Returns:
             List of NarrationBeat objects with timing
         """
+        cfg = get_config()
+        if min_words is None:
+            min_words = cfg.audio.min_words_per_beat
+        if max_words is None:
+            max_words = cfg.audio.max_words_per_beat
+
         narration = segment.get('narration_script', '').strip()
         if not narration:
             return []
@@ -168,12 +181,12 @@ class BeatSyncTTS:
         segment_id = segment.get('segment_id', 'unknown')
         title = segment.get('title', 'Untitled')
 
-        print(f"\n{'='*70}")
-        print(f"Segment: {segment_id} - {title}")
-        print(f"{'='*70}")
+        logger.info("=" * 70)
+        logger.info(f"Segment: {segment_id} - {title}")
+        logger.info("=" * 70)
 
         beat_texts = split_into_beats(narration, min_words, max_words, language)
-        print(f"Split into {len(beat_texts)} beats")
+        logger.info(f"Split into {len(beat_texts)} beats")
 
         beats = []
         cumulative_time = 0.0
@@ -183,8 +196,27 @@ class BeatSyncTTS:
             safe_segment_id = segment_id.replace('/', '_').replace(' ', '_')
             audio_file = Path(output_dir) / f"{safe_segment_id}_beat_{beat_id}.wav"
 
-            print(f"\nBeat {beat_id}/{len(beat_texts)}:")
-            print(f"  Text: {text[:60]}{'...' if len(text) > 60 else ''}")
+            logger.info(f"Beat {beat_id}/{len(beat_texts)}:")
+            logger.info(f"  Text: {text[:60]}{'...' if len(text) > 60 else ''}")
+
+            # Partial resume: skip beats with existing valid audio files
+            if audio_file.exists() and audio_file.stat().st_size > 44:
+                import wave
+                try:
+                    with wave.open(str(audio_file), 'rb') as wf:
+                        frames = wf.getnframes()
+                        rate = wf.getframerate()
+                        duration = frames / rate
+                    logger.info(f"  Skipped (existing audio: {duration:.2f}s)")
+                    beat = NarrationBeat(
+                        beat_id=beat_id, text=text, audio_file=str(audio_file),
+                        duration=duration, start_time=cumulative_time,
+                    )
+                    beats.append(beat)
+                    cumulative_time += duration
+                    continue
+                except Exception:
+                    pass  # Regenerate if file is corrupted
 
             start_time = time.monotonic()
             duration = self.generate_beat_audio(text, str(audio_file))
@@ -200,12 +232,12 @@ class BeatSyncTTS:
             beats.append(beat)
             cumulative_time += duration
 
-            print(f"  Duration: {duration:.2f}s (generated in {gen_time:.2f}s)")
-            print(f"  File: {audio_file.name}")
+            logger.info(f"  Duration: {duration:.2f}s (generated in {gen_time:.2f}s)")
+            logger.debug(f"  File: {audio_file.name}")
 
         total_duration = cumulative_time
-        print(f"\nTotal segment duration: {total_duration:.2f}s")
-        print(f"Average beat length: {total_duration/len(beats):.2f}s")
+        logger.info(f"Total segment duration: {total_duration:.2f}s")
+        logger.info(f"Average beat length: {total_duration/len(beats):.2f}s")
 
         return beats
 
@@ -222,11 +254,11 @@ class _BeatJob:
 def generate_beat_timeline(
     explanation_path: str,
     output_dir: str = "src/research_viz/manim_generator/output/audio_beats",
-    voice: str = "nova",
-    min_words: int = 8,
-    max_words: int = 25,
+    voice: Optional[str] = None,
+    min_words: Optional[int] = None,
+    max_words: Optional[int] = None,
     language: str = "en",
-    max_workers: int = MAX_TTS_WORKERS
+    max_workers: int = MAX_TTS_WORKERS,
 ) -> Dict[str, List[NarrationBeat]]:
     """
     Generate complete beat timeline for all segments.
@@ -237,14 +269,22 @@ def generate_beat_timeline(
     Returns:
         Dict mapping segment_id to list of beats
     """
+    cfg = get_config()
+    if voice is None:
+        voice = cfg.audio.voice
+    if min_words is None:
+        min_words = cfg.audio.min_words_per_beat
+    if max_words is None:
+        max_words = cfg.audio.max_words_per_beat
+
     with open(explanation_path, 'r') as f:
         explanation = json.load(f)
 
     segments = explanation.get('segments', [])
-    print(f"\nGenerating beat timeline for {len(segments)} segments")
-    print(f"Voice: {voice}, Language: {language}")
-    print(f"Beat length: {min_words}-{max_words} words")
-    print(f"Max parallel TTS workers: {max_workers}\n")
+    logger.info(f"Generating beat timeline for {len(segments)} segments")
+    logger.info(f"Voice: {voice}, Language: {language}")
+    logger.info(f"Beat length: {min_words}-{max_words} words")
+    logger.info(f"Max parallel TTS workers: {max_workers}")
 
     # Phase 1: Split all segments into beats (CPU-only, fast)
     jobs: List[_BeatJob] = []
@@ -386,15 +426,15 @@ def generate_beat_timeline(
     with open(metadata_path, 'w') as f:
         json.dump(timeline_data, f, indent=2)
 
-    print(f"\nBeat timeline saved to {metadata_path}")
+    logger.info(f"Beat timeline saved to {metadata_path}")
 
     total_beats = sum(len(beats) for beats in timeline.values())
     total_duration = sum(
         sum(b.duration for b in beats)
         for beats in timeline.values()
     )
-    print(f"Total beats: {total_beats}")
-    print(f"Total duration: {total_duration:.1f}s")
+    logger.info(f"Total beats: {total_beats}")
+    logger.info(f"Total duration: {total_duration:.1f}s")
 
     return timeline
 
