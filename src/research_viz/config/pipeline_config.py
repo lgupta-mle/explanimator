@@ -61,8 +61,9 @@ class LLMConfig(BaseModel):
 
 
 class AudioConfig(BaseModel):
-    tts_model: str = "tts-1"
-    voice: str = "nova"
+    tts_model: str = "google/gemini-3.1-flash-tts-preview"
+    voice: str = "Leda"
+    provider: str = "openrouter"
     max_workers: int = 4
     sample_rate: int = 24000
     min_words_per_beat: int = 8

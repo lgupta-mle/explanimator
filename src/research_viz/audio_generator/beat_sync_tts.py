@@ -96,7 +96,7 @@ def split_into_beats(narration: str, min_words: int = 8, max_words: int = 25, la
 
 
 class BeatSyncTTS:
-    """Generate beat-synchronized TTS using OpenAI."""
+    """Generate beat-synchronized TTS using OpenRouter or OpenAI."""
 
     def __init__(
         self,
@@ -107,13 +107,21 @@ class BeatSyncTTS:
         self.voice = voice if voice is not None else cfg.audio.voice
         self.sample_rate = sample_rate if sample_rate is not None else cfg.audio.sample_rate
         self.tts_model = cfg.audio.tts_model
+        self.provider = getattr(cfg.audio, 'provider', 'openai')
         self.client = None
 
     def _load_client(self):
-        """Lazy load OpenAI client."""
+        """Lazy load OpenAI-compatible client (OpenRouter or OpenAI)."""
         if self.client is None:
+            import os
             from openai import OpenAI
-            self.client = OpenAI()
+            if self.provider == "openrouter":
+                self.client = OpenAI(
+                    base_url="https://openrouter.ai/api/v1",
+                    api_key=os.getenv("OPENROUTER_API_KEY"),
+                )
+            else:
+                self.client = OpenAI()
 
     def generate_beat_audio(self, text: str, output_path: str) -> float:
         """
