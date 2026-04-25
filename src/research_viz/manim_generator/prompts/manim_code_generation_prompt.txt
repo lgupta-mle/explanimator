@@ -14,6 +14,29 @@ A complete, executable **Manim Scene class** that implements the animation speci
 
 ---
 
+## THE THREE GOLDEN RULES (NEVER VIOLATE)
+
+1. **CLEAN BEFORE NEW**: Before ANY new phase or concept, FadeOut ALL objects from the
+   previous phase. Use VGroup to track each phase's objects:
+   ```python
+   phase_1_objects = VGroup()
+   # ... create and add objects ...
+   phase_1_objects.add(obj1, obj2, label1)
+   # ... animations ...
+   # MANDATORY before Phase 2:
+   self.play(FadeOut(phase_1_objects), run_time=1.5)
+   ```
+
+2. **FRAME BOUNDS**: No object may exceed x=[-5.5, 5.5], y=[-3.0, 3.0].
+   Use `.to_edge()` and `.to_corner()` with `buff=0.3` for safe positioning.
+   After ANY `.move_to()` or `.shift()`, mentally verify the object stays in bounds.
+
+3. **MAX 2 CONTENT GROUPS VISIBLE**: At any moment, at most a persistent header
+   plus ONE content group should be fully visible on screen. When adding a second group,
+   either FadeOut the first or shrink it to 0.45× and slide it to an edge.
+
+---
+
 ## Critical Instructions
 
 ### 1. LEARN FROM THE EXAMPLES
