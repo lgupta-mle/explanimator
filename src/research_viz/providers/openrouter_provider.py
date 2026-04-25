@@ -57,9 +57,8 @@ class OpenRouterProvider(LLMProvider):
         if kwargs.get("response_format"):
             payload["response_format"] = kwargs["response_format"]
 
-        # Enable reasoning for DeepSeek models
-        if "deepseek" in model.lower():
-            payload["reasoning"] = {"enabled": True}
+        if kwargs.get("reasoning"):
+            payload["reasoning"] = kwargs["reasoning"]
 
         last_exception: Exception | None = None
         for attempt in range(1, self.max_retries + 1):
@@ -81,11 +80,39 @@ class OpenRouterProvider(LLMProvider):
 
                 resp.raise_for_status()
 
-                data = resp.json()
+                try:
+                    data = resp.json()
+                except ValueError:
+                    logger.error(
+                        "Non-JSON response from OpenRouter (status=%d, content-type=%s, len=%d): %s",
+                        resp.status_code,
+                        resp.headers.get("content-type"),
+                        len(resp.text),
+                        resp.text[:500],
+                    )
+                    raise
+                if "error" in data and "choices" not in data:
+                    err = data["error"]
+                    raise requests.HTTPError(
+                        f"OpenRouter error {err.get('code')}: {err.get('message')}",
+                        response=resp,
+                    )
+
                 content = ""
                 tokens_used = 0
                 if "choices" in data and data["choices"]:
-                    content = data["choices"][0].get("message", {}).get("content", "")
+                    msg = data["choices"][0].get("message", {})
+                    content = msg.get("content") or ""
+                    if not content:
+                        # Reasoning models sometimes only populate `reasoning`
+                        content = msg.get("reasoning") or ""
+                    if not content:
+                        logger.warning(
+                            "Empty content from %s; finish_reason=%s, message keys=%s",
+                            model,
+                            data["choices"][0].get("finish_reason"),
+                            list(msg.keys()),
+                        )
                 tokens_in = 0
                 tokens_out = 0
                 if "usage" in data:
@@ -106,7 +133,11 @@ class OpenRouterProvider(LLMProvider):
                 self._record_call(response)
                 return response
 
-            except (requests.ConnectionError, requests.Timeout) as exc:
+            except (
+                requests.ConnectionError,
+                requests.Timeout,
+                requests.exceptions.ChunkedEncodingError,
+            ) as exc:
                 last_exception = exc
                 if attempt < self.max_retries:
                     wait = self.retry_base_delay * (2 ** (attempt - 1))
