@@ -6,12 +6,43 @@ import time
 from typing import Any
 
 import requests
+from requests.adapters import HTTPAdapter
 
 from research_viz.providers.llm_provider import LLMProvider, LLMResponse
 
 logger = logging.getLogger(__name__)
 
 RETRYABLE_STATUS_CODES = {429, 500, 502, 503}
+
+CACHE_AWARE_MODEL_PREFIXES = ("anthropic/", "google/gemini")
+
+
+def _supports_prompt_cache(model: str) -> bool:
+    m = model.lower()
+    return any(m.startswith(p) for p in CACHE_AWARE_MODEL_PREFIXES)
+
+
+def _mark_system_cached(messages: list[dict]) -> list[dict]:
+    """Add a cache_control breakpoint to the first system message.
+
+    Returns a new messages list; original is not mutated. Caller should
+    only invoke this when the target model supports prompt caching.
+    """
+    out = []
+    marked = False
+    for msg in messages:
+        if not marked and msg.get("role") == "system":
+            content = msg["content"]
+            if isinstance(content, str):
+                content = [{"type": "text", "text": content}]
+            else:
+                content = [dict(p) for p in content]
+            content[-1] = {**content[-1], "cache_control": {"type": "ephemeral"}}
+            out.append({**msg, "content": content})
+            marked = True
+        else:
+            out.append(msg)
+    return out
 
 
 class OpenRouterProvider(LLMProvider):
@@ -24,11 +55,25 @@ class OpenRouterProvider(LLMProvider):
         api_key: str | None = None,
         max_retries: int = 3,
         retry_base_delay: float = 1.0,
+        pool_size: int = 32,
+        route_sort: str | None = None,
+        prompt_cache: bool = True,
     ):
         super().__init__()
         self.api_key = api_key or os.getenv("OPENROUTER_API_KEY", "")
         self.max_retries = max_retries
         self.retry_base_delay = retry_base_delay
+        self.route_sort = route_sort
+        self.prompt_cache = prompt_cache
+
+        self.session = requests.Session()
+        self.session.headers.update({
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        })
+        adapter = HTTPAdapter(pool_connections=pool_size, pool_maxsize=pool_size)
+        self.session.mount("https://", adapter)
+        self.session.mount("http://", adapter)
 
     def generate(
         self,
@@ -41,10 +86,8 @@ class OpenRouterProvider(LLMProvider):
         Retries on: 429, 500, 502, 503, and timeout/connection errors.
         Raises immediately on: 400, 401, 404 and other non-retryable errors.
         """
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json",
-        }
+        if self.prompt_cache and _supports_prompt_cache(model):
+            messages = _mark_system_cached(messages)
 
         payload: dict[str, Any] = {
             "model": model,
@@ -60,11 +103,17 @@ class OpenRouterProvider(LLMProvider):
         if kwargs.get("reasoning"):
             payload["reasoning"] = kwargs["reasoning"]
 
+        provider_routing = kwargs.get("provider")
+        if provider_routing is None and self.route_sort:
+            provider_routing = {"sort": self.route_sort}
+        if provider_routing:
+            payload["provider"] = provider_routing
+
         last_exception: Exception | None = None
         for attempt in range(1, self.max_retries + 1):
             try:
                 start = time.perf_counter()
-                resp = requests.post(self.BASE_URL, headers=headers, json=payload)
+                resp = self.session.post(self.BASE_URL, json=payload)
                 latency_ms = (time.perf_counter() - start) * 1000
 
                 if resp.status_code in RETRYABLE_STATUS_CODES:
@@ -115,11 +164,19 @@ class OpenRouterProvider(LLMProvider):
                         )
                 tokens_in = 0
                 tokens_out = 0
+                cache_read = 0
+                cache_write = 0
                 if "usage" in data:
                     usage = data["usage"]
                     tokens_in = usage.get("prompt_tokens", 0)
                     tokens_out = usage.get("completion_tokens", 0)
                     tokens_used = tokens_in + tokens_out
+                    details = usage.get("prompt_tokens_details") or {}
+                    cache_read = (
+                        details.get("cached_tokens")
+                        or usage.get("cache_read_input_tokens", 0)
+                    )
+                    cache_write = usage.get("cache_creation_input_tokens", 0)
 
                 response = LLMResponse(
                     content=content,
@@ -128,6 +185,8 @@ class OpenRouterProvider(LLMProvider):
                     tokens_in=tokens_in,
                     tokens_out=tokens_out,
                     latency_ms=latency_ms,
+                    cache_read_tokens=cache_read,
+                    cache_write_tokens=cache_write,
                     raw=data,
                 )
                 self._record_call(response)

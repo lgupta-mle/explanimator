@@ -31,6 +31,9 @@ class LLMConfig(BaseModel):
     provider: str = "openrouter"
     max_retries: int = 3
     retry_base_delay: float = 1.0
+    route_sort: Optional[str] = "throughput"
+    prompt_cache: bool = True
+    judge_reasoning_effort: Optional[str] = None  # e.g. "low" | "medium" | "high"
     tiers: dict[str, TierConfig] = {}
     model_pricing: dict[str, ModelPricing] = {}
 
@@ -205,6 +208,8 @@ def _create_provider():
         return OpenRouterProvider(
             max_retries=cfg.llm.max_retries,
             retry_base_delay=cfg.llm.retry_base_delay,
+            route_sort=cfg.llm.route_sort,
+            prompt_cache=cfg.llm.prompt_cache,
         )
     raise ValueError(f"Unknown LLM provider: {provider_name}")
 

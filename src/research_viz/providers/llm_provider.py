@@ -14,6 +14,8 @@ class CallStat:
     tokens_out: int
     latency_ms: float
     stage: str = ""
+    cache_read_tokens: int = 0
+    cache_write_tokens: int = 0
 
 
 @dataclass
@@ -25,6 +27,8 @@ class LLMResponse:
     tokens_in: int = 0
     tokens_out: int = 0
     latency_ms: float = 0.0
+    cache_read_tokens: int = 0
+    cache_write_tokens: int = 0
     raw: Optional[dict] = field(default=None, repr=False)
 
 
@@ -66,6 +70,8 @@ class LLMProvider(ABC):
                 tokens_out=response.tokens_out,
                 latency_ms=response.latency_ms,
                 stage=self._current_stage,
+                cache_read_tokens=response.cache_read_tokens,
+                cache_write_tokens=response.cache_write_tokens,
             )
         )
 
