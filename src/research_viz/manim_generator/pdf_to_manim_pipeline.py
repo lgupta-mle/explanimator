@@ -309,6 +309,17 @@ Fix the errors and regenerate the complete scene code.
                 logger.error(f"      Parse error: {e}")
                 continue
 
+        # Validate and fix the generated code before execution
+        from research_viz.manim_generator.scene_validator import validate_and_fix_scene
+        validated_code, n_fixes = validate_and_fix_scene(scene_code.code)
+        if n_fixes > 0:
+            print(f"      [{title}] Validator applied {n_fixes} fix(es)", flush=True)
+            scene_code = ManimSceneCode(
+                scene_id=scene_code.scene_id,
+                class_name=scene_code.class_name,
+                code=validated_code,
+            )
+
         # Execute the code
         logger.info(f"      [{title}] Executing Manim... (t={time.time():.1f})")
         exec_start = time.time()
