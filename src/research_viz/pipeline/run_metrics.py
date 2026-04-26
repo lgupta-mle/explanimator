@@ -22,6 +22,8 @@ class StageMetrics:
     tokens_in: int = 0
     tokens_out: int = 0
     tokens_total: int = 0
+    cache_read_tokens: int = 0
+    cache_write_tokens: int = 0
     cost_estimate: float = 0.0
     latency_ms: float = 0.0
 
@@ -68,12 +70,28 @@ class RunMetricsCollector:
         end = self._end_time or time.time()
         return end - self._start_time
 
+    @staticmethod
+    def _cache_totals(provider: Optional[LLMProvider]) -> tuple[int, int]:
+        if not provider:
+            return 0, 0
+        return (
+            sum(s.cache_read_tokens for s in provider.call_stats),
+            sum(s.cache_write_tokens for s in provider.call_stats),
+        )
+
     @contextmanager
     def time_stage(self, stage_name: str, provider: Optional[LLMProvider] = None):
         """Context manager that times a stage and logs metrics on completion."""
+        if self._start_time is None:
+            self.start()
         start = time.time()
         tokens_before = provider.total_tokens if provider else 0
         calls_before = provider.total_calls if provider else 0
+        cache_read_before, cache_write_before = self._cache_totals(provider)
+        prior_stage = ""
+        if provider is not None:
+            prior_stage = provider._current_stage
+            provider.set_stage(stage_name)
         try:
             yield
         except Exception as exc:
@@ -82,15 +100,28 @@ class RunMetricsCollector:
             calls = (provider.total_calls - calls_before) if provider else 0
             timing = StageTiming(stage_name, duration, tokens, calls, error=type(exc).__name__)
             self.stage_timings.append(timing)
+            if provider is not None:
+                provider.set_stage(prior_stage)
             logger.error(f"Stage {stage_name} failed after {duration:.1f}s: {type(exc).__name__}: {exc}")
             raise
         else:
             duration = time.time() - start
             tokens = (provider.total_tokens - tokens_before) if provider else 0
             calls = (provider.total_calls - calls_before) if provider else 0
+            cache_read_after, cache_write_after = self._cache_totals(provider)
+            cache_read = cache_read_after - cache_read_before
+            cache_write = cache_write_after - cache_write_before
             timing = StageTiming(stage_name, duration, tokens, calls)
             self.stage_timings.append(timing)
-            logger.info(f"Stage {stage_name}: {duration:.1f}s, {tokens} tokens, {calls} API calls")
+            cache_note = (
+                f", cache(r={cache_read}, w={cache_write})"
+                if (cache_read or cache_write) else ""
+            )
+            if provider is not None:
+                provider.set_stage(prior_stage)
+            logger.info(
+                f"Stage {stage_name}: {duration:.1f}s, {tokens} tokens, {calls} API calls{cache_note}"
+            )
 
     def record_error(self, stage: str, exc: Exception, artifact_id: Optional[str] = None, recoverable: bool = False):
         """Record a structured error for a stage."""
@@ -117,6 +148,8 @@ class RunMetricsCollector:
             sm.tokens_in += stat.tokens_in
             sm.tokens_out += stat.tokens_out
             sm.tokens_total += stat.tokens_used
+            sm.cache_read_tokens += stat.cache_read_tokens
+            sm.cache_write_tokens += stat.cache_write_tokens
             sm.latency_ms += stat.latency_ms
 
             model_price = pricing.get(stat.model)
@@ -137,6 +170,8 @@ class RunMetricsCollector:
                     "tokens_in": sm.tokens_in,
                     "tokens_out": sm.tokens_out,
                     "tokens_total": sm.tokens_total,
+                    "cache_read_tokens": sm.cache_read_tokens,
+                    "cache_write_tokens": sm.cache_write_tokens,
                     "cost_estimate": round(sm.cost_estimate, 6),
                     "latency_ms": round(sm.latency_ms, 1),
                 }
@@ -167,10 +202,39 @@ class RunMetricsCollector:
 
     def write(self, provider: LLMProvider, output_dir) -> Path:
         """Collect metrics and write run_metrics.json to output_dir."""
+        if self._end_time is None:
+            self.stop()
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
         metrics = self.collect(provider)
         path = output_dir / "run_metrics.json"
         with open(path, "w") as f:
             json.dump(metrics, f, indent=2)
+        self._log_summary(metrics)
         return path
+
+    def _log_summary(self, metrics: dict) -> None:
+        """Print a compact end-of-run breakdown to the log."""
+        logger.info("=" * 70)
+        logger.info("RUN SUMMARY")
+        logger.info("=" * 70)
+        logger.info(f"Total wall time: {metrics['total_duration']:.1f}s")
+        logger.info(f"Total LLM calls: {metrics['total_calls']}")
+        logger.info(f"Total tokens: {metrics['total_tokens']}")
+        logger.info(f"Estimated cost: ${metrics['total_cost_estimate']:.4f}")
+        logger.info("Per-stage timings:")
+        for t in metrics["stage_timings"]:
+            err = f"  ERROR={t['error']}" if t.get("error") else ""
+            logger.info(
+                f"  {t['stage_name']:30s} {t['duration_seconds']:7.1f}s  "
+                f"{t['api_calls_count']:3d} calls  {t['tokens_used']:>7d} tokens{err}"
+            )
+        logger.info("Per-stage cache hits:")
+        for stage, st in metrics["calls_per_stage"].items():
+            r, w = st["cache_read_tokens"], st["cache_write_tokens"]
+            if r or w:
+                hit_rate = (r / st["tokens_in"] * 100) if st["tokens_in"] else 0
+                logger.info(
+                    f"  {stage:30s} read={r:>7d}  write={w:>7d}  hit_rate={hit_rate:5.1f}%"
+                )
+        logger.info("=" * 70)
