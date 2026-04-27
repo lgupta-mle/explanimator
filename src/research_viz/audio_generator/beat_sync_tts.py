@@ -135,13 +135,26 @@ class BeatSyncTTS:
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
+        # OpenRouter's Gemini TTS rejects response_format="wav"; only mp3/pcm
+        # are supported. We request pcm (raw 16-bit mono samples) and wrap
+        # with a WAV header so the rest of the pipeline keeps working with
+        # standard .wav files.
+        use_pcm = self.provider == "openrouter"
         response = self.client.audio.speech.create(
             model=self.tts_model,
             voice=self.voice,
             input=text,
-            response_format="wav"
+            response_format="pcm" if use_pcm else "wav",
         )
-        response.write_to_file(str(output_path))
+        if use_pcm:
+            pcm_bytes = response.read()
+            with wave.open(str(output_path), "wb") as wf:
+                wf.setnchannels(1)
+                wf.setsampwidth(2)
+                wf.setframerate(self.sample_rate)
+                wf.writeframes(pcm_bytes)
+        else:
+            response.write_to_file(str(output_path))
 
         with wave.open(str(output_path), "rb") as wf:
             frames = wf.getnframes()
@@ -248,6 +261,163 @@ class BeatSyncTTS:
         logger.info(f"Average beat length: {total_duration/len(beats):.2f}s")
 
         return beats
+
+
+class StreamingBeatGenerator:
+    """Generates TTS beats and signals per-segment completion via threading.Event.
+
+    Pipeline-parallel callers (e.g. pipelined_codegen_render_sync) can wait
+    on `event_for(segment_id)` to gate the sync stage on per-segment audio
+    readiness, instead of waiting for the whole batch.
+    """
+
+    def __init__(
+        self,
+        explanation: dict,
+        output_dir: str,
+        voice: Optional[str] = None,
+        min_words: Optional[int] = None,
+        max_words: Optional[int] = None,
+        language: str = "en",
+        max_workers: int = MAX_TTS_WORKERS,
+    ):
+        import threading
+        cfg = get_config()
+        self.voice = voice or cfg.audio.voice
+        self.min_words = min_words if min_words is not None else cfg.audio.min_words_per_beat
+        self.max_words = max_words if max_words is not None else cfg.audio.max_words_per_beat
+        self.language = language
+        self.max_workers = max_workers
+        self.output_dir = Path(output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.explanation = explanation
+
+        self._lock = threading.Lock()
+        self._segment_events: Dict[str, threading.Event] = {}
+        self._segment_data: Dict[str, dict] = {}
+        self._segment_remaining: Dict[str, int] = {}
+        self._beat_durations: Dict[tuple, float] = {}
+        self._beat_texts: Dict[tuple, str] = {}
+        self._beat_files: Dict[tuple, str] = {}
+        self._beat_order: Dict[str, list[int]] = {}
+        self._executor: Optional[ThreadPoolExecutor] = None
+        self._tts: Optional[BeatSyncTTS] = None
+        self._jobs_total = 0
+        self._gen_start: Optional[float] = None
+
+        for seg in explanation.get('segments', []):
+            seg_id = seg.get('segment_id')
+            if seg_id:
+                self._segment_events[seg_id] = threading.Event()
+
+    def event_for(self, segment_id: str):
+        return self._segment_events.get(segment_id)
+
+    def get_segment_audio(self, segment_id: str) -> Optional[dict]:
+        with self._lock:
+            return self._segment_data.get(segment_id)
+
+    def start(self):
+        """Submit all TTS jobs to a background thread pool and return immediately."""
+        segments = self.explanation.get('segments', [])
+        jobs: list[_BeatJob] = []
+
+        for segment in segments:
+            seg_id = segment.get('segment_id', 'unknown')
+            narration = segment.get('narration_script', '').strip()
+            if not narration:
+                self._segment_remaining[seg_id] = 0
+                self._beat_order[seg_id] = []
+                self._segment_data[seg_id] = {'beat_count': 0, 'total_duration': 0.0, 'beats': []}
+                self._segment_events[seg_id].set()
+                continue
+
+            beat_texts = split_into_beats(narration, self.min_words, self.max_words, self.language)
+            self._segment_remaining[seg_id] = len(beat_texts)
+            self._beat_order[seg_id] = list(range(1, len(beat_texts) + 1))
+            safe_id = seg_id.replace('/', '_').replace(' ', '_')
+            for i, text in enumerate(beat_texts, 1):
+                audio_file = str(self.output_dir / f"{safe_id}_beat_{i}.wav")
+                self._beat_texts[(seg_id, i)] = text
+                self._beat_files[(seg_id, i)] = audio_file
+                jobs.append(_BeatJob(seg_id, i, text, audio_file))
+
+        self._jobs_total = len(jobs)
+        logger.info(f"StreamingBeatGenerator: {len(jobs)} beats across {len(segments)} segments")
+
+        if not jobs:
+            return
+
+        self._tts = BeatSyncTTS(voice=self.voice)
+        self._tts._load_client()
+        self._executor = ThreadPoolExecutor(max_workers=self.max_workers, thread_name_prefix='tts')
+        self._gen_start = time.monotonic()
+
+        for job in jobs:
+            self._executor.submit(self._run_beat, job)
+
+    def _run_beat(self, job: '_BeatJob'):
+        try:
+            duration = self._tts.generate_beat_audio(job.text, job.audio_file)
+        except Exception as exc:
+            wc = len(job.text.split())
+            duration = max(1.0, wc / 2.5)
+            logger.error(
+                f"  TTS error {job.segment_id} beat {job.beat_id}: {exc}; "
+                f"using estimated duration {duration:.1f}s"
+            )
+        with self._lock:
+            self._beat_durations[(job.segment_id, job.beat_id)] = duration
+            self._segment_remaining[job.segment_id] -= 1
+            done = self._segment_remaining[job.segment_id] == 0
+        if done:
+            self._finalize_segment(job.segment_id)
+
+    def _finalize_segment(self, seg_id: str):
+        beat_ids = sorted(self._beat_order.get(seg_id, []))
+        beats: list[dict] = []
+        cumulative = 0.0
+        for bi in beat_ids:
+            d = self._beat_durations.get((seg_id, bi), 0.0)
+            beats.append({
+                'beat_id': bi,
+                'text': self._beat_texts[(seg_id, bi)],
+                'audio_file': self._beat_files[(seg_id, bi)],
+                'duration': d,
+                'start_time': cumulative,
+            })
+            cumulative += d
+        seg_data = {
+            'beat_count': len(beats),
+            'total_duration': cumulative,
+            'beats': beats,
+        }
+        with self._lock:
+            self._segment_data[seg_id] = seg_data
+        evt = self._segment_events.get(seg_id)
+        if evt:
+            evt.set()
+        logger.info(f"  audio READY for {seg_id}: {len(beats)} beats, {cumulative:.1f}s")
+
+    def shutdown_and_write_timeline(self) -> Optional[str]:
+        """Wait for all jobs, write the consolidated beat_timeline.json."""
+        if self._executor:
+            self._executor.shutdown(wait=True)
+            elapsed = time.monotonic() - (self._gen_start or time.monotonic())
+            logger.info(
+                f"StreamingBeatGenerator: all {self._jobs_total} beats done in {elapsed:.1f}s"
+            )
+        timeline_path = self.output_dir / "beat_timeline.json"
+        with self._lock:
+            data = {
+                'voice': self.voice,
+                'total_segments': len(self._segment_data),
+                'segments': dict(self._segment_data),
+            }
+        with open(timeline_path, 'w') as f:
+            json.dump(data, f, indent=2)
+        logger.info(f"Beat timeline saved to {timeline_path}")
+        return str(timeline_path)
 
 
 @dataclass
