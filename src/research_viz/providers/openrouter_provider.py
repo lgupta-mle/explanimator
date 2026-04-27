@@ -131,14 +131,22 @@ class OpenRouterProvider(LLMProvider):
 
                 try:
                     data = resp.json()
-                except ValueError:
-                    logger.error(
-                        "Non-JSON response from OpenRouter (status=%d, content-type=%s, len=%d): %s",
+                except ValueError as decode_exc:
+                    body_preview = (resp.text or "")[:500].replace("\n", "\\n")
+                    logger.warning(
+                        "Non-JSON response from OpenRouter (status=%d, content-type=%s, len=%d, attempt=%d/%d): %s",
                         resp.status_code,
                         resp.headers.get("content-type"),
-                        len(resp.text),
-                        resp.text[:500],
+                        len(resp.text or ""),
+                        attempt,
+                        self.max_retries,
+                        body_preview,
                     )
+                    last_exception = decode_exc
+                    if attempt < self.max_retries:
+                        wait_s = self.retry_base_delay * (2 ** (attempt - 1))
+                        time.sleep(wait_s)
+                        continue
                     raise
                 if "error" in data and "choices" not in data:
                     err = data["error"]
