@@ -22,8 +22,10 @@ import tyro
 LOG_TS = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) ")
 CODEGEN_ATTEMPT = re.compile(r"\[([^\]]+)\] Attempt (\d)/3 \(t=([\d.]+)\)")
 CODEGEN_SUCCESS = re.compile(r"\[([^\]]+)\] SUCCESS in [\d.]+s \(t=([\d.]+)\)")
-RENDER_START = re.compile(r"\[(\d+)\] Rendering Manim scene (seg_\d+)")
+RENDER_START = re.compile(r"\[(\d+)\] Rendering Manim scene ([\w-]+)")
 SYNC_START = re.compile(r"\[(\d+)\] Syncing audio with video")
+READY = re.compile(r"\[(\d+)\] READY-TO-WATCH \(sync done, t=([\d.]+)\)")
+RENDER_DONE = re.compile(r"\[(\d+)\] render done -> submitting sync \(t=([\d.]+)\)")
 FINAL_SUCCESS = re.compile(r"SUCCESS! Final video:")
 WPS = 2.5  # words per second of narration
 
@@ -115,6 +117,29 @@ def parse_pipeline_log(log_path: Path, explanation_path: Path) -> tuple[list[Seg
                     target.sync_start = line_ts
             continue
 
+        m = RENDER_DONE.search(line)
+        if m:
+            idx = int(m.group(1))
+            t = float(m.group(2))
+            seg_id = seg_index_to_id.get(idx)
+            if seg_id:
+                target = next((s for s in by_order.values() if s.seg_id == seg_id), None)
+                if target and target.sync_start is None:
+                    # In pipelined runs, render-done == sync-start (sync is submitted immediately)
+                    target.sync_start = t
+            continue
+
+        m = READY.search(line)
+        if m:
+            idx = int(m.group(1))
+            t = float(m.group(2))
+            seg_id = seg_index_to_id.get(idx)
+            if seg_id:
+                target = next((s for s in by_order.values() if s.seg_id == seg_id), None)
+                if target:
+                    target.sync_end = t
+            continue
+
         if FINAL_SUCCESS.search(line) and line_ts is not None:
             final_t = line_ts
 
@@ -123,16 +148,19 @@ def parse_pipeline_log(log_path: Path, explanation_path: Path) -> tuple[list[Seg
     # sync_start for parallel pool with sync_workers=2, otherwise = final_t.
     # Simplest: order segments by sync_start and use the next sync_start as a
     # cap. Last segment's sync_end = final_t.
+    # For segments that didn't get an explicit READY-TO-WATCH timestamp,
+    # estimate sync_end from sync_start + 5s or the next sync start.
     syncs_sorted = sorted(
-        [s for s in by_order.values() if s.sync_start is not None],
+        [s for s in by_order.values() if s.sync_start is not None and s.sync_end is None],
         key=lambda s: s.sync_start or 0,
     )
-    for i, s in enumerate(syncs_sorted):
-        # Heuristic: sync takes roughly 1-3s per segment in single-pass mode;
-        # without explicit sync_end log lines, approximate as min(next sync
-        # start, sync_start + 5). For the last sync, fall back to final_t.
-        if i + 1 < len(syncs_sorted):
-            next_start = syncs_sorted[i + 1].sync_start
+    all_sync_starts = sorted(
+        [s.sync_start for s in by_order.values() if s.sync_start is not None]
+    )
+    for s in syncs_sorted:
+        idx = all_sync_starts.index(s.sync_start)
+        if idx + 1 < len(all_sync_starts):
+            next_start = all_sync_starts[idx + 1]
             s.sync_end = min(s.sync_start + 5.0, next_start)
         else:
             s.sync_end = final_t or (last_event_ts or s.sync_start + 5.0)
