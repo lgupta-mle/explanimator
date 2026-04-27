@@ -16,7 +16,7 @@ import time
 from pathlib import Path
 from typing import Optional, List
 from pydantic import BaseModel, Field
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, wait, FIRST_COMPLETED
 import tyro
 from dotenv import load_dotenv
 
@@ -1129,6 +1129,204 @@ def render_and_sync_all_scenes(
         return None
 
 
+def _stitch_videos(synced_videos: list, output_dir: str) -> Optional[str]:
+    """ffmpeg-concat the per-segment videos in order; return the final path or None."""
+    final_videos = [v for v in synced_videos if v is not None]
+    if not final_videos:
+        logger.error("No videos to stitch")
+        return None
+
+    concat_list_path = f"{output_dir}/final_concat.txt"
+    with open(concat_list_path, 'w') as f:
+        for video in final_videos:
+            f.write(f"file '{os.path.abspath(video)}'\n")
+
+    final_output = f"{output_dir}/final_video.mp4"
+    try:
+        subprocess.run([
+            'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
+            '-i', concat_list_path,
+            '-c:v', 'libx264', '-c:a', 'aac',
+            '-b:a', '192k', '-pix_fmt', 'yuv420p',
+            final_output,
+        ], capture_output=True, check=True)
+        logger.info(f"SUCCESS! Final video: {final_output}")
+        try:
+            d = get_video_duration(final_output)
+            logger.info(f"Duration: {d:.1f}s ({d/60:.1f} min)")
+        except Exception:
+            pass
+        return final_output
+    except Exception as e:
+        logger.error(f"Error stitching videos: {e}")
+        return None
+
+
+def pipelined_codegen_render_sync(
+    explanation: dict,
+    difficulty: str,
+    output_dir: str,
+    audio_timeline_path: Optional[str] = None,
+    audio_streamer: Optional["StreamingBeatGenerator"] = None,
+    quality: str = "l",
+    sync_mode: str = "segment",
+    max_speed_change: float = 0.3,
+    model_name: Optional[str] = None,
+    max_retries: Optional[int] = None,
+    chroma_path: str = "data/manim_docs/vector_db/chroma_db",
+    codegen_workers: int = MAX_CODEGEN_WORKERS,
+) -> tuple[List[Optional[ManimSceneCode]], Optional[str]]:
+    """Run codegen → render → sync as a single pipeline-parallel flow.
+
+    Each segment moves through the three stages independently: as soon as a
+    segment's codegen finishes its render is submitted; as soon as render
+    finishes its sync is submitted. This minimizes time-to-first-watchable
+    versus the bulk codegen→bulk render flow used by render_and_sync_all_scenes.
+
+    Returns (scene_codes_in_order, final_video_path). Either may have
+    holes/None for segments whose codegen or render failed.
+    """
+    cfg = get_config()
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    segments = explanation.get('segments', [])
+    n = len(segments)
+    running_example = explanation.get('running_example', '')
+
+    audio_timeline = None
+    beat_timeline_by_segment: dict = {}
+    if audio_timeline_path and os.path.exists(audio_timeline_path):
+        with open(audio_timeline_path, 'r') as f:
+            audio_timeline = json.load(f)
+        beat_timeline_by_segment = audio_timeline.get('segments', {})
+    elif audio_streamer is not None:
+        # Audio is being generated in parallel; per-segment data becomes
+        # available as each segment's TTS jobs finish. _do_sync waits on the
+        # per-segment event before constructing a fake timeline for that segment.
+        pass
+
+    scene_codes: list[Optional[ManimSceneCode]] = [None] * n
+    synced_videos: list[Optional[str]] = [None] * n
+
+    debug_dir = Path(output_dir) / "debug_ready_segments"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+
+    logger.info("=" * 70)
+    logger.info(f"PIPELINE-PARALLEL CODEGEN → RENDER → SYNC ({n} segments)")
+    logger.info("=" * 70)
+    logger.info(
+        f"Workers: codegen={codegen_workers} render={cfg.video.render_workers} sync={cfg.video.sync_workers}"
+    )
+    logger.info(f"Debug ready segments will be copied to: {debug_dir}")
+
+    codegen_pool = ThreadPoolExecutor(max_workers=codegen_workers, thread_name_prefix='cg')
+    render_pool = ThreadPoolExecutor(max_workers=cfg.video.render_workers, thread_name_prefix='rd')
+    sync_pool = ThreadPoolExecutor(max_workers=cfg.video.sync_workers, thread_name_prefix='sy')
+
+    def _do_codegen(i: int) -> Optional[ManimSceneCode]:
+        seg = segments[i]
+        seg_id = seg.get('segment_id', f'seg_{i+1:02d}')
+        beats = None
+        if seg_id in beat_timeline_by_segment:
+            beats = beat_timeline_by_segment[seg_id].get('beats')
+        return generate_scene_code(
+            segment=seg,
+            running_example=running_example,
+            difficulty=difficulty,
+            model_name=model_name,
+            max_retries=max_retries,
+            chroma_path=chroma_path,
+            beat_timeline=beats,
+        )
+
+    def _do_render(i: int, scene_code: ManimSceneCode) -> Optional[str]:
+        return _render_scene(i, scene_code, output_dir, quality)
+
+    def _do_sync(i: int, video_path: str) -> Optional[str]:
+        seg_id = segments[i].get('segment_id', f'seg_{i+1:02d}')
+        if audio_streamer is not None:
+            evt = audio_streamer.event_for(seg_id)
+            if evt is not None:
+                evt.wait(timeout=600)
+            seg_audio = audio_streamer.get_segment_audio(seg_id)
+            if seg_audio and seg_audio.get('beats'):
+                local_timeline = {'segments': {seg_id: seg_audio}}
+                return _sync_scene(
+                    i, video_path, seg_id, local_timeline, output_dir,
+                    max_speed_change, sync_mode,
+                )
+            logger.warning(f"  [{i+1}] No audio for {seg_id}; returning unsynced video")
+            return video_path
+        if not audio_timeline:
+            return video_path  # nothing to sync against
+        return _sync_scene(
+            i, video_path, seg_id, audio_timeline, output_dir,
+            max_speed_change, sync_mode,
+        )
+
+    futures: dict = {}
+    for i in range(n):
+        f = codegen_pool.submit(_do_codegen, i)
+        futures[f] = ('codegen', i)
+
+    pending = set(futures)
+    try:
+        while pending:
+            done, pending = wait(pending, return_when=FIRST_COMPLETED)
+            for fut in done:
+                kind, i = futures.pop(fut)
+                try:
+                    result = fut.result()
+                except Exception as exc:
+                    logger.error(f"  [{i+1}] {kind} raised: {exc}")
+                    continue
+
+                if kind == 'codegen':
+                    if result is None:
+                        logger.error(f"  [{i+1}] codegen returned None; skipping render")
+                        continue
+                    scene_codes[i] = result
+                    logger.info(f"  [{i+1}] codegen done -> submitting render (t={time.time():.1f})")
+                    nf = render_pool.submit(_do_render, i, result)
+                    futures[nf] = ('render', i)
+                    pending.add(nf)
+
+                elif kind == 'render':
+                    if result is None:
+                        logger.error(f"  [{i+1}] render returned None; skipping sync")
+                        continue
+                    logger.info(f"  [{i+1}] render done -> submitting sync (t={time.time():.1f})")
+                    nf = sync_pool.submit(_do_sync, i, result)
+                    futures[nf] = ('sync', i)
+                    pending.add(nf)
+
+                elif kind == 'sync':
+                    synced_videos[i] = result
+                    ready_t = time.time()
+                    logger.info(
+                        f"  [{i+1}] READY-TO-WATCH (sync done, t={ready_t:.1f}): {result}"
+                    )
+                    if result and os.path.exists(result):
+                        seg_id = segments[i].get('segment_id', f'seg_{i+1:02d}')
+                        debug_name = f"order{i+1:02d}_{seg_id}_t{int(ready_t)}.mp4"
+                        debug_path = debug_dir / debug_name
+                        try:
+                            shutil.copy2(result, debug_path)
+                            logger.info(f"  [{i+1}] Debug copy saved: {debug_path}")
+                        except Exception as exc:
+                            logger.warning(f"  [{i+1}] Could not write debug copy: {exc}")
+    finally:
+        codegen_pool.shutdown(wait=True)
+        render_pool.shutdown(wait=True)
+        sync_pool.shutdown(wait=True)
+
+    logger.info("=" * 70)
+    logger.info("STITCHING VIDEOS")
+    logger.info("=" * 70)
+    final_path = _stitch_videos(synced_videos, output_dir)
+    return scene_codes, final_path
+
+
 def _run_for_language(
     language: str,
     explanation: dict,
@@ -1334,6 +1532,7 @@ def main(
     language: str = "en",
     languages: Optional[str] = None,
     force_restart: bool = False,
+    pipeline_parallel: bool = True,
 ):
     """
     Generate Manim animation from a PDF research paper.
@@ -1513,6 +1712,76 @@ def main(
                     shutil.copy2(found_code, code_output_path)
 
         need_codegen = not (os.path.exists(code_output_path) and os.path.exists(scene_metadata_path))
+
+        # ----------------------------------------------------------------
+        # FAST PATH: pipeline-parallel codegen → render → sync (single-lang)
+        # ----------------------------------------------------------------
+        use_pipelined = (
+            pipeline_parallel
+            and not multi_lang
+            and target_languages == ["en"]
+            and render_video
+            and need_codegen
+        )
+
+        if use_pipelined:
+            logger.info("=" * 70)
+            logger.info("FAST PATH: pipeline-parallel codegen → render → sync (+streaming audio)")
+            logger.info("=" * 70)
+
+            audio_streamer = None
+            audio_timeline_path = None
+            audio_dir = f"{base_dir}/audio_beats"
+            existing_timeline = f"{audio_dir}/beat_timeline.json"
+
+            if generate_audio or render_video:
+                if os.path.exists(existing_timeline):
+                    audio_timeline_path = existing_timeline
+                    logger.info(f"Reusing existing audio timeline: {existing_timeline}")
+                else:
+                    from research_viz.audio_generator.beat_sync_tts import StreamingBeatGenerator
+                    audio_streamer = StreamingBeatGenerator(
+                        explanation=explanation,
+                        output_dir=audio_dir,
+                        voice=tts_voice,
+                        min_words=difficulty_config.beat_min_words,
+                        max_words=difficulty_config.beat_max_words,
+                        language="en",
+                    )
+                    audio_streamer.start()
+                    logger.info("StreamingBeatGenerator started in parallel with codegen")
+
+            try:
+                with collector.time_stage("codegen_render_sync", provider):
+                    scene_codes, final_video = pipelined_codegen_render_sync(
+                        explanation=explanation,
+                        difficulty=difficulty,
+                        output_dir=base_dir,
+                        audio_timeline_path=audio_timeline_path,
+                        audio_streamer=audio_streamer,
+                        quality=video_quality,
+                        sync_mode=sync_mode,
+                        max_speed_change=max_speed_change,
+                        model_name=model_name,
+                        max_retries=max_retries,
+                    )
+                    scene_codes = [s for s in scene_codes if s is not None]
+                    if scene_codes:
+                        paper_title = explanation.get('paper_title', pdf_stem)
+                        complete_code = assemble_complete_code(scene_codes, paper_title)
+                        with open(code_output_path, 'w') as f:
+                            f.write(complete_code)
+                        with open(scene_metadata_path, 'w') as f:
+                            json.dump([s.model_dump() for s in scene_codes], f, indent=2)
+            finally:
+                if audio_streamer is not None:
+                    audio_streamer.shutdown_and_write_timeline()
+
+            if final_video:
+                logger.info(f"Pipeline complete! Final video: {final_video}")
+            else:
+                logger.warning("Pipeline finished without producing a final video.")
+            return
 
         with collector.time_stage("codegen", provider):
             if need_codegen:
