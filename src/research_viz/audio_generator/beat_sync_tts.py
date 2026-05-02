@@ -280,6 +280,7 @@ class StreamingBeatGenerator:
         max_words: Optional[int] = None,
         language: str = "en",
         max_workers: int = MAX_TTS_WORKERS,
+        on_segment_ready: Optional[callable] = None,
     ):
         import threading
         cfg = get_config()
@@ -291,6 +292,7 @@ class StreamingBeatGenerator:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.explanation = explanation
+        self._on_segment_ready = on_segment_ready
 
         self._lock = threading.Lock()
         self._segment_events: Dict[str, threading.Event] = {}
@@ -398,6 +400,11 @@ class StreamingBeatGenerator:
         if evt:
             evt.set()
         logger.info(f"  audio READY for {seg_id}: {len(beats)} beats, {cumulative:.1f}s")
+        if self._on_segment_ready is not None:
+            try:
+                self._on_segment_ready(seg_id, seg_data)
+            except Exception as exc:
+                logger.warning(f"on_segment_ready raised for {seg_id}: {exc}")
 
     def shutdown_and_write_timeline(self) -> Optional[str]:
         """Wait for all jobs, write the consolidated beat_timeline.json."""

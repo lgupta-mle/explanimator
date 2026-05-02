@@ -14,7 +14,7 @@ import subprocess
 import tempfile
 import time
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional, List, Callable
 from pydantic import BaseModel, Field
 from concurrent.futures import ThreadPoolExecutor, as_completed, wait, FIRST_COMPLETED
 import tyro
@@ -1175,6 +1175,7 @@ def pipelined_codegen_render_sync(
     max_retries: Optional[int] = None,
     chroma_path: str = "data/manim_docs/vector_db/chroma_db",
     codegen_workers: int = MAX_CODEGEN_WORKERS,
+    event_callback: Optional[Callable[[dict], None]] = None,
 ) -> tuple[List[Optional[ManimSceneCode]], Optional[str]]:
     """Run codegen → render → sync as a single pipeline-parallel flow.
 
@@ -1218,6 +1219,25 @@ def pipelined_codegen_render_sync(
         f"Workers: codegen={codegen_workers} render={cfg.video.render_workers} sync={cfg.video.sync_workers}"
     )
     logger.info(f"Debug ready segments will be copied to: {debug_dir}")
+
+    def _emit(event: dict) -> None:
+        if event_callback is None:
+            return
+        try:
+            event_callback(event)
+        except Exception as exc:
+            logger.warning(f"event_callback raised: {exc}")
+
+    def _seg_meta(i: int) -> dict:
+        seg = segments[i]
+        return {
+            'segment_idx': i,
+            'segment_id': seg.get('segment_id', f'seg_{i+1:02d}'),
+            'title': seg.get('title', ''),
+            'total_segments': n,
+        }
+
+    _emit({'type': 'pipeline_started', 'payload': {'total_segments': n}})
 
     codegen_pool = ThreadPoolExecutor(max_workers=codegen_workers, thread_name_prefix='cg')
     render_pool = ThreadPoolExecutor(max_workers=cfg.video.render_workers, thread_name_prefix='rd')
@@ -1266,6 +1286,7 @@ def pipelined_codegen_render_sync(
 
     futures: dict = {}
     for i in range(n):
+        _emit({'type': 'codegen_segment_started', **_seg_meta(i)})
         f = codegen_pool.submit(_do_codegen, i)
         futures[f] = ('codegen', i)
 
@@ -1284,9 +1305,12 @@ def pipelined_codegen_render_sync(
                 if kind == 'codegen':
                     if result is None:
                         logger.error(f"  [{i+1}] codegen returned None; skipping render")
+                        _emit({'type': 'codegen_segment_failed', **_seg_meta(i)})
                         continue
                     scene_codes[i] = result
                     logger.info(f"  [{i+1}] codegen done -> submitting render (t={time.time():.1f})")
+                    _emit({'type': 'codegen_segment_done', **_seg_meta(i)})
+                    _emit({'type': 'render_segment_started', **_seg_meta(i)})
                     nf = render_pool.submit(_do_render, i, result)
                     futures[nf] = ('render', i)
                     pending.add(nf)
@@ -1294,8 +1318,11 @@ def pipelined_codegen_render_sync(
                 elif kind == 'render':
                     if result is None:
                         logger.error(f"  [{i+1}] render returned None; skipping sync")
+                        _emit({'type': 'render_segment_failed', **_seg_meta(i)})
                         continue
                     logger.info(f"  [{i+1}] render done -> submitting sync (t={time.time():.1f})")
+                    _emit({'type': 'render_segment_done', **_seg_meta(i)})
+                    _emit({'type': 'sync_segment_started', **_seg_meta(i)})
                     nf = sync_pool.submit(_do_sync, i, result)
                     futures[nf] = ('sync', i)
                     pending.add(nf)
@@ -1306,6 +1333,7 @@ def pipelined_codegen_render_sync(
                     logger.info(
                         f"  [{i+1}] READY-TO-WATCH (sync done, t={ready_t:.1f}): {result}"
                     )
+                    debug_path = None
                     if result and os.path.exists(result):
                         seg_id = segments[i].get('segment_id', f'seg_{i+1:02d}')
                         debug_name = f"order{i+1:02d}_{seg_id}_t{int(ready_t)}.mp4"
@@ -1315,6 +1343,18 @@ def pipelined_codegen_render_sync(
                             logger.info(f"  [{i+1}] Debug copy saved: {debug_path}")
                         except Exception as exc:
                             logger.warning(f"  [{i+1}] Could not write debug copy: {exc}")
+                    seg_audio = (
+                        audio_streamer.get_segment_audio(segments[i].get('segment_id', f'seg_{i+1:02d}'))
+                        if audio_streamer is not None else None
+                    )
+                    _emit({
+                        'type': 'sync_segment_done',
+                        **_seg_meta(i),
+                        'payload': {
+                            'video_path': str(debug_path) if debug_path else result,
+                            'duration_seconds': (seg_audio or {}).get('total_duration', 0.0),
+                        },
+                    })
     finally:
         codegen_pool.shutdown(wait=True)
         render_pool.shutdown(wait=True)
@@ -1324,6 +1364,10 @@ def pipelined_codegen_render_sync(
     logger.info("STITCHING VIDEOS")
     logger.info("=" * 70)
     final_path = _stitch_videos(synced_videos, output_dir)
+    if final_path:
+        _emit({'type': 'pipeline_done', 'payload': {'final_video_path': final_path}})
+    else:
+        _emit({'type': 'pipeline_error', 'payload': {'message': 'Final video stitching failed'}})
     return scene_codes, final_path
 
 
