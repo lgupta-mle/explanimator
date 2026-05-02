@@ -2,12 +2,15 @@
 FastAPI Backend for Anvaya — PDF to Animated Video Pipeline
 """
 
+import asyncio
 import os
+import queue
 import re
 import sys
 import uuid
 import json
 import threading
+import time
 import traceback
 from pathlib import Path
 from typing import Dict, Any, Optional
@@ -17,6 +20,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from dotenv import load_dotenv
+from sse_starlette.sse import EventSourceResponse
 
 # Allow importing from the src/ tree
 # File lives at anvaya/apps/api/main.py
@@ -144,159 +148,195 @@ def _build_segment_list(explanation: dict, audio_timeline: Optional[dict] = None
 
 # ── Background pipeline runner ───────────────────────────────────────────────
 
+def _publish_event(job: Dict[str, Any], event: dict) -> None:
+    """Push an event onto the job's queue (for SSE listeners) and update job state."""
+    event = dict(event)
+    event.setdefault("ts", time.time())
+    q: Optional[queue.Queue] = job.get("events")
+    if q is not None:
+        q.put(event)
+    # Mirror key transitions into the polling-friendly status field
+    et = event.get("type")
+    if et == "pipeline_started":
+        job["status"] = "running"
+        job["message"] = "Starting pipeline…"
+    elif et == "explanation_started":
+        job["status"] = "extracting"
+        job["message"] = "Reading the paper…"
+    elif et == "explanation_done":
+        job["message"] = "Explanation ready"
+    elif et == "audio_segment_ready":
+        idx = event.get("segment_idx", -1)
+        job["message"] = f"Audio ready for segment {idx + 1}"
+    elif et == "codegen_segment_done":
+        idx = event.get("segment_idx", -1)
+        job["message"] = f"Codegen done for segment {idx + 1}"
+    elif et == "render_segment_done":
+        idx = event.get("segment_idx", -1)
+        job["message"] = f"Render done for segment {idx + 1}"
+    elif et == "sync_segment_done":
+        idx = event.get("segment_idx", -1)
+        job["message"] = f"Segment {idx + 1} ready to watch"
+        # Track ready segments
+        job.setdefault("ready_segments", set()).add(idx)
+    elif et == "pipeline_done":
+        job["status"] = "completed"
+        job["step"] = 3
+        job["message"] = "Done!"
+        if event.get("payload", {}).get("final_video_path"):
+            job["video_path"] = event["payload"]["final_video_path"]
+    elif et == "pipeline_error":
+        job["status"] = "failed"
+        job["error"] = event.get("payload", {}).get("message", "Pipeline error")
+
+
 def run_pipeline(job_id: str, pdf_path: str, difficulty: str = "medium"):
     job = jobs[job_id]
     output_dir = str(JOBS_DIR / job_id / "output")
     Path(output_dir).mkdir(parents=True, exist_ok=True)
+    base_dir = output_dir  # pipeline writes per-segment artifacts directly here
 
-    # Model configuration
-    explanation_model = "google/gemini-3.1-pro-preview"
-    manim_model = "google/gemini-3.1-pro-preview"
-    tts_voice = "nova"
-
-    # Difficulty config
     from research_viz.config.difficulty import DIFFICULTY_CONFIGS
     difficulty_config = DIFFICULTY_CONFIGS.get(difficulty, DIFFICULTY_CONFIGS["medium"])
 
-    try:
-        # ── Step 0: Extract concepts ──────────────────────────────────────
-        job.update(status="extracting", step=0,
-                   message="Extracting concepts from paper…")
+    def emit(event: dict):
+        _publish_event(job, event)
 
+    try:
+        emit({"type": "pipeline_started", "payload": {"job_id": job_id, "difficulty": difficulty}})
+
+        # ── Step 0: Explanation ──────────────────────────────────────────
         from research_viz.manim_generator.pdf_explanation_generator import (
             generate_explanation_from_pdf,
         )
 
-        print(f"\n{'='*70}")
-        print(f"STEP 0: EXPLANATION GENERATION")
-        print(f"{'='*70}")
-        print(f"Model: {explanation_model}")
-        print(f"PDF: {pdf_path}")
-        print(f"Difficulty: {difficulty} (segments: {difficulty_config.min_segments}-{difficulty_config.max_segments})")
-        print(f"{'='*70}\n")
+        emit({"type": "explanation_started"})
 
         explanation_path = f"{output_dir}/explanation.json"
         explanation = generate_explanation_from_pdf(
             pdf_path=pdf_path,
             output_path=explanation_path,
-            model_name=explanation_model,
+            difficulty=difficulty,
             max_judge_attempts=2,
             difficulty_config=difficulty_config,
         )
 
         if not explanation:
-            job.update(status="failed", error="Failed to generate explanation from PDF.")
+            emit({"type": "pipeline_error", "payload": {"message": "Explanation generation failed"}})
             return
 
-        # ── Step 1: Build animation code ──────────────────────────────────
-        job.update(status="building", step=1,
-                   message="Building animation structure…")
+        segments_meta = explanation.get("segments", [])
+        paper_title = explanation.get("paper_title", "paper")
+        job["paper_title"] = paper_title
+        # Pre-populate segment titles so the frontend can render placeholder cards
+        job["segments"] = [
+            {
+                "idx": i,
+                "segment_id": s.get("segment_id", f"seg_{i+1:02d}"),
+                "title": s.get("title", f"Segment {i + 1}"),
+                "narration_script": s.get("narration_script", ""),
+                "narration_clean": _clean_narration(s.get("narration_script", "")),
+                "duration_seconds": 0.0,  # filled in when audio_segment_ready arrives
+                "ready": False,
+                "url": None,
+            }
+            for i, s in enumerate(segments_meta)
+        ]
+        emit({
+            "type": "explanation_done",
+            "payload": {
+                "paper_title": paper_title,
+                "total_segments": len(segments_meta),
+                "segments": [{"idx": i, "title": s["title"]} for i, s in enumerate(job["segments"])],
+            },
+        })
 
+        # ── Step 1: Streaming audio + pipeline-parallel codegen → render → sync ──
+        from research_viz.audio_generator.beat_sync_tts import StreamingBeatGenerator
         from research_viz.manim_generator.pdf_to_manim_pipeline import (
-            generate_all_scenes,
+            pipelined_codegen_render_sync,
             assemble_complete_code,
         )
 
-        print(f"\n{'='*70}")
-        print(f"STEP 1: MANIM CODE GENERATION")
-        print(f"{'='*70}")
-        print(f"Model: {manim_model}")
-        print(f"Segments: {len(explanation.get('segments', []))}")
-        print(f"{'='*70}\n")
+        # Map segment_id -> idx for the audio callback
+        seg_id_to_idx = {s["segment_id"]: i for i, s in enumerate(job["segments"])}
 
-        scene_codes = generate_all_scenes(
-            explanation=explanation,
-            model_name=manim_model,
-            max_retries=3,
-        )
+        def on_audio_ready(seg_id: str, seg_data: dict):
+            idx = seg_id_to_idx.get(seg_id, -1)
+            if 0 <= idx < len(job["segments"]):
+                job["segments"][idx]["duration_seconds"] = seg_data.get("total_duration", 0.0)
+            emit({
+                "type": "audio_segment_ready",
+                "segment_idx": idx,
+                "segment_id": seg_id,
+                "payload": {
+                    "duration_seconds": seg_data.get("total_duration", 0.0),
+                    "beat_count": seg_data.get("beat_count", 0),
+                },
+            })
 
-        if not scene_codes:
-            job.update(status="failed", error="Failed to generate animation code.")
-            return
-
-        paper_title = explanation.get("paper_title", "paper")
-        complete_code = assemble_complete_code(scene_codes, paper_title)
-        with open(f"{output_dir}/animation.py", "w") as f:
-            f.write(complete_code)
-
-        # Save scene metadata
-        scene_meta_path = f"{output_dir}/scene_metadata.json"
-        with open(scene_meta_path, "w") as f:
-            json.dump([sc.model_dump() for sc in scene_codes], f, indent=2)
-
-        # ── Step 2: Render animation ──────────────────────────────────────
-        job.update(status="rendering", step=2,
-                   message="Rendering animation…")
+        def on_pipeline_event(event: dict):
+            # Forward all pipelined events; enrich sync_segment_done with the
+            # frontend-facing URL so it points at /api/segment/{job_id}/{idx}.
+            if event.get("type") == "sync_segment_done":
+                idx = event.get("segment_idx", -1)
+                event = dict(event)
+                event.setdefault("payload", {})
+                event["payload"]["url"] = f"/api/segment/{job_id}/{idx}"
+                if 0 <= idx < len(job["segments"]):
+                    job["segments"][idx]["ready"] = True
+                    job["segments"][idx]["url"] = event["payload"]["url"]
+            emit(event)
 
         audio_dir = f"{output_dir}/audio_beats"
-        audio_timeline_path = f"{audio_dir}/beat_timeline.json"
-
-        from research_viz.audio_generator.beat_sync_tts import generate_beat_timeline
-
-        print(f"\n{'='*70}")
-        print(f"STEP 2: AUDIO & VIDEO RENDERING")
-        print(f"{'='*70}")
-        print(f"TTS Voice: {tts_voice}")
-        print(f"{'='*70}\n")
-
-        generate_beat_timeline(
-            explanation_path=explanation_path,
-            output_dir=audio_dir,
-            voice=tts_voice,
-        )
-
-        from research_viz.manim_generator.pdf_to_manim_pipeline import (
-            render_and_sync_all_scenes,
-        )
-
-        final_video = render_and_sync_all_scenes(
-            scene_codes=scene_codes,
+        audio_streamer = StreamingBeatGenerator(
             explanation=explanation,
-            audio_timeline_path=audio_timeline_path,
-            output_dir=output_dir,
-            quality="l",
-            sync_mode="segment",
-            max_speed_change=0.3,
+            output_dir=audio_dir,
+            voice=None,
+            min_words=difficulty_config.beat_min_words,
+            max_words=difficulty_config.beat_max_words,
+            language="en",
+            on_segment_ready=on_audio_ready,
         )
+        audio_streamer.start()
+
+        try:
+            scene_codes, final_video = pipelined_codegen_render_sync(
+                explanation=explanation,
+                difficulty=difficulty,
+                output_dir=base_dir,
+                audio_streamer=audio_streamer,
+                event_callback=on_pipeline_event,
+            )
+        finally:
+            audio_streamer.shutdown_and_write_timeline()
+
+        successful = [s for s in scene_codes if s is not None]
+        if successful:
+            complete_code = assemble_complete_code(successful, paper_title)
+            with open(f"{output_dir}/animation.py", "w") as f:
+                f.write(complete_code)
+            with open(f"{output_dir}/scene_metadata.json", "w") as f:
+                json.dump([sc.model_dump() for sc in successful], f, indent=2)
 
         if not final_video:
-            job.update(status="failed", error="Failed to render final video.")
+            emit({"type": "pipeline_error", "payload": {"message": "Final video stitching failed"}})
             return
 
-        # ── Done ──────────────────────────────────────────────────────────
-        # Load beat timeline for accurate segment durations
-        audio_timeline_data = None
-        if os.path.exists(audio_timeline_path):
-            with open(audio_timeline_path, "r") as f:
-                audio_timeline_data = json.load(f)
-
-        segments = _build_segment_list(explanation, audio_timeline=audio_timeline_data)
+        # ── Done — pipeline_done was already emitted by the pipelined function ──
         full_transcript = "\n\n".join(
-            s["narration_script"] for s in segments if s["narration_script"]
+            s["narration_clean"] for s in job["segments"] if s.get("narration_clean")
         )
-
-        job.update(
-            status="completed",
-            step=3,
-            message="Done!",
-            video_path=final_video,
-            paper_title=paper_title,
-            segments=segments,
-            transcript=full_transcript,
-            models={
-                "explanation": explanation_model,
-                "manim_code": manim_model,
-                "tts_voice": tts_voice,
-                "difficulty": difficulty,
-            },
-        )
+        job["transcript"] = full_transcript
+        job["models"] = {"difficulty": difficulty}
 
     except Exception as e:
-        job.update(
-            status="failed",
-            error=str(e),
-            traceback=traceback.format_exc(),
-        )
+        emit({"type": "pipeline_error", "payload": {"message": str(e)}})
+        job["traceback"] = traceback.format_exc()
+    finally:
+        # Sentinel so the SSE generator knows to close cleanly
+        if job.get("events") is not None:
+            job["events"].put(None)
 
 
 # ── API Routes ───────────────────────────────────────────────────────────────
@@ -342,6 +382,8 @@ async def generate_video(
         "segments": [],
         "transcript": "",
         "paper_title": "",
+        "events": queue.Queue(),
+        "ready_segments": set(),
     }
 
     thread = threading.Thread(
@@ -417,6 +459,55 @@ async def serve_video(job_id: str):
     if not video_path or not os.path.exists(video_path):
         raise HTTPException(status_code=404, detail="Video file not found.")
     return FileResponse(video_path, media_type="video/mp4")
+
+
+@app.get("/api/events/{job_id}")
+async def stream_events(job_id: str):
+    """Server-Sent Events stream for real-time pipeline progress."""
+    if job_id not in jobs:
+        raise HTTPException(status_code=404, detail="Job not found.")
+    job = jobs[job_id]
+    q: Optional[queue.Queue] = job.get("events")
+    if q is None:
+        raise HTTPException(status_code=410, detail="Job has no event stream (cached/old job).")
+
+    async def gen():
+        loop = asyncio.get_event_loop()
+        while True:
+            event = await loop.run_in_executor(None, q.get)
+            if event is None:  # sentinel — pipeline finished, close stream
+                break
+            yield {"event": event.get("type", "message"), "data": json.dumps(event)}
+
+    return EventSourceResponse(gen())
+
+
+@app.get("/api/segments/{job_id}")
+async def list_segments(job_id: str):
+    """List per-segment metadata for the player UI (titles, durations, ready state, urls)."""
+    if job_id not in jobs:
+        raise HTTPException(status_code=404, detail="Job not found.")
+    return {
+        "job_id": job_id,
+        "paper_title": jobs[job_id].get("paper_title", ""),
+        "total_segments": len(jobs[job_id].get("segments", [])),
+        "segments": jobs[job_id].get("segments", []),
+    }
+
+
+@app.get("/api/segment/{job_id}/{idx}")
+async def serve_segment(job_id: str, idx: int):
+    """Stream a single per-segment .mp4 from debug_ready_segments/."""
+    if job_id not in jobs:
+        raise HTTPException(status_code=404, detail="Job not found.")
+    debug_dir = JOBS_DIR / job_id / "output" / "debug_ready_segments"
+    if not debug_dir.exists():
+        raise HTTPException(status_code=404, detail="Segment not yet available.")
+    prefix = f"order{idx + 1:02d}_"
+    matches = sorted(debug_dir.glob(f"{prefix}*.mp4"))
+    if not matches:
+        raise HTTPException(status_code=404, detail="Segment not yet available.")
+    return FileResponse(matches[0], media_type="video/mp4")
 
 
 @app.get("/api/health")
