@@ -67,6 +67,7 @@ def call_llm_provider(
     model_name: str,
     schema: Optional[Type[T]] = None,
     plugins: Optional[list] = None,
+    reasoning: Optional[dict] = None,
 ) -> "LLMResponse":
     """Call the LLM provider and return an LLMResponse.
 
@@ -77,6 +78,8 @@ def call_llm_provider(
     kwargs: dict = {}
     if plugins:
         kwargs["plugins"] = plugins
+    if reasoning:
+        kwargs["reasoning"] = reasoning
     rf = _build_response_format(schema)
     if rf:
         kwargs["response_format"] = rf
@@ -256,7 +259,13 @@ Provide your evaluation as a JSON object with score, criteria_scores, and feedba
     ]
 
     try:
-        llm_response = call_llm_provider(messages, model_name, JudgeResult)
+        cfg = get_config()
+        reasoning = (
+            {"effort": cfg.llm.judge_reasoning_effort}
+            if cfg.llm.judge_reasoning_effort
+            else None
+        )
+        llm_response = call_llm_provider(messages, model_name, JudgeResult, reasoning=reasoning)
         content = llm_response.content
 
         if not content:
@@ -349,42 +358,47 @@ Each segment needs:
         difficulty_section = _build_difficulty_prompt_section(difficulty_config, prereq_tree)
         base_user_prompt += difficulty_section
 
+    from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
+
     previous_feedback = None
+    previous_content: Optional[str] = None
 
     for attempt in range(max_attempts):
         logger.info(f"Attempt {attempt + 1}/{max_attempts}")
 
-        # Build prompt with feedback if this is a retry
-        if previous_feedback:
-            user_prompt = f"""{base_user_prompt}
+        if previous_feedback and previous_content:
+            # Revision step: skip the PDF, work from prior explanation + feedback
+            logger.info("  Revising prior explanation from feedback (no PDF re-upload)...")
+            revise_prompt = f"""Below is your previous explanation attempt and the judge's feedback.
+Produce a revised explanation in the SAME JSON schema that addresses ALL the feedback.
 
-IMPORTANT - Previous attempt failed quality check. Fix these issues:
+PREVIOUS EXPLANATION:
+```json
+{previous_content}
+```
 
+JUDGE FEEDBACK:
 {previous_feedback}
 
-Generate a revised explanation that addresses ALL the feedback above.
+Output the revised explanation as JSON only, no other commentary.
 """
-        else:
-            user_prompt = base_user_prompt
-
-        # Generate explanation
-        logger.info("  Generating explanation from PDF...")
-        try:
-            from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
-            llm_response = create_pdf_llm_response(
-                pdf_path=pdf_path,
-                prompt=user_prompt,
-                system_prompt=system_prompt,
+            llm_response = call_llm_provider(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": revise_prompt},
+                ],
                 model_name=model_name,
                 schema=EducationalExplanation3B1B,
             )
-        except ImportError:
+        else:
+            # First attempt (or no prior content): full PDF call
+            logger.info("  Generating explanation from PDF...")
             llm_response = create_pdf_llm_response(
                 pdf_path=pdf_path,
-                prompt=user_prompt,
+                prompt=base_user_prompt,
                 system_prompt=system_prompt,
                 model_name=model_name,
-                schema=None,
+                schema=EducationalExplanation3B1B,
             )
 
         content = llm_response.content
@@ -426,6 +440,7 @@ Generate a revised explanation that addresses ALL the feedback above.
                     f"You generated {seg_count} segments but the requirement is {min_s}-{max_s}. "
                     f"Regenerate with exactly {min_s}-{max_s} segments."
                 )
+                previous_content = content
                 continue
 
         # Judge the explanation
@@ -454,6 +469,7 @@ Generate a revised explanation that addresses ALL the feedback above.
         if judge_result.feedback:
             logger.info(f"  Feedback: {judge_result.feedback[:200]}...")
             previous_feedback = judge_result.feedback
+            previous_content = content
 
     logger.error(f"Failed to pass quality check after {max_attempts} attempts")
     return None
