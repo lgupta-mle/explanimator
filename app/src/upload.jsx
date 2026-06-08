@@ -3,7 +3,7 @@
 const Upload = ({ setView, onSubmit }) => {
   const [file, setFile] = useState(null);
   const [dragging, setDragging] = useState(false);
-  const [mode, setMode] = useState("technical");
+  const [mode, setMode] = useState("expert");
   const [voice, setVoice] = useState("aria");
   const [series, setSeries] = useState("none");
   const [chapters, setChapters] = useState([
@@ -105,16 +105,16 @@ const DropZone = ({ dragging, setDragging, onFile }) => {
 };
 
 const DifficultyChoice = () => {
-  const [d, setD] = useState("technical");
+  const [d, setD] = useState("expert");
   const opts = [
     {
-      value: "easy",
-      label: "Easy",
+      value: "beginner",
+      label: "Beginner",
       blurb: "Plain language, more analogies, gentler pacing. Equations are introduced step-by-step. Best if the topic is new to you.",
     },
     {
-      value: "technical",
-      label: "Technical",
+      value: "expert",
+      label: "Expert",
       blurb: "Full notation, faster pace, derivations shown. Assumes you're comfortable with the math. Best if you're refreshing or studying the field.",
     },
   ];
@@ -233,8 +233,8 @@ const ModeCard = ({ mode, setMode }) => (
     <div className="mono" style={{ fontSize: 11, color: "var(--fg-dim)", marginBottom: 16 }}>SAME PAPER · DIFFERENT LECTURE</div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
       {[
-        { id: "easy", label: "Easy", desc: "Intuition, analogies. No math required.", accent: "var(--accent-warm)" },
-        { id: "technical", label: "Technical", desc: "Equations, derivations, proofs.", accent: "var(--accent-2)" },
+        { id: "beginner", label: "Beginner", desc: "Intuition, analogies. No math required.", accent: "var(--accent-warm)" },
+        { id: "expert", label: "Expert", desc: "Equations, derivations, proofs.", accent: "var(--accent-2)" },
       ].map((m) => (
         <div
           key={m.id}
@@ -325,7 +325,7 @@ const SeriesCard = ({ series, setSeries }) => (
 
 const EstimateCard = ({ onSubmit, chapters, mode }) => {
   const included = chapters.filter((c) => c.include && !c.sub).length;
-  const minutes = mode === "technical" ? 11 : 8;
+  const minutes = mode === "expert" ? 11 : 8;
   const cost = (minutes * 0.42).toFixed(2);
   return (
     <div className="card" style={{

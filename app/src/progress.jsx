@@ -10,26 +10,26 @@ const Progress = ({ progressVariant, jobState, setJobState, setView }) => {
   }));
   const totalStagesDone = stageInfo.filter((s) => s.status === "done").length;
   const overallPct = Math.min(100, Math.round((totalStagesDone / stageInfo.length) * 100));
-  const seg1Ready = !!jobState.segments?.[0]?.ready;
+  const anyReady = Object.values(jobState.segments || {}).some((s) => s && s.ready);
   const playerRef = useRef(null);
   const scrolledRef = useRef(false);
 
   useEffect(() => {
-    if (seg1Ready && !scrolledRef.current && playerRef.current) {
+    if (anyReady && !scrolledRef.current && playerRef.current) {
       scrolledRef.current = true;
       // small timeout so layout settles before the scroll
       setTimeout(() => {
         playerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 80);
     }
-  }, [seg1Ready]);
+  }, [anyReady]);
 
   return (
     <div style={{ padding: "32px 48px", maxWidth: 1320, margin: "0 auto" }}>
       <ProgressHeader overallPct={overallPct} jobState={jobState} stageInfo={stageInfo} setView={setView} />
       <DiagramView stageInfo={stageInfo} />
       <SegmentTrack jobState={jobState} />
-      {seg1Ready && (
+      {anyReady && (
         <div ref={playerRef} style={{ marginTop: 40 }}>
           <InlinePlayer jobState={jobState} />
         </div>
@@ -102,28 +102,40 @@ const DiagramView = ({ stageInfo }) => {
               )}
               <circle cx={x} cy={y} r="58" fill="var(--surface)" stroke="var(--border)" strokeWidth="1" />
               {s.status === "running" && (
-                <circle cx={x} cy={y} r="58" fill="none" stroke="var(--accent)" strokeWidth="2.5"
-                  strokeDasharray="365 365"
-                  style={{ animation: "spin 2.4s linear infinite", transformOrigin: `${x}px ${y}px` }}
-                />
+                <>
+                  <circle cx={x} cy={y} r="58" fill="none" stroke="var(--border-strong)" strokeWidth="2" />
+                  <g style={{ transformOrigin: `${x}px ${y}px`, animation: "spin 1.6s linear infinite" }}>
+                    <circle cx={x} cy={y} r="58" fill="none" stroke="var(--accent)" strokeWidth="3"
+                      strokeDasharray="90 365" strokeLinecap="round"
+                    />
+                  </g>
+                  <circle cx={x} cy={y} r="6" fill="var(--accent)">
+                    <animate attributeName="opacity" values="0.4;1;0.4" dur="1.4s" repeatCount="indefinite" />
+                  </circle>
+                </>
               )}
               {s.status === "done" && (
                 <circle cx={x} cy={y} r="58" fill="none" stroke="var(--good)" strokeWidth="2" />
               )}
-              <text x={x} y={y - 6} textAnchor="middle" fontFamily="var(--mono)" fontSize="11" fill={color} letterSpacing="0.1em">
+              <text x={x} y={y - 18} textAnchor="middle" fontFamily="var(--mono)" fontSize="11" fill={color} letterSpacing="0.1em"
+                style={s.status === "running" ? { animation: "pulse-glow 1.4s ease-in-out infinite" } : undefined}>
                 0{i + 1}
               </text>
-              <text x={x} y={y + 12} textAnchor="middle" fontFamily="var(--display-font, var(--serif))" fontSize="17" fill="var(--fg)" fontStyle="italic">
+              <text x={x} y={y + 4} textAnchor="middle" fontFamily="var(--display-font, var(--serif))" fontSize="17" fill="var(--fg)" fontStyle="italic">
                 {s.name}
               </text>
-              <text x={x} y={y + 30} textAnchor="middle" fontFamily="var(--mono)" fontSize="9" fill="var(--fg-dim)" letterSpacing="0.06em">
+              <text x={x} y={y + 22} textAnchor="middle" fontFamily="var(--mono)" fontSize="9" fill={color} letterSpacing="0.08em"
+                style={s.status === "running" ? { animation: "pulse-glow 1.4s ease-in-out infinite" } : undefined}>
                 {s.status === "running" ? "RUNNING…" : s.status === "done" ? "DONE" : "QUEUED"}
               </text>
             </g>
           );
         })}
       </svg>
-      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+      `}</style>
     </div>
   );
 };
@@ -149,10 +161,10 @@ const SegmentTrack = ({ jobState }) => {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 12 }}>
         {indices.map((i) => {
           const seg = segments[i];
-          const isFirst = i === 0;
-          const stageLabel = isFirst
-            ? (seg.ready ? "ready to watch" : "wired to circles above")
+          const stageLabel = seg.ready
+            ? "ready to watch"
             : _STAGE_LABEL[seg.current_stage || "queued"];
+          const isFirst = i === 0;
           const accent = seg.ready ? "var(--good)" : "var(--accent)";
           return (
             <div
@@ -175,7 +187,7 @@ const SegmentTrack = ({ jobState }) => {
               <div className="display" style={{ fontSize: 14, lineHeight: 1.25 }}>
                 {seg.title || `Segment ${i + 1}`}
               </div>
-              {!isFirst && !seg.ready && (
+              {!seg.ready && (
                 <div className="mono" style={{ fontSize: 11, marginTop: 8, color: "var(--fg-muted)" }}>
                   Preparing… <span className="dots" style={{ color: accent }}><span></span><span></span><span></span></span>
                 </div>
@@ -192,90 +204,91 @@ const InlinePlayer = ({ jobState }) => {
   const segments = jobState.segments || {};
   const orderedIdx = Object.keys(segments).map((k) => parseInt(k, 10)).sort((a, b) => a - b);
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [waiting, setWaiting] = useState(false);
   const videoRef = useRef(null);
 
   const currentSeg = segments[currentIdx];
-  const nextSeg = segments[currentIdx + 1];
+  const currentReady = !!currentSeg?.ready;
 
-  // When video ends, advance to next ready segment.
+  // Whenever the current segment flips ready, the <video key={currentIdx}>
+  // remounts with a real src and autoplays.
+  // When the current ends, advance to the next index (whether ready or not);
+  // if not ready yet, the overlay below will show "preparing" and the
+  // segment will auto-load + play once segments[next].ready becomes true.
   const onEnded = () => {
-    const next = currentIdx + 1;
-    if (next > Math.max(...orderedIdx)) return;  // last segment
-    if (segments[next]?.ready) {
-      setCurrentIdx(next);
-      setWaiting(false);
-    } else {
-      setWaiting(true);
-    }
+    const lastIdx = orderedIdx.length ? orderedIdx[orderedIdx.length - 1] : 0;
+    if (currentIdx >= lastIdx) return;
+    setCurrentIdx(currentIdx + 1);
   };
 
-  // If we were waiting and the next segment becomes ready, advance.
-  useEffect(() => {
-    if (waiting && nextSeg?.ready) {
-      setCurrentIdx((c) => c + 1);
-      setWaiting(false);
-    }
-  }, [waiting, nextSeg?.ready]);
-
-  if (!currentSeg) {
-    return <div className="card" style={{ padding: 32 }}>Waiting for segment 1…</div>;
-  }
-
-  const src = window.api.segmentUrl(jobState.job_id, currentIdx);
+  const lastIdx = orderedIdx.length ? orderedIdx[orderedIdx.length - 1] : 0;
+  const totalSegments = jobState.total_segments || orderedIdx.length || 1;
 
   return (
     <div className="card" style={{ padding: 0, overflow: "hidden" }}>
       <div style={{ padding: "14px 18px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <div className="label-mono" style={{ color: "var(--accent)", marginBottom: 4 }}>NOW PLAYING · SEGMENT {currentIdx + 1} / {orderedIdx.length}</div>
-          <div className="display" style={{ fontSize: 18 }}>{currentSeg.title}</div>
+          <div className="label-mono" style={{ color: "var(--accent)", marginBottom: 4 }}>
+            {currentReady ? "NOW PLAYING" : "QUEUED"} · SEGMENT {currentIdx + 1} / {totalSegments}
+          </div>
+          <div className="display" style={{ fontSize: 18 }}>{currentSeg?.title || `Segment ${currentIdx + 1}`}</div>
         </div>
         <span className="pill pill-good"><span className="pill-dot" />streaming</span>
       </div>
-      <div style={{ position: "relative", background: "#000" }}>
-        <video
-          ref={videoRef}
-          key={currentIdx}
-          src={src}
-          controls
-          autoPlay
-          onEnded={onEnded}
-          style={{ width: "100%", display: "block" }}
-        />
-        {waiting && (
+      <div style={{ position: "relative", background: "#000", aspectRatio: "16 / 9" }}>
+        {currentReady ? (
+          <video
+            ref={videoRef}
+            key={currentIdx}
+            src={window.api.segmentUrl(jobState.job_id, currentIdx)}
+            controls
+            autoPlay
+            onEnded={onEnded}
+            style={{ width: "100%", height: "100%", display: "block" }}
+          />
+        ) : (
           <div style={{
             position: "absolute", inset: 0,
-            background: "rgba(0,0,0,0.65)", color: "var(--fg)",
+            color: "var(--fg)",
             display: "grid", placeItems: "center",
             fontFamily: "var(--mono)", fontSize: 13, letterSpacing: "0.08em",
+            textAlign: "center", padding: 24,
           }}>
             <div>
-              <div className="dots" style={{ color: "var(--accent)" }}><span></span><span></span><span></span></div>
-              <div style={{ marginTop: 12 }}>Preparing segment {currentIdx + 2}…</div>
+              <div className="dots" style={{ color: "var(--accent)", fontSize: 20 }}><span></span><span></span><span></span></div>
+              <div style={{ marginTop: 14, color: "var(--fg-muted)" }}>
+                Preparing segment {currentIdx + 1}…
+              </div>
+              <div style={{ marginTop: 4, fontSize: 11, color: "var(--fg-dim)" }}>
+                It will auto-play as soon as it's rendered.
+              </div>
             </div>
           </div>
         )}
       </div>
       <div style={{ padding: "12px 18px", display: "flex", gap: 8, flexWrap: "wrap" }}>
-        {orderedIdx.map((i) => (
-          <button
-            key={i}
-            disabled={!segments[i]?.ready}
-            onClick={() => { if (segments[i]?.ready) setCurrentIdx(i); }}
-            className="mono"
-            style={{
-              padding: "4px 10px", borderRadius: 6, fontSize: 11,
-              border: `1px solid ${currentIdx === i ? "var(--accent)" : "var(--border)"}`,
-              background: currentIdx === i ? "color-mix(in srgb, var(--accent) 12%, var(--surface))" : "var(--surface)",
-              color: segments[i]?.ready ? "var(--fg)" : "var(--fg-dim)",
-              cursor: segments[i]?.ready ? "pointer" : "not-allowed",
-              fontFamily: "var(--mono)",
-            }}
-          >
-            {i + 1}{segments[i]?.ready ? "" : "·"}
-          </button>
-        ))}
+        {orderedIdx.map((i) => {
+          const seg = segments[i];
+          const isCur = currentIdx === i;
+          return (
+            <button
+              key={i}
+              disabled={!seg?.ready}
+              onClick={() => { if (seg?.ready) setCurrentIdx(i); }}
+              className="mono"
+              style={{
+                padding: "4px 10px", borderRadius: 6, fontSize: 11,
+                border: `1px solid ${isCur ? "var(--accent)" : "var(--border)"}`,
+                background: isCur ? "color-mix(in srgb, var(--accent) 12%, var(--surface))" : "var(--surface)",
+                color: seg?.ready ? "var(--fg)" : "var(--fg-dim)",
+                cursor: seg?.ready ? "pointer" : "not-allowed",
+                fontFamily: "var(--mono)",
+              }}
+              title={seg?.title || `Segment ${i + 1}`}
+            >
+              {i + 1}{seg?.ready ? "" : "·"}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

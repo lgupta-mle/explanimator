@@ -4,6 +4,9 @@
 const BACKEND_URL = window.ANVYA_BACKEND_URL || "http://localhost:8000";
 
 const _DIFFICULTY_MAP = {
+  beginner: "easy",
+  expert: "medium",
+  // legacy aliases — keep so older bookmarked clients still work
   easy: "easy",
   technical: "medium",
   scholar: "medium",
@@ -68,4 +71,28 @@ async function fetchSegments(jobId) {
   return await res.json();
 }
 
-window.api = { BACKEND_URL, uploadPdf, subscribeEvents, segmentUrl, fetchSegments };
+async function fetchStatus(jobId) {
+  const res = await fetch(`${BACKEND_URL}/api/status/${jobId}`);
+  if (!res.ok) throw new Error(`Failed to fetch status: ${res.status}`);
+  return await res.json();
+}
+
+const JOB_LS_KEY = "anvya:active_job_id";
+
+function saveActiveJobId(jobId) {
+  try { localStorage.setItem(JOB_LS_KEY, jobId); } catch (_) {}
+}
+
+function loadActiveJobId() {
+  try { return localStorage.getItem(JOB_LS_KEY); } catch (_) { return null; }
+}
+
+function clearActiveJobId() {
+  try { localStorage.removeItem(JOB_LS_KEY); } catch (_) {}
+}
+
+window.api = {
+  BACKEND_URL, uploadPdf, subscribeEvents, segmentUrl,
+  fetchSegments, fetchStatus,
+  saveActiveJobId, loadActiveJobId, clearActiveJobId,
+};
