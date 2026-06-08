@@ -18,3 +18,15 @@ out.txt
 
 # Claude artifacts
 .claude/
+
+# Backend job artifacts
+anvaya_website/apps/api/jobs/
+
+# Local archives / scratch
+AnvyaAI.zip
+*.zip
+/tmp/
+/private/tmp/
+
+# Local logs from end-to-end smoke runs
+/tmp/pipeline_*.log
