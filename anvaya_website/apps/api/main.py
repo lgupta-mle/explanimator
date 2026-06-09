@@ -217,7 +217,7 @@ def run_pipeline(job_id: str, pdf_path: str, difficulty: str = "medium"):
             pdf_path=pdf_path,
             output_path=explanation_path,
             difficulty=difficulty,
-            max_judge_attempts=2,
+            max_judge_attempts=3,
             difficulty_config=difficulty_config,
         )
 

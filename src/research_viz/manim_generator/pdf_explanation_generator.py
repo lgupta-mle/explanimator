@@ -362,6 +362,7 @@ Each segment needs:
 
     previous_feedback = None
     previous_content: Optional[str] = None
+    best_attempt: Optional[dict] = None  # last parseable attempt, used as fallback
 
     for attempt in range(max_attempts):
         logger.info(f"Attempt {attempt + 1}/{max_attempts}")
@@ -430,6 +431,12 @@ Output the revised explanation as JSON only, no other commentary.
         except json.JSONDecodeError:
             parsed = None
 
+        # Remember the latest parseable attempt as a fallback in case every
+        # judge attempt fails — a "judge said no but the JSON is fine" outcome
+        # should still produce a video rather than failing the whole pipeline.
+        if parsed and parsed.get("segments"):
+            best_attempt = parsed
+
         # Validate segment count against difficulty config
         if difficulty_config and parsed:
             seg_count = len(parsed.get("segments", []))
@@ -471,7 +478,22 @@ Output the revised explanation as JSON only, no other commentary.
             previous_feedback = judge_result.feedback
             previous_content = content
 
-    logger.error(f"Failed to pass quality check after {max_attempts} attempts")
+    # All judge attempts failed. If we still have a valid parsed explanation
+    # from some attempt, ship that with a warning rather than returning None —
+    # a "judge wasn't fully satisfied" explanation is still way better than
+    # failing the whole pipeline.
+    if best_attempt is not None:
+        logger.warning(
+            f"Judge never returned score=1 after {max_attempts} attempts; "
+            f"shipping the last parseable explanation ({len(best_attempt.get('segments', []))} segments)."
+        )
+        if difficulty_config:
+            best_attempt["difficulty_level"] = difficulty_config.level
+        if prereq_tree:
+            best_attempt["prerequisite_tree"] = prereq_tree
+        return best_attempt
+
+    logger.error(f"Failed to pass quality check after {max_attempts} attempts (no parseable JSON either)")
     return None
 
 
