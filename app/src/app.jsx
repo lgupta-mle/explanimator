@@ -5,7 +5,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "font": "lora-inter",
   "heroVariant": "equation",
   "progressVariant": "diagram",
-  "startView": "landing"
+  "startView": "upload"
 }/*EDITMODE-END*/;
 
 const INITIAL_JOB_STATE = {
@@ -276,102 +276,22 @@ const App = () => {
     }
   };
 
-  const showSidebar = view !== "landing" && view !== "auth";
   const jobsRunning = jobState.job_id && !jobState.done && !jobState.error ? 1 : null;
 
   return (
-    <>
-      <div className="app" data-view={view}>
-        {showSidebar && (
-          <Sidebar
-            view={view}
-            setView={(v) => { setView(v); window.scrollTo(0, 0); }}
-            jobsRunning={jobsRunning}
-          />
-        )}
-        <div className="view" data-screen-label={`view-${view}`}>
-          {view === "landing" && <Landing heroVariant={T.heroVariant} setView={setView} />}
-          {view === "auth" && <Auth setView={setView} />}
-          {view === "upload" && <Upload setView={setView} onSubmit={startJob} />}
-          {view === "progress" && <Progress progressVariant={T.progressVariant} jobState={jobState} setJobState={setJobState} setView={setView} />}
-          {view === "player" && <Player setView={setView} jobState={jobState} />}
-          {view === "library" && <Library setView={setView} />}
-        </div>
+    <div className="app" data-view={view}>
+      <Sidebar
+        view={view}
+        setView={(v) => { setView(v); window.scrollTo(0, 0); }}
+        jobsRunning={jobsRunning}
+      />
+      <div className="view" data-screen-label={`view-${view}`}>
+        {view === "upload" && <Upload setView={setView} onSubmit={startJob} />}
+        {view === "progress" && <Progress progressVariant={T.progressVariant} jobState={jobState} setJobState={setJobState} setView={setView} />}
+        {view === "player" && <Player setView={setView} jobState={jobState} />}
+        {view === "library" && <Library setView={setView} />}
       </div>
-
-      {window.TweaksPanel && (
-        <window.TweaksPanel title="Tweaks">
-          <window.TweakSection title="Quick jump">
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
-              {[
-                ["landing", "Landing"],
-                ["auth", "Sign-in"],
-                ["upload", "Upload"],
-                ["progress", "Progress"],
-                ["player", "Player"],
-                ["library", "Library"],
-              ].map(([id, label]) => (
-                <button
-                  key={id}
-                  onClick={() => setView(id)}
-                  className="tweak-btn"
-                  style={{
-                    padding: "6px 10px", borderRadius: 6, fontSize: 11,
-                    border: "1px solid var(--border)",
-                    background: view === id ? "var(--accent)" : "var(--surface)",
-                    color: view === id ? "var(--bg)" : "var(--fg-muted)",
-                    cursor: "pointer",
-                    fontFamily: "var(--mono)",
-                  }}
-                >{label}</button>
-              ))}
-            </div>
-          </window.TweakSection>
-          <window.TweakSection title="Theme">
-            <window.TweakRadio
-              label="Palette"
-              value={T.palette}
-              onChange={(v) => setTweak("palette", v)}
-              options={[
-                { value: "manim", label: "Manim Midnight" },
-                { value: "chalk", label: "Chalkboard Slate" },
-                { value: "paper", label: "Paper & Ink (light)" },
-              ]}
-            />
-            <window.TweakRadio
-              label="Type"
-              value={T.font}
-              onChange={(v) => setTweak("font", v)}
-              options={[
-                { value: "lora-inter", label: "Lora × Inter" },
-                { value: "lora-grotesk", label: "Lora × Space Grotesk" },
-                { value: "grotesk-code", label: "Space Grotesk × Source Code Pro" },
-                { value: "code-grotesk", label: "Source Code Pro display × Space Grotesk" },
-                { value: "serif-sans", label: "Instrument Serif × Inter" },
-                { value: "fraunces", label: "Fraunces × Inter" },
-                { value: "sans-mono", label: "Geometric sans only" },
-              ]}
-            />
-          </window.TweakSection>
-          <window.TweakSection title="Job state (demo)">
-            <button
-              onClick={() => {
-                if (closeStreamRef.current) closeStreamRef.current();
-                subscribedJobRef.current = null;
-                window.api.clearActiveJobId();
-                setJobState(INITIAL_JOB_STATE);
-              }}
-              style={{
-                padding: "8px 12px", borderRadius: 6, fontSize: 12,
-                background: "var(--surface)", border: "1px solid var(--border)",
-                color: "var(--fg)", cursor: "pointer", width: "100%",
-                fontFamily: "inherit",
-              }}
-            >Reset job state</button>
-          </window.TweakSection>
-        </window.TweaksPanel>
-      )}
-    </>
+    </div>
   );
 };
 

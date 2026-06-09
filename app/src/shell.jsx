@@ -44,28 +44,15 @@ const Sidebar = ({ view, setView, jobsRunning }) => (
     <NavLink icon={<I.pulse />} label="In progress" badge={jobsRunning} active={view === "progress"} onClick={() => setView("progress")} />
     <NavLink icon={<I.library />} label="Library" active={view === "library"} onClick={() => setView("library")} />
 
-    <div className="nav-section">Series</div>
-    <div style={{ padding: "4px 10px", fontSize: 13, color: "var(--fg-muted)" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0" }}>
-        <span style={{ width: 4, height: 4, borderRadius: 2, background: "var(--accent-2)" }} />
-        Transformers, from First Principles
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0" }}>
-        <span style={{ width: 4, height: 4, borderRadius: 2, background: "var(--accent-warm)" }} />
-        Calculus, Visualized
-      </div>
-      <div style={{ padding: "6px 0", color: "var(--fg-dim)", display: "flex", alignItems: "center", gap: 8 }}>
-        <I.plus size={12} /> New series
-      </div>
-    </div>
-
-    <div className="nav-foot">
-      <div className="nav-avatar">SG</div>
-      <div style={{ flex: 1, fontSize: 13 }}>
-        <div style={{ color: "var(--fg)" }}>Sasha Grant</div>
-        <div className="mono" style={{ fontSize: 10, color: "var(--fg-dim)" }}>PRO · 18 / 50</div>
-      </div>
-      <I.settings size={14} stroke="var(--fg-dim)" />
+    <div className="nav-foot" style={{ fontSize: 11, color: "var(--fg-dim)", fontFamily: "var(--mono)" }}>
+      <a
+        href="https://github.com/lgupta-mle/explanimator"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "var(--fg-muted)", textDecoration: "none" }}
+      >
+        github ↗
+      </a>
     </div>
   </nav>
 );
