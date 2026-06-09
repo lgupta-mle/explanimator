@@ -1,0 +1,15 @@
+llm:
+  explanation_model: "openai/gpt-4.1"
+  judge_model: "openai/gpt-4.1"
+  prereq_model: "openai/gpt-4.1"
+  code_gen_model: "anthropic/claude-sonnet-4.5"
+  default_model: "openai/gpt-4.1"
+
+audio:
+  max_workers: 4
+
+manim:
+  max_workers: 4
+
+translation:
+  max_workers: 8

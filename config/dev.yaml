@@ -1,0 +1,9 @@
+audio:
+  max_workers: 2
+
+manim:
+  timeout: 60
+  max_workers: 2
+
+translation:
+  max_workers: 4

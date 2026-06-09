@@ -1,269 +1,304 @@
-# Research Paper to Video Pipeline
+# Anvya — Research papers → 3Blue1Brown-style explainer videos
 
-Automatically generate educational explainer videos from research papers using AI-powered code generation, Manim animations, and synchronized TTS narration.
+Turn any research-paper PDF into a narrated, Manim-animated explainer video.
+The pipeline reads the paper, writes a 3B1B-style lesson plan, generates Manim
+code per segment, renders and syncs each segment to AI narration, and stitches
+them into a final MP4 — and starts handing you finished segments while the rest
+of the video is still being rendered.
 
-## Overview
+<p align="center">
+  <img src="docs/assets/demo_sam.gif" alt="Generated SAM explainer (3x speed)" width="640" />
+</p>
 
-This tool converts research papers (PDFs) into 3Blue1Brown-style animated explainer videos with synchronized narration:
+> The clip above is segment 1 of the SAM paper (Segment Anything, Kirillov et
+> al.) generated end-to-end from the PDF — 3× speed for the README.
+
+---
+
+## Why this is interesting
+
+**Pipeline-parallel codegen → render → sync** means each segment moves through
+the three stages independently. As soon as a segment's code is written, its
+render is queued; the moment its render finishes, audio sync starts. The
+final concat happens once at the end. The practical effect: **segment 1 is
+ready to watch ~10× sooner than it would be if every stage ran in bulk.**
+
+<p align="center">
+  <img src="docs/assets/streaming_staircase.gif" alt="Streaming staircase: segments become watchable as the pipeline runs" width="720" />
+</p>
 
 ```
-PDF → Explanation → Audio Beats → Manim Code (with timing) → Rendered Videos → Synced & Stitched Video
+                              BEFORE              AFTER
+Time to first watchable:      ≈ 19 min            ≈ 8 min
+Total wall time:              ≈ 20 min            ≈ 22 min
+Codegen prompt-cache hit:     —                   ≈ 70–80 %
 ```
 
-### Pipeline Flow
+Measured on `resources/SAM.pdf` → "Beginner" tier (12 segments, with audio).
+Numbers above are from the optimization branch's CI runs.
 
-1. **PDF → Explanation**
-   - Extracts and structures paper content
-   - LLM generates educational breakdown per segment
+---
 
-2. **Audio Generation FIRST** 
-   - Splits narration into beats (sentences)
-   - Generates TTS audio with precise timing
-   - Creates a json file with exact durations
+## Quick start
 
-3. **Code Generation with Timing** 
-   - Loads beat timeline for precise timing info
-   - LLM generates Manim code per segment
-   - Validates by executing code by using RAG to retrieve the manim documentation and store it as vector db, such that it can be referenced in case an error occurs.
-
-4. **Video Rendering & Sync** 
-   - Renders each segment with Manim
-   - **Measures** actual video duration
-   - **Adjusts** video speed to match audio exactly
-   - Merges audio with speed-adjusted video
-
-5. **Stitching** - Concatenates all synced segments → Final video
-
-## Features
-
-- **AI Explanation**: LLM (Gemini-3.1-Pro) generates 3Blue1Brown-style educational explanations from research paper PDF as input
-- **Beat-Synchronized Audio**: OpenAI TTS with precise sentence-level timing
-- **Manim Code Generation**: Executable animation code with automatic error fixing via RAG
-- **Measured Duration Sync**: Mesures the duration of each segment and adjusts the video speed to match the audio
-- **Configurable Speed Adjustment**: Segment-level or beat-level sync modes (Preferred and default: segment-level sync)
-- **Auto-Stitching**: Seamlessly combines all segments
-
-## Quick Start
-
-### Prerequisites
+### 1. Prerequisites
 
 ```bash
 # Python 3.10+
 python --version
 
-# Install dependencies
+# ffmpeg for audio/video processing
+brew install ffmpeg          # macOS
+# or: apt-get install ffmpeg # Debian/Ubuntu
+
+# Manim for rendering
+pip install manim
+# or follow https://docs.manim.community/en/stable/installation.html
+```
+
+### 2. Install Python dependencies
+
+Two paths — use whichever you already have:
+
+```bash
+# Option A — uv (recommended; what we use)
+uv venv && source .venv/bin/activate
+uv pip install -r requirements.txt
+
+# Option B — vanilla pip
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-
-# Set up API keys
-export OPENAI_API_KEY="your-openai-key"
-export OPENROUTER_API_KEY="your-openrouter-key"  # For Claude/GPT access
-
-# Install ffmpeg (for audio/video processing)
-brew install ffmpeg  # macOS
 ```
 
-### Run the Complete Pipeline
+### 3. Configure API keys
+
+Copy the template and fill in your key:
 
 ```bash
-# From existing explanation JSON
-python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --pdf-path resources/attention_is_all_you_need.pdf \
-  --output-dir output/final \
-  --generate-audio \
-  --render-video \
-  --video-quality l \
-  --model-name google/gemini-3.1-pro-preview \
-  --tts-voice nova
+cp .env.example .env
+# Edit .env and paste your OpenRouter key
 ```
 
-This will:
-1. ✓ Load research paper PDF and create an intuitive explanation (stored in JSON)
-2. ✓ Generate TTS audio with beat-level timing → `beat_timeline.json`
-3. ✓ Generate Manim code (with beat timing info, validated by execution)
-4. ✓ Render each segment to video using Manim
-5. ✓ Measure video segment duration, adjust speed to match audio
-6. ✓ Merge adjusted video with audio (segment-level sync)
-7. ✓ Stitch all synced segments into final video
+`.env` needs at minimum:
 
-**Output**: `output/final/final_video.mp4`
+```env
+OPENROUTER_API_KEY=sk-or-v1-…
+```
 
-## Pipeline Options
+That's it for the default config. All LLM calls (explanation, judge, codegen)
+and Gemini TTS go through OpenRouter. Get a key at
+https://openrouter.ai/keys — pay-as-you-go, no monthly minimum.
 
-### Basic Usage (Code Generation Only)
+`OPENAI_API_KEY` is **only** required if you switch the TTS provider back
+to OpenAI in `config.yaml` (`audio.provider: openai`), or if you want to
+rebuild the Manim RAG vector DB from scratch (a pre-built one ships in
+`data/manim_docs/vector_db/chroma_db/`).
+
+### 4. Run
 
 ```bash
 python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --pdf-path research_paper.pdf \
-  --output-dir output
+  --pdf-path resources/SAM.pdf \
+  --difficulty easy
 ```
 
-Generates Manim code without rendering videos.
+The pipeline-parallel fast path is on by default for single-language English
+runs. Output lands in
+`src/research_viz/manim_generator/output/<paper>_<difficulty>_en/`:
 
-### With Audio Only
+- `final_video.mp4` — the stitched final video
+- `debug_ready_segments/order{NN}_*.mp4` — per-segment files, written the
+  moment each becomes watchable (great for streaming UI demos)
+- `run_metrics.json` — per-stage timing, cache hit rate, cost estimate
+- `<paper>_explanation.json` — the structured 3B1B lesson plan
+- `audio_beats/beat_timeline.json` — per-beat TTS timing
+- `<paper>_animation.py` — the generated Manim code
+
+---
+
+## Difficulty tiers
+
+```
+easy    →  10–14 segments, 350–600 words/segment, prereqs taught from scratch
+medium  →   4–6  segments, 150–300 words/segment, full notation
+hard    →   2–3  segments,  80–180 words/segment, terse, expert-level
+```
 
 ```bash
+# CLI flag picks the tier directly
 python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --pdf-path research_paper.pdf \
-  --generate-audio \
-  --tts-voice nova
+  --pdf-path <paper.pdf> --difficulty easy
 ```
 
-Generates code and audio files (no video rendering).
+Each tier maps to a different model lineup in `config.yaml`:
 
-### Full Pipeline (Recommended)
+| Tier   | Explanation                  | Codegen                  | Judge       |
+| ------ | ---------------------------- | ------------------------ | ----------- |
+| easy   | gemini-3.1-pro-preview       | gemini-3.1-pro-preview   | gemini-2.5-flash |
+| medium | gemini-3.1-flash-lite        | claude-sonnet-4.5        | gemini-2.5-flash |
+| hard   | gemini-3.1-flash-lite        | deepseek-v3.2            | (skipped)   |
+
+Override any of these in `config.yaml` (root) or `config/dev.yaml` (per-profile).
+
+---
+
+## Pipeline flow
+
+```
+PDF
+  │
+  ▼
+[ 1 ] Explanation        Pro LLM reads the PDF and writes a structured
+                         3B1B lesson plan: opening question, running
+                         example, segments × { intuition + technical +
+                         narration script }. Judge loop verifies quality.
+  │
+  ▼
+[ 2 ] Pipeline-parallel codegen → render → sync (per segment)
+       │
+       ├── Audio (parallel)       Gemini TTS narrates every beat;
+       │                          per-segment readiness signals downstream.
+       │
+       ├── Codegen (parallel)     LLM writes the Manim animation for the
+       │                          segment, with beat-timed run_times. RAG
+       │                          retrieves Manim docs on execution errors.
+       │
+       ├── Render (parallel)      Manim renders the scene as soon as its
+       │                          codegen finishes.
+       │
+       └── Sync   (parallel)      ffmpeg single-pass: speed-adjust the
+                                  video to match audio duration, mux.
+                                  Result: a per-segment MP4 that's
+                                  immediately watchable.
+  │
+  ▼
+[ 3 ] Stitch              Concat all per-segment MP4s → final_video.mp4
+```
+
+The pipeline is **resumable.** If a run is interrupted, re-running with
+the same args picks up where it left off — anything already on disk
+(explanation JSON, scene metadata, audio beats, rendered scenes) is
+reused.
+
+---
+
+## Web app (beta)
+
+There's also a browser UI for uploading a PDF and watching segments
+stream onto the page as they're rendered.
 
 ```bash
-python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --pdf-path research_paper.pdf \
-  --generate-audio \
-  --render-video \
-  --video-quality m \
-  --tts-voice nova
+# Terminal 1 — backend (FastAPI + SSE)
+cd anvaya_website/apps/api
+pip install -r requirements.txt        # only once
+python main.py
+
+# Terminal 2 — frontend (static React-via-CDN prototype)
+cd app
+python -m http.server 5500
+
+# Then open http://localhost:5500
 ```
 
-Generates everything including final stitched video.
+Flow: upload a PDF → progress page shows five circles (Explanation / Audio /
+Codegen / Render / Sync) lighting up for segment 1 in real time → other
+segments appear as "Preparing segment N…" cards → as soon as any segment is
+done the page auto-scrolls to an inline `<video>` that starts playing it →
+when it ends, it auto-advances to the next ready segment.
 
-### Resume from Existing Files
+The `app/` directory uses Babel-standalone (no build step), so you can edit
+`.jsx` files and reload.
 
-The pipeline automatically skips completed steps:
-- If code exists: skips generation
-- If audio exists: skips TTS
-- If videos exist: skips rendering
-
-Just run the same command again - it will pick up where it left off!
+---
 
 ## Configuration
 
-### Video Quality
+`config.yaml` at the repo root carries the defaults. `config/{dev,staging,prod}.yaml`
+overlay on top (selected via `ANVAYA_PROFILE`, default `dev`). Common knobs:
 
-```bash
---video-quality l  # Low (480p15) - fast, good for testing
---video-quality m  # Medium (720p30) - balanced
---video-quality h  # High (1080p60) - best quality, slow
+```yaml
+llm:
+  route_sort: throughput        # OpenRouter picks the fastest endpoint
+  prompt_cache: true            # auto-add cache_control on system prompts
+  judge_reasoning_effort: null  # "low" | "medium" | "high" to opt in
+
+audio:
+  tts_model: google/gemini-3.1-flash-tts-preview
+  voice: Leda
+  provider: openrouter
+  max_workers: 4
+
+video:
+  quality: l                    # l/m/h/k → 480p/720p/1080p/2160p
+  sync_mode: segment            # vs "beat"  (frame-perfect, experimental)
+  max_speed_change: 0.3         # cap on speed adjust during audio sync
+
+manim:
+  timeout: 120
+  max_workers: 4
+  max_retries: 3                # per-segment retries on codegen failure
 ```
 
-### TTS Voices
+ENV overrides also work for any key — e.g. `ANVAYA_VIDEO__QUALITY=h`.
 
-OpenAI TTS provides six natural voices:
+---
 
-```bash
---tts-voice nova     # Natural, clear (default)
---tts-voice alloy    # Neutral, balanced
---tts-voice echo     # Clear, warm
---tts-voice fable    # Expressive, storytelling
---tts-voice onyx     # Deep, authoritative
---tts-voice shimmer  # Bright, energetic
-```
+## Project layout
 
-### Model Selection
-
-```bash
---model-name google/gemini-3.1-pro-preview  # Preferred
---model-name openai/gpt-5.2-codex         # Alternative
-```
-
-### Code Generation Retries
-
-```bash
---max-retries 3  # Number of attempts per scene (default: 3)
-```
-
-## Output Structure
-
-```
-output/
-├── attention_is_all_you_need_animation.py    # Generated Manim code
-├── attention_is_all_you_need_scene_metadata.json  # Scene metadata
-├── audio_beats/
-│   ├── seg_01_beat_1.wav                     # TTS audio files
-│   ├── seg_01_beat_2.wav
-│   └── beat_timeline.json                    # Audio timing metadata
-├── synced_scene_1.mp4                        # Individual synced videos
-├── synced_scene_2.mp4
-└── final_video.mp4                           # Complete stitched video
-```
-
-## Advanced Usage
-
-### Standalone Audio Generation
-
-```bash
-python -m research_viz.audio_generator.beat_sync_tts \
-  --pdf-path research_paper.pdf \
-  --output-dir audio_output \
-  --voice nova
-```
-
-### Manual Rendering
-
-```bash
-# Render specific scene
-manim -pqm output/animation.py SceneClassName
-
-# Render all scenes
-manim -pqm output/animation.py -a
-```
-
-## Project Structure
-
-### Core Pipeline Files (Runtime)
 ```
 src/research_viz/
 ├── manim_generator/
-│   ├── pdf_to_manim_pipeline.py          # Main pipeline orchestrator
-│   ├── pdf_explanation_generator.py      # PDF → Educational explanation
-│   └── prompts/
-│       └── manim_code_generation_prompt.txt  # LLM instructions for code
+│   ├── pdf_to_manim_pipeline.py        # Main orchestrator + pipelined runner
+│   ├── pdf_explanation_generator.py    # PDF → structured 3B1B lesson
+│   ├── scene_validator.py              # Static fixes on generated Manim code
+│   └── prompts/                        # System prompts for each stage
 ├── audio_generator/
-│   └── beat_sync_tts.py                  # Beat-synchronized TTS (OpenAI)
-├── preprocessing/
-│   └── manim_db.py                       # RAG for Manim documentation
-└── schemas/
-    ├── explanation_schemas.py            # Data structures
-    └── manim_docs_schemas.py             # RAG schemas
+│   └── beat_sync_tts.py                # StreamingBeatGenerator + classic mode
+├── book_generator/                     # Book-to-video pipeline (chapters)
+├── providers/
+│   ├── llm_provider.py                 # Provider ABC + LLMResponse
+│   └── openrouter_provider.py          # OpenRouter impl w/ retries + caching
+├── pipeline/
+│   ├── checkpoint.py                   # Resume support
+│   └── run_metrics.py                  # Per-stage timing + cost
+├── translation/                        # Multilingual fan-out
+├── preprocessing/                      # Manim docs scraping + RAG build
+└── schemas/                            # Pydantic models
+
+anvaya_website/apps/api/                # FastAPI backend (SSE + segments)
+app/                                    # React-via-CDN prototype frontend
+
+scripts/
+├── analyze_pipeline_timeline.py        # Gantt + time-to-first-watchable from logs
+├── build_staircase_gif.py              # README streaming-staircase animation
+└── profile_hard_mode.py                # End-to-end latency profiler
 ```
 
-### Setup Files (One-Time)
-```
-src/research_viz/preprocessing/
-├── manim_docs_scraper.py       # Scrape Manim docs
-├── manim_docs_chunker.py       # Split into chunks
-├── manim_docs_embedder.py      # Generate embeddings
-└── build_manim_index.py        # Build ChromaDB index
-```
+---
 
-**Setup**: Run once to create RAG database in `data/manim_docs/vector_db/chroma_db/`
+## Troubleshooting
 
-See [PIPELINE_FILES.md](PIPELINE_FILES.md) for detailed dependency mapping.
+**`OpenRouter error 401`** — `OPENROUTER_API_KEY` is unset or revoked. Re-source
+your shell after editing `.env`.
 
-## Audio-Video Synchronization
+**`Model tts-1 does not exist`** — a stale `config/dev.yaml` overriding
+`audio.tts_model`. Remove the override; default is the OpenRouter Gemini TTS.
 
-### Sync Modes
+**`Address already in use` on `:8000`** — old backend still running.
+`lsof -i :8000 -t | xargs kill -9`.
 
-The pipeline supports configurable synchronization modes to ensure animations match narration timing:
+**No segments under `debug_ready_segments/`** — codegen failed all 3 attempts
+for that segment. Check `run_metrics.json` for which stage errored.
 
-#### **Segment-Level Sync** (Default, Recommended)
+---
 
-Adjusts entire segment video to match segment audio duration.
+## Authors
 
-```bash
-python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --explanation-path output/explanation.json \
-  --generate-audio --render-video \
-  --sync-mode segment \
-  --max-speed-change 0.3
-```
+- **Lakshya Gupta** — [LinkedIn](https://www.linkedin.com/in/lakshyaadm/)
+- **Anannya Popat** — [LinkedIn](https://www.linkedin.com/in/anannya-popat/)
 
-#### **Beat-Level Sync** (Experimental)
+GitHub Pages: https://chaosadmstudent.github.io/research-paper-graphviz/
 
-Adjusts each beat separately for frame-perfect synchronization.
+## License
 
-```bash
-python -m research_viz.manim_generator.pdf_to_manim_pipeline \
-  --explanation-path output/explanation.json \
-  --generate-audio --render-video \
-  --sync-mode beat \
-  --max-speed-change 0.2
-```
-
-**Transform research papers into engaging educational videos automatically!** 📄 → 🎬
+MIT.

@@ -1,0 +1,334 @@
+## Codebase Patterns
+- Config lives in `src/research_viz/config/pipeline_config.py`; use `get_config()` singleton accessor
+- YAML config at project root `config.yaml`; env overrides via `ANVAYA_*` prefix with `__` nesting (e.g. `ANVAYA_LLM__EXPLANATION_MODEL`)
+- Use `reset_config()` in tests to clear singleton state
+- Tests go in `tests/` directory; run with `python3 -m pytest tests/ -v`
+- Project uses pydantic for schemas, pydantic-settings for config
+- LLM calls go through OpenRouter (prefix models with provider e.g. `openai/gpt-5`)
+- All modules read model names, timeouts, and worker counts from `get_config()` — no hardcoded values in business logic
+- Pattern for config migration: change default to `Optional[str] = None`, resolve via `get_config()` at top of function body
+- Profile YAMLs live in `config/` dir (sibling to `config.yaml`); selected via `ANVAYA_PROFILE` env var (default: `dev`)
+- Resolution order: env vars > profile YAML > base config.yaml > field defaults
+- Tests that construct `PipelineConfig()` directly must set `ANVAYA_CONFIG_PATH` to an isolated tmp path to avoid picking up real project config + dev profile
+- Files that don't exist per PRD (translator.py, video_renderer.py, constants.py, code_generator.py) — code_gen is in `pdf_to_manim_pipeline.py`, others were removed in prior refactors
+- LLM provider abstraction lives in `src/research_viz/providers/`; use `get_provider()` singleton from `pipeline_config.py`
+- `reset_config()` also resets the provider singleton; use `reset_provider()` to reset only the provider
+- All LLM calls now go through `get_provider().generate()` — never call OpenRouter/OpenAI directly
+- Use `call_llm_provider()` from `pdf_explanation_generator.py` as convenience wrapper (handles schema→response_format, plugins)
+- Provider tracks per-call stats via `provider.call_stats`, `provider.total_tokens`, `provider.total_calls`
+- When updating tests that mock LLM calls, mock `get_provider` to return a MagicMock with `.generate()` returning `LLMResponse`
+- `CallStat` has `tokens_in`, `tokens_out`, and `stage` fields; use `provider.set_stage("name")` before calls to attribute them
+- Run metrics module at `src/research_viz/pipeline/run_metrics.py`; `RunMetricsCollector` wraps start/stop timing + `collect(provider)` → dict + `write(provider, dir)` → JSON
+- Model pricing lives in `llm.model_pricing` config as dict of `ModelPricing(input, output)` per-token USD rates
+- `run_pipeline()` runs TTS and code gen in parallel via `ThreadPoolExecutor(max_workers=2)` after explanation generation; fail-fast on either failure
+- `sync_video_audio_single_pass()` combines speed adjust (setpts) + pad (tpad) + audio merge in one ffmpeg call — always prefer this over the two-step chain
+- Legacy `adjust_video_to_audio_duration()` and `sync_audio_with_video()` are kept as thin wrappers for backward compat
+- `render_and_sync_all_scenes` uses producer-consumer pattern: render pool feeds sync pool via `ThreadPoolExecutor`; configure via `video.render_workers` and `video.sync_workers`
+- `_render_scene()` and `_sync_scene()` are extracted helpers for single-scene render and sync; test them individually
+- Model tiering: use `get_config().llm.get_model("explanation_model", difficulty)` to resolve per-difficulty model; falls back to base if tier not set
+- `TierConfig` has `skip_judge: bool` for per-difficulty behavior toggles; access via `get_config().llm.get_tier(difficulty)`
+- `generate_with_feedback_loop` and `generate_explanation_from_pdf` accept `difficulty` param; pass it to use tier-specific models and skip_judge
+- `_validate_segment_count(content)` checks 2-3 segment range — always runs even when judge is skipped
+- Checkpoint module at `src/research_viz/pipeline/checkpoint.py`; use `write_checkpoint(run_dir, stage, paths)` after each stage, `read_checkpoints(run_dir)` to load, `validate_checkpoint(cp)` to verify hashes
+- `run_pipeline` has `force_restart` param; `main()` exposes it as `--force-restart` CLI flag
+- Partial audio resume: `generate_segment_beats` skips beats with existing valid WAV files; corrupted files trigger regeneration
+- All modules use `logging.getLogger(__name__)` — no print() in src/research_viz/ (except README examples)
+- Log config in `src/research_viz/__init__.py`: format `%(asctime)s %(levelname)s %(name)s: %(message)s`
+- `RunMetricsCollector.time_stage(name, provider)` context manager for per-stage wall-clock timing with token/call delta tracking
+- `RunMetricsCollector.record_error(stage, exc, artifact_id, recoverable)` for structured error logging in metrics
+---
+
+## 2026-03-21 - US-001
+- Implemented PipelineConfig Pydantic model with sections: llm, audio, video, manim, translation
+- Loads from config.yaml in project root with ANVAYA_* env var overrides
+- Singleton pattern via get_config()/reset_config()
+- Files changed:
+  - `src/research_viz/config/__init__.py` (created)
+  - `src/research_viz/config/pipeline_config.py` (created)
+  - `config.yaml` (created)
+  - `requirements.txt` (added pydantic-settings, pyyaml)
+  - `tests/test_pipeline_config.py` (created, 13 tests)
+- **Learnings for future iterations:**
+  - `src/research_viz/config/` directory existed but was empty (no __init__.py)
+  - pydantic-settings handles env var parsing with nested delimiter support out of the box
+  - The `_find_config_yaml()` walks up from the module to find project root via pyproject.toml
+  - Translation module directory exists but has no Python files (was removed in a refactor)
+---
+
+## 2026-03-21 - US-002
+- Migrated all hardcoded model names, timeouts, and worker counts to read from PipelineConfig
+- Pattern: `def func(model_name: Optional[str] = None)` → resolve from `get_config()` if None
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_explanation_generator.py` (6 functions updated)
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (4 functions + timeout)
+  - `src/research_viz/audio_generator/beat_sync_tts.py` (BeatSyncTTS class + 2 functions)
+  - `src/research_viz/utils/llm_utils.py` (1 function)
+  - `tests/test_config_migration.py` (created, 11 tests)
+- **Learnings for future iterations:**
+  - Several files from the PRD acceptance criteria don't exist: `translator.py`, `video_renderer.py`, `constants.py`, `code_generator.py` — code generation logic lives in `pdf_to_manim_pipeline.py`
+  - `beat_sync_tts.py` stores `tts_model` as instance var on `BeatSyncTTS.__init__` since it's used in `generate_beat_audio`
+  - `pdf_explanation_generator.py` has its own `call_openrouter()` separate from `llm_utils.py` — both needed migration
+  - Explicit model args still override config for backward compat (e.g. CLI usage via tyro)
+---
+
+## 2026-03-21 - US-003
+- Added config profiles: `config/dev.yaml`, `config/staging.yaml`, `config/prod.yaml`
+- `ANVAYA_PROFILE` env var selects profile (default: `dev`)
+- Profile YAML overlays base `config.yaml`; env vars still take highest priority
+- Files changed:
+  - `config/dev.yaml` (created — cheap/fast models)
+  - `config/staging.yaml` (created — mid-tier models)
+  - `config/prod.yaml` (created — production models)
+  - `src/research_viz/config/pipeline_config.py` (added `_load_profile_yaml()`, updated `load_yaml_defaults` validator)
+  - `tests/test_pipeline_config.py` (fixed fixture to isolate from project config)
+  - `tests/test_config_profiles.py` (created, 7 tests)
+- **Learnings for future iterations:**
+  - Profile YAML is loaded relative to `config.yaml` parent dir (i.e. `{config.yaml parent}/config/{profile}.yaml`)
+  - Existing TestDefaults tests broke because they weren't isolated from the real project config — always set `ANVAYA_CONFIG_PATH` to tmp path in test fixtures
+  - `_load_profile_yaml` returns None gracefully if profile file doesn't exist, so unknown profiles just use base config
+---
+
+## 2026-03-21 - US-004
+- Created LLMProvider ABC with `generate(messages, model, **kwargs) -> LLMResponse`
+- Created LLMResponse dataclass with content, model, tokens_used, latency_ms, raw fields
+- Created OpenRouterProvider wrapping current call_openrouter() logic with timing and token tracking
+- Added `llm.provider` config field and `get_provider()`/`reset_provider()` singletons in pipeline_config.py
+- Files changed:
+  - `src/research_viz/providers/__init__.py` (created)
+  - `src/research_viz/providers/llm_provider.py` (created — ABC + LLMResponse)
+  - `src/research_viz/providers/openrouter_provider.py` (created — OpenRouter implementation)
+  - `src/research_viz/config/pipeline_config.py` (added provider field + get_provider/reset_provider)
+  - `tests/test_llm_provider.py` (created, 20 tests)
+- **Learnings for future iterations:**
+  - OpenRouterProvider uses `requests.post` directly (matching existing `call_openrouter` pattern), not the OpenAI SDK
+  - `reset_config()` chains to `reset_provider()` so test cleanup stays simple
+  - Provider factory uses lazy import to avoid circular imports between config and providers
+  - The `raw` field on LLMResponse stores the full API response dict for callers that need it
+---
+
+## 2026-03-21 - US-005
+- Added retry with exponential backoff to OpenRouterProvider.generate()
+- Retries on 429, 500, 502, 503 status codes and ConnectionError/Timeout exceptions
+- Exponential backoff: base_delay * 2^(attempt-1) — 1s, 2s, 4s by default
+- Non-retryable errors (400, 401, 404) raise immediately on first attempt
+- Added `max_retries` and `retry_base_delay` fields to LLMConfig
+- Provider factory passes retry config from LLMConfig to OpenRouterProvider
+- Files changed:
+  - `src/research_viz/providers/openrouter_provider.py` (added retry loop, logging)
+  - `src/research_viz/config/pipeline_config.py` (added retry config fields, updated factory)
+  - `tests/test_retry.py` (created, 15 tests)
+- **Learnings for future iterations:**
+  - Mock `time.sleep` to avoid slow tests; mock `requests.post` side_effect with list for sequential responses
+  - `raise_for_status()` is the mechanism for non-retryable errors — status codes not in RETRYABLE_STATUS_CODES fall through to raise_for_status immediately
+  - ConnectionError and Timeout are caught separately from HTTP status errors since they don't produce a response object
+---
+
+## 2026-03-21 - US-006
+- Migrated all pipeline stages to use LLMProvider instead of direct API calls
+- Replaced `call_openrouter()` in pdf_explanation_generator.py with `call_llm_provider()` using `get_provider().generate()`
+- Replaced `call_openrouter` usage in pdf_to_manim_pipeline.py with `call_llm_provider`
+- Replaced OpenAI client in llm_utils.py with `get_provider().generate()`
+- Added `CallStat` dataclass and token accumulation to `LLMProvider` base class (`call_stats`, `total_tokens`, `total_calls`)
+- Updated `OpenRouterProvider.generate()` to call `_record_call()` after each successful call
+- Removed `requests` import from pdf_explanation_generator.py and `openai` import from llm_utils.py
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_explanation_generator.py` (replaced call_openrouter with call_llm_provider, updated callers)
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (replaced call_openrouter import/usage)
+  - `src/research_viz/utils/llm_utils.py` (replaced OpenAI client with provider)
+  - `src/research_viz/providers/llm_provider.py` (added CallStat, token accumulation)
+  - `src/research_viz/providers/openrouter_provider.py` (added super().__init__(), _record_call())
+  - `tests/test_provider_migration.py` (created, 12 tests)
+  - `tests/test_config_migration.py` (updated 8 tests to mock provider instead of requests/OpenAI)
+- **Learnings for future iterations:**
+  - When migrating from raw API calls to provider, callers that checked `response["choices"]` / `response["error"]` need refactoring to use `LLMResponse.content` directly
+  - `call_llm_provider()` is the convenience wrapper that handles schema→response_format and plugins kwargs
+  - Existing test_config_migration.py tests needed updating since they mocked `requests.post` and `OpenAI` which no longer exist in the modules
+  - `_build_response_format()` is exported from pdf_explanation_generator for reuse by pipeline
+---
+
+## 2026-03-21 - US-007
+- Added per-call token breakdown (tokens_in, tokens_out) and stage attribution to CallStat
+- Added stage tracking to LLMProvider via set_stage()/reset_stats()
+- Added configurable model pricing table (ModelPricing) to LLMConfig
+- Created RunMetricsCollector in src/research_viz/pipeline/run_metrics.py that aggregates provider stats into run_metrics.json
+- Updated OpenRouterProvider to capture prompt_tokens/completion_tokens separately
+- Files changed:
+  - `src/research_viz/providers/llm_provider.py` (extended CallStat, LLMResponse, LLMProvider)
+  - `src/research_viz/providers/openrouter_provider.py` (tokens_in/tokens_out tracking)
+  - `src/research_viz/config/pipeline_config.py` (added ModelPricing, model_pricing dict)
+  - `config.yaml` (added model_pricing section)
+  - `src/research_viz/pipeline/__init__.py` (created)
+  - `src/research_viz/pipeline/run_metrics.py` (created)
+  - `tests/test_run_metrics.py` (created, 16 tests)
+  - `tests/test_provider_migration.py` (updated CallStat test for new fields)
+- **Learnings for future iterations:**
+  - OpenRouter returns token counts as `prompt_tokens` and `completion_tokens` in the `usage` dict
+  - `defaultdict(StageMetrics)` works because StageMetrics dataclass has all-default fields
+  - Existing tests that construct CallStat directly need updating when fields are added — search for `CallStat(` across tests
+---
+
+## 2026-03-21 - US-008
+- Parallelized TTS (beat_sync_tts) and code generation (generate_all_scenes) in `run_pipeline` using `concurrent.futures.ThreadPoolExecutor`
+- Both stages launch after explanation generation; neither depends on the other's output
+- Fail-fast: if one stage raises, the other future is cancelled and pipeline returns None
+- Wall-clock time for both stages equals the slower of the two
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (added concurrent.futures import, rewrote Step 2 in run_pipeline)
+  - `tests/test_parallel_pipeline.py` (created, 5 tests including concurrency overlap verification)
+- **Learnings for future iterations:**
+  - `generate_beat_timeline` reads from a JSON file, so the explanation must be written to disk before TTS can read it
+  - `generate_all_scenes` accepts `audio_timeline_path` for beat timing but TTS may not finish first in parallel mode — code gen proceeds without beat timing if TTS hasn't written the file yet
+  - `threading.Event` is useful for verifying true concurrency in tests — have each thread set an event and wait on the other's event
+  - `future.cancel()` only prevents pending futures from starting; it can't interrupt already-running threads
+---
+
+## 2026-03-21 - US-009
+- Replaced two-step ffmpeg chain (adjust_video_to_audio_duration + sync_audio_with_video) with single-pass `sync_video_audio_single_pass()`
+- New function builds one ffmpeg command combining: setpts speed adjust + tpad last-frame padding + audio merge
+- Updated `render_and_sync_all_scenes` segment sync path to use single-pass function (eliminates intermediate adjusted_video temp file)
+- Legacy wrappers kept for backward compatibility
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (new sync_video_audio_single_pass, slimmed legacy wrappers, updated render_and_sync_all_scenes)
+  - `tests/test_single_pass_ffmpeg.py` (created, 11 tests)
+- **Learnings for future iterations:**
+  - `tpad=stop_mode=clone:stop_duration=X` freezes last frame for X seconds — replaces the 3-step extract-frame/loop/concat approach
+  - When no video filter is needed, use `-c:v copy` to avoid re-encoding entirely
+  - ffmpeg filter chains are comma-separated in a single `-filter:v` argument (e.g. `setpts=PTS/1.2,tpad=stop_mode=clone:stop_duration=0.5`)
+  - The 0.5s buffer on target duration ensures video fully covers audio — prevents black screen at end
+---
+
+## 2026-03-21 - US-010
+- Replaced sequential render-all-then-sync-all with producer-consumer pattern in `render_and_sync_all_scenes`
+- Extracted `_render_scene()` and `_sync_scene()` helpers for single-scene operations
+- Render pool (`ThreadPoolExecutor`) submits scenes; each render submits its sync to a separate sync pool
+- Results stored in ordered slots to preserve scene ordering regardless of completion order
+- Added `render_workers` (default 2) and `sync_workers` (default 2) to `VideoConfig`
+- Files changed:
+  - `src/research_viz/config/pipeline_config.py` (added render_workers, sync_workers to VideoConfig)
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (extracted _render_scene, _sync_scene, rewrote render_and_sync_all_scenes)
+  - `tests/test_pipeline_parallel_render.py` (created, 13 tests)
+- **Learnings for future iterations:**
+  - The render pool submits sync work to a separate pool, so render threads don't block waiting for sync — this achieves true overlap
+  - `synced_videos` uses a pre-allocated list indexed by scene number to maintain ordering despite concurrent completion
+  - `future.result()` in `as_completed` loop is safe here because exceptions from _render_then_sync propagate cleanly
+  - Time-based concurrency tests (sleep + assert elapsed) need generous margins — CI can be slow
+---
+
+## 2026-03-21 - US-011
+- No code changes needed — translator.py was removed in prior refactors
+- TranslationConfig.max_workers already defaults to 10 (set in US-001)
+- Config profiles already set appropriate values: dev=4, staging=8, prod=10 (US-003)
+- Existing test `test_default_translation_config` already verifies max_workers==10
+- All 123 tests pass
+- Files changed: prd.json (marked passes: true)
+- **Learnings for future iterations:**
+  - When a PRD story references a deleted file, verify the requirement is met by existing infrastructure before writing new code
+---
+
+## 2026-03-21 - US-012
+- Added `TierConfig` model with optional per-stage model overrides and `skip_judge` flag
+- Added `tiers: dict[str, TierConfig]` to `LLMConfig` with `get_model(stage, difficulty)` and `get_tier(difficulty)` methods
+- Fallback: if tier or tier-specific model not set, returns base LLMConfig model
+- Added tier configs to config.yaml (hard uses fast/cheap models, medium/easy use production models)
+- Files changed:
+  - `src/research_viz/config/pipeline_config.py` (added TierConfig, tiers dict, get_model, get_tier)
+  - `config.yaml` (added tiers section)
+  - `tests/test_model_tiering.py` (created, 13 tests)
+- **Learnings for future iterations:**
+  - `get_model(stage, difficulty)` uses `getattr` on both LLMConfig and TierConfig for uniform stage name resolution
+  - TierConfig fields are all Optional[str] = None so partial overrides work naturally
+  - `skip_judge` lives on TierConfig since it's a per-difficulty behavior toggle, not a model name
+---
+
+## 2026-03-21 - US-013
+- Added `difficulty` parameter to `generate_with_feedback_loop` and `generate_explanation_from_pdf`
+- When tier has `skip_judge=True`, judge evaluation is skipped entirely
+- Added `_validate_segment_count()` — segment count validation (2-3 range) always runs, even when judge is skipped
+- Hard mode uses tier-specific model via `cfg.llm.get_model("explanation_model", difficulty)`
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_explanation_generator.py` (added _validate_segment_count, difficulty param, skip_judge logic)
+  - `tests/test_skip_judge.py` (created, 10 tests)
+- **Learnings for future iterations:**
+  - Segment count validation is separate from judge quality check — it's structural, not qualitative
+  - `_validate_segment_count` parses JSON and checks `len(segments)` — runs before judge to avoid wasting an LLM call on structurally invalid output
+  - The `difficulty` param flows: `generate_explanation_from_pdf` → `generate_with_feedback_loop` → `cfg.llm.get_model/get_tier`
+---
+
+## 2026-03-21 - US-014
+- Created `pipeline/checkpoint.py` with `write_checkpoint()`, `read_checkpoints()`, and `validate_checkpoint()`
+- `Checkpoint` dataclass: stage_name, artifact_paths, artifact_hashes (SHA-256), timestamp
+- Checkpoints written to `{run_dir}/checkpoints/{stage_name}.json`
+- Hash validation detects modified/missing artifacts
+- Files changed:
+  - `src/research_viz/pipeline/checkpoint.py` (created)
+  - `tests/test_checkpoint.py` (created, 15 tests)
+- **Learnings for future iterations:**
+  - `_sha256()` reads in 8KB chunks to handle large files efficiently
+  - Missing artifacts at write time get path recorded but no hash — allows partial tracking
+  - `validate_checkpoint()` returns False if any artifact is missing or hash mismatches
+---
+
+## 2026-03-21 - US-015
+- Integrated checkpoint reading/writing into `run_pipeline` for each stage (explanation, tts, assembly)
+- `_is_stage_cached()` helper checks checkpoint validity before each stage
+- Added `force_restart` param to `run_pipeline` and `main()` CLI — ignores all checkpoints
+- Partial audio resume: `generate_segment_beats` skips beats with existing valid WAV files (>44 bytes, parseable)
+- Corrupted WAV files trigger regeneration (wave.open exception caught)
+- Files changed:
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py` (checkpoint integration, _is_stage_cached, force_restart)
+  - `src/research_viz/audio_generator/beat_sync_tts.py` (partial resume in generate_segment_beats)
+  - `tests/test_checkpoint_resume.py` (created, 8 tests)
+- **Learnings for future iterations:**
+  - `generate_explanation_from_pdf` is imported locally inside `run_pipeline`, so mock at source module not pipeline module
+  - WAV header is 44 bytes — files ≤44 bytes are empty/corrupt
+  - Code gen results are in-memory (scene_codes), so assembly stage re-runs code gen if only codegen checkpoint exists
+---
+
+## 2026-03-21 - US-016
+- Replaced all 178 print() statements across 7 files with structured logging
+- Added `import logging` + `logger = logging.getLogger(__name__)` to each module
+- Log levels: error (failures/exceptions), warning (empty responses, failed checks), info (progress), debug (file paths)
+- Added `logging.basicConfig()` in `src/research_viz/__init__.py` with timestamp+level+module format
+- Files changed:
+  - `src/research_viz/__init__.py` (logging.basicConfig)
+  - `src/research_viz/preprocessing/build_manim_index.py`
+  - `src/research_viz/preprocessing/manim_docs_scraper.py`
+  - `src/research_viz/preprocessing/manim_docs_embedder.py`
+  - `src/research_viz/manim_generator/pdf_explanation_generator.py`
+  - `src/research_viz/manim_generator/pdf_to_manim_pipeline.py`
+  - `src/research_viz/audio_generator/beat_sync_tts.py`
+  - `src/research_viz/utils/llm_utils.py`
+- **Learnings for future iterations:**
+  - `logging.basicConfig()` in `__init__.py` ensures consistent format when any module is imported
+  - Use `logger.warning` for recoverable issues (empty LLM response, failed quality check) vs `logger.error` for unrecoverable
+  - Removed `\n` prefixes from messages — logging handles line separation
+---
+
+## 2026-03-21 - US-017
+- Added `StageTiming` and `StageError` dataclasses to run_metrics.py
+- Added `time_stage()` context manager to `RunMetricsCollector` — times wall-clock duration, tracks tokens/API calls delta
+- Added `record_error()` method for structured error logging with exception_type, stage, artifact_id, recoverable
+- `collect()` now includes `stage_timings` and `errors` arrays in the metrics dict
+- Files changed:
+  - `src/research_viz/pipeline/run_metrics.py` (added StageTiming, StageError, time_stage, record_error)
+  - `tests/test_run_metrics.py` (added 8 tests for timing and error features)
+- **Learnings for future iterations:**
+  - `time_stage()` captures token/call deltas by recording provider state before and after
+  - On exception, `time_stage()` still records timing with the error type, then re-raises
+  - `record_error()` is separate from `time_stage()` for cases where errors are caught and handled (recoverable)
+---
+
+## 2026-03-21 - US-018
+- Created `scripts/profile_hard_mode.py` — profiling script for hard-mode end-to-end latency
+- Uses fast model tier (US-012), skip judge (US-013), parallel stages (US-008), single-pass ffmpeg (US-009)
+- Reports per-stage timings, total duration, token usage, cost estimate
+- Identifies bottleneck stage if total exceeds 5-minute target
+- Returns exit code 0 (pass) or 1 (fail) for CI integration
+- Files changed:
+  - `scripts/profile_hard_mode.py` (created)
+  - `tests/test_profile_hard_mode.py` (created, 5 tests)
+- **Learnings for future iterations:**
+  - The profiling script uses `generate_explanation_from_pdf(difficulty="hard")` directly, then `run_pipeline(skip_explanation=True)` for the rest
+  - `report()` function is pure (takes metrics dict, returns bool) — easy to test without running the actual pipeline
+  - Tests add `scripts/` to PYTHONPATH to import the profiling module
+---

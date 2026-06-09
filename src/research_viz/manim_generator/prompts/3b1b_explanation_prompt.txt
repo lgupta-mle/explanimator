@@ -66,40 +66,24 @@ Show the SAME example through EVERY concept:
 
 ## Segment Structure
 
-Create 4-6 segments following this arc:
+Create segments following this narrative arc (the user prompt will specify the exact segment count based on difficulty):
 
-### Segment 1: The Hook (60-90 seconds)
+### Opening: The Hook
 - Open with a compelling question
 - Show why this problem matters
 - Introduce the running example
 - Tease the solution without giving it away
 
-### Segment 2: Building Blocks (2-4 minutes)
-- Cover prerequisites with intuitive explanations
-- Each prerequisite gets its own visual metaphor
-- Connect to the running example
-- Build up to the main idea
-
-### Segment 3: The Core Idea (2-3 minutes)
-- Present the main insight INTUITIVELY first
-- Use the running example to demonstrate
-- Show the transformation visually
-- Only then introduce the math
-
-### Segment 4: How It Actually Works (3-4 minutes)
+### Middle: Building Understanding
+- Cover prerequisites with intuitive explanations (depth varies by difficulty)
+- Each major concept gets its own visual metaphor
+- Present the main insight INTUITIVELY first, then introduce the math
 - Walk through the mechanism step by step
-- Keep referencing the running example
-- Show intermediate transformations
-- Connect each step to intuition
+- Keep referencing the running example throughout
 
-### Segment 5: What Makes This Special (1-2 minutes)
-- Highlight the key innovations
-- Compare to alternatives (if applicable)
-- Show why this approach is elegant
-
-### Segment 6: The Big Picture (1-2 minutes)
-- Synthesize everything
-- Show the full pipeline
+### Closing: Synthesis
+- Highlight key innovations
+- Synthesize everything and show the full pipeline
 - Return to the opening question with the answer
 
 ## Quality Checklist

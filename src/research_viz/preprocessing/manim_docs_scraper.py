@@ -4,6 +4,7 @@ Scrape Manim Community documentation from https://docs.manim.community/en/stable
 Extracts documentation pages, code examples, API references, and metadata.
 """
 
+import logging
 import requests
 from bs4 import BeautifulSoup
 from typing import List, Dict, Any, Optional
@@ -15,6 +16,8 @@ import re
 from research_viz.schemas.manim_docs_schemas import (
     DocPage, CodeExample, MethodSignature
 )
+
+logger = logging.getLogger(__name__)
 
 
 class ManimDocsScraper:
@@ -56,9 +59,9 @@ class ManimDocsScraper:
 
         results = {}
         for section_name, section_url in sections.items():
-            print(f"Scraping section: {section_name}")
+            logger.info(f"Scraping section: {section_name}")
             results[section_name] = self.scrape_section(section_name, section_url)
-            print(f"  Scraped {len(results[section_name])} pages")
+            logger.info(f"  Scraped {len(results[section_name])} pages")
 
         return results
 
@@ -117,7 +120,7 @@ class ManimDocsScraper:
                 time.sleep(self.delay_seconds)
 
             except Exception as e:
-                print(f"  Error scraping {url}: {e}")
+                logger.error(f"  Error scraping {url}: {e}")
                 continue
 
         return pages
@@ -137,7 +140,7 @@ class ManimDocsScraper:
             response = self.session.get(url, timeout=30)
             response.raise_for_status()
         except Exception as e:
-            print(f"    Failed to fetch {url}: {e}")
+            logger.error(f"    Failed to fetch {url}: {e}")
             return None
 
         soup = BeautifulSoup(response.content, 'html.parser')

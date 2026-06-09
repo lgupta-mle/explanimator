@@ -14,6 +14,29 @@ A complete, executable **Manim Scene class** that implements the animation speci
 
 ---
 
+## THE THREE GOLDEN RULES (NEVER VIOLATE)
+
+1. **CLEAN BEFORE NEW**: Before ANY new phase or concept, FadeOut ALL objects from the
+   previous phase. Use VGroup to track each phase's objects:
+   ```python
+   phase_1_objects = VGroup()
+   # ... create and add objects ...
+   phase_1_objects.add(obj1, obj2, label1)
+   # ... animations ...
+   # MANDATORY before Phase 2:
+   self.play(FadeOut(phase_1_objects), run_time=1.5)
+   ```
+
+2. **FRAME BOUNDS**: No object may exceed x=[-5.5, 5.5], y=[-3.0, 3.0].
+   Use `.to_edge()` and `.to_corner()` with `buff=0.3` for safe positioning.
+   After ANY `.move_to()` or `.shift()`, mentally verify the object stays in bounds.
+
+3. **MAX 2 CONTENT GROUPS VISIBLE**: At any moment, at most a persistent header
+   plus ONE content group should be fully visible on screen. When adding a second group,
+   either FadeOut the first or shrink it to 0.45× and slide it to an edge.
+
+---
+
 ## Critical Instructions
 
 ### 1. LEARN FROM THE EXAMPLES
@@ -133,6 +156,61 @@ Before placing any object, you MUST think through spatial conflicts to prevent o
    - Check: does it intersect any existing object?
    - If yes: adjust position, remove old objects first, or move to different zone
 
+6. **Content Coexistence Protocol**
+
+When new content arrives, decide: is it RELATED or UNRELATED to what's on screen?
+
+**Case 1 — RELATED** (e.g., equation that explains a visible diagram):
+Shrink existing content and slide it to one side, then show new content in the freed space:
+
+```python
+# Existing diagram is on screen at center
+existing_diagram = VGroup(...)  # already visible
+
+# SHRINK + MOVE existing to left side
+self.play(existing_diagram.animate.scale(0.45).to_edge(LEFT, buff=0.4), run_time=1.5)
+
+# Show related equation on the right side
+equation = MathTex(r"y = f(x)").move_to(RIGHT * 2 + UP * 0.5)
+eq_label = Text("This describes the diagram", font_size=22).next_to(equation, DOWN, buff=0.3)
+self.play(Write(equation), FadeIn(eq_label), run_time=2.0)
+```
+
+**Case 2 — UNRELATED** (e.g., moving from one concept to another):
+Fully transition out old content before showing new:
+
+```python
+self.play(*[FadeOut(obj) for obj in phase_objects], run_time=1.5)
+self.wait(0.5)
+# Now show new content on clean canvas
+```
+
+**Decision rule**: If the narration says "notice how this relates to..." or "looking at our diagram..." → Case 1 (shrink + coexist). If the narration says "now let's turn to..." or "moving on..." → Case 2 (full transition).
+
+7. **Off-Screen Prevention Protocol**
+
+BEFORE finalizing any object position, verify it fits within safe bounds:
+
+```python
+# Safe frame boundaries (NEVER exceed these)
+# x: [-6.0, 6.0]   y: [-3.5, 3.5]
+
+# .to_corner() and .to_edge() with buff are safe — they respect frame edges
+group.scale(0.45).to_corner(UL, buff=0.3)  # always safe
+
+# DANGER: .shift() and .move_to() can push objects off screen
+# After .shift(RIGHT * X), verify total x doesn't exceed 6.0
+# After .move_to(UP * Y), verify object height/2 + Y < 3.5
+```
+
+For equations that are too wide (common with long derivations):
+```python
+eq = MathTex(r"very long equation...")
+if eq.width > 10:
+    eq.scale(10.0 / eq.width)
+eq.move_to(ORIGIN)
+```
+
 **FIDELITY TO SPECIFICATION**
 - Scene class name: Use the `scene_id` to create a descriptive class name
 - Shapes: Create exactly what's specified in `scene.shapes` list
@@ -248,6 +326,92 @@ These are more complex, involving mathematical formulas:
 - `show_intermediate_steps`: Whether to show intermediates
 
 **Your job**: Create MathTex objects for formulas and animate transformations.
+
+### Equation Build-Up Animation Protocol (MANDATORY)
+
+**NEVER show an equation all at once with a single `Write(equation)`.** Build it incrementally.
+
+When the specification includes `derivation_steps` or `equation_build_order`, animate the derivation step by step:
+
+```python
+# Step 1: Show the starting equation
+eq1 = MathTex(r"V(s)", color=YELLOW).move_to(UP * 1.0)
+label1 = Text("Value of current state", font_size=24).next_to(eq1, DOWN, buff=0.3)
+nums1 = MathTex(r"V(\text{tile 5}) = 0.5", color=YELLOW, font_size=30).next_to(label1, DOWN, buff=0.3)
+self.play(Write(eq1), FadeIn(label1), run_time=2.0)
+self.play(FadeIn(nums1), run_time=1.0)
+self.wait(1.5)
+
+# Shrink step 1 to corner before showing step 2
+step1_group = VGroup(eq1, label1, nums1)
+self.play(
+    step1_group.animate.scale(0.5).to_corner(UL, buff=0.3),
+    run_time=1.5
+)
+
+# Step 2: Build the next equation — color-code the NEW part
+eq2 = MathTex(r"V(s')", r"-", r"V(s)")
+eq2[0].set_color(GREEN)  # new term
+eq2.move_to(UP * 1.0)
+label2 = Text("TD Error: next value minus current", font_size=22).next_to(eq2, DOWN, buff=0.3)
+nums2 = MathTex(r"0.7 - 0.5 = 0.2", color=YELLOW, font_size=30).next_to(label2, DOWN, buff=0.3)
+self.play(Write(eq2), FadeIn(label2), run_time=2.0)
+self.play(FadeIn(nums2), run_time=1.0)
+self.wait(1.5)
+
+# Shrink step 2, then show full assembled equation
+step2_group = VGroup(eq2, label2, nums2)
+self.play(step2_group.animate.scale(0.5).to_corner(UL, buff=0.3).shift(DOWN * 1.2), run_time=1.5)
+
+# Step 3: Full equation assembled
+full_eq = MathTex(r"V(s)", r"\leftarrow", r"V(s)", r"+", r"\alpha", r"[V(s') - V(s)]")
+full_eq[4].set_color(BLUE)  # alpha is new
+full_eq.move_to(ORIGIN)
+self.play(Write(full_eq), run_time=2.5)
+final_nums = MathTex(r"0.5 + 0.1 \times 0.2 = 0.52", color=YELLOW, font_size=30).next_to(full_eq, DOWN, buff=0.4)
+self.play(FadeIn(final_nums), run_time=1.0)
+self.wait(3.0)
+```
+
+**Key rules:**
+1. Use `MathTex` with SEPARATE STRING ARGUMENTS for parts you want to color independently
+2. Color-code each NEW symbol when it first appears
+3. Show numerical substitution in **YELLOW** below each symbolic equation
+4. Shrink previous step to corner (`scale(0.5).to_corner(UL)`) before showing the next
+5. Keep at most 2 equation steps visible at once (shrunk previous + full-size current)
+6. Use `TransformMatchingTex` when one equation evolves into another; fallback to `ReplacementTransform`
+7. If `derivation_steps` or `equation_build_order` are provided, follow that exact order
+
+### Concept Title + Summary Pattern (MANDATORY)
+
+Every segment MUST follow this three-part framing:
+
+**Opening — Title Card:**
+```python
+concept_title = Text("Temporal-Difference Learning", font_size=48, color=BLUE).move_to(UP * 0.5)
+subtitle = Text("How do we learn from predictions?", font_size=26, color=GRAY).next_to(concept_title, DOWN, buff=0.3)
+self.play(Write(concept_title), run_time=1.5)
+self.play(FadeIn(subtitle), run_time=1.0)
+self.wait(2.0)
+self.play(FadeOut(subtitle), run_time=0.5)
+self.play(concept_title.animate.scale(0.55).to_edge(UP), run_time=1.0)
+# concept_title persists as a header
+```
+
+**Body** — (diagrams, derivations, examples)
+
+**Closing — Summary Card:**
+```python
+self.play(*[FadeOut(obj) for obj in current_objects], run_time=1.0)
+summary_title = Text("Temporal-Difference Learning", font_size=36, color=BLUE).move_to(UP * 1.5)
+summary_text = Text("Refines value estimates by shifting\ncurrent predictions toward subsequent ones.",
+                     font_size=28, line_spacing=1.3).next_to(summary_title, DOWN, buff=0.5)
+self.play(Write(summary_title), run_time=1.0)
+self.play(FadeIn(summary_text), run_time=1.5)
+self.wait(4.0)
+```
+
+If `concept_summary` is provided in the segment data, use it verbatim.
 
 ---
 
@@ -545,6 +709,13 @@ Before submitting, verify:
 ✓ Scene class has proper structure
 ✓ Comments explain key steps
 ✓ No invented/guessed class names
+✓ Equations with derivation_steps are built incrementally (one step at a time)
+✓ Previous derivation steps shrink to corner before next appears
+✓ Numerical example values shown in YELLOW below each symbolic equation
+✓ Related content coexists via shrink+slide; unrelated content transitions out
+✓ No object exceeds safe frame boundaries after positioning
+✓ Segment opens with concept title card, closes with summary card
+✓ Narrated scenarios use actual Manim geometry, not just Text()
 
 **CRITICAL - Overlap Prevention:**
 ✓ Each major conceptual shift has a FadeOut phase BEFORE new content
@@ -559,6 +730,15 @@ Before submitting, verify:
 1. **Read the segment specification** to understand requirements
    - You'll receive: narration, intuition section, technical section, key visuals, equations
    - This is FLAT - no explicit phases provided
+
+1b. **NARRATION CROSS-CHECK** (before writing any code):
+   - Read the narration sentence by sentence
+   - For each sentence describing a visual scenario, example, or quantity changing:
+     * It MUST have a corresponding Manim diagram or animation
+     * "Imagine a grid" → CREATE a grid with Square() cells, not Text("grid")
+     * "The value increases" → ANIMATE a value counter or bar growing
+     * "The agent moves" → ANIMATE agent.animate.move_to(...)
+   - Never substitute Text() for a visual that should be a diagram
 
 2. **MENTALLY decompose into PHASES** (CRITICAL):
    - Read through narration and identify conceptual shifts
@@ -732,5 +912,14 @@ This would have prevented the overlap in TransformerPipelineSceneS4.
 - **Do not hallucinate** class names - if you haven't seen it in examples, don't use it
 - **Quality over cleverness** - readable, working code is best
 - **Follow the spec precisely** - implement exactly what's requested
+
+## Multilingual Support
+
+When code is post-processed for non-English languages:
+1. Use Text() for ALL non-math display text (never Tex() for translated text)
+2. MathTex() stays in English/LaTeX - NEVER translate math
+3. Keep text content short and clear - it will be translated
+
+---
 
 Generate executable, correct Manim code that faithfully implements the animation scene.

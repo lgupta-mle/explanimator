@@ -1,0 +1,55 @@
+llm:
+  tiers:
+    hard:
+      explanation_model: "google/gemini-3.1-flash-lite-preview"
+      code_gen_model: "deepseek/deepseek-v3.2"
+      skip_judge: true
+    medium:
+      explanation_model: "google/gemini-3.1-flash-lite-preview"
+      judge_model: "google/gemini-2.5-flash"
+      code_gen_model: "anthropic/claude-sonnet-4.5"
+    easy:
+      explanation_model: "google/gemini-3.1-pro-preview"
+      judge_model: "google/gemini-2.5-flash"
+      prereq_model: "google/gemini-3.1-flash-lite-preview"
+      code_gen_model: "google/gemini-3.1-pro-preview"
+  model_pricing:
+    "deepseek/deepseek-v3.2":
+      input: 0.27e-6
+      output: 1.1e-6
+    "anthropic/claude-sonnet-4.5":
+      input: 3.0e-6
+      output: 15.0e-6
+    "google/gemini-3.1-pro-preview":
+      input: 1.25e-6
+      output: 10.0e-6
+    "google/gemini-3.1-flash-lite-preview":
+      input: 0.0375e-6
+      output: 0.15e-6
+    "google/gemini-2.5-flash":
+      input: 0.15e-6
+      output: 0.6e-6
+
+audio:
+  tts_model: "google/gemini-3.1-flash-tts-preview"
+  voice: "Leda"
+  provider: "openrouter"
+  max_workers: 4
+  sample_rate: 24000
+  min_words_per_beat: 8
+  max_words_per_beat: 25
+
+video:
+  quality: "l"
+  sync_mode: "segment"
+  max_speed_change: 0.3
+  render_timeout: 300
+
+manim:
+  timeout: 120
+  max_workers: 4
+  max_retries: 3
+
+translation:
+  model: "google/gemini-3.1-flash-lite-preview"
+  max_workers: 10

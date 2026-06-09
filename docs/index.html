@@ -14,21 +14,16 @@
 
 <!-- ── HERO ── -->
 <header class="hero">
-  <p class="project-name">Explanimator</p>
+  <p class="project-name">Anvaya (Explanimator)</p>
   <h1>From Research Papers to<br>3Blue1Brown-Style Videos</h1>
   <p class="authors">
-    <a href="https://www.linkedin.com/in/anannya-popat/" target="_blank" rel="noopener">Anannya Popat</a>
-    <a href="https://www.linkedin.com/in/lakshyaadm/" target="_blank" rel="noopener">Lakshya Gupta</a>,
+    <a href="https://www.linkedin.com/in/anannya-popat/" target="_blank" rel="noopener">Anannya Popat</a>,
+    <a href="https://www.linkedin.com/in/lakshyaadm/" target="_blank" rel="noopener">Lakshya Gupta</a>
   </p>
-  <p class="affiliation">Tool for assisting quicker understanding of research papers</p>
-  <div class="buttons">
-    <a class="btn btn-dark" href="https://github.com/lgupta-mle/explanimator" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-      </svg>
-      View Code
-    </a>
-  </div>
+  <p class="affiliation">Tool for assisting visual understanding of research papers for students and educators!</p>
+  <p style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(22,163,74,0.1)); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; font-size: 0.95rem; color: #22c55e;">
+    🚀 <strong>Web Platform Coming Soon</strong> — Interactive UI for generating videos with one click
+  </p>
 </header>
 
 <!-- ── MAIN CONTENT ── -->
@@ -57,7 +52,7 @@
   <h2 class="section-title">Pipeline Overview</h2>
 
   <p>
-    The system takes a research paper PDF as input and produces a fully narrated, animated video as output. There are five stages, each feeding into the next:
+    The system takes a research paper PDF as input and produces a fully narrated, animated video as output. Users can select between two difficulty levels — <strong>Initiate</strong> (includes prerequisite concepts) or <strong>Scholar</strong> (focused deep dive). Each difficulty level uses a <strong>specialized multi-agent system</strong> with distinct prompts tailored to the target audience, controlling explanation depth, segment count, vocabulary complexity, and pacing. There are five stages, each feeding into the next:
   </p>
 
   <div class="pipeline-flow" aria-label="Pipeline stages">
@@ -257,6 +252,37 @@
     </div>
   </div>
 
+  <!-- ── PARALLELIZATION ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Parallel Execution</h2>
+
+  <p>
+    Both Manim code generation and video rendering run in parallel using Python's <code style="font-family:monospace;font-size:0.9em;background:#f3f4f6;padding:2px 6px;border-radius:4px">ThreadPoolExecutor</code>. Each segment's code generation (including its retry loop) runs in its own thread, with up to 4 workers executing concurrently. Similarly, video rendering and audio synchronization for each segment happen in parallel threads.
+  </p>
+
+  <p>
+    This parallelization significantly reduces total pipeline time. For a paper with 6 segments, instead of processing them sequentially (6 × average_time), the pipeline processes them in batches of 4, cutting wall-clock time by roughly 60–70% depending on segment complexity.
+  </p>
+
+  <!-- Parallelization diagram -->
+  <div class="flow-diag">
+    <div class="flow-row">
+      <div class="fnode fnode-blue">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="fnode-label">Explanation<br><span class="fnode-sub">6 segments</span></span>
+      </div>
+      <span class="farrow">→</span>
+      <div class="fnode fnode-purple">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="fnode-label">ThreadPool<br><span class="fnode-sub">4 workers</span></span>
+      </div>
+    </div>
+    <div class="flow-note" style="margin-top:12px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 20 9 4 6 12 2 12"/></svg>
+      Segments 1–4 process concurrently, then 5–6 &nbsp;·&nbsp; results collected in original order &nbsp;·&nbsp; ~60–70% faster than sequential
+    </div>
+  </div>
+
   <!-- ── AUDIO + VIDEO SYNC ── -->
   <hr class="divider" />
   <h2 class="section-title">Audio and Video Synchronization</h2>
@@ -326,7 +352,7 @@
   <div class="video-section">
     <h2 class="section-title" style="margin-top: 0;">Model Comparison</h2>
     <p>
-      We ran the same paper — <a href="https://arxiv.org/abs/2602.17270" target="_blank" rel="noopener"><em>Unified Latents</em></a> — through the pipeline using three different frontier models for the explanation and code generation steps. Here's what each produced.
+      We ran the same paper — <a href="https://arxiv.org/abs/2602.17270" target="_blank" rel="noopener"><em>Unified Latents</em></a> — on "scholar" mode through the pipeline using three different frontier models for the explanation and code generation steps. Here's what each produced.
     </p>
 
     <div class="tab-bar" role="tablist">

@@ -6,11 +6,14 @@ Usage:
     python -m research_viz.preprocessing.build_manim_index --force-rescrape
 """
 
+import logging
 import tyro
 from pathlib import Path
 from research_viz.preprocessing.manim_docs_scraper import ManimDocsScraper
 from research_viz.preprocessing.manim_docs_chunker import ManimDocsChunker
 from research_viz.preprocessing.manim_docs_embedder import ManimDocsEmbedder
+
+logger = logging.getLogger(__name__)
 
 
 def main(
@@ -54,32 +57,32 @@ def main(
     processed_dir = f"{output_dir}/processed"
     vector_db_dir = f"{output_dir}/vector_db/chroma_db"
 
-    print("=" * 80)
-    print("MANIM DOCUMENTATION INDEX BUILDER")
-    print("=" * 80)
+    logger.info("=" * 80)
+    logger.info("MANIM DOCUMENTATION INDEX BUILDER")
+    logger.info("=" * 80)
 
     # Step 1: Scrape documentation
     scraper = ManimDocsScraper(manim_docs_url, raw_dir)
 
     if force_rescrape or not Path(raw_dir).exists():
-        print("\n[1/4] Scraping Manim documentation...")
-        print(f"  URL: {manim_docs_url}")
-        print(f"  This may take 30-60 minutes...")
+        logger.info("[1/4] Scraping Manim documentation...")
+        logger.info(f"  URL: {manim_docs_url}")
+        logger.info(f"  This may take 30-60 minutes...")
         docs = scraper.scrape_all()
         scraper.save(docs)
         total_pages = sum(len(pages) for pages in docs.values())
-        print(f"  ✓ Scraped {total_pages} pages")
+        logger.info(f"  Scraped {total_pages} pages")
     else:
-        print("\n[1/4] Loading cached documentation...")
+        logger.info("[1/4] Loading cached documentation...")
         docs = scraper.load()
         total_pages = sum(len(pages) for pages in docs.values())
-        print(f"  ✓ Loaded {total_pages} pages from cache")
-        print(f"  (Use --force-rescrape to re-scrape)")
+        logger.info(f"  Loaded {total_pages} pages from cache")
+        logger.info(f"  (Use --force-rescrape to re-scrape)")
 
     # Step 2: Chunk documents
-    print("\n[2/4] Chunking documents...")
-    print(f"  Chunk size: {chunk_size} tokens")
-    print(f"  Chunk overlap: {chunk_overlap} tokens")
+    logger.info("[2/4] Chunking documents...")
+    logger.info(f"  Chunk size: {chunk_size} tokens")
+    logger.info(f"  Chunk overlap: {chunk_overlap} tokens")
 
     chunker = ManimDocsChunker(
         chunk_size=chunk_size,
@@ -89,13 +92,13 @@ def main(
 
     chunks_path = f"{processed_dir}/chunks.json"
     chunker.save(chunks, chunks_path)
-    print(f"  ✓ Created {len(chunks)} chunks")
-    print(f"  ✓ Saved to: {chunks_path}")
+    logger.info(f"  Created {len(chunks)} chunks")
+    logger.info(f"  Saved to: {chunks_path}")
 
     # Step 3: Generate embeddings and store in ChromaDB
-    print("\n[3/4] Generating embeddings and storing in ChromaDB...")
-    print(f"  Model: {embedding_model}")
-    print(f"  This may take 10-20 minutes...")
+    logger.info("[3/4] Generating embeddings and storing in ChromaDB...")
+    logger.info(f"  Model: {embedding_model}")
+    logger.info(f"  This may take 10-20 minutes...")
 
     embedder = ManimDocsEmbedder(
         embedding_model=embedding_model,
@@ -104,25 +107,25 @@ def main(
     embedder.embed_and_store(chunks)
 
     # Step 4: Verification
-    print("\n[4/4] Verification...")
+    logger.info("[4/4] Verification...")
     stats = embedder.get_collection_stats()
-    print(f"  ✓ Total chunks indexed: {stats['total_chunks']}")
-    print(f"  ✓ ChromaDB location: {stats['chroma_path']}")
+    logger.info(f"  Total chunks indexed: {stats['total_chunks']}")
+    logger.info(f"  ChromaDB location: {stats['chroma_path']}")
 
-    print("\n" + "=" * 80)
-    print("INDEX BUILD COMPLETE!")
-    print("=" * 80)
-    print(f"\nData stored in: {output_dir}/")
-    print(f"  - Raw docs: {raw_dir}/")
-    print(f"  - Chunks: {chunks_path}")
-    print(f"  - Vector DB: {vector_db_dir}/")
-    print(f"\nTotal storage:")
-    print(f"  - {total_pages} documentation pages")
-    print(f"  - {len(chunks)} searchable chunks")
-    print(f"  - {stats['total_chunks']} embedded vectors")
+    logger.info("=" * 80)
+    logger.info("INDEX BUILD COMPLETE!")
+    logger.info("=" * 80)
+    logger.info(f"Data stored in: {output_dir}/")
+    logger.info(f"  - Raw docs: {raw_dir}/")
+    logger.info(f"  - Chunks: {chunks_path}")
+    logger.info(f"  - Vector DB: {vector_db_dir}/")
+    logger.info(f"Total storage:")
+    logger.info(f"  - {total_pages} documentation pages")
+    logger.info(f"  - {len(chunks)} searchable chunks")
+    logger.info(f"  - {stats['total_chunks']} embedded vectors")
 
-    print("\nYou can now use the RAG system for code generation:")
-    print("  python -m research_viz.manim_generator.manim_code_generator")
+    logger.info("You can now use the RAG system for code generation:")
+    logger.info("  python -m research_viz.manim_generator.manim_code_generator")
 
 
 if __name__ == "__main__":
