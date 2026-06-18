@@ -22,7 +22,7 @@
   </p>
   <p class="affiliation">Tool for assisting visual understanding of research papers for students and educators!</p>
   <p style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(22,163,74,0.1)); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; font-size: 0.95rem; color: #22c55e;">
-    🚀 <strong>Web Platform Coming Soon</strong> — Interactive UI for generating videos with one click
+    🚀 <strong>Web App (beta) is live</strong> — upload a PDF and watch segments stream onto the page as they render. <a href="https://github.com/lgupta-mle/explanimator" target="_blank" rel="noopener" style="color:#16a34a; font-weight:600;">Run it from the repo →</a>
   </p>
 </header>
 
@@ -52,7 +52,7 @@
   <h2 class="section-title">Pipeline Overview</h2>
 
   <p>
-    The system takes a research paper PDF as input and produces a fully narrated, animated video as output. Users can select between two difficulty levels — <strong>Initiate</strong> (includes prerequisite concepts) or <strong>Scholar</strong> (focused deep dive). Each difficulty level uses a <strong>specialized multi-agent system</strong> with distinct prompts tailored to the target audience, controlling explanation depth, segment count, vocabulary complexity, and pacing. There are five stages, each feeding into the next:
+    The system takes a research paper PDF as input and produces a fully narrated, animated video as output. Users pick one of <strong>three difficulty tiers</strong> — <strong>easy</strong> (10–14 segments, prerequisites taught from scratch), <strong>medium</strong> (4–6 segments, full notation), or <strong>hard</strong> (2–3 terse, expert-level segments). Each tier uses a <strong>specialized multi-agent system</strong> with distinct prompts and its own model lineup, controlling explanation depth, segment count, vocabulary complexity, and pacing. The paper first becomes a structured lesson plan, then every segment moves through codegen, render, and sync independently:
   </p>
 
   <div class="pipeline-flow" aria-label="Pipeline stages">
@@ -60,15 +60,17 @@
     <span class="flow-arrow">→</span>
     <span class="flow-step">Explanation</span>
     <span class="flow-arrow">→</span>
-    <span class="flow-step">Audio Beats</span>
+    <span class="flow-step">Codegen</span>
     <span class="flow-arrow">→</span>
-    <span class="flow-step">Manim Code</span>
+    <span class="flow-step">Render</span>
     <span class="flow-arrow">→</span>
-    <span class="flow-step">Synced Video</span>
+    <span class="flow-step">Sync</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">Stitch</span>
   </div>
 
   <p>
-    Audio is generated <em>before</em> the animation code. This ordering is deliberate: the beat timeline produced by TTS generation becomes the source of truth for animation timing. Each segment's narration is split into sentence-level beats, each with a precise measured duration. The Manim code generator receives this timing metadata and structures its animations to land on the right beats.
+    Narration audio is generated <em>in parallel</em> with the animation code, per segment. The beat timeline produced by TTS becomes the source of truth for animation timing: each segment's narration is split into sentence-level beats with a precise measured duration, and the Manim code generator receives this timing metadata so its animations land on the right beats. Because the stages are pipelined per segment rather than run in bulk, a finished segment can be handed to the viewer while the rest of the video is still rendering.
   </p>
 
   <!-- ── SPECIALIZED AGENTS ── -->
@@ -252,43 +254,54 @@
     </div>
   </div>
 
-  <!-- ── PARALLELIZATION ── -->
+  <!-- ── PIPELINE-PARALLEL STREAMING ── -->
   <hr class="divider" />
-  <h2 class="section-title">Parallel Execution</h2>
+  <h2 class="section-title">Pipeline-Parallel Streaming</h2>
 
   <p>
-    Both Manim code generation and video rendering run in parallel using Python's <code style="font-family:monospace;font-size:0.9em;background:#f3f4f6;padding:2px 6px;border-radius:4px">ThreadPoolExecutor</code>. Each segment's code generation (including its retry loop) runs in its own thread, with up to 4 workers executing concurrently. Similarly, video rendering and audio synchronization for each segment happen in parallel threads.
+    Earlier versions ran each stage in bulk — generate every segment's code, then render everything, then sync everything — so you waited for the whole video before seeing anything. The pipeline now runs <strong>pipeline-parallel</strong>: each segment moves through codegen → render → sync <em>independently</em>. The moment a segment's code is written, its render is queued; the moment that render finishes, its audio sync starts. The final concat happens just once, at the end.
   </p>
 
   <p>
-    This parallelization significantly reduces total pipeline time. For a paper with 6 segments, instead of processing them sequentially (6 × average_time), the pipeline processes them in batches of 4, cutting wall-clock time by roughly 60–70% depending on segment complexity.
+    The practical effect is dramatic for time-to-first-watchable. Instead of staring at a progress bar, you get <strong>segment 1 roughly 10× sooner</strong>, and each subsequent segment lands as it finishes — a streaming staircase rather than a single wall at the end.
   </p>
 
-  <!-- Parallelization diagram -->
-  <div class="flow-diag">
-    <div class="flow-row">
-      <div class="fnode fnode-blue">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <span class="fnode-label">Explanation<br><span class="fnode-sub">6 segments</span></span>
-      </div>
-      <span class="farrow">→</span>
-      <div class="fnode fnode-purple">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        <span class="fnode-label">ThreadPool<br><span class="fnode-sub">4 workers</span></span>
-      </div>
+  <!-- Streaming staircase GIF -->
+  <figure class="demo-figure">
+    <img src="assets/streaming_staircase.gif" alt="Streaming staircase: segments become watchable one by one as the pipeline runs" loading="lazy" />
+    <figcaption>Segments become watchable one at a time as the pipeline runs, instead of all at once at the end.</figcaption>
+  </figure>
+
+  <!-- Before/after stats -->
+  <div class="stats-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 4px;">
+    <div style="border:1px solid var(--border); border-radius:10px; padding:14px 12px; text-align:center;">
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px;">Time to first watchable</div>
+      <div style="font-size:1.05rem; font-weight:700;"><span style="color:#b91c1c;">≈ 19 min</span> → <span style="color:#16a34a;">≈ 8 min</span></div>
     </div>
-    <div class="flow-note" style="margin-top:12px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 20 9 4 6 12 2 12"/></svg>
-      Segments 1–4 process concurrently, then 5–6 &nbsp;·&nbsp; results collected in original order &nbsp;·&nbsp; ~60–70% faster than sequential
+    <div style="border:1px solid var(--border); border-radius:10px; padding:14px 12px; text-align:center;">
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px;">Total wall time</div>
+      <div style="font-size:1.05rem; font-weight:700;">≈ 20 min → ≈ 22 min</div>
+    </div>
+    <div style="border:1px solid var(--border); border-radius:10px; padding:14px 12px; text-align:center;">
+      <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px;">Codegen cache hit</div>
+      <div style="font-size:1.05rem; font-weight:700; color:#16a34a;">≈ 70–80 %</div>
     </div>
   </div>
+  <div class="flow-note" style="margin-top:10px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 20 9 4 6 12 2 12"/></svg>
+    Measured on <code style="font-size:0.7rem;background:#f3f4f6;padding:1px 5px;border-radius:3px;font-family:monospace">SAM.pdf</code> → easy tier (12 segments, with audio) &nbsp;·&nbsp; each stage still runs on a 4-worker <code style="font-size:0.7rem;background:#f3f4f6;padding:1px 5px;border-radius:3px;font-family:monospace">ThreadPoolExecutor</code> under the hood
+  </div>
+
+  <p style="margin-top:1.25rem;">
+    The pipeline is also <strong>resumable</strong>. If a run is interrupted, re-running with the same arguments picks up where it left off — anything already on disk (the explanation JSON, scene metadata, audio beats, rendered scenes) is reused rather than regenerated.
+  </p>
 
   <!-- ── AUDIO + VIDEO SYNC ── -->
   <hr class="divider" />
   <h2 class="section-title">Audio and Video Synchronization</h2>
 
   <p>
-    Narration is generated using OpenAI TTS at the beat level — each sentence or short phrase is its own audio file with a precisely measured WAV duration. These durations are accumulated into a timeline JSON that records the exact start time and length of every beat within every segment.
+    Narration is generated at the beat level using Gemini TTS through OpenRouter by default (OpenAI TTS remains a drop-in alternative via config) — each sentence or short phrase is its own audio file with a precisely measured WAV duration. These durations are accumulated into a timeline JSON that records the exact start time and length of every beat within every segment.
   </p>
 
   <p>
@@ -311,7 +324,7 @@
           </div>
           <span class="farrow">→</span>
           <div class="fnode fnode-teal" style="min-width:0; padding:8px 10px;">
-            <span class="fnode-label">TTS<br><span class="fnode-sub">OpenAI</span></span>
+            <span class="fnode-label">TTS<br><span class="fnode-sub">Gemini</span></span>
           </div>
         </div>
       </div>
@@ -346,6 +359,18 @@
       </div>
     </div>
   </div>
+
+  <!-- ── WEB APP ── -->
+  <hr class="divider" />
+  <h2 class="section-title">Web App <span style="font-size:0.6em; font-weight:600; color:#16a34a; vertical-align:middle; border:1px solid rgba(34,197,94,0.4); border-radius:6px; padding:2px 7px;">beta</span></h2>
+
+  <p>
+    There's now a browser UI that puts the streaming pipeline in front of the viewer. A <strong>FastAPI backend</strong> drives the pipeline and pushes live progress over <strong>Server-Sent Events</strong>; a lightweight React frontend renders it. You upload a PDF, and a progress page shows five circles — Explanation, Audio, Codegen, Render, Sync — lighting up for segment 1 in real time, while the remaining segments appear as "Preparing segment N…" cards.
+  </p>
+
+  <p>
+    The instant any segment finishes, the page auto-scrolls to an inline player that starts playing it; when it ends, it auto-advances to the next ready segment. The whole thing runs locally from the repo today — point the backend at your OpenRouter key and open the page.
+  </p>
 
   <!-- ── VIDEO COMPARISON ── -->
   <hr class="divider" />
@@ -390,7 +415,7 @@
   <p>
     Built by <a href="https://www.linkedin.com/in/lakshyaadm/" target="_blank" rel="noopener">Lakshya Gupta</a> &amp;
     <a href="https://www.linkedin.com/in/anannya-popat/" target="_blank" rel="noopener">Anannya Popat</a> &nbsp;·&nbsp;
-    <a href="https://github.com/ChaosAdmStudent/research-paper-graphviz" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/lgupta-mle/explanimator" target="_blank" rel="noopener">GitHub</a>
   </p>
 </footer>
 
