@@ -211,6 +211,44 @@ The `app/` directory uses Babel-standalone (no build step), so you can edit
 
 ---
 
+## Books → video (chapters)
+
+The same engine also turns whole **book chapters** into a coherent *series* of
+explainer videos — not just one-off papers. It pulls the table of contents from
+the PDF (embedded TOC or LLM-parsed), writes a shared **series bible** — running
+example, notation glossary, visual style — so every chapter video feels like
+part of one course, then runs each chapter through the same
+explanation → codegen → render → sync pipeline.
+
+```bash
+# Chapter 1 of a book, medium tier
+python -m research_viz.book_generator.book_pipeline \
+  --book-pdf resources/MyBook.pdf \
+  --chapters 1 \
+  --difficulty medium
+```
+
+`--chapters "1,3,5"` picks specific chapters; `--chapters 0` does the whole
+book. Chapters render in parallel by default. Output lands per chapter under
+`output/books/<book_title>/ch_NN_*/` — each with its extracted `chapter.pdf`,
+`explanation.json`, `audio_beats/`, and `final_video.mp4` — alongside a shared
+`series_bible.json`.
+
+| Flag           | Description                                       | Default      |
+| -------------- | ------------------------------------------------- | ------------ |
+| `--book-pdf`   | Path to the book PDF                              | required     |
+| `--chapters`   | Comma-separated chapters, or `0` for all          | `"1"`        |
+| `--difficulty` | `easy` / `medium` / `hard` (same tiers as papers) | `medium`     |
+| `--skip-bible` | Reuse a series bible already on disk              | `false`      |
+| `--skip-video` | Stop after explanations — skip rendering          | `false`      |
+| `--no-parallel`| Process chapters one at a time                    | parallel on  |
+
+Full reference — chapter-detection strategies, supported book formats, output
+layout — lives in
+[`src/research_viz/book_generator/README.md`](src/research_viz/book_generator/README.md).
+
+---
+
 ## Configuration
 
 `config.yaml` at the repo root carries the defaults. `config/{dev,staging,prod}.yaml`
