@@ -114,6 +114,27 @@ def _get_indent(line: str) -> str:
     return re.match(r"^(\s*)", line).group(1)
 
 
+# Inline tag and variable-name conventions marking a mobject as PERSISTENT across phases.
+# Persistent objects — e.g. a header or an accumulating math/derivation panel in the
+# 2-column zone layout — are excluded from Fix C's auto-FadeOut so they survive validation.
+# The codegen prompt is expected to emit these names / the tag for things that must persist.
+_PERSIST_TAG = "[persist]"
+
+
+def _is_persistent_assignment(line: str, var: str) -> bool:
+    """True if this assignment marks the object as persistent across phase boundaries."""
+    if _PERSIST_TAG in line:
+        return True
+    v = var.lower()
+    return (
+        v == "header"
+        or v.startswith("header")
+        or v == "panel"
+        or v.endswith("_panel")
+        or "math_panel" in v
+    )
+
+
 # ---------------------------------------------------------------------------
 # Core validator
 # ---------------------------------------------------------------------------
@@ -165,19 +186,22 @@ def validate_and_fix_scene(code: str) -> Tuple[str, int]:
     if len(boundaries) >= 2:
         # Track objects through the code
         visible: Set[str] = set()
+        persistent: Set[str] = set()  # vars excluded from auto-FadeOut (header, math panel, ...)
         groups: dict[str, Set[str]] = {}  # group_name -> member names
         insertions: List[Tuple[int, str]] = []  # (line_idx, code_to_insert)
 
         for i, line in enumerate(lines):
             # Track object creation
             var = _extract_var_name(line)
-            if var:
-                pass  # just created, not yet visible
+            if var and _is_persistent_assignment(line, var):
+                persistent.add(var)
 
             # Track VGroup membership
             grp_name, members = _extract_vgroup_members(line)
             if grp_name:
                 groups[grp_name] = set(members)
+                if _is_persistent_assignment(line, grp_name):
+                    persistent.add(grp_name)
 
             # Track .add() calls on groups
             add_m = re.match(r"^\s+(\w+)\.add\((\w+)\)", line)
@@ -205,7 +229,11 @@ def validate_and_fix_scene(code: str) -> Tuple[str, int]:
                 lookahead = "\n".join(lines[i:min(i + 5, len(lines))])
                 has_cleanup = _line_has_fadeout(lookahead)
 
-                if not has_cleanup and len(visible) > 1:
+                # Persistent objects (header / accumulating math panel) are never
+                # auto-faded — only non-persistent "orphans" are eligible for cleanup.
+                cleanable = visible - persistent
+
+                if not has_cleanup and len(cleanable) > 1:
                     # There are orphaned visible objects and no upcoming cleanup
                     # Find the indent level from the phase comment or surrounding code
                     indent = "        "  # default 8 spaces (inside construct)
@@ -214,8 +242,8 @@ def validate_and_fix_scene(code: str) -> Tuple[str, int]:
                             indent = _get_indent(lines[j])
                             break
 
-                    # Build FadeOut injection — use the visible set
-                    orphans = sorted(visible)
+                    # Build FadeOut injection — only the non-persistent orphans
+                    orphans = sorted(cleanable)
                     if len(orphans) <= 6:
                         fadeout_args = ", ".join(orphans)
                         injection = f"{indent}self.play(FadeOut({fadeout_args}), run_time=1.5)  # [auto-cleanup]"
@@ -227,8 +255,8 @@ def validate_and_fix_scene(code: str) -> Tuple[str, int]:
                     insertions.append((i, injection))
                     fixes += 1
 
-                    # After injection, mark these as removed
-                    visible.clear()
+                    # After injection, the cleaned orphans are gone; persistent objects stay.
+                    visible = set(persistent)
 
         # Apply insertions in reverse order to preserve line numbers
         for idx, code_line in reversed(insertions):
@@ -269,6 +297,22 @@ def validate_and_fix_scene(code: str) -> Tuple[str, int]:
                 fixed_line = line.replace(old, new)
                 fixes += 1
         new_lines.append(fixed_line)
+    lines = new_lines
+
+    # --- Fix F: Sector() takes radius=, not outer_radius= ---
+    # Manim's Sector forwards outer_radius=radius to its AnnularSector parent,
+    # so passing outer_radius= explicitly raises
+    # "got multiple values for keyword argument 'outer_radius'".
+    # AnnularSector legitimately accepts outer_radius=, so exclude it.
+    new_lines = []
+    for line in lines:
+        if "outer_radius" in line and re.search(r"(?<![A-Za-z])Sector\s*\(", line):
+            fixed_line = re.sub(r"\bouter_radius\s*=", "radius=", line)
+            if fixed_line != line:
+                fixes += 1
+            new_lines.append(fixed_line)
+        else:
+            new_lines.append(line)
     lines = new_lines
 
     return "\n".join(lines), fixes

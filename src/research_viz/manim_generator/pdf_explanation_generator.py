@@ -33,6 +33,7 @@ class CriteriaScores(BaseModel):
     animation_potential: int = Field(0, description="1 if pass, 0 if fail")
     math_intuition_connection: int = Field(0, description="1 if pass, 0 if fail")
     narration_quality: int = Field(0, description="1 if pass, 0 if fail")
+    math_density: int = Field(0, description="1 if pass, 0 if fail")
 
 
 class JudgeResult(BaseModel):
@@ -175,8 +176,39 @@ prerequisites (list of PrerequisiteConcept with concept_name, why_needed, depth_
         return json.loads(content)
 
 
+def _build_math_density_section(difficulty_config: DifficultyConfig) -> str:
+    """Build the per-tier math-density requirement (applies to every difficulty).
+
+    Math density lives in STRUCTURED fields and does not count toward narration words,
+    so these requirements never bloat narration length.
+    """
+    substitution_line = (
+        "- Each derivation chain MUST include at least one `example_substitution` with the "
+        "running example's concrete numbers AND the computed numeric result."
+        if difficulty_config.require_numeric_substitution
+        else ""
+    )
+    build_order_line = (
+        "- Set `equation_build_order` for every technical segment (ordered equation ids, "
+        "simplest first)."
+        if difficulty_config.require_equation_build_order
+        else ""
+    )
+    return f"""
+MANDATORY MATH DENSITY (structured fields — does NOT affect narration length):
+- Every technical segment MUST have at least {difficulty_config.min_equations_per_technical_segment} `key_equations` (one per distinct symbolic relationship).
+- Each technical segment's main result MUST have a populated `derivation_steps` chain of at least {difficulty_config.min_derivation_steps_per_technical_segment} steps.
+- Each derivation step sets `latex_formula`, `from_previous`, `new_symbol_introduced` (define every new symbol), `example_substitution`, and `visualizable_action`.
+{substitution_line}
+{build_order_line}
+- Provide `running_example_walkthrough` carrying ONE numeric thread through the segment's equations.
+- Do NOT leave `derivation_steps` or `equation_build_order` empty for a technical segment."""
+
+
 def _build_difficulty_prompt_section(difficulty_config: DifficultyConfig, prereq_tree: Optional[dict] = None) -> str:
     """Build difficulty-specific prompt section to append to the user prompt."""
+    math_density_section = _build_math_density_section(difficulty_config)
+
     if difficulty_config.level == "easy":
         prereq_section = ""
         if prereq_tree and prereq_tree.get("prerequisites"):
@@ -193,7 +225,8 @@ DIFFICULTY: EASY (Complete Beginner)
 - Each narration MUST be {difficulty_config.min_narration_words}-{difficulty_config.max_narration_words} words.
 - Explain EVERY concept from first principles. Assume ZERO prior knowledge.
 - Use extensive analogies and real-world examples.
-{prereq_section}"""
+{prereq_section}
+{math_density_section}"""
 
     elif difficulty_config.level == "hard":
         return f"""
@@ -202,29 +235,97 @@ DIFFICULTY: HARD (Expert/PhD-level)
 - Each narration MUST be {difficulty_config.min_narration_words}-{difficulty_config.max_narration_words} words.
 - Assume PhD-level domain expertise. Skip ALL prerequisites.
 - Focus exclusively on novel contributions and technical depth.
-- Be concise and information-dense."""
+- Be concise and information-dense.
+{math_density_section}"""
 
-    # Medium: no extra constraints (current default behavior)
-    return ""
+    # Medium: math density still mandatory even though narration is unconstrained.
+    return f"""
+DIFFICULTY: MEDIUM
+- Create {difficulty_config.min_segments}-{difficulty_config.max_segments} segments.
+- Each narration MUST be {difficulty_config.min_narration_words}-{difficulty_config.max_narration_words} words.
+{math_density_section}"""
 
 
 def _build_difficulty_judge_section(difficulty_config: DifficultyConfig) -> str:
     """Build difficulty-specific section for the judge prompt."""
+    math_density_criterion = f"""
+
+MANDATORY CRITERION FOR ALL DIFFICULTIES — math_density:
+- Set math_density to 0 (FAIL) if ANY technical segment has an empty `derivation_steps`,
+  an empty/missing `equation_build_order`, fewer than {difficulty_config.min_equations_per_technical_segment} `key_equations`,
+  or any equation symbol that is never defined (via `new_symbol_introduced` or `what_it_means`).
+- Also FAIL if no derivation chain contains an `example_substitution` with a computed numeric result.
+- This criterion is required: a passing overall score (score=1) REQUIRES math_density=1."""
+
     if difficulty_config.level == "easy":
-        return """
+        return math_density_criterion + """
 
 ADDITIONAL CRITERION FOR EASY MODE:
 - prerequisite_coverage: Are ALL identified prerequisites explained from scratch with their own visual metaphors?
   FAIL if any prerequisite is just mentioned without dedicated explanation."""
 
     elif difficulty_config.level == "hard":
-        return """
+        return math_density_criterion + """
 
 NOTE FOR HARD MODE EVALUATION:
 This is expert-level content. Do NOT penalize for skipping prerequisites or being terse.
-Instead, check for conciseness, density, and focus on novel contributions."""
+Instead, check for conciseness, density, and focus on novel contributions.
+(math_density still applies — terse does not mean math-light.)"""
 
-    return ""
+    return math_density_criterion
+
+
+def _math_density_shortfall(
+    parsed: dict,
+    difficulty_config: DifficultyConfig,
+) -> Optional[str]:
+    """Deterministic structural check for on-screen math density.
+
+    Returns feedback describing the shortfall if any technical segment is too math-sparse,
+    else None. A segment is "technical" if its technical.key_equations is non-empty, so
+    intro/hook segments without equations are not penalized.
+    """
+    min_eq = difficulty_config.min_equations_per_technical_segment
+    min_steps = difficulty_config.min_derivation_steps_per_technical_segment
+    problems: List[str] = []
+
+    for seg in parsed.get("segments", []):
+        tech = seg.get("technical") or {}
+        eqs = tech.get("key_equations") or []
+        if not eqs:
+            continue  # not a technical segment
+        title = seg.get("title", seg.get("segment_id", "?"))
+
+        if len(eqs) < min_eq:
+            problems.append(f"segment '{title}' has {len(eqs)} key_equations (need >= {min_eq})")
+
+        has_chain = any(len(eq.get("derivation_steps") or []) >= min_steps for eq in eqs)
+        if not has_chain:
+            problems.append(
+                f"segment '{title}' has no derivation_steps chain of >= {min_steps} steps"
+            )
+
+        if difficulty_config.require_equation_build_order and not (tech.get("equation_build_order") or []):
+            problems.append(f"segment '{title}' is missing equation_build_order")
+
+        if difficulty_config.require_numeric_substitution:
+            has_sub = any(
+                (step.get("example_substitution") or "").strip()
+                for eq in eqs
+                for step in (eq.get("derivation_steps") or [])
+            )
+            if not has_sub:
+                problems.append(
+                    f"segment '{title}' has no example_substitution with concrete numbers"
+                )
+
+    if not problems:
+        return None
+    return (
+        "The explanation is too math-sparse for on-screen rendering. Fix these and regenerate, "
+        "populating the structured math fields (this does NOT change narration length): "
+        + "; ".join(problems[:8])
+    )
 
 
 def judge_explanation(
@@ -349,7 +450,17 @@ Output format - JSON with:
 Each segment needs:
 - segment_id, title, order
 - intuition: core_insight, visual_metaphor, metaphor_example, starting_question, intuitive_walkthrough, key_visuals, transformations_to_show
-- technical: intuition_to_math_bridge, key_equations (latex_formula, what_it_means, visualizable_aspect), shape_intuitions, mathematical_insight
+- technical:
+  - intuition_to_math_bridge
+  - key_equations: a LIST (one entry per distinct symbolic relationship), each with:
+    - latex_formula, what_it_means, visualizable_aspect
+    - example_values (concrete numbers from the running example)
+    - derivation_steps: ordered list, each step with latex_formula, from_previous (justification),
+      new_symbol_introduced (symbol + plain meaning on first appearance), example_substitution
+      (running example's numbers plugged in WITH the computed result), visualizable_action
+  - equation_build_order: ordered list of equation ids describing how equations appear on screen
+  - running_example_walkthrough: one numeric thread carried through the segment's equations
+  - shape_intuitions, mathematical_insight
 - narration_script
 """
 
@@ -447,6 +558,17 @@ Output the revised explanation as JSON only, no other commentary.
                     f"You generated {seg_count} segments but the requirement is {min_s}-{max_s}. "
                     f"Regenerate with exactly {min_s}-{max_s} segments."
                 )
+                previous_content = content
+                continue
+
+        # Deterministic math-density gate: force regeneration before spending a judge
+        # call if the structured math fields are too sparse to render on screen.
+        # The last-parseable-attempt fallback still ships something if attempts run out.
+        if difficulty_config and parsed:
+            shortfall = _math_density_shortfall(parsed, difficulty_config)
+            if shortfall:
+                logger.info(f"  Math-density shortfall, auto-retrying: {shortfall[:160]}")
+                previous_feedback = shortfall
                 previous_content = content
                 continue
 

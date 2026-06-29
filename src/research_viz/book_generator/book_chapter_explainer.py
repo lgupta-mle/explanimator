@@ -188,16 +188,7 @@ def extract_chapter_digest(
         print(f"    Digest extraction failed: {exc}")
         return None
 
-    if "error" in response:
-        print(f"    Digest extraction API error: {response['error']}")
-        return None
-
-    choices = response.get("choices", [])
-    if not choices:
-        print(f"    Digest extraction: empty response")
-        return None
-
-    digest_text = choices[0]["message"]["content"]
+    digest_text = response.content
     if not digest_text or not digest_text.strip():
         print(f"    Digest extraction: blank content returned")
         return None
@@ -340,6 +331,12 @@ Generate a revised explanation addressing ALL feedback above.
             except Exception as exc:
                 print(f"    LLM call failed: {exc}")
                 continue
+
+            # call_openrouter returns the raw JSON dict
+            if "choices" not in response or not response["choices"]:
+                print(f"    Error: invalid response: {response.get('error', response)}")
+                continue
+            content = response["choices"][0]["message"]["content"]
         else:
             print("    Generating explanation from chapter PDF (fallback)...")
             try:
@@ -354,11 +351,13 @@ Generate a revised explanation addressing ALL feedback above.
                 print(f"    LLM call failed: {exc}")
                 continue
 
-        if "choices" not in response or not response["choices"]:
-            print(f"    Error: invalid response: {response.get('error', response)}")
+            # create_pdf_llm_response returns an LLMResponse object
+            content = response.content
+
+        if not content or not content.strip():
+            print(f"    Error: blank content returned")
             continue
 
-        content = response["choices"][0]["message"]["content"]
         print(f"    Generated ({len(content)} chars)")
 
         try:

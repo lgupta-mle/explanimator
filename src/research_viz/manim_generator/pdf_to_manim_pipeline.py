@@ -244,8 +244,8 @@ Generate a Manim animation scene for this segment of a 3Blue1Brown-style educati
 5. **CRITICAL**: The total scene duration MUST be at least {target_animation_duration:.1f} seconds to match the narration length
 6. Add a comment at the top of your construct() method showing your duration planning breakdown
 7. **IF BEAT TIMING PROVIDED**: Structure animations to match each beat's duration exactly
-8. **EQUATION BUILD-UP**: Animate each equation incrementally per derivation_steps. Show symbolic equation, then numerical substitution in YELLOW. Shrink previous step to corner before next.
-9. **SPATIAL MANAGEMENT**: Related content → shrink existing to one side. Unrelated → FadeOut first. Never exceed frame boundaries (x: [-6,6], y: [-3.5,3.5]).
+8. **EQUATION BUILD-UP (mandatory when any key_equations exist)**: Build each equation incrementally (per derivation_steps / equation_build_order when present). Show the symbolic equation, then its numerical substitution in YELLOW, with variable definitions in the bottom caption zone. Accumulate steps in the PERSISTENT right-hand math panel (stack shrunk prior steps toward the top) — do NOT push them to the left corner where the diagram lives.
+9. **ZONE-BASED SPATIAL MANAGEMENT**: Use the 2-column layout — diagram in the LEFT zone (x ≤ +0.5), the persistent `math_panel` in the RIGHT zone (x ≥ +1.0), header on top, variable captions at the bottom. Diagram and math COEXIST (different columns, ≥0.5-unit buffer, no overlap). Only clear a zone when its content is replaced by unrelated content; the header and math panel persist. Never exceed frame boundaries (x: [-5.5,5.5], y: [-3.0,3.0]).
 10. **CONCEPT FRAMING**: Open with concept title card (then shrink to header). Close with summary card (concept name + concept_summary text).
 
 Output a JSON object with:
@@ -840,7 +840,7 @@ def sync_video_audio_single_pass(
             cmd += ['-t', f'{target_duration:.3f}']
 
         cmd += [
-            '-c:a', 'aac', '-b:a', '192k',
+            '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2',
             '-map', '0:v:0', '-map', '1:a:0',
             output_path
         ]
@@ -1115,7 +1115,8 @@ def render_and_sync_all_scenes(
             '-f', 'concat', '-safe', '0',
             '-i', concat_list_path,
             '-c:v', 'libx264', '-c:a', 'aac',
-            '-b:a', '192k', '-pix_fmt', 'yuv420p',
+            '-b:a', '192k', '-ar', '48000', '-ac', '2',
+            '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
             final_output
         ], capture_output=True, check=True)
 
@@ -1147,7 +1148,8 @@ def _stitch_videos(synced_videos: list, output_dir: str) -> Optional[str]:
             'ffmpeg', '-y', '-f', 'concat', '-safe', '0',
             '-i', concat_list_path,
             '-c:v', 'libx264', '-c:a', 'aac',
-            '-b:a', '192k', '-pix_fmt', 'yuv420p',
+            '-b:a', '192k', '-ar', '48000', '-ac', '2',
+            '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
             final_output,
         ], capture_output=True, check=True)
         logger.info(f"SUCCESS! Final video: {final_output}")
@@ -1730,7 +1732,13 @@ def main(
                         pdf_path=pdf_path,
                         output_path=explanation_output,
                         difficulty=difficulty,
-                        model_name=model_name,
+                        # NOTE: `model_name` here is the code-gen model (defaulted from
+                        # code_gen_model). The explanation stage must use its OWN
+                        # explanation_model for this tier, so pass None and let it resolve
+                        # via get_model("explanation_model", difficulty). Forwarding the
+                        # code-gen model (e.g. claude-sonnet-4.5) made the explanation call
+                        # use a model with a 100-page PDF limit and 400 on large books.
+                        model_name=None,
                         max_judge_attempts=3,
                         difficulty_config=difficulty_config,
                     )

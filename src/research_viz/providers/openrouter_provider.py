@@ -127,7 +127,29 @@ class OpenRouterProvider(LLMProvider):
                         continue
                     resp.raise_for_status()
 
-                resp.raise_for_status()
+                if not resp.ok:
+                    # Surface OpenRouter's error body (it explains *why*, e.g. 402 =
+                    # insufficient credits, invalid key, or a model that needs more credit).
+                    detail = ""
+                    try:
+                        err = resp.json().get("error", {})
+                        detail = err.get("message") or str(err)
+                        # OpenRouter nests the upstream provider's real reason in metadata
+                        # (e.g. "document exceeds 100 page maximum"). Surface it.
+                        meta = err.get("metadata") or {}
+                        raw = meta.get("raw") or meta.get("provider_error") or meta
+                        if raw and str(raw) not in detail:
+                            detail = f"{detail} | provider: {str(raw)[:400]}"
+                    except ValueError:
+                        detail = (resp.text or "")[:500]
+                    logger.error(
+                        "OpenRouter %d for model %s: %s",
+                        resp.status_code, model, detail,
+                    )
+                    raise requests.HTTPError(
+                        f"{resp.status_code} {resp.reason} for {self.BASE_URL}: {detail}",
+                        response=resp,
+                    )
 
                 try:
                     data = resp.json()

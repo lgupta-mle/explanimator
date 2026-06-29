@@ -16,24 +16,41 @@ A complete, executable **Manim Scene class** that implements the animation speci
 
 ## THE THREE GOLDEN RULES (NEVER VIOLATE)
 
-1. **CLEAN BEFORE NEW**: Before ANY new phase or concept, FadeOut ALL objects from the
-   previous phase. Use VGroup to track each phase's objects:
+1. **CLEAN WITHIN ZONES, NOT EVERYTHING**: Before showing UNRELATED new content, FadeOut the
+   objects from the previous phase that occupy the SAME zone. Do NOT blanket-FadeOut the whole
+   screen — the header and the math/derivation panel PERSIST across phases (see Rule 3). Track
+   each phase's *non-persistent* objects in a VGroup and clear only those:
    ```python
+   header = Text("Concept Name").to_edge(UP)          # [persist] — never faded
+   math_panel = VGroup().to_edge(RIGHT, buff=0.3)     # [persist] — accumulates derivation steps
+   # ... per-phase visuals live in the diagram zone ...
    phase_1_objects = VGroup()
-   # ... create and add objects ...
-   phase_1_objects.add(obj1, obj2, label1)
+   phase_1_objects.add(diagram, diagram_label)        # ONLY non-persistent diagram-zone content
    # ... animations ...
-   # MANDATORY before Phase 2:
-   self.play(FadeOut(phase_1_objects), run_time=1.5)
+   # When moving to an UNRELATED visual, clear just the diagram zone:
+   self.play(FadeOut(phase_1_objects), run_time=1.5)  # header + math_panel remain
    ```
+   IMPORTANT: tag persistent objects with a trailing `# [persist]` comment on their assignment
+   line, OR name them `header`, `math_panel`, or `*_panel`. The post-processor uses these to
+   avoid auto-deleting them between phases.
 
 2. **FRAME BOUNDS**: No object may exceed x=[-5.5, 5.5], y=[-3.0, 3.0].
    Use `.to_edge()` and `.to_corner()` with `buff=0.3` for safe positioning.
    After ANY `.move_to()` or `.shift()`, mentally verify the object stays in bounds.
 
-3. **MAX 2 CONTENT GROUPS VISIBLE**: At any moment, at most a persistent header
-   plus ONE content group should be fully visible on screen. When adding a second group,
-   either FadeOut the first or shrink it to 0.45× and slide it to an edge.
+3. **ZONE-BASED OCCUPANCY (show math AND visuals at once, without overlap)**: The screen is
+   divided into reserved, NON-OVERLAPPING regions. More than 2 elements MAY be visible
+   simultaneously *provided each lives in its own region and the regions do not overlap*.
+   Overlap is forbidden; cross-region coexistence is REQUIRED so the math is on screen while the
+   diagram is shown. The regions:
+   - **Header zone** (y > +2.8): persistent title / concept name.
+   - **Diagram zone** (LEFT, x ∈ [−5.5, +0.5]): the intuition visual / diagram.
+   - **Math panel zone** (RIGHT, x ∈ [+1.0, +5.5]): a PERSISTENT `math_panel` VGroup that
+     ACCUMULATES derivation steps — the current step full-size, prior steps shrunk to ~0.55× and
+     stacked above it. Keep at most 3 steps visible; when a 4th arrives, FadeOut the oldest.
+   - **Caption zone** (y < −2.5): one-line variable-definition callouts for the current equation.
+   - **Buffer rule (prevents overlap):** the math panel's left edge must stay ≥ x=+1.0 and the
+     diagram's right edge ≤ x=+0.5 — a mandatory ≥0.5-unit gap between the two columns.
 
 ---
 
@@ -67,14 +84,19 @@ The documentation examples provided are your PRIMARY source of truth. You MUST:
 
 **CRITICAL ANIMATION QUALITY RULES**
 
-1. **NO OVERLAPPING ANIMATIONS**
-   - Remove or transition old content before showing new content
-   - NEVER let old text/equations/diagrams overlap with new ones
+1. **NO OVERLAPPING ANIMATIONS (overlap ≠ coexistence)**
+   - Objects in DIFFERENT zones SHOULD coexist (diagram on the left while the math panel builds
+     on the right). That is required, not forbidden.
+   - "No overlap" means: never let two objects occupy the SAME screen space. Before reusing a
+     zone, clear what was in it. Respect the column buffer (diagram ≤ x=+0.5, panel ≥ x=+1.0).
 
-2. **RICH TEXTUAL CONTEXT**
-   - When showing equations: ALWAYS add text labels explaining variables
-   - Example: If showing Q=XW_Q, add Text("Q: Query matrix") nearby
-   - When showing diagrams: ALWAYS add descriptive text (concise, not walls of text)
+2. **RICH TEXTUAL CONTEXT (REQUIRED, not optional)**
+   - When showing equations: you MUST add variable-definition callouts in the caption zone
+     (y < −2.5). Example: showing Q=XW_Q → add Text("Q: Query matrix", font_size=22) at the
+     bottom. Define every symbol the first time it appears on screen.
+   - When showing diagrams: ALWAYS add a concise descriptive label (not walls of text).
+   - The math panel and diagram are shown TOGETHER — do not drop the equations to keep the
+     screen sparse. Density across zones is the goal; overlap within a zone is the thing to avoid.
 
 3. **STAY WITHIN FRAME BOUNDARIES**
    - ALWAYS check positions: LEFT * 3, RIGHT * 3, UP * 2, DOWN * 2 are safe
@@ -143,12 +165,14 @@ Before placing any object, you MUST think through spatial conflicts to prevent o
    - If |y_posA - y_posB| < (height_A/2 + height_B/2 + buffer), objects will overlap
    - Maintain minimum buffer of 0.5-1.0 units between unrelated objects
 
-4. **Vertical Zone Allocation**
-   - Title zone: y > +2.5 (top edge)
-   - Upper content: y = +1.0 to +2.0
-   - Middle content: y = -1.0 to +1.0
-   - Lower content: y < -1.0
-   - Leave entire zones empty between conceptually separate elements
+4. **2D Region Map (the authoritative layout — matches Golden Rule 3)**
+   - **Header zone**: y > +2.8, full width. Persistent title/concept (`header`).
+   - **Diagram zone (LEFT column)**: x ∈ [−5.5, +0.5], y ∈ [−2.4, +2.6]. Intuition visual.
+   - **Math panel zone (RIGHT column)**: x ∈ [+1.0, +5.5], y ∈ [−2.4, +2.6]. Persistent
+     `math_panel` VGroup accumulating derivation steps (current full-size, priors shrunk + stacked).
+   - **Caption zone**: y < −2.5, full width. Variable-definition callouts for the current equation.
+   - Keep a ≥0.5-unit buffer between the two columns; never let diagram-zone and panel-zone objects
+     cross x=+0.5..+1.0. This is what lets the diagram and the math coexist without overlapping.
 
 5. **Mental Checklist Before Adding Objects**
    - List all currently visible objects and their y-positions
@@ -160,32 +184,35 @@ Before placing any object, you MUST think through spatial conflicts to prevent o
 
 When new content arrives, decide: is it RELATED or UNRELATED to what's on screen?
 
-**Case 1 — RELATED** (e.g., equation that explains a visible diagram):
-Shrink existing content and slide it to one side, then show new content in the freed space:
+**Case 1 — RELATED (THE DEFAULT for equation-vs-diagram):**
+The diagram stays in the LEFT column; the equation goes into the RIGHT math panel. They coexist —
+do NOT fade the diagram to make room for the math. Place the diagram in its column and build the
+math panel beside it:
 
 ```python
-# Existing diagram is on screen at center
-existing_diagram = VGroup(...)  # already visible
+# Diagram lives in the LEFT column
+diagram = VGroup(...).move_to(LEFT * 2.7)   # diagram zone, right edge <= +0.5
 
-# SHRINK + MOVE existing to left side
-self.play(existing_diagram.animate.scale(0.45).to_edge(LEFT, buff=0.4), run_time=1.5)
-
-# Show related equation on the right side
-equation = MathTex(r"y = f(x)").move_to(RIGHT * 2 + UP * 0.5)
-eq_label = Text("This describes the diagram", font_size=22).next_to(equation, DOWN, buff=0.3)
+# Equation goes into the persistent RIGHT math panel (no overlap — separate column)
+equation = MathTex(r"y = f(x)").move_to(RIGHT * 3.2 + UP * 1.5)   # panel zone, left edge >= +1.0
+eq_label = Text("y: output, x: input", font_size=22).to_edge(DOWN, buff=0.3)  # caption zone
+math_panel.add(equation)
 self.play(Write(equation), FadeIn(eq_label), run_time=2.0)
+# Diagram remains visible the whole time.
 ```
 
-**Case 2 — UNRELATED** (e.g., moving from one concept to another):
-Fully transition out old content before showing new:
+**Case 2 — UNRELATED** (genuinely moving from one concept/segment to another):
+Clear the per-phase (non-persistent) content, but KEEP the header and math panel:
 
 ```python
-self.play(*[FadeOut(obj) for obj in phase_objects], run_time=1.5)
+self.play(*[FadeOut(obj) for obj in phase_objects], run_time=1.5)  # header + math_panel persist
 self.wait(0.5)
-# Now show new content on clean canvas
+# Now show the next concept's visual in the (now-empty) diagram zone
 ```
 
-**Decision rule**: If the narration says "notice how this relates to..." or "looking at our diagram..." → Case 1 (shrink + coexist). If the narration says "now let's turn to..." or "moving on..." → Case 2 (full transition).
+**Decision rule**: equation that explains/derives from the current topic → Case 1 (coexist across
+columns; this is the common case). Only on a real topic change ("now let's turn to...", "moving
+on...") use Case 2 — and even then the header and math panel persist.
 
 7. **Off-Screen Prevention Protocol**
 
@@ -331,56 +358,60 @@ These are more complex, involving mathematical formulas:
 
 **NEVER show an equation all at once with a single `Write(equation)`.** Build it incrementally.
 
-When the specification includes `derivation_steps` or `equation_build_order`, animate the derivation step by step:
+This protocol is MANDATORY whenever the specification has any `key_equations` — not only when
+`derivation_steps`/`equation_build_order` are present. If those structured fields exist, follow
+their exact order; if only flat `key_equations` are given, still build each one up term by term
+and synthesize a short derivation. Steps ACCUMULATE in the persistent RIGHT math panel beside the
+diagram — they do NOT replace the diagram.
 
 ```python
-# Step 1: Show the starting equation
-eq1 = MathTex(r"V(s)", color=YELLOW).move_to(UP * 1.0)
-label1 = Text("Value of current state", font_size=24).next_to(eq1, DOWN, buff=0.3)
-nums1 = MathTex(r"V(\text{tile 5}) = 0.5", color=YELLOW, font_size=30).next_to(label1, DOWN, buff=0.3)
-self.play(Write(eq1), FadeIn(label1), run_time=2.0)
-self.play(FadeIn(nums1), run_time=1.0)
+# The diagram stays in the LEFT column the whole time; equations build in the RIGHT panel.
+math_panel = VGroup()  # [persist] — accumulates derivation steps in the right column
+
+# Step 1: Show the starting equation IN THE RIGHT PANEL
+eq1 = MathTex(r"V(s)", color=YELLOW).move_to(RIGHT * 3.2 + UP * 1.8)   # panel zone (x >= +1.0)
+nums1 = MathTex(r"V(\text{tile 5}) = 0.5", color=YELLOW, font_size=30).next_to(eq1, DOWN, buff=0.25)
+label1 = Text("V(s): value of current state", font_size=22).to_edge(DOWN, buff=0.3)  # caption zone
+step1_group = VGroup(eq1, nums1)
+math_panel.add(step1_group)
+self.play(Write(eq1), FadeIn(nums1), FadeIn(label1), run_time=2.0)
 self.wait(1.5)
 
-# Shrink step 1 to corner before showing step 2
-step1_group = VGroup(eq1, label1, nums1)
-self.play(
-    step1_group.animate.scale(0.5).to_corner(UL, buff=0.3),
-    run_time=1.5
-)
+# Shrink step 1 UPWARD within the panel (stack), keeping it visible, then show step 2 below it
+self.play(step1_group.animate.scale(0.55).to_edge(UP, buff=0.6).shift(RIGHT * 3.2), run_time=1.2)
 
-# Step 2: Build the next equation — color-code the NEW part
-eq2 = MathTex(r"V(s')", r"-", r"V(s)")
+# Step 2: Build the next equation in the panel — color-code the NEW part
+eq2 = MathTex(r"V(s')", r"-", r"V(s)").move_to(RIGHT * 3.2 + UP * 0.6)
 eq2[0].set_color(GREEN)  # new term
-eq2.move_to(UP * 1.0)
-label2 = Text("TD Error: next value minus current", font_size=22).next_to(eq2, DOWN, buff=0.3)
-nums2 = MathTex(r"0.7 - 0.5 = 0.2", color=YELLOW, font_size=30).next_to(label2, DOWN, buff=0.3)
-self.play(Write(eq2), FadeIn(label2), run_time=2.0)
-self.play(FadeIn(nums2), run_time=1.0)
+nums2 = MathTex(r"0.7 - 0.5 = 0.2", color=YELLOW, font_size=30).next_to(eq2, DOWN, buff=0.25)
+label2 = Text("TD error: next value minus current", font_size=22).to_edge(DOWN, buff=0.3)
+step2_group = VGroup(eq2, nums2)
+math_panel.add(step2_group)
+self.play(ReplacementTransform(label1, label2), Write(eq2), FadeIn(nums2), run_time=2.0)
 self.wait(1.5)
 
-# Shrink step 2, then show full assembled equation
-step2_group = VGroup(eq2, label2, nums2)
-self.play(step2_group.animate.scale(0.5).to_corner(UL, buff=0.3).shift(DOWN * 1.2), run_time=1.5)
-
-# Step 3: Full equation assembled
-full_eq = MathTex(r"V(s)", r"\leftarrow", r"V(s)", r"+", r"\alpha", r"[V(s') - V(s)]")
+# Step 3: Full assembled equation lower in the panel (≤3 steps visible; oldest fades if a 4th comes)
+self.play(step2_group.animate.scale(0.55).next_to(step1_group, DOWN, buff=0.3), run_time=1.2)
+full_eq = MathTex(r"V(s)", r"\leftarrow", r"V(s)", r"+", r"\alpha", r"[V(s') - V(s)]").move_to(RIGHT * 3.2 + DOWN * 0.6).scale(0.8)
 full_eq[4].set_color(BLUE)  # alpha is new
-full_eq.move_to(ORIGIN)
-self.play(Write(full_eq), run_time=2.5)
-final_nums = MathTex(r"0.5 + 0.1 \times 0.2 = 0.52", color=YELLOW, font_size=30).next_to(full_eq, DOWN, buff=0.4)
-self.play(FadeIn(final_nums), run_time=1.0)
+final_nums = MathTex(r"0.5 + 0.1 \times 0.2 = 0.52", color=YELLOW, font_size=30).next_to(full_eq, DOWN, buff=0.3)
+label3 = Text("alpha: learning rate (0.1)", font_size=22).to_edge(DOWN, buff=0.3)
+math_panel.add(full_eq, final_nums)
+self.play(ReplacementTransform(label2, label3), Write(full_eq), FadeIn(final_nums), run_time=2.5)
 self.wait(3.0)
 ```
 
 **Key rules:**
 1. Use `MathTex` with SEPARATE STRING ARGUMENTS for parts you want to color independently
 2. Color-code each NEW symbol when it first appears
-3. Show numerical substitution in **YELLOW** below each symbolic equation
-4. Shrink previous step to corner (`scale(0.5).to_corner(UL)`) before showing the next
-5. Keep at most 2 equation steps visible at once (shrunk previous + full-size current)
-6. Use `TransformMatchingTex` when one equation evolves into another; fallback to `ReplacementTransform`
-7. If `derivation_steps` or `equation_build_order` are provided, follow that exact order
+3. Show numerical substitution in **YELLOW** under each symbolic equation (from `example_substitution`)
+4. Build every equation in the RIGHT math panel (x ≥ +1.0); shrink+stack prior steps within the
+   panel (toward the top) — do NOT send them to the LEFT (UL) corner where the diagram lives
+5. Keep at most 3 steps visible in the panel; when a 4th arrives, FadeOut the oldest step
+6. Put the current equation's variable definitions in the caption zone (y < −2.5)
+7. The diagram in the LEFT column stays visible while the panel builds — coexist, don't replace
+8. Use `TransformMatchingTex` when one equation evolves into another; fallback to `ReplacementTransform`
+9. Follow `equation_build_order` / `derivation_steps` order exactly when provided
 
 ### Concept Title + Summary Pattern (MANDATORY)
 
@@ -790,56 +821,58 @@ Before submitting, verify:
 Ask yourself these questions:
 
 <thinking>
-1. What objects are currently visible on screen?
-2. Is the new content conceptually different from what's visible?
-3. If yes → MUST FadeOut old content first
-4. If no → Can build on existing content
+1. What objects are currently visible, and in WHICH zone (diagram / math panel / caption)?
+2. Does the new content go in a DIFFERENT zone than what's visible?
+3. If different zone → it COEXISTS (e.g. equation in the right panel beside the left diagram).
+   Do NOT FadeOut the other zone.
+4. If SAME zone → clear what's there first (or transform it), respecting the column buffer.
+5. The header and math panel PERSIST — never FadeOut them at a phase boundary.
 </thinking>
 
 ### Mandatory Phases Pattern
 
-Structure your construct() method into CLEAR PHASES separated by cleanup:
+Structure construct() into CLEAR PHASES, but clear only the SAME-ZONE (non-persistent) content
+between them. The header and the math panel persist across all phases:
 
 ```python
 def construct(self):
-    # PHASE 1: Setup
-    title = Text(...)
-    self.play(Write(title))
+    # PHASE 1: Setup (persistent header + panel created once)
+    header = Text(...).to_edge(UP)          # [persist]
+    math_panel = VGroup().to_edge(RIGHT)    # [persist] — accumulates equations
+    self.play(Write(header))
     self.wait(1)
 
-    # PHASE 2: First concept
-    diagram1 = ...
+    # PHASE 2: First concept — diagram on the LEFT, its equation builds in the RIGHT panel
+    diagram1 = VGroup(...).move_to(LEFT * 2.7)   # diagram zone
     self.play(Create(diagram1))
+    eq1 = MathTex(...).move_to(RIGHT * 3.2 + UP * 1.5); math_panel.add(eq1)
+    self.play(Write(eq1))                         # coexists with diagram1 — no overlap (separate column)
     self.wait(1.5)
 
-    # CLEANUP BEFORE PHASE 3 - MANDATORY!
+    # CLEAR ONLY THE DIAGRAM ZONE before an UNRELATED visual (header + math_panel stay):
     self.play(FadeOut(diagram1), run_time=1.5)
 
-    # PHASE 3: Second concept (FRESH CANVAS)
-    diagram2 = ...
+    # PHASE 3: Second concept — new diagram in the freed LEFT zone; panel keeps prior equations
+    diagram2 = VGroup(...).move_to(LEFT * 2.7)
     self.play(Create(diagram2))
     self.wait(1.5)
 
-    # CLEANUP BEFORE PHASE 4
-    self.play(FadeOut(diagram2), run_time=1.5)
-
-    # Final cleanup
-    self.play(FadeOut(title), run_time=1.0)
+    # Final cleanup (now everything, including persistent objects)
+    self.play(FadeOut(header), FadeOut(math_panel), FadeOut(diagram2), run_time=1.0)
 ```
 
 ### Rules for When to Clear
 
-✓ **MUST FadeOut when transitioning between**:
-- Different diagrams (architecture → heatmap → flowchart)
-- Different equations (unless building on previous)
-- Different examples (sentence A → sentence B)
-- Intuitive explanation → technical explanation
-- Any conceptual shift in narration
+✓ **MUST clear the SAME zone when transitioning between**:
+- Different diagrams in the diagram zone (architecture → heatmap → flowchart)
+- A different running example (sentence A → sentence B)
+- Any conceptual shift that reuses the same screen region
 
-✗ **Can keep visible when**:
-- Adding labels to existing elements
-- Highlighting/indicating existing elements
-- Small additions that complement (not replace) current content
+✗ **Keep visible / coexist when**:
+- An equation explains the current diagram → put it in the RIGHT panel, keep the diagram
+- Adding labels, highlights, or variable callouts to existing elements
+- Successive derivation steps → stack them in the math panel (don't clear it)
+- The header and math panel — these PERSIST across the whole scene until the final cleanup
 
 ### Anti-Pattern Example (NEVER DO THIS)
 

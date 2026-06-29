@@ -14,6 +14,12 @@ class DifficultyConfig:
     beat_min_words: int
     beat_max_words: int
     include_prerequisite_segments: bool
+    # Math-density requirements (structured fields; do NOT count toward narration words).
+    # Drive how much on-screen math the explanation stage must produce per technical segment.
+    min_derivation_steps_per_technical_segment: int = 3
+    min_equations_per_technical_segment: int = 2
+    require_numeric_substitution: bool = True
+    require_equation_build_order: bool = True
 
 
 DIFFICULTY_CONFIGS = {
@@ -27,6 +33,10 @@ DIFFICULTY_CONFIGS = {
         beat_min_words=10,
         beat_max_words=30,
         include_prerequisite_segments=True,
+        min_derivation_steps_per_technical_segment=3,
+        min_equations_per_technical_segment=2,
+        require_numeric_substitution=True,
+        require_equation_build_order=True,
     ),
     "medium": DifficultyConfig(
         level="medium",
@@ -38,6 +48,10 @@ DIFFICULTY_CONFIGS = {
         beat_min_words=8,
         beat_max_words=25,
         include_prerequisite_segments=False,
+        min_derivation_steps_per_technical_segment=3,
+        min_equations_per_technical_segment=2,
+        require_numeric_substitution=True,
+        require_equation_build_order=True,
     ),
     "hard": DifficultyConfig(
         level="hard",
@@ -49,5 +63,9 @@ DIFFICULTY_CONFIGS = {
         beat_min_words=6,
         beat_max_words=20,
         include_prerequisite_segments=False,
+        min_derivation_steps_per_technical_segment=2,
+        min_equations_per_technical_segment=2,
+        require_numeric_substitution=True,
+        require_equation_build_order=True,
     ),
 }
