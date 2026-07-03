@@ -430,7 +430,7 @@ if __name__ == "__main__":
         chapters_list = [int(c.strip()) for c in args.chapters.split(",") if c.strip()]
 
     config = BookConfig(
-        max_tokens_per_chunk=60_000,
+        max_tokens_per_chunk=50000,
         parallel_chapters=args.parallel,
         max_workers=args.max_workers,
         extraction_model=args.extraction_model,

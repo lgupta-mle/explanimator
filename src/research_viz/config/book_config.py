@@ -6,7 +6,7 @@ from typing import Optional
 
 @dataclass
 class BookConfig:
-    max_tokens_per_chunk: int = 60_000
+    max_tokens_per_chunk: int = 53355
     parallel_chapters: bool = True
     max_workers: int = 4
     token_count_method: str = "approx"  # "approx" uses len(text)/4
