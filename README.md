@@ -437,4 +437,6 @@ GitHub Pages: https://chaosadmstudent.github.io/research-paper-graphviz/
 
 ## License
 
-MIT.
+[PolyForm Noncommercial License 1.0.0](LICENSE) — free for any noncommercial
+purpose (personal, research, education, nonprofit); commercial use requires
+a separate license from the copyright holders.
