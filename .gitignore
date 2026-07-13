@@ -16,6 +16,10 @@ output/
 output_old/
 out.txt
 
+# Manim RAG vector DB — large binary index, rebuild via
+# `python -m research_viz.preprocessing.build_manim_index`
+data/manim_docs/vector_db/
+
 # Claude artifacts
 .claude/
 
