@@ -76,7 +76,12 @@ Both strategies filter out front matter (Preface, Foreword), back matter (Refere
 
 ## Requirements
 
-- `OPENROUTER_API_KEY` — LLM calls (explanation generation, TOC extraction)
-- `OPENAI_API_KEY` — TTS audio generation
-- `manim` — animation rendering
+- `OPENROUTER_API_KEY` — LLM calls (explanation generation, TOC extraction,
+  judging, Manim codegen) and Gemini TTS audio generation (default provider)
+- `OPENAI_API_KEY` — Manim RAG lookups (used during code-fix retries in
+  Manim codegen); also needed if you switch `audio.provider` back to
+  `openai` in `config.yaml`. See the root [README](../../../README.md) for
+  the one-time `build_manim_index` setup step this key unlocks.
+- `manim` — animation rendering (requires a working LaTeX install for
+  `MathTex`/`Tex` — see root README Prerequisites)
 - `ffmpeg` — video/audio processing

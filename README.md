@@ -44,12 +44,40 @@ Numbers above are from the optimization branch's CI runs.
 ### 1. Prerequisites
 
 ```bash
-# Python 3.10+
-python --version
+# Python 3.10+ (macOS ships python3, not a bare `python` — use python3
+# for the venv step below, or alias it)
+python3 --version
+
+# Homebrew (macOS only, if you don't have it)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Prompts for your password — run it in an actual terminal, not piped
+# through another tool. Follow its printed "Next steps" to add brew to PATH.
 
 # ffmpeg for audio/video processing
 brew install ffmpeg          # macOS
 # or: apt-get install ffmpeg # Debian/Ubuntu
+
+# cairo + pango + pkg-config — required on macOS for `pip install manim`
+# to build its pycairo / manimpango dependencies. Without these the pip
+# install fails with "Pkg-config for machine host machine not found" or
+# similar meson/cairo errors.
+brew install cairo pango pkg-config   # macOS
+# or: apt-get install libcairo2-dev libpango1.0-dev pkg-config # Debian/Ubuntu
+
+# LaTeX — required for Manim's MathTex/Tex (any equation rendering).
+# Without this, every scene with an equation fails at render time with
+# `FileNotFoundError: [Errno 2] No such file or directory: 'latex'`.
+brew install --cask mactex   # macOS, full TeX Live (~5GB, needs sudo — run
+                              # `sudo installer -pkg <path-to-pkg> -target /`
+                              # directly if `brew install --cask mactex` says
+                              # "already installed" but `which latex` still
+                              # fails, since the cask's own installer step
+                              # can silently fail without an interactive sudo
+                              # prompt)
+# or: brew install --cask basictex for a smaller (~100MB) install, then
+#     `eval "$(/usr/libexec/path_helper)"` and `tlmgr install dvisvgm` for
+#     the extra packages Manim needs
+# or: apt-get install texlive-full  # Debian/Ubuntu
 
 # Manim for rendering
 pip install manim
@@ -64,11 +92,18 @@ Two paths — use whichever you already have:
 # Option A — uv (recommended; what we use)
 uv venv && source .venv/bin/activate
 uv pip install -r requirements.txt
+uv pip install -e .
 
 # Option B — vanilla pip
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+pip install -e .
 ```
+
+The `pip install -e .` step is required — without it, `python -m
+research_viz...` fails with `ModuleNotFoundError: No module named
+'research_viz'`, since the package lives under `src/` and isn't on the
+Python path until installed.
 
 ### 3. Configure API keys
 
@@ -85,14 +120,47 @@ cp .env.example .env
 OPENROUTER_API_KEY=sk-or-v1-…
 ```
 
-That's it for the default config. All LLM calls (explanation, judge, codegen)
-and Gemini TTS go through OpenRouter. Get a key at
+That's it for LLM calls. All of them (explanation, judge, codegen) and
+Gemini TTS go through OpenRouter. Get a key at
 https://openrouter.ai/keys — pay-as-you-go, no monthly minimum.
 
-`OPENAI_API_KEY` is **only** required if you switch the TTS provider back
-to OpenAI in `config.yaml` (`audio.provider: openai`), or if you want to
-rebuild the Manim RAG vector DB from scratch (a pre-built one ships in
-`data/manim_docs/vector_db/chroma_db/`).
+Two OpenRouter gotchas worth knowing up front:
+- OpenRouter lets you cap an individual **API key** with its own spending
+  limit, separate from your account's overall balance. If you hit
+  `402 Payment Required: ... adjust the key's total limit`, that's the
+  key's own cap, not your account balance — raise it at
+  `https://openrouter.ai/workspaces/default/keys/<your-key-id>`, not just
+  the general credits page.
+- Some requests need at least $0.50 in account balance specifically to
+  process file (PDF) attachments — a `402 ... requires at least $0.50 in
+  balance for files` error means your account balance itself is low, add
+  funds at https://openrouter.ai/settings/credits.
+
+`OPENAI_API_KEY` is **required**, not optional, if you're using the Manim
+RAG lookups (used during code-fix retries in Manim codegen) — it's *not*
+only for switching TTS back to OpenAI. The vector DB itself is gitignored
+(not shipped in the repo — see step 3.5 below), and even querying an
+existing local vector DB re-embeds the search query via OpenAI's
+`text-embedding-3-large`, so this key is needed at query time, not just
+when rebuilding the index. Get one at https://platform.openai.com — note
+that a fresh OpenAI account/project may need billing explicitly enabled
+under **Settings → Organization → Billing → Overview** (not just a card on
+file) before embedding calls will succeed.
+
+### 3.5. Build the Manim RAG vector DB (required, one-time)
+
+```bash
+python -m research_viz.preprocessing.build_manim_index
+```
+
+Scrapes the Manim docs (cached after the first run), chunks them, and
+embeds ~3,900 chunks via OpenAI (`text-embedding-3-large`) into a local
+ChromaDB at `data/manim_docs/vector_db/chroma_db/`. Costs roughly $0.50–1
+in OpenAI credits and takes a few minutes. Without this step, Manim
+codegen retries will hit `RAG error: Collection [manim_docs] does not
+exist` — non-fatal (retries still happen, just with less context to
+self-correct from), but noticeably reduces the success rate of
+error-fix retries.
 
 ### 4. Run
 
@@ -134,11 +202,15 @@ Each tier maps to a different model lineup in `config.yaml`:
 
 | Tier   | Explanation                  | Codegen                  | Judge       |
 | ------ | ---------------------------- | ------------------------ | ----------- |
-| easy   | gemini-3.1-pro-preview       | gemini-3.1-pro-preview   | gemini-2.5-flash |
+| easy   | gemini-2.5-pro                | gemini-2.5-pro            | gemini-2.5-flash |
 | medium | gemini-3.1-flash-lite        | claude-sonnet-4.5        | gemini-2.5-flash |
 | hard   | gemini-3.1-flash-lite        | deepseek-v3.2            | (skipped)   |
 
 Override any of these in `config.yaml` (root) or `config/dev.yaml` (per-profile).
+Note that `config/dev.yaml` (the default profile when `ANVAYA_PROFILE` is
+unset) can override values from the root `config.yaml` — e.g. it currently
+sets a longer `manim.timeout` than you might expect by reading the root
+file alone. Check both files if a setting doesn't seem to be taking effect.
 
 ---
 
@@ -327,6 +399,32 @@ your shell after editing `.env`.
 
 **No segments under `debug_ready_segments/`** — codegen failed all 3 attempts
 for that segment. Check `run_metrics.json` for which stage errored.
+
+**`FileNotFoundError: ... 'latex'`** — Manim's `MathTex`/`Tex` shell out to a
+real LaTeX install (`latex`/`pdflatex`), which isn't the same as installing
+Manim itself. See Prerequisites above (`mactex` or `basictex` via Homebrew).
+
+**`RAG error: Collection [manim_docs] does not exist`** — the Manim RAG
+vector DB hasn't been built yet (it's gitignored, not shipped in the repo).
+Run `python -m research_viz.preprocessing.build_manim_index`. If you see
+`Missing credentials ... OPENAI_API_KEY` instead, that key isn't set in
+`.env`; if you see `openai.RateLimitError: insufficient_quota`, your OpenAI
+account (not OpenRouter) has no billing enabled — see step 3 above.
+
+**`OpenRouter 402 ... requested up to 65536 tokens, but can only afford
+N`** — your OpenRouter API key's own credit limit is capped; this is
+unrelated to (and often mistaken for) low account balance. Raise the
+limit on the key itself at
+`https://openrouter.ai/workspaces/default/keys/<key-id>`.
+
+**Output directory keeps regenerating a new series bible every run** — the
+book pipeline caches the bible/explanation/segments against a stable
+output directory derived from the PDF filename
+(`output/books/<pdf-stem>/`). If you're on an older checkout that still
+renames this directory to a book-title-derived slug after generating the
+bible, that rename breaks the cache lookup on every subsequent run. Update
+to a version where `book_pipeline.py` uses one stable directory for the
+whole lifetime of a book.
 
 ---
 
