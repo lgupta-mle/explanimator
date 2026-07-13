@@ -2,7 +2,7 @@ audio:
   max_workers: 2
 
 manim:
-  timeout: 60
+  timeout: 180
   max_workers: 2
 
 translation:

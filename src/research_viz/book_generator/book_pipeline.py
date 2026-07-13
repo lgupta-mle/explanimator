@@ -20,7 +20,6 @@ All outputs are saved under: output_dir/<book_slug>/
 
 import json
 import re
-import shutil
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Optional
@@ -90,6 +89,8 @@ def _run_chapter_video(
     max_retries: int,
     extraction_model: str = "google/gemini-2.5-flash",
     skip_video: bool = False,
+    max_judge_attempts: int = 6,
+    codegen_model: Optional[str] = None,
 ) -> Optional[dict]:
     """Run the full pipeline for a single chapter part. Returns the explanation dict or None."""
     part_dir = chapter_output_dir / part.part_id
@@ -125,7 +126,7 @@ def _run_chapter_video(
             bible=bible,
             model_name=model_name,
             extraction_model=extraction_model,
-            max_judge_attempts=3,
+            max_judge_attempts=max_judge_attempts,
             difficulty_config=difficulty_config,
             prev_chapter_narration=prev_narration,
         )
@@ -147,7 +148,10 @@ def _run_chapter_video(
             pdf_path=None,
             explanation_path=explanation_path,
             output_dir=str(part_dir),
-            model_name=model_name,
+            # NOTE: manim_main's `model_name` is the code-gen model (used for Manim
+            # scene generation), not the explanation model — pass codegen_model here
+            # so it can be tuned independently of the explanation/judge model above.
+            model_name=codegen_model,
             max_retries=max_retries,
             generate_audio=True,
             render_video=True,
@@ -167,7 +171,7 @@ def _run_chapter_video(
 def run_book_pipeline(
     book_pdf_path: str,
     output_base_dir: str = "output/books",
-    model_name: str = "google/gemini-3.1-pro-preview",
+    model_name: str = "google/gemini-2.5-pro",
     extraction_model: Optional[str] = None,
     difficulty: str = "medium",
     book_config: Optional[BookConfig] = None,
@@ -176,6 +180,8 @@ def run_book_pipeline(
     skip_bible: bool = False,
     skip_video: bool = False,
     chapters_to_process: Optional[List[int]] = None,
+    max_judge_attempts: int = 6,
+    codegen_model: Optional[str] = None,
 ) -> dict:
     """
     Run the full book-to-video pipeline.
@@ -191,6 +197,9 @@ def run_book_pipeline(
         skip_bible: If True, skip bible generation and load from disk if available.
         chapters_to_process: List of chapter numbers (1-indexed) to process.
                              Defaults to [1] (chapter 1 only). Pass None to process ALL chapters.
+        max_judge_attempts: Max attempts to pass the chapter explanation quality check.
+        codegen_model: LLM model for Manim scene code generation. Defaults (None) to the
+                       difficulty tier's code_gen_model from config.yaml.
 
     Returns:
         A summary dict with paths to all generated videos.
@@ -238,9 +247,10 @@ def run_book_pipeline(
     print(f"  Total processing units: {len(all_parts)}")
 
     # --- Determine output directory ---
-    # Use PDF stem as temp slug (always valid, even if chapter detection failed)
-    temp_slug = _slugify(Path(book_pdf_path).stem, fallback="book_temp")
-    output_dir = Path(output_base_dir) / temp_slug
+    # Stable directory based on the PDF filename — never renamed after the fact, so the
+    # bible/explanation/segment caches persist across every rerun of the same book instead
+    # of silently regenerating (and invalidating everything downstream) each time.
+    output_dir = Path(output_base_dir) / _slugify(Path(book_pdf_path).stem, fallback="book")
     output_dir.mkdir(parents=True, exist_ok=True)
     print(f"\n  Output directory: {output_dir}")
 
@@ -261,13 +271,6 @@ def run_book_pipeline(
             )
             if bible:
                 _save_bible(bible, output_dir)
-                # Re-slug with actual book title from bible
-                book_slug = _slugify(bible.book_title, fallback=temp_slug)
-                actual_output_dir = Path(output_base_dir) / book_slug
-                if actual_output_dir.resolve() != output_dir.resolve():
-                    shutil.move(str(output_dir), str(actual_output_dir))
-                    output_dir = actual_output_dir
-                    print(f"  Output directory updated: {output_dir}")
     else:
         bible = _load_existing_bible(output_dir)
 
@@ -280,10 +283,6 @@ def run_book_pipeline(
             visual_style_notes="Dark background, 3Blue1Brown style",
             chapter_briefs={},
         )
-
-    # Update output_dir slug with book title
-    output_dir = Path(output_base_dir) / _slugify(bible.book_title)
-    output_dir.mkdir(parents=True, exist_ok=True)
 
     # --- Phase 2: Per-chapter video generation ---
     print(f"\n[Phase 2] Generating videos for {len(all_parts)} chapter unit(s)...")
@@ -312,6 +311,8 @@ def run_book_pipeline(
                     max_retries,
                     effective_extraction_model,
                     skip_video,
+                    max_judge_attempts,
+                    codegen_model,
                 ): part
                 for part in all_parts
             }
@@ -344,6 +345,8 @@ def run_book_pipeline(
                 max_retries=max_retries,
                 extraction_model=effective_extraction_model,
                 skip_video=skip_video,
+                max_judge_attempts=max_judge_attempts,
+                codegen_model=codegen_model,
             )
             video_path = output_dir / part.part_id / "final_video.mp4"
             results[part.part_id] = {
@@ -399,7 +402,7 @@ if __name__ == "__main__":
         """Path to the book PDF."""
         output_dir: str = "output/books"
         """Root directory for all output."""
-        model: str = "google/gemini-3.1-pro-preview"
+        model: str = "google/gemini-2.5-pro"
         """LLM model for explanation generation (Stage 2)."""
         extraction_model: str = "google/gemini-2.5-flash"
         """Cheap model for chapter digest extraction (Stage 1)."""
@@ -409,6 +412,10 @@ if __name__ == "__main__":
         """Path to Manim RAG vector DB."""
         max_retries: int = 3
         """Max Manim code retries per scene."""
+        max_judge_attempts: int = 6
+        """Max attempts to pass the chapter explanation quality check."""
+        codegen_model: str = "google/gemini-3.1-pro-preview"
+        """LLM model for Manim scene code generation (video generation)."""
         skip_bible: bool = False
         """Skip bible generation (load from disk if available)."""
         skip_video: bool = False
@@ -448,4 +455,6 @@ if __name__ == "__main__":
         skip_bible=args.skip_bible,
         skip_video=args.skip_video,
         chapters_to_process=chapters_list,
+        max_judge_attempts=args.max_judge_attempts,
+        codegen_model=args.codegen_model,
     )

@@ -429,7 +429,7 @@ def _detect_toc_pages(
 # LLM-based TOC extraction
 # ---------------------------------------------------------------------------
 
-_TOC_MODEL = "google/gemini-3.1-pro-preview"
+_TOC_MODEL = "google/gemini-2.5-pro"
 
 _EXERCISE_SECTION_RE = re.compile(
     r'^(exercises?|problems?|practice\s+problems?|exercises?\s+and\s+problems?'

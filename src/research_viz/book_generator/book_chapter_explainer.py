@@ -93,7 +93,7 @@ as already-known to the viewer.
 def judge_chapter_explanation(
     explanation_json: str,
     bible: SeriesBible,
-    model_name: str = "google/gemini-3.1-pro-preview",
+    model_name: str = "google/gemini-2.5-pro",
     difficulty_config: Optional[DifficultyConfig] = None,
 ) -> JudgeResult:
     """
@@ -225,7 +225,7 @@ def generate_chapter_explanation(
     chapter_id: str,
     output_path: str,
     bible: SeriesBible,
-    model_name: str = "google/gemini-3.1-pro-preview",
+    model_name: str = "google/gemini-2.5-pro",
     extraction_model: str = "google/gemini-2.5-flash",
     max_judge_attempts: int = 3,
     difficulty_config: Optional[DifficultyConfig] = None,
@@ -294,7 +294,16 @@ Output format — JSON with:
 Each segment needs:
 - segment_id, title, order
 - intuition: core_insight, visual_metaphor, metaphor_example, starting_question, intuitive_walkthrough, key_visuals, transformations_to_show
-- technical: intuition_to_math_bridge, key_equations (latex_formula, what_it_means, visualizable_aspect), shape_intuitions, mathematical_insight
+- technical:
+  - intuition_to_math_bridge
+  - key_equations: a LIST (one entry per distinct symbolic relationship), each with:
+    - latex_formula, what_it_means, visualizable_aspect
+    - derivation_steps: ordered list, each step with latex_formula, from_previous (justification),
+      new_symbol_introduced (symbol + plain meaning on first appearance), example_substitution
+      (running example's numbers plugged in WITH the computed result), visualizable_action
+  - equation_build_order: ordered list of equation ids describing how equations appear on screen
+  - running_example_walkthrough: one numeric thread carried through the segment's equations
+  - shape_intuitions, mathematical_insight
 - narration_script
 """
 
@@ -302,23 +311,50 @@ Each segment needs:
         base_user_prompt += _build_difficulty_prompt_section(difficulty_config)
 
     previous_feedback = None
+    previous_content: Optional[str] = None
+    user_prompt = base_user_prompt
 
     for attempt in range(max_judge_attempts):
         print(f"\n  Attempt {attempt + 1}/{max_judge_attempts}")
 
-        if previous_feedback:
-            user_prompt = f"""{base_user_prompt}
+        from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
 
-IMPORTANT — Previous attempt failed quality check. Fix these issues:
+        if previous_feedback and previous_content:
+            # Revision step: work from the prior explanation JSON + judge feedback
+            # instead of regenerating blind from the digest — lets the model fix
+            # exactly what was flagged rather than drifting on a fresh attempt.
+            print("    Revising prior explanation from feedback...")
+            revise_prompt = f"""Below is your previous chapter explanation attempt and the feedback on why it failed.
+Produce a revised explanation in the SAME JSON schema that addresses ALL the feedback.
+
+PREVIOUS EXPLANATION:
+```json
+{previous_content}
+```
+
+FEEDBACK:
 {previous_feedback}
 
-Generate a revised explanation addressing ALL feedback above.
+Output the revised explanation as JSON only, no other commentary.
 """
-        else:
-            user_prompt = base_user_prompt
+            try:
+                response = call_openrouter(
+                    [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": revise_prompt},
+                    ],
+                    model_name,
+                    EducationalExplanation3B1B,
+                )
+            except Exception as exc:
+                print(f"    LLM call failed: {exc}")
+                continue
 
-        from research_viz.schemas.explanation_schemas import EducationalExplanation3B1B
-        if digest is not None:
+            if "choices" not in response or not response["choices"]:
+                print(f"    Error: invalid response: {response.get('error', response)}")
+                continue
+            content = response["choices"][0]["message"]["content"]
+        elif digest is not None:
             print("    Stage 2: generating explanation from chapter digest...")
             try:
                 response = _create_text_llm_response(
@@ -375,6 +411,7 @@ Generate a revised explanation addressing ALL feedback above.
                     f"You generated {seg_count} segments but the requirement is {min_s}-{max_s}. "
                     f"Regenerate with exactly {min_s}-{max_s} segments."
                 )
+                previous_content = content
                 continue
 
         # Judge with bible adherence
@@ -400,9 +437,19 @@ Generate a revised explanation addressing ALL feedback above.
             return result
 
         print(f"    FAILED quality check")
+        previous_content = content
         if judge_result.feedback:
             print(f"    Feedback: {judge_result.feedback[:200]}...")
             previous_feedback = judge_result.feedback
+        else:
+            previous_feedback = (
+                "The judge failed this explanation (score=0) without detailed feedback. "
+                "Common causes: a technical segment has an empty or null `derivation_steps` "
+                "or `equation_build_order`, fewer than the required `key_equations`, an "
+                "equation symbol used without being defined via `new_symbol_introduced` or "
+                "`what_it_means`, or no `example_substitution` with a computed numeric result. "
+                "Review every technical segment against these requirements and fix any gaps."
+            )
 
     print(f"\n  Failed to pass quality check after {max_judge_attempts} attempts for: {chapter_title}")
     return None

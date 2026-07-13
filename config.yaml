@@ -9,10 +9,10 @@ llm:
       judge_model: "google/gemini-2.5-flash"
       code_gen_model: "anthropic/claude-sonnet-4.5"
     easy:
-      explanation_model: "google/gemini-3.1-pro-preview"
+      explanation_model: "google/gemini-2.5-pro"
       judge_model: "google/gemini-2.5-flash"
       prereq_model: "google/gemini-3.1-flash-lite-preview"
-      code_gen_model: "google/gemini-3.1-pro-preview"
+      code_gen_model: "google/gemini-2.5-pro"
   model_pricing:
     "deepseek/deepseek-v3.2":
       input: 0.27e-6
@@ -20,7 +20,7 @@ llm:
     "anthropic/claude-sonnet-4.5":
       input: 3.0e-6
       output: 15.0e-6
-    "google/gemini-3.1-pro-preview":
+    "google/gemini-2.5-pro":
       input: 1.25e-6
       output: 10.0e-6
     "google/gemini-3.1-flash-lite-preview":

@@ -66,7 +66,7 @@ Output ONLY valid JSON. No markdown fences, no extra text.
 
 def generate_series_bible(
     pdf_path: str,
-    model_name: str = "google/gemini-3.1-pro-preview",
+    model_name: str = "google/gemini-2.5-pro",
     snippet_pages: int = 2,
     toc_cache_path: Optional[str] = None,
 ) -> Optional[SeriesBible]:
